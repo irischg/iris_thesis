@@ -1,0 +1,10 @@
+project_name: iris_thesis
+
+paths:
+  raw_data: data/raw
+  interim_data: data/interim
+  processed_data: data/processed
+  results: results
+
+cases:
+  main_case_name: baseline_setup
