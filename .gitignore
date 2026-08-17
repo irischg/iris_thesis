@@ -15,3 +15,19 @@ Thumbs.db
 
 # optional generated files
 results/tmp/
+
+# thesis local/source data
+data/
+
+# generated analysis outputs
+results/
+
+# local thesis / electricity-bill PDFs in repository root
+/*.pdf
+
+# generated logs
+layer_a_log.txt
+
+# legacy / exploratory work not in current production pipeline
+scripts_archive/
+notebooks/
