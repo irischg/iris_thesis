@@ -1,0 +1,211 @@
+{
+  "manifest_version": "v7.2-production-checkpoint-2026-09-09-r1",
+  "status": "FROZEN_PRODUCTION_LINEAGE",
+  "purpose": "Non-solving immutable source and artifact gate for future Winter-PV economic sensitivity and final 81-case production runs.",
+  "authoritative_specification": {
+    "framework": {
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5",
+      "classification": "tracked_source"
+    },
+    "registry": {
+      "path": "docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md",
+      "sha256": "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e",
+      "classification": "tracked_source"
+    },
+    "alignment_audit": {
+      "path": "docs/v7_2_framework_registry_alignment_audit_2026-08-24.md",
+      "sha256": "0035514813799df8baa46bf912a73c76f946ccdadd87ce88014c92fd79a7517d",
+      "classification": "tracked_source"
+    }
+  },
+  "canonical_and_economic_inputs": {
+    "canonical_annual_input": {
+      "path": "data/processed/annual_input_v7_1.parquet",
+      "sha256": "e0d4a8e84bee68c71f3d278e617df6fee0bb022a97c6fb5e9c49da6d6809fa0e",
+      "classification": "local_ignored_artifact"
+    },
+    "parameter_registry": {
+      "path": "data/reference/parameter_registry_v7_2.csv",
+      "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+      "classification": "local_ignored_artifact"
+    },
+    "production_economic_interface": {
+      "path": "data/reference/production_economic_interface_v7_2.json",
+      "sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+      "classification": "local_ignored_artifact"
+    },
+    "nominal_tariff_registry": {
+      "path": "data/reference/taipower_tariff_registry_v7_1.csv",
+      "sha256": "20333b3c521ed77ebbc38cc427dd58a6c3acd61047ac95befdf3d3223f8226dd",
+      "classification": "local_ignored_artifact"
+    },
+    "constant_ntd2023_tariff": {
+      "path": "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+      "sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+      "classification": "local_ignored_artifact"
+    },
+    "transition_settlement_interface": {
+      "path": "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+      "sha256": "896f07e4dd6335fb26a906d2274446c362d11da503d7bd08be766f2d223a4916",
+      "classification": "local_ignored_artifact"
+    },
+    "settlement_matrix": {
+      "path": "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+      "sha256": "31172c471c11034ac55811d9eb0ee5602d0e2dbbdc55f09f3320855078e190e1",
+      "classification": "local_ignored_artifact"
+    }
+  },
+  "model": {
+    "annual_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "version_field": "CORE_VERSION",
+      "version": "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9",
+      "sha256": "d145eeb0c48a865c9a5d467346d94b63075e8245c08de4ecf890c1055e4369c0",
+      "classification": "current_model"
+    },
+    "representative_wrapper_16a": {
+      "path": "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "version_field": "SCRIPT_VERSION",
+      "version": "v7.2-layer-a-analytical-representative-binary-preflight-transition-candidate1-reduced-native-max-provenance-2026-09-06-r10",
+      "sha256": "c9e01022a7596b2fdf2f42e1a84855585c7901b06af100f0cb8d189852ee502f",
+      "classification": "tracked_source"
+    }
+  },
+  "frozen_eob_comparator": {
+    "classification": "FROZEN EOB COMPARATOR FOR PREMIUM CALCULATION",
+    "lineage_classification": "historical_frozen_artifact",
+    "result": {
+      "path": "results/eob_production/eob_production_result_v7_2.json",
+      "sha256": "ad606a503b3f68ceba048e4b94bc0e19e6ddde00f88c145d051f772557e0bd56",
+      "classification": "historical_frozen_artifact"
+    },
+    "freeze_audit": {
+      "path": "results/eob_production/eob_production_freeze_audit_v7_2.json",
+      "sha256": "18bf93414dcc677bdd4ab68b99aae3c0af9412ea52c950eaf8f186b075822907",
+      "classification": "historical_frozen_artifact"
+    },
+    "originating_script_15b": {
+      "path": "scripts/15b_freeze_production_eob_baseline.py",
+      "version_field": "SCRIPT_VERSION",
+      "version": "v7.2-production-eob-freeze-2026-08-30-r1",
+      "sha256": "9a5f61d19bc279920f51f67294ef96ddcd7623ffe240482ff66b88e029eafc60",
+      "classification": "tracked_source"
+    },
+    "historical_source_core_recorded_by_eob": {
+      "version": "v7.2-annual-design-core-transition-rate-audit-2026-08-29-r1",
+      "sha256": "448235d33e9e7837d677b14ce527bf1204500fc8d73fc36d5ec6cebf92e349ff",
+      "classification": "historical_embedded_provenance_not_current_file"
+    },
+    "canonical_annual_input_sha256": "e0d4a8e84bee68c71f3d278e617df6fee0bb022a97c6fb5e9c49da6d6809fa0e",
+    "economic_interface_sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+    "settlement_interface_sha256": "896f07e4dd6335fb26a906d2274446c362d11da503d7bd08be766f2d223a4916",
+    "settlement_matrix_sha256": "31172c471c11034ac55811d9eb0ee5602d0e2dbbdc55f09f3320855078e190e1",
+    "expectations": {
+      "result_status": "OPTIMAL",
+      "result_mode": "binary",
+      "result_has_solution": true,
+      "freeze_status": "PRODUCTION_EOB_FREEZE_PASS",
+      "transition_certificate": "PASS_NO_RATE_AMBIGUOUS_INCREMENTAL_OVERAGE",
+      "all_production_gates": "PASS"
+    },
+    "rainflow_validation": {
+      "path": "results/degradation_validation/eob_rainflow_validation_audit_v7_2.json",
+      "sha256": "8660da9fcee9507d9e03b656981cc325dc2533283657d4c4dbf1f5585fcd9f71",
+      "classification": "historical_frozen_artifact",
+      "expected_final_verdict": "EOB_RAINFLOW_VALIDATION_PASS"
+    }
+  },
+  "current_representative_validation": {
+    "classification": "accepted_validation_evidence",
+    "run_id": "20260906T050046737317Z_5f2cd1942c",
+    "run_manifest": {
+      "path": "results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/run_manifest_v7_2.json",
+      "sha256": "6872f8de736b60fda2be86ecfe30aac6c1fb05460eeddd5f468a4b8c6bb23f26",
+      "classification": "accepted_validation_evidence"
+    },
+    "completion_manifest": {
+      "path": "results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/run_completion_v7_2.json",
+      "sha256": "7a1e9c0d839201e175d336dad9b37c8d5bd71a00f84bf1f394758ac9e18397bc",
+      "classification": "accepted_validation_evidence"
+    },
+    "wrapper_version": "v7.2-layer-a-analytical-representative-binary-preflight-transition-candidate1-reduced-native-max-provenance-2026-09-06-r10",
+    "wrapper_sha256": "c9e01022a7596b2fdf2f42e1a84855585c7901b06af100f0cb8d189852ee502f",
+    "core_version": "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9",
+    "core_sha256": "d145eeb0c48a865c9a5d467346d94b63075e8245c08de4ecf890c1055e4369c0",
+    "expected_status": "REPRESENTATIVE_PASS",
+    "expected_all_gates_pass": true,
+    "expected_case_ids": ["a0.60_b04", "a0.60_b12", "a0.80_b08", "a1.00_b04", "a1.00_b12"]
+  },
+  "winter_pv_validation": {
+    "classification": "accepted_validation_evidence",
+    "frozen_protocol": {
+      "path": "docs/winter_pv_longblock_sensitivity_protocol_v7_2_2026-09-07.md",
+      "sha256": "630c9c20a388fde31d424d8b1e43d99cd05c5d2c9cf51b17e2d36f90fb50f525",
+      "classification": "tracked_source"
+    },
+    "script_17a": {
+      "path": "scripts/17a_validate_winter_pv_longblock_holdouts.py",
+      "version_field": "SCRIPT_VERSION",
+      "version": "v7.2-winter-pv-longblock-holdout-validation-2026-09-09-r2",
+      "sha256": "c8bb665fb607b129df2187435c5454e49dbf6faff3ca25013a3eda7d26670c91",
+      "classification": "tracked_source"
+    },
+    "run_id": "20260909T042957292822Z_7de1c7a4f4",
+    "run_manifest": {
+      "path": "results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/run_manifest.json",
+      "sha256": "374a52ebc2db0ad0b4c26a05b51a6ed50273dd1dc803164e99da4560ac14d14b",
+      "classification": "accepted_validation_evidence"
+    },
+    "completion_manifest": {
+      "path": "results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/completion_manifest.json",
+      "sha256": "678a11d8acd0dec10020f39c011917a998d75c0055fd568fe14d75a7226f34f6",
+      "classification": "accepted_validation_evidence"
+    },
+    "source_commit": "b1732532c793b1c76aae28e57a8dc64b6647f654",
+    "expected_completion_status": "COMPLETED_PASS_FOR_SENSITIVITY",
+    "expected_decision": "PASS_FOR_SENSITIVITY",
+    "expected_holdout_status": {"H1": "PASS", "H2": "PASS", "H3": "PASS"}
+  },
+  "authority_policy": {
+    "accepted_representative_run_id": "20260906T050046737317Z_5f2cd1942c",
+    "stale_top_level_outputs": [
+      "results/layer_a/preflight/representative_cases/",
+      "results/layer_a/preflight/layer_a_representative_preflight_summary_v7_2.csv"
+    ],
+    "historical_15a_benchmark_outputs": [
+      "results/eob_benchmark/",
+      "results/eob_benchmark_gap1e-5/",
+      "results/eob_benchmark_gap1e-6/"
+    ],
+    "historical_failed_representative_runs": [
+      "20260903T132530103499Z_f32ad981ca",
+      "20260905T110342777608Z_e9587c959c"
+    ],
+    "historical_non_authoritative_intermediate_runs": [
+      "20260906T040445014999Z_df972f82f0",
+      "20260906T044615625390Z_53ab30b125"
+    ],
+    "frozen_15b_output": "results/eob_production/",
+    "frozen_15c_output": "results/degradation_validation/",
+    "never": [
+      "select latest by filename, directory order, or mtime",
+      "trust top-level convenience output",
+      "use Script-15a output as production EOB",
+      "use failed, incomplete, build-only, or superseded run directories",
+      "silently update an expected hash"
+    ],
+    "require": [
+      "exact run ID",
+      "completion manifest with expected success fields",
+      "expected source/core/wrapper hashes",
+      "exact canonical/economic/tariff/settlement hashes",
+      "exact frozen EOB comparator hashes",
+      "production environment preflight PASS",
+      "production checkpoint validator PASS",
+      "explicit repository state",
+      "run-specific output directory",
+      "completion manifest only after successful completion"
+    ]
+  }
+}
