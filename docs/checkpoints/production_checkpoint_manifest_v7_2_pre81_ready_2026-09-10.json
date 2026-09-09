@@ -1,0 +1,330 @@
+{
+  "checkpoint_version": "v7.2-pre81-ready-checkpoint-2026-09-10-r1",
+  "checkpoint_role": "FINAL_81_BUILD_READY_PRE_PRODUCTION_SOLVE_FREEZE",
+  "status": "FROZEN_PRE81_READY",
+  "created_utc": "2026-09-09T17:28:38.2268847Z",
+  "purpose": "Additive cryptographic freeze of the accepted Script-19a final Layer-A 81-case build-only pre-production gate before any Script-19b implementation or production optimization.",
+  "authority": {
+    "framework": {
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5",
+      "status": "CURRENT_METHODOLOGY_SOURCE_OF_TRUTH"
+    },
+    "registry": {
+      "path": "docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md",
+      "sha256": "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e",
+      "status": "CURRENT_EVIDENCE_SOURCE_OF_TRUTH"
+    },
+    "post17c_checkpoint": {
+      "path": "docs/checkpoints/production_checkpoint_manifest_v7_2_post17c_2026-09-09.json",
+      "sha256": "9ad301e891bb8e794b11a6f8ebac632d96cf59fecf38d402f72bd9b0bdd32921",
+      "checkpoint_role": "POST_17C_PRE_FINAL_81_LAYER_A_FREEZE",
+      "status": "FROZEN_POST_17C_PRE_FINAL_81",
+      "byte_identical": true
+    },
+    "read_only_checkpoint_validator": {
+      "path": "scripts/18a_validate_production_checkpoint.py",
+      "sha256": "cce25edc0bf27607d227ea776145ba899361c0b3106b0bb6317a91e1602343f5",
+      "validator_version": "v7.2-production-checkpoint-validator-2026-09-09-r1",
+      "mode": "READ_ONLY_NO_SOLVE",
+      "status": "PASS",
+      "artifact_hash_checks": 22
+    }
+  },
+  "repository_provenance_before_checkpoint": {
+    "active_branch": "thesis-v7",
+    "pre_checkpoint_head": "b09f078c4ad8f2323af7135e2ade82f59f167f5e",
+    "local_origin_thesis_v7": "b09f078c4ad8f2323af7135e2ade82f59f167f5e",
+    "live_remote_origin_thesis_v7": "b09f078c4ad8f2323af7135e2ade82f59f167f5e",
+    "branch_synchronized": true,
+    "tracked_modifications": [],
+    "staged_changes": [],
+    "untracked_files": [
+      "docs/protocols/iris_thesis_rigorous_audit_skill.md",
+      "scripts/19a_preflight_final_layer_a_81_cases.py"
+    ],
+    "unrelated_untracked_content_excluded_from_checkpoint": [
+      "docs/protocols/iris_thesis_rigorous_audit_skill.md"
+    ],
+    "prior_tag": {
+      "name": "v7.2-post17c",
+      "local_tag_object_sha1": "1aa834bef65328651add441d1b5c076a3c6ae183",
+      "remote_tag_object_sha1": "1aa834bef65328651add441d1b5c076a3c6ae183",
+      "local_peeled_commit": "b09f078c4ad8f2323af7135e2ade82f59f167f5e",
+      "remote_peeled_commit": "b09f078c4ad8f2323af7135e2ade82f59f167f5e",
+      "unchanged": true
+    },
+    "new_tag_collision_check": {
+      "tag": "v7.2-pre81-ready",
+      "local_exists_before_checkpoint": false,
+      "remote_exists_before_checkpoint": false,
+      "status": "PASS_NO_COLLISION"
+    }
+  },
+  "immutable_production_identities": {
+    "canonical_annual_input": {
+      "path": "data/processed/annual_input_v7_1.parquet",
+      "sha256": "e0d4a8e84bee68c71f3d278e617df6fee0bb022a97c6fb5e9c49da6d6809fa0e",
+      "role": "CURRENT_AUDITED_V7_2_CANONICAL_MAINLINE_INPUT_WITH_INHERITED_FILENAME"
+    },
+    "annual_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "sha256": "d145eeb0c48a865c9a5d467346d94b63075e8245c08de4ecf890c1055e4369c0",
+      "version": "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9"
+    },
+    "economic_interface": {
+      "path": "data/reference/production_economic_interface_v7_2.json",
+      "sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9"
+    },
+    "optimization_tariff": {
+      "path": "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+      "sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395"
+    },
+    "settlement_interface": {
+      "path": "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+      "sha256": "896f07e4dd6335fb26a906d2274446c362d11da503d7bd08be766f2d223a4916"
+    },
+    "settlement_matrix": {
+      "path": "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+      "sha256": "31172c471c11034ac55811d9eb0ee5602d0e2dbbdc55f09f3320855078e190e1"
+    },
+    "mainline_degradation_package": {
+      "package_id": "pnnl_v2024_lfp_2023_point_10mw_4to10h",
+      "embedded_in": "data/reference/production_economic_interface_v7_2.json",
+      "package_sha256": "b8c461eb3513a2f6f05739a824d124e797aa7f59d12b1cf28b066bc391bcd5e2",
+      "candidate_cost_packages": {
+        "path": "results/parameter_audit/pnnl_v2024_lfp_ntd2023_candidate_cost_packages.csv",
+        "sha256": "f0c167001cf554804152d5f5eb114ee9403c784bb7937f3c5c90bf000203b3e7"
+      },
+      "pwl_candidate_packages": {
+        "path": "results/parameter_audit/pnnl_calibrated_pwl_degradation_candidate_packages.csv",
+        "sha256": "6921ae2171da8318945a48280b41780a9c26ce70a15b373088f6dfb486a1eff3"
+      },
+      "cyclelife_provenance": {
+        "path": "results/parameter_audit/pnnl_table4_2_cyclelife_g_provenance_by_bracket.csv",
+        "sha256": "1172963521fbc4b646394cb2df6947ade9f961211bf608c5928ef4de215644f6"
+      }
+    },
+    "rainflow_implementation": {
+      "path": "src/rainflow_validation_v7_2.py",
+      "sha256": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    },
+    "accepted_requirement_logic": {
+      "script09": {
+        "path": "scripts/09_build_valid_outage_start_sets.py",
+        "sha256": "3c67e91848c7093e974bf3d3b8440a4c3054ffe25a4fc99b68fd951883ae43d4"
+      },
+      "script16a": {
+        "path": "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+        "sha256": "c9e01022a7596b2fdf2f42e1a84855585c7901b06af100f0cb8d189852ee502f"
+      },
+      "valid_start_set": {
+        "path": "data/processed/valid_outage_starts_v7_1.parquet",
+        "sha256": "b8449ad96a063e4181f371e37127df70b43aafb1e92177ad355d630d8700d7c8"
+      },
+      "valid_start_counts": {
+        "path": "results/data_audit/valid_outage_start_counts_v7_1.csv",
+        "sha256": "da4c7175eb75e08793f6e41fa6c819205b73bcb59113ca44ac98eb916ea51275"
+      }
+    },
+    "winter_pv_mainline_consumption": false
+  },
+  "accepted_script_19a_lineage": {
+    "script": {
+      "path": "scripts/19a_preflight_final_layer_a_81_cases.py",
+      "version": "v7.2-final-layer-a-81-preproduction-2026-09-09-r1",
+      "sha256": "ad4f041a0727ef7091e000a73eac9955466293fdfa88cfad2c072cb32e9a65ed"
+    },
+    "accepted_run_id": "20260909T170841521430Z_55cc09a45f",
+    "accepted_run_directory": "results/layer_a/final_81_preflight/20260909T170841521430Z_55cc09a45f",
+    "completion_manifest": {
+      "path": "results/layer_a/final_81_preflight/20260909T170841521430Z_55cc09a45f/completion_manifest.json",
+      "sha256": "9dcaaf00e1dc5fe7b9fcee9709fab1a81d8c32f2eb520eedda677f2081573fa0",
+      "status": "PASS"
+    },
+    "artifact_registry_verification": {
+      "authority": "completion_manifest.json:artifact_registry",
+      "registered_artifact_count": 93,
+      "registered_artifacts_verified": 93,
+      "total_run_file_count_including_completion": 94,
+      "missing_artifacts": [],
+      "sha256_mismatches": [],
+      "byte_count_mismatches": [],
+      "unregistered_noncompletion_files": [],
+      "status": "PASS_COMPLETE_REGISTRY_VERIFICATION"
+    },
+    "registered_non_case_artifacts": {
+      "binding_window_matrix.csv": "1cca30d7be58b2cc271e867440475957e668f3f9d47a95d24107c25a023b0ab0",
+      "case_matrix.csv": "0f7a6a5915fd5295225417ce0389ab44fe5b987376f8fab39dc88ded29bce851",
+      "cross_case_structural_audit.json": "df83c582cf2a35e237c59a106089af9228bd90853ddbd29abd37d098562640f7",
+      "grid_definition.json": "d2ac73a5d9fa4da9ea3cb89bf9ab50a3180fe7d7b0d5f7e59f849d85dfd9f05e",
+      "per_case_build_audit.csv": "2122d1827d2f1dd067cf4600d2b15c9df5712d97433355c8a4c71d8e5e838e5c",
+      "post_build_immutability_audit.json": "313c8491c5ad6624fdd574110055482944dc08cf1f8a6e53030fc3ee48ee0d86",
+      "pre_solve_gate.json": "79600b01e6abc893d26d63289730d1485a0a49b2d1ae0b14ba20297fd8e8c212",
+      "production_runner_design_audit.json": "ee8988e59213b3c28c5345c4c0fa0bc67cfb2f9b61060316dc6e1ff0b3d727b9",
+      "reserve_matrix.csv": "ca4eb04937b5cf38017c1cef86539f1a92f3d955c735d703094bfb245329dec5",
+      "run_manifest.json": "8d258ecaf0dab06c5c753fb9e11f90770fdd80b15a12683bed6abaf6cc329270",
+      "solver_parameter_fingerprint.json": "1346ffdc04dc67408e58f7e92787f5a07eb86ff2b37db5029e543f286f32a2ec",
+      "valid_start_sets.parquet": "b8449ad96a063e4181f371e37127df70b43aafb1e92177ad355d630d8700d7c8"
+    },
+    "registered_case_build_audits": {
+      "count": 81,
+      "path_pattern": "results/layer_a/final_81_preflight/20260909T170841521430Z_55cc09a45f/cases/<CASE_ID>_build_audit.json",
+      "exact_hash_authority": "completion_manifest.json:artifact_registry",
+      "all_verified": true
+    },
+    "pre_and_post_protected_identity_count": 149,
+    "all_protected_identities_unchanged": true,
+    "accepted_verdict": "FINAL 81 PRE-PRODUCTION GATE PASS — 81/81 CASES READY FOR CONTROLLED PRODUCTION SOLVE"
+  },
+  "grid_closure": {
+    "alpha_values": [0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.00],
+    "beta_values_h": [4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "expected_case_count": 81,
+    "generated_case_count": 81,
+    "unique_case_id_count": 81,
+    "unique_alpha_beta_count": 81,
+    "duplicate_count": 0,
+    "missing_count": 0,
+    "extra_count": 0,
+    "status": "CLOSED_PASS"
+  },
+  "structural_closure": {
+    "valid_start_counts_by_beta_h": {
+      "4": 8757,
+      "5": 8756,
+      "6": 8755,
+      "7": 8754,
+      "8": 8753,
+      "9": 8752,
+      "10": 8751,
+      "11": 8750,
+      "12": 8749
+    },
+    "script09_exact_start_set_reconciliation": "PASS",
+    "circular_year_end_wrap_used": false,
+    "pout_nondecreasing_over_alpha": "PASS",
+    "pout_constant_across_beta_for_fixed_alpha": "PASS",
+    "reserve_nondecreasing_over_alpha": "PASS",
+    "reserve_nondecreasing_over_beta": "PASS",
+    "binding_window_matrix_reproducible": "PASS",
+    "representative_reconciliation": {
+      "case_ids": [
+        "a0.60_b04",
+        "a0.60_b12",
+        "a0.80_b08",
+        "a1.00_b04",
+        "a1.00_b12"
+      ],
+      "numeric_differences": 0,
+      "binding_window_mismatches": 0,
+      "status": "PASS"
+    },
+    "cross_case_structural_audit": {
+      "path": "results/layer_a/final_81_preflight/20260909T170841521430Z_55cc09a45f/cross_case_structural_audit.json",
+      "sha256": "df83c582cf2a35e237c59a106089af9228bd90853ddbd29abd37d098562640f7",
+      "status": "PASS"
+    },
+    "status": "CLOSED_PASS"
+  },
+  "build_readiness": {
+    "models_attempted": 81,
+    "models_constructed": 81,
+    "models_failed": 0,
+    "models_unsolved": 81,
+    "binary_formulation_models": 81,
+    "models_disposed": 81,
+    "optimization_calls": 0,
+    "unique_structural_profiles": 1,
+    "accepted_model_structure": {
+      "variables": 122831,
+      "linear_constraints": 122085,
+      "binary_variables": 8764,
+      "general_constraints": 17528,
+      "indicator_constraints": 17520,
+      "native_max_constraints": 8,
+      "max_operands": 858,
+      "reserve_floor_rows": 8761,
+      "segment_dynamics_rows": 26280,
+      "cyclic_segment_rows": 3
+    },
+    "solver_parameters": {
+      "unique_fingerprint_count": 1,
+      "fingerprint_sha256": "205d5a9ce5ddad4d9f5d316546d6efcc0047a75add4c4c064838e111476e1fbf",
+      "MIPGap": 0.000001,
+      "NumericFocus": 1,
+      "MIPFocus": 0,
+      "Threads": 0,
+      "OutputFlag": 0,
+      "TimeLimit": "UNSET_INFINITY",
+      "historical_representative_900_second_limit_inherited": false,
+      "case_specific_tuning": false,
+      "warm_starts": false
+    },
+    "production_core_unchanged": true,
+    "status": "FINAL_81_BUILD_READY_CLOSED_PASS"
+  },
+  "earlier_diagnostic_runs": {
+    "classification": "HISTORICAL_FAILED_PREFLIGHT_ATTEMPTS_NOT_ACCEPTED_PRODUCTION_EVIDENCE",
+    "runs": [
+      {
+        "run_id": "20260909T170709262120Z_a065b701e1",
+        "failure_manifest_path": "results/layer_a/final_81_preflight/20260909T170709262120Z_a065b701e1/failure_manifest.json",
+        "failure_manifest_sha256": "b444513333c85945fdaace9f4066122e30773425f5cbb59b2a7d50e5358040fe",
+        "success_completion_manifest_exists": false,
+        "optimization_calls": 0,
+        "forbidden_call_attempts": 0,
+        "protected_file_changes": 0
+      },
+      {
+        "run_id": "20260909T170759677585Z_44813d2803",
+        "failure_manifest_path": "results/layer_a/final_81_preflight/20260909T170759677585Z_44813d2803/failure_manifest.json",
+        "failure_manifest_sha256": "e1a6a69d1e8126c0f66a4b9482b6696b9628cb6c04965666cd0691bf9e104fab",
+        "success_completion_manifest_exists": false,
+        "optimization_calls": 0,
+        "forbidden_call_attempts": 0,
+        "protected_file_changes": 0
+      }
+    ],
+    "accepted_run_id": "20260909T170841521430Z_55cc09a45f",
+    "historical_failure_evidence_retained": true
+  },
+  "future_run_boundary": {
+    "FINAL_81_BUILD_READY": "CLOSED / PASS",
+    "FINAL_81_PRODUCTION_SOLVE": "NOT YET STARTED",
+    "WINTER_PV_P1": "CLOSED",
+    "script19b_path_reserved": "scripts/19b_run_final_layer_a_81_cases.py",
+    "script19b_implemented": false,
+    "script19b_run": false,
+    "future_output_root": "results/layer_a/final_81/runs/<RUN_ID>/",
+    "restart_policy": "FRESH_RUN_ONLY",
+    "mtime_based_reuse": false,
+    "filename_recency_selection": false,
+    "failed_and_unattempted_cases_remain_explicit": true,
+    "run_completion_rule": "Only after all 81 exact unique cases have COMPLETE_PASS case manifests and every required artifact hash and post-solve gate verifies.",
+    "all_start_postsolve_adapter": "PENDING_IMPLEMENTATION_AND_TESTING",
+    "postsolve_reporting_adapters": "PENDING_IMPLEMENTATION_AND_TESTING",
+    "build_readiness_is_not_solved_feasibility_or_optimality": true
+  },
+  "checkpoint_pass_solve_prohibition": {
+    "optimize_calls": 0,
+    "eob_solves": 0,
+    "layer_a_solves": 0,
+    "final_81_solves": 0,
+    "script19a_reruns": 0,
+    "script19b_files_created": 0,
+    "gurobi_models_constructed": 0,
+    "status": "PASS_NO_SOLVE_NO_MODEL_CONSTRUCTION"
+  },
+  "git_tracking_policy": {
+    "intended_checkpoint_commit_files": [
+      "scripts/19a_preflight_final_layer_a_81_cases.py",
+      "docs/checkpoints/production_checkpoint_manifest_v7_2_pre81_ready_2026-09-10.json"
+    ],
+    "excluded_unrelated_file": "docs/protocols/iris_thesis_rigorous_audit_skill.md",
+    "accepted_result_directories_force_added": false,
+    "future_script19b_staged": false
+  },
+  "accepted_verdict": "FINAL 81 PRE-PRODUCTION GATE PASS — 81/81 CASES READY FOR CONTROLLED PRODUCTION SOLVE",
+  "checkpoint_verdict": "PRE-81 READY CHECKPOINT FULLY VERIFIED — READY FOR SCRIPT 19B PRODUCTION RUNNER IMPLEMENTATION"
+}
