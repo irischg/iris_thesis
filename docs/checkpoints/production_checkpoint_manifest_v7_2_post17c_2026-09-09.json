@@ -1,0 +1,367 @@
+{
+  "checkpoint_version": "v7.2-post17c-pre-final-81-checkpoint-2026-09-09-r1",
+  "checkpoint_role": "POST_17C_PRE_FINAL_81_LAYER_A_FREEZE",
+  "status": "FROZEN_POST_17C_PRE_FINAL_81",
+  "created_utc": "2026-09-09T13:02:45.9163102Z",
+  "purpose": "Additive cryptographic freeze of the accepted Script-17C Winter-PV paired economic sensitivity after P1 closure and before any final 81-point Layer-A production work.",
+  "authority": {
+    "framework": {
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5",
+      "status": "CURRENT_METHODOLOGY_SOURCE_OF_TRUTH"
+    },
+    "registry": {
+      "path": "docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md",
+      "sha256": "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e",
+      "status": "CURRENT_EVIDENCE_SOURCE_OF_TRUTH"
+    },
+    "winter_pv_protocol": {
+      "path": "docs/winter_pv_longblock_sensitivity_protocol_v7_2_2026-09-07.md",
+      "sha256": "630c9c20a388fde31d424d8b1e43d99cd05c5d2c9cf51b17e2d36f90fb50f525",
+      "status": "FROZEN / APPROVED FOR IMPLEMENTATION"
+    }
+  },
+  "repository_provenance_before_checkpoint": {
+    "active_branch": "thesis-v7",
+    "pre_checkpoint_commit": "1f945a3253b1396d6ce255b525b1c0832d6ad463",
+    "local_origin_thesis_v7": "1f945a3253b1396d6ce255b525b1c0832d6ad463",
+    "live_remote_origin_thesis_v7": "1f945a3253b1396d6ce255b525b1c0832d6ad463",
+    "branch_synchronized": true,
+    "tracked_modifications": [],
+    "staged_changes": [],
+    "untracked_files": [
+      "docs/protocols/iris_thesis_rigorous_audit_skill.md",
+      "scripts/17c_run_winter_pv_economic_sensitivity.py"
+    ],
+    "unrelated_untracked_content_excluded_from_checkpoint": [
+      "docs/protocols/iris_thesis_rigorous_audit_skill.md"
+    ],
+    "prior_tag": {
+      "name": "v7.2-post17b",
+      "local_tag_object_sha1": "cbf9b1d0839c489a429759535ab1a0beda3a36be",
+      "remote_tag_object_sha1": "cbf9b1d0839c489a429759535ab1a0beda3a36be",
+      "local_peeled_commit": "1f945a3253b1396d6ce255b525b1c0832d6ad463",
+      "remote_peeled_commit": "1f945a3253b1396d6ce255b525b1c0832d6ad463",
+      "unchanged": true
+    },
+    "new_tag_collision_check": {
+      "tag": "v7.2-post17c",
+      "local_exists_before_checkpoint": false,
+      "remote_exists_before_checkpoint": false,
+      "status": "PASS_NO_COLLISION"
+    }
+  },
+  "prior_checkpoints": {
+    "production_checkpoint": {
+      "path": "docs/checkpoints/production_checkpoint_manifest_v7_2_2026-09-09.json",
+      "sha256": "ebe619b440f011e525f0b9c43a0b4512f44b6f9efa049c787e8049e8c1f51b73",
+      "status": "FROZEN_PRODUCTION_LINEAGE",
+      "unchanged": true
+    },
+    "post17b_checkpoint": {
+      "path": "docs/checkpoints/production_checkpoint_manifest_v7_2_post17b_2026-09-09.json",
+      "sha256": "4082861056d59437a56839d6caa18647f7186e5a08dd89bc2557718ba9d936a6",
+      "role": "POST_17B_PRE_17C_SENSITIVITY_INPUT_FREEZE",
+      "status": "FROZEN_POST_17B_PRE_17C",
+      "unchanged": true,
+      "superseded_or_modified": false
+    }
+  },
+  "mainline_immutable_identities": {
+    "annual_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "version": "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9",
+      "sha256": "d145eeb0c48a865c9a5d467346d94b63075e8245c08de4ecf890c1055e4369c0"
+    },
+    "canonical_annual_input": {
+      "path": "data/processed/annual_input_v7_1.parquet",
+      "sha256": "e0d4a8e84bee68c71f3d278e617df6fee0bb022a97c6fb5e9c49da6d6809fa0e",
+      "role": "CURRENT_AUDITED_V7_2_CANONICAL_MAINLINE_INPUT_WITH_INHERITED_FILENAME",
+      "unchanged": true
+    },
+    "economic_interface": {
+      "path": "data/reference/production_economic_interface_v7_2.json",
+      "sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9"
+    },
+    "optimization_tariff": {
+      "path": "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+      "sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395"
+    },
+    "settlement_interface": {
+      "path": "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+      "sha256": "896f07e4dd6335fb26a906d2274446c362d11da503d7bd08be766f2d223a4916"
+    },
+    "settlement_matrix": {
+      "path": "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+      "sha256": "31172c471c11034ac55811d9eb0ee5602d0e2dbbdc55f09f3320855078e190e1"
+    },
+    "rainflow_implementation": {
+      "path": "src/rainflow_validation_v7_2.py",
+      "sha256": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    },
+    "rainflow_technical_provenance": {
+      "path": "results/parameter_audit/pnnl_table4_2_cyclelife_g_provenance_by_bracket.csv",
+      "sha256": "1172963521fbc4b646394cb2df6947ade9f961211bf608c5928ef4de215644f6"
+    },
+    "script_15b": {
+      "path": "scripts/15b_freeze_production_eob_baseline.py",
+      "sha256": "9a5f61d19bc279920f51f67294ef96ddcd7623ffe240482ff66b88e029eafc60"
+    },
+    "script_16a": {
+      "path": "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "sha256": "c9e01022a7596b2fdf2f42e1a84855585c7901b06af100f0cb8d189852ee502f"
+    },
+    "frozen_eob_comparator": {
+      "result_path": "results/eob_production/eob_production_result_v7_2.json",
+      "result_sha256": "ad606a503b3f68ceba048e4b94bc0e19e6ddde00f88c145d051f772557e0bd56",
+      "freeze_audit_path": "results/eob_production/eob_production_freeze_audit_v7_2.json",
+      "freeze_audit_sha256": "18bf93414dcc677bdd4ab68b99aae3c0af9412ea52c950eaf8f186b075822907",
+      "rainflow_audit_path": "results/degradation_validation/eob_rainflow_validation_audit_v7_2.json",
+      "rainflow_audit_sha256": "8660da9fcee9507d9e03b656981cc325dc2533283657d4c4dbf1f5585fcd9f71",
+      "qualification": "FROZEN_PROTOCOL_AUTHORIZED_HISTORICAL_CORE_COMPARATOR; NOT_RELABELED_AS_CURRENT_R9_SOLVE"
+    },
+    "accepted_layer_a_comparator": {
+      "run_id": "20260906T050046737317Z_5f2cd1942c",
+      "case_id": "a0.80_b08",
+      "run_manifest_path": "results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/run_manifest_v7_2.json",
+      "run_manifest_sha256": "6872f8de736b60fda2be86ecfe30aac6c1fb05460eeddd5f468a4b8c6bb23f26",
+      "completion_path": "results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/run_completion_v7_2.json",
+      "completion_sha256": "7a1e9c0d839201e175d336dad9b37c8d5bd71a00f84bf1f394758ac9e18397bc",
+      "case_result_path": "results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/representative_cases/a0.80_b08/a0.80_b08_result_v7_2.json",
+      "case_result_sha256": "0dd931e5075e94e0ef6e7d215af46b30e673ba48455e3395d4dfbea4be902074"
+    }
+  },
+  "accepted_script_17a_lineage": {
+    "script": {
+      "path": "scripts/17a_validate_winter_pv_longblock_holdouts.py",
+      "sha256": "c8bb665fb607b129df2187435c5454e49dbf6faff3ca25013a3eda7d26670c91"
+    },
+    "run_id": "20260909T042957292822Z_7de1c7a4f4",
+    "run_manifest": {
+      "path": "results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/run_manifest.json",
+      "sha256": "374a52ebc2db0ad0b4c26a05b51a6ed50273dd1dc803164e99da4560ac14d14b"
+    },
+    "completion_manifest": {
+      "path": "results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/completion_manifest.json",
+      "sha256": "678a11d8acd0dec10020f39c011917a998d75c0055fd568fe14d75a7226f34f6"
+    },
+    "final_validation_decision": {
+      "path": "results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/final_validation_decision.json",
+      "sha256": "454a60574d30731fc621ed57d1355911586df4c97aa6b2184ab405015708c594",
+      "decision": "PASS_FOR_SENSITIVITY"
+    },
+    "holdout_gates": {
+      "H1": "PASS",
+      "H2": "PASS",
+      "H3": "PASS"
+    }
+  },
+  "accepted_script_17b_lineage": {
+    "script": {
+      "path": "scripts/17b_build_winter_pv_sensitivity_annual_input.py",
+      "version": "v7.2-winter-pv-sensitivity-annual-input-build-2026-09-09-r1",
+      "sha256": "dd2d3e47bee139bd866eb5a8aee6603390d46f849ef80f4dd8944c6edd77ea01"
+    },
+    "run_id": "20260909T111758450767Z_4619514ef1",
+    "alternative_annual_input": {
+      "path": "data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07.parquet",
+      "sha256": "023cba88416b965c7dedf4139e9a495602039117ecc827e52a372f10a1aad986",
+      "role": "winter_pv_sensitivity_only"
+    },
+    "sensitivity_manifest": {
+      "path": "data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07_manifest.json",
+      "sha256": "644cf6dc502977422fb9baee96e95103ca581aab45f2e69c3581646d45458cd7"
+    },
+    "run_manifest": {
+      "path": "results/data_audit/winter_pv_17b/20260909T111758450767Z_4619514ef1/run_manifest.json",
+      "sha256": "aead6cd317555aa69aff92925ae096dcf0568534f9f437251ead633f93bf4b8c"
+    },
+    "diff_audit": {
+      "path": "results/data_audit/winter_pv_17b/20260909T111758450767Z_4619514ef1/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07_column_diff_audit.csv",
+      "sha256": "a20998fddec6188a1d0ffd7c0132a4b65bd70907cc6e3f3c97f7661283ad829d",
+      "status": "PASS"
+    },
+    "completion_manifest": {
+      "path": "results/data_audit/winter_pv_17b/20260909T111758450767Z_4619514ef1/completion_manifest.json",
+      "sha256": "3af8d3ef3c0b9ccd43351aaba0e467a6ef89ef54a78821d7d3f849722a740ef8",
+      "status": "17B_BUILD_PASS"
+    }
+  },
+  "accepted_script_17c_lineage": {
+    "script": {
+      "path": "scripts/17c_run_winter_pv_economic_sensitivity.py",
+      "version": "v7.2-winter-pv-economic-sensitivity-2026-09-09-r1",
+      "sha256": "ef97dfb1f5f95836759a24627b082c4bc371c36d0fffb1412bec45f32f019c9d"
+    },
+    "run_id": "20260909T122536990276Z_17ac951b61",
+    "run_directory": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61",
+    "run_manifest": {
+      "path": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61/run_manifest.json",
+      "sha256": "5cad4c6884b4db150f4256447649c3670236350a364c15b1fa1433e487386902"
+    },
+    "pre_solve_gate": {
+      "path": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61/pre_solve_gate.json",
+      "sha256": "009d8f33b450ed65316eae5b556efa88d11079a6e93bfb946184ba3bef914295",
+      "status": "PASS"
+    },
+    "completion_manifest": {
+      "path": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61/completion_manifest.json",
+      "sha256": "07420a089833abbae91ee95be33fbe2105c17ebc93a0e594de90919724062afb",
+      "status": "PASS",
+      "final_verdict": "17C WINTER-PV ECONOMIC SENSITIVITY PASS — P1 CLOSED",
+      "registered_artifact_count": 30,
+      "artifact_registry_field": "artifact_registry",
+      "cryptographic_registry_rule": "The full SHA-256 of this completion manifest freezes the exact path/SHA-256/byte-count registry for all 30 accepted run artifacts.",
+      "independent_registry_verification": {
+        "exact_run_id_selected": true,
+        "selection_by_mtime_or_latest": false,
+        "registered_count": 30,
+        "missing_artifact_count": 0,
+        "sha256_mismatch_count": 0,
+        "path_substitution_count": 0,
+        "status": "PASS"
+      }
+    },
+    "alternative_eob_result": {
+      "path": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61/alternative_eob_result.json",
+      "sha256": "6b512ce9c61714147b69beb2958b4ae50a5df9405201f6d1844a9b2116d7015a",
+      "solver_status": "OPTIMAL",
+      "mode": "binary",
+      "mip_gap": 6.833809021366518e-7,
+      "all_post_solve_gates_pass": true
+    },
+    "alternative_layer_a0_80_b08_result": {
+      "path": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61/alternative_layer_a0.80_b08_result.json",
+      "sha256": "13e63bd22875ab736552ac22f22c668a391e04965f67bf175aeb6ae12b4de09f",
+      "case_id": "a0.80_b08",
+      "alpha": 0.8,
+      "beta_h": 8,
+      "solver_status": "OPTIMAL",
+      "mode": "binary",
+      "mip_gap": 5.048388301023261e-7,
+      "all_post_solve_gates_pass": true
+    },
+    "alternative_eob_rainflow": {
+      "path": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61/alternative_eob_rainflow_audit.json",
+      "sha256": "1a42e91869a460a80b55bfe845b83fb80bf30a97831a7039b9cb3978edb3e4ff",
+      "verdict": "RAINFLOW_VALIDATION_PASS",
+      "all_gates_pass": true
+    },
+    "alternative_layer_a0_80_b08_rainflow": {
+      "path": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61/alternative_layer_a0.80_b08_rainflow_audit.json",
+      "sha256": "5b6d2a5b093346284562d3b84adb2f294b8c7fd809aba0b8b48e26668e548996",
+      "verdict": "RAINFLOW_VALIDATION_PASS",
+      "all_gates_pass": true
+    },
+    "paired_comparison": {
+      "json_path": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61/paired_sensitivity_comparison.json",
+      "json_sha256": "f62f600020d4a4e00a7fce78ef85490d29db3c5838e3770ab2b5907d2a196164",
+      "csv_path": "results/sensitivity/winter_pv_17c/20260909T122536990276Z_17ac951b61/paired_sensitivity_comparison.csv",
+      "csv_sha256": "d2ed36a649316a7be706e7cd5979071ac89cd9a3e7bb5dc6935c344303919021",
+      "status": "PASS"
+    },
+    "solve_scope": {
+      "alternative_eob_optimizations": 1,
+      "alternative_layer_a0_80_b08_optimizations": 1,
+      "mainline_resolves": 0,
+      "other_representative_layer_a_optimizations": 0,
+      "final_81_point_optimizations": 0,
+      "telemetry_optimize_started_total": 2,
+      "status": "PASS_EXACTLY_TWO_AUTHORIZED_OPTIMIZATIONS"
+    },
+    "paired_fairness": {
+      "canonical_rows": 8760,
+      "alternative_rows": 8760,
+      "timestamp_vector_exact": true,
+      "sensitivity_marked_rows": 1463,
+      "numerically_changed_pv_rows": 619,
+      "forbidden_changed_columns": [],
+      "alternative_minus_canonical_pv_energy_kwh_recomputed": 39484.42249408527,
+      "accepted_17b_value_kwh": 39484.422494085295,
+      "canonical_input_unchanged": true,
+      "alternative_role": "winter_pv_sensitivity_only",
+      "status": "PASS"
+    }
+  },
+  "accepted_interpretation_boundary": {
+    "alternative_role": "winter_pv_sensitivity_only",
+    "actual_unavailable_nov_dec_pv_recovered_claim": false,
+    "historical_truth_claim": false,
+    "under_evaluated_sensitivity": {
+      "annual_operating_cost_changed": true,
+      "E_N_changed": false,
+      "P_B_changed": false,
+      "CC_changed": false,
+      "primary_mechanism": "grid_import_and_TOU_energy_cost_reduction",
+      "fixed_a0_80_b08_binding_interval": "2025-09-16T10:00:00/2025-09-16T18:00:00",
+      "binding_interval_outside_winter_pv_target_period": true
+    },
+    "full_81_point_surface_robustness_claim": false,
+    "universal_materiality_threshold": null,
+    "scope": "IMPLEMENTATION_AND_EVIDENCE_PROVENANCE_ONLY; NO_METHODOLOGY_CHANGE"
+  },
+  "experimental_closure": {
+    "WINTER_PV_LONG_BLOCK_VALIDATION": "CLOSED_PASS_FOR_SENSITIVITY",
+    "WINTER_PV_ALTERNATIVE_BUILD": "CLOSED_PASS",
+    "WINTER_PV_PAIRED_ECONOMIC_SENSITIVITY": "CLOSED_PASS",
+    "WINTER_PV_P1": "CLOSED",
+    "FINAL_81_LAYER_A": "NOT_YET_RUN"
+  },
+  "git_tracking_policy": {
+    "gitignore_path": ".gitignore",
+    "data_directory_ignored": true,
+    "results_directory_ignored": true,
+    "force_added_generated_artifacts": false,
+    "files_intended_for_checkpoint_commit": [
+      "scripts/17c_run_winter_pv_economic_sensitivity.py",
+      "docs/checkpoints/production_checkpoint_manifest_v7_2_post17c_2026-09-09.json"
+    ],
+    "excluded_unrelated_file": "docs/protocols/iris_thesis_rigorous_audit_skill.md"
+  },
+  "checkpoint_pass_solve_prohibition": {
+    "script_17c_rerun": false,
+    "optimize_called": false,
+    "eob_solve": false,
+    "layer_a_solve": false,
+    "final_81_point_solve": false,
+    "script_17b_regenerated": false,
+    "frozen_comparator_regenerated": false
+  },
+  "validation": {
+    "mode": "READ_ONLY_POST_17C_CHECKPOINT_CREATION_GATES_NO_SOLVE",
+    "production_checkpoint_validator_18a": {
+      "status": "PASS",
+      "artifact_hash_checks": 22
+    },
+    "production_environment_preflight_18b": {
+      "status": "PASS",
+      "python_version": "3.14.3",
+      "pandas_version": "3.0.2",
+      "numpy_version": "2.4.4",
+      "pyarrow_version": "23.0.1",
+      "gurobi_version": "13.0.1",
+      "dirty_tree_warning_fully_explained": true
+    },
+    "checks": {
+      "authority_hashes": "PASS",
+      "repository_lineage": "PASS",
+      "prior_checkpoint_hashes": "PASS",
+      "prior_tag_immutability": "PASS",
+      "mainline_identity_hashes": "PASS",
+      "accepted_17a_lineage": "PASS",
+      "accepted_17b_lineage": "PASS",
+      "accepted_17c_script_version_and_hash": "PASS",
+      "accepted_17c_exact_run_id": "PASS",
+      "accepted_17c_registered_artifacts": "PASS_30_OF_30",
+      "accepted_17c_solve_scope": "PASS_EXACTLY_TWO",
+      "accepted_17c_solver_and_model_gates": "PASS",
+      "accepted_17c_rainflow_gates": "PASS",
+      "paired_input_fairness": "PASS",
+      "canonical_mainline_immutability": "PASS",
+      "winter_pv_p1_closure": "PASS",
+      "final_81_not_yet_run": "PASS",
+      "checkpoint_pass_no_solve": "PASS"
+    },
+    "all_checkpoint_gates_pass": true
+  }
+}
