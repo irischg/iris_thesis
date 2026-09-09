@@ -4,12 +4,15 @@
 
 **Protocol date:** 2026-09-07
 
-**Protocol status:** REVISED DRAFT — PENDING HUMAN FREEZE REVIEW
+**Freeze date:** 2026-09-09
+
+**Protocol status:** FROZEN / APPROVED FOR IMPLEMENTATION
 
 **Role:** project-level v7.2 implementation protocol; sensitivity-only
+**Methodological scope:** controls Winter-PV long-block H1/H2/H3 holdout validation and the prerequisites for the later sensitivity-only branch
 **Authority boundary:** this document supplements, and does not supersede, the authoritative v7.2 Framework and v7.2 Literature/Evidence Registry.
 
-Upon human approval, this protocol freezes the operational details that the v7.2 Framework and Registry require but do not fully prescribe for the Winter-PV long-block sensitivity. It does **not** alter the production/mainline model, tariff authority, data source-of-truth, or frozen EOB provenance.
+This approved protocol freezes the operational details that the v7.2 Framework and Registry require but do not fully prescribe for the Winter-PV long-block sensitivity. It does **not** alter the production/mainline model, tariff authority, data source-of-truth, or frozen EOB provenance.
 
 ---
 
@@ -160,7 +163,7 @@ The two methods intentionally use different statistics for different roles:
 - The CWA candidate retains the validated hour-specific **median PV/GHI ratio**, multiplied by contemporaneous CWA GHI, plus its existing global-median fallback and physical guards.
 - The climatology baseline uses the arithmetic **mean observed PV by hour-of-day** as a simple weather-free reference.
 
-The HOD mean climatology is selected because climatology is a standard simple reference family for solar-prediction validation, the mean is the natural central tendency under squared-error loss, and hourly RMSE is one of the two primary comparative metrics. It therefore provides a transparent naive benchmark aligned with that loss. This is a project-level methodological decision made before validation outcomes are observed and, upon human approval, frozen before validation. It is not explicitly required by Framework v7.2 or prescribed as this exact NTUST protocol by an external paper, and it does not imply that alternative robust climatological summaries are invalid.
+The HOD mean climatology is selected because climatology is a standard simple reference family for solar-prediction validation, the mean is the natural central tendency under squared-error loss, and hourly RMSE is one of the two primary comparative metrics. It therefore provides a transparent naive benchmark aligned with that loss. This is a project-level methodological decision made before validation outcomes are observed and frozen by the approval recorded above before formal validation. It is not explicitly required by Framework v7.2 or prescribed as this exact NTUST protocol by an external paper, and it does not imply that alternative robust climatological summaries are invalid.
 
 Before calculating validation metrics, Script 17a must record and verify for each holdout:
 
@@ -522,4 +525,4 @@ It does not:
 - authorize an alternative 81-case surface; or
 - authorize overwriting canonical data or frozen artifacts.
 
-Implementation begins only after human approval of this document.
+Implementation is approved under this freeze. Script 17a validation must pass before any later, separate annual economic-sensitivity solve; this protocol does not itself authorize such a solve.
