@@ -1,0 +1,196 @@
+{
+  "checkpoint_version": "v7.2-post17b-pre17c-checkpoint-2026-09-09-r1",
+  "checkpoint_role": "POST_17B_PRE_17C_SENSITIVITY_INPUT_FREEZE",
+  "status": "FROZEN_POST_17B_PRE_17C",
+  "created_utc": "2026-09-09T11:39:57.0675463Z",
+  "purpose": "Additive cryptographic freeze of the accepted Script-17b sensitivity-only annual input before any Script-17c economic sensitivity solve.",
+  "authoritative_specification": {
+    "framework": {
+      "version": "v7.2",
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5",
+      "status": "CURRENT_METHODOLOGY_SOURCE_OF_TRUTH"
+    },
+    "registry": {
+      "version": "v7.2",
+      "path": "docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md",
+      "sha256": "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e",
+      "status": "CURRENT_EVIDENCE_SOURCE_OF_TRUTH"
+    }
+  },
+  "repository_state_before_checkpoint": {
+    "active_branch": "thesis-v7",
+    "pre_checkpoint_commit": "2b353c4caabc9f81229445fa2683f0053c2c528d",
+    "local_origin_thesis_v7": "2b353c4caabc9f81229445fa2683f0053c2c528d",
+    "remote_origin_thesis_v7": "2b353c4caabc9f81229445fa2683f0053c2c528d",
+    "branch_synchronized_before_checkpoint": true,
+    "remote_verification_method": "git ls-remote --heads --tags origin",
+    "untracked_files_before_checkpoint": [
+      "docs/protocols/iris_thesis_rigorous_audit_skill.md",
+      "scripts/17b_build_winter_pv_sensitivity_annual_input.py"
+    ],
+    "unrelated_untracked_content_excluded_from_checkpoint": [
+      "docs/protocols/iris_thesis_rigorous_audit_skill.md"
+    ]
+  },
+  "prior_production_checkpoint": {
+    "path": "docs/checkpoints/production_checkpoint_manifest_v7_2_2026-09-09.json",
+    "sha256": "ebe619b440f011e525f0b9c43a0b4512f44b6f9efa049c787e8049e8c1f51b73",
+    "manifest_version": "v7.2-production-checkpoint-2026-09-09-r1",
+    "status": "FROZEN_PRODUCTION_LINEAGE",
+    "validator": {
+      "path": "scripts/18a_validate_production_checkpoint.py",
+      "status": "PASS",
+      "artifact_hash_checks": 22,
+      "mode": "READ_ONLY_NO_SOLVE"
+    },
+    "superseded_or_modified": false
+  },
+  "production_mainline_immutability": {
+    "annual_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "version": "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9",
+      "sha256": "d145eeb0c48a865c9a5d467346d94b63075e8245c08de4ecf890c1055e4369c0",
+      "unchanged": true
+    },
+    "canonical_annual_input": {
+      "path": "data/processed/annual_input_v7_1.parquet",
+      "sha256": "e0d4a8e84bee68c71f3d278e617df6fee0bb022a97c6fb5e9c49da6d6809fa0e",
+      "role": "CURRENT_AUDITED_V7_2_CANONICAL_MAINLINE_INPUT_WITH_INHERITED_FILENAME",
+      "unchanged": true,
+      "overwritten_by_script_17b": false
+    },
+    "scripts_01_through_17a": {
+      "verification_source": "data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07_manifest.json",
+      "verified_file_count": 33,
+      "all_hashes_match_accepted_script_17b_manifest": true,
+      "unchanged": true
+    }
+  },
+  "accepted_script_17a_lineage": {
+    "frozen_protocol": {
+      "path": "docs/winter_pv_longblock_sensitivity_protocol_v7_2_2026-09-07.md",
+      "sha256": "630c9c20a388fde31d424d8b1e43d99cd05c5d2c9cf51b17e2d36f90fb50f525",
+      "status": "FROZEN / APPROVED FOR IMPLEMENTATION"
+    },
+    "script_17a": {
+      "path": "scripts/17a_validate_winter_pv_longblock_holdouts.py",
+      "version": "v7.2-winter-pv-longblock-holdout-validation-2026-09-09-r2",
+      "sha256": "c8bb665fb607b129df2187435c5454e49dbf6faff3ca25013a3eda7d26670c91"
+    },
+    "formal_run_id": "20260909T042957292822Z_7de1c7a4f4",
+    "run_manifest": {
+      "path": "results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/run_manifest.json",
+      "sha256": "374a52ebc2db0ad0b4c26a05b51a6ed50273dd1dc803164e99da4560ac14d14b"
+    },
+    "completion_manifest": {
+      "path": "results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/completion_manifest.json",
+      "sha256": "678a11d8acd0dec10020f39c011917a998d75c0055fd568fe14d75a7226f34f6"
+    },
+    "final_decision": {
+      "path": "results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/final_validation_decision.json",
+      "sha256": "454a60574d30731fc621ed57d1355911586df4c97aa6b2184ab405015708c594",
+      "decision": "PASS_FOR_SENSITIVITY"
+    },
+    "holdout_status": {
+      "H1": "PASS",
+      "H2": "PASS",
+      "H3": "PASS"
+    }
+  },
+  "accepted_script_17b_freeze": {
+    "script": {
+      "path": "scripts/17b_build_winter_pv_sensitivity_annual_input.py",
+      "version": "v7.2-winter-pv-sensitivity-annual-input-build-2026-09-09-r1",
+      "sha256": "dd2d3e47bee139bd866eb5a8aee6603390d46f849ef80f4dd8944c6edd77ea01"
+    },
+    "accepted_run_id": "20260909T111758450767Z_4619514ef1",
+    "artifact_role": "winter_pv_sensitivity_only",
+    "alternative_annual_input": {
+      "path": "data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07.parquet",
+      "sha256": "023cba88416b965c7dedf4139e9a495602039117ecc827e52a372f10a1aad986",
+      "git_tracking": "EXTERNAL_IGNORED_ARTIFACT_VERIFIED_BY_PATH_AND_SHA256"
+    },
+    "sensitivity_manifest": {
+      "path": "data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07_manifest.json",
+      "sha256": "644cf6dc502977422fb9baee96e95103ca581aab45f2e69c3581646d45458cd7",
+      "git_tracking": "EXTERNAL_IGNORED_ARTIFACT_VERIFIED_BY_PATH_AND_SHA256"
+    },
+    "run_manifest": {
+      "path": "results/data_audit/winter_pv_17b/20260909T111758450767Z_4619514ef1/run_manifest.json",
+      "sha256": "aead6cd317555aa69aff92925ae096dcf0568534f9f437251ead633f93bf4b8c",
+      "git_tracking": "EXTERNAL_IGNORED_ARTIFACT_VERIFIED_BY_PATH_AND_SHA256"
+    },
+    "diff_audit": {
+      "path": "results/data_audit/winter_pv_17b/20260909T111758450767Z_4619514ef1/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07_column_diff_audit.csv",
+      "sha256": "a20998fddec6188a1d0ffd7c0132a4b65bd70907cc6e3f3c97f7661283ad829d",
+      "status": "PASS",
+      "git_tracking": "EXTERNAL_IGNORED_ARTIFACT_VERIFIED_BY_PATH_AND_SHA256"
+    },
+    "completion_manifest": {
+      "path": "results/data_audit/winter_pv_17b/20260909T111758450767Z_4619514ef1/completion_manifest.json",
+      "sha256": "3af8d3ef3c0b9ccd43351aaba0e467a6ef89ef54a78821d7d3f849722a740ef8",
+      "status": "17B_BUILD_PASS",
+      "final_verdict": "17B BUILD PASS — READY FOR INDEPENDENT PRE-17C AUDIT",
+      "git_tracking": "EXTERNAL_IGNORED_ARTIFACT_VERIFIED_BY_PATH_AND_SHA256"
+    },
+    "post_17b_independent_provenance_audit": {
+      "repository_artifact_available": false,
+      "path": null,
+      "sha256": null,
+      "checkpoint_creation_reverification": "PASS",
+      "note": "No separate repository artifact existed; no path or hash was invented. The checkpoint creation validator independently reverified the accepted machine-readable 17b chain."
+    },
+    "accepted_build_gate_count": 27,
+    "all_accepted_build_gates_pass": true,
+    "parameter_derivation_provenance": "PASS",
+    "canonical_mainline_input_modified": false,
+    "alternative_remains_sensitivity_only": true
+  },
+  "git_tracking_policy": {
+    "gitignore_path": ".gitignore",
+    "gitattributes_present": false,
+    "data_directory_ignored": true,
+    "results_directory_ignored": true,
+    "force_added_generated_artifacts": false,
+    "files_intended_for_checkpoint_commit": [
+      "scripts/17b_build_winter_pv_sensitivity_annual_input.py",
+      "docs/checkpoints/production_checkpoint_manifest_v7_2_post17b_2026-09-09.json"
+    ]
+  },
+  "prohibitions_and_claim_boundary": {
+    "alternative_dataset_role": "winter_pv_sensitivity_only",
+    "canonical_mainline_input_was_not_modified": true,
+    "solve_status": "NO_17C_SOLVE_PERFORMED",
+    "methodology_status": "NO_METHODOLOGY_CHANGE",
+    "annual_optimizer_invoked": false,
+    "annual_milp_run": false,
+    "eob_run": false,
+    "representative_layer_a_cases_run": false,
+    "matrix_81_point_run": false,
+    "historical_truth_claim": false
+  },
+  "validator_result": {
+    "status": "PASS",
+    "mode": "READ_ONLY_POST_17B_CHECKPOINT_CREATION_GATES_NO_SOLVE",
+    "checks": {
+      "framework_sha256": "PASS",
+      "registry_sha256": "PASS",
+      "prior_checkpoint_sha256_and_validator": "PASS",
+      "canonical_annual_input_sha256": "PASS",
+      "annual_core_sha256": "PASS",
+      "scripts_01_through_17a_hashes": "PASS_33_OF_33",
+      "accepted_script_17a_lineage": "PASS",
+      "script_17b_sha256_and_version": "PASS",
+      "accepted_17b_run_id": "PASS",
+      "alternative_annual_input_sha256": "PASS",
+      "sensitivity_manifest_sha256": "PASS",
+      "run_manifest_sha256": "PASS",
+      "diff_audit_sha256_and_status": "PASS",
+      "completion_manifest_sha256_and_status": "PASS",
+      "alternative_role": "PASS_WINTER_PV_SENSITIVITY_ONLY",
+      "no_17c_or_optimizer_execution": "PASS"
+    },
+    "all_checks_pass": true
+  }
+}
