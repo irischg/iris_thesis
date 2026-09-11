@@ -32,16 +32,16 @@ import gurobipy as gp
 import numpy as np
 import pandas as pd
 
-SCRIPT_VERSION = "v7.2-final-layer-a-81-production-runner-2026-09-10-r2"
+SCRIPT_VERSION = "v7.2-final-layer-a-81-production-runner-2026-09-11-r3"
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path(__file__).resolve()
 CHECKPOINT = "docs/checkpoints/production_checkpoint_manifest_v7_2_pre81_ready_2026-09-10.json"
 CHECKPOINT_SHA = "08b1fef4e39e164336b9b890901869c6c265cb42975f44f85d21ade861a64a61"
 START_HEAD = "b2acdf28cf1459aee5da44e4407c225f5d3c68a6"
 TAG_OBJECT = "2aeccf585e2ff8f1e8bc67d09f1648e6556ff325"
-RUNNER_AUTHORITY = "docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-10.json"
-PRODUCTION_TAG = "v7.2-final81-runner-ready"
-AUTHORITY_VERSION = "v7.2-final81-runner-authority-1"
+RUNNER_AUTHORITY = "docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-11.json"
+PRODUCTION_TAG = "v7.2-final81-runner-ready-r3"
+AUTHORITY_VERSION = "v7.2-final81-runner-authority-2"
 PREFLIGHT = "results/layer_a/final_81_preflight/20260909T170841521430Z_55cc09a45f"
 PREFLIGHT_SHA = "9dcaaf00e1dc5fe7b9fcee9709fab1a81d8c32f2eb520eedda677f2081573fa0"
 HELPER19 = "scripts/19a_preflight_final_layer_a_81_cases.py"
