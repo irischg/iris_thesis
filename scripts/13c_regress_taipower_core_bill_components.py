@@ -563,9 +563,18 @@ def overcontract_components(
     contract threshold. Then charge only the incremental exceedance beyond the
     largest raw exceedance already seen in earlier TOU periods.
 
-    Tier allocation is applied to the incremental interval of raw exceedance:
-    the portion up to 10% of that period's cumulative contract threshold uses
-    the 2x multiplier; the portion beyond 10% uses 3x.
+    Tier allocation (W-07 frozen semantics) is then applied to THAT period's
+    own new increment q[p]: the portion up to 10% of that period's cumulative
+    contract threshold uses the 2x multiplier; the remainder of the same
+    increment uses 3x.  Earlier-period raw exceedance reduces a later period
+    only through q[p] and must never consume the later period's own 2x
+    allowance.
+
+    This mirrors ``overcontract_tier_split`` in
+    ``src/annual_design_model_v7_2.py``; the two implementations must stay
+    numerically identical (see tests/test_w07_overcontract_tier_allocation.py).
+    No rounding is applied: the universal Taipower threshold-rounding
+    convention remains SOURCE_UNRESOLVED.
 
     This preserves:
     peak -> half -> sat_half -> off
@@ -628,20 +637,15 @@ def overcontract_components(
 
     for period in period_order:
         raw = raw_over[period]
-        lower = min(prior_max_raw, raw)
         chargeable_kw = max(0.0, raw - prior_max_raw)
 
         tier1_cap_kw = (
             tier1_fraction * thresholds[period]
         )
 
-        tier1_interval_start = min(lower, tier1_cap_kw)
-        tier1_interval_end = min(raw, tier1_cap_kw)
-        tier1_kw = max(
-            0.0,
-            tier1_interval_end - tier1_interval_start,
-        )
-        tier2_kw = max(0.0, chargeable_kw - tier1_kw)
+        # W-07: the 2x allowance applies to this period's own new increment.
+        tier1_kw = min(chargeable_kw, max(0.0, tier1_cap_kw))
+        tier2_kw = chargeable_kw - tier1_kw
 
         basic_rate_contract_key = OVERCONTRACT_BASIC_RATE_KEY[period]
         rate = basic_rate(indexed, season, basic_rate_contract_key)

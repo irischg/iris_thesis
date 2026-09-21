@@ -8,9 +8,10 @@ Coverage:
     2024-11-01 through 2025-10-31 inclusive
 
 Evidence logic:
-1) 2024 case-year slice is only Nov-Dec. The official 2024 TOU off-peak
-   holiday list has no special off-peak dates in November or December,
-   so classify by weekday:
+1) 2024 case-year slice is only Nov-Dec. Preserve the existing weekday
+   classification as strongly corroborated / INFORMATIONAL; W-18 does not
+   claim HARD primary-source validation without the applicable colored
+   ROC-113 calendar. Legacy source_note text is retained for provenance:
        Sunday -> offpeak_day
        Saturday -> saturday
        otherwise -> weekday
@@ -25,6 +26,7 @@ Output:
 
 from pathlib import Path
 from datetime import date, timedelta
+from collections import Counter
 import csv
 
 FORMAL_START = date(2024, 11, 1)
@@ -37,6 +39,7 @@ SPECIAL_OFFPEAK_2025 = {
     date(2025, 1, 29),
     date(2025, 1, 30),
     date(2025, 1, 31),
+    date(2025, 2, 1),
     date(2025, 2, 28),
     date(2025, 4, 4),
     date(2025, 5, 1),
@@ -114,11 +117,18 @@ def main() -> int:
     assert rows[0]["date"] == "2024-11-01"
     assert rows[-1]["date"] == "2025-10-31"
 
-    # Explicitly guard the two Saturday holiday overrides that would otherwise
-    # be misclassified as sat_half in Script 06.
+    # Guard the complete ROC-114 special-date inventory and all Saturday
+    # overrides. W-18 independently checks every case-year date against its
+    # separately transcribed, source-hashed official-calendar oracle.
     lookup = {r["date"]: r["tou_day_type"] for r in rows}
-    assert lookup["2025-05-31"] == "offpeak_day"
-    assert lookup["2025-10-25"] == "offpeak_day"
+    assert len(SPECIAL_OFFPEAK_2025) == 13
+    assert all(lookup[d.isoformat()] == "offpeak_day" for d in SPECIAL_OFFPEAK_2025)
+    assert lookup["2025-01-27"] == "weekday"
+    for saturday_holiday in ("2025-02-01", "2025-05-31", "2025-10-25"):
+        assert lookup[saturday_holiday] == "offpeak_day"
+    assert Counter(lookup.values()) == {
+        "weekday": 251, "saturday": 49, "offpeak_day": 65,
+    }
 
     with out.open("w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(

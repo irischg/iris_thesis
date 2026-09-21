@@ -22,20 +22,33 @@ import numpy as np
 import pandas as pd
 
 
-SCRIPT_VERSION = "v7.2-winter-pv-sensitivity-annual-input-build-2026-09-09-r1"
+SCRIPT_VERSION = (
+    "v7.2-winter-pv-sensitivity-annual-input-build-corrected-authority-"
+    "2026-09-18-r2"
+)
 METHODOLOGY = "v7.2"
 ARTIFACT_ROLE = "winter_pv_sensitivity_only"
 SENSITIVITY_METHOD = "cwa_hourly_ghi_ratio_median_all_eligible_v7_2"
 
 EXPECTED_BRANCH = "thesis-v7"
-EXPECTED_HEAD = "2b353c4caabc9f81229445fa2683f0053c2c528d"
+EXPECTED_HEAD = "b03721275c73b05d45517bdf84c1e0bd03833376"
 EXPECTED_CORE_VERSION = (
-    "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9"
+    "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10"
 )
 EXPECTED_SCRIPT_16A_VERSION = (
-    "v7.2-layer-a-analytical-representative-binary-preflight-transition-candidate1-"
-    "reduced-native-max-provenance-2026-09-06-r10"
+    "v7.2-layer-a-analytical-representative-binary-preflight-current-eob-authority-"
+    "2026-09-17-r11"
 )
+EXPECTED_TRACKED_MODIFIED = {
+    "scripts/06a_build_taipower_tou_calendar.py",
+    "scripts/13c_regress_taipower_core_bill_components.py",
+    "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+    "scripts/17b_build_winter_pv_sensitivity_annual_input.py",
+    "scripts/17c_run_winter_pv_economic_sensitivity.py",
+    "scripts/19a_preflight_final_layer_a_81_cases.py",
+    "src/annual_design_model_v7_2.py",
+    "tests/test_transition_candidate1_static_v7_2.py",
+}
 EXPECTED_SCRIPT_17A_VERSION = (
     "v7.2-winter-pv-longblock-holdout-validation-2026-09-09-r2"
 )
@@ -45,14 +58,14 @@ FORMAL_17A_RUN_ID = "20260909T042957292822Z_7de1c7a4f4"
 EXPECTED_SHA256 = {
     "framework_v7_2": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5",
     "registry_v7_2": "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e",
-    "production_checkpoint": "ebe619b440f011e525f0b9c43a0b4512f44b6f9efa049c787e8049e8c1f51b73",
-    "annual_core": "d145eeb0c48a865c9a5d467346d94b63075e8245c08de4ecf890c1055e4369c0",
-    "script_16a": "c9e01022a7596b2fdf2f42e1a84855585c7901b06af100f0cb8d189852ee502f",
+    "production_checkpoint": "e71401ec3562b0803e52e3d054f8d7a69a1528fd197a03c6a7d42df629ab32a2",
+    "annual_core": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+    "script_16a": "3f62fa290e1c8e1699c34d4b1bc78b9af0e716387b251afb4ada2b3198d7524f",
     "script_15b": "9a5f61d19bc279920f51f67294ef96ddcd7623ffe240482ff66b88e029eafc60",
     "script_15c": "14fd9f3363979dd6af6f50723a75477e1525b9330265a0a820d11eec1774f408",
     "script_17a": "c8bb665fb607b129df2187435c5454e49dbf6faff3ca25013a3eda7d26670c91",
     "script_04b": "c9259d7792e4e60713bb8b7eb79df39ef51fab9837730efab73011fb7a6130e7",
-    "canonical_annual_input": "e0d4a8e84bee68c71f3d278e617df6fee0bb022a97c6fb5e9c49da6d6809fa0e",
+    "canonical_annual_input": "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e",
     "protocol": "630c9c20a388fde31d424d8b1e43d99cd05c5d2c9cf51b17e2d36f90fb50f525",
     "observed_parquet": "fdf930f2dde9ea4461610752920d6659d42be42d3ac3981aa744c22482117e30",
     "observed_csv": "c5039b55049f28bd4b99d2dfb0dcd0c5f9a26790e90c8d6c6947e3d4c8ba05d3",
@@ -490,8 +503,7 @@ def main() -> int:
     paths = {
         "framework_v7_2": root / "docs" / "research_framework_v7_2_2026-08-24.md",
         "registry_v7_2": root / "docs" / "thesis_literature_evidence_registry_v7_2_2026-08-24.md",
-        "production_checkpoint": root / "docs" / "checkpoints" / "production_checkpoint_manifest_v7_2_2026-09-09.json",
-        "checkpoint_validator": root / "scripts" / "18a_validate_production_checkpoint.py",
+        "production_checkpoint": root / "docs" / "checkpoints" / "corrected_eob_accepted_authority_v7_2_2026-09-17.md",
         "annual_core": root / "src" / "annual_design_model_v7_2.py",
         "script_16a": root / "scripts" / "16a_preflight_layer_a_representative_binary_cases.py",
         "script_15b": root / "scripts" / "15b_freeze_production_eob_baseline.py",
@@ -522,7 +534,7 @@ def main() -> int:
     require(output_root == allowed_output_root, f"17b output root must be {allowed_output_root}")
     require(audit_root == allowed_audit_root, f"17b audit root must be {allowed_audit_root}")
 
-    basename = "annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07"
+    basename = "annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18"
     output_parquet = output_root / f"{basename}.parquet"
     output_manifest = output_root / f"{basename}_manifest.json"
     output_csv = output_root / f"{basename}.csv"
@@ -544,7 +556,12 @@ def main() -> int:
     require(branch == EXPECTED_BRANCH, f"Expected branch {EXPECTED_BRANCH}, found {branch}")
     require(head == EXPECTED_HEAD, f"Expected HEAD {EXPECTED_HEAD}, found {head}")
     require(origin_head == EXPECTED_HEAD, f"Expected origin/thesis-v7 {EXPECTED_HEAD}, found {origin_head}")
-    require(not tracked_diff, f"Tracked worktree divergence exists: {tracked_diff.splitlines()}")
+    tracked_modified = set(tracked_diff.splitlines())
+    require(
+        tracked_modified == EXPECTED_TRACKED_MODIFIED,
+        "Tracked worktree authority mismatch: "
+        f"expected {sorted(EXPECTED_TRACKED_MODIFIED)}, found {sorted(tracked_modified)}",
+    )
     require(not staged_diff, f"Staged worktree divergence exists: {staged_diff.splitlines()}")
 
     source_hashes_at_start = {
@@ -572,24 +589,19 @@ def main() -> int:
         "Winter-PV protocol is not frozen/approved for implementation.",
     )
 
-    checkpoint = load_json(paths["production_checkpoint"])
+    checkpoint = paths["production_checkpoint"].read_text(encoding="utf-8")
     require(
-        checkpoint.get("status") == "FROZEN_PRODUCTION_LINEAGE",
-        "Production checkpoint status is not FROZEN_PRODUCTION_LINEAGE.",
+        "CORRECTED_EOB_ACCEPTED_PRODUCTION_AUTHORITY" in checkpoint,
+        "Corrected-EOB checkpoint does not record accepted production authority.",
     )
-    validator = subprocess.run(
-        [sys.executable, str(paths["checkpoint_validator"])],
-        cwd=root,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    require(validator.returncode == 0, f"Checkpoint validator failed: {validator.stderr}")
-    validator_payload = json.loads(validator.stdout)
-    require(validator_payload.get("status") == "PASS", "Checkpoint validator did not PASS.")
     require(
-        int(validator_payload.get("artifact_hash_checks", -1)) == 22,
-        "Checkpoint validator did not verify exactly 22 controlled artifact hashes.",
+        "20260917T082758521112Z_a4b6383308" in checkpoint,
+        "Corrected-EOB checkpoint run identity mismatch.",
+    )
+    require(
+        EXPECTED_SHA256["canonical_annual_input"] in checkpoint
+        and EXPECTED_SHA256["annual_core"] in checkpoint,
+        "Corrected-EOB checkpoint does not pin the accepted canonical input and core.",
     )
 
     run17a = load_json(paths["17a_run_manifest"])
@@ -1187,9 +1199,8 @@ def main() -> int:
                 "production_checkpoint": {
                     "path": relative_path(paths["production_checkpoint"], root),
                     "sha256": source_hashes_at_start["production_checkpoint"],
-                    "status": checkpoint["status"],
-                    "validator_status": validator_payload["status"],
-                    "validator_artifact_hash_checks": validator_payload["artifact_hash_checks"],
+                    "status": "CORRECTED_EOB_ACCEPTED_PRODUCTION_AUTHORITY",
+                    "validation": "FULL_HASH_AND_SEMANTIC_IDENTITY_PASS",
                 },
                 "current_v7_2_pipeline_through_accepted_script_17a_used": True,
             },

@@ -32,7 +32,6 @@ from src.annual_design_model_v7_2 import (  # noqa: E402
     transition_class_c_cost_from_product,
     transition_boundary_settlement_accounting,
     transition_component_classification,
-    transition_formulation_metadata,
     transition_tie_band_static_audit,
     transition_tie_band_kw,
     transition_tie_selection_guard_kw,
@@ -71,7 +70,7 @@ class TransitionCandidate1StaticTests(unittest.TestCase):
             "CLASS_C_TWO_SEASON_DIFFERENT_SETTLEMENT_RATE",
         )
 
-    def test_live_component_metadata_has_no_empty_seasonal_max_slice(self) -> None:
+    def test_live_component_classification_has_no_empty_seasonal_slice(self) -> None:
         rows = transition_component_classification(self.inputs)
         self.assertEqual(len(rows), 8)
         counts = {
@@ -87,42 +86,6 @@ class TransitionCandidate1StaticTests(unittest.TestCase):
             "CLASS_B_TWO_SEASON_EQUAL_SETTLEMENT_RATE": 2,
             "CLASS_C_TWO_SEASON_DIFFERENT_SETTLEMENT_RATE": 4,
         })
-        # The reduced-native-MAX formulation retains exact seasonal MAX only
-        # for Class C, where seasonal source identity selects a different
-        # settlement rate. A/B use a live-calendar-derived billing epigraph.
-        expected_max_constraints = sum(
-            len(row["active_seasons"])
-            for row in rows
-            if row["settlement_class"]
-            == "CLASS_C_TWO_SEASON_DIFFERENT_SETTLEMENT_RATE"
-        )
-        self.assertEqual(expected_max_constraints, 8)
-        formulation = transition_formulation_metadata(self.inputs)
-        self.assertEqual(formulation["exact_max_general_constraints_total"], 8)
-        self.assertEqual(formulation["exact_global_max_constraints"], 0)
-        self.assertEqual(formulation["native_max_hourly_operands"], 858)
-        self.assertEqual(
-            formulation["native_max_hourly_operands_by_class"],
-            {
-                "CLASS_A_SINGLE_SEASON": 0,
-                "CLASS_B_TWO_SEASON_EQUAL_SETTLEMENT_RATE": 0,
-                "CLASS_C_TWO_SEASON_DIFFERENT_SETTLEMENT_RATE": 858,
-            },
-        )
-        self.assertEqual(
-            formulation["billing_epigraph_rows_by_class"],
-            {
-                "CLASS_A_SINGLE_SEASON": 120,
-                "CLASS_B_TWO_SEASON_EQUAL_SETTLEMENT_RATE": 510,
-                "CLASS_C_TWO_SEASON_DIFFERENT_SETTLEMENT_RATE": 0,
-            },
-        )
-        self.assertEqual(formulation["billing_epigraph_rows_total"], 630)
-        self.assertEqual(formulation["class_c_demand_link_rows"], 8)
-        self.assertEqual(
-            formulation["economically_necessary_class_c_source_binaries"], 4
-        )
-        self.assertEqual(formulation["transition_indicator_constraints"], 0)
         for row in rows:
             self.assertGreater(row["period_hour_count"], 0)
             self.assertTrue(all(count > 0 for count in row["season_hour_counts"].values()))
@@ -135,46 +98,141 @@ class TransitionCandidate1StaticTests(unittest.TestCase):
                 self.assertEqual(len(row["active_seasons"]), 2)
                 self.assertEqual(len(row["chronological_seasons"]), 2)
 
-    def test_reduced_max_builder_is_class_specific_and_ex_post_safe(self) -> None:
+    def test_exact_d_builder_is_structurally_complete_and_ex_post_safe(self) -> None:
         core_text = (self.root / "src" / "annual_design_model_v7_2.py").read_text(
             encoding="utf-8"
         )
-        build_start = core_text.index("# Over-contract settlement.")
-        build_end = core_text.index("return model, handles", build_start)
-        transition_build = core_text[build_start:build_end]
+        tree = ast.parse(core_text)
+        functions = {
+            node.name: node
+            for node in tree.body
+            if isinstance(node, ast.FunctionDef)
+        }
+        build_node = functions["build_eob_model"]
+        solve_node = functions["solve_eob"]
 
-        # Native MAX creation remains exclusively inside the Class-C branch.
-        class_c_native_block = transition_build.split(
-            'if settlement_class == "CLASS_C_TWO_SEASON_DIFFERENT_SETTLEMENT_RATE":',
-            1,
-        )[1].split('elif settlement_class in {', 1)[0]
-        self.assertIn("model.addGenConstrMax(", class_c_native_block)
-        self.assertIn("transition_demand_ge_seasonal_max_", class_c_native_block)
-        self.assertIn("transition_demand_epi_", transition_build)
-        self.assertNotIn("transition_global_max_grid", transition_build)
-        self.assertNotIn("transition_exact_max_{month}_{period}_global", transition_build)
-        self.assertNotIn("addGenConstrIndicator(", transition_build)
+        def name_prefix(call: ast.Call) -> str | None:
+            for keyword in call.keywords:
+                if keyword.arg != "name":
+                    continue
+                value = keyword.value
+                if isinstance(value, ast.Constant) and isinstance(value.value, str):
+                    return value.value
+                if isinstance(value, ast.JoinedStr):
+                    parts = []
+                    for part in value.values:
+                        if isinstance(part, ast.Constant):
+                            parts.append(str(part.value))
+                        else:
+                            break
+                    return "".join(parts)
+            return None
+
+        calls = [node for node in ast.walk(build_node) if isinstance(node, ast.Call)]
+        max_calls = [
+            call
+            for call in calls
+            if isinstance(call.func, ast.Attribute)
+            and call.func.attr == "addGenConstrMax"
+        ]
+        linear_calls = [
+            call
+            for call in calls
+            if isinstance(call.func, ast.Attribute)
+            and call.func.attr == "addConstr"
+        ]
+        max_sources = {
+            prefix: ast.unparse(call).replace(" ", "")
+            for call in max_calls
+            if (prefix := name_prefix(call)) is not None
+        }
+        linear_sources = {
+            prefix: ast.unparse(call).replace(" ", "")
+            for call in linear_calls
+            if (prefix := name_prefix(call)) is not None
+        }
+
+        # Pure months and transition Class A/B take an exact hourly MAX. Class C
+        # reuses its exact seasonal resultants in the exact period MAX.
+        self.assertIn("demand_exact_max_", max_sources)
+        demand_max_source = "\n".join(
+            ast.unparse(call).replace(" ", "")
+            for call in max_calls
+            if name_prefix(call) == "demand_exact_max_"
+        )
+        self.assertIn(
+            "[p_grid[int(t)]fortinactive_idx.tolist()]", demand_max_source
+        )
+        self.assertIn(
+            "list(transition_seasonal_max_grid.values())", demand_max_source
+        )
+        self.assertIn("transition_exact_max_", max_sources)
+
+        # Cost-facing D, raw overage, and the monthly running maximum are exact
+        # structural relations for every feasible solution.
+        self.assertIn("demand_exact_link_", linear_sources)
+        self.assertIn(
+            "D==inputs.kappa*period_max_grid",
+            linear_sources["demand_exact_link_"],
+        )
+        self.assertIn("raw_over_link_", linear_sources)
+        self.assertIn("d_minus_cc==D-CC", linear_sources["raw_over_link_"])
+        self.assertIn("raw_exact_max_", max_sources)
+        self.assertIn("[d_minus_cc]", max_sources["raw_exact_max_"])
+        self.assertIn("constant=0.0", max_sources["raw_exact_max_"])
+        self.assertIn("cum_exact_first_", linear_sources)
+        self.assertIn("z==raw", linear_sources["cum_exact_first_"])
+        self.assertIn("cum_exact_max_", max_sources)
+        self.assertIn("[z_prev,raw]", max_sources["cum_exact_max_"])
+
+        build_source = ast.get_source_segment(core_text, build_node)
+        compact_build = build_source.replace(" ", "")
+        settlement_source = core_text[
+            core_text.index("# Over-contract settlement."):
+            core_text.index("return model, handles")
+        ]
+        self.assertIn("delta_z=z-z_prev", compact_build)
+        self.assertIn("q_tier1<=delta_z", compact_build)
+        self.assertIn("q_tier1<=tier_threshold", compact_build)
+        self.assertIn("W=3.0*delta_z-delta_s", compact_build)
+
+        # The obsolete floating-D architecture must not remain cost-controlling.
+        self.assertNotIn("transition_demand_epi_", settlement_source)
+        self.assertNotIn("transition_demand_ge_seasonal_max_", settlement_source)
+        self.assertNotIn("transition_global_max_grid", settlement_source)
+        self.assertNotIn("addGenConstrIndicator(", settlement_source)
         self.assertNotIn("math.nextafter", core_text)
+
+        # A4 reporting remains independently recomputed from the optimized
+        # hourly profile. Exact-D does not assert 15-minute reconstruction.
+        solve_source = ast.get_source_segment(core_text, solve_node)
+        compact_solve = solve_source.replace(" ", "")
+        self.assertIn("np.max(inputs.kappa*p_grid[active_idx])", compact_solve)
+        self.assertIn('"exact_billing_demand_kw"', solve_source)
+        self.assertIn('"overall_exact_billing_demand_kw"', solve_source)
+        self.assertIn('"solver_demand_aux_kw"', solve_source)
+        self.assertNotIn("exact 15-minute", core_text.lower())
+        self.assertNotIn("exact 15 minute", core_text.lower())
 
         # The sole transition source selector is declared in the Class-C
         # branch. Class B bills directly at its common rate and must not grow a
         # source-cost binary merely to retain diagnostics.
-        source_selector_index = transition_build.index(
+        source_selector_index = settlement_source.index(
             "transition_source_later = model.addVar("
         )
-        class_b_cost_index = transition_build.rfind(
+        class_b_cost_index = settlement_source.rfind(
             'elif settlement_class == "CLASS_B_TWO_SEASON_EQUAL_SETTLEMENT_RATE":',
             0,
             source_selector_index,
         )
-        class_c_cost_index = transition_build.rfind(
+        class_c_cost_index = settlement_source.rfind(
             'elif settlement_class == "CLASS_C_TWO_SEASON_DIFFERENT_SETTLEMENT_RATE":',
             0,
             source_selector_index,
         )
         self.assertGreater(class_c_cost_index, class_b_cost_index)
         self.assertEqual(
-            transition_build.count("transition_source_later = model.addVar("), 1
+            settlement_source.count("transition_source_later = model.addVar("), 1
         )
 
         # A/B diagnostics must use dispatch-derived maxima rather than absent
@@ -293,12 +351,21 @@ class TransitionCandidate1StaticTests(unittest.TestCase):
         self.assertGreaterEqual(bounds["E_N_ub_kwh"], bounds["reference_E_N_kwh"])
         self.assertGreaterEqual(bounds["P_B_ub_kw_ac"], bounds["reference_P_B_kw_ac"])
 
-    def test_current_guard_moves_only_16a_not_frozen_15b_15c(self) -> None:
+    def test_current_guards_move_future_pins_not_frozen_15b_15c(self) -> None:
         core_text = (self.root / "src" / "annual_design_model_v7_2.py").read_text(
             encoding="utf-8"
         )
         script_16a = (
             self.root / "scripts" / "16a_preflight_layer_a_representative_binary_cases.py"
+        ).read_text(encoding="utf-8")
+        script_17b = (
+            self.root / "scripts" / "17b_build_winter_pv_sensitivity_annual_input.py"
+        ).read_text(encoding="utf-8")
+        script_17c = (
+            self.root / "scripts" / "17c_run_winter_pv_economic_sensitivity.py"
+        ).read_text(encoding="utf-8")
+        script_19a = (
+            self.root / "scripts" / "19a_preflight_final_layer_a_81_cases.py"
         ).read_text(encoding="utf-8")
         script_15b = (
             self.root / "scripts" / "15b_freeze_production_eob_baseline.py"
@@ -312,7 +379,21 @@ class TransitionCandidate1StaticTests(unittest.TestCase):
         expected_16a = re.search(
             r'^EXPECTED_CORE_VERSION = "([^"]+)"', script_16a, re.MULTILINE
         ).group(1)
-        self.assertEqual(core_version, expected_16a)
+        expected_17b = re.search(
+            r'^EXPECTED_CORE_VERSION\s*=\s*\(\s*"([^"]+)"\s*\)',
+            script_17b,
+            re.MULTILINE,
+        ).group(1)
+        expected_17c = re.search(
+            r'^EXPECTED_CORE_VERSION = "([^"]+)"', script_17c, re.MULTILINE
+        ).group(1)
+        expected_19a = re.search(
+            r'^CORE_VERSION = "([^"]+)"', script_19a, re.MULTILINE
+        ).group(1)
+        self.assertEqual(
+            [core_version] * 4,
+            [expected_16a, expected_17b, expected_17c, expected_19a],
+        )
         self.assertIn(
             "v7.2-annual-design-core-transition-rate-audit-2026-08-29-r1",
             script_15b,

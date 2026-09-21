@@ -8,6 +8,7 @@ never constructs or solves the 81-case Layer-A matrix.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import importlib.util
 import json
@@ -24,12 +25,23 @@ import numpy as np
 import pandas as pd
 
 
-SCRIPT_VERSION = "v7.2-winter-pv-economic-sensitivity-2026-09-09-r1"
+SCRIPT_VERSION = "v7.2-winter-pv-economic-sensitivity-corrected-authority-2026-09-18-r2"
 EXPECTED_BRANCH = "thesis-v7"
-EXPECTED_COMMIT = "1f945a3253b1396d6ce255b525b1c0832d6ad463"
-EXPECTED_TAG = "v7.2-post17b"
-EXPECTED_TAG_OBJECT = "cbf9b1d0839c489a429759535ab1a0beda3a36be"
-EXPECTED_CORE_VERSION = "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9"
+EXPECTED_COMMIT = "b03721275c73b05d45517bdf84c1e0bd03833376"
+EXPECTED_CORE_VERSION = "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10"
+EXPECTED_TRACKED_MODIFIED = {
+    "scripts/06a_build_taipower_tou_calendar.py",
+    "scripts/13c_regress_taipower_core_bill_components.py",
+    "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+    "scripts/17b_build_winter_pv_sensitivity_annual_input.py",
+    "scripts/17c_run_winter_pv_economic_sensitivity.py",
+    "scripts/19a_preflight_final_layer_a_81_cases.py",
+    "src/annual_design_model_v7_2.py",
+    "tests/test_transition_candidate1_static_v7_2.py",
+}
+CORRECTED_EOB_RUN_ID = "20260917T082758521112Z_a4b6383308"
+CURRENT_LAYER_RUN_ID = "20260918T085202453195Z_755e01dfb2"
+CURRENT_17B_RUN_ID = "20260918T143929009039Z_8f11437d44"
 MIP_GAP = 1e-6
 TIME_LIMIT_SEC = None
 ALPHA = 0.80
@@ -37,43 +49,60 @@ BETA_H = 8
 CASE_ID = "a0.80_b08"
 TOL = 1e-6
 
-EXPECTED_HASHES = {
+ACTIVE_HASHES = {
     "framework": ("docs/research_framework_v7_2_2026-08-24.md", "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5"),
     "registry": ("docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md", "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e"),
     "winter_pv_protocol": ("docs/winter_pv_longblock_sensitivity_protocol_v7_2_2026-09-07.md", "630c9c20a388fde31d424d8b1e43d99cd05c5d2c9cf51b17e2d36f90fb50f525"),
-    "post17b_checkpoint": ("docs/checkpoints/production_checkpoint_manifest_v7_2_post17b_2026-09-09.json", "4082861056d59437a56839d6caa18647f7186e5a08dd89bc2557718ba9d936a6"),
-    "annual_core": ("src/annual_design_model_v7_2.py", "d145eeb0c48a865c9a5d467346d94b63075e8245c08de4ecf890c1055e4369c0"),
+    "annual_core": ("src/annual_design_model_v7_2.py", "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"),
     "rainflow_core": ("src/rainflow_validation_v7_2.py", "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"),
-    "script_15b": ("scripts/15b_freeze_production_eob_baseline.py", "9a5f61d19bc279920f51f67294ef96ddcd7623ffe240482ff66b88e029eafc60"),
-    "script_16a": ("scripts/16a_preflight_layer_a_representative_binary_cases.py", "c9e01022a7596b2fdf2f42e1a84855585c7901b06af100f0cb8d189852ee502f"),
+    "script_16a": ("scripts/16a_preflight_layer_a_representative_binary_cases.py", "3f62fa290e1c8e1699c34d4b1bc78b9af0e716387b251afb4ada2b3198d7524f"),
     "script_17a": ("scripts/17a_validate_winter_pv_longblock_holdouts.py", "c8bb665fb607b129df2187435c5454e49dbf6faff3ca25013a3eda7d26670c91"),
-    "script_17b": ("scripts/17b_build_winter_pv_sensitivity_annual_input.py", "dd2d3e47bee139bd866eb5a8aee6603390d46f849ef80f4dd8944c6edd77ea01"),
-    "canonical_annual": ("data/processed/annual_input_v7_1.parquet", "e0d4a8e84bee68c71f3d278e617df6fee0bb022a97c6fb5e9c49da6d6809fa0e"),
-    "alternative_annual": ("data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07.parquet", "023cba88416b965c7dedf4139e9a495602039117ecc827e52a372f10a1aad986"),
-    "alternative_manifest": ("data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07_manifest.json", "644cf6dc502977422fb9baee96e95103ca581aab45f2e69c3581646d45458cd7"),
+    "script_17b": ("scripts/17b_build_winter_pv_sensitivity_annual_input.py", "96e7c0fdd77bb3a6293becea401cc83dd0f24659ee26676e18aef69991d33160"),
+    "canonical_annual": ("data/processed/annual_input_v7_1.parquet", "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e"),
+    "alternative_annual": ("data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18.parquet", "1c1dbc265b092415e649bba23232f645f7ba5c74e0f074f2914c1ed7ac9d7cd9"),
+    "alternative_manifest": ("data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18_manifest.json", "e6808ca6270afd808e930a4baa8032852d88bf92c232bb53e68f434fdfba1381"),
     "economic_interface": ("data/reference/production_economic_interface_v7_2.json", "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9"),
     "normalized_tariff": ("data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv", "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395"),
-    "settlement_interface": ("data/reference/taipower_transition_period_settlement_interface_v7_2.json", "896f07e4dd6335fb26a906d2274446c362d11da503d7bd08be766f2d223a4916"),
-    "settlement_matrix": ("data/reference/taipower_seasonal_settlement_matrix_v7_2.csv", "31172c471c11034ac55811d9eb0ee5602d0e2dbbdc55f09f3320855078e190e1"),
+    "settlement_interface": ("data/reference/taipower_transition_period_settlement_interface_v7_2.json", "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88"),
+    "settlement_matrix": ("data/reference/taipower_seasonal_settlement_matrix_v7_2.csv", "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79"),
     "technical_provenance": ("results/parameter_audit/pnnl_table4_2_cyclelife_g_provenance_by_bracket.csv", "1172963521fbc4b646394cb2df6947ade9f961211bf608c5928ef4de215644f6"),
     "observed_bill": ("data/reference/taipower_bills_final_clean.csv", "e18d05a1cec3917b0f69f9a769e549ab50228f060ac7bf6bd06361a4b247f34d"),
     "17a_run_manifest": ("results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/run_manifest.json", "374a52ebc2db0ad0b4c26a05b51a6ed50273dd1dc803164e99da4560ac14d14b"),
     "17a_completion": ("results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/completion_manifest.json", "678a11d8acd0dec10020f39c011917a998d75c0055fd568fe14d75a7226f34f6"),
     "17a_decision": ("results/data_audit/winter_pv_holdouts/20260909T042957292822Z_7de1c7a4f4/final_validation_decision.json", "454a60574d30731fc621ed57d1355911586df4c97aa6b2184ab405015708c594"),
-    "17b_run_manifest": ("results/data_audit/winter_pv_17b/20260909T111758450767Z_4619514ef1/run_manifest.json", "aead6cd317555aa69aff92925ae096dcf0568534f9f437251ead633f93bf4b8c"),
-    "17b_diff_audit": ("results/data_audit/winter_pv_17b/20260909T111758450767Z_4619514ef1/annual_input_v7_2_winter_pv_sensitivity_protocol_2026-09-07_column_diff_audit.csv", "a20998fddec6188a1d0ffd7c0132a4b65bd70907cc6e3f3c97f7661283ad829d"),
-    "17b_completion": ("results/data_audit/winter_pv_17b/20260909T111758450767Z_4619514ef1/completion_manifest.json", "3af8d3ef3c0b9ccd43351aaba0e467a6ef89ef54a78821d7d3f849722a740ef8"),
-    "mainline_eob_result": ("results/eob_production/eob_production_result_v7_2.json", "ad606a503b3f68ceba048e4b94bc0e19e6ddde00f88c145d051f772557e0bd56"),
-    "mainline_eob_freeze": ("results/eob_production/eob_production_freeze_audit_v7_2.json", "18bf93414dcc677bdd4ab68b99aae3c0af9412ea52c950eaf8f186b075822907"),
-    "mainline_eob_rainflow": ("results/degradation_validation/eob_rainflow_validation_audit_v7_2.json", "8660da9fcee9507d9e03b656981cc325dc2533283657d4c4dbf1f5585fcd9f71"),
-    "mainline_eob_dispatch": ("results/eob_production/eob_production_dispatch_v7_2.csv", "91a13101ca7f3ef82903359fed1f3de6093d0015b8b6a892463a22e9142f4d85"),
-    "mainline_eob_billing": ("results/eob_production/eob_production_billing_exact_v7_2.csv", "9567163c72ce50ea9144a04e035a9613a3c5653488cc8f62ad4fe632eac3b710"),
-    "mainline_layer_run_manifest": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/run_manifest_v7_2.json", "6872f8de736b60fda2be86ecfe30aac6c1fb05460eeddd5f468a4b8c6bb23f26"),
-    "mainline_layer_completion": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/run_completion_v7_2.json", "7a1e9c0d839201e175d336dad9b37c8d5bd71a00f84bf1f394758ac9e18397bc"),
-    "mainline_layer_result": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/representative_cases/a0.80_b08/a0.80_b08_result_v7_2.json", "0dd931e5075e94e0ef6e7d215af46b30e673ba48455e3395d4dfbea4be902074"),
-    "mainline_layer_dispatch": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/representative_cases/a0.80_b08/a0.80_b08_dispatch_v7_2.csv", "5586caaafc7cdc7261e14f556e7fcf4edb26168be3dd04aaf1cd05bb580d0fb9"),
-    "mainline_layer_billing": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/representative_cases/a0.80_b08/a0.80_b08_billing_exact_v7_2.csv", "f79fb12c841c9890560af8c1919ed16252f5efe9aeebeed87e6c177df77006f2"),
-    "mainline_layer_rainflow": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/representative_cases/a0.80_b08/a0.80_b08_rainflow_summary_v7_2.csv", "d2e6712adb38eeb8c03768f9c6b4944a643663c75686749f964a72f59772803d"),
+    "17b_run_manifest": ("results/data_audit/winter_pv_17b/20260918T143929009039Z_8f11437d44/run_manifest.json", "37250bf2367517e8b519c4b6b8fe04309e938e0838fecccce10915071e5f8024"),
+    "17b_diff_audit": ("results/data_audit/winter_pv_17b/20260918T143929009039Z_8f11437d44/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18_column_diff_audit.csv", "a20998fddec6188a1d0ffd7c0132a4b65bd70907cc6e3f3c97f7661283ad829d"),
+    "17b_completion": ("results/data_audit/winter_pv_17b/20260918T143929009039Z_8f11437d44/completion_manifest.json", "b11133993ff2bb791bc7f131e66e8fd9b6b4df9c38fcbc24ff53f888679698e4"),
+    "corrected_eob_acceptance": ("docs/checkpoints/corrected_eob_accepted_authority_v7_2_2026-09-17.md", "e71401ec3562b0803e52e3d054f8d7a69a1528fd197a03c6a7d42df629ab32a2"),
+    "r3_delta": ("results/provenance/post_eob_delta_freeze_v7_2_20260917_r3/post_eob_old_new_delta_r3_2026-09-17.json", "e217b7f64100260ae2a5d8de5231f0a1b608844afc818271236f99ead5c5ce96"),
+    "r3_manifest": ("results/provenance/post_eob_delta_freeze_v7_2_20260917_r3/post_eob_delta_package_r3_hash_manifest_2026-09-17.json", "6cf23560f2daa1e9fc45d0eaf46d3af6d97303829d8fd20ef5e94068bb89495e"),
+    "r3_checkpoint": ("docs/checkpoints/post_eob_delta_freeze_r3_authority_v7_2_2026-09-17.md", "32f4c437f6279c7a53aad2e0d9f0a0d1692a1e11fdc7c8b700f31aec818730e0"),
+    "16a_checkpoint": ("docs/checkpoints/16a_current_authority_comparator_update_v7_2_2026-09-17.md", "f0610c7b20afe063d9f4e844e9a10421af083e380572ceb192b45b3e99889db3"),
+    "current_eob_manifest": ("results/eob_production_corrected/runs/20260917T082758521112Z_a4b6383308/run_manifest.json", "9acb3f52948c63e65c29baf3f8a84653d127febf96369f1945cbb358389eb99a"),
+    "current_eob_result": ("results/eob_production_corrected/runs/20260917T082758521112Z_a4b6383308/corrected_eob_result.json", "d7c37a0013ad6ea5a8dc3231a67bf427ec0c502aef96fedc47aacfe7c8897022"),
+    "current_eob_dispatch": ("results/eob_production_corrected/runs/20260917T082758521112Z_a4b6383308/corrected_eob_dispatch.csv", "b4dca52eba714a2d28cb7b3b6928facdeda39949b1b5cdcab4e25acdc52fa147"),
+    "current_eob_billing": ("results/eob_production_corrected/runs/20260917T082758521112Z_a4b6383308/corrected_eob_billing_exact.csv", "5bb71bfb0b817ec5efa3923174daf2ceceb78bf84a60dadd039a67c7cda5de1c"),
+    "current_layer_manifest": ("results/layer_a/preflight/runs/20260918T085202453195Z_755e01dfb2/run_manifest_v7_2.json", "1a331faaf2d079bfd0d70d46d400e29eeeb8ee1edc67a566b096926ed1202118"),
+    "current_layer_completion": ("results/layer_a/preflight/runs/20260918T085202453195Z_755e01dfb2/run_completion_v7_2.json", "06a794588623d1658cec1bb2196279915a5a77ad251e4ebc6899ef3d9c829aac"),
+    "current_layer_case_manifest": ("results/layer_a/preflight/runs/20260918T085202453195Z_755e01dfb2/representative_cases/a0.80_b08/case_manifest_v7_2.json", "2be9e0716827e83e380bf17c1c9210f760818e0a4ccaa86b53a46bd16979c23f"),
+    "current_layer_result": ("results/layer_a/preflight/runs/20260918T085202453195Z_755e01dfb2/representative_cases/a0.80_b08/a0.80_b08_result_v7_2.json", "8a9bc67fc541ea682f9360e6063ededdb5bc0e2c6340c43c10c1fde86ab155f6"),
+    "current_layer_dispatch": ("results/layer_a/preflight/runs/20260918T085202453195Z_755e01dfb2/representative_cases/a0.80_b08/a0.80_b08_dispatch_v7_2.csv", "1b5f1fbc3c68bd3d52d426bc4e3c58c35b8a90830b42113f62c5a4ca92fde926"),
+    "current_layer_billing": ("results/layer_a/preflight/runs/20260918T085202453195Z_755e01dfb2/representative_cases/a0.80_b08/a0.80_b08_billing_exact_v7_2.csv", "ba9762031435c1e06464878356e81d4e289ac20562cac9e713f3756fbb156f83"),
+    "current_layer_rainflow": ("results/layer_a/preflight/runs/20260918T085202453195Z_755e01dfb2/representative_cases/a0.80_b08/a0.80_b08_rainflow_summary_v7_2.csv", "a433f9c28dac71f2c28f4c46e1c514c23afb7bd24b22ad7a82829fbab30b4a44"),
+}
+
+HISTORICAL_PROVENANCE_HASHES = {
+    "historical_eob_result": ("results/eob_production/eob_production_result_v7_2.json", "ad606a503b3f68ceba048e4b94bc0e19e6ddde00f88c145d051f772557e0bd56"),
+    "historical_eob_freeze": ("results/eob_production/eob_production_freeze_audit_v7_2.json", "18bf93414dcc677bdd4ab68b99aae3c0af9412ea52c950eaf8f186b075822907"),
+    "historical_eob_rainflow": ("results/degradation_validation/eob_rainflow_validation_audit_v7_2.json", "8660da9fcee9507d9e03b656981cc325dc2533283657d4c4dbf1f5585fcd9f71"),
+    "historical_eob_dispatch": ("results/eob_production/eob_production_dispatch_v7_2.csv", "91a13101ca7f3ef82903359fed1f3de6093d0015b8b6a892463a22e9142f4d85"),
+    "historical_eob_billing": ("results/eob_production/eob_production_billing_exact_v7_2.csv", "9567163c72ce50ea9144a04e035a9613a3c5653488cc8f62ad4fe632eac3b710"),
+    "historical_layer_manifest": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/run_manifest_v7_2.json", "6872f8de736b60fda2be86ecfe30aac6c1fb05460eeddd5f468a4b8c6bb23f26"),
+    "historical_layer_completion": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/run_completion_v7_2.json", "7a1e9c0d839201e175d336dad9b37c8d5bd71a00f84bf1f394758ac9e18397bc"),
+    "historical_layer_result": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/representative_cases/a0.80_b08/a0.80_b08_result_v7_2.json", "0dd931e5075e94e0ef6e7d215af46b30e673ba48455e3395d4dfbea4be902074"),
+    "historical_layer_dispatch": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/representative_cases/a0.80_b08/a0.80_b08_dispatch_v7_2.csv", "5586caaafc7cdc7261e14f556e7fcf4edb26168be3dd04aaf1cd05bb580d0fb9"),
+    "historical_layer_billing": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/representative_cases/a0.80_b08/a0.80_b08_billing_exact_v7_2.csv", "f79fb12c841c9890560af8c1919ed16252f5efe9aeebeed87e6c177df77006f2"),
+    "historical_layer_rainflow": ("results/layer_a/preflight/runs/20260906T050046737317Z_5f2cd1942c/representative_cases/a0.80_b08/a0.80_b08_rainflow_summary_v7_2.csv", "d2e6712adb38eeb8c03768f9c6b4944a643663c75686749f964a72f59772803d"),
 }
 
 
@@ -102,6 +131,8 @@ def json_safe(value: Any) -> Any:
         return int(value)
     if isinstance(value, (np.floating,)):
         return float(value) if np.isfinite(value) else None
+    if isinstance(value, (np.bool_,)):
+        return bool(value)
     if isinstance(value, float):
         return value if math.isfinite(value) else None
     return value
@@ -142,9 +173,12 @@ def load_module(path: Path, name: str) -> Any:
     return module
 
 
-def check_hashes(root: Path) -> dict[str, Any]:
+def check_hashes(
+    root: Path,
+    records: dict[str, tuple[str, str]] = ACTIVE_HASHES,
+) -> dict[str, Any]:
     checks: dict[str, Any] = {}
-    for label, (relative, expected) in EXPECTED_HASHES.items():
+    for label, (relative, expected) in records.items():
         path = root / relative
         actual = sha256_file(path) if path.is_file() else None
         checks[label] = {
@@ -163,37 +197,22 @@ def check_repository(root: Path) -> dict[str, Any]:
     branch = run_git(root, "branch", "--show-current")
     head = run_git(root, "rev-parse", "HEAD")
     origin = run_git(root, "rev-parse", "origin/thesis-v7")
-    local_tag_object = run_git(root, "rev-parse", EXPECTED_TAG)
-    local_tag_peeled = run_git(root, "rev-parse", f"{EXPECTED_TAG}^{{}}")
-    remote_head = run_git(root, "ls-remote", "--heads", "origin", EXPECTED_BRANCH).split()[0]
-    remote_tag_lines = run_git(
-        root, "ls-remote", "--tags", "origin", f"refs/tags/{EXPECTED_TAG}", f"refs/tags/{EXPECTED_TAG}^{{}}"
-    ).splitlines()
-    remote_tags = {line.split()[1]: line.split()[0] for line in remote_tag_lines if line.strip()}
-    status_lines = run_git(root, "status", "--porcelain=v1", "--untracked-files=all").splitlines()
-    allowed_untracked = {
-        "?? docs/protocols/iris_thesis_rigorous_audit_skill.md",
-        "?? scripts/17c_run_winter_pv_economic_sensitivity.py",
-    }
+    tracked_modified = set(run_git(root, "diff", "--name-only").splitlines())
+    staged_modified = run_git(root, "diff", "--cached", "--name-only").splitlines()
     repo = {
         "branch": branch,
         "head": head,
         "local_origin_thesis_v7": origin,
-        "live_remote_origin_thesis_v7": remote_head,
-        "tag": EXPECTED_TAG,
-        "local_tag_object": local_tag_object,
-        "local_tag_peeled": local_tag_peeled,
-        "remote_tag_object": remote_tags.get(f"refs/tags/{EXPECTED_TAG}"),
-        "remote_tag_peeled": remote_tags.get(f"refs/tags/{EXPECTED_TAG}^{{}}"),
-        "working_tree_porcelain": status_lines,
-        "allowed_untracked_only": set(status_lines).issubset(allowed_untracked),
+        "tracked_modified": sorted(tracked_modified),
+        "expected_tracked_modified": sorted(EXPECTED_TRACKED_MODIFIED),
+        "staged_modified": staged_modified,
+        "network_lookup_performed": False,
     }
     expected = (
         branch == EXPECTED_BRANCH
-        and head == origin == remote_head == EXPECTED_COMMIT
-        and local_tag_object == remote_tags.get(f"refs/tags/{EXPECTED_TAG}") == EXPECTED_TAG_OBJECT
-        and local_tag_peeled == remote_tags.get(f"refs/tags/{EXPECTED_TAG}^{{}}") == EXPECTED_COMMIT
-        and repo["allowed_untracked_only"]
+        and head == origin == EXPECTED_COMMIT
+        and tracked_modified == EXPECTED_TRACKED_MODIFIED
+        and not staged_modified
     )
     repo["status"] = "PASS" if expected else "FAIL"
     if not expected:
@@ -218,31 +237,72 @@ def run_read_only_validator(root: Path, script: str) -> dict[str, Any]:
 
 
 def verify_accepted_chain(root: Path) -> dict[str, Any]:
-    checkpoint = read_json(root / EXPECTED_HASHES["post17b_checkpoint"][0])
-    alt_manifest = read_json(root / EXPECTED_HASHES["alternative_manifest"][0])
-    decision = read_json(root / EXPECTED_HASHES["17a_decision"][0])
-    completion_17b = read_json(root / EXPECTED_HASHES["17b_completion"][0])
-    gate_values = completion_17b.get("gates", completion_17b.get("accepted_build_gates", {}))
+    alt_manifest = read_json(root / ACTIVE_HASHES["alternative_manifest"][0])
+    decision = read_json(root / ACTIVE_HASHES["17a_decision"][0])
+    completion_17b = read_json(root / ACTIVE_HASHES["17b_completion"][0])
+    acceptance = (root / ACTIVE_HASHES["corrected_eob_acceptance"][0]).read_text(encoding="utf-8")
     decision_text = decision.get("WINTER_PV_RECONSTRUCTION_VALIDATION")
     checks = {
-        "checkpoint_status": checkpoint.get("status") == "FROZEN_POST_17B_PRE_17C",
-        "checkpoint_validator": checkpoint.get("validator_result", {}).get("all_checks_pass") is True,
-        "checkpoint_17a_full_hash": checkpoint.get("accepted_script_17a_lineage", {}).get("completion_manifest", {}).get("sha256") == EXPECTED_HASHES["17a_completion"][1],
-        "request_transcription_hash_not_used": True,
+        "corrected_eob_acceptance": "CORRECTED_EOB_ACCEPTED_PRODUCTION_AUTHORITY" in acceptance,
+        "corrected_eob_run_identity": CORRECTED_EOB_RUN_ID in acceptance,
         "17a_decision": decision_text == "PASS_FOR_SENSITIVITY",
+        "17b_run_identity": completion_17b.get("run_id") == CURRENT_17B_RUN_ID,
         "17b_status": completion_17b.get("status") == "17B_BUILD_PASS",
         "alternative_role": alt_manifest.get("additive_provenance", {}).get("artifact_role") == "winter_pv_sensitivity_only",
+        "alternative_uses_corrected_canonical": alt_manifest.get("canonical_annual_input", {}).get("sha256_before_build") == ACTIVE_HASHES["canonical_annual"][1],
         "17b_all_gates_pass": completion_17b.get("all_build_gates_pass") is True and all(bool(value) for value in completion_17b.get("build_gates", {}).values()),
     }
     if not all(checks.values()):
         raise RuntimeError(f"Accepted 17a/17b chain failure: {checks}")
     return {
         "checks": {key: "PASS" if value else "FAIL" for key, value in checks.items()},
-        "hash_transcription_note": {
-            "request_text_value": "678a11d8acd0dec10020f39c011917a998d75a7226f34f6",
-            "authoritative_checkpoint_value": EXPECTED_HASHES["17a_completion"][1],
-            "disposition": "AUTHORITATIVE_FULL_CHECKPOINT_HASH_USED",
-        },
+        "authority_route": "CORRECTED_EOB_ACCEPTANCE -> CURRENT_16A -> AUDITED_A0.80_B08 -> CORRECTED_17B_INPUT",
+    }
+
+
+def load_current_comparators(root: Path) -> dict[str, Any]:
+    eob_manifest = read_json(root / ACTIVE_HASHES["current_eob_manifest"][0])
+    eob_result = read_json(root / ACTIVE_HASHES["current_eob_result"][0])
+    layer_manifest = read_json(root / ACTIVE_HASHES["current_layer_manifest"][0])
+    layer_completion = read_json(root / ACTIVE_HASHES["current_layer_completion"][0])
+    case_manifest = read_json(root / ACTIVE_HASHES["current_layer_case_manifest"][0])
+    layer_record = read_json(root / ACTIVE_HASHES["current_layer_result"][0])
+    layer_result = layer_record.get("result", {})
+    rainflow = layer_record.get("rainflow_validation", {})
+    checks = {
+        "eob_run_id": eob_manifest.get("run_id") == CORRECTED_EOB_RUN_ID,
+        "eob_core": eob_manifest.get("CORE_VERSION") == EXPECTED_CORE_VERSION
+        and eob_manifest.get("core_sha256") == ACTIVE_HASHES["annual_core"][1],
+        "eob_canonical": eob_manifest.get("canonical_input_sha256") == ACTIVE_HASHES["canonical_annual"][1],
+        "eob_optimal_binary": eob_result.get("status") == "OPTIMAL"
+        and eob_result.get("mode") == "binary"
+        and float(eob_result.get("mip_gap", math.inf)) <= MIP_GAP,
+        "layer_run_id": layer_manifest.get("run_id") == CURRENT_LAYER_RUN_ID,
+        "layer_selected_case": layer_manifest.get("selected_cases")
+        == [{"case_id": CASE_ID, "alpha": ALPHA, "beta_h": BETA_H}],
+        "layer_current_eob_authority": layer_manifest.get("eob_comparator_authority", {}).get("run_id") == CORRECTED_EOB_RUN_ID
+        and layer_manifest.get("eob_comparator_authority", {}).get("historical_fallback_allowed") is False,
+        "layer_completion": layer_completion.get("run_id") == CURRENT_LAYER_RUN_ID
+        and layer_completion.get("status") == "REPRESENTATIVE_PASS"
+        and layer_completion.get("all_gates_pass") is True,
+        "case_identity": case_manifest.get("run_id") == CURRENT_LAYER_RUN_ID
+        and case_manifest.get("case_id") == CASE_ID
+        and case_manifest.get("mode") == "binary",
+        "case_optimal_binary": layer_result.get("status") == "OPTIMAL"
+        and layer_result.get("mode") == "binary"
+        and float(layer_result.get("mip_gap", math.inf)) <= MIP_GAP,
+        "case_18_gates": len(layer_record.get("gates", {})) == 18
+        and all(value == "PASS" for value in layer_record.get("gates", {}).values()),
+        "case_rainflow": rainflow.get("summary", {}).get("verdict") == "RAINFLOW_VALIDATION_PASS"
+        and all(value == "PASS" for value in rainflow.get("gates", {}).values()),
+    }
+    if not all(checks.values()):
+        raise RuntimeError(f"Current comparator authority failure: {checks}")
+    return {
+        "checks": {key: "PASS" if value else "FAIL" for key, value in checks.items()},
+        "eob_result": eob_result,
+        "layer_record": layer_record,
+        "layer_result": layer_result,
     }
 
 
@@ -280,7 +340,7 @@ def fairness_audit(canonical: pd.DataFrame, alternative: pd.DataFrame) -> dict[s
         alternative["artifact_role"].eq("winter_pv_sensitivity_only").all()
         and int(target.sum()) == 1463
         and alternative["winter_pv_sensitivity_method"].eq("cwa_hourly_ghi_ratio_median_all_eligible_v7_2").all()
-        and alternative["winter_pv_sensitivity_protocol_sha256"].eq(EXPECTED_HASHES["winter_pv_protocol"][1]).all()
+        and alternative["winter_pv_sensitivity_protocol_sha256"].eq(ACTIVE_HASHES["winter_pv_protocol"][1]).all()
     )
     report = {
         "status": "PASS" if timestamp_equal and not forbidden and provenance_ok and abs(delta_pv - 39484.422494085295) <= 1e-6 else "FAIL",
@@ -463,7 +523,46 @@ def artifact_registry(run_dir: Path) -> dict[str, Any]:
     return records
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--authority-validation",
+        action="store_true",
+        help="Validate corrected authority and input fairness without constructing a model or writing outputs.",
+    )
+    return parser.parse_args()
+
+
+def validate_authority(root: Path) -> tuple[dict[str, Any], pd.DataFrame, dict[str, Any]]:
+    hashes = check_hashes(root)
+    repository = check_repository(root)
+    chain = verify_accepted_chain(root)
+    canonical = pd.read_parquet(root / ACTIVE_HASHES["canonical_annual"][0])
+    canonical_load_route = "HASH_PINNED_CANONICAL_PARQUET"
+    alternative = pd.read_parquet(root / ACTIVE_HASHES["alternative_annual"][0])
+    fairness = fairness_audit(canonical, alternative)
+    comparators = load_current_comparators(root)
+    report = {
+        "status": "PASS",
+        "mode": "READ_ONLY_NO_SOLVE_NO_WRITE",
+        "script_version": SCRIPT_VERSION,
+        "active_hashes": hashes,
+        "repository": repository,
+        "accepted_chain": chain,
+        "canonical_load_route": canonical_load_route,
+        "input_fairness": fairness,
+        "current_comparators": comparators["checks"],
+        "historical_provenance_active": False,
+        "model_construction_attempts": 0,
+        "optimization_attempts": 0,
+        "solve_eob_calls": 0,
+        "output_directories_created": 0,
+    }
+    return report, alternative, comparators
+
+
 def main() -> int:
+    args = parse_args()
     root = root_path()
     sys.path.insert(0, str(root))
     started = utc_now()
@@ -471,13 +570,10 @@ def main() -> int:
     run_dir: Path | None = None
     solve_count = 0
     try:
-        hashes = check_hashes(root)
-        repository = check_repository(root)
-        chain = verify_accepted_chain(root)
-        validators = {
-            "18a": run_read_only_validator(root, "scripts/18a_validate_production_checkpoint.py"),
-            "18b": run_read_only_validator(root, "scripts/18b_preflight_production_environment.py"),
-        }
+        authority, alternative, comparators = validate_authority(root)
+        if args.authority_validation:
+            print(json.dumps(json_safe(authority), indent=2))
+            return 0
 
         from src.annual_design_model_v7_2 import (
             CORE_VERSION, ETA_D, SOC_MAX, SOC_MIN,
@@ -487,42 +583,21 @@ def main() -> int:
         if CORE_VERSION != EXPECTED_CORE_VERSION:
             raise RuntimeError(f"Core version mismatch: {CORE_VERSION}")
 
-        canonical = pd.read_parquet(root / EXPECTED_HASHES["canonical_annual"][0])
-        alternative = pd.read_parquet(root / EXPECTED_HASHES["alternative_annual"][0])
-        fairness = fairness_audit(canonical, alternative)
+        fairness = authority["input_fairness"]
         requirement = single_case_requirement(alternative, float(ETA_D), float(SOC_MIN), float(SOC_MAX))
         if requirement["valid_start_count"] != requirement["expected_valid_start_count"]:
             raise RuntimeError("Single-case all-start enumeration failed.")
 
-        main_eob = read_json(root / EXPECTED_HASHES["mainline_eob_result"][0])
-        main_eob_freeze = read_json(root / EXPECTED_HASHES["mainline_eob_freeze"][0])
-        main_eob_rainflow = read_json(root / EXPECTED_HASHES["mainline_eob_rainflow"][0])
-        main_layer_record = read_json(root / EXPECTED_HASHES["mainline_layer_result"][0])
-        main_layer = main_layer_record["result"]
-        main_layer_completion = read_json(root / EXPECTED_HASHES["mainline_layer_completion"][0])
-        if main_eob.get("status") != "OPTIMAL" or main_eob.get("mode") != "binary":
-            raise RuntimeError("Frozen mainline EOB comparator is not optimal binary.")
-        if main_eob_freeze.get("freeze_status") != "PRODUCTION_EOB_FREEZE_PASS":
-            raise RuntimeError("Frozen EOB audit is not PASS.")
-        if main_eob_rainflow.get("summary", {}).get("verdict") != "RAINFLOW_VALIDATION_PASS":
-            raise RuntimeError("Frozen EOB rainflow audit is not PASS.")
-        if main_layer.get("status") != "OPTIMAL" or main_layer.get("mode") != "binary":
-            raise RuntimeError("Accepted mainline Layer-A comparator is not optimal binary.")
-        if float(main_layer.get("mip_gap", math.inf)) > MIP_GAP:
-            raise RuntimeError("Accepted mainline Layer-A MIP gap is outside tolerance.")
-        if main_layer_record.get("case_id") != CASE_ID or main_layer_record.get("analytical_requirement", {}).get("alpha") != ALPHA or main_layer_record.get("analytical_requirement", {}).get("beta_h") != BETA_H:
-            raise RuntimeError("Accepted mainline Layer-A comparator is not a0.80_b08.")
-        if main_layer_completion.get("status") != "REPRESENTATIVE_PASS" or main_layer_completion.get("all_gates_pass") is not True:
-            raise RuntimeError("Accepted mainline Layer-A completion is not PASS.")
-        if not all(value == "PASS" for value in main_layer_record.get("gates", {}).values()):
-            raise RuntimeError("Accepted mainline Layer-A case gates are not all PASS.")
+        main_eob = comparators["eob_result"]
+        main_layer_record = comparators["layer_record"]
+        main_layer = comparators["layer_result"]
 
         inputs = load_annual_design_inputs(
             root,
-            annual_parquet=root / EXPECTED_HASHES["alternative_annual"][0],
+            annual_parquet=root / ACTIVE_HASHES["alternative_annual"][0],
             annual_csv=root / "data/processed/alternatives/DO_NOT_FALL_BACK.csv",
         )
-        if Path(inputs.source_paths["annual_input"]).resolve() != (root / EXPECTED_HASHES["alternative_annual"][0]).resolve():
+        if Path(inputs.source_paths["annual_input"]).resolve() != (root / ACTIVE_HASHES["alternative_annual"][0]).resolve():
             raise RuntimeError("Loader did not bind to the accepted alternative annual input.")
         package = inputs.mainline_package
         package_checks = {
@@ -543,16 +618,16 @@ def main() -> int:
             "generated_utc": utc_text(),
             "status": "PASS",
             "solve_boundary": {"authorized_solves": ["alternative_EOB", CASE_ID], "exact_solve_count": 2, "canonical_re_solve": False, "matrix_81_point": False},
-            "repository": repository,
-            "frozen_hashes": hashes,
-            "accepted_chain": chain,
-            "read_only_validators": validators,
+            "repository": authority["repository"],
+            "active_hashes": authority["active_hashes"],
+            "accepted_chain": authority["accepted_chain"],
             "input_fairness": fairness,
             "single_case_analytical_requirement": requirement,
             "economic_package_checks": {key: "PASS" if value else "FAIL" for key, value in package_checks.items()},
             "solver_settings": {"mode": "binary", "MIPGap": MIP_GAP, "TimeLimit": TIME_LIMIT_SEC, "NumericFocus": 1},
-            "mainline_eob_comparator_qualification": "FROZEN_ACCEPTED_COMPARATOR; HISTORICAL_CORE_IDENTITY_PRESERVED; NOT_RELABELED_AS_R9_SOLVE",
-            "mainline_layer_comparator_qualification": "ACCEPTED_EXACT_A0.80_B08_REPRESENTATIVE_CASE",
+            "mainline_eob_comparator_qualification": "CURRENT_CORRECTED_EOB_ACCEPTED_PRODUCTION_AUTHORITY",
+            "mainline_layer_comparator_qualification": "CURRENT_AUDITED_EXACT_A0.80_B08_REPRESENTATIVE_CASE",
+            "historical_provenance_active": False,
         }
         write_json(run_dir / "pre_solve_gate.json", preflight)
         write_json(run_dir / "run_manifest.json", {
@@ -563,7 +638,7 @@ def main() -> int:
             "claim_boundary": "PAIRED_SENSITIVITY_ONLY; NO_HISTORICAL_TRUTH_OR_UNIVERSAL_MATERIALITY_CLAIM",
         })
 
-        helper = load_module(root / EXPECTED_HASHES["script_16a"][0], "script16a_17c_helpers")
+        helper = load_module(root / ACTIVE_HASHES["script_16a"][0], "script16a_17c_helpers")
         eob_settings = SolveSettings(
             mode="binary", mip_gap=MIP_GAP, time_limit_sec=TIME_LIMIT_SEC, output_flag=1,
             numeric_focus=1, log_file=str(run_dir / "alternative_eob_gurobi.log"),
@@ -609,10 +684,10 @@ def main() -> int:
         layer_audit = {"status": "PASS", "elapsed_wall_seconds": time.perf_counter() - layer_started, "gates": layer_gates, "billing_audit": layer_billing, "analytical_requirement": requirement}
         write_solution_outputs(run_dir, "alternative_layer_a0.80_b08", alternative_layer, layer_audit, layer_rainflow)
 
-        main_eob_dispatch = pd.read_csv(root / EXPECTED_HASHES["mainline_eob_dispatch"][0])
-        main_eob_billing = pd.read_csv(root / EXPECTED_HASHES["mainline_eob_billing"][0])
-        main_layer_dispatch = pd.read_csv(root / EXPECTED_HASHES["mainline_layer_dispatch"][0])
-        main_layer_billing = pd.read_csv(root / EXPECTED_HASHES["mainline_layer_billing"][0])
+        main_eob_dispatch = pd.read_csv(root / ACTIVE_HASHES["current_eob_dispatch"][0])
+        main_eob_billing = pd.read_csv(root / ACTIVE_HASHES["current_eob_billing"][0])
+        main_layer_dispatch = pd.read_csv(root / ACTIVE_HASHES["current_layer_dispatch"][0])
+        main_layer_billing = pd.read_csv(root / ACTIVE_HASHES["current_layer_billing"][0])
         main_eob_metrics = scenario_metrics(main_eob, main_eob_dispatch, main_eob_billing, package)
         alt_eob_metrics = scenario_metrics(alternative_eob, alternative_eob["dispatch"], alternative_eob["billing_exact"], package)
         main_layer_metrics = scenario_metrics(main_layer, main_layer_dispatch, main_layer_billing, package)

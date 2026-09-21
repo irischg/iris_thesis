@@ -25,8 +25,35 @@ import numpy as np
 import pandas as pd
 
 
-SCRIPT_VERSION = "v7.2-layer-a-analytical-representative-binary-preflight-transition-candidate1-reduced-native-max-provenance-2026-09-06-r10"
-EXPECTED_CORE_VERSION = "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9"
+SCRIPT_VERSION = "v7.2-layer-a-analytical-representative-binary-preflight-current-eob-authority-2026-09-17-r11"
+EXPECTED_CORE_VERSION = "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10"
+EXPECTED_CORE_SHA256 = "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+CURRENT_CORRECTED_EOB_RUN_ID = "20260917T082758521112Z_a4b6383308"
+CURRENT_CORRECTED_EOB_RESULT_SHA256 = "d7c37a0013ad6ea5a8dc3231a67bf427ec0c502aef96fedc47aacfe7c8897022"
+CURRENT_CORRECTED_EOB_MANIFEST_SHA256 = "9acb3f52948c63e65c29baf3f8a84653d127febf96369f1945cbb358389eb99a"
+CURRENT_CORRECTED_EOB_ACCEPTANCE_SHA256 = "e71401ec3562b0803e52e3d054f8d7a69a1528fd197a03c6a7d42df629ab32a2"
+ACCEPTED_R3_DELTA_SHA256 = "e217b7f64100260ae2a5d8de5231f0a1b608844afc818271236f99ead5c5ce96"
+ACCEPTED_R3_MANIFEST_SHA256 = "6cf23560f2daa1e9fc45d0eaf46d3af6d97303829d8fd20ef5e94068bb89495e"
+ACCEPTED_R3_CHECKPOINT_SHA256 = "32f4c437f6279c7a53aad2e0d9f0a0d1692a1e11fdc7c8b700f31aec818730e0"
+CURRENT_CORRECTED_EOB_ROOT = Path(
+    "results/eob_production_corrected/runs"
+) / CURRENT_CORRECTED_EOB_RUN_ID
+CURRENT_CORRECTED_EOB_RESULT = CURRENT_CORRECTED_EOB_ROOT / "corrected_eob_result.json"
+CURRENT_CORRECTED_EOB_MANIFEST = CURRENT_CORRECTED_EOB_ROOT / "run_manifest.json"
+CURRENT_CORRECTED_EOB_ACCEPTANCE = Path(
+    "docs/checkpoints/corrected_eob_accepted_authority_v7_2_2026-09-17.md"
+)
+ACCEPTED_R3_DELTA = Path(
+    "results/provenance/post_eob_delta_freeze_v7_2_20260917_r3/"
+    "post_eob_old_new_delta_r3_2026-09-17.json"
+)
+ACCEPTED_R3_MANIFEST = Path(
+    "results/provenance/post_eob_delta_freeze_v7_2_20260917_r3/"
+    "post_eob_delta_package_r3_hash_manifest_2026-09-17.json"
+)
+ACCEPTED_R3_CHECKPOINT = Path(
+    "docs/checkpoints/post_eob_delta_freeze_r3_authority_v7_2_2026-09-17.md"
+)
 ALPHAS = tuple(round(0.60 + 0.05 * i, 2) for i in range(9))
 BETAS_H = tuple(range(4, 13))
 REPRESENTATIVE_CASES = ((0.60, 4), (0.60, 12), (0.80, 8), (1.00, 4), (1.00, 12))
@@ -48,11 +75,13 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--mode",
-        choices=("analytical-only", "representative", "build-only"),
+        choices=("authority-validation", "analytical-only", "representative", "build-only"),
         default="analytical-only",
         help=(
-            "Default performs no MILP solve; representative solves only five "
-            "binary cases; build-only constructs one diagnostic model without optimize()."
+            "authority-validation resolves the real current EOB authority without "
+            "loading data or constructing a model; default performs no MILP solve; "
+            "representative solves only five binary cases; build-only constructs one "
+            "diagnostic model without optimize()."
         ),
     )
     parser.add_argument("--mip-gap", type=float, default=1e-6)
@@ -152,20 +181,125 @@ def read_json(path: Path, label: str) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
-def canonical_eob(root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Path]]:
-    # Actual repository convention is results/eob_production, not a duplicate
-    # results/eob/production directory.
+def historical_eob(root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Path]]:
+    """Load the immutable historical r1 EOB comparator for reproduction only."""
     paths = {
-        "result": root / "results" / "eob_production" / "eob_production_result_v7_2.json",
-        "freeze_audit": root / "results" / "eob_production" / "eob_production_freeze_audit_v7_2.json",
+        "historical_eob_result": root / "results" / "eob_production" / "eob_production_result_v7_2.json",
+        "historical_eob_freeze_audit": root / "results" / "eob_production" / "eob_production_freeze_audit_v7_2.json",
     }
-    result = read_json(paths["result"], "canonical 15b EOB result")
-    audit = read_json(paths["freeze_audit"], "canonical 15b EOB freeze audit")
+    result = read_json(paths["historical_eob_result"], "historical 15b EOB result")
+    audit = read_json(paths["historical_eob_freeze_audit"], "historical 15b EOB freeze audit")
     if audit.get("freeze_status") != "PRODUCTION_EOB_FREEZE_PASS":
-        raise RuntimeError("Canonical EOB freeze status is not PASS.")
+        raise RuntimeError("Historical EOB freeze status is not PASS.")
     if result.get("status") != "OPTIMAL" or result.get("mode") != "binary":
-        raise RuntimeError("Canonical EOB is not an optimal binary production result.")
+        raise RuntimeError("Historical EOB is not an optimal binary production result.")
     return result, audit, paths
+
+
+def canonical_eob(root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Path]]:
+    """Backward-compatible historical comparator alias; never used by current workflow."""
+    return historical_eob(root)
+
+
+def _verified_identity(root: Path, relative: Path, expected_sha256: str, label: str) -> Path:
+    path = root / relative
+    if not path.is_file():
+        raise FileNotFoundError(f"{label} not found: {path}")
+    actual = sha256_file(path)
+    if actual != expected_sha256:
+        raise RuntimeError(
+            f"{label} identity mismatch: expected={expected_sha256}, actual={actual}"
+        )
+    return path
+
+
+def current_corrected_eob(
+    root: Path,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Path]]:
+    """Resolve the accepted corrected EOB authority without model construction."""
+    expected = {
+        "current_eob_result": (CURRENT_CORRECTED_EOB_RESULT, CURRENT_CORRECTED_EOB_RESULT_SHA256),
+        "current_eob_run_manifest": (CURRENT_CORRECTED_EOB_MANIFEST, CURRENT_CORRECTED_EOB_MANIFEST_SHA256),
+        "current_eob_acceptance_checkpoint": (
+            CURRENT_CORRECTED_EOB_ACCEPTANCE,
+            CURRENT_CORRECTED_EOB_ACCEPTANCE_SHA256,
+        ),
+        "accepted_r3_delta": (ACCEPTED_R3_DELTA, ACCEPTED_R3_DELTA_SHA256),
+        "accepted_r3_package_manifest": (ACCEPTED_R3_MANIFEST, ACCEPTED_R3_MANIFEST_SHA256),
+        "accepted_r3_checkpoint": (ACCEPTED_R3_CHECKPOINT, ACCEPTED_R3_CHECKPOINT_SHA256),
+        "current_annual_core": (Path("src/annual_design_model_v7_2.py"), EXPECTED_CORE_SHA256),
+    }
+    paths = {
+        key: _verified_identity(root, relative, digest, key)
+        for key, (relative, digest) in expected.items()
+    }
+    result = read_json(paths["current_eob_result"], "accepted corrected EOB result")
+    manifest = read_json(paths["current_eob_run_manifest"], "immutable corrected EOB manifest")
+    r3_delta = read_json(paths["accepted_r3_delta"], "accepted R3 old/new delta")
+    r3_manifest = read_json(paths["accepted_r3_package_manifest"], "accepted R3 package manifest")
+
+    if result.get("status") != "OPTIMAL" or result.get("mode") != "binary" or not result.get("has_solution"):
+        raise RuntimeError("Accepted corrected EOB is not an optimal binary production result.")
+    if result.get("core_version") != EXPECTED_CORE_VERSION:
+        raise RuntimeError("Accepted corrected EOB core version mismatch.")
+    if manifest.get("run_id") != CURRENT_CORRECTED_EOB_RUN_ID:
+        raise RuntimeError("Corrected EOB manifest run ID mismatch.")
+    if manifest.get("CORE_VERSION") != EXPECTED_CORE_VERSION or manifest.get("core_sha256") != EXPECTED_CORE_SHA256:
+        raise RuntimeError("Corrected EOB manifest core authority mismatch.")
+    result_entry = manifest.get("output_artifacts", {}).get("corrected_eob_result.json", {})
+    if result_entry.get("sha256") != CURRENT_CORRECTED_EOB_RESULT_SHA256:
+        raise RuntimeError("Corrected EOB manifest does not pin the accepted result.")
+    if manifest.get("result_authority") != "CORRECTED_EOB_CANDIDATE_PENDING_AUDIT":
+        raise RuntimeError("Immutable corrected manifest serialization-time authority changed.")
+
+    acceptance_text = paths["current_eob_acceptance_checkpoint"].read_text(encoding="utf-8")
+    for required in (
+        CURRENT_CORRECTED_EOB_RUN_ID,
+        "CORRECTED_EOB_ACCEPTED_PRODUCTION_AUTHORITY",
+        CURRENT_CORRECTED_EOB_RESULT_SHA256,
+        CURRENT_CORRECTED_EOB_MANIFEST_SHA256,
+    ):
+        if required not in acceptance_text:
+            raise RuntimeError(f"Corrected EOB acceptance checkpoint missing {required!r}.")
+
+    if r3_delta.get("package") != "POST_EOB_DELTA_FREEZE_R3":
+        raise RuntimeError("R3 delta package role mismatch.")
+    chain = r3_delta.get("supersession_chain", {})
+    if chain.get("corrected_eob_production_authority_unaffected") is not True:
+        raise RuntimeError("R3 does not preserve corrected EOB authority.")
+    if chain.get("accepted_corrected_eob_run") != CURRENT_CORRECTED_EOB_RUN_ID:
+        raise RuntimeError("R3 corrected EOB run identity mismatch.")
+    if r3_manifest.get("package") != "POST_EOB_DELTA_FREEZE_R3":
+        raise RuntimeError("R3 hash-manifest role mismatch.")
+    for record in r3_manifest.get("artifacts", {}).values():
+        artifact = root / record["path"]
+        if not artifact.is_file() or sha256_file(artifact) != record["sha256"]:
+            raise RuntimeError(f"R3 registered artifact mismatch: {record['path']}")
+        if artifact.stat().st_size != int(record["bytes"]):
+            raise RuntimeError(f"R3 registered artifact byte-count mismatch: {record['path']}")
+
+    authority = {
+        "authority_role": "CURRENT_CORRECTED_EOB_COMPARATOR",
+        "run_id": CURRENT_CORRECTED_EOB_RUN_ID,
+        "result_sha256": CURRENT_CORRECTED_EOB_RESULT_SHA256,
+        "run_manifest_sha256": CURRENT_CORRECTED_EOB_MANIFEST_SHA256,
+        "core_version": EXPECTED_CORE_VERSION,
+        "core_sha256": EXPECTED_CORE_SHA256,
+        "acceptance_checkpoint_sha256": CURRENT_CORRECTED_EOB_ACCEPTANCE_SHA256,
+        "r3_delta_sha256": ACCEPTED_R3_DELTA_SHA256,
+        "r3_package_manifest_sha256": ACCEPTED_R3_MANIFEST_SHA256,
+        "r3_checkpoint_sha256": ACCEPTED_R3_CHECKPOINT_SHA256,
+        "manifest_serialization_authority": manifest["result_authority"],
+        "accepted_by_later_additive_checkpoint": True,
+        "historical_fallback_allowed": False,
+        "comparator_usage": "ECONOMIC_COMPARISON_AND_OBJECTIVE_LOWER_BOUND_ONLY",
+        "corrected_rainflow_required": False,
+        "model_construction_attempts": 0,
+        "optimization_attempts": 0,
+        "solve_eob_calls": 0,
+        "layer_a_runs": 0,
+    }
+    return result, authority, paths
 
 
 def analytical_surface(
@@ -425,7 +559,7 @@ def representative_gate(
 
 
 def eob_comparison(result: dict[str, Any], eob: dict[str, Any]) -> dict[str, float | None]:
-    """Calculate representative-case premiums from the canonical EOB JSON."""
+    """Calculate premiums from the explicitly supplied EOB authority."""
     if not result.get("has_solution"):
         return {
             "delta_E_N_kwh": None,
@@ -707,15 +841,20 @@ def build_only_case_audit(
     variables = model.getVars()
     linear_constraints = model.getConstrs()
     general_constraints = model.getGenConstrs()
-    transition_billing_epigraph_rows = [
+    demand_exact_link_rows = [
         constraint
         for constraint in linear_constraints
-        if str(constraint.ConstrName).startswith("transition_demand_epi_")
+        if str(constraint.ConstrName).startswith("demand_exact_link_")
     ]
-    class_c_demand_link_rows = [
+    raw_over_link_rows = [
         constraint
         for constraint in linear_constraints
-        if str(constraint.ConstrName).startswith("transition_demand_ge_seasonal_max_")
+        if str(constraint.ConstrName).startswith("raw_over_link_")
+    ]
+    cum_exact_first_rows = [
+        constraint
+        for constraint in linear_constraints
+        if str(constraint.ConstrName).startswith("cum_exact_first_")
     ]
     max_records: list[dict[str, Any]] = []
     indicator_count = 0
@@ -785,10 +924,23 @@ def build_only_case_audit(
                     if "operand_count" in record
                 )
             ),
-            "transition_billing_epigraph_rows": int(
-                len(transition_billing_epigraph_rows)
-            ),
-            "class_c_demand_link_rows": int(len(class_c_demand_link_rows)),
+            "demand_exact_link_rows": int(len(demand_exact_link_rows)),
+            "raw_over_link_rows": int(len(raw_over_link_rows)),
+            "cum_exact_first_rows": int(len(cum_exact_first_rows)),
+            "exact_d_max_family_counts": {
+                prefix: int(
+                    sum(
+                        str(record["name"]).startswith(prefix)
+                        for record in max_records
+                    )
+                )
+                for prefix in (
+                    "demand_exact_max_",
+                    "raw_exact_max_",
+                    "cum_exact_max_",
+                    "transition_exact_max_",
+                )
+            },
             "max_constraints": max_records,
             "linear_matrix_coefficient_range": matrix_range,
             "objective_coefficient_range": _finite_range(
@@ -864,6 +1016,35 @@ def main() -> int:
     root = project_root()
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
+
+    if args.mode == "authority-validation":
+        _eob, authority, paths = current_corrected_eob(root)
+        print(
+            json.dumps(
+                json_safe(
+                    {
+                        "status": "PASS",
+                        "validation_mode": "NO_SOLVE_CURRENT_EOB_AUTHORITY",
+                        "authority": authority,
+                        "required_artifacts": {
+                            key: {"path": str(path.relative_to(root)), "sha256": sha256_file(path)}
+                            for key, path in paths.items()
+                        },
+                        "execution_counters": {
+                            "optimization_calls": 0,
+                            "model_creations": 0,
+                            "solve_eob_calls": 0,
+                            "layer_a_runs": 0,
+                            "sensitivity_runs": 0,
+                            "case81_runs": 0,
+                        },
+                    }
+                ),
+                indent=2,
+            )
+        )
+        return 0
+
     from src.annual_design_model_v7_2 import CORE_VERSION, ETA_D, SOC_MAX, SOC_MIN, load_annual_design_inputs
     from src.rainflow_validation_v7_2 import VALIDATOR_VERSION
 
@@ -879,6 +1060,7 @@ def main() -> int:
         selected_cases = selected_representative_cases("a0.60_b04")
     else:
         selected_cases = ()
+    eob, eob_authority, eob_paths = current_corrected_eob(root)
     run_started_utc = utc_now()
     run_id = new_run_id(run_started_utc)
     run_dir = args.output_dir / "runs" / run_id
@@ -906,17 +1088,18 @@ def main() -> int:
                 "script_16a": sha256_file(Path(__file__).resolve()),
                 "annual_core": sha256_file(root / "src" / "annual_design_model_v7_2.py"),
             },
+            "eob_comparator_authority": eob_authority,
         },
         exclusive=True,
     )
 
     try:
         inputs = load_annual_design_inputs(root)
-        eob, _freeze_audit, eob_paths = canonical_eob(root)
         surface, starts, audit = analytical_surface(
             inputs.annual, eta_d=ETA_D, soc_min=SOC_MIN, soc_max=SOC_MAX
         )
         manifest = source_manifest(root, inputs, eob_paths)
+        manifest["eob_comparator_authority"] = eob_authority
         manifest["git"] = {
             "branch": git_value(root, "branch", "--show-current"),
             "head": git_value(root, "rev-parse", "HEAD"),

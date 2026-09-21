@@ -39,10 +39,10 @@ CHECKPOINT_SHA = "9ad301e891bb8e794b11a6f8ebac632d96cf59fecf38d402f72bd9b0bdd329
 HEAD = "b09f078c4ad8f2323af7135e2ade82f59f167f5e"
 TAG_OBJECT = "1aa834bef65328651add441d1b5c076a3c6ae183"
 CANONICAL = "data/processed/annual_input_v7_1.parquet"
-CANONICAL_SHA = "e0d4a8e84bee68c71f3d278e617df6fee0bb022a97c6fb5e9c49da6d6809fa0e"
+CANONICAL_SHA = "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e"
 CORE = "src/annual_design_model_v7_2.py"
-CORE_SHA = "d145eeb0c48a865c9a5d467346d94b63075e8245c08de4ecf890c1055e4369c0"
-CORE_VERSION = "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9"
+CORE_SHA = "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+CORE_VERSION = "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10"
 ALPHAS = (0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.00)
 BETAS = tuple(range(4, 13))
 MIP_GAP = 1e-6
@@ -372,11 +372,11 @@ def audit_model(model, handles, req, inputs, core):
     require(sum(n.startswith("seg_dyn_t") for n in con_by_name) == 26280, "Intertemporal state rows missing")
     require(sum(n.startswith("cyclic_seg_k") for n in con_by_name) == 3, "Annual cyclic segment rows missing")
     types = Counter(int(c.GenConstrType) for c in general)
-    require(types == {gp.GRB.GENCONSTR_MAX: 8, gp.GRB.GENCONSTR_INDICATOR: 17520}, f"General constraint drift: {types}")
+    require(types == {gp.GRB.GENCONSTR_MAX: 122, gp.GRB.GENCONSTR_INDICATOR: 17520}, f"General constraint drift: {types}")
     require(model.NumBinVars == 8764, "Unexpected binary count")
     require(set(handles["cost_expr"]) == {"annualized_capex", "fom", "energy", "basic", "overcontract_pure_season", "overcontract_transition_resolved", "degradation"}, "Cost component missing/extra")
     max_operands = sum(len(model.getGenConstrMax(c)[1]) for c in general if c.GenConstrType == gp.GRB.GENCONSTR_MAX)
-    require(max_operands == 858, "Reduced-native-MAX operand routing mismatch")
+    require(max_operands == 8870, "Exact-D MAX operand routing mismatch")
     params = parameter_audit(model)
     counts = {"variables": model.NumVars, "linear_constraints": model.NumConstrs, "binary_variables": model.NumBinVars,
               "integer_variables_including_binary": model.NumIntVars, "general_constraints": model.NumGenConstrs,
@@ -391,7 +391,7 @@ def audit_model(model, handles, req, inputs, core):
             "routing_gates": {name: "PASS" for name in (
                 "canonical_ac_bus", "canonical_tou_objective", "reserve_rhs_all_8761_states", "reserve_segment_state_identity",
                 "power_rhs", "binary_exclusivity", "no_warm_start", "intertemporal_degradation", "cyclic_segments",
-                "all_cost_components", "reduced_native_max", "production_parameters", "model_loaded_unsolved")}}
+                "all_cost_components", "exact_d_native_max", "production_parameters", "model_loaded_unsolved")}}
 
 
 def runner_design(helper, core):

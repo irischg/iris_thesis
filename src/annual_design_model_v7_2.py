@@ -75,7 +75,7 @@ except ImportError as exc:  # pragma: no cover - user environment dependency
     ) from exc
 
 
-CORE_VERSION = "v7.2-annual-design-core-transition-candidate1-reduced-native-max-2026-09-06-r9"
+CORE_VERSION = "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10"
 
 FORMAL_START = pd.Timestamp("2024-11-01 00:00:00")
 FORMAL_END_EXCLUSIVE = pd.Timestamp("2025-11-01 00:00:00")
@@ -992,6 +992,35 @@ def transition_class_c_cost_from_product(
     return float(rate_early * quantity + (rate_later - rate_early) * product)
 
 
+def overcontract_tier_split(
+    raw_overage_kw: float,
+    prior_max_raw_overage_kw: float,
+    tier1_cap_kw: float,
+) -> tuple[float, float, float]:
+    """Frozen W-07 incremental over-contract tier allocation (single source).
+
+    Official basis: 詳細電價表 §七(一)2.(5) non-duplication and §七(二) 10% / 2x / 3x.
+
+    Stage 1/2 (non-duplication) and stage 3 (tier allocation) are independent:
+
+        q[p]    = max(0, r[p] - max_{j<p} r[j])
+        h[p]    = tier1_cap_kw                 (continuous 0.10 * C[p])
+        q_2x[p] = min(q[p], h[p])
+        q_3x[p] = q[p] - q_2x[p]
+
+    Prior-period raw exceedance reduces a later period only through q[p]; it
+    must never consume that later period's own 2x allowance.  No rounding or
+    discretization is applied: the universal Taipower threshold-rounding
+    convention remains SOURCE_UNRESOLVED and must not be invented here.
+
+    Returns ``(q, q_2x, q_3x)`` in kW.
+    """
+    q_kw = max(0.0, float(raw_overage_kw) - float(prior_max_raw_overage_kw))
+    tier1_kw = min(q_kw, max(0.0, float(tier1_cap_kw)))
+    tier2_kw = q_kw - tier1_kw
+    return float(q_kw), float(tier1_kw), float(tier2_kw)
+
+
 def _transition_reference_overcontract_cost(
     inputs: AnnualDesignInputs,
     p_grid_reference_kw: np.ndarray,
@@ -1439,7 +1468,6 @@ def build_eob_model(
         season = _pure_month_season(annual, idx)
         month_df = annual.iloc[idx]
         z_prev: gp.Var | None = None
-        s_prev: gp.Var | None = None
         month_cost = gp.LinExpr(0.0)
         aux_periods: dict[str, Any] = {}
 
@@ -1466,7 +1494,9 @@ def build_eob_model(
                 continue
             demand_ub = float(period_demand_upper_kw[period])
             cumulative_demand_upper_kw = max(cumulative_demand_upper_kw, demand_ub)
-            tier_cumulative_ub = min(cumulative_demand_upper_kw, tier1_frac * CC_ub)
+            # W-07: the 2x allowance applies to THIS period's own new increment
+            # q[p], so its bound is the increment bound intersected with 0.10*CC.
+            tier_increment_ub = min(cumulative_demand_upper_kw, tier1_frac * CC_ub)
             D = model.addVar(
                 lb=0.0, ub=demand_ub, name=f"D_{month}_{period}_kw"
             )
@@ -1478,10 +1508,10 @@ def build_eob_model(
                 ub=cumulative_demand_upper_kw,
                 name=f"cum_over_{month}_{period}_kw",
             )
-            s_tier = model.addVar(
+            q_tier1 = model.addVar(
                 lb=0.0,
-                ub=tier_cumulative_ub,
-                name=f"cum_tier1_{month}_{period}_kw",
+                ub=tier_increment_ub,
+                name=f"incr_tier1_{month}_{period}_kw",
             )
 
             transition_spec: dict[str, Any] | None = None
@@ -1491,6 +1521,26 @@ def build_eob_model(
             transition_product_later: gp.Var | None = None
             transition_w_upper_kw: float | None = None
             transition_difference_bounds_kw: dict[str, float] | None = None
+            # W-07 EXACT tariff-cost-facing billing demand:
+            #     D[m,q] = kappa * max_{t in (m,q)} p_grid[t].
+            # A one-sided epigraph leaves D free to inflate, and under the
+            # per-increment 2x allowance that inflation is economically
+            # exploitable (it manufactures extra 2x capacity by splitting one
+            # period's exceedance across two).  The relation is therefore
+            # structural, not objective-driven.
+            #
+            # Framework A4 is unaffected: this is the tariff-cost-facing
+            # optimization auxiliary only.  Reported modeled billing maxima are
+            # still recomputed post-solve directly from the optimized hourly
+            # profile, and the hourly-proxy claim boundary is unchanged.
+            period_grid_ub = max(
+                float(p_grid_ub_by_hour_kw[int(t)]) for t in active_idx.tolist()
+            )
+            period_max_grid = model.addVar(
+                lb=0.0,
+                ub=period_grid_ub,
+                name=f"period_max_grid_{month}_{period}_kw",
+            )
             if season is None:
                 transition_spec = _transition_component_spec(
                     inputs, month, idx, period
@@ -1519,55 +1569,87 @@ def build_eob_model(
                         transition_seasonal_max_grid_ub[season_component] = float(
                             seasonal_grid_ub
                         )
-                    for season_component, max_grid in transition_seasonal_max_grid.items():
-                        model.addConstr(
-                            D >= inputs.kappa * max_grid,
-                            name=(
-                                "transition_demand_ge_seasonal_max_"
-                                f"{month}_{period}_{season_component}"
-                            ),
-                        )
+                    # The seasonal resultants are already exact, so the period
+                    # maximum is an exact 2-operand max over them rather than a
+                    # second pass over the same hourly operands.
+                    model.addGenConstrMax(
+                        period_max_grid,
+                        list(transition_seasonal_max_grid.values()),
+                        name=f"demand_exact_max_{month}_{period}",
+                    )
                 elif settlement_class in {
                     "CLASS_A_SINGLE_SEASON",
                     "CLASS_B_TWO_SEASON_EQUAL_SETTLEMENT_RATE",
                 }:
-                    # A/B have no cost-facing seasonal source distinction. The
-                    # standard billing epigraph preserves their in-model demand
-                    # quantity; exact maxima/timestamps are recomputed ex-post.
-                    for t in active_idx.tolist():
-                        model.addConstr(
-                            D >= inputs.kappa * p_grid[int(t)],
-                            name=f"transition_demand_epi_{month}_{period}_t{int(t)}",
-                        )
+                    # A/B have no cost-facing seasonal source distinction, so the
+                    # period maximum is taken directly over the period's hours.
+                    model.addGenConstrMax(
+                        period_max_grid,
+                        [p_grid[int(t)] for t in active_idx.tolist()],
+                        name=f"demand_exact_max_{month}_{period}",
+                    )
                 else:
                     raise RuntimeError(
                         "Unknown transition settlement class for demand formulation: "
                         f"{settlement_class!r}."
                     )
             else:
-                for t in active_idx.tolist():
-                    model.addConstr(
-                        D >= inputs.kappa * p_grid[int(t)],
-                        name=f"demand_epi_{month}_{period}_t{int(t)}",
-                    )
-            model.addConstr(raw >= D - CC, name=f"raw_over_link_{month}_{period}")
-            model.addConstr(z >= raw, name=f"cum_ge_raw_{month}_{period}")
-            if z_prev is not None:
-                model.addConstr(z >= z_prev, name=f"cum_monotone_{month}_{period}")
-            model.addConstr(s_tier <= z, name=f"tier1_le_cum_{month}_{period}")
-            model.addConstr(s_tier <= tier_threshold, name=f"tier1_le_cap_{month}_{period}")
-
+                model.addGenConstrMax(
+                    period_max_grid,
+                    [p_grid[int(t)] for t in active_idx.tolist()],
+                    name=f"demand_exact_max_{month}_{period}",
+                )
+            model.addConstr(
+                D == inputs.kappa * period_max_grid,
+                name=f"demand_exact_link_{month}_{period}",
+            )
+            # W-07 EXACT raw exceedance: raw = max(0, D - CC).  A one-sided
+            # epigraph (raw >= D - CC) leaves raw free to inflate, which under
+            # the per-increment 2x allowance is economically exploitable, so the
+            # relation is structural rather than objective-driven.
+            d_minus_cc = model.addVar(
+                lb=-CC_ub,
+                ub=demand_ub,
+                name=f"demand_minus_cc_{month}_{period}_kw",
+            )
+            model.addConstr(
+                d_minus_cc == D - CC, name=f"raw_over_link_{month}_{period}"
+            )
+            model.addGenConstrMax(
+                raw,
+                [d_minus_cc],
+                constant=0.0,
+                name=f"raw_exact_max_{month}_{period}",
+            )
+            # W-07 EXACT running maximum: z[p] = max(z[p-1], raw[p]), with
+            # z[first] = raw[first].  delta_z[p] = z[p] - z[p-1] then equals the
+            # frozen q[p] for EVERY feasible solution, not only at the optimum.
+            # Two operands per relation; this is unrelated to the closed
+            # reduced-native-MAX decision, which concerns hourly-operand maxima.
             if z_prev is None:
+                model.addConstr(z == raw, name=f"cum_exact_first_{month}_{period}")
                 delta_z = z
-                delta_s = s_tier
             else:
-                model.addConstr(s_tier >= s_prev, name=f"tier1_monotone_{month}_{period}")
-                model.addConstr(
-                    s_tier - s_prev <= z - z_prev,
-                    name=f"tier1_increment_le_total_{month}_{period}",
+                model.addGenConstrMax(
+                    z,
+                    [z_prev, raw],
+                    name=f"cum_exact_max_{month}_{period}",
                 )
                 delta_z = z - z_prev
-                delta_s = s_tier - s_prev
+            # delta_z is this period's NEW non-duplicated increment q[p]; its 2x
+            # allowance is q_tier1 <= min(q[p], 0.10*CC).  The allowance is
+            # per-increment, never a cumulative monthly pool, so earlier-period
+            # raw exceedance cannot consume it.  Both upper bounds are imposed
+            # directly; the objective coefficient on q_tier1 is -rate < 0, so
+            # minimization drives q_tier1 to exactly min(delta_z, tier_threshold)
+            # without any MAX/MIN or binary.
+            model.addConstr(
+                q_tier1 <= delta_z, name=f"tier1_le_increment_{month}_{period}"
+            )
+            model.addConstr(
+                q_tier1 <= tier_threshold, name=f"tier1_le_cap_{month}_{period}"
+            )
+            delta_s = q_tier1
 
             if season is not None:
                 rate_info = {
@@ -1700,7 +1782,7 @@ def build_eob_model(
                 "D": D,
                 "raw": raw,
                 "z": z,
-                "s": s_tier,
+                "s": q_tier1,
                 "rate": float(rate_info["resolved_rate"]) if rate_info["resolved_rate"] is not None else None,
                 "rate_unambiguous": True,
                 "candidate_rates": rate_info["candidate_rates"],
@@ -1721,13 +1803,14 @@ def build_eob_model(
                 "cumulative_demand_upper_kw": cumulative_demand_upper_kw,
                 "bound_derivation": (
                     "D and seasonal MAX upper bounds derive from hourly p_grid upper "
-                    "bounds; raw/z/s use the existing sequential cumulative-demand "
-                    "structure; Class-C W uses 3 times the cumulative demand bound; "
-                    "difference bounds are [-D_early_bar, D_later_bar]."
+                    "bounds; raw/z use the existing sequential cumulative-demand "
+                    "structure; the W-07 tier-1 variable is bounded per-increment "
+                    "by min(increment bound, 0.10*CC_ub); Class-C W uses 3 times "
+                    "the cumulative demand bound; difference bounds are "
+                    "[-D_early_bar, D_later_bar]."
                 ),
             }
             z_prev = z
-            s_prev = s_tier
 
         over_month_terms[month] = month_cost
         if season is None:
@@ -2274,11 +2357,10 @@ def solve_eob(
 
                 raw = max(0.0, global_exact - CC)
                 transition_positive_raw = transition_positive_raw or raw > TRANSITION_OVERAGE_TOL_KW
-                lower = min(prior_max, raw)
-                incremental = max(0.0, raw - prior_max)
                 cap = tier1_frac * CC
-                tier1_kw = max(0.0, min(raw, cap) - min(lower, cap))
-                tier2_kw = max(0.0, incremental - tier1_kw)
+                incremental, tier1_kw, tier2_kw = overcontract_tier_split(
+                    raw, prior_max, cap
+                )
                 W_exact = float(3.0 * incremental - tier1_kw)
 
                 if settlement_class == "CLASS_C_TWO_SEASON_DIFFERENT_SETTLEMENT_RATE":
@@ -2478,11 +2560,10 @@ def solve_eob(
             if rows.empty:
                 continue
             raw = float(rows.iloc[0]["raw_overage_kw"])
-            lower = min(prior_max, raw)
-            chargeable = max(0.0, raw - prior_max)
             cap = tier1_frac * CC
-            tier1_kw = max(0.0, min(raw, cap) - min(lower, cap))
-            tier2_kw = max(0.0, chargeable - tier1_kw)
+            chargeable, tier1_kw, tier2_kw = overcontract_tier_split(
+                raw, prior_max, cap
+            )
             rate = _matrix_rate(inputs.settlement_matrix, month, season, period)
             pure_exact_cost += rate * (tier1_mult * tier1_kw + tier2_mult * tier2_kw)
             prior_max = max(prior_max, raw)
