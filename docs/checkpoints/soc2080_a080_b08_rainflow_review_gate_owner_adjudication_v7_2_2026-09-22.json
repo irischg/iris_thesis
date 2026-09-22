@@ -1,0 +1,387 @@
+{
+  "schema_version": "v7.2-soc2080-a080-b08-rainflow-review-gate-owner-adjudication-1",
+  "record_type": "RAINFLOW_REVIEW_GATE_OWNER_ADJUDICATION_CHECKPOINT",
+  "checkpoint_role": "RAINFLOW_REVIEW_GATE_OWNER_ADJUDICATION",
+  "status": "REVIEW_CLOSED_ACCEPT_WITH_DISCLOSURE",
+  "checkpoint_date": "2026-09-22",
+  "created_at_utc": "2026-09-22T14:25:20.5841731Z",
+  "branch": "thesis-v7",
+  "change_classification": {
+    "classification": "ADDITIVE_PROVENANCE_CHECKPOINT_ONLY",
+    "methodology_changed": false,
+    "source_changed": false,
+    "diagnostic_artifacts_changed": false,
+    "raw_validator_state_changed": false,
+    "new_acceptance_threshold_introduced": false,
+    "production_execution_authorized": false,
+    "model_solve_performed_by_this_pass": false,
+    "model_construction_performed_by_this_pass": false,
+    "new_scientific_result_created_by_this_pass": false
+  },
+  "governing_sources": {
+    "framework": {
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5"
+    },
+    "evidence_registry": {
+      "path": "docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md",
+      "sha256": "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e"
+    },
+    "version_provenance_protocol": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "rules_applied": [
+        "additive-only checkpoint",
+        "primary repository bytes and run artifacts outrank prose",
+        "zero solve during provenance checkpoint pass",
+        "historical production artifacts remain immutable",
+        "checkpoint self-hash omitted to avoid circular self-reference"
+      ]
+    }
+  },
+  "pre_freeze_repository_authority": {
+    "branch": "thesis-v7",
+    "head": "beb54fb6b0b85711c570f5117a43bf7a296f60cd",
+    "origin_thesis_v7_after_fetch": "beb54fb6b0b85711c570f5117a43bf7a296f60cd",
+    "ahead": 0,
+    "behind": 0,
+    "staged_path_count": 0,
+    "tracked_modified_path_count": 0,
+    "accepted_preexisting_untracked_files": [
+      "0629開會逐字稿Iris.docx",
+      "Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md",
+      "Claude outputs/P2_Literature_Positioning_v7.2.pptx",
+      "Claude outputs/iris_thesis_independent_audit_2026-09-13.md",
+      "Claude outputs/iris_thesis_repo_audit_2026-09-13.md",
+      "docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf"
+    ],
+    "accepted_preexisting_untracked_file_count": 6,
+    "diagnostic_result_directory": {
+      "path": "results/diagnostics/soc2080_a080_b08/runs/20260922T114915241277Z_402a1e21fa",
+      "exists": true,
+      "git_classification": "IGNORED_BY_RESULTS_RULE_NOT_TRACKED",
+      "git_ignore_rule": ".gitignore:23:results/",
+      "commit_status": "UNCOMMITTED_RESEARCH_OUTPUT",
+      "modified_by_this_pass": false
+    },
+    "repository_literally_clean": false,
+    "repository_tracked_authority_clean": true
+  },
+  "frozen_authority_bundle": {
+    "diagnostic_runner": {
+      "path": "scripts/17f_run_soc2080_a080_b08_diagnostic.py",
+      "version": "v7.2-soc2080-a080-b08-diagnostic-candidate-2026-09-22-r1",
+      "sha256": "a8ec2250ed4a4bffcd79e2e57c93df29b1762c07baa9b109a1e0e2b3f02e30b0"
+    },
+    "diagnostic_tests": {
+      "path": "tests/test_17f_soc2080_a080_b08_diagnostic_v7_2.py",
+      "sha256": "bed72af36c94c1604ccf2621dcc35ca468f96d1faf69e61421fe1a5f5787bc30"
+    },
+    "diagnostic_preexecution_authority_freeze": {
+      "path": "docs/checkpoints/soc2080_a080_b08_single_case_diagnostic_preexecution_authority_freeze_v7_2_2026-09-22.json",
+      "sha256": "146ba010ca9fbc7cfd76c36f93d6cebea6b9398e1e03c2923f0ac839c54351e2"
+    },
+    "accepted_rainflow_failure_handling_correction_freeze": {
+      "path": "docs/checkpoints/soc2080_rainflow_failure_handling_correction_authority_freeze_v7_2_2026-09-22.json",
+      "sha256": "f8f74f4281187d67115c2e66abb942ccafebe237ae68d7ea6ad7af65d4724116"
+    },
+    "accepted_soc2080_runner": {
+      "path": "scripts/17e_run_soc_window_sensitivity.py",
+      "version": "v7.2-soc2080-sensitivity-runner-candidate-2026-09-22-r2",
+      "sha256": "2d8cc520a499851b2cfdc85dafa655accace5aee05d74dc31b851af75c5ffe5d"
+    },
+    "annual_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "version": "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10",
+      "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+    },
+    "rainflow_validator": {
+      "path": "src/rainflow_validation_v7_2.py",
+      "version": "v7.2-rainflow-validator-2026-08-30-r1",
+      "sha256": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    },
+    "soc2080_adapter": {
+      "path": "src/soc_window_sensitivity_adapter_v7_2.py",
+      "sha256": "11cfc8167683d7204955f7b0b583ed026889b3ca0629902ff08dc92be3bb6304"
+    },
+    "static_pin_verification": {
+      "status": "DIAGNOSTIC_BUILD_STATIC_AUTHORITY_PASS_NO_MODEL_NO_SOLVE",
+      "direct_dependency_pins_passed": 7,
+      "transitive_accepted_17e_pins_passed": 12,
+      "model_constructions": 0,
+      "optimize_calls": 0
+    }
+  },
+  "primary_diagnostic_authority": {
+    "run_id": "20260922T114915241277Z_402a1e21fa",
+    "result_path": "results/diagnostics/soc2080_a080_b08/runs/20260922T114915241277Z_402a1e21fa",
+    "case_id": "a0.80_b08",
+    "diagnostic_terminal_state": "DIAGNOSTIC_REVIEW_REQUIRED",
+    "raw_validator_state": "REVIEW",
+    "eligible_for_run_completion": false,
+    "eligible_for_production_completion": false,
+    "not_production_acceptance": true,
+    "gate_owner_adjudication": "REVIEW_CLOSED_ACCEPT_WITH_DISCLOSURE",
+    "layer_distinction": {
+      "validator_layer": "REVIEW",
+      "gate_owner_layer": "REVIEW_CLOSED_ACCEPT_WITH_DISCLOSURE",
+      "review_rewritten_as_pass": false
+    }
+  },
+  "diagnostic_artifact_authority": {
+    "tree_fingerprint": {
+      "root": "results/diagnostics/soc2080_a080_b08/runs/20260922T114915241277Z_402a1e21fa",
+      "algorithm": "SHA256 over UTF-8 concatenation of sorted POSIX relative path, NUL, byte count, NUL, lowercase file SHA-256, LF",
+      "file_count": 20,
+      "total_bytes": 2861138,
+      "tree_sha256": "abae3b66b2175064ab6a23f0eec28b20585b1a7e3519f3d47ab0bc6a21ce988d"
+    },
+    "relevant_artifacts": {
+      "diagnostic_run_manifest.json": {
+        "sha256": "38b6b9ef7e8c1e9e5454f801398f9ebdeef2037a4ae3417f6a776c4b2b245e94",
+        "bytes": 3346
+      },
+      "diagnostic_terminal_manifest.json": {
+        "sha256": "e6eb5e1677912c07f14035d2522744d614de649fea3bdabb42fb8d538ce32815",
+        "bytes": 5286
+      },
+      "case/a0.80_b08/artifacts/result.json": {
+        "sha256": "b4fa56e653bad115dadc055fbb5e59a9e35a6fe6135e11cdb28328b3aea588aa",
+        "bytes": 21113
+      },
+      "case/a0.80_b08/artifacts/post_solve_gates.json": {
+        "sha256": "4966f247bd415e010efe07b8de14d051ffe770abb6d7067c796e77f3d48324f0",
+        "bytes": 1811
+      },
+      "case/a0.80_b08/artifacts/rainflow_audit.json": {
+        "sha256": "b6e46f91028461c2380cc6068b51cb1a199002d390be7d1b7722503220a241a7",
+        "bytes": 3658
+      },
+      "case/a0.80_b08/artifacts/rainflow_pwl_segments.csv": {
+        "sha256": "a5793343fdab2ed164e62505359f51a43816ab0a60eedb6d44ccae86486c0258",
+        "bytes": 337
+      },
+      "case/a0.80_b08/artifacts/rainflow_depth_bins.csv": {
+        "sha256": "ab923af117e354cc1fd130e66990768309faa2862a2e4269ffddda96c61f3b8c",
+        "bytes": 321
+      },
+      "case/a0.80_b08/artifacts/dispatch.csv": {
+        "sha256": "f86cafeaa06eead6a1117dd14a916d8c8da42a99c20a6cdf4d168111f9dbd1a5",
+        "bytes": 1763994
+      },
+      "case/a0.80_b08/artifacts/outage_replay_audit.json": {
+        "sha256": "024f006dacc2026025be2bb8fe2eb396f2b4e15f1047d7a0621b825f92571694",
+        "bytes": 1031
+      },
+      "case/a0.80_b08/artifacts/billing_audit.json": {
+        "sha256": "d5135d021784224e4f327f2fc8a7519269407697bcb15e32294529cc4359c7c3",
+        "bytes": 319
+      }
+    },
+    "terminal_manifest_registry_role": "The diagnostic terminal manifest registers every diagnostic file except itself; its own external SHA-256 is recorded above.",
+    "artifacts_modified_by_this_pass": false
+  },
+  "primary_adjudication_evidence": {
+    "top_level_gate_counts": {
+      "PASS": 31,
+      "REVIEW": 2,
+      "FAIL": 0
+    },
+    "top_level_review_gates": [
+      "rainflow_validation",
+      "representative__rainflow_validation"
+    ],
+    "hard_fail_exists": false,
+    "internal_rainflow_gate_counts": {
+      "PASS": 12,
+      "REVIEW": 1,
+      "FAIL": 0
+    },
+    "only_internal_non_pass_rainflow_gate": {
+      "gate": "pwl_vs_rainflow_cost_numerical_equivalence",
+      "state": "REVIEW"
+    },
+    "all_other_internal_rainflow_gates": "PASS"
+  },
+  "exact_cost_difference": {
+    "pwl_degradation_cost_ntd2023_per_year": 22411.192301850315,
+    "rainflow_degradation_cost_ntd2023_per_year": 22401.14819363826,
+    "pwl_minus_rainflow_ntd2023_per_year": 10.044108212056017,
+    "absolute_relative_difference": 0.0004481737551833311,
+    "absolute_relative_difference_percent": 0.044817375518333105,
+    "numerical_equivalence_tolerance_ntd": 0.05,
+    "tolerance_semantics": "NUMERICAL_EQUIVALENCE_TOLERANCE_ONLY",
+    "scientific_materiality_threshold": false,
+    "new_acceptance_threshold_introduced": false
+  },
+  "exact_arithmetic_decomposition": {
+    "pwl_segment_1": {
+      "battery_side_discharge_kwh_adjudicated": 36122.394925,
+      "battery_side_discharge_kwh_artifact": 36122.39492455417,
+      "lambda_ntd2023_per_battery_side_discharged_kwh": 0.6200066796874999,
+      "lambda_approx": 0.6200066797
+    },
+    "pwl_segment_2": {
+      "battery_side_discharge_kwh_adjudicated": 8.100000,
+      "battery_side_discharge_kwh_artifact": 8.100000000255628,
+      "lambda_ntd2023_per_battery_side_discharged_kwh": 1.8600200390625,
+      "lambda_approx": 1.8600200391
+    },
+    "pwl_segment_3_battery_side_discharge_kwh": 0.0,
+    "rainflow": {
+      "rainflow_record_count": 795,
+      "all_records_depth_bin": "(0, 0.05]",
+      "all_records_priced_using": "lambda_1",
+      "rainflow_accounted_discharge_kwh": 36130.49492455315
+    },
+    "discrepancy_identity": {
+      "expression": "8.100 kWh * (lambda_2 - lambda_1)",
+      "decomposition_using_artifact_segment_2_energy_ntd": 10.044108211254482,
+      "reported_cost_difference_ntd": 10.044108212056017,
+      "decomposition_minus_reported_residual_ntd": -8.015348385015386e-10,
+      "absolute_residual_approx_ntd": 8.0e-10
+    },
+    "segment_2_allocation": {
+      "annual_trajectory_hour_count": 1,
+      "timestamp": "2025-10-14 14:00:00",
+      "ac_side_discharge_kw": 7.290000000230066
+    }
+  },
+  "implementation_calibration_adjudication": {
+    "finding": "IMPLEMENTATION_CALIBRATION_DEFECT_DEMONSTRATED",
+    "value": "NO",
+    "supporting_facts": {
+      "pwl_dispatch_vs_15b_cost": "PASS",
+      "segment_vs_aggregate_discharge": "PASS",
+      "hourly_segment_power_linkage": "PASS",
+      "intertemporal_segment_state_dynamics": "PASS",
+      "physical_vs_segment_state_identity": "PASS",
+      "rainflow_vs_dispatch_discharge_energy": "PASS",
+      "rainflow_depth_within_technical_domain": "PASS",
+      "dispatch_vs_15b_battery_discharge_energy": "PASS",
+      "soc_bounds": "PASS",
+      "annual_cyclic_state": "PASS",
+      "simultaneous_charge_discharge_hours": 0,
+      "solver_status": "OPTIMAL",
+      "solver_mip_gap": 9.21766553415047e-7,
+      "accepted_mip_gap_ceiling": 1.0e-6,
+      "billing": "PASS",
+      "outage_replay": "PASS",
+      "calibration_and_package_routing": "PASS"
+    },
+    "finding_not_reinterpreted_or_expanded": true
+  },
+  "energy_reconciliation": {
+    "dispatch_battery_side_discharge_kwh": 36130.49492455428,
+    "rainflow_accounted_discharge_kwh": 36130.49492455315,
+    "rainflow_minus_dispatch_kwh": -1.127773430198431e-9,
+    "supports": {
+      "missing_discharge": "NO",
+      "double_counting": "NO",
+      "material_energy_basis_inconsistency": "NO"
+    }
+  },
+  "model_form_interpretation": {
+    "confirmed_fact": "The 10.044108 NTD discrepancy is attributable to 8.100 kWh being assigned to PWL segment 2 in one hour while ex-post rainflow assigns all realized cycles to the shallowest depth region.",
+    "inference": "The one-hour segment-2 allocation may reflect a degenerate near-optimal segment allocation within the accepted nonzero MIP gap.",
+    "inference_promoted_to_confirmed_causal_fact": false,
+    "general_cycle_shallowness_claim_authorized": false,
+    "control_case_boundary": "The control cases demonstrate that shallower trajectories can have exact PWL/rainflow agreement when segment attribution and rainflow-depth attribution align."
+  },
+  "sizing_and_methodology_adjudication": {
+    "sizing_finding": "SIZING_IMPLICATION_NOT_DEMONSTRATED",
+    "methodology_finding": "METHODOLOGY_CONFLICT_NOT_DEMONSTRATED",
+    "zero_sizing_impact_proven": false,
+    "counterfactual_resolve_performed": false,
+    "structural_findings": {
+      "E_N_kwh": 56328.51851851853,
+      "analytical_resilience_lower_bound_kwh": 56176.66666666666,
+      "E_N_above_bound_kwh": 151.85185185187584,
+      "E_N_above_bound_percent": 0.27031125351903373,
+      "outage_adequacy_binding": true,
+      "P_B_kw_ac": 3949.6,
+      "layer_a_power_requirement_kw_ac": 3949.6000000000004,
+      "power_difference_kw": -4.547473508864641e-13,
+      "reserve_kwh": 33706.0,
+      "usable_soc_window_kwh": 33797.11111111112,
+      "reserve_share_of_usable_soc_window": 0.9973041745842838,
+      "reserve_share_percent": 99.73041745842838,
+      "design_characterization": "RESILIENCE_CONSTRAINED"
+    }
+  },
+  "descriptive_magnitude_only": {
+    "status": "DESCRIPTIVE_ONLY_NOT_ACCEPTANCE_THRESHOLDS",
+    "absolute_difference_ntd2023_per_year": 10.044108212056017,
+    "relative_to_cycling_degradation_percent": 0.044817375518333105,
+    "relative_to_annual_objective_percent": 8.3061506956126e-6,
+    "pwl_cycling_cost_share_of_annual_objective_percent": 0.01853332686162059,
+    "rainflow_cycling_cost_share_of_annual_objective_percent": 0.018525020710924975,
+    "prohibited_materiality_rules_not_created": [
+      "0.1%",
+      "1%",
+      "10 NTD",
+      "objective-share",
+      "any other materiality rule"
+    ]
+  },
+  "historical_boundary": {
+    "historical_date": "2026-09-21",
+    "historical_run_id": "20260921T153546259891Z_2e03707743",
+    "case_id": "a0.80_b08",
+    "historical_internal_rainflow_state": "UNRESOLVED / UNRECOVERABLE FROM PRESERVED EVIDENCE",
+    "new_diagnostic_date": "2026-09-22",
+    "new_diagnostic_is_new_solve": true,
+    "new_diagnostic_review_retrospectively_assigned_to_historical_solve": false
+  },
+  "acceptance_scope": {
+    "accepted_statement": "The 2026-09-22 a0.80_b08 diagnostic result is scientifically usable as evidence that the corrected configuration is solver-valid, structurally rainflow-consistent, resilience-adequate, and billing/settlement-valid, with the finite-PWL versus rainflow cycling-cost difference disclosed.",
+    "accepted_evidence": [
+      "solver-valid",
+      "structurally rainflow-consistent",
+      "resilience-adequate",
+      "billing/settlement-valid"
+    ],
+    "finite_pwl_vs_rainflow_difference_disclosure_required": true,
+    "rainflow_review_gate_owner_state": "CLOSED",
+    "raw_validator_state": "REVIEW"
+  },
+  "explicitly_not_authorized": [
+    "production completion of a0.80_b08",
+    "retrospective repair of the historical 2026-09-21 case",
+    "a1.00_b04 execution",
+    "a1.00_b12 execution",
+    "full six-case SOC2080 rerun",
+    "Step 12",
+    "final81",
+    "any additional solve"
+  ],
+  "remaining_route_limitation": {
+    "runner": "scripts/17e_run_soc_window_sensitivity.py",
+    "remaining_two_case_execution_mode_exists": false,
+    "limitation_solved_by_this_pass": false
+  },
+  "optimize_accounting": {
+    "lifetime_step_11c_optimize_calls": 6,
+    "this_checkpoint_pass_optimize_calls": 0,
+    "this_checkpoint_pass_model_constructions": 0,
+    "new_scientific_results_created_by_this_checkpoint_pass": 0
+  },
+  "next_gate": {
+    "name": "SOC2080 PRODUCTION-CONTINUATION ROUTE DECISION",
+    "authorized_by_this_checkpoint": false,
+    "options_requiring_future_adjudication": {
+      "A": "full six-case 17e rerun",
+      "B": "narrowly scoped continuation capability for only a1.00_b04 and a1.00_b12"
+    },
+    "choice_made_by_this_checkpoint": "NONE"
+  },
+  "immutable_prior_provenance": {
+    "diagnostic_artifact_tree": "NOT_MODIFIED",
+    "historical_soc2080_run_artifacts": "NOT_MODIFIED",
+    "framework_v7_2": "NOT_MODIFIED",
+    "registry_v7_2": "NOT_MODIFIED",
+    "source_code": "NOT_MODIFIED"
+  },
+  "checkpoint_self_hash_omitted": true,
+  "checkpoint_self_hash_reason": "Avoid circular self-reference; record the checkpoint SHA-256 externally after serialization and commit."
+}
