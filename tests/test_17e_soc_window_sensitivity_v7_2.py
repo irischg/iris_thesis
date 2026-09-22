@@ -20,6 +20,8 @@ import unittest
 import uuid
 from pathlib import Path
 
+import pandas as pd
+
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -86,6 +88,10 @@ class SocWindowContractTests(unittest.TestCase):
 
 class RunnerContractTests(unittest.TestCase):
     def test_case_allowlist_and_solve_counts(self) -> None:
+        self.assertEqual(
+            runner.SCRIPT_VERSION,
+            "v7.2-soc2080-sensitivity-runner-candidate-2026-09-22-r2",
+        )
         self.assertEqual(
             runner.ALLOWED_CASE_IDS,
             (
@@ -165,6 +171,135 @@ class RunnerContractTests(unittest.TestCase):
             )
         self.assertEqual(return_code, 0)
         self.assertEqual(calls["executor"], 0)
+
+
+class RainflowAuthorityStateTests(unittest.TestCase):
+    @staticmethod
+    def _rainflow(verdict: str, cost_state: str, hard_state: str = "PASS"):
+        return {
+            "summary": {
+                "verdict": verdict,
+                "maximum_rainflow_DOD_fraction_nameplate": 0.60,
+            },
+            "gates": {
+                "soc_energy_identity": hard_state,
+                "pwl_vs_rainflow_cost_numerical_equivalence": cost_state,
+            },
+        }
+
+    @staticmethod
+    def _result():
+        return {
+            "status": "OPTIMAL",
+            "mode": "binary",
+            "mip_gap": 0.0,
+            "dispatch": pd.DataFrame(
+                {
+                    "e_seg_3_kwh": [0.0, 0.0],
+                    "p_charge_seg_3_kw_ac": [0.0, 0.0],
+                    "p_discharge_seg_3_kw_ac": [0.0, 0.0],
+                    "soc_fraction": [0.20, 0.80],
+                }
+            ),
+            "physical_diagnostics": {
+                "soc_min_realized": 0.20,
+                "soc_max_realized": 0.80,
+                "max_ac_balance_residual_kw": 0.0,
+                "max_segment_dynamics_residual_kwh": 0.0,
+                "max_segment_cyclic_residual_kwh": 0.0,
+                "simultaneous_hours_above_tol": 0,
+            },
+            "cost_reconciliation_residual_ntd": 0.0,
+            "transition_settlement": {
+                "nonbinding_certificate": "PASS_NO_RATE_AMBIGUOUS_INCREMENTAL_OVERAGE"
+            },
+        }
+
+    @staticmethod
+    def _billing():
+        return {
+            "period_ids": "PASS",
+            "detail_columns": "PASS",
+            "valid_detail_keys": "PASS",
+            "duplicate_detail_keys": "PASS",
+            "tariff_calendar_structure": "PASS",
+        }
+
+    def test_base_gate_preserves_pass_review_fail_and_fails_closed(self) -> None:
+        cases = (
+            ("RAINFLOW_VALIDATION_PASS", "PASS", "PASS", "PASS"),
+            (
+                "RAINFLOW_VALIDATION_REVIEW_REQUIRED_PWL_COST_DIFFERENCE",
+                "REVIEW",
+                "PASS",
+                "REVIEW",
+            ),
+            ("RAINFLOW_VALIDATION_FAIL", "PASS", "FAIL", "FAIL"),
+            ("RAINFLOW_VALIDATION_PASS", "REVIEW", "PASS", "FAIL"),
+        )
+        for verdict, cost_state, hard_state, expected in cases:
+            with self.subTest(
+                verdict=verdict, cost_state=cost_state, hard_state=hard_state
+            ):
+                gates = runner.base_post_solve_gates(
+                    self._result(),
+                    self._billing(),
+                    self._rainflow(verdict, cost_state, hard_state),
+                )
+                self.assertEqual(gates["rainflow_validation"], expected)
+
+    def test_review_and_fail_are_serialized_before_termination(self) -> None:
+        for state, expected_status in (
+            ("REVIEW", "CANDIDATE_REVIEW_REQUIRED"),
+            ("FAIL", "CANDIDATE_GATE_FAILED"),
+        ):
+            events = []
+
+            def serializer(status, post_solve_state):
+                events.append(("serialized", status, post_solve_state))
+
+            with self.subTest(state=state):
+                with self.assertRaises(runner.SocSensitivityAuthorityError):
+                    runner.serialize_case_diagnostics_before_enforcement(
+                        "synthetic_case",
+                        {"rainflow_validation": state},
+                        serializer,
+                    )
+                self.assertEqual(
+                    events,
+                    [("serialized", expected_status, state)],
+                )
+
+    def test_pass_serialization_retains_candidate_completion_semantics(self) -> None:
+        events = []
+
+        def serializer(status, post_solve_state):
+            events.append(("serialized", status, post_solve_state))
+
+        status = runner.serialize_case_diagnostics_before_enforcement(
+            "synthetic_case",
+            {"rainflow_validation": "PASS", "all_other_gates": "PASS"},
+            serializer,
+        )
+        self.assertEqual(status, "CANDIDATE_PENDING_INDEPENDENT_POST_RUN_AUDIT")
+        self.assertEqual(
+            events,
+            [
+                (
+                    "serialized",
+                    "CANDIDATE_PENDING_INDEPENDENT_POST_RUN_AUDIT",
+                    "PASS",
+                )
+            ],
+        )
+
+    def test_corrected_representative_helper_hash_is_pinned(self) -> None:
+        self.assertEqual(
+            runner.sha256_file(
+                ROOT / "scripts/16a_preflight_layer_a_representative_binary_cases.py"
+            ),
+            runner.EXPECTED_HELPER_SHA256,
+        )
 
 
 class SourceIsolationTests(unittest.TestCase):

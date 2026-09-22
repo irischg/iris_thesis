@@ -46,7 +46,7 @@ from src.soc_window_sensitivity_adapter_v7_2 import (
 )
 
 
-SCRIPT_VERSION = "v7.2-soc2080-sensitivity-runner-candidate-2026-09-21-r1"
+SCRIPT_VERSION = "v7.2-soc2080-sensitivity-runner-candidate-2026-09-22-r2"
 EXPECTED_BRANCH = "thesis-v7"
 EXPECTED_FUTURE_SENSITIVITY_OPTIMIZE_CALLS = 6
 EXPECTED_FUTURE_COMPARATOR_OPTIMIZE_CALLS = 0
@@ -55,13 +55,24 @@ EXPECTED_MAINLINE_PACKAGE_ID = "pnnl_v2024_lfp_2023_point_10mw_4to10h"
 EXPECTED_MAINLINE_PACKAGE_SHA256 = "b8c461eb3513a2f6f05739a824d124e797aa7f59d12b1cf28b066bc391bcd5e2"
 EXPECTED_CANONICAL_INPUT_SHA256 = "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e"
 EXPECTED_17D_SHA256 = "9899bc0e2a24bbf6d01d8b2c5dd976142975eb48c7f05933a46b43477eabdb55"
-EXPECTED_HELPER_SHA256 = "3f62fa290e1c8e1699c34d4b1bc78b9af0e716387b251afb4ada2b3198d7524f"
+EXPECTED_HELPER_SHA256 = "5813119e258e83a45a245ec715ade4536bf9dbf880687f6d3f1e978cce8b06a0"
 EXPECTED_RAINFLOW_SHA256 = "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
 MIP_GAP = 1e-6
 NUMERIC_FOCUS = 1
 OUTPUT_FLAG = 1
 TIME_LIMIT_SEC = None
 TOL = 1e-6
+RAINFLOW_COST_EQUIVALENCE_GATE = "pwl_vs_rainflow_cost_numerical_equivalence"
+RAINFLOW_PASS_VERDICT = "RAINFLOW_VALIDATION_PASS"
+RAINFLOW_REVIEW_VERDICT = (
+    "RAINFLOW_VALIDATION_REVIEW_REQUIRED_PWL_COST_DIFFERENCE"
+)
+RAINFLOW_FAIL_VERDICT = "RAINFLOW_VALIDATION_FAIL"
+CASE_AUTHORITY_STATUS = {
+    "PASS": "CANDIDATE_PENDING_INDEPENDENT_POST_RUN_AUDIT",
+    "REVIEW": "CANDIDATE_REVIEW_REQUIRED",
+    "FAIL": "CANDIDATE_GATE_FAILED",
+}
 
 SOLVER_CONTRACT = {
     "solver": "Gurobi",
@@ -726,6 +737,41 @@ def outage_replay_audit(
     return audit, starts
 
 
+def classify_rainflow_validation(rainflow: Mapping[str, Any] | None) -> str:
+    """Preserve the validator's PASS/REVIEW/FAIL contract; inconsistencies fail closed."""
+
+    if not isinstance(rainflow, Mapping):
+        return "FAIL"
+    summary = rainflow.get("summary")
+    gates = rainflow.get("gates")
+    if not isinstance(summary, Mapping) or not isinstance(gates, Mapping):
+        return "FAIL"
+    if RAINFLOW_COST_EQUIVALENCE_GATE not in gates:
+        return "FAIL"
+
+    cost_state = gates[RAINFLOW_COST_EQUIVALENCE_GATE]
+    hard_states = [
+        state for name, state in gates.items() if name != RAINFLOW_COST_EQUIVALENCE_GATE
+    ]
+    if (
+        not hard_states
+        or any(state not in {"PASS", "FAIL"} for state in hard_states)
+        or cost_state not in {"PASS", "REVIEW"}
+    ):
+        return "FAIL"
+
+    verdict = summary.get("verdict")
+    if verdict == RAINFLOW_FAIL_VERDICT or any(
+        state == "FAIL" for state in hard_states
+    ):
+        return "FAIL"
+    if verdict == RAINFLOW_REVIEW_VERDICT and cost_state == "REVIEW":
+        return "REVIEW"
+    if verdict == RAINFLOW_PASS_VERDICT and cost_state == "PASS":
+        return "PASS"
+    return "FAIL"
+
+
 def base_post_solve_gates(
     result: Mapping[str, Any],
     billing: Mapping[str, Any],
@@ -743,10 +789,7 @@ def base_post_solve_gates(
         for column in third_columns
     )
     realized_depth = float(dispatch["soc_fraction"].max() - dispatch["soc_fraction"].min())
-    rainflow_pass = (
-        rainflow.get("summary", {}).get("verdict") == "RAINFLOW_VALIDATION_PASS"
-        and all(value == "PASS" for value in rainflow.get("gates", {}).values())
-    )
+    rainflow_state = classify_rainflow_validation(rainflow)
     return {
         "solver_optimal": "PASS" if result.get("status") == "OPTIMAL" else "FAIL",
         "binary_formulation": "PASS" if result.get("mode") == "binary" else "FAIL",
@@ -802,8 +845,40 @@ def base_post_solve_gates(
             }
         )
         else "FAIL",
-        "rainflow_validation": "PASS" if rainflow_pass else "FAIL",
+        "rainflow_validation": rainflow_state,
     }
+
+
+def classify_post_solve_authority(gates: Mapping[str, str]) -> str:
+    """Reduce case gates without promoting REVIEW or unknown states."""
+
+    if not isinstance(gates, Mapping) or not gates:
+        return "FAIL"
+    states = tuple(gates.values())
+    if any(state not in {"PASS", "REVIEW", "FAIL"} for state in states):
+        return "FAIL"
+    if any(state == "FAIL" for state in states):
+        return "FAIL"
+    if any(state == "REVIEW" for state in states):
+        return "REVIEW"
+    return "PASS"
+
+
+def serialize_case_diagnostics_before_enforcement(
+    case_id: str,
+    gates: Mapping[str, str],
+    serializer: Callable[[str, str], None],
+) -> str:
+    """Persist a solved candidate, then enforce its non-accepting authority state."""
+
+    post_solve_state = classify_post_solve_authority(gates)
+    candidate_status = CASE_AUTHORITY_STATUS[post_solve_state]
+    serializer(candidate_status, post_solve_state)
+    if post_solve_state != "PASS":
+        raise SocSensitivityAuthorityError(
+            f"Post-solve gate {post_solve_state} for {case_id}: {dict(gates)}"
+        )
+    return candidate_status
 
 
 def strip_result(result: Mapping[str, Any]) -> dict[str, Any]:
@@ -859,18 +934,21 @@ def write_case_artifacts(
     analytical_requirement: Mapping[str, Any] | None,
     outage_audit: Mapping[str, Any] | None,
     outage_starts: pd.DataFrame | None,
+    candidate_status: str,
+    post_solve_state: str,
 ) -> None:
     case_dir.mkdir(parents=True, exist_ok=False)
     write_json(
         case_dir / "result.json",
         {
-            "status": "CANDIDATE_PENDING_INDEPENDENT_POST_RUN_AUDIT",
+            "status": candidate_status,
             "case_id": case.case_id,
             "alpha": case.alpha,
             "beta_h": case.beta_h,
             "lineage_id": LINEAGE_ID,
             "parent_lineage": PARENT_LINEAGE_ID,
-            "authority_state": "CANDIDATE_PENDING_INDEPENDENT_POST_RUN_AUDIT",
+            "authority_state": candidate_status,
+            "post_solve_authority_state": post_solve_state,
             "runner_version": SCRIPT_VERSION,
             "runner_sha256": sha256_file(Path(__file__).resolve()),
             "adapter_version": ADAPTER_VERSION,
@@ -937,7 +1015,15 @@ def write_case_artifacts(
     result["transition_settlement_detail"].to_csv(
         case_dir / "transition_settlement_detail.csv", index=False, encoding="utf-8-sig"
     )
-    write_json(case_dir / "post_solve_gates.json", {"status": "PASS", "gates": gates})
+    write_json(
+        case_dir / "post_solve_gates.json",
+        {
+            "status": post_solve_state,
+            "authority_state": candidate_status,
+            "eligible_for_run_completion": post_solve_state == "PASS",
+            "gates": gates,
+        },
+    )
     write_json(
         case_dir / "rainflow_audit.json",
         {
@@ -1025,6 +1111,7 @@ def execute_production(root: Path, static_authority: Mapping[str, Any]) -> Path:
     run_id = new_run_id()
     run_dir: Path | None = None
     completed: dict[str, dict[str, Any]] = {}
+    nonaccepted_case: dict[str, Any] | None = None
     try:
         run_dir = allocate_run_directory(root, run_id)
         write_json(
@@ -1130,24 +1217,44 @@ def execute_production(root: Path, static_authority: Mapping[str, Any]) -> Path:
                         inputs.annual, requirement, result["sizing"]
                     )
                     gates["all_start_outage_replay"] = outage_audit["status"]
-                if not all(value == "PASS" for value in gates.values()):
-                    raise SocSensitivityAuthorityError(
-                        f"Post-solve gate failed for {case.case_id}: {gates}"
-                    )
                 comparator = comparator_records[case.case_id]
-                write_case_artifacts(
-                    case_dir / "artifacts",
-                    case,
-                    result,
-                    inputs.mainline_package,
+
+                def persist_case_diagnostics(
+                    authority_status: str, gate_state: str
+                ) -> None:
+                    nonlocal nonaccepted_case
+                    write_case_artifacts(
+                        case_dir / "artifacts",
+                        case,
+                        result,
+                        inputs.mainline_package,
+                        gates,
+                        rainflow,
+                        comparator,
+                        requirement,
+                        outage_audit,
+                        outage_starts,
+                        authority_status,
+                        gate_state,
+                    )
+                    if gate_state != "PASS":
+                        nonaccepted_case = {
+                            "case_id": case.case_id,
+                            "authority_state": authority_status,
+                            "post_solve_authority_state": gate_state,
+                            "artifacts_path": (
+                                Path("cases") / case.case_id / "artifacts"
+                            ).as_posix(),
+                            "eligible_for_run_completion": False,
+                        }
+
+                candidate_status = serialize_case_diagnostics_before_enforcement(
+                    case.case_id,
                     gates,
-                    rainflow,
-                    comparator,
-                    requirement,
-                    outage_audit,
-                    outage_starts,
+                    persist_case_diagnostics,
                 )
                 completed[case.case_id] = {
+                    "status": candidate_status,
                     "result": strip_result(result),
                     "gates": gates,
                     "elapsed_wall_seconds": time.perf_counter() - started,
@@ -1241,6 +1348,7 @@ def execute_production(root: Path, static_authority: Mapping[str, Any]) -> Path:
                         "exception_type": type(exc).__name__,
                         "exception_message": str(exc),
                         "completed_cases": list(completed),
+                        "nonaccepted_case": nonaccepted_case,
                         "completion_manifest_written": False,
                     },
                 )

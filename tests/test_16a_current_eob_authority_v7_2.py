@@ -39,7 +39,7 @@ class CurrentEobAuthorityTests(unittest.TestCase):
         result, authority, paths = self.script.current_corrected_eob(ROOT)
         self.assertEqual(
             self.script.SCRIPT_VERSION,
-            "v7.2-layer-a-analytical-representative-binary-preflight-current-eob-authority-2026-09-17-r11",
+            "v7.2-layer-a-analytical-representative-binary-preflight-current-eob-authority-2026-09-22-r12",
         )
         self.assertEqual(authority["authority_role"], "CURRENT_CORRECTED_EOB_COMPARATOR")
         self.assertEqual(authority["run_id"], "20260917T082758521112Z_a4b6383308")
@@ -177,6 +177,86 @@ class CurrentEobAuthorityTests(unittest.TestCase):
         _result, authority, paths = self.script.current_corrected_eob(ROOT)
         self.assertFalse(authority["corrected_rainflow_required"])
         self.assertFalse(any("rainflow" in key for key in paths))
+
+
+class RepresentativeRainflowStateTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.script = load_script()
+
+    @staticmethod
+    def _rainflow(verdict: str, cost_state: str, hard_state: str = "PASS"):
+        return {
+            "summary": {"verdict": verdict},
+            "gates": {
+                "soc_energy_identity": hard_state,
+                "pwl_vs_rainflow_cost_numerical_equivalence": cost_state,
+            },
+        }
+
+    def _representative_rainflow_gate(self, rainflow) -> str:
+        result = {
+            "has_solution": True,
+            "status": "OPTIMAL",
+            "mode": "binary",
+            "mip_gap": 0.0,
+            "sizing": {"E_N_kwh": 10.0, "P_B_kw_ac": 5.0},
+            "physical_diagnostics": {
+                "soc_min_realized": 0.20,
+                "soc_max_realized": 0.80,
+                "simultaneous_hours_above_tol": 0,
+            },
+            "layer_a_resilience": {"annual_reserve_floor": {"violating_hours": 0}},
+            "cost_reconciliation_residual_ntd": 0.0,
+            "objective_ntd2023_per_year": 100.0,
+            "transition_settlement": {
+                "nonbinding_certificate": "PASS_NO_RATE_AMBIGUOUS_INCREMENTAL_OVERAGE"
+            },
+        }
+        requirement = {
+            "analytical_E_N_min_kwh": 9.0,
+            "P_out_kw_ac": 4.0,
+        }
+        eob = {"objective_ntd2023_per_year": 90.0}
+        billing = {
+            "period_ids": "PASS",
+            "detail_columns": "PASS",
+            "valid_detail_keys": "PASS",
+            "duplicate_detail_keys": "PASS",
+            "tariff_calendar_structure": "PASS",
+            "actual_row_count": 1,
+            "expected_row_count": 1,
+        }
+        return self.script.representative_gate(
+            result,
+            requirement,
+            eob,
+            soc_min=0.20,
+            soc_max=0.80,
+            rainflow_validation=rainflow,
+            billing_audit=billing,
+        )["rainflow_validation"]
+
+    def test_representative_rainflow_pass_review_fail_and_fail_closed(self) -> None:
+        cases = (
+            ("RAINFLOW_VALIDATION_PASS", "PASS", "PASS", "PASS"),
+            (
+                "RAINFLOW_VALIDATION_REVIEW_REQUIRED_PWL_COST_DIFFERENCE",
+                "REVIEW",
+                "PASS",
+                "REVIEW",
+            ),
+            ("RAINFLOW_VALIDATION_FAIL", "PASS", "FAIL", "FAIL"),
+            ("RAINFLOW_VALIDATION_PASS", "REVIEW", "PASS", "FAIL"),
+        )
+        for verdict, cost_state, hard_state, expected in cases:
+            with self.subTest(
+                verdict=verdict, cost_state=cost_state, hard_state=hard_state
+            ):
+                actual = self._representative_rainflow_gate(
+                    self._rainflow(verdict, cost_state, hard_state)
+                )
+                self.assertEqual(actual, expected)
 
 
 if __name__ == "__main__":

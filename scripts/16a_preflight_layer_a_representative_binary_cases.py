@@ -19,13 +19,13 @@ import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 import numpy as np
 import pandas as pd
 
 
-SCRIPT_VERSION = "v7.2-layer-a-analytical-representative-binary-preflight-current-eob-authority-2026-09-17-r11"
+SCRIPT_VERSION = "v7.2-layer-a-analytical-representative-binary-preflight-current-eob-authority-2026-09-22-r12"
 EXPECTED_CORE_VERSION = "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10"
 EXPECTED_CORE_SHA256 = "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
 CURRENT_CORRECTED_EOB_RUN_ID = "20260917T082758521112Z_a4b6383308"
@@ -64,6 +64,12 @@ REPRESENTATIVE_CASES_BY_ID = {
 PRODUCTION_MIP_GAP_MAX = 1e-6
 EOB_OBJECTIVE_TOL_NTD = 100.0
 TOL = 1e-6
+RAINFLOW_COST_EQUIVALENCE_GATE = "pwl_vs_rainflow_cost_numerical_equivalence"
+RAINFLOW_PASS_VERDICT = "RAINFLOW_VALIDATION_PASS"
+RAINFLOW_REVIEW_VERDICT = (
+    "RAINFLOW_VALIDATION_REVIEW_REQUIRED_PWL_COST_DIFFERENCE"
+)
+RAINFLOW_FAIL_VERDICT = "RAINFLOW_VALIDATION_FAIL"
 
 
 def project_root() -> Path:
@@ -517,6 +523,45 @@ def billing_structure_audit(
     }
 
 
+def classify_rainflow_validation(
+    rainflow_validation: Mapping[str, Any] | None,
+) -> str:
+    """Preserve the validator's PASS/REVIEW/FAIL contract; inconsistencies fail closed."""
+
+    if not isinstance(rainflow_validation, Mapping):
+        return "FAIL"
+    summary = rainflow_validation.get("summary")
+    gates = rainflow_validation.get("gates")
+    if not isinstance(summary, Mapping) or not isinstance(gates, Mapping):
+        return "FAIL"
+    if RAINFLOW_COST_EQUIVALENCE_GATE not in gates:
+        return "FAIL"
+
+    cost_state = gates[RAINFLOW_COST_EQUIVALENCE_GATE]
+    hard_states = [
+        state
+        for name, state in gates.items()
+        if name != RAINFLOW_COST_EQUIVALENCE_GATE
+    ]
+    if (
+        not hard_states
+        or any(state not in {"PASS", "FAIL"} for state in hard_states)
+        or cost_state not in {"PASS", "REVIEW"}
+    ):
+        return "FAIL"
+
+    verdict = summary.get("verdict")
+    if verdict == RAINFLOW_FAIL_VERDICT or any(
+        state == "FAIL" for state in hard_states
+    ):
+        return "FAIL"
+    if verdict == RAINFLOW_REVIEW_VERDICT and cost_state == "REVIEW":
+        return "REVIEW"
+    if verdict == RAINFLOW_PASS_VERDICT and cost_state == "PASS":
+        return "PASS"
+    return "FAIL"
+
+
 def representative_gate(
     result: dict[str, Any],
     requirement: dict[str, Any],
@@ -531,11 +576,7 @@ def representative_gate(
         return {"solver_solution": "FAIL"}
     sizing, phys = result["sizing"], result["physical_diagnostics"]
     layer = result.get("layer_a_resilience", {})
-    rainflow_pass = (
-        rainflow_validation is not None
-        and rainflow_validation["summary"].get("verdict") == "RAINFLOW_VALIDATION_PASS"
-        and all(value == "PASS" for value in rainflow_validation["gates"].values())
-    )
+    rainflow_state = classify_rainflow_validation(rainflow_validation)
     return {
         "solver_optimal": "PASS" if result["status"] == "OPTIMAL" else "FAIL",
         "binary_formulation": "PASS" if result["mode"] == "binary" else "FAIL",
@@ -554,7 +595,7 @@ def representative_gate(
         "billing_tariff_calendar_structure": billing_audit["tariff_calendar_structure"],
         "billing_row_count": "PASS" if billing_audit["actual_row_count"] == billing_audit["expected_row_count"] else "FAIL",
         "transition_ambiguity": "PASS" if result["transition_settlement"]["nonbinding_certificate"] == "PASS_NO_RATE_AMBIGUOUS_INCREMENTAL_OVERAGE" else "FAIL",
-        "rainflow_validation": "PASS" if rainflow_pass else "FAIL",
+        "rainflow_validation": rainflow_state,
     }
 
 
