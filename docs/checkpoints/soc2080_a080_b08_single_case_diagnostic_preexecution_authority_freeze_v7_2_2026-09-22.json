@@ -1,0 +1,404 @@
+{
+  "schema_version": "v7.2-soc2080-a080-b08-single-case-diagnostic-preexecution-authority-freeze-1",
+  "record_type": "SINGLE_CASE_DIAGNOSTIC_PREEXECUTION_AUTHORITY_FREEZE",
+  "checkpoint_role": "SINGLE_CASE_DIAGNOSTIC_PREEXECUTION_AUTHORITY_FREEZE",
+  "status": "DIAGNOSTIC_CAPABILITY_FROZEN_EXECUTION_NOT_YET_AUTHORIZED",
+  "checkpoint_date": "2026-09-22",
+  "created_at_utc": "2026-09-22T10:21:51.494753+00:00",
+  "branch": "thesis-v7",
+  "governing_sources": {
+    "framework": {
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5"
+    },
+    "evidence_registry": {
+      "path": "docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md",
+      "sha256": "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e"
+    },
+    "provenance_protocol": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "sequence_followed": "Section 25 Commit/Tag Freeze Rule steps 1-5; step 6 (production execution) NOT performed",
+      "additive_only_rule": "Section 5 satisfied: two new source files plus this new checkpoint; nothing historical mutated"
+    }
+  },
+  "accepted_diagnostic_capability_commit": {
+    "label": "COMMIT_A",
+    "commit_sha": "c397f5605be9253c955a9ed40659ebe356e1884d",
+    "subject": "Add audited SOC2080 a0.80_b08 diagnostic capability",
+    "tree_sha": "db926a8002b443e171100cc1e9a13725dcf5485f",
+    "parent_commit_sha": "9058ae55de85fa8a55edda9232a3dc04f828510e",
+    "files_changed": 2,
+    "insertions": 1136,
+    "deletions": 0,
+    "remote_synchronized": true,
+    "message_amendment_note": "The first locally created commit object 27a45746cfb87c8735f855224bae504c17043c74 carried a malformed subject line (a stray at-sign from a shell here-string quoting error). It was never pushed and never referenced by any artifact. Its message only was amended, under explicit user authorization, producing this commit. The Git tree object was byte-identical before and after the amendment (db926a8002b443e171100cc1e9a13725dcf5485f), so no accepted source byte changed. The discarded object is on no branch."
+  },
+  "diagnostic_runner": {
+    "path": "scripts/17f_run_soc2080_a080_b08_diagnostic.py",
+    "sha256": "a8ec2250ed4a4bffcd79e2e57c93df29b1762c07baa9b109a1e0e2b3f02e30b0",
+    "script_version": "v7.2-soc2080-a080-b08-diagnostic-candidate-2026-09-22-r1",
+    "line_count": 756,
+    "line_endings": "LF",
+    "tracked": true
+  },
+  "diagnostic_tests": {
+    "path": "tests/test_17f_soc2080_a080_b08_diagnostic_v7_2.py",
+    "sha256": "bed72af36c94c1604ccf2621dcc35ca468f96d1faf69e61421fe1a5f5787bc30",
+    "line_count": 380,
+    "line_endings": "LF",
+    "tracked": true,
+    "build_only_test_count": 18,
+    "model_constructions": 0,
+    "optimize_calls": 0
+  },
+  "accepted_dependency_authority": {
+    "annual_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "revision": "r10",
+      "version": "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10",
+      "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+    },
+    "rainflow_validator": {
+      "path": "src/rainflow_validation_v7_2.py",
+      "sha256": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    },
+    "soc2080_adapter": {
+      "path": "src/soc_window_sensitivity_adapter_v7_2.py",
+      "sha256": "11cfc8167683d7204955f7b0b583ed026889b3ca0629902ff08dc92be3bb6304"
+    },
+    "representative_helper_16a": {
+      "path": "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "revision": "r12",
+      "sha256": "5813119e258e83a45a245ec715ade4536bf9dbf880687f6d3f1e978cce8b06a0"
+    },
+    "accepted_soc2080_runner_17e": {
+      "path": "scripts/17e_run_soc_window_sensitivity.py",
+      "revision": "r2",
+      "version": "v7.2-soc2080-sensitivity-runner-candidate-2026-09-22-r2",
+      "sha256": "2d8cc520a499851b2cfdc85dafa655accace5aee05d74dc31b851af75c5ffe5d"
+    },
+    "accepted_correction_authority_freeze": {
+      "path": "docs/checkpoints/soc2080_rainflow_failure_handling_correction_authority_freeze_v7_2_2026-09-22.json",
+      "sha256": "f8f74f4281187d67115c2e66abb942ccafebe237ae68d7ea6ad7af65d4724116"
+    },
+    "read_only_soc2080_eob_reference": {
+      "path": "results/sensitivity/soc_20_80/runs/20260921T153546259891Z_2e03707743/cases/EOB/artifacts/result.json",
+      "sha256": "adff87a99061b4869817969ce3f9530ef0dddf71a902652963fc3b5153b33cdb"
+    },
+    "canonical_annual_input": {
+      "path": "data/processed/annual_input_v7_1.parquet",
+      "sha256": "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e"
+    },
+    "economic_interface": {
+      "path": "data/reference/production_economic_interface_v7_2.json",
+      "sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9"
+    },
+    "optimization_tariff": {
+      "path": "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+      "sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395"
+    },
+    "settlement_interface": {
+      "path": "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+      "sha256": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88"
+    },
+    "settlement_matrix": {
+      "path": "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+      "sha256": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79"
+    },
+    "pnnl_cyclelife_provenance": {
+      "path": "results/parameter_audit/pnnl_table4_2_cyclelife_g_provenance_by_bracket.csv",
+      "sha256": "1172963521fbc4b646394cb2df6947ade9f961211bf608c5928ef4de215644f6"
+    },
+    "authority_bundle_note": "Protocol Section 23: a route is a bundle, not one file. The runner additionally enforces all twelve transitive 17e AUTHORITY_PINS at runtime via authority.verify_file_pins."
+  },
+  "case_identity": {
+    "case_id": "a0.80_b08",
+    "alpha": 0.8,
+    "beta_h": 8,
+    "soc_min": 0.2,
+    "soc_max": 0.8,
+    "usable_fraction": 0.6,
+    "technical_degradation_breakpoints": [
+      0.0,
+      0.3,
+      0.6,
+      0.8
+    ],
+    "technical_segment_widths": [
+      0.3,
+      0.3,
+      0.2
+    ],
+    "active_segment_widths": [
+      0.3,
+      0.3,
+      0.0
+    ],
+    "third_segment_inactive": true,
+    "case_definition_source": "scripts/17e_run_soc_window_sensitivity.py",
+    "case_definition_mechanism": "accepted_diagnostic_case() selects the unique ALLOWED_CASES entry whose case_id is a0.80_b08 and fails closed unless alpha == 0.80 and beta_h == 8; the runner defines no case of its own.",
+    "only_executable_case": true,
+    "cli_case_selector_exists": false,
+    "cli_alpha_or_beta_selector_exists": false,
+    "environment_or_config_override_exists": false
+  },
+  "future_optimize_budget": {
+    "expected_diagnostic_optimize_calls": 1,
+    "maximum_diagnostic_optimize_calls": 1,
+    "comparator_optimize_calls": 0,
+    "reference_eob_optimize_calls": 0,
+    "automatic_retry": false,
+    "retry_after_solver_failure": false,
+    "retry_after_review": false,
+    "retry_after_fail": false,
+    "retry_after_pass": false,
+    "enforcement": "SingleDiagnosticOptimizeGuard delegates to accepted 17e OptimizeCallGuard with an immutable ceiling of 1; a second optimize raises, and optimizeAsync/optimizeBatch/tune/feasRelax/feasRelaxS are replaced with forbidden stubs. assert_one_new_call and assert_exact_total both run immediately after the single solve."
+  },
+  "solve_eob_naming_clarification": {
+    "shared_entry_point": "src/annual_design_model_v7_2.py::solve_eob",
+    "naming_status": "HISTORICALLY_NAMED_SHARED_ANNUAL_CORE_ENTRY_POINT",
+    "eob_reference_behaviour": "Called with layer_a_requirements = None, which retains the original EOB economic formulation.",
+    "diagnostic_behaviour": "Called with a non-None LayerAResilienceRequirements, which constructs the Layer-A model.",
+    "layer_a_requirements_supplied_for_this_diagnostic": {
+      "alpha": 0.8,
+      "beta_h": 8,
+      "reserve_kwh_battery": "R(0.80, 8) from accepted 16a analytical_surface row for a0.80_b08",
+      "power_requirement_kw_ac": "P_out(0.80) from the same accepted analytical_surface row"
+    },
+    "constraints_added_only_in_the_layer_a_branch": [
+      "layer_a_power_adequacy: P_B >= power_requirement_kw_ac (core lines 1317-1320)",
+      "layer_a_reserve_floor_t{t} for every hour t: sum_k e_seg[t,k] >= reserve_kwh_battery (core lines 1372-1379)",
+      "Layer-A-specific E_N and P_B upper bounds (core lines 1254-1263)"
+    ],
+    "conclusion": "THE SINGLE FUTURE OPTIMIZATION SOLVES THE a0.80_b08 LAYER-A MODEL. IT IS NOT AN EOB SOLVE.",
+    "why_recorded": "Recorded explicitly to prevent future provenance confusion from the function name alone."
+  },
+  "read_only_eob_reference_reuse": {
+    "path": "results/sensitivity/soc_20_80/runs/20260921T153546259891Z_2e03707743/cases/EOB/artifacts/result.json",
+    "sha256": "adff87a99061b4869817969ce3f9530ef0dddf71a902652963fc3b5153b33cdb",
+    "source_run_id": "20260921T153546259891Z_2e03707743",
+    "lineage_id": "SENS-SOC2080-R10",
+    "parent_lineage": "MAINLINE-CORRECTED-R10",
+    "mode": "READ_ONLY_REUSE_NO_RESOLVE",
+    "sole_use": "representative_gate eob_objective_lower_bound comparison only",
+    "consumed_field": "result.objective_ntd2023_per_year",
+    "new_optimize_calls": 0,
+    "fail_closed_on_missing_artifact": true,
+    "fail_closed_on_hash_mismatch": true,
+    "hash_verified_before_use": true,
+    "artifact_authority_state_unchanged": "CANDIDATE_PENDING_INDEPENDENT_POST_RUN_AUDIT",
+    "artifact_mutated_by_this_capability": false
+  },
+  "solver_contract": {
+    "solver": "Gurobi",
+    "mode": "binary",
+    "MIPGap": 1e-06,
+    "NumericFocus": 1,
+    "OutputFlag": 1,
+    "TimeLimit": "INFINITY_UNSET",
+    "NodeLimit": "INFINITY_UNSET",
+    "automatic_retry": false,
+    "tuning": false,
+    "feasibility_relaxation": false,
+    "warm_start": false,
+    "identical_to_accepted_17e_r2": true,
+    "diagnostic_specific_relaxation": false,
+    "diagnostic_specific_tightening": false,
+    "parameter_sourcing": "Every solver parameter is read from the accepted 17e r2 module constants (MIP_GAP, TIME_LIMIT_SEC, OUTPUT_FLAG, NUMERIC_FOCUS) rather than redeclared. core.SolveSettings exposes no threads, seed, method or tolerance field, so no channel for a diagnostic-specific solver deviation exists.",
+    "accepted_termination_semantics": "result.status must be OPTIMAL and the accepted mip_gap gate must pass, as in 17e r2"
+  },
+  "scientific_identity": {
+    "verdict": "REUSE_ONLY_NO_SECOND_IMPLEMENTATION",
+    "reused_authorities": [
+      "scripts/17e_run_soc_window_sensitivity.py (r2) - 38 symbols",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py (r12) - analytical_surface, billing_structure_audit, representative_gate",
+      "src/annual_design_model_v7_2.py (r10) - solve_eob, build_eob_model, LayerAResilienceRequirements, SolveSettings, load_annual_design_inputs",
+      "src/rainflow_validation_v7_2.py - via accepted 17e validate_soc_rainflow",
+      "src/soc_window_sensitivity_adapter_v7_2.py - via accepted 17e load_isolated_r10_soc_core"
+    ],
+    "duplicated_scientific_formulas": 0,
+    "duplicated_scientific_constants": 0,
+    "numeric_literal_audit": "AST enumeration over all 756 runner lines yields only 0, 0.3, 0.8, 1, 1024, 2, 3 and 8. The 0.3/0.8/8/0.0 occurrences are assertions against accepted authority (active-width, alpha and beta verification); the values used in the model come from the accepted CaseSpec and SOC2080_SPEC. 1024 is a hash chunk size; 1/2/3 are the optimize budget and process exit codes.",
+    "annual_input_loading": "load_annual_design_inputs invocation is character-identical to accepted 17e r2",
+    "one_factor_contract": "UNCHANGED_FROM_ACCEPTED_17E_R2",
+    "only_changed_factor": "SOC_WINDOW_10_90_TO_20_80",
+    "sole_scientific_authority_remains": "scripts/17e_run_soc_window_sensitivity.py (r2) with 16a r12 and the R10 core"
+  },
+  "output_namespace": {
+    "namespace": "results/diagnostics/soc2080_a080_b08/runs/<run_id>",
+    "namespace_exists_yet": false,
+    "isolation_mechanism": "diagnostic_output_root() rejects any path outside results/diagnostics/soc2080_a080_b08 and any path equal to, parent of, or child of the protected SOC2080 locations. It is re-evaluated on every call and has no CLI, environment or configuration override.",
+    "protected_paths_rejected": [
+      "results/sensitivity/soc_20_80",
+      "results/sensitivity/soc_20_80/runs/20260921T153546259891Z_2e03707743",
+      "results/sensitivity/soc_20_80/runs/20260921T154716421273Z_cdc64658b8"
+    ],
+    "run_id_uniqueness": "authority.new_run_id() timestamp plus uuid4; allocate_diagnostic_run_directory raises if the directory exists",
+    "stale_output_reuse_possible": false,
+    "resume_logic_exists": false,
+    "all_write_targets_confined_to_run_dir": true
+  },
+  "production_authority_boundary": {
+    "capability_class": "DIAGNOSTIC_ONLY",
+    "eligible_for_production_completion": false,
+    "eligible_for_production_completion_for_all_terminal_outcomes": false,
+    "can_update_soc2080_production_completion": false,
+    "can_add_a080_b08_to_historical_completed_cases": false,
+    "can_complete_step_11c": false,
+    "writes_soc2080_root_completion_manifest": false,
+    "updates_production_artifact_registry": false,
+    "modifies_production_resume_state": false,
+    "structural_evidence": "The runner contains zero occurrences of completion_manifest, completed[, paired_sensitivity, final_81, final81, execute_production, comparator_records, verify_comparators, recover_authoritative_comparator_pins or load_comparator_result."
+  },
+  "tri_state_semantics": {
+    "classifier": "accepted 17e r2 classify_post_solve_authority (reused, not reimplemented)",
+    "PASS": "DIAGNOSTIC_PASS",
+    "REVIEW": "DIAGNOSTIC_REVIEW_REQUIRED",
+    "FAIL": "DIAGNOSTIC_GATE_FAILED",
+    "unknown_or_inconsistent": "DIAGNOSTIC_GATE_FAILED",
+    "hard_fail_overrides_review": true,
+    "legitimate_validator_review_collapsed_to_fail": false,
+    "review_promotable_to_pass": false,
+    "new_numerical_or_materiality_threshold_introduced": false,
+    "serialization_before_enforcement": true,
+    "serialization_note": "classify_and_serialize_diagnostic writes the full diagnostic artifact family for PASS, REVIEW and FAIL before raising DiagnosticTerminalOutcome. No raise or assert exists between the rainflow computation and artifact serialization.",
+    "process_exit_codes": {
+      "DIAGNOSTIC_PASS": 0,
+      "DIAGNOSTIC_REVIEW_REQUIRED": 2,
+      "DIAGNOSTIC_GATE_FAILED": 3
+    }
+  },
+  "historical_claim_boundary": {
+    "historical_run_id": "20260921T153546259891Z_2e03707743",
+    "historical_case": "a0.80_b08",
+    "historical_internal_rainflow_state": "UNRESOLVED_UNRECOVERABLE_FROM_PRESERVED_EVIDENCE",
+    "explicit_statement": "The historical 2026-09-21 a0.80_b08 internal rainflow state remains UNRESOLVED / UNRECOVERABLE FROM PRESERVED EVIDENCE. The pre-correction caller collapsed REVIEW into FAIL and enforced gates before serialization, so no rainflow gate dictionary was ever written for that case.",
+    "future_diagnostic_is_a_new_solve": true,
+    "future_outcome_may_be_retrospectively_assigned_to_historical_execution": false,
+    "retrospective_assignment_prohibited_for": [
+      "DIAGNOSTIC_PASS",
+      "DIAGNOSTIC_REVIEW_REQUIRED",
+      "DIAGNOSTIC_GATE_FAILED"
+    ],
+    "runner_encoded_boundary": "HISTORICAL_CLAIM_BOUNDARY is stamped into result.json, diagnostic_authority.json, diagnostic_run_manifest.json, diagnostic_terminal_manifest.json and diagnostic_failure_manifest.json."
+  },
+  "optimize_accounting": {
+    "lifetime_step_11c_optimize_calls_before_future_diagnostic_execution": 5,
+    "this_freeze_pass_optimize_calls": 0,
+    "this_freeze_pass_model_constructions": 0,
+    "expected_lifetime_only_if_a_separately_authorized_diagnostic_execution_completes_its_single_solve": 6,
+    "lifetime_incremented_by_this_freeze": false,
+    "research_results_created_by_this_freeze": 0
+  },
+  "audit_history": {
+    "implementation_verdict": "SINGLE_CASE_DIAGNOSTIC_BUILD_ONLY_PASS",
+    "independent_audit_verdict": "SINGLE_CASE_DIAGNOSTIC_CAPABILITY_ACCEPTED_FOR_AUTHORITY_FREEZE",
+    "accepted_bytes_changed_after_audit": false,
+    "audit_accepted_runner_sha256": "a8ec2250ed4a4bffcd79e2e57c93df29b1762c07baa9b109a1e0e2b3f02e30b0",
+    "audit_accepted_tests_sha256": "bed72af36c94c1604ccf2621dcc35ca468f96d1faf69e61421fe1a5f5787bc30"
+  },
+  "execution_authorization": {
+    "status": "NOT_YET_AUTHORIZED",
+    "diagnostic_executed_during_this_freeze": false,
+    "authority_freeze_is_itself_execution_authorization": false,
+    "next_required_gate": "FINAL READ-ONLY SINGLE-SOLVE PRE-EXECUTION AUTHORIZATION CHECK",
+    "next_gate_permits_solving": false,
+    "runtime_execution_preconditions": [
+      "branch thesis-v7",
+      "local HEAD equals origin/thesis-v7",
+      "zero staged changes",
+      "zero tracked modifications",
+      "untracked set exactly the six accepted pre-existing files",
+      "scripts/17f_run_soc2080_a080_b08_diagnostic.py tracked",
+      "tests/test_17f_soc2080_a080_b08_diagnostic_v7_2.py tracked",
+      "all seven runner dependency pins matching",
+      "all twelve transitive accepted 17e pins matching"
+    ],
+    "precondition_enforcement_point": "execution_repository_authority runs as the first statement of execute_diagnostic, before the gurobipy import, before the isolated core load, before run-directory allocation and before any model construction."
+  },
+  "explicitly_unauthorized": {
+    "running_17f_as_part_of_this_freeze_pass": "NOT_YET_AUTHORIZED",
+    "single_case_diagnostic_execution": "NOT_YET_AUTHORIZED",
+    "full_six_case_soc2080_rerun": "NOT_YET_AUTHORIZED",
+    "a1.00_b04": "NOT_YET_AUTHORIZED",
+    "a1.00_b12": "NOT_YET_AUTHORIZED",
+    "step_12": "NOT_YET_AUTHORIZED",
+    "final81_production_execution": "NOT_YET_AUTHORIZED",
+    "production_runner_status_for_corrected_six_case_route": "NOT_YET_AUTHORIZED",
+    "production_tag_identity_for_this_capability": "NOT_YET_AUTHORIZED",
+    "note": "Protocol Section 24: historical authority values are never used as placeholders for future authority."
+  },
+  "immutable_prior_provenance": {
+    "soc2080_preexecution_production_authority_freeze_2026_09_21": {
+      "path": "docs/checkpoints/soc2080_preexecution_production_authority_freeze_v7_2_2026-09-21.json",
+      "sha256": "bfe2d22844282f838cfba7a174e0d348090ef5f78f7dd23b3ee539b934bece8e",
+      "status": "IMMUTABLE_NOT_MODIFIED_BY_THIS_FREEZE"
+    },
+    "soc2080_rainflow_failure_handling_correction_authority_freeze_2026_09_22": {
+      "path": "docs/checkpoints/soc2080_rainflow_failure_handling_correction_authority_freeze_v7_2_2026-09-22.json",
+      "sha256": "f8f74f4281187d67115c2e66abb942ccafebe237ae68d7ea6ad7af65d4724116",
+      "status": "IMMUTABLE_NOT_MODIFIED_BY_THIS_FREEZE"
+    },
+    "historical_soc2080_run_artifacts": "IMMUTABLE_NOT_MODIFIED_BY_THIS_FREEZE",
+    "scripts_17b_17c_17d_pins": "NOT_MIGRATED_BY_THIS_FREEZE",
+    "scripts_19a_19b": "NOT_MODIFIED_BY_THIS_FREEZE",
+    "framework_and_registry": "NOT_MODIFIED_BY_THIS_FREEZE"
+  },
+  "repository_state_evidence": {
+    "protocol_reference": "Sections 16 and 17",
+    "literal_argv": "git -c core.quotePath=false status --porcelain=v1 --untracked-files=all",
+    "pre_freeze": {
+      "head": "9058ae55de85fa8a55edda9232a3dc04f828510e",
+      "origin_thesis_v7": "9058ae55de85fa8a55edda9232a3dc04f828510e",
+      "ahead": 0,
+      "behind": 0,
+      "staged_paths": [],
+      "tracked_modified_paths": [],
+      "porcelain_bytes": 449,
+      "porcelain_sha256": "abf921fd6431a82d2c1a8fa1b6e78b804d44a19d12eecdf9af57ebbd753a2492"
+    },
+    "post_commit_a": {
+      "head": "c397f5605be9253c955a9ed40659ebe356e1884d",
+      "origin_thesis_v7": "c397f5605be9253c955a9ed40659ebe356e1884d",
+      "ahead": 0,
+      "behind": 0,
+      "staged_paths": [],
+      "tracked_modified_paths": [],
+      "porcelain_bytes": 345,
+      "porcelain_sha256": "1b327a6b760149b096447422529c76a0d180717cb6d51642bdede697e863407c"
+    },
+    "accepted_preexisting_untracked_files": [
+      "0629開會逐字稿Iris.docx",
+      "Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md",
+      "Claude outputs/P2_Literature_Positioning_v7.2.pptx",
+      "Claude outputs/iris_thesis_independent_audit_2026-09-13.md",
+      "Claude outputs/iris_thesis_repo_audit_2026-09-13.md",
+      "docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf"
+    ],
+    "accepted_preexisting_untracked_file_count": 6,
+    "accepted_preexisting_untracked_files_modified_by_this_freeze": false,
+    "repository_literally_clean": false,
+    "repository_tracked_authority_clean": true
+  },
+  "known_environment_boundary": {
+    "git_core_autocrlf": "true",
+    "gitattributes_present": false,
+    "committed_blob_line_endings": "LF",
+    "working_tree_line_endings": "LF",
+    "finding": "All pinned SHA-256 values are of LF bytes, and the runner hashes on-disk bytes at runtime. Commit does not rewrite the working tree, so the current tree still matches every pin (verified before and after Commit A). However, a fresh clone or a hard re-checkout on Windows under core.autocrlf=true would materialise CRLF and would fail these pins.",
+    "severity": "PRE_EXISTING_ENVIRONMENT_BOUNDARY_NOT_INTRODUCED_BY_THIS_CAPABILITY",
+    "applies_equally_to": [
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "scripts/17e_run_soc_window_sensitivity.py"
+    ],
+    "action_required_before_execution_on_a_fresh_checkout": "Confirm on-disk line endings match the pins, or add a .gitattributes eol policy under a separately authorized change."
+  },
+  "claim_boundary": {
+    "experimental_result_status": "NO_DIAGNOSTIC_RESULT_EXISTS",
+    "diagnostic_execution_status": "NOT_YET_EXECUTED_NOT_YET_AUTHORIZED",
+    "scientific_claims_made": false,
+    "new_research_results_created": 0,
+    "explicit_statement": "NO SOC2080 a0.80_b08 DIAGNOSTIC SOLVE HAS OCCURRED. This checkpoint freezes an audited capability and its authority bundle only."
+  }
+}
