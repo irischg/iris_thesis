@@ -1,0 +1,152 @@
+{
+  "schema_version": "v7.2-soc2080-rainflow-failure-handling-correction-authority-freeze-1",
+  "record_type": "ACCEPTED_IMPLEMENTATION_CORRECTION_AUTHORITY_FREEZE",
+  "checkpoint_role": "accepted implementation correction authority freeze",
+  "created_at_utc": "2026-09-22T08:25:41.0031208Z",
+  "date": "2026-09-22",
+  "status": "ACCEPTED_CORRECTION_AUTHORITY_FROZEN",
+  "lineage_id": "SENS-SOC2080-R10",
+  "parent_lineage": "MAINLINE-CORRECTED-R10",
+  "git_authority": {
+    "branch": "thesis-v7",
+    "historical_pre_correction_production_commit": "c8e305fa6766979b04cfb76e48cb433a551725ec",
+    "accepted_correction_commit": "14e8eb0810de1e13071c98945cde42ef113d4e7b",
+    "accepted_correction_commit_message": "Accept SOC2080 rainflow failure-handling correction"
+  },
+  "governing_sources": {
+    "framework": {
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5"
+    },
+    "evidence_registry": {
+      "path": "docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md",
+      "sha256": "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e"
+    },
+    "version_provenance_protocol": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "applicable_rules": [
+        "additive-only correction",
+        "independent acceptance before commit freeze",
+        "zero solve during authority freeze",
+        "historical provenance remains immutable"
+      ]
+    }
+  },
+  "correction_scope": {
+    "classification": "IMPLEMENTATION_CORRECTION_NOT_METHODOLOGY_CHANGE",
+    "accepted_behaviors": [
+      "preserve validator PASS_REVIEW_FAIL semantics at caller level",
+      "keep REVIEW explicitly non-accepted and distinct from FAIL",
+      "preserve genuine hard FAIL",
+      "fail closed for unknown or inconsistent states",
+      "serialize solved-case diagnostics before post-solve non-acceptance enforcement",
+      "preserve PASS-only eligibility for run completion"
+    ]
+  },
+  "correction_file_lineage": {
+    "representative_helper_16a": {
+      "path": "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "old_sha256": "3f62fa290e1c8e1699c34d4b1bc78b9af0e716387b251afb4ada2b3198d7524f",
+      "new_sha256": "5813119e258e83a45a245ec715ade4536bf9dbf880687f6d3f1e978cce8b06a0",
+      "old_revision": "r11",
+      "new_revision": "r12"
+    },
+    "soc2080_runner_17e": {
+      "path": "scripts/17e_run_soc_window_sensitivity.py",
+      "old_sha256": "3858bc93627f60954bbf24a45e5fbdb4d50887e7ea453e3528a3363caa976890",
+      "new_sha256": "2d8cc520a499851b2cfdc85dafa655accace5aee05d74dc31b851af75c5ffe5d",
+      "old_revision": "r1",
+      "new_revision": "r2"
+    },
+    "representative_helper_16a_tests": {
+      "path": "tests/test_16a_current_eob_authority_v7_2.py",
+      "old_sha256": "122305822a7ae2336398846e54f87e0ef4459b3e363f19cb0b88756e9ee0ae0c",
+      "new_sha256": "49234c8bdcc3cdba3debfd8443fcfe24aefe92f3497a7a6d498ae1fcb54f781b"
+    },
+    "soc2080_runner_17e_tests": {
+      "path": "tests/test_17e_soc_window_sensitivity_v7_2.py",
+      "old_sha256": "fc447354f0c3dcbabb872cee8f58972dbd35a65063460928de46526fc1a3a956",
+      "new_sha256": "5ec82b33d898873d4b51382941b2ed09987bff913e8891807a4edd20d5c5e540"
+    }
+  },
+  "unchanged_dependencies": {
+    "annual_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+    },
+    "rainflow_validator": {
+      "path": "src/rainflow_validation_v7_2.py",
+      "sha256": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    },
+    "soc2080_adapter": {
+      "path": "src/soc_window_sensitivity_adapter_v7_2.py",
+      "sha256": "11cfc8167683d7204955f7b0b583ed026889b3ca0629902ff08dc92be3bb6304"
+    }
+  },
+  "controlling_audit_history": {
+    "forensic_verdict": "IMPLEMENTATION_CORRECTION_REQUIRED",
+    "implementation_verdict": "IMPLEMENTATION_CORRECTION_BUILD_ONLY_PASS",
+    "independent_acceptance_verdict": "CORRECTION_ACCEPTED_DIAGNOSTIC_RERUN_CAN_BE_CONSIDERED"
+  },
+  "scientific_and_methodological_invariants": {
+    "methodology_changed": false,
+    "annual_core_changed": false,
+    "degradation_calibration_changed": false,
+    "tariff_changed": false,
+    "reserve_changed": false,
+    "soc_methodology_changed": false,
+    "solver_contract_changed": false,
+    "rainflow_tolerance_changed": false,
+    "new_materiality_threshold_introduced": false
+  },
+  "optimize_accounting": {
+    "forensic_audit_optimize_calls": 0,
+    "correction_pass_optimize_calls": 0,
+    "independent_acceptance_audit_optimize_calls": 0,
+    "authority_freeze_optimize_calls": 0,
+    "lifetime_step_11c_optimize_calls": 5
+  },
+  "historical_run_evidence": {
+    "productive_run_id": "20260921T153546259891Z_2e03707743",
+    "duplicate_aborted_run_id": "20260921T154716421273Z_cdc64658b8",
+    "usable_candidate_case_ids": [
+      "EOB",
+      "a0.60_b04",
+      "a0.60_b12"
+    ],
+    "a0.80_b08_solver_status": "OPTIMAL",
+    "a0.80_b08_post_solve_status": "RAINFLOW_TOP_LEVEL_FAILURE",
+    "a0.80_b08_internal_rainflow_cause": "UNRESOLVED_UNRECOVERABLE_FROM_PRESERVED_EVIDENCE",
+    "retrospective_review_or_hard_fail_classification_authorized": false
+  },
+  "historical_freeze_relationship": {
+    "path": "docs/checkpoints/soc2080_preexecution_production_authority_freeze_v7_2_2026-09-21.json",
+    "sha256": "bfe2d22844282f838cfba7a174e0d348090ef5f78f7dd23b3ee539b934bece8e",
+    "historical_status": "IMMUTABLE_AND_VALID_FOR_2026_09_21_EXECUTION_PROVENANCE",
+    "future_execution_status": "SUPERSEDED_FOR_FUTURE_EXECUTION_AUTHORITY_BY_ACCEPTED_CORRECTION",
+    "historically_invalid": false
+  },
+  "cross_runner_boundary": {
+    "advanced_helper_pin_runner": "scripts/17e_run_soc_window_sensitivity.py",
+    "intentionally_not_migrated": [
+      "scripts/17b_build_winter_pv_sensitivity_annual_input.py",
+      "scripts/17c_run_winter_pv_economic_sensitivity.py",
+      "scripts/17d_run_bess_cost_scale_sensitivity.py",
+      "scripts/19a_preflight_final_layer_a_81_cases.py",
+      "scripts/19b_run_final_layer_a_81_cases.py"
+    ],
+    "historical_pin_behavior": "FAIL_CLOSED_AGAINST_INCOMPATIBLE_LIVE_HELPER_BYTES",
+    "repository_wide_pin_migration_performed": false
+  },
+  "next_authorized_activity": {
+    "activity": "DESIGN_IMPLEMENT_BUILD_ONLY_AUDIT_OF_NARROW_SINGLE_CASE_A0_80_B08_DIAGNOSTIC_CAPABILITY",
+    "solve_authorized": false
+  },
+  "explicitly_not_authorized": [
+    "execution of the single-case diagnostic capability",
+    "full six-case SOC2080 rerun",
+    "remaining SOC2080 production cases",
+    "Step 12",
+    "corrected final81"
+  ]
+}
