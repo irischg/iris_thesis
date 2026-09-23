@@ -1,0 +1,419 @@
+{
+  "schema_version": "v7.2-soc2080-remaining-two-continuation-preexecution-authority-freeze-1",
+  "record_type": "PRE_EXECUTION_AUTHORITY_CHECKPOINT",
+  "checkpoint_role": "REMAINING_TWO_CASE_CONTINUATION_PREEXECUTION_AUTHORITY_FREEZE",
+  "status": "CONTINUATION_CAPABILITY_FROZEN_EXECUTION_NOT_YET_AUTHORIZED",
+  "checkpoint_date": "2026-09-23",
+  "created_at_utc": "2026-09-23T03:40:04.6130285Z",
+  "branch": "thesis-v7",
+  "change_classification": {
+    "type": "ADDITIVE_SOURCE_AND_PROVENANCE_FREEZE",
+    "implementation_capability_freeze": true,
+    "methodology_change": false,
+    "scientific_change": false,
+    "accepted_source_modified_during_freeze": false
+  },
+  "accepted_independent_audit": {
+    "verdict": "REMAINING_TWO_CASE_CONTINUATION_CAPABILITY_ACCEPTED_FOR_AUTHORITY_FREEZE",
+    "OUTAGE_ADAPTER_SCIENTIFIC_SEMANTICS_CHANGED": "NO",
+    "UNEXPECTED_EXCEPTION_CAN_BE_NORMALIZED_TO_VALIDATION_FAIL": "NO",
+    "NEW_UNAUTHORIZED_SCIENTIFIC_LOGIC": "NO",
+    "methodology_change_authorized": false
+  },
+  "git_authority": {
+    "parent_adjudication_commit": "486ac0a53dc9702080c07d40158ff5522e439674",
+    "capability_commit_a": {
+      "sha": "2146d81d9ac8e19a1a2cf5ecc70b67421372e82c",
+      "parent": "486ac0a53dc9702080c07d40158ff5522e439674",
+      "subject": "Add audited SOC2080 remaining-two continuation capability",
+      "tree_sha": "5135380c9041b775fa8dee3d8d15c46c7b695525",
+      "paths": [
+        "scripts/17g_run_soc2080_remaining_two_case_continuation.py",
+        "tests/test_17g_soc2080_remaining_two_case_continuation_v7_2.py"
+      ],
+      "local_head_equals_origin_after_fetch": true,
+      "ahead": 0,
+      "behind": 0
+    },
+    "post_commit_a_repository_snapshot": {
+      "branch": "thesis-v7",
+      "head": "2146d81d9ac8e19a1a2cf5ecc70b67421372e82c",
+      "origin_tracking": "2146d81d9ac8e19a1a2cf5ecc70b67421372e82c",
+      "staged_count": 0,
+      "tracked_modified_count": 0,
+      "untracked_count": 6,
+      "untracked_boundary": [
+        "0629開會逐字稿Iris.docx",
+        "Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md",
+        "Claude outputs/P2_Literature_Positioning_v7.2.pptx",
+        "Claude outputs/iris_thesis_independent_audit_2026-09-13.md",
+        "Claude outputs/iris_thesis_repo_audit_2026-09-13.md",
+        "docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf"
+      ],
+      "exact_porcelain_capture": {
+        "argv": [
+          "git",
+          "-c",
+          "core.quotePath=false",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "byte_count": 345,
+        "sha256": "1b327a6b760149b096447422529c76a0d180717cb6d51642bdede697e863407c",
+        "base64": "Pz8gMDYyOemWi+acg+mAkOWtl+eov0lyaXMuZG9jeAo/PyAiQ2xhdWRlIG91dHB1dHMvMDkzMF/pgLLluqbloLHlkYpf5oqV5b2x54mH5p625qeL6IiH6YCQ6aCB6Kyb56i/X3Y3LjIubWQiCj8/ICJDbGF1ZGUgb3V0cHV0cy9QMl9MaXRlcmF0dXJlX1Bvc2l0aW9uaW5nX3Y3LjIucHB0eCIKPz8gIkNsYXVkZSBvdXRwdXRzL2lyaXNfdGhlc2lzX2luZGVwZW5kZW50X2F1ZGl0XzIwMjYtMDktMTMubWQiCj8/ICJDbGF1ZGUgb3V0cHV0cy9pcmlzX3RoZXNpc19yZXBvX2F1ZGl0XzIwMjYtMDktMTMubWQiCj8/ICJkb2NzL0VTR0MgQ29zdCBQZXJmb3JtYW5jZSBSZXBvcnQgMjAyMiBQTk5MLTMzMjgzLnBkZiIK"
+      }
+    }
+  },
+  "frozen_capability": {
+    "runner": {
+      "path": "scripts/17g_run_soc2080_remaining_two_case_continuation.py",
+      "version": "v7.2-soc2080-remaining-two-continuation-candidate-2026-09-22-r1",
+      "sha256": "56c1ba32e26025f3896628a930c529fac0c203652023edc9930e063e0c1eaffb",
+      "bytes": 46259,
+      "working_staged_committed_bytes_identical": true
+    },
+    "tests": {
+      "path": "tests/test_17g_soc2080_remaining_two_case_continuation_v7_2.py",
+      "sha256": "43c1b770674f3c42e5e6f5009c99353348b7cdd5f29b3f7efa0bd48bea9bafc6",
+      "bytes": 28569,
+      "working_staged_committed_bytes_identical": true
+    }
+  },
+  "direct_dependency_pins": {
+    "framework": {
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5"
+    },
+    "registry": {
+      "path": "docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md",
+      "sha256": "8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e"
+    },
+    "provenance_protocol": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696"
+    },
+    "annual_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+    },
+    "rainflow_validator": {
+      "path": "src/rainflow_validation_v7_2.py",
+      "sha256": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    },
+    "soc2080_adapter": {
+      "path": "src/soc_window_sensitivity_adapter_v7_2.py",
+      "sha256": "11cfc8167683d7204955f7b0b583ed026889b3ca0629902ff08dc92be3bb6304"
+    },
+    "representative_helper_16a_r12": {
+      "path": "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "sha256": "5813119e258e83a45a245ec715ade4536bf9dbf880687f6d3f1e978cce8b06a0"
+    },
+    "accepted_soc2080_runner_17e_r2": {
+      "path": "scripts/17e_run_soc_window_sensitivity.py",
+      "sha256": "2d8cc520a499851b2cfdc85dafa655accace5aee05d74dc31b851af75c5ffe5d"
+    },
+    "accepted_a080_b08_diagnostic_17f_r1": {
+      "path": "scripts/17f_run_soc2080_a080_b08_diagnostic.py",
+      "sha256": "a8ec2250ed4a4bffcd79e2e57c93df29b1762c07baa9b109a1e0e2b3f02e30b0"
+    },
+    "rainflow_correction_authority_freeze": {
+      "path": "docs/checkpoints/soc2080_rainflow_failure_handling_correction_authority_freeze_v7_2_2026-09-22.json",
+      "sha256": "f8f74f4281187d67115c2e66abb942ccafebe237ae68d7ea6ad7af65d4724116"
+    },
+    "diagnostic_preexecution_authority_freeze": {
+      "path": "docs/checkpoints/soc2080_a080_b08_single_case_diagnostic_preexecution_authority_freeze_v7_2_2026-09-22.json",
+      "sha256": "146ba010ca9fbc7cfd76c36f93d6cebea6b9398e1e03c2923f0ac839c54351e2"
+    },
+    "rainflow_review_gate_owner_adjudication": {
+      "path": "docs/checkpoints/soc2080_a080_b08_rainflow_review_gate_owner_adjudication_v7_2_2026-09-22.json",
+      "sha256": "d26198c3afa147bac2cb0d3f0ec75defbf1f0e6922fbfe13c35d4e319032c253"
+    }
+  },
+  "accepted_17e_transitive_pins": {
+    "authoritative_comparator_pin_source": {
+      "path": "scripts/17d_run_bess_cost_scale_sensitivity.py",
+      "sha256": "9899bc0e2a24bbf6d01d8b2c5dd976142975eb48c7f05933a46b43477eabdb55"
+    },
+    "canonical_annual_input": {
+      "path": "data/processed/annual_input_v7_1.parquet",
+      "sha256": "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e"
+    },
+    "economic_interface": {
+      "path": "data/reference/production_economic_interface_v7_2.json",
+      "sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9"
+    },
+    "optimization_tariff": {
+      "path": "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+      "sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395"
+    },
+    "settlement_interface": {
+      "path": "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+      "sha256": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88"
+    },
+    "settlement_matrix": {
+      "path": "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+      "sha256": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79"
+    },
+    "pnnl_cyclelife_provenance": {
+      "path": "results/parameter_audit/pnnl_table4_2_cyclelife_g_provenance_by_bracket.csv",
+      "sha256": "1172963521fbc4b646394cb2df6947ade9f961211bf608c5928ef4de215644f6"
+    },
+    "mainline_package_object": {
+      "package_id": "pnnl_v2024_lfp_2023_point_10mw_4to10h",
+      "sha256": "b8c461eb3513a2f6f05739a824d124e797aa7f59d12b1cf28b066bc391bcd5e2"
+    }
+  },
+  "accepted_read_only_comparator_artifacts": {
+    "a1.00_b04": {
+      "run_id": "20260918T105101058616Z_a75a268198",
+      "result_path": "results/layer_a/preflight/runs/20260918T105101058616Z_a75a268198/representative_cases/a1.00_b04/a1.00_b04_result_v7_2.json",
+      "result_sha256": "9fa5506db13681df0dd86b91bf3f9729b47f7a874fe57909b422dea7a6dfa628",
+      "run_manifest_path": "results/layer_a/preflight/runs/20260918T105101058616Z_a75a268198/run_manifest_v7_2.json",
+      "run_manifest_sha256": "9751bec3e53826b886974cfd0f6321425aaf5996fd802b0e61e3db169a8f117c",
+      "completion_path": "results/layer_a/preflight/runs/20260918T105101058616Z_a75a268198/run_completion_v7_2.json",
+      "completion_sha256": "be0ce2429ae680fe229408898cd9150a854bcfe08fce0317742fbfa2afcaf8a9",
+      "reuse_only": true,
+      "new_optimize_calls": 0
+    },
+    "a1.00_b12": {
+      "run_id": "20260918T123936526903Z_82e3bc3214",
+      "result_path": "results/layer_a/preflight/runs/20260918T123936526903Z_82e3bc3214/representative_cases/a1.00_b12/a1.00_b12_result_v7_2.json",
+      "result_sha256": "6ea1dce9c951d11f3129c8654057c33df97030e54241f367123cfb6776590321",
+      "run_manifest_path": "results/layer_a/preflight/runs/20260918T123936526903Z_82e3bc3214/run_manifest_v7_2.json",
+      "run_manifest_sha256": "a6e962664550ce55add658bd4b6026c800f35085b3af844d5ecf0e19b4509881",
+      "completion_path": "results/layer_a/preflight/runs/20260918T123936526903Z_82e3bc3214/run_completion_v7_2.json",
+      "completion_sha256": "c2f88ded9b0b153825b15364faf78ea7b1759a62b9646fb11242755164c42a89",
+      "reuse_only": true,
+      "new_optimize_calls": 0
+    }
+  },
+  "accepted_reference_eob": {
+    "role": "SOC2080_REFERENCE_EOB_REUSE_ONLY",
+    "path": "results/sensitivity/soc_20_80/runs/20260921T153546259891Z_2e03707743/cases/EOB/artifacts/result.json",
+    "sha256": "adff87a99061b4869817969ce3f9530ef0dddf71a902652963fc3b5153b33cdb",
+    "run_id": "20260921T153546259891Z_2e03707743",
+    "new_optimize_calls": 0
+  },
+  "fixed_future_case_universe": [
+    {
+      "order": 1,
+      "case_id": "a1.00_b04",
+      "alpha": 1.0,
+      "beta_h": 4,
+      "definition_source": "scripts/17e_run_soc_window_sensitivity.py:ALLOWED_CASES"
+    },
+    {
+      "order": 2,
+      "case_id": "a1.00_b12",
+      "alpha": 1.0,
+      "beta_h": 12,
+      "definition_source": "scripts/17e_run_soc_window_sensitivity.py:ALLOWED_CASES"
+    }
+  ],
+  "case_universe_controls": {
+    "arbitrary_selector_exists": false,
+    "eob_execution_mode_exists": false,
+    "comparator_execution_mode_exists": false,
+    "case_id_alpha_beta_literals_are_assertions_only": true
+  },
+  "future_optimize_contract": {
+    "expected_optimize_calls": 2,
+    "maximum_optimize_calls": 2,
+    "maximum_optimize_calls_per_case": 1,
+    "comparator_optimize_calls": 0,
+    "reference_eob_optimize_calls": 0,
+    "automatic_retry": false,
+    "fallback_solve": false,
+    "tuning": false,
+    "feasibility_relaxation": false,
+    "attempt_order": [
+      "a1.00_b04",
+      "a1.00_b12"
+    ]
+  },
+  "case_local_validation_policy": {
+    "applies_to": "VALID_SOLVED_POST_SOLVE_CASE_RESULT",
+    "raw_states": [
+      "PASS",
+      "REVIEW",
+      "FAIL"
+    ],
+    "precedence": "FAIL > REVIEW > PASS",
+    "serialize_complete_evidence_before_enforcement": true,
+    "preserve_raw_state": true,
+    "relabel_review_as_pass": false,
+    "retry": false,
+    "permit_other_fixed_case_one_independent_attempt": true,
+    "unknown_state": "FAIL_CLOSED"
+  },
+  "execution_level_failure_policy": {
+    "distinct_from_case_local_scientific_validation": true,
+    "whole_run_stop": true,
+    "later_unattempted_case_must_not_start": true,
+    "retry": false,
+    "preserve_previously_serialized_valid_case_evidence": true,
+    "examples": [
+      "REPOSITORY_AUTHORITY_MISMATCH",
+      "DEPENDENCY_OR_HASH_MISMATCH",
+      "NAMESPACE_COLLISION",
+      "MODEL_CONSTRUCTION_EXCEPTION",
+      "GUROBI_OR_LICENSE_FAILURE",
+      "SOLVER_OR_RUNTIME_FAILURE_PREVENTING_VALID_RESULT",
+      "UNEXPECTED_PYTHON_EXCEPTION",
+      "OPTIMIZE_BUDGET_VIOLATION",
+      "UNKNOWN_EXECUTION_STATE"
+    ]
+  },
+  "outage_adapter_finding": {
+    "caught_exception_type": "authority.SocSensitivityAuthorityError",
+    "required_message_prefix": "SOC2080 outage replay failed: ",
+    "required_payload_predicate": "nonempty dict; every value is bool; at least one value is false",
+    "accepted_17e_prefix_occurrences": 1,
+    "accepted_17e_raise_site": "scripts/17e_run_soc_window_sensitivity.py:736",
+    "raise_site_role": "POST_COMPUTATION_OUTAGE_VALIDATION_FAIL",
+    "OUTAGE_ADAPTER_SCIENTIFIC_SEMANTICS_CHANGED": "NO",
+    "UNEXPECTED_EXCEPTION_CAN_BE_NORMALIZED_TO_VALIDATION_FAIL": "NO",
+    "representation_only": true,
+    "unchanged_scientific_elements": [
+      "OUTAGE_CALCULATIONS",
+      "THRESHOLDS",
+      "VALID_STARTS",
+      "ENERGY_BALANCE",
+      "SOC_FLOOR",
+      "POWER_ADEQUACY",
+      "NO_WRAP_SEMANTICS",
+      "NO_PV_SURPLUS_RECHARGE"
+    ]
+  },
+  "scientific_identity": {
+    "NEW_UNAUTHORIZED_SCIENTIFIC_LOGIC": "NO",
+    "reused_accepted_authority": [
+      "SOC20_80_CONTRACT",
+      "ACTIVE_PWL_WIDTHS",
+      "EFFICIENCIES",
+      "ANALYTICAL_SURFACE",
+      "RESERVE",
+      "POWER_REQUIREMENT",
+      "LAYER_A_RESILIENCE_REQUIREMENTS",
+      "CANONICAL_INPUT",
+      "PNNL_10MW_MAINLINE_PACKAGE",
+      "TARIFF_AND_BILLING",
+      "EXACT_D_AND_KAPPA",
+      "TRANSITION_SETTLEMENT",
+      "INTERTEMPORAL_DEGRADATION_FORMULATION",
+      "RAINFLOW_VALIDATION",
+      "REPRESENTATIVE_GATES",
+      "POST_SOLVE_GATES",
+      "OUTAGE_REPLAY",
+      "SOLVER_SETTINGS",
+      "COMPARATOR_ARTIFACTS"
+    ]
+  },
+  "solver_contract": {
+    "solver": "Gurobi",
+    "mode": "binary",
+    "MIPGap": 0.000001,
+    "NumericFocus": 1,
+    "OutputFlag": 1,
+    "TimeLimit": "INFINITY_UNSET",
+    "NodeLimit": "INFINITY_UNSET",
+    "automatic_retry": false,
+    "tuning": false,
+    "feasibility_relaxation": false,
+    "warm_start": false
+  },
+  "output_and_production_boundary": {
+    "namespace": "results/continuation/soc2080_remaining_two/runs/<run_id>",
+    "output_root_override": false,
+    "resume": false,
+    "reuse": false,
+    "overwrite": false,
+    "protected_namespaces": [
+      "results/sensitivity/soc_20_80",
+      "results/diagnostics/soc2080_a080_b08",
+      "results/sensitivity/soc_20_80/runs/20260921T153546259891Z_2e03707743",
+      "results/sensitivity/soc_20_80/runs/20260921T154716421273Z_cdc64658b8",
+      "results/eob_production",
+      "results/eob_production_corrected",
+      "results/layer_a",
+      "results/layer_a/final_81"
+    ],
+    "eligible_for_production_completion": false,
+    "step_11c_completion": false,
+    "step_12_authorized": false,
+    "final81_authorized": false,
+    "execution_equals_result_acceptance": false,
+    "later_common_step_11c_result_acceptance_closure_gate_required": true
+  },
+  "historical_boundary": {
+    "historical_2026_09_21_a080_b08_internal_rainflow_state": "UNRESOLVED / UNRECOVERABLE FROM PRESERVED EVIDENCE",
+    "diagnostic_2026_09_22_role": "NEW_DIAGNOSTIC_SOLVE",
+    "historical_repair": false,
+    "historical_relabel": false,
+    "historical_promotion": false,
+    "historical_overwrite": false,
+    "copy_into_historical_namespace": false
+  },
+  "test_evidence_disclosure": {
+    "accepted_focused_17g_tests": {
+      "passed": 39,
+      "total": 39,
+      "status": "PASS",
+      "real_model_constructions": 0,
+      "real_optimize_calls": 0
+    },
+    "prior_combined_75_of_75_claim": "UNVERIFIED_PRIOR_REPORT_COUNT",
+    "prior_combined_claim_is_accepted_authority_evidence": false,
+    "replacement_aggregate_count": null,
+    "non_blocking_observations": [
+      "CURRENT_17D_TEST_AUTHORITY_IS_STALE_AGAINST_CURRENT_HEAD",
+      "FULL_17E_TEST_SUITE_CONTAINS_BUILD_ONLY_REAL_MODEL_CONSTRUCTION_AND_IS_NOT_ZERO_MODEL"
+    ]
+  },
+  "line_ending_environment_boundary": {
+    "core_autocrlf": true,
+    "gitattributes_present": false,
+    "pins_target_current_on_disk_bytes": true,
+    "current_live_bytes_match_accepted_hashes": true,
+    "fresh_clone_or_checkout_under_autocrlf_true_could_materialize_crlf_and_invalidate_on_disk_sha_pins": true,
+    "risk_predates_17g": true,
+    "affects_17e_and_17f_similarly": true,
+    "failure_mode": "FAIL_CLOSED",
+    "repaired_in_this_pass": false,
+    "gitattributes_added": false,
+    "core_autocrlf_changed": false,
+    "accepted_files_checked_out_or_reset": false,
+    "line_endings_normalized": false
+  },
+  "route_a_governance_wording": {
+    "full_17e_rerun_guaranteed_to_reproduce_review": false,
+    "accepted_wording": [
+      "17e has no resume/skip and re-solves earlier cases.",
+      "Any case-level non-PASS terminates its loop.",
+      "The corrected diagnostic proves a0.80_b08 CAN produce REVIEW.",
+      "Therefore a full six-case rerun carries a material risk of again terminating at case 4 and provides no demonstrated governance advantage over the additive remaining-two-case route."
+    ],
+    "route_decision_reopened": false
+  },
+  "optimize_accounting": {
+    "freeze_pass_optimize_calls": 0,
+    "freeze_pass_model_constructions": 0,
+    "lifetime_step_11c_before_execution": 6,
+    "projected_lifetime_only_if_separately_authorized_execution_attempts_both_cases": 8,
+    "no_gurobi_solve": true,
+    "continuation_executed": false
+  },
+  "execution_status": "NOT_YET_AUTHORIZED",
+  "explicitly_not_authorized": [
+    "RUN_17G_CONTINUATION",
+    "SOLVE_A1_00_B04",
+    "SOLVE_A1_00_B12",
+    "PRODUCTION_COMPLETION",
+    "STEP_12",
+    "FINAL81"
+  ],
+  "next_gate": "FINAL READ-ONLY REMAINING-TWO-CASE PRE-EXECUTION AUTHORIZATION CHECK",
+  "checkpoint_self_hash_omitted": true,
+  "checkpoint_self_hash_reason": "A file cannot canonically contain its own SHA-256 without circularity; the committed checkpoint hash is reported and verified externally."
+}
