@@ -3,10 +3,13 @@
 ## 1. AUTHORITATIVE SOURCES
 
 Current methodology source of truth:
-- Research Framework v7.2
+- `docs/research_framework_v7_3_2026-09-23.md` — Research Framework v7.3 (`CLOSED / ACCEPTED`)
 
 Current literature / evidence source of truth:
-- Thesis Literature Evidence Registry v7.2
+- `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md` — Thesis Literature Evidence Registry v7.3 R3 (`CLOSED / ACCEPTED`)
+
+Current methodology/evidence lifecycle authority checkpoint:
+- `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` — v7.3 authority freeze (`CLOSED / ACCEPTED`)
 
 Current implementation source of truth:
 - Current local working tree
@@ -15,7 +18,7 @@ Current implementation source of truth:
 
 Repository code and generated production artifacts control exact implemented values where the Framework / Registry explicitly delegate numerical authority to those artifacts.
 
-Earlier Frameworks, Registries, scripts, thesis predecessors, legacy constants, archived outputs, or old chat discussions are NOT current authority unless v7.2 explicitly classifies them as:
+Earlier Frameworks, Registries, scripts, thesis predecessors, legacy constants, archived outputs, or old chat discussions are NOT current authority unless the accepted Framework v7.3 / Registry v7.3 R3 explicitly classifies them as:
 - provenance,
 - historical lineage,
 - regression,
@@ -60,9 +63,9 @@ Never allow superseded assumptions or values to re-enter production merely becau
 
 In particular:
 
-- legacy parameters must not override v7.2 parameters;
+- legacy parameters must not override current v7.3 parameters or current machine-readable values delegated by the accepted authorities;
 - predecessor theses are lineage / comparison evidence, not current numerical authority;
-- a PENDING current value must not be filled using an older version unless v7.2 explicitly authorizes this;
+- a PENDING current value must not be filled using an older version unless Framework v7.3 / Registry v7.3 R3 explicitly authorizes this;
 - sensitivity packages must not leak into mainline;
 - mainline and sensitivity parameters must remain internally consistent packages;
 - parameter selection must not depend retrospectively on the optimization result unless the Framework explicitly permits it.
@@ -78,8 +81,8 @@ Treat this as a graduate-thesis research implementation, not ordinary software d
 For every material change, check where relevant:
 
 - consistency with the research question;
-- consistency with Framework v7.2;
-- consistency with Registry v7.2;
+- consistency with Framework v7.3;
+- consistency with Registry v7.3 R3;
 - mathematical correctness;
 - unit consistency;
 - temporal indexing;
@@ -125,9 +128,9 @@ Do not describe:
 
 ## 6. CURRENT-VERSION SEMANTICS
 
-Framework v7.2 and Registry v7.2 supersede earlier methodological wording where conflicts exist.
+Framework v7.3 and Registry v7.3 R3 supersede earlier methodological/evidence wording where conflicts exist. Framework v7.2 and Registry v7.2 remain historical accepted predecessors; Registry v7.3 R1/R2 remain failed immutable provenance.
 
-Respect all currently CLOSED v7.2 decisions, including but not limited to the established:
+Respect all currently CLOSED v7.3 decisions, including the decisions preserved from v7.2, and in particular the established:
 - preprocessing lineage;
 - efficiency semantics;
 - annual reserve / outage replay semantics;
@@ -141,7 +144,13 @@ Respect all currently CLOSED v7.2 decisions, including but not limited to the es
 - constant monetary-basis rules;
 - Layer A / Layer B research boundaries.
 
-Do not infer an older rule from old scripts when v7.2 has superseded it.
+For PV input identity, v7.3 additionally fixes reconstructed full-year PV as the best-estimate planning
+mainline and prior zero-winter PV as conservative stress/sensitivity. Reconstructed values are
+model-based/weather-informed estimates, not observed truth or exact recovery. The future canonical
+reconstructed-mainline artifact must be shared by EOB/economic, Layer A adequacy/replay, and baseline
+Layer B; that artifact and its production routing are not yet implemented or authorized.
+
+Do not infer an older rule from old scripts when v7.3 has superseded it.
 
 ---
 
@@ -242,7 +251,7 @@ State the smallest academically defensible next step.
 
 Do not silently improvise if you discover:
 
-- conflict between Framework v7.2 and Registry v7.2;
+- conflict between Framework v7.3 and Registry v7.3 R3;
 - conflict between current documentation and production code;
 - missing authoritative numerical provenance;
 - unexpected legacy contamination;

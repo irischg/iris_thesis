@@ -26,8 +26,10 @@ read-only audit is warranted (any change touching methodology-adjacent code, sol
 basis, degradation semantics, or a frozen checkpoint; any change gating a production run).
 - Performs a **read-only** audit: it may re-derive, re-check hashes, re-run build-only/no-solve
   diagnostics, and inspect diffs — it does not edit the working tree as part of the audit.
-- Receives: the authoritative sources (Framework v7.2, Registry v7.2), current repository state, the
-  diff/commit under review, and any test/audit output the primary agent produced.
+- Receives: the current authoritative sources (Framework v7.3 for methodology, Registry v7.3 R3 for
+  evidence, and the v7.3 methodology/evidence authority freeze as the lifecycle authority checkpoint),
+  current repository state, the diff/commit under review, and any test/audit output the primary agent
+  produced.
 - **Does not receive the primary agent's private reasoning or chat transcript** — only its stated
   claims plus the artifacts that should support them. This keeps the audit independent rather than
   anchored.
@@ -57,9 +59,10 @@ modification of provenance-guarded artifacts.
 **Do not resolve disagreement between primary and secondary by majority vote or by re-running until
 one agent's verdict wins.** Instead:
 
-1. Trace the disagreement to a specific artifact: does Framework v7.2 or Registry v7.2 say something
-   the code contradicts? Does a data file not match what one agent assumed? Is there a source-
-   transcription mismatch?
+1. Trace the disagreement to a specific artifact: does Framework v7.3 or Registry v7.3 R3 say
+   something the code contradicts? If the disagreement concerns authority or lifecycle state, does the
+   v7.3 methodology/evidence authority freeze settle it? Does a data file not match what one agent
+   assumed? Is there a source-transcription mismatch?
 2. If the trace resolves to a **code or data error**, that is an implementation-correction task —
    assign it explicitly, re-audit after the fix.
 3. If the trace resolves to a **genuine methodology ambiguity** (the Framework/Registry text does not

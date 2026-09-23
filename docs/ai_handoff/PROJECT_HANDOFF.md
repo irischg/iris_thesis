@@ -36,7 +36,7 @@ real-world outage performance (see Framework §1.2 "不應主張").
 ```
 raw data (load, PV, weather, tariff, cost sources)
   -> Scripts 01–05: preprocessing, load/PV baseline reconstruction, calendar/TOU build
-  -> Script 06: final integrated annual input (canonical downstream source)
+  -> Script 06: historical v7.2 integrated annual input (v7.3 canonical successor pending Step 2D)
   -> Scripts 07–10: billing-demand registry, kappa calibration, outage-start sets,
      BESS state semantics audit
   -> Scripts 11a–11h: PNNL v2024 LFP cost profiling, linearization, dual-bracket
@@ -61,6 +61,16 @@ each stage *does*, not whether it has currently run or passed. Current completio
 is controlled only by `docs/ai_handoff/CURRENT_STATE.md` and the latest applicable checkpoint/audit —
 consult it before making any claim about what has actually been executed or accepted.
 
+### v7.3 reconstructed-PV methodology note
+
+The accepted v7.3 methodology uses reconstructed full-year PV, including the prolonged winter
+unavailable block, as the best-estimate planning mainline. The prior zero-winter treatment is retained
+as a conservative stress/sensitivity. Reconstructed values are model-based, weather-informed estimates,
+not observed truth or exact recovery. EOB/economic optimization, Layer A \(R\), \(P^{out}\), binding
+classification and outage replay, and baseline Layer B must all use the same future canonical
+reconstructed-mainline artifact. That canonical artifact has not yet been created or authorized, and
+production routing has not yet been authorized.
+
 ## 4. Layer A / Layer B / DG — conceptual roles
 
 - **Layer A**: the core annual design optimization. For each \((\alpha, \beta)\) cell in a dense
@@ -77,18 +87,21 @@ consult it before making any claim about what has actually been executed or acce
 
 ## 5. Authority hierarchy (read this before trusting any number or rule)
 
-1. **`docs/research_framework_v7_2_2026-08-24.md`** — current methodology source of truth.
-2. **`docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md`** — current evidence source of
+1. **`docs/research_framework_v7_3_2026-09-23.md`** — current methodology source of truth.
+2. **`docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md`** — current evidence source of
    truth (literature-vs-project-vs-implementation-choice mapping).
-3. **Current repository working tree + latest applicable checkpoint/audit** — current implementation
+3. **`docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md`** — current methodology/evidence
+   lifecycle closure.
+4. **Current repository working tree + latest accepted applicable implementation checkpoint/audit** — current implementation
    state. Exact numeric values (parameters, hashes, cost coefficients) live in machine-readable
    artifacts (`data/reference/*.json`/`*.csv`, `results/parameter_audit/*`), not hard-coded in the
    framework text.
 
-Earlier framework/registry versions (`research_framework_v7_2026-08-14.md`,
-`research_framework_v7_1_2026-08-16.md`, and their merge-audit files, plus the equivalent registry
-files) are **provenance / regression / historical lineage only**. They may be cited to explain lineage
-or run a regression comparison, never as current methodology.
+Framework v7.2 and Registry v7.2 are historical accepted predecessors only. Registry v7.3 R1 and R2
+are failed immutable provenance only. Earlier framework/registry versions and failed candidates are
+**provenance / regression / historical lineage only** unless the current accepted v7.3 authorities
+explicitly assign another role. They may explain lineage or support a labeled regression comparison,
+never act as current methodology/evidence authority.
 
 ## 6. Methodology vs. implementation status — keep these separate
 
@@ -129,7 +142,7 @@ or run a regression comparison, never as current methodology.
 
 ## 8. Provenance rule for legacy artifacts
 
-Historical frozen artifacts (older EOB runs, pre-v7.2 checkpoints, `scripts_archive/`, superseded
+Historical frozen artifacts (older EOB runs, predecessor checkpoints, `scripts_archive/`, superseded
 framework/registry versions) must remain untouched and are never used as evidence for the *current*
 formulation. Do not "fix" a provenance/hash guard to make an old script or artifact match new code —
 a guard rejecting something is a signal to investigate, not an obstacle.
@@ -138,8 +151,12 @@ a guard rejecting something is a signal to investigate, not an obstacle.
 
 | What | Where |
 |---|---|
-| Methodology / evidence source of truth | `docs/research_framework_v7_2_2026-08-24.md`, `docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md` |
-| Superseded framework/registry versions | `docs/research_framework_v7_2026-08-14.md`, `docs/research_framework_v7_1_2026-08-16.md`, `docs/thesis_literature_evidence_registry_v7_2026-08-14.md`, `docs/thesis_literature_evidence_registry_v7_1_2026-08-16.md`, and `*_merge_audit_*.md` |
+| Current methodology source of truth | `docs/research_framework_v7_3_2026-09-23.md` |
+| Current evidence source of truth | `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md` |
+| Current methodology/evidence lifecycle closure | `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` |
+| Historical accepted predecessors | `docs/research_framework_v7_2_2026-08-24.md`, `docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md` |
+| Failed immutable Registry candidates | `docs/thesis_literature_evidence_registry_v7_3_2026-09-23.md` (R1), `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r2.md` (R2) |
+| Earlier historical framework/registry lineage | `docs/research_framework_v7_2026-08-14.md`, `docs/research_framework_v7_1_2026-08-16.md`, `docs/thesis_literature_evidence_registry_v7_2026-08-14.md`, `docs/thesis_literature_evidence_registry_v7_1_2026-08-16.md` |
 | Numbered pipeline scripts | `scripts/` (active), `scripts_archive/` (superseded, do not use as production input) |
 | Core annual optimization model | `src/annual_design_model_v7_2.py` |
 | Rainflow ex-post validation | `src/rainflow_validation_v7_2.py` |

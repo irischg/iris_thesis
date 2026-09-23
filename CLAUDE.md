@@ -6,20 +6,22 @@ planning, NTUST demonstration case), not a generic software project.
 
 ## Read first, in order
 
-1. `docs/research_framework_v7_2_2026-08-24.md` — **current methodology source of truth**
-2. `docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md` — **current evidence source of truth**
-3. `docs/ai_handoff/PROJECT_HANDOFF.md` — stable orientation (problem, pipeline, authority hierarchy)
-4. `docs/ai_handoff/CURRENT_STATE.md` — **current implementation state** (branch, HEAD, latest
+1. `docs/research_framework_v7_3_2026-09-23.md` — **current methodology source of truth**
+2. `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md` — **current evidence source of truth**
+3. `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` — **current methodology/evidence lifecycle closure**
+4. `docs/ai_handoff/PROJECT_HANDOFF.md` — stable orientation (problem, pipeline, authority hierarchy)
+5. `docs/ai_handoff/CURRENT_STATE.md` — **current implementation state** (branch, HEAD, latest
    checkpoint/audit, open blockers) — this is the only file that should ever name a specific "latest"
    checkpoint or audit path. Re-read it fresh every session; it goes stale as soon as the repository
    advances.
-5. `docs/ai_handoff/CROSS_AUDIT_PROTOCOL.md` — how Claude Code and Codex split work and cross-check each other
-6. The latest applicable checkpoint/audit **as identified by `CURRENT_STATE.md`** — treat this, not any
+6. `docs/ai_handoff/CROSS_AUDIT_PROTOCOL.md` — how Claude Code and Codex split work and cross-check each other
+7. The latest applicable checkpoint/audit **as identified by `CURRENT_STATE.md`** — treat this, not any
    path hard-coded here, as the current implementation evidence.
 
-Earlier framework/registry files (`*_v7_2026-08-14.md`, `*_v7_1_2026-08-16.md`, merge-audit files) are
-**provenance / regression / historical lineage only**, unless v7.2 explicitly assigns them another role.
-Do not cite or apply them as current methodology.
+The current research lineage branch is `thesis-v7`. Framework v7.2 and Registry v7.2 are historical
+accepted predecessors only. Registry v7.3 R1/R2 are failed immutable provenance. Earlier framework /
+registry files and failed candidates must not be used as current authority; use them only for their
+explicitly assigned provenance, regression, historical-lineage, replication, or comparison roles.
 
 ## Hard rules
 

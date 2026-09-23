@@ -5,10 +5,10 @@ methodology — see `PROJECT_HANDOFF.md` and the Framework itself for that.**
 A stage below is marked complete only where a checkpoint/audit artifact supports it — never merely
 because a script exists.
 
-Last reconstructed: 2026-09-11, immediately after the governance commit `d18d335` was pushed, using
-Git state observed at that time, Framework v7.2 status text, the pre-existing checkpoint/audit chain,
-and one fresh no-solve authorization check (see §5). Re-derive this from the repository before trusting
-it if substantial time has passed.
+Last reconstructed: 2026-09-23, from primary repository evidence at the v7.3 governance-freeze baseline
+commit `52e46e83678bf24393cf561062b16e59171a39a7`. Framework v7.3, Registry v7.3 R3, their merge/alignment
+audits, and the methodology/evidence authority freeze were committed and pushed at that baseline.
+Re-derive live Git and implementation authority before trusting this file after the repository advances.
 
 **Self-reference convention — read this before trusting any HEAD/tag fact below.** This file is itself a
 tracked, committed file. Committing or amending it (like any other commit) advances the repository's
@@ -24,80 +24,89 @@ describes a specific past base point rather than whatever HEAD is live right now
 - Similarly, any tag-vs-HEAD relationship described below (§5) is an **observation from that specific
   reconstruction**, not an ongoing or permanent claim about current tag status. Re-check it live
   (`git rev-parse <tag>^{}` vs `git rev-parse HEAD`) before relying on it.
-- **Production authorization must always be determined from the live repository-authority gate** (the
-  runner's own `audit_only` no-solve check, §5's mechanism) run fresh against the live HEAD — never
-  solely from this file, regardless of how recently it was reconstructed.
+- **Production authorization must always be determined from a live, separately authorized v7.3
+  repository-authority gate** run against the live HEAD — never solely from this file. Section 5 records
+  a historical v7.2 mechanism and does not authorize its reuse for v7.3 production.
 
 ## 1. Source of truth
 
-- **Methodology**: `docs/research_framework_v7_2_2026-08-24.md`
-  (SHA-256 `bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5` per its own provenance
-  header and cross-referenced from the pre81 checkpoint).
-- **Evidence**: `docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md`
-  (SHA-256 `8b72bd3f56226f0be6900f52779b1702daaa8bbf85f674040b336f9aae6e021e`).
+- **Methodology**: `docs/research_framework_v7_3_2026-09-23.md`
+  (SHA-256 `44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a`;
+  `CLOSED / ACCEPTED`).
+- **Evidence**: `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md`
+  (SHA-256 `e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d`;
+  `CLOSED / ACCEPTED`).
+- **Methodology/evidence lifecycle closure**:
+  `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md`
+  (`V7.3 METHODOLOGY / EVIDENCE CONTENT FREEZE — CLOSED / ACCEPTED`).
+
+Framework v7.2 and Registry v7.2 are historical accepted predecessors only. Registry v7.3 R1/R2 are
+failed immutable provenance only; neither is current authority.
 
 ## 2. Git state — base HEAD observed at last reconstruction
 
 - Branch: `thesis-v7`
-- **Base HEAD at last reconstruction**: `d18d33546cd5a4432e4f791cc934772bf93ad6eb` — "Add cross-agent
-  thesis governance and audit protocol" (governance commit; parent
-  `f4bbdebfb37a44983462df7ffa3477536761c3a9`, "Freeze audited 19b r2 production authority mechanism").
+- **Base HEAD observed before this handoff refresh**:
+  `52e46e83678bf24393cf561062b16e59171a39a7` — "Freeze accepted v7.3 methodology and evidence
+  authorities". This commit adds the accepted Framework v7.3, Registry R1/R2/R3 provenance chain,
+  their candidate checkpoints, the Framework and Registry merge audits, the cross-alignment audit,
+  and the v7.3 methodology/evidence authority freeze.
   **This is not necessarily the live current HEAD** — obtain that fresh via `git rev-parse HEAD`.
-- At that reconstruction, `origin/thesis-v7` matched the base HEAD above (confirmed via
-  `git fetch origin thesis-v7` immediately after push, not just the stale tracking ref).
-- Working tree: **clean** (`git status --short` empty). The governance commit tracked exactly six
-  files: `AGENTS.md`, `CLAUDE.md`, `docs/ai_handoff/PROJECT_HANDOFF.md`,
-  `docs/ai_handoff/CURRENT_STATE.md`, `docs/ai_handoff/CROSS_AUDIT_PROTOCOL.md`, and
-  `docs/protocols/iris_thesis_rigorous_audit_skill.md` — the last committed **byte-identical** to its
-  previously audited SHA-256 `05ae32c5087cfdd542deec2adb27ab93f4b9ee95b34a7e481cd1b0539fdc2d7d`
-  (verified before staging, and again as the staged blob hash, before commit).
-- No script, Framework, Registry, data, result, checkpoint, or authority-manifest file was touched by
-  this commit.
+- At this reconstruction, live HEAD and `origin/thesis-v7` both matched the base HEAD above with
+  ahead/behind `0/0` before the authorized five-file handoff refresh began.
+- The governance package at this base is committed and pushed. No code, data, script, test, solver,
+  result, or production-routing artifact is changed by this handoff-only refresh.
 
 ## 3. Checkpoint / audit chain
 
-In order, most recent last:
+Current v7.3 methodology/evidence closure chain:
 
-1. `docs/checkpoints/production_checkpoint_manifest_v7_2_pre81_ready_2026-09-10.json` —
-   `FROZEN_PRE81_READY`, tag `v7.2-pre81-ready` (commit `b2acdf2`).
-2. `docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-10.json` —
-   `v7.2-final81-runner-authority-1`, pins runner `scripts/19b_run_final_layer_a_81_cases.py`
-   (version `v7.2-final-layer-a-81-production-runner-2026-09-10-r2`,
-   SHA-256 `d206c81b691cccb8c81ef36cee2f9bd19a8a165d188115a69c202ac9d64a9b97`). States it is
-   *"Source authority only... does not certify any optimi[zation]"* — an authorization mechanism, not a
-   production result.
-3. **Historical, superseded by §5**: the 2026-09-11 execution-authorization audit at
-   `results/layer_a/final_81_execution_authorization/20260911T065811Z/`, run against the
-   *pre-governance-commit* HEAD `f4bbdeb`. Verdict was `FAIL — 81-CASE PRODUCTION EXECUTION NOT
-   AUTHORIZED` on finding **F-01**: the untracked `docs/protocols/iris_thesis_rigorous_audit_skill.md`
-   file was a reachable authority-hash dependency. This remains valid historical evidence for that old
-   HEAD; it does not describe the current HEAD and must not be cited as current status.
-4. **Fresh no-solve implementation/authorization check against base HEAD `d18d335`** (§5):
-   `results/layer_a/final_81_runner_audit/20260911T081511741789Z_dd663aeba1/`.
+1. `docs/framework_v7_3_merge_audit_2026-09-23.md` — Framework successor merge audit, PASS/CLOSED.
+2. `docs/registry_v7_3_r3_merge_audit_2026-09-23.md` — Registry R3 successor merge audit, PASS/CLOSED.
+3. `docs/framework_registry_v7_3_cross_alignment_audit_2026-09-23.md` — Framework/Registry alignment
+   audit, PASS/CLOSED.
+4. `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` — current content/authority freeze,
+   `CLOSED / ACCEPTED`.
+5. Commit `52e46e83678bf24393cf561062b16e59171a39a7` — committed/pushed repository baseline containing the
+   complete twelve-file v7.3 governance package.
+
+Historical v7.2 implementation/runner evidence retained for provenance, not current v7.3 production
+authority:
+
+- `docs/checkpoints/production_checkpoint_manifest_v7_2_pre81_ready_2026-09-10.json`;
+- `docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-10.json`;
+- `results/layer_a/final_81_execution_authorization/20260911T065811Z/`;
+- `results/layer_a/final_81_runner_audit/20260911T081511741789Z_dd663aeba1/`.
+
+The detailed historical reconstruction remains in §5. None of those v7.2 runner/tag artifacts
+authorizes v7.3 production execution.
 
 ## 4. Latest completed implementation stage
 
+- **v7.3 methodology/evidence governance**: Framework v7.3 and Registry v7.3 R3 are `CLOSED /
+  ACCEPTED`; their merge audits, cross-alignment audit, and authority freeze are closed and committed at
+  the base HEAD in §2.
 - Scripts 01 through 13c: **CLOSED / PASS** (preprocessing, canonical annual input, billing/kappa
   calibration, PNNL cost dual-bracket construction, Xu degradation semantics audit, Taipower tariff
-  registry + bill-component regression).
+  registry + bill-component regression) as historical accepted v7.2 implementation lineage.
 - Scripts 14a/14b (production economic interface, transition-settlement interface), the EOB
   formulation benchmark/production baseline (`results/eob_production/`), rainflow validation, 16a
   representative-case preflight, and the 17a–17c winter-PV long-block sensitivity protocol: **built and
-  audited**, frozen into checkpoints.
-- Script 18a/18b (production-environment and checkpoint validation): **PASS**.
-- Script 19a (final-81 preflight, build-only): **accepted**.
-- Script 19b (final-81 production runner): frozen and authority-pinned. Its own no-solve
-  implementation-audit path (`audit_only`, i.e. running it without `--execute-production`) passed
-  cleanly when checked against base HEAD `d18d335` (§5) — re-check live before relying on this. **No
-  Layer A 81-case result exists.** `results/layer_a/final_81` (the actual production output namespace)
-  does not exist.
+  audited** under their original v7.2 evidence roles. Corrected Sep-18 reconstructed PV remains a
+  promotion-source candidate only; it is not canonical.
+- New v7.3 canonical reconstructed-mainline annual input: `NOT_YET_CREATED / NOT_YET_AUTHORIZED`.
+- Same-artifact routing to EOB/economic, Layer A \(R/P^{out}\)/binding/replay, and baseline Layer B:
+  `NOT_YET_AUTHORIZED`.
+- v7.3 optimization production rerun: `NOT_YET_AUTHORIZED`.
+- Representative cases and Steps 11A/11B/11C: not closed under v7.3.
+- Final81: not authorized under v7.3; no v7.3 final81 result exists.
 
-## 5. Fresh no-solve authorization check — reconstruction record (base HEAD `d18d335`)
+## 5. Historical v7.2 no-solve authorization check — reconstruction record (base HEAD `d18d335`)
 
 **This section records what one specific check found at one specific base HEAD. It is a reconstruction
-record, not a live status feed.** Before relying on any conclusion in this section, re-run the same
-mechanism (below) against the live HEAD (`git rev-parse HEAD`) rather than assuming this record still
-applies.
+record, not a live status feed or current v7.3 production authority.** Preserve it for provenance. Do
+not re-run or reuse this v7.2 runner/tag route as v7.3 authority; Step 2D and later routing authorization
+must establish new, independently audited v7.3 identities.
 
 **Mechanism used**: the runner's own built-in, officially-designed no-solve path — invoking
 `scripts/19b_run_final_layer_a_81_cases.py` with **no** `--execute-production` flag. In that mode
@@ -157,53 +166,33 @@ read off this file.
 
 ## 6. Unresolved IMPLEMENTATION / VALIDATION items (not methodology)
 
-- 81-case Layer A production run: **not executed**. At last reconstruction, blocked on the
-  production-authority tag not peeling to base HEAD `d18d335` (§5), not on F-01 (resolved). Re-verify
-  live before treating this as still the case.
-- Post-solve exact demand maxima, ex-post rainflow/cycle-depth validation against a real Layer A solve,
-  winter-PV long-block economic sensitivity beyond the holdout-validation stage: all depend on the
-  81-case run and are therefore also pending.
+- New canonical reconstructed-PV mainline annual input: `NOT_YET_CREATED / NOT_YET_AUTHORIZED`.
+- Corrected Sep-18 reconstructed-PV artifact: promotion-source candidate only; not canonical and must
+  not be renamed or mutated into the canonical artifact.
+- Same-artifact production routing: `NOT_YET_AUTHORIZED`.
+- v7.3 optimization production rerun: `NOT_YET_AUTHORIZED`.
+- Representative cases and Steps 11A/11B/11C: not closed under v7.3.
+- Final81: not authorized under v7.3.
+- Post-solve exact demand maxima and ex-post rainflow/cycle-depth validation against a v7.3 solve remain
+  pending because no v7.3 production solve is authorized.
 - Layer B benchmark-design count (3/5/9) and coordinates: explicitly deferred until after Layer A
   (Framework §0.2) — do not decide this from implementation convenience.
 - DG extension CAPEX/FOM/fuel/emission parameter audit: not started; may proceed in parallel with
   Layer A per Framework §0.3, but has not been started as of this writing.
 
-## 7. Next intended gate, if repository evidence supports it
+## 7. Next intended gate
 
-**Governance decision on tag provenance (recorded here, not adjudicated by this file):** the
-already-published `v7.2-final81-runner-ready` tag (peeling to `f4bbdebfb37a44983462df7ffa3477536761c3a9`)
-is **preserved as historical/frozen provenance evidence**. It is not to be retargeted, deleted/recreated,
-or force-updated — it already underlies prior independent audit records (including the accepted r2c
-reaudit and the 2026-09-11 `065811Z` execution-authorization gate) that assert its identity as a fact;
-moving it would retroactively falsify those frozen records. This is **provenance / production-authority
-hardening, not a methodology change, and not evidence of a problem with Framework v7.2.**
+> **Step 2D — construct a NEW canonical reconstructed-PV mainline annual artifact from the corrected
+> Sep-18 promotion-source candidate, with truthful v7.3 mainline provenance.**
 
-Consequently, the next production-authority task is not "cut/move a tag" but **design a new
-production-authority identity for the post-governance repository state**:
+Step 2D must be separately authorized and must be followed by an independent canonical-artifact audit
+before any same-artifact production routing is authorized. It must not:
 
-1. Because `PRODUCTION_TAG` is hard-coded in `scripts/19b_run_final_layer_a_81_cases.py` and the current
-   authority manifest (`docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-10.json`) pins
-   that runner's exact byte hash, giving the post-governance state a new production-authority identity
-   will require a **separately authorized, additive runner/authority-manifest update** (a new tag name,
-   not a reuse of the existing one) — not an edit to the frozen manifest or a silent constant change.
-2. That update will itself require an **independent re-audit** before being trusted as production
-   authority, consistent with how the existing r2 runner/manifest pair was itself audited
-   (`final_81_runner_correction_audit`, the r2/r2b/r2c reaudits) before its own tag was cut.
-3. Only after a new, independently-audited runner+manifest pair exists and its own new tag is cut and
-   confirmed (both locally and on `origin`) should the runner's no-solve `audit_only` path (as in §5) be
-   re-run **against the then-live HEAD** to confirm `deployment_status: "PRODUCTION_AUTHORITY_FROZEN"`
-   together with a clean `untracked_files`/`worktree` result. Do not infer this from an old reconstruction
-   record.
-4. Only after that holds — verified live, not from this file — consider the actual frozen production
-   command, for review and explicit separate authorization, not to be run automatically:
-   ```powershell
-   .venv\Scripts\python.exe -X utf8 -B scripts\19b_run_final_layer_a_81_cases.py --execute-production
-   ```
+- rename or mutate the corrected v7.2 sensitivity artifact into canonical;
+- overwrite observed columns or describe reconstructed values as observed truth/exact recovery;
+- authorize EOB/economic, Layer A, or baseline Layer B routing in the artifact-construction step;
+- run EOB, representative cases, Steps 11A/11B/11C, or final81.
 
-**This file does not invent the new tag name or implement the runner/manifest change** — that is future,
-separately authorized work. Do not advance past step 1–2 above without that separate authorization.
-**Production authorization is a live property of the repository, not a fact this file can certify** —
-always re-derive it from the repository-authority gate run against the live HEAD. Do not treat any single
-audit directory under `results/layer_a/final_81_runner_audit/` or
-`results/layer_a/final_81_execution_authorization/` as current without opening it and confirming its
-recorded HEAD matches current `git rev-parse HEAD`.
+Historical v7.2 production tags and runner/authority manifests remain frozen provenance. They must not
+be retargeted or cited as current v7.3 production authority. Any future v7.3 routing/runner authority
+must be additive, independently audited, and verified against the then-live HEAD.
