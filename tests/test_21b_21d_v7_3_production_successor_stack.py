@@ -3,15 +3,21 @@
 from __future__ import annotations
 
 import ast
+import builtins
 import importlib.util
 import json
+import math
 import subprocess
 import sys
+import tempfile
 import unittest
 from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
 from unittest.mock import patch
+
+import numpy as np
+import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -718,6 +724,337 @@ class ProductionSuccessorStackV73Tests(unittest.TestCase):
                 changed,
                 consumer="eob_layer_a",
             )
+
+
+def eob_result_fixture() -> dict:
+    """Solver-free stand-in for a solved EOB result bundle (no Gurobi, no model)."""
+    return {
+        "kind": "eob",
+        "has_solution": True,
+        "objective": 66_623_000.0,
+        "mip_gap": 0.0,
+        "unbounded_probe": float("inf"),
+        "status_name": "OPTIMAL",
+        "schedule": pd.DataFrame({"t": [0, 1], "p_kw": [1.5, -2.5]}),
+    }
+
+
+def passing_audits(names) -> dict:
+    return {name: {"status": "PASS", "adapter": name} for name in names}
+
+
+class JsonSafeSerializationTests(unittest.TestCase):
+    """Section 6A — historical accepted serialization semantics."""
+
+    def test_scalars_paths_containers_and_numpy_round_trip(self) -> None:
+        self.assertIsNone(stack._json_safe(None))
+        self.assertEqual(stack._json_safe("text"), "text")
+        self.assertIs(stack._json_safe(True), True)
+        self.assertIs(stack._json_safe(False), False)
+        self.assertEqual(stack._json_safe(7), 7)
+        self.assertEqual(stack._json_safe(1.25), 1.25)
+        self.assertIsNone(stack._json_safe(float("nan")))
+        self.assertIsNone(stack._json_safe(float("inf")))
+        self.assertIsNone(stack._json_safe(float("-inf")))
+        self.assertEqual(stack._json_safe(Path("a/b.json")), str(Path("a/b.json")))
+        self.assertEqual(
+            stack._json_safe({"k": Path("x"), 2: [1.0, float("nan")]}),
+            {"k": str(Path("x")), "2": [1.0, None]},
+        )
+        self.assertEqual(stack._json_safe((1, "a", None)), [1, "a", None])
+        self.assertEqual(stack._json_safe([{"n": float("inf")}]), [{"n": None}])
+
+    def test_numpy_scalars_are_unwrapped_and_non_finite_becomes_null(self) -> None:
+        self.assertEqual(stack._json_safe(np.int64(5)), 5)
+        self.assertEqual(stack._json_safe(np.float64(2.5)), 2.5)
+        self.assertIs(stack._json_safe(np.bool_(True)), True)
+        self.assertIsNone(stack._json_safe(np.float64("nan")))
+        self.assertIsNone(stack._json_safe(np.float64("inf")))
+
+    def test_unknown_objects_degrade_to_string_never_raise(self) -> None:
+        class Opaque:
+            def __repr__(self) -> str:
+                return "<opaque>"
+
+        self.assertEqual(stack._json_safe(Opaque()), "<opaque>")
+
+    def test_every_json_safe_output_is_json_serialisable(self) -> None:
+        payload = stack._json_safe(eob_result_fixture() | {"path": Path("p")})
+        json.loads(json.dumps(payload))
+
+
+class ExclusiveJsonTests(unittest.TestCase):
+    """Section 6B — the exact helper whose missing dependency broke publication."""
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.tmp = Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+
+    def test_writes_non_empty_parsable_json(self) -> None:
+        target = self.tmp / "authority.json"
+        stack._exclusive_json(target, {"status": "PRODUCTION_AUTHORITY_FROZEN"})
+        self.assertGreater(target.stat().st_size, 0)
+        self.assertEqual(
+            json.loads(target.read_text(encoding="utf-8")),
+            {"status": "PRODUCTION_AUTHORITY_FROZEN"},
+        )
+
+    def test_regression_zero_byte_file_is_never_left_behind(self) -> None:
+        target = self.tmp / "regression.json"
+        stack._exclusive_json(target, {"a": float("inf"), "b": np.float64(1.5)})
+        self.assertNotEqual(target.stat().st_size, 0)
+        self.assertEqual(json.loads(target.read_text(encoding="utf-8")), {"a": None, "b": 1.5})
+
+    def test_exclusive_create_semantics_reject_overwrite(self) -> None:
+        target = self.tmp / "once.json"
+        stack._exclusive_json(target, {"first": True})
+        with self.assertRaises(FileExistsError):
+            stack._exclusive_json(target, {"second": True})
+        self.assertEqual(json.loads(target.read_text(encoding="utf-8")), {"first": True})
+
+
+class FilesystemPublisherEobTests(unittest.TestCase):
+    """Section 6C/6D — the REAL publisher, never exercised by the 2E-A stub."""
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+        self.publisher = stack.FilesystemProductionPublisher(self.root)
+        self.runs = self.root / stack.EOB_PRODUCTION_ROOT
+        self.record = {
+            "authority": {"status": "PRODUCTION_AUTHORITY_FROZEN", "branch": "thesis-v7"},
+            "annual_identity": {"artifact_role": authority.ACCEPTED_ARTIFACT_ROLE},
+            "solver_settings": {"MIPGap": 1e-6, "TimeLimit": None, "NumericFocus": 1},
+            "result": eob_result_fixture(),
+            "audits": passing_audits(stack.MANDATORY_EOB_AUDITS),
+        }
+
+    def pending(self) -> list[Path]:
+        return sorted(self.runs.glob(".pending_eob_*")) if self.runs.exists() else []
+
+    def test_publish_eob_writes_complete_authoritative_bundle(self) -> None:
+        final = Path(self.publisher.publish_eob(self.record))
+
+        self.assertTrue(final.is_dir())
+        self.assertEqual(self.pending(), [], "staging directory must not survive success")
+        for name in (
+            "authority.json",
+            "solver_settings.json",
+            "result.json",
+            "mandatory_audits.json",
+            "completion_manifest.json",
+            "schedule.csv",
+        ):
+            with self.subTest(artifact=name):
+                self.assertTrue((final / name).is_file())
+                self.assertGreater((final / name).stat().st_size, 0)
+
+        manifest = json.loads((final / "completion_manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["status"], "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE")
+        self.assertEqual(manifest["optimization_calls"], 1)
+        self.assertEqual(sorted(manifest["mandatory_audits"]), sorted(stack.MANDATORY_EOB_AUDITS))
+
+        audits = json.loads((final / "mandatory_audits.json").read_text(encoding="utf-8"))
+        self.assertEqual(sorted(audits), sorted(stack.MANDATORY_EOB_AUDITS))
+        self.assertTrue(all(entry["status"] == "PASS" for entry in audits.values()))
+
+        result = json.loads((final / "result.json").read_text(encoding="utf-8"))
+        self.assertEqual(result["objective"], 66_623_000.0)
+        self.assertIsNone(result["unbounded_probe"], "non-finite floats must serialize as null")
+        self.assertNotIn("schedule", result, "DataFrames belong in the CSV bundle")
+
+    def test_published_artifact_registry_matches_bytes_on_disk(self) -> None:
+        final = Path(self.publisher.publish_eob(self.record))
+        manifest = json.loads((final / "completion_manifest.json").read_text(encoding="utf-8"))
+        registry = manifest["artifact_registry"]
+
+        self.assertNotIn("completion_manifest.json", registry)
+        self.assertEqual(
+            sorted(registry),
+            sorted(
+                path.relative_to(final).as_posix()
+                for path in final.rglob("*")
+                if path.is_file() and path.name != "completion_manifest.json"
+            ),
+        )
+        for relative, identity in registry.items():
+            with self.subTest(artifact=relative):
+                self.assertEqual(authority.sha256_file(final / relative), identity["sha256"])
+                self.assertEqual((final / relative).stat().st_size, identity["bytes"])
+        stack._verify_artifact_registry(final, registry)
+
+    def test_registry_verification_detects_post_publication_mutation(self) -> None:
+        final = Path(self.publisher.publish_eob(self.record))
+        registry = json.loads(
+            (final / "completion_manifest.json").read_text(encoding="utf-8")
+        )["artifact_registry"]
+        (final / "result.json").write_text("{}", encoding="utf-8")
+        with self.assertRaises(stack.SuccessorPreflightError):
+            stack._verify_artifact_registry(final, registry)
+
+    def test_failed_publication_leaves_valid_failure_manifest_and_no_authority(self) -> None:
+        def boom(directory, result):
+            raise RuntimeError("injected publication failure")
+
+        with patch.object(stack, "_write_result_bundle", boom):
+            with self.assertRaises(RuntimeError):
+                self.publisher.publish_eob(self.record)
+
+        staging = self.pending()
+        self.assertEqual(len(staging), 1, "failed staging evidence must be retained")
+        self.assertEqual(
+            [path for path in self.runs.iterdir() if not path.name.startswith(".pending_eob_")],
+            [],
+            "a failed publication must never produce an authoritative run directory",
+        )
+
+        failure = staging[0] / "failure_manifest.json"
+        self.assertGreater(failure.stat().st_size, 0, "failure manifest must not be zero bytes")
+        payload = json.loads(failure.read_text(encoding="utf-8"))
+        self.assertEqual(payload["status"], "PUBLICATION_FAILED")
+        self.assertFalse(payload["authoritative"])
+        self.assertFalse((staging[0] / "completion_manifest.json").exists())
+        self.assertFalse((staging[0] / "result.json").exists())
+        self.assertGreater((staging[0] / "authority.json").stat().st_size, 0)
+
+    def test_two_publications_never_collide_or_share_a_directory(self) -> None:
+        first = Path(self.publisher.publish_eob(self.record))
+        second = Path(self.publisher.publish_eob(deepcopy(self.record)))
+        self.assertNotEqual(first, second)
+        self.assertTrue(first.is_dir() and second.is_dir())
+        self.assertEqual(self.pending(), [])
+
+
+class FilesystemPublisherLayerATests(unittest.TestCase):
+    """Section 6E — the same serializer defect blocked Layer-A publication."""
+
+    CASE_IDS = ("LOW", "CENTRAL", "HIGH")
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+        self.publisher = stack.FilesystemProductionPublisher(self.root)
+        self.runs = self.root / stack.LAYER_A_PRODUCTION_ROOT
+
+    def case_record(self, case_id: str, alpha: float, beta_h: int) -> dict:
+        return {
+            "case": {"case_id": case_id, "alpha": alpha, "beta_h": beta_h, "eta_d": stack.ETA_D},
+            "solver_settings": {"MIPGap": 1e-6, "TimeLimit": None},
+            "result": {
+                "kind": "layer_a",
+                "case_id": case_id,
+                "has_solution": True,
+                "objective": 1.0e6 + beta_h,
+                "dispatch": pd.DataFrame({"t": [0, 1], "soc": [0.5, 0.6]}),
+            },
+            "audits": passing_audits(stack.MANDATORY_LAYER_A_AUDITS),
+        }
+
+    def test_full_core_three_run_publishes_and_clears_staging(self) -> None:
+        run = self.publisher.begin_layer_run(
+            {
+                "authority": {"status": "PRODUCTION_AUTHORITY_FROZEN"},
+                "schedule": [{"case_id": case_id} for case_id in self.CASE_IDS],
+            }
+        )
+        staging = Path(run["staging"])
+        self.assertGreater((staging / "authority.json").stat().st_size, 0)
+        self.assertGreater((staging / "case_schedule.json").stat().st_size, 0)
+
+        for case_id, alpha, beta_h in (("LOW", 0.60, 4), ("CENTRAL", 0.80, 8), ("HIGH", 1.00, 12)):
+            case_dir = Path(self.publisher.publish_layer_case(run, self.case_record(case_id, alpha, beta_h)))
+            case_manifest = json.loads(
+                (case_dir / "completion_manifest.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(case_manifest["status"], "COMPLETE_PASS")
+            self.assertEqual(case_manifest["case_id"], case_id)
+            self.assertEqual(case_manifest["optimization_calls"], 1)
+            self.assertEqual(
+                sorted(case_manifest["mandatory_audits"]), sorted(stack.MANDATORY_LAYER_A_AUDITS)
+            )
+            for relative, identity in case_manifest["artifact_registry"].items():
+                self.assertEqual(authority.sha256_file(case_dir / relative), identity["sha256"])
+
+        final = Path(
+            self.publisher.complete_layer_run(
+                run, {"case_ids": list(self.CASE_IDS), "case_set": "core_three"}
+            )
+        )
+
+        self.assertTrue(final.is_dir())
+        self.assertEqual(sorted(self.runs.glob(".pending_layer_a_*")), [])
+        manifest = json.loads((final / "completion_manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["status"], "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE")
+        self.assertEqual(manifest["case_set"], "core_three")
+        self.assertEqual(manifest["case_count"], 3)
+        self.assertEqual(manifest["case_ids"], list(self.CASE_IDS))
+        self.assertEqual(manifest["optimization_calls"], 3)
+        stack._verify_artifact_registry(final, manifest["artifact_registry"])
+        for case_id in self.CASE_IDS:
+            self.assertTrue((final / "cases" / case_id / "result.json").is_file())
+
+    def test_case_surface_drift_fails_closed_without_publishing_run(self) -> None:
+        run = self.publisher.begin_layer_run(
+            {"authority": {}, "schedule": [{"case_id": case_id} for case_id in self.CASE_IDS]}
+        )
+        self.publisher.publish_layer_case(run, self.case_record("LOW", 0.60, 4))
+        with self.assertRaises(stack.SuccessorPreflightError):
+            self.publisher.complete_layer_run(
+                run, {"case_ids": list(self.CASE_IDS), "case_set": "core_three"}
+            )
+        self.assertEqual(len(sorted(self.runs.glob(".pending_layer_a_*"))), 1)
+        self.assertFalse(Path(run["final"]).exists())
+
+
+class PublicationDefectRegressionTests(unittest.TestCase):
+    """Guards the exact 2026-09-24 failure mode against reintroduction."""
+
+    def test_stack_module_has_no_undefined_module_level_names(self) -> None:
+        source = (ROOT / "src/production_successor_stack_v7_3.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        defined: set[str] = set(dir(builtins))
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                defined.add(node.name)
+            elif isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store):
+                defined.add(node.id)
+            elif isinstance(node, (ast.Import, ast.ImportFrom)):
+                for alias in node.names:
+                    defined.add((alias.asname or alias.name).split(".")[0])
+            elif isinstance(node, (ast.arg,)):
+                defined.add(node.arg)
+            elif isinstance(node, ast.ExceptHandler) and node.name:
+                defined.add(node.name)
+            elif isinstance(node, ast.Global):
+                defined.update(node.names)
+
+        called = {
+            node.func.id
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+        }
+        missing = sorted(name for name in called if name not in defined)
+        self.assertEqual(missing, [], f"undefined called names in successor stack: {missing}")
+
+    def test_json_safe_is_defined_in_the_publication_module(self) -> None:
+        self.assertTrue(callable(getattr(stack, "_json_safe", None)))
+
+    def test_math_isfinite_contract_matches_historical_15d_helper(self) -> None:
+        historical = load_script(
+            ROOT / "scripts/15d_run_corrected_eob_v7_2.py", "historical_15d_for_serializer_parity"
+        )
+        for value in (
+            None, "s", True, False, 0, 13, 1.5, -0.0,
+            float("nan"), float("inf"), float("-inf"),
+            Path("a/b"), {"k": [1, (2, 3)]}, (1, 2), [Path("p")],
+            np.float64(3.5), np.int64(4), np.float64("nan"),
+        ):
+            with self.subTest(value=repr(value)):
+                self.assertEqual(stack._json_safe(value), historical._json_safe(value))
+        self.assertTrue(math.isfinite(1.0))
 
 
 if __name__ == "__main__":

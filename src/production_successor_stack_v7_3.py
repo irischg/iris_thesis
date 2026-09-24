@@ -1330,6 +1330,26 @@ class NativeProductionBackend:
         }
 
 
+def _json_safe(value: Any) -> Any:
+    """Historical accepted serialization semantics (see scripts/15d_run_corrected_eob_v7_2.py)."""
+    if value is None or isinstance(value, (str, bool, int)):
+        return value
+    if isinstance(value, float):
+        return value if math.isfinite(value) else None
+    if isinstance(value, Path):
+        return str(value)
+    if isinstance(value, Mapping):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    if hasattr(value, "item"):
+        try:
+            return _json_safe(value.item())
+        except (TypeError, ValueError):
+            pass
+    return str(value)
+
+
 def _exclusive_json(path: Path, payload: Mapping[str, Any]) -> None:
     with path.open("x", encoding="utf-8", newline="\n") as handle:
         json.dump(_json_safe(dict(payload)), handle, indent=2, sort_keys=True)
