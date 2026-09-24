@@ -5,12 +5,15 @@ from __future__ import annotations
 import ast
 import builtins
 import importlib.util
+import io
 import json
 import math
+import re
 import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
@@ -54,6 +57,68 @@ def worktree_status() -> str:
         capture_output=True,
         text=True,
     ).stdout
+
+
+def run_cli_in_process(module, argv: list[str]) -> tuple[dict, int]:
+    """Invoke a CLI's main() in process and capture its JSON payload and exit code.
+
+    Used instead of subprocess so that no test can ever spawn a solver-capable
+    process that outlives the assertions guarding it.
+    """
+
+    buffer = io.StringIO()
+    with redirect_stdout(buffer):
+        code = module.main(argv)
+    return json.loads(buffer.getvalue()), code
+
+
+class NativeSolverTripwire(AssertionError):
+    """Raised if any test reaches a real Gurobi entry point."""
+
+
+_TRIPWIRE_PATCHES: list = []
+
+
+def setUpModule() -> None:
+    """Make real native solver entry structurally impossible for this whole module.
+
+    Process-list observation is not a control.  Every real Gurobi entry point is
+    replaced for the duration of the module so that a regression which reintroduces
+    a live production path fails instantly instead of solving for 40 minutes.
+    """
+
+    def _forbidden(name):
+        def _raise(*args, **kwargs):
+            raise NativeSolverTripwire(
+                f"Test suite reached real native solver entry point: {name}"
+            )
+
+        return _raise
+
+    try:
+        import gurobipy as gp
+    except Exception:  # pragma: no cover - gurobipy absent is already safe
+        return
+
+    for target, attribute in (
+        (gp.Model, "__init__"),
+        (gp.Model, "optimize"),
+        (gp.Model, "optimizeAsync"),
+        (gp.Model, "optimizeBatch"),
+        (gp.Model, "tune"),
+    ):
+        if not hasattr(target, attribute):
+            continue
+        patcher = patch.object(
+            target, attribute, _forbidden(f"gurobipy.Model.{attribute}")
+        )
+        patcher.start()
+        _TRIPWIRE_PATCHES.append(patcher)
+
+
+def tearDownModule() -> None:
+    while _TRIPWIRE_PATCHES:
+        _TRIPWIRE_PATCHES.pop().stop()
 
 
 class MockProductionBackend:
@@ -359,13 +424,53 @@ class ProductionSuccessorStackV73Tests(unittest.TestCase):
             accepted.assert_not_called()
 
     def test_current_real_execution_fails_before_native_backend_creation(self) -> None:
+        """Negative condition is the interlock, not the live repository state.
+
+        Previously this asserted ``not committed in HEAD``, which only held while the
+        successor bytes were uncommitted.  That coupling is what made the suite unsafe
+        once deployment authority froze.
+        """
+
         with patch.object(stack, "NativeProductionBackend") as native_backend:
-            with self.assertRaisesRegex(
-                stack.ProductionAuthorityError, "not committed in HEAD"
-            ) as caught:
+            with self.assertRaises(stack.ProductionAuthorityError) as caught:
                 stack.run_eob_production(ROOT, execute_production=True)
-            self.assertEqual(caught.exception.status, "PRODUCTION_AUTHORITY_NOT_YET_FROZEN")
+            self.assertEqual(caught.exception.status, "NATIVE_SOLVE_CONFIRMATION_REQUIRED")
             native_backend.assert_not_called()
+
+        with patch.object(stack, "NativeProductionBackend") as native_backend:
+            with self.assertRaises(stack.ProductionAuthorityError) as caught:
+                stack.run_layer_a_production(
+                    ROOT, execute_production=True, case_set="core-three"
+                )
+            self.assertEqual(caught.exception.status, "NATIVE_SOLVE_CONFIRMATION_REQUIRED")
+            native_backend.assert_not_called()
+
+    def test_deployment_failure_is_proven_with_synthetic_snapshots_not_live_repo(self) -> None:
+        frozen = self.passing_snapshot()
+        negatives = {
+            "wrong_branch": replace(frozen, branch="main"),
+            "head_not_pushed": replace(frozen, origin_head="0" * 40),
+            "successor_not_committed": replace(frozen, successor_bytes_committed=False),
+            "tracked_dirty": replace(frozen, tracked_unstaged_changes=True),
+            "staged": replace(frozen, staged_changes=True),
+            "authority_hash_fail": replace(
+                frozen, authority_hashes_valid=False, authority_error="hash mismatch"
+            ),
+            "r3_identity_fail": replace(
+                frozen, accepted_identity=replace(self.expected_identity, sha256="0" * 64)
+            ),
+            "protected_untracked": replace(
+                frozen, authority_untracked_paths=("results/stray.json",)
+            ),
+            "csv_fallback": replace(frozen, csv_fallback_possible=True),
+            "missing_step2e1_ancestry": replace(frozen, step2e1_is_ancestor=False),
+        }
+        for label, snapshot in negatives.items():
+            with self.subTest(case=label):
+                with self.assertRaises(stack.ProductionAuthorityError):
+                    stack.validate_deployment_snapshot(
+                        snapshot, execute_production=True, selected_scope="eob"
+                    )
 
     def test_mock_eob_future_path_executes_exactly_one_complete_wiring_chain(self) -> None:
         backend = MockProductionBackend(self.expected_identity)
@@ -680,7 +785,12 @@ class ProductionSuccessorStackV73Tests(unittest.TestCase):
         for index, path in enumerate(NEW_SOURCES[1:], start=1):
             module = load_script(path, f"successor_cli_{index}")
             self.assertFalse(module.parse_args([]).execute_production)
+            self.assertFalse(module.parse_args([]).confirm_native_solve)
             self.assertTrue(module.parse_args(["--execute-production"]).execute_production)
+            self.assertFalse(module.parse_args(["--execute-production"]).confirm_native_solve)
+            self.assertTrue(
+                module.parse_args(["--confirm-native-solve"]).confirm_native_solve
+            )
             if path.name.startswith(("21c", "21d")):
                 self.assertEqual(
                     module.parse_args(["--case-set", "core-three"]).case_set,
@@ -690,30 +800,34 @@ class ProductionSuccessorStackV73Tests(unittest.TestCase):
                     module.parse_args(["--alpha", "0.8", "--beta", "8"])
 
     def test_all_cli_execute_requests_fail_closed_without_changing_worktree(self) -> None:
+        """In-process only.
+
+        The historical version of this test launched real ``--execute-production``
+        subprocesses and relied on the successor bytes being uncommitted for its
+        negative condition.  Once the repository became deployable that assumption
+        inverted and the test itself started a live EOB optimization.  The negative
+        condition is now the native-solve interlock, which is independent of
+        repository state, and no subprocess is launched.
+        """
+
         before = worktree_status()
-        for path in NEW_SOURCES[1:]:
-            command = [sys.executable, "-B", str(path), "--execute-production"]
+        for index, path in enumerate(NEW_SOURCES[1:], start=1):
+            module = load_script(path, f"cli_fail_closed_{index}")
+            argv = ["--execute-production"]
             if path.name.startswith(("21c", "21d")):
-                command.extend(["--case-set", "core-three"])
-            command.append("--compact")
-            completed = subprocess.run(
-                command,
-                cwd=ROOT,
-                check=False,
-                capture_output=True,
-                text=True,
-            )
+                argv.extend(["--case-set", "core-three"])
+            argv.append("--compact")
             with self.subTest(path=path.name):
-                self.assertEqual(completed.returncode, 2)
-                payload = json.loads(completed.stdout)
-                self.assertEqual(
-                    payload["status"], "PRODUCTION_AUTHORITY_NOT_YET_FROZEN"
-                )
-                self.assertIn("not committed in HEAD", payload["error"])
+                with patch.object(stack, "NativeProductionBackend") as native_backend:
+                    payload, code = run_cli_in_process(module, argv)
+                self.assertEqual(code, 2)
+                self.assertEqual(payload["status"], "NATIVE_SOLVE_CONFIRMATION_REQUIRED")
+                self.assertIn("--confirm-native-solve", payload["error"])
                 self.assertFalse(payload["production_execution_attempted"])
                 self.assertEqual(payload["execution_counters"]["model_constructions"], 0)
                 self.assertEqual(payload["execution_counters"]["optimization_calls"], 0)
                 self.assertEqual(payload["execution_counters"]["economic_evaluations"], 0)
+                native_backend.assert_not_called()
         self.assertEqual(before, worktree_status())
 
     def test_direct_same_identity_guard_rejects_eob_layer_a_difference(self) -> None:
@@ -1055,6 +1169,238 @@ class PublicationDefectRegressionTests(unittest.TestCase):
             with self.subTest(value=repr(value)):
                 self.assertEqual(stack._json_safe(value), historical._json_safe(value))
         self.assertTrue(math.isfinite(1.0))
+
+
+class ProductionExecutionInterlockTests(unittest.TestCase):
+    """Section 6 — the two-flag interlock, proven without any live production path."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.modules = {
+            path.name: load_script(path, f"interlock_cli_{index}")
+            for index, path in enumerate(NEW_SOURCES[1:], start=1)
+        }
+        cls.identity = authority.load_accepted_v7_3_annual_input(ROOT).identity
+
+    def case_set_argv(self, name: str) -> list[str]:
+        return ["--case-set", "core-three"] if name.startswith(("21c", "21d")) else []
+
+    def test_a_default_cli_is_zero_solve(self) -> None:
+        for name, module in self.modules.items():
+            with self.subTest(cli=name):
+                with patch.object(stack, "NativeProductionBackend") as native_backend:
+                    payload, code = run_cli_in_process(module, ["--compact"])
+                self.assertEqual(code, 0)
+                self.assertEqual(payload["status"], "PASS")
+                counters = payload["execution_counters"]
+                self.assertEqual(counters["model_constructions"], 0)
+                self.assertEqual(counters["optimization_calls"], 0)
+                self.assertEqual(counters["economic_evaluations"], 0)
+                native_backend.assert_not_called()
+
+    def test_b_execute_production_alone_requires_confirmation(self) -> None:
+        for name, module in self.modules.items():
+            argv = ["--execute-production", *self.case_set_argv(name), "--compact"]
+            with self.subTest(cli=name):
+                with patch.object(stack, "NativeProductionBackend") as native_backend:
+                    payload, code = run_cli_in_process(module, argv)
+                self.assertEqual(code, 2)
+                self.assertEqual(payload["status"], "NATIVE_SOLVE_CONFIRMATION_REQUIRED")
+                self.assertEqual(payload["execution_counters"]["model_constructions"], 0)
+                self.assertEqual(payload["execution_counters"]["optimization_calls"], 0)
+                native_backend.assert_not_called()
+
+    def test_c_confirmation_alone_is_execution_disabled(self) -> None:
+        for name, module in self.modules.items():
+            argv = ["--confirm-native-solve", *self.case_set_argv(name), "--compact"]
+            with self.subTest(cli=name):
+                with patch.object(stack, "NativeProductionBackend") as native_backend:
+                    payload, code = run_cli_in_process(module, argv)
+                self.assertEqual(code, 2)
+                self.assertEqual(payload["status"], "EXECUTION_DISABLED")
+                self.assertEqual(payload["execution_counters"]["model_constructions"], 0)
+                self.assertEqual(payload["execution_counters"]["optimization_calls"], 0)
+                native_backend.assert_not_called()
+
+    def test_d_both_flags_with_failed_authority_is_zero_solve(self) -> None:
+        def refuse(*args, **kwargs):
+            raise stack.ProductionAuthorityError(
+                "PRODUCTION_AUTHORITY_NOT_YET_FROZEN", "synthetic deployment failure"
+            )
+
+        for name, module in self.modules.items():
+            argv = [
+                "--execute-production",
+                "--confirm-native-solve",
+                *self.case_set_argv(name),
+                "--compact",
+            ]
+            with self.subTest(cli=name):
+                with patch.object(stack, "require_production_authority", refuse), patch.object(
+                    stack, "NativeProductionBackend"
+                ) as native_backend:
+                    payload, code = run_cli_in_process(module, argv)
+                self.assertEqual(code, 2)
+                self.assertEqual(payload["status"], "PRODUCTION_AUTHORITY_NOT_YET_FROZEN")
+                self.assertEqual(payload["execution_counters"]["model_constructions"], 0)
+                self.assertEqual(payload["execution_counters"]["optimization_calls"], 0)
+                native_backend.assert_not_called()
+
+    def test_e_both_flags_with_frozen_authority_reaches_mock_path_only(self) -> None:
+        frozen = {
+            "status": "PRODUCTION_AUTHORITY_FROZEN",
+            "branch": "thesis-v7",
+            "head": "synthetic",
+            "origin_head": "synthetic",
+            "annual_identity": self.identity.as_dict(),
+        }
+        backend = MockProductionBackend(self.identity)
+        publisher = MockProductionPublisher()
+
+        with patch.object(stack, "require_production_authority", lambda *a, **k: frozen), patch.object(
+            stack, "NativeProductionBackend", lambda *a, **k: backend
+        ), patch.object(stack, "FilesystemProductionPublisher", lambda *a, **k: publisher):
+            payload, code = run_cli_in_process(
+                self.modules["21b_preflight_v7_3_eob_successor.py"],
+                ["--execute-production", "--confirm-native-solve", "--compact"],
+            )
+
+        self.assertEqual(code, 0)
+        self.assertEqual(payload["status"], "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE")
+        self.assertEqual(payload["optimization_calls"], 1)
+        self.assertEqual(backend.optimization_calls, 1)
+        self.assertEqual([event[0] for event in publisher.events], ["publish_eob"])
+
+    def test_f_real_native_backend_is_never_constructible_without_confirmation(self) -> None:
+        with self.assertRaises(stack.ProductionAuthorityError) as caught:
+            stack.NativeProductionBackend(ROOT, self.identity)
+        self.assertEqual(caught.exception.status, "NATIVE_SOLVE_CONFIRMATION_REQUIRED")
+
+        with self.assertRaises(stack.ProductionAuthorityError) as caught:
+            stack.NativeProductionBackend(ROOT, self.identity, confirm_native_solve=False)
+        self.assertEqual(caught.exception.status, "NATIVE_SOLVE_CONFIRMATION_REQUIRED")
+
+    def test_g_interlock_precedes_the_deployment_gate_entirely(self) -> None:
+        """The interlock must not depend on deployment authority being evaluated."""
+
+        with patch.object(stack, "require_production_authority") as gate, patch.object(
+            stack, "NativeProductionBackend"
+        ) as native_backend:
+            with self.assertRaises(stack.ProductionAuthorityError):
+                stack.run_eob_production(ROOT, execute_production=True)
+            gate.assert_not_called()
+            native_backend.assert_not_called()
+
+    def test_h_all_three_clis_share_one_confirmation_contract(self) -> None:
+        for name, module in self.modules.items():
+            source = (ROOT / "scripts" / name).read_text(encoding="utf-8")
+            with self.subTest(cli=name):
+                self.assertIn("--confirm-native-solve", source)
+                self.assertIn("confirm_native_solve=args.confirm_native_solve", source)
+                self.assertFalse(module.parse_args([]).confirm_native_solve)
+
+    def test_i_core_three_selection_is_unchanged(self) -> None:
+        cases = stack.select_production_cases(
+            stack.run_successor_stack(ROOT)["final81"], "core-three"
+        )
+        self.assertEqual(
+            sorted((round(float(case["alpha"]), 2), int(case["beta_h"])) for case in cases),
+            [(0.60, 4), (0.80, 8), (1.00, 12)],
+        )
+
+    def test_j_full81_is_never_reached_without_explicit_selection(self) -> None:
+        for name, module in self.modules.items():
+            if not name.startswith(("21c", "21d")):
+                continue
+            argv = ["--execute-production", "--confirm-native-solve", "--compact"]
+            with self.subTest(cli=name):
+                with patch.object(stack, "NativeProductionBackend") as native_backend:
+                    payload, code = run_cli_in_process(module, argv)
+                self.assertEqual(code, 2)
+                self.assertIn(
+                    payload["status"],
+                    {"CASE_SCOPE_REQUIRED", "CASE_SCOPE_REJECTED"},
+                )
+                native_backend.assert_not_called()
+
+
+class TestSuiteExecutionSafetyAuditTests(unittest.TestCase):
+    """Section 7 — no test in the repository may reach a real native optimizer."""
+
+    EXECUTE_FLAG = "--execute-production"
+    CONFIRM_FLAG = "--confirm-native-solve"
+    SUBPROCESS_CALL = re.compile(r"subprocess\.(run|Popen|check_call|check_output|call)\s*\(")
+    PRODUCTION_TARGET = re.compile(
+        r"21[bcd]_preflight|NEW_SOURCES\[1:\]|run_eob_production|run_layer_a_production"
+    )
+    # Mentioning a production target is not execution; only these actually invoke one.
+    EXECUTION_CALL = re.compile(
+        r"\bmain\s*\(|\brun_cli_in_process\s*\(|\brun_eob_production\s*\(|"
+        r"\brun_layer_a_production\s*\(|subprocess\.(run|Popen|check_call|check_output|call)\s*\("
+    )
+
+    @staticmethod
+    def functions(path: Path):
+        source = path.read_text(encoding="utf-8")
+        lines = source.splitlines()
+        for node in ast.walk(ast.parse(source)):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                body = "\n".join(lines[node.lineno - 1 : getattr(node, "end_lineno", node.lineno)])
+                yield node.name, body
+
+    def test_no_test_launches_a_live_production_capable_subprocess(self) -> None:
+        offenders = []
+        for path in sorted((ROOT / "tests").glob("test_*.py")):
+            for name, body in self.functions(path):
+                if self.EXECUTE_FLAG not in body:
+                    continue
+                if not self.SUBPROCESS_CALL.search(body):
+                    continue
+                if self.PRODUCTION_TARGET.search(body):
+                    offenders.append(f"{path.name}::{name}")
+        self.assertEqual(
+            sorted(set(offenders)),
+            [],
+            "tests must never spawn a real production subprocess",
+        )
+
+    def test_every_execute_production_occurrence_is_classified_safe(self) -> None:
+        neutralising = {
+            "NativeProductionBackend",
+            "require_production_authority",
+            "validate_deployment_snapshot",
+            "run_eob_production",
+            "run_layer_a_production",
+            "FilesystemProductionPublisher",
+        }
+        unsafe = []
+        for path in sorted((ROOT / "tests").glob("test_*.py")):
+            for name, body in self.functions(path):
+                if self.EXECUTE_FLAG not in body:
+                    continue
+                patched = set(re.findall(r"[\"'](\w+)[\"']", body)) | set(
+                    re.findall(r"patch\.object\(\s*\w+\s*,\s*[\"'](\w+)[\"']", body)
+                )
+                confirmed = self.CONFIRM_FLAG in body
+                reaches_production = bool(
+                    self.PRODUCTION_TARGET.search(body) and self.EXECUTION_CALL.search(body)
+                )
+                if not reaches_production:
+                    continue
+                if patched & neutralising:
+                    continue
+                if not confirmed:
+                    continue  # interlock fails closed before any backend
+                unsafe.append(f"{path.name}::{name}")
+        self.assertEqual(sorted(set(unsafe)), [], "unmocked confirmed production path in tests")
+
+    def test_no_test_module_can_reach_a_real_gurobi_model(self) -> None:
+        """The module tripwire must be installed and effective."""
+
+        import gurobipy as gp
+
+        with self.assertRaises(NativeSolverTripwire):
+            gp.Model("tripwire-probe")
 
 
 if __name__ == "__main__":

@@ -39,6 +39,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Future explicit execution interface; rejected until Macro Gate 2E-B.",
     )
+    parser.add_argument(
+        "--confirm-native-solve",
+        action="store_true",
+        help=(
+            "Second explicit interlock. Required in addition to --execute-production "
+            "before any native model may be constructed."
+        ),
+    )
     parser.add_argument("--compact", action="store_true")
     return parser.parse_args(argv)
 
@@ -46,11 +54,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     try:
+        if args.confirm_native_solve and not args.execute_production:
+            raise ProductionAuthorityError(
+                "EXECUTION_DISABLED",
+                "--confirm-native-solve requires --execute-production; no model "
+                "was constructed and no optimization ran.",
+            )
         if args.execute_production:
             payload = run_layer_a_production(
                 ROOT,
                 execute_production=True,
                 case_set=args.case_set,
+                confirm_native_solve=args.confirm_native_solve,
             )
         else:
             stack = run_successor_stack(ROOT)

@@ -191,6 +191,26 @@ class ProductionAuthorityError(SuccessorPreflightError):
         self.status = status
 
 
+def require_native_solve_confirmation(confirm_native_solve: bool) -> None:
+    """Second explicit interlock guarding every native-solve-capable path.
+
+    ``--execute-production`` alone is not sufficient: an automated caller (a test
+    harness, a script, a scheduler) can supply it without a human ever intending a
+    multi-hour native optimization.  This guard must be satisfied in addition to the
+    deployment-authority gate, and is enforced both at the production entry points
+    and at ``NativeProductionBackend`` construction so that bypassing the CLI does
+    not silently remove it.  It is a safety interlock, not a scientific authority.
+    """
+
+    if not confirm_native_solve:
+        raise ProductionAuthorityError(
+            "NATIVE_SOLVE_CONFIRMATION_REQUIRED",
+            "Explicit --confirm-native-solve is required in addition to "
+            "--execute-production before any native model may be constructed. "
+            "No model was constructed and no optimization ran.",
+        )
+
+
 def reject_unauthorized_execution(execute_production: bool) -> None:
     """Enforce the 2E-A/2E-B boundary before any build or solve-capable path."""
 
@@ -1076,7 +1096,14 @@ def _load_helper(root: Path, relative: str, name: str) -> Any:
 class NativeProductionBackend:
     """Real future core/solver/audit adapter; constructed only after deployment PASS."""
 
-    def __init__(self, root: Path, expected_identity: AnnualInputIdentity) -> None:
+    def __init__(
+        self,
+        root: Path,
+        expected_identity: AnnualInputIdentity,
+        *,
+        confirm_native_solve: bool = False,
+    ) -> None:
+        require_native_solve_confirmation(confirm_native_solve)
         self.root = root.resolve()
         self.core = __import__(
             "src.annual_design_model_v7_2", fromlist=["annual_design_model_v7_2"]
@@ -1693,16 +1720,24 @@ def _execute_layer_a_authorized(
 
 
 def run_eob_production(
-    root: Path = ROOT, *, execute_production: bool
+    root: Path = ROOT,
+    *,
+    execute_production: bool,
+    confirm_native_solve: bool = False,
 ) -> dict[str, Any]:
-    """Real EOB entry point; current uncommitted tree fails before backend creation."""
+    """Real EOB entry point; both explicit interlocks precede any backend creation."""
 
+    if not execute_production:
+        raise ProductionAuthorityError(
+            "EXECUTION_DISABLED", "Explicit --execute-production is required."
+        )
+    require_native_solve_confirmation(confirm_native_solve)
     authority = require_production_authority(
         root, execute_production=execute_production, selected_scope="eob"
     )
     preflight = run_successor_stack(root)
     identity = _identity_from_mapping(preflight["eob"]["annual_identity"], context="EOB")
-    backend = NativeProductionBackend(root, identity)
+    backend = NativeProductionBackend(root, identity, confirm_native_solve=True)
     publisher = FilesystemProductionPublisher(root)
     return _execute_eob_authorized(
         authority=authority,
@@ -1720,9 +1755,15 @@ def run_layer_a_production(
     *,
     execute_production: bool,
     case_set: str | None,
+    confirm_native_solve: bool = False,
 ) -> dict[str, Any]:
     """Real Layer-A/Final81 entry point with closed fixed case-set selection."""
 
+    if not execute_production:
+        raise ProductionAuthorityError(
+            "EXECUTION_DISABLED", "Explicit --execute-production is required."
+        )
+    require_native_solve_confirmation(confirm_native_solve)
     authority = require_production_authority(
         root, execute_production=execute_production, selected_scope=case_set
     )
@@ -1732,7 +1773,7 @@ def run_layer_a_production(
     identity = _identity_from_mapping(
         preflight["final81"]["annual_identity"], context="Final81"
     )
-    backend = NativeProductionBackend(root, identity)
+    backend = NativeProductionBackend(root, identity, confirm_native_solve=True)
     publisher = FilesystemProductionPublisher(root)
     return _execute_layer_a_authorized(
         authority=authority,
