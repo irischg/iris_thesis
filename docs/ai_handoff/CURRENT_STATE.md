@@ -10,6 +10,12 @@ commit `52e46e83678bf24393cf561062b16e59171a39a7`. Framework v7.3, Registry v7.3
 audits, and the methodology/evidence authority freeze were committed and pushed at that baseline.
 Re-derive live Git and implementation authority before trusting this file after the repository advances.
 
+Last updated: 2026-09-24, for the **Step 2D acceptance and durability-freeze gate** only — Step 2D
+Candidate R3 and its post-2D-A governance closure are `CLOSED / ACCEPTED`. The independent closure
+verdict is `POST_2D_A_GOVERNANCE_CLOSURE_AUDIT — PASS`; the additive attestation records are named in
+§3. This update changes no methodology, data value, or production-routing authority and performs no
+solve. Git publication is authorized only for the exact Step 2D R3 authority package described below.
+
 **Self-reference convention — read this before trusting any HEAD/tag fact below.** This file is itself a
 tracked, committed file. Committing or amending it (like any other commit) advances the repository's
 live HEAD; that does not invalidate the historical reconstruction record below, it only means the record
@@ -56,6 +62,15 @@ failed immutable provenance only; neither is current authority.
   ahead/behind `0/0` before the authorized five-file handoff refresh began.
 - The governance package at this base is committed and pushed. No code, data, script, test, solver,
   result, or production-routing artifact is changed by this handoff-only refresh.
+- **Base HEAD observed at the 2026-09-24 Step 2D acceptance-closure update**:
+  `23bdadaa87bd4fbb1ce849a0c774e9394a4e2270` — "Refresh v7.3 handoff and authority references", with
+  `origin/thesis-v7` matching. **Again, this is an observation at that moment, not a permanent claim
+  about live HEAD** — obtain that fresh via `git rev-parse HEAD`.
+- The post-2D-A governance closure passed independent audit. The exact Git durability freeze is
+  `FREEZE_AUTHORIZED_IN_THIS_GATE`, with target annotated tag
+  `v7.3-step2d-r3-accepted-2026-09-24`. The authoritative freeze commit/tag identities are Git metadata
+  verified after publication; CURRENT_STATE intentionally does not self-encode the commit SHA of the
+  commit containing itself. Remote durability is not claimed by this file before that verification.
 
 ## 3. Checkpoint / audit chain
 
@@ -69,6 +84,22 @@ Current v7.3 methodology/evidence closure chain:
    `CLOSED / ACCEPTED`.
 5. Commit `52e46e83678bf24393cf561062b16e59171a39a7` — committed/pushed repository baseline containing the
    complete twelve-file v7.3 governance package.
+
+**Latest governance checkpoint (Step 2D acceptance closure, 2026-09-24):**
+
+- `docs/checkpoints/v7_3_reconstructed_pv_mainline_step_2d_r3_acceptance_closure_2026-09-24.md`
+  — human-readable acceptance-closure checkpoint;
+- `docs/checkpoints/v7_3_reconstructed_pv_mainline_step_2d_r3_acceptance_closure_2026-09-24.json`
+  — machine-readable companion manifest.
+- `docs/checkpoints/v7_3_reconstructed_pv_mainline_step_2d_r3_independent_acceptance_2026-09-24.md`
+  — independent acceptance attestation;
+- `docs/checkpoints/v7_3_reconstructed_pv_mainline_step_2d_r3_independent_acceptance_2026-09-24.json`
+  — machine-readable independent acceptance attestation.
+
+Those two files record an **already-completed** independent Step 2D-A audit whose verdict was
+`STEP_2D_CANDIDATE_R3_2D_A — PASS`. The closure records then passed a separate independent audit with
+verdict `POST_2D_A_GOVERNANCE_CLOSURE_AUDIT — PASS`; Post-2D-A Governance Closure is now `CLOSED /
+ACCEPTED`. Step 2D Candidate R3 remains `CLOSED / ACCEPTED`.
 
 Historical v7.2 implementation/runner evidence retained for provenance, not current v7.3 production
 authority:
@@ -94,10 +125,29 @@ authorizes v7.3 production execution.
   representative-case preflight, and the 17a–17c winter-PV long-block sensitivity protocol: **built and
   audited** under their original v7.2 evidence roles. Corrected Sep-18 reconstructed PV remains a
   promotion-source candidate only; it is not canonical.
-- New v7.3 canonical reconstructed-mainline annual input: `NOT_YET_CREATED / NOT_YET_AUTHORIZED`.
+- **Step 2D — new v7.3 canonical reconstructed-PV mainline annual input: `CLOSED / ACCEPTED`.**
+  - Canonical artifact:
+    `data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet`
+    (SHA-256 `3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428`).
+  - Independent Step 2D-A verdict: `STEP_2D_CANDIDATE_R3_2D_A — PASS`. Acceptance applies **only** to
+    those exact bytes and covers the **data artifact only**.
+  - Step 2D lineage: Candidate R1 `STOP / FAILED IMMUTABLE PROVENANCE` (evidence/provenance/lifecycle
+    packaging defect class, **not** a numerical data defect); Candidate R2
+    `STOP / ABANDONED IMMUTABLE PROVENANCE` (builder only survived; no R2 parquet or evidence
+    namespace was ever published); Candidate R3 `CLOSED / ACCEPTED`. R1 and R2 remain immutable
+    historical provenance and must not be modified or executed.
+  - Epistemic boundary: reconstructed long-unavailable PV values are model-based/weather-informed
+    planning estimates — **not** observed truth, **not** ground truth, **not** exact historical
+    recovery. Do not restate them as observed data anywhere downstream.
+  - **Git durability freeze: `FREEZE_AUTHORIZED_IN_THIS_GATE`.** Target annotated tag:
+    `v7.3-step2d-r3-accepted-2026-09-24`. The exact accepted `data/` and `results/` bytes are included in
+    the authorized freeze package despite their general gitignore rules. Final commit/tag and remote
+    identities must be verified from Git metadata after publication; this file intentionally does not
+    self-encode its containing commit SHA.
 - Same-artifact routing to EOB/economic, Layer A \(R/P^{out}\)/binding/replay, and baseline Layer B:
   `NOT_YET_AUTHORIZED`.
-- v7.3 optimization production rerun: `NOT_YET_AUTHORIZED`.
+- Step 2E (production routing of the accepted Step 2D artifact): `NOT_YET_AUTHORIZED`.
+- v7.3 optimization production rerun: `NOT_AUTHORIZED`.
 - Representative cases and Steps 11A/11B/11C: not closed under v7.3.
 - Final81: not authorized under v7.3; no v7.3 final81 result exists.
 
@@ -166,11 +216,16 @@ read off this file.
 
 ## 6. Unresolved IMPLEMENTATION / VALIDATION items (not methodology)
 
-- New canonical reconstructed-PV mainline annual input: `NOT_YET_CREATED / NOT_YET_AUTHORIZED`.
+- New canonical reconstructed-PV mainline annual input: **resolved** — Step 2D is `CLOSED / ACCEPTED`
+  (see §4), and the post-2D-A governance closure is also `CLOSED / ACCEPTED`. Its independent
+  acceptance attestations are named in §3. Git durability freeze is `FREEZE_AUTHORIZED_IN_THIS_GATE`;
+  authoritative local/remote refs must be verified after publication.
 - Corrected Sep-18 reconstructed-PV artifact: promotion-source candidate only; not canonical and must
-  not be renamed or mutated into the canonical artifact.
-- Same-artifact production routing: `NOT_YET_AUTHORIZED`.
-- v7.3 optimization production rerun: `NOT_YET_AUTHORIZED`.
+  not be renamed or mutated into the canonical artifact. It remains the accepted numerical promotion
+  source **from which** the Step 2D canonical artifact was constructed; that does not make it
+  canonical.
+- Same-artifact production routing (Step 2E): `NOT_YET_AUTHORIZED`.
+- v7.3 optimization production rerun: `NOT_AUTHORIZED`.
 - Representative cases and Steps 11A/11B/11C: not closed under v7.3.
 - Final81: not authorized under v7.3.
 - Post-solve exact demand maxima and ex-post rainflow/cycle-depth validation against a v7.3 solve remain
@@ -182,16 +237,24 @@ read off this file.
 
 ## 7. Next intended gate
 
-> **Step 2D — construct a NEW canonical reconstructed-PV mainline annual artifact from the corrected
-> Sep-18 promotion-source candidate, with truthful v7.3 mainline provenance.**
+> **Exact Git durability freeze of the accepted Step 2D R3 authority package**, targeting annotated tag
+> `v7.3-step2d-r3-accepted-2026-09-24`.
 
-Step 2D must be separately authorized and must be followed by an independent canonical-artifact audit
-before any same-artifact production routing is authorized. It must not:
+This gate authorizes only the exact selective commit/push/tag freeze and its local/remote verification.
+Step 2E (production routing of the accepted artifact) remains `NOT_YET_AUTHORIZED` and is not part of
+this gate. After a verified freeze, Step 2E may be considered only under a separate authorization.
 
-- rename or mutate the corrected v7.2 sensitivity artifact into canonical;
-- overwrite observed columns or describe reconstructed values as observed truth/exact recovery;
-- authorize EOB/economic, Layer A, or baseline Layer B routing in the artifact-construction step;
-- run EOB, representative cases, Steps 11A/11B/11C, or final81.
+**Step 2D itself is closed.** For the record, Step 2D was required to be separately authorized and
+followed by an independent canonical-artifact audit before any same-artifact production routing, and it
+was forbidden from:
+
+- renaming or mutating the corrected v7.2 sensitivity artifact into canonical;
+- overwriting observed columns or describing reconstructed values as observed truth/exact recovery;
+- authorizing EOB/economic, Layer A, or baseline Layer B routing in the artifact-construction step;
+- running EOB, representative cases, Steps 11A/11B/11C, or final81.
+
+The independent Step 2D-A audit verified each of those constraints against primary repository bytes and
+returned `STEP_2D_CANDIDATE_R3_2D_A — PASS`.
 
 Historical v7.2 production tags and runner/authority manifests remain frozen provenance. They must not
 be retargeted or cited as current v7.3 production authority. Any future v7.3 routing/runner authority

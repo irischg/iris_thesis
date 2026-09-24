@@ -1,0 +1,418 @@
+{
+  "acceptance_scope": {
+    "accepted_canonical_artifact": "v7.3 reconstructed-PV mainline canonical DATA ARTIFACT",
+    "accepted_parquet_path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+    "accepted_parquet_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+    "authorizes_optimization": false,
+    "authorizes_production_routing": false,
+    "scope_limit": "Acceptance applies ONLY to these exact audited bytes."
+  },
+  "accepted_r3_subject": {
+    "adjacent_manifest": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23_manifest.json",
+      "sha256": "f0e63614010d3a7450b5041409943fd94749d7b1af88ac4fd1c2b07701af9326",
+      "size_bytes": 49620
+    },
+    "all_subject_hashes_reverified_at_closure": true,
+    "builder": {
+      "path": "scripts/20c_build_v7_3_reconstructed_pv_mainline_candidate_r3.py",
+      "sha256": "e7af06409afd735e6556ee4cad64a2a1bd8cb26a772d0fe9c51b6d2727aff1ad",
+      "size_bytes": 82803
+    },
+    "candidate_parquet": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "size_bytes": 554037
+    },
+    "evidence_files": {
+      "completion_manifest.json": {
+        "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/completion_manifest.json",
+        "sha256": "811ed297b67aeec15ea7b0839f2a35272887f15766768f6d4af3835b4ca0a281",
+        "size_bytes": 15582
+      },
+      "historical_canonical_to_candidate_column_diff.csv": {
+        "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/historical_canonical_to_candidate_column_diff.csv",
+        "sha256": "18b926b65151c2b28ccc1a1f169d7fad1ef2286a2edfb6f37d9c86e0fbc4f96a",
+        "size_bytes": 12807
+      },
+      "package_manifest.json": {
+        "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/package_manifest.json",
+        "sha256": "454a6136fa81d55153d8f58e4252034b9c1d2cec604cb12e00582b394200cf14",
+        "size_bytes": 2471
+      },
+      "promotion_source_to_candidate_column_diff.csv": {
+        "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/promotion_source_to_candidate_column_diff.csv",
+        "sha256": "1a828db1cef3c1f1131883aeadc2299071db144a682327844de8f5477eb179ec",
+        "size_bytes": 17364
+      },
+      "run_manifest.json": {
+        "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/run_manifest.json",
+        "sha256": "06f4a873770abc7b3488ba7d1d904a8824be583d4bb1898ae7fde4b7dcfdee27",
+        "size_bytes": 50439
+      }
+    },
+    "evidence_namespace": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3",
+    "identity": "V7_3_RECONSTRUCTED_PV_MAINLINE_CANDIDATE_R3",
+    "source_authorities": {
+      "corrected_sep18_promotion_source": {
+        "path": "data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18.parquet",
+        "sha256": "1c1dbc265b092415e649bba23232f645f7ba5c74e0f074f2914c1ed7ac9d7cd9",
+        "size_bytes": 556721
+      },
+      "historical_zero_winter_canonical": {
+        "path": "data/processed/annual_input_v7_1.parquet",
+        "sha256": "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e",
+        "size_bytes": 535531
+      }
+    }
+  },
+  "authority": {
+    "closed_decision_reopened": false,
+    "evidence": {
+      "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "size_bytes": 187796
+    },
+    "lifecycle_closure": {
+      "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+      "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "size_bytes": 12358
+    },
+    "methodology": {
+      "path": "docs/research_framework_v7_3_2026-09-23.md",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "size_bytes": 181798
+    },
+    "methodology_changed": false,
+    "provenance_procedure": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "size_bytes": 19977
+    },
+    "research_lineage_branch": "thesis-v7",
+    "revision_family_disambiguation": "Registry v7.3 R3 is the current EVIDENCE authority revision. Step 2D Candidate R3 is the reconstructed-PV DATA-ARTIFACT candidate revision accepted here. These are different revision families and must not be conflated."
+  },
+  "authorized_changes": {
+    "added": [
+      "docs/checkpoints/v7_3_reconstructed_pv_mainline_step_2d_r3_acceptance_closure_2026-09-24.md",
+      "docs/checkpoints/v7_3_reconstructed_pv_mainline_step_2d_r3_acceptance_closure_2026-09-24.json"
+    ],
+    "any_other_change_is_a_defect": true,
+    "deleted": [],
+    "modified": [
+      "docs/ai_handoff/CURRENT_STATE.md"
+    ],
+    "no_acceptance_file_added_inside_r3_evidence_namespace": true,
+    "r3_namespace_untouched": true,
+    "self_hash_note": "These two closure files cannot register their own digests. Their SHA-256 values are reported in the closure construction report and must be re-derived independently by the auditor of this record."
+  },
+  "created_utc_date": "2026-09-24",
+  "downstream_authorization": {
+    "commit_push_tag_freeze": "NOT_AUTHORIZED",
+    "eob_solve": "NOT_AUTHORIZED",
+    "final81": "NOT_AUTHORIZED",
+    "layer_a_solve": "NOT_AUTHORIZED",
+    "layer_b_solve": "NOT_AUTHORIZED",
+    "production_routing": "NOT_YET_AUTHORIZED",
+    "step_2e": "NOT_YET_AUTHORIZED"
+  },
+  "durability": {
+    "caution": "A SHA-256 recorded in this checkpoint attests to the bytes observed in the live working tree at closure time. It does NOT by itself make those gitignored bytes Git-durable, and does not guarantee they are recoverable from any commit or remote.",
+    "commit_identity": "NOT_YET_AUTHORIZED",
+    "gitignore_rules_covering_r3": [
+      "data/",
+      "results/"
+    ],
+    "r3_git_commit_freeze_status": "NOT_YET_COMPLETED",
+    "r3_gitignored_runtime_bytes_present": true,
+    "r3_remote_durability_status": "NOT_YET_VERIFIED",
+    "r3_scientific_acceptance_status": "CLOSED / ACCEPTED",
+    "tag_identity": "NOT_YET_AUTHORIZED"
+  },
+  "epistemic_boundary": "Reconstructed long-unavailable PV values are model-based/weather-informed planning estimates and are NOT observed truth, NOT ground truth, and NOT exact historical recovery.",
+  "gate_83_of_86_disposition": {
+    "classification": "NON-BLOCKING EVIDENCE-ROSTER PERSISTENCE LIMITATION",
+    "executed_gates": 86,
+    "gate_77": "PASS",
+    "gate_78": "PASS",
+    "gate_79": "PASS",
+    "gate_details": {
+      "gate_77_no_self_classification_wording_tail": {
+        "description": "tail wording scan",
+        "reconstructible_from_primary_bytes": true,
+        "result": "PASS"
+      },
+      "gate_78_no_forbidden_filenames_tail": {
+        "description": "tail filename scan",
+        "reconstructible_from_primary_bytes": true,
+        "result": "PASS"
+      },
+      "gate_79_package_registers_all_but_itself": {
+        "description": "package-registry completeness",
+        "reconstructible_from_primary_bytes": true,
+        "result": "PASS"
+      }
+    },
+    "persisted_gates": 83,
+    "reconstructible_from_primary_bytes": true,
+    "reopening_rule": "Do not reopen the 83/86 difference as an unresolved R3 blocker unless new primary evidence contradicts this accepted audit finding.",
+    "root_cause": "The builder snapshots its gate roster into the completion manifest before gates 77-79 execute, because those three gates validate the staged completion and package manifests themselves. A manifest cannot record the result of a check performed on its own finished bytes; this is the same structural self-reference as the package manifest's omitted self-hash.",
+    "why_non_blocking": "All three predicates are deterministic functions of bytes that survive on disk. The independent Step 2D-A audit reconstructed all three from published primary bytes alone, without executing the builder, and all three passed. No acceptance-critical fact depends solely on ephemeral stdout."
+  },
+  "immutable_controls": {
+    "measurement_point": "before_governance_closure_edits",
+    "member_count": 28,
+    "members": {
+      "AGENTS.md": {
+        "sha256": "d00fd3684eb3c10f9343f666082c7a79c147830de9e9d4af3585075a2cfe1925",
+        "size_bytes": 4599
+      },
+      "CLAUDE.md": {
+        "sha256": "9de32f752ceab7687736f76613d54cab50e8ba439a1d43ca42800debf0a79e0c",
+        "size_bytes": 4487
+      },
+      "data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18.parquet": {
+        "sha256": "1c1dbc265b092415e649bba23232f645f7ba5c74e0f074f2914c1ed7ac9d7cd9",
+        "size_bytes": 556721
+      },
+      "data/processed/annual_input_v7_1.parquet": {
+        "sha256": "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e",
+        "size_bytes": 535531
+      },
+      "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r1_2026-09-23.manifest.json": {
+        "sha256": "bf63eeaa0e52559cd342465989980d8a693b3f0abf8c6f7876dd2271c2d715cc",
+        "size_bytes": 30551
+      },
+      "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r1_2026-09-23.parquet": {
+        "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "size_bytes": 554037
+      },
+      "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet": {
+        "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "size_bytes": 554037
+      },
+      "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23_manifest.json": {
+        "sha256": "f0e63614010d3a7450b5041409943fd94749d7b1af88ac4fd1c2b07701af9326",
+        "size_bytes": 49620
+      },
+      "docs/ai_handoff/CROSS_AUDIT_PROTOCOL.md": {
+        "sha256": "95f6c967a04c85db06eca0fa593c5665d2693b2f18447b9afa0b515cef640dfd",
+        "size_bytes": 5777
+      },
+      "docs/ai_handoff/PROJECT_HANDOFF.md": {
+        "sha256": "d169d297e6b280b2e0194fce818ff65e0c4fff5c4e88e5f9fde215506d4c5014",
+        "size_bytes": 12082
+      },
+      "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md": {
+        "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+        "size_bytes": 19977
+      },
+      "docs/protocols/iris_thesis_rigorous_audit_skill.md": {
+        "sha256": "05ae32c5087cfdd542deec2adb27ab93f4b9ee95b34a7e481cd1b0539fdc2d7d",
+        "size_bytes": 12215
+      },
+      "docs/research_framework_v7_3_2026-09-23.md": {
+        "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+        "size_bytes": 181798
+      },
+      "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md": {
+        "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+        "size_bytes": 187796
+      },
+      "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md": {
+        "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+        "size_bytes": 12358
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/completion_manifest.json": {
+        "sha256": "0f743a834fc94fb8c5553d12c2fbd891cf6a95eb26888f9f7390acce91a58c99",
+        "size_bytes": 3034
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/diff_vs_historical_canonical.csv": {
+        "sha256": "b3ee8b362ec441f2e83d7d22f0820abd0570f38bd965b05273ac838e6da7121e",
+        "size_bytes": 11255
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/diff_vs_promotion_source.csv": {
+        "sha256": "2194ca2bd7812830c7b2c9910fa8c16d155a8f5b34bede1a938b00fb1dfdf2eb",
+        "size_bytes": 15974
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/evidence_package_manifest.json": {
+        "sha256": "4e3fcaf2bcea03dfcd831d2082af965b6477f10ab06fa348c205b6498a0d115d",
+        "size_bytes": 1367
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/run_manifest.json": {
+        "sha256": "447fe701cf9ec9cddd1b08630288781c0482794606799ed9ebcd6b5baa596c25",
+        "size_bytes": 51918
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/completion_manifest.json": {
+        "sha256": "811ed297b67aeec15ea7b0839f2a35272887f15766768f6d4af3835b4ca0a281",
+        "size_bytes": 15582
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/historical_canonical_to_candidate_column_diff.csv": {
+        "sha256": "18b926b65151c2b28ccc1a1f169d7fad1ef2286a2edfb6f37d9c86e0fbc4f96a",
+        "size_bytes": 12807
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/package_manifest.json": {
+        "sha256": "454a6136fa81d55153d8f58e4252034b9c1d2cec604cb12e00582b394200cf14",
+        "size_bytes": 2471
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/promotion_source_to_candidate_column_diff.csv": {
+        "sha256": "1a828db1cef3c1f1131883aeadc2299071db144a682327844de8f5477eb179ec",
+        "size_bytes": 17364
+      },
+      "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/run_manifest.json": {
+        "sha256": "06f4a873770abc7b3488ba7d1d904a8824be583d4bb1898ae7fde4b7dcfdee27",
+        "size_bytes": 50439
+      },
+      "scripts/20a_build_v7_3_reconstructed_pv_mainline_candidate_r1.py": {
+        "sha256": "dfb2f586efcc22b23ffad2a3768311143518acf5e1f2f3bc0049c29480b18f80",
+        "size_bytes": 45595
+      },
+      "scripts/20b_build_v7_3_reconstructed_pv_mainline_candidate_r2.py": {
+        "sha256": "6f30660c5de9442aafccb8085fd26d994a1438b816a7ca9e4797fc23e572e3b9",
+        "size_bytes": 47729
+      },
+      "scripts/20c_build_v7_3_reconstructed_pv_mainline_candidate_r3.py": {
+        "sha256": "e7af06409afd735e6556ee4cad64a2a1bd8cb26a772d0fe9c51b6d2727aff1ad",
+        "size_bytes": 82803
+      }
+    },
+    "requirement": "All listed members must be byte-identical before and after this closure pass."
+  },
+  "independent_acceptance": {
+    "acceptance_applies_only_to_exact_bytes": true,
+    "accepted_candidate": "V7_3_RECONSTRUCTED_PV_MAINLINE_CANDIDATE_R3",
+    "accepted_parquet_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+    "audit_scope": "implementation, data-artifact identity, provenance and evidence contract; it did not reopen the CLOSED Framework v7.3 decision that full reconstructed annual PV is the v7.3 best-estimate planning mainline",
+    "performed_by": "an independent read-only Step 2D-A auditor, prior to and separate from this closure record",
+    "performed_by_this_record": false,
+    "verdict": "STEP_2D_CANDIDATE_R3_2D_A — PASS"
+  },
+  "next_authorized_action": {
+    "action": "INDEPENDENT READ-ONLY AUDIT OF THIS POST-2D-A GOVERNANCE CLOSURE",
+    "after_independent_pass": "commit/push/tag freeze of the accepted R3 bytes and of these closure records may be separately authorized",
+    "step_2e_authorized_by_this_record": false
+  },
+  "no_solve_assertions": {
+    "commits": 0,
+    "economic_evaluations": 0,
+    "model_constructions": 0,
+    "optimization_calls": 0,
+    "production_routing_changes": 0,
+    "pushes": 0,
+    "tags": 0
+  },
+  "non_claims": [
+    "This record did NOT perform the Step 2D-A audit; that audit was completed independently beforehand.",
+    "This record does NOT self-accept: it is a governance-closure CANDIDATE pending its own independent read-only audit.",
+    "This record does NOT downgrade Step 2D Candidate R3, which remains CLOSED / ACCEPTED.",
+    "This record does NOT authorize Step 2E, production routing, or any optimization solve.",
+    "This record does NOT constitute a Git durability freeze, and does not commit, push, or tag.",
+    "This record does NOT claim to be an original contemporaneous Step 2D Candidate R1 audit.",
+    "This record does NOT modify any R1, R2, or R3 byte."
+  ],
+  "record_identity": "V7_3_RECONSTRUCTED_PV_MAINLINE_STEP_2D_R3_ACCEPTANCE_CLOSURE_2026_09_24",
+  "repository_state_before": {
+    "branch": "thesis-v7",
+    "head": "23bdadaa87bd4fbb1ce849a0c774e9394a4e2270",
+    "note": "R1/R2/R3 data and evidence artifacts live under gitignored data/ and results/ trees and therefore never appear in git status; they are tracked here by explicit path hashing.",
+    "origin_thesis_v7": "23bdadaa87bd4fbb1ce849a0c774e9394a4e2270",
+    "porcelain_command": "git -c core.quotePath=false status --porcelain=v1 --untracked-files=all",
+    "porcelain_raw_bytes": 597,
+    "porcelain_raw_sha256": "702156318e65380d03be8a78020891dacbfd63c42e5871bd597c2fde698ece3c",
+    "staged_paths": [],
+    "unstaged_tracked_paths": [],
+    "untracked_entries": [
+      "0629開會逐字稿Iris.docx",
+      "\"Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md\"",
+      "\"Claude outputs/P2_Literature_Positioning_v7.2.pptx\"",
+      "\"Claude outputs/iris_thesis_independent_audit_2026-09-13.md\"",
+      "\"Claude outputs/iris_thesis_repo_audit_2026-09-13.md\"",
+      "\"docs/CATOCKERTEAIPOTEP rctㄐㄚPV  I.html\"",
+      "\"docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf\"",
+      "scripts/20a_build_v7_3_reconstructed_pv_mainline_candidate_r1.py",
+      "scripts/20b_build_v7_3_reconstructed_pv_mainline_candidate_r2.py",
+      "scripts/20c_build_v7_3_reconstructed_pv_mainline_candidate_r3.py"
+    ]
+  },
+  "schema_version": "iris-thesis-v7.3-step2d-r3-acceptance-closure-v1",
+  "status": "GOVERNANCE_CLOSURE_CANDIDATE_PASS_PENDING_INDEPENDENT_AUDIT",
+  "status_applies_to": "this NEW governance closure record only; it does NOT downgrade Step 2D Candidate R3, which remains CLOSED / ACCEPTED",
+  "step_2d_lineage": {
+    "step_2d_candidate_r1": {
+      "artifacts": {
+        "adjacent_manifest": {
+          "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r1_2026-09-23.manifest.json",
+          "sha256": "bf63eeaa0e52559cd342465989980d8a693b3f0abf8c6f7876dd2271c2d715cc",
+          "size_bytes": 30551
+        },
+        "builder": {
+          "path": "scripts/20a_build_v7_3_reconstructed_pv_mainline_candidate_r1.py",
+          "sha256": "dfb2f586efcc22b23ffad2a3768311143518acf5e1f2f3bc0049c29480b18f80",
+          "size_bytes": 45595
+        },
+        "completion_manifest": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/completion_manifest.json",
+          "sha256": "0f743a834fc94fb8c5553d12c2fbd891cf6a95eb26888f9f7390acce91a58c99",
+          "size_bytes": 3034
+        },
+        "diff_vs_historical_canonical": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/diff_vs_historical_canonical.csv",
+          "sha256": "b3ee8b362ec441f2e83d7d22f0820abd0570f38bd965b05273ac838e6da7121e",
+          "size_bytes": 11255
+        },
+        "diff_vs_promotion_source": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/diff_vs_promotion_source.csv",
+          "sha256": "2194ca2bd7812830c7b2c9910fa8c16d155a8f5b34bede1a938b00fb1dfdf2eb",
+          "size_bytes": 15974
+        },
+        "evidence_package_manifest": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/evidence_package_manifest.json",
+          "sha256": "4e3fcaf2bcea03dfcd831d2082af965b6477f10ab06fa348c205b6498a0d115d",
+          "size_bytes": 1367
+        },
+        "parquet": {
+          "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r1_2026-09-23.parquet",
+          "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+          "size_bytes": 554037
+        },
+        "run_manifest": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/run_manifest.json",
+          "sha256": "447fe701cf9ec9cddd1b08630288781c0482794606799ed9ebcd6b5baa596c25",
+          "size_bytes": 51918
+        }
+      },
+      "defect_class_reconfirmed_from_preserved_bytes": {
+        "adjacent_manifest_naming": "R1's adjacent manifest uses '.manifest.json'; the accepted R3 contract uses '_manifest.json'.",
+        "epistemic_boundary_absent": "No epistemic_boundary statement exists anywhere in R1's adjacent manifest or completion manifest.",
+        "evidence_filename_contract": "R1's evidence namespace carries all three defective filenames (diff_vs_historical_canonical.csv, diff_vs_promotion_source.csv, evidence_package_manifest.json) that the accepted R3 builder hard-codes as forbidden.",
+        "evidence_roster_completeness": "R1's completion manifest registers only three evidence files and omits both the package manifest and itself.",
+        "lifecycle_contract": "R1's adjacent manifest exposes 22 top-level keys and does not satisfy the accepted R3 18-key contract; 13 required keys are absent, including candidate_identity, all_build_gates_pass, target_mask, numerical_inheritance, provenance_transformation, mutation_audit and outputs."
+      },
+      "immutability": "R1 remains immutable historical provenance; no R1 byte was modified.",
+      "note_on_parquet_byte_identity_with_r3": "R1's parquet is byte-identical to the accepted R3 parquet (SHA-256 3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428). The independent Step 2D-A audit established R3's data correctness directly from the two accepted source authorities, and established statically that the R3 builder never reads the R1 parquet as construction input (it is hashed as an immutability control only). The identity is therefore a reproducibility observation and corroborates that R1's failure was not a numerical data defect.",
+      "record_basis": "Historical disposition recorded post hoc in the Step 2D R3 acceptance closure based on the preserved R1 bytes and the previously established STOP decision. This record is NOT an original contemporaneous R1 audit and does not claim to be one.",
+      "rejected_for_numerical_data_defect": false,
+      "status": "STOP / FAILED IMMUTABLE PROVENANCE",
+      "verified_defect_class": "evidence / provenance / lifecycle packaging: noncompliant manifest and lifecycle contract, and historical evidence-filename contract defects"
+    },
+    "step_2d_candidate_r2": {
+      "abandonment_reason": "Abandoned after an R2 path collision and static discovery of inherited filename-contract defects.",
+      "builder": {
+        "path": "scripts/20b_build_v7_3_reconstructed_pv_mainline_candidate_r2.py",
+        "sha256": "6f30660c5de9442aafccb8085fd26d994a1438b816a7ca9e4797fc23e572e3b9",
+        "size_bytes": 47729
+      },
+      "candidate_parquet_published": false,
+      "evidence_namespace_published": false,
+      "immutability": "Not executed, not modified.",
+      "status": "STOP / ABANDONED IMMUTABLE PROVENANCE",
+      "surviving_artifact": "R2 builder only"
+    },
+    "step_2d_candidate_r3": {
+      "acceptance_scope": "v7.3 reconstructed-PV mainline canonical DATA ARTIFACT only; does NOT authorize production routing or optimization.",
+      "accepted_parquet_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "independent_verdict": "STEP_2D_CANDIDATE_R3_2D_A — PASS",
+      "status": "CLOSED / ACCEPTED"
+    }
+  }
+}

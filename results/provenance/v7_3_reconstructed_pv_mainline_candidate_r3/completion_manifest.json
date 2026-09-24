@@ -1,0 +1,337 @@
+{
+  "all_build_gates_pass": true,
+  "build_gates": {
+    "gate_01_r3_final_path_absence": true,
+    "gate_02_builder_is_authorized_r3_path": true,
+    "gate_03_branch_identity": true,
+    "gate_04_head_matches_origin": true,
+    "gate_05_tracked_worktree_and_index_clean": true,
+    "gate_06_untracked_baseline_exact": true,
+    "gate_07_zero_solve_static_guard": true,
+    "gate_08_no_r1_r2_final_path_reuse": true,
+    "gate_09_r2_builder_expected_identity": true,
+    "gate_10_historical_source_sha256": true,
+    "gate_11_promotion_source_sha256": true,
+    "gate_12_source_row_counts": true,
+    "gate_13_source_column_counts": true,
+    "gate_14_promotion_prefix_is_historical_order": true,
+    "gate_15_promotion_extra_columns_exact": true,
+    "gate_16_source_dtype_identity": true,
+    "gate_17_source_time_axis_exact": true,
+    "gate_18_source_no_serialized_index": true,
+    "gate_19_source_no_custom_metadata": true,
+    "gate_20_target_row_count": true,
+    "gate_21_target_status_counts": true,
+    "gate_22_target_mask_redundant_range_consistency": true,
+    "gate_23_target_mask_identical_on_historical_source": true,
+    "gate_24_target_timestamp_sha256": true,
+    "gate_25_target_timeline_contiguous_hourly": true,
+    "gate_26_target_positive_hours": true,
+    "gate_27_target_zero_night_hours": true,
+    "gate_28_target_no_negative_reconstruction": true,
+    "gate_29_target_reconstructed_energy": true,
+    "gate_30_target_max_kw": true,
+    "gate_31_historical_target_block_is_zero": true,
+    "gate_32_candidate_row_count": true,
+    "gate_33_candidate_column_count": true,
+    "gate_34_candidate_historical_prefix_exact": true,
+    "gate_35_removed_columns_absent": true,
+    "gate_36_candidate_dtype_preservation": true,
+    "gate_37_numerical_identity_to_promotion_source": true,
+    "gate_38_authorized_change_set_exact": true,
+    "gate_38b_non_numerical_change_set_is_authorized_provenance": true,
+    "gate_39_pv_surplus_before_bess_kw_unchanged": true,
+    "gate_40_grid_demand_before_bess_kw_row_count": true,
+    "gate_40_pv_available_kw_row_count": true,
+    "gate_40_pv_available_kwh_row_count": true,
+    "gate_40_residual_load_kw_row_count": true,
+    "gate_41_grid_demand_before_bess_kw_delta": true,
+    "gate_41_pv_available_kw_delta": true,
+    "gate_41_pv_available_kwh_delta": true,
+    "gate_41_residual_load_kw_delta": true,
+    "gate_42_no_numerical_change_outside_target": true,
+    "gate_43_observed_columns_exact": true,
+    "gate_44_artifact_role_complete": true,
+    "gate_45_target_pv_reconstructed_true": true,
+    "gate_46_target_reconstruction_method": true,
+    "gate_47_target_long_unavailable_assumption_false": true,
+    "gate_48_target_cwa_model": true,
+    "gate_49_preserved_provenance_fields": true,
+    "gate_50_short_gap_row_count": true,
+    "gate_51_short_gap_disjoint_from_target": true,
+    "gate_52_short_gap_provenance_protected": true,
+    "gate_53_no_provenance_change_outside_target": true,
+    "gate_54_parquet_roundtrip_identity": true,
+    "gate_55_candidate_no_serialized_index": true,
+    "gate_56_candidate_no_custom_metadata": true,
+    "gate_57_candidate_physical_shape": true,
+    "gate_58_candidate_csv_not_produced": true,
+    "gate_59_promotion_mutation_is_provenance_only": true,
+    "gate_60_manifest_top_level_keys_exact_staged": true,
+    "gate_61_lifecycle_status_exact_staged": true,
+    "gate_62_candidate_identity_exact_staged": true,
+    "gate_63_epistemic_boundary_present_staged": true,
+    "gate_64_epistemic_boundary_in_run_manifest_staged": true,
+    "gate_65_all_build_gates_pass_top_level_staged": true,
+    "gate_66_exact_evidence_filenames_staged": true,
+    "gate_67_forbidden_filenames_absent_staged": true,
+    "gate_68_no_forbidden_filename_in_output_declarations_staged": true,
+    "gate_69_no_r1_r2_path_reuse_in_outputs_staged": true,
+    "gate_70_no_self_classification_wording_staged": true,
+    "gate_71_no_solve_assertions_zero_staged": true,
+    "gate_72_output_namespace_exact_staged": true,
+    "gate_73_immutability_preserved_through_construction": true,
+    "gate_74_all_construction_gates_pass": true,
+    "gate_75_published_bytes_match_staging": true,
+    "gate_76_immutability_preserved_through_publication": true
+  },
+  "candidate_identity": "V7_3_RECONSTRUCTED_PV_MAINLINE_CANDIDATE_R3",
+  "completed_utc": "2026-09-23T16:10:04.978957Z",
+  "created_utc": "2026-09-23T16:10:04.172493Z",
+  "epistemic_boundary": "Reconstructed long-unavailable PV values are model-based/weather-informed planning estimates and are not observed truth, ground truth, or exact historical recovery.",
+  "failed_gates": [],
+  "gate_count": 83,
+  "next_authorized_step": "INDEPENDENT READ-ONLY STEP 2D-A AUDIT OF THE EXACT STEP 2D CANDIDATE R3 BY A DIFFERENT AGENT",
+  "no_solve_assertions": {
+    "annual_optimization_core_imported": false,
+    "ast_parsed": true,
+    "builder_import_names": [
+      "__future__",
+      "ast",
+      "csv",
+      "datetime",
+      "hashlib",
+      "io",
+      "json",
+      "numpy",
+      "os",
+      "pandas",
+      "pathlib",
+      "platform",
+      "pyarrow",
+      "pyarrow.parquet",
+      "re",
+      "shutil",
+      "subprocess",
+      "sys",
+      "tempfile",
+      "typing"
+    ],
+    "candidate_csv_written": false,
+    "commits": 0,
+    "economic_evaluations": 0,
+    "eob_runs": 0,
+    "final81_runs": 0,
+    "forbidden_calls": [],
+    "forbidden_imports": [],
+    "forbidden_modules_loaded_at_runtime": [],
+    "gurobi_imported": false,
+    "layer_a_runs": 0,
+    "layer_b_runs": 0,
+    "model_constructions": 0,
+    "optimization_calls": 0,
+    "production_routing_actions": 0,
+    "pushes": 0,
+    "representative_case_runs": 0,
+    "tags": 0
+  },
+  "non_claim": "Step 2D Candidate R3 is a candidate artifact revision only: it is not accepted, not canonical, and not production-authorized; only a later independent Step 2D-A audit performed by a different agent may externally accept these exact bytes.",
+  "post_publication_verification": {
+    "immutability_set_unchanged": true,
+    "immutable_hashes_after_publication": {
+      "measurement_point": "after_publication_of_first_five_files",
+      "members": {
+        "annual_design_core": {
+          "path": "src/annual_design_model_v7_2.py",
+          "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+          "size_bytes": 124399
+        },
+        "authority_freeze_v7_3": {
+          "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+          "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+          "size_bytes": 12358
+        },
+        "evidence_17b_column_diff_audit": {
+          "path": "results/data_audit/winter_pv_17b/20260918T143929009039Z_8f11437d44/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18_column_diff_audit.csv",
+          "sha256": "a20998fddec6188a1d0ffd7c0132a4b65bd70907cc6e3f3c97f7661283ad829d",
+          "size_bytes": 4484
+        },
+        "evidence_17b_completion_manifest": {
+          "path": "results/data_audit/winter_pv_17b/20260918T143929009039Z_8f11437d44/completion_manifest.json",
+          "sha256": "b11133993ff2bb791bc7f131e66e8fd9b6b4df9c38fcbc24ff53f888679698e4",
+          "size_bytes": 3405
+        },
+        "evidence_17b_run_manifest": {
+          "path": "results/data_audit/winter_pv_17b/20260918T143929009039Z_8f11437d44/run_manifest.json",
+          "sha256": "37250bf2367517e8b519c4b6b8fe04309e938e0838fecccce10915071e5f8024",
+          "size_bytes": 3767
+        },
+        "framework_v7_3": {
+          "path": "docs/research_framework_v7_3_2026-09-23.md",
+          "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+          "size_bytes": 181798
+        },
+        "historical_canonical_parquet": {
+          "path": "data/processed/annual_input_v7_1.parquet",
+          "sha256": "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e",
+          "size_bytes": 535531
+        },
+        "promotion_source_parquet": {
+          "path": "data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18.parquet",
+          "sha256": "1c1dbc265b092415e649bba23232f645f7ba5c74e0f074f2914c1ed7ac9d7cd9",
+          "size_bytes": 556721
+        },
+        "provenance_protocol": {
+          "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+          "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+          "size_bytes": 19977
+        },
+        "r1_adjacent_manifest": {
+          "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r1_2026-09-23.manifest.json",
+          "sha256": "bf63eeaa0e52559cd342465989980d8a693b3f0abf8c6f7876dd2271c2d715cc",
+          "size_bytes": 30551
+        },
+        "r1_builder": {
+          "path": "scripts/20a_build_v7_3_reconstructed_pv_mainline_candidate_r1.py",
+          "sha256": "dfb2f586efcc22b23ffad2a3768311143518acf5e1f2f3bc0049c29480b18f80",
+          "size_bytes": 45595
+        },
+        "r1_completion_manifest": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/completion_manifest.json",
+          "sha256": "0f743a834fc94fb8c5553d12c2fbd891cf6a95eb26888f9f7390acce91a58c99",
+          "size_bytes": 3034
+        },
+        "r1_historical_diff": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/diff_vs_historical_canonical.csv",
+          "sha256": "b3ee8b362ec441f2e83d7d22f0820abd0570f38bd965b05273ac838e6da7121e",
+          "size_bytes": 11255
+        },
+        "r1_package_manifest": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/evidence_package_manifest.json",
+          "sha256": "4e3fcaf2bcea03dfcd831d2082af965b6477f10ab06fa348c205b6498a0d115d",
+          "size_bytes": 1367
+        },
+        "r1_parquet": {
+          "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r1_2026-09-23.parquet",
+          "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+          "size_bytes": 554037
+        },
+        "r1_promotion_diff": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/diff_vs_promotion_source.csv",
+          "sha256": "2194ca2bd7812830c7b2c9910fa8c16d155a8f5b34bede1a938b00fb1dfdf2eb",
+          "size_bytes": 15974
+        },
+        "r1_run_manifest": {
+          "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r1/run_manifest.json",
+          "sha256": "447fe701cf9ec9cddd1b08630288781c0482794606799ed9ebcd6b5baa596c25",
+          "size_bytes": 51918
+        },
+        "r2_builder_abandoned": {
+          "path": "scripts/20b_build_v7_3_reconstructed_pv_mainline_candidate_r2.py",
+          "sha256": "6f30660c5de9442aafccb8085fd26d994a1438b816a7ca9e4797fc23e572e3b9",
+          "size_bytes": 47729
+        },
+        "registry_v7_3_r3": {
+          "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+          "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+          "size_bytes": 187796
+        },
+        "script_06": {
+          "path": "scripts/06_build_final_annual_input.py",
+          "sha256": "132feac01f2d6ca76282d363c06db7b01a5b928340a0b7ffe4cf8845d065b9cb",
+          "size_bytes": 41600
+        },
+        "script_15d": {
+          "path": "scripts/15d_run_corrected_eob_v7_2.py",
+          "sha256": "90d19baac8c0b96e08de00b4769b7ae68dff745f71923b850433ffc2935091a8",
+          "size_bytes": 41078
+        },
+        "script_17b": {
+          "path": "scripts/17b_build_winter_pv_sensitivity_annual_input.py",
+          "sha256": "96e7c0fdd77bb3a6293becea401cc83dd0f24659ee26676e18aef69991d33160",
+          "size_bytes": 62930
+        },
+        "script_17c": {
+          "path": "scripts/17c_run_winter_pv_economic_sensitivity.py",
+          "sha256": "6bec6865aa7d2ecdb6fb75c5e548a45c8d1ba2794d9d5aa37f86655932c85094",
+          "size_bytes": 46014
+        },
+        "untracked_esgc_cost_pdf": {
+          "path": "docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf",
+          "sha256": "8c15c2fdd30f0452d75e15767fb9128ac866c3e9dd15a03669d92fad1048976d",
+          "size_bytes": 4988887
+        },
+        "untracked_independent_audit_md": {
+          "path": "Claude outputs/iris_thesis_independent_audit_2026-09-13.md",
+          "sha256": "648eff55bbd7de9eec76a3e153f26dec805dfd27251a77a750c5cca5ad00d4b6",
+          "size_bytes": 45612
+        },
+        "untracked_literature_positioning_pptx": {
+          "path": "Claude outputs/P2_Literature_Positioning_v7.2.pptx",
+          "sha256": "88b446d52b3bc2d359093f32e72e72b07817b3a6921c946318c2d6a8878b9cb7",
+          "size_bytes": 185542
+        },
+        "untracked_meeting_transcript_docx": {
+          "path": "0629開會逐字稿Iris.docx",
+          "sha256": "a36a318f40846ba581e11fcfcfb5c596ec4dff33ae48b4e9e789e7c8685a910a",
+          "size_bytes": 907045
+        },
+        "untracked_progress_slides_outline_md": {
+          "path": "Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md",
+          "sha256": "6021788cd865b55f740a5db7d70b4c78e967c3a682f5553083683fd754a1084e",
+          "size_bytes": 42655
+        },
+        "untracked_repo_audit_md": {
+          "path": "Claude outputs/iris_thesis_repo_audit_2026-09-13.md",
+          "sha256": "d67e419d8696e4773369aafbf96f73999554d07763ecf1495d1f6e9b10ad3bbe",
+          "size_bytes": 17702
+        }
+      }
+    },
+    "published_bytes_match_staging": true
+  },
+  "published_before_this_file": [
+    {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "size_bytes": 554037
+    },
+    {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23_manifest.json",
+      "sha256": "f0e63614010d3a7450b5041409943fd94749d7b1af88ac4fd1c2b07701af9326",
+      "size_bytes": 49620
+    },
+    {
+      "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/historical_canonical_to_candidate_column_diff.csv",
+      "sha256": "18b926b65151c2b28ccc1a1f169d7fad1ef2286a2edfb6f37d9c86e0fbc4f96a",
+      "size_bytes": 12807
+    },
+    {
+      "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/promotion_source_to_candidate_column_diff.csv",
+      "sha256": "1a828db1cef3c1f1131883aeadc2299071db144a682327844de8f5477eb179ec",
+      "size_bytes": 17364
+    },
+    {
+      "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/run_manifest.json",
+      "sha256": "06f4a873770abc7b3488ba7d1d904a8824be583d4bb1898ae7fde4b7dcfdee27",
+      "size_bytes": 50439
+    }
+  ],
+  "run_id": "v7_3_reconstructed_pv_mainline_candidate_r3",
+  "schema_version": "iris-thesis-v7.3-step2d-candidate-r3-completion-manifest-v1",
+  "semantics": "This completion manifest is written last and records ONLY that the Step 2D Candidate R3 construction gates completed. It does not mean the candidate has been independently audited or externally approved.",
+  "status": "CANDIDATE_PASS_PENDING_INDEPENDENT_2D_A_AUDIT",
+  "validation_not_performed": [
+    "NO optimization solve",
+    "NO EOB",
+    "NO representative cases",
+    "NO Layer A",
+    "NO Layer B",
+    "NO Final81",
+    "NO production routing",
+    "NO independent 2D-A acceptance",
+    "NO commit",
+    "NO push",
+    "NO tag"
+  ]
+}

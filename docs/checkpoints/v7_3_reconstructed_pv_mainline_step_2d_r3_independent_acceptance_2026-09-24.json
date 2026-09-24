@@ -1,0 +1,124 @@
+{
+  "accepted_governance_closure": {
+    "json": {
+      "path": "docs/checkpoints/v7_3_reconstructed_pv_mainline_step_2d_r3_acceptance_closure_2026-09-24.json",
+      "sha256": "ff870de5af30c54d1ad5d83fb7b3fb6837e3d00d797a396d3b12aae751d9cb3d",
+      "size_bytes": 23618
+    },
+    "markdown": {
+      "path": "docs/checkpoints/v7_3_reconstructed_pv_mainline_step_2d_r3_acceptance_closure_2026-09-24.md",
+      "sha256": "32e873bb5a17e2b1dc3b90cf30cb6341fb1c36563e242698c9756748433f5705",
+      "size_bytes": 16381
+    },
+    "status": "CLOSED / ACCEPTED"
+  },
+  "accepted_r3_subject": {
+    "adjacent_manifest": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23_manifest.json",
+      "sha256": "f0e63614010d3a7450b5041409943fd94749d7b1af88ac4fd1c2b07701af9326",
+      "size_bytes": 49620
+    },
+    "builder": {
+      "path": "scripts/20c_build_v7_3_reconstructed_pv_mainline_candidate_r3.py",
+      "sha256": "e7af06409afd735e6556ee4cad64a2a1bd8cb26a772d0fe9c51b6d2727aff1ad",
+      "size_bytes": 82803
+    },
+    "candidate_parquet": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "size_bytes": 554037
+    },
+    "completion_manifest": {
+      "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/completion_manifest.json",
+      "sha256": "811ed297b67aeec15ea7b0839f2a35272887f15766768f6d4af3835b4ca0a281",
+      "size_bytes": 15582
+    },
+    "historical_diff": {
+      "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/historical_canonical_to_candidate_column_diff.csv",
+      "sha256": "18b926b65151c2b28ccc1a1f169d7fad1ef2286a2edfb6f37d9c86e0fbc4f96a",
+      "size_bytes": 12807
+    },
+    "package_manifest": {
+      "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/package_manifest.json",
+      "sha256": "454a6136fa81d55153d8f58e4252034b9c1d2cec604cb12e00582b394200cf14",
+      "size_bytes": 2471
+    },
+    "promotion_diff": {
+      "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/promotion_source_to_candidate_column_diff.csv",
+      "sha256": "1a828db1cef3c1f1131883aeadc2299071db144a682327844de8f5477eb179ec",
+      "size_bytes": 17364
+    },
+    "run_manifest": {
+      "path": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/run_manifest.json",
+      "sha256": "06f4a873770abc7b3488ba7d1d904a8824be583d4bb1898ae7fde4b7dcfdee27",
+      "size_bytes": 50439
+    }
+  },
+  "accepted_step_2d_candidate": {
+    "identity": "V7_3_RECONSTRUCTED_PV_MAINLINE_CANDIDATE_R3",
+    "parquet_path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+    "parquet_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+    "status": "CLOSED / ACCEPTED"
+  },
+  "authority": {
+    "evidence": {
+      "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d"
+    },
+    "lifecycle": {
+      "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+      "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d"
+    },
+    "methodology": {
+      "path": "docs/research_framework_v7_3_2026-09-23.md",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a"
+    },
+    "provenance_procedure": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696"
+    }
+  },
+  "created_date": "2026-09-24",
+  "downstream_authorization": {
+    "eob": "NOT_AUTHORIZED",
+    "final81": "NOT_AUTHORIZED",
+    "layer_a": "NOT_AUTHORIZED",
+    "layer_b": "NOT_AUTHORIZED",
+    "optimization": "NOT_AUTHORIZED",
+    "production_routing": "NOT_YET_AUTHORIZED",
+    "step_2e": "NOT_YET_AUTHORIZED"
+  },
+  "freeze_target": {
+    "authorized_path_count": 13,
+    "branch": "thesis-v7",
+    "commit_identity_note": "The authoritative freeze commit/tag identities are Git metadata verified after publication; this record intentionally does not self-encode the commit SHA of the commit containing itself.",
+    "scope": "exact accepted Step 2D R3 and governance authority package",
+    "tag": "v7.3-step2d-r3-accepted-2026-09-24"
+  },
+  "gate_83_of_86_disposition": {
+    "classification": "NON-BLOCKING EVIDENCE-ROSTER PERSISTENCE LIMITATION",
+    "executed_gates": 86,
+    "gate_77": "PASS",
+    "gate_78": "PASS",
+    "gate_79": "PASS",
+    "persisted_gates": 83,
+    "reconstructible_from_primary_bytes": true
+  },
+  "historical_lineage": {
+    "r1": "STOP / FAILED IMMUTABLE PROVENANCE",
+    "r2": "STOP / ABANDONED IMMUTABLE PROVENANCE",
+    "r3": "CLOSED / ACCEPTED"
+  },
+  "independent_auditor": "CODEX",
+  "independent_verdict": "POST_2D_A_GOVERNANCE_CLOSURE_AUDIT — PASS",
+  "no_solve_assertions": {
+    "economic_evaluations": 0,
+    "model_constructions": 0,
+    "optimization_calls": 0,
+    "production_routing_changes": 0
+  },
+  "primary_implementation_agent": "CLAUDE CODE",
+  "record_identity": "V7_3_RECONSTRUCTED_PV_MAINLINE_STEP_2D_R3_INDEPENDENT_ACCEPTANCE_2026_09_24",
+  "record_type": "INDEPENDENT_ACCEPTANCE_ATTESTATION",
+  "schema_version": "iris-thesis-v7.3-step2d-r3-independent-acceptance-v1"
+}

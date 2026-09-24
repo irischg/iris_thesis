@@ -1,0 +1,43 @@
+{
+  "all_build_gates_pass": true,
+  "builder": {
+    "path": "scripts/20c_build_v7_3_reconstructed_pv_mainline_candidate_r3.py",
+    "sha256": "e7af06409afd735e6556ee4cad64a2a1bd8cb26a772d0fe9c51b6d2727aff1ad",
+    "size_bytes": 82803
+  },
+  "candidate_identity": "V7_3_RECONSTRUCTED_PV_MAINLINE_CANDIDATE_R3",
+  "created_utc": "2026-09-23T16:10:04.172493Z",
+  "epistemic_boundary": "Reconstructed long-unavailable PV values are model-based/weather-informed planning estimates and are not observed truth, ground truth, or exact historical recovery.",
+  "omitted_file": "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/package_manifest.json",
+  "package_files": {
+    "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet": {
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "size_bytes": 554037
+    },
+    "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23_manifest.json": {
+      "sha256": "f0e63614010d3a7450b5041409943fd94749d7b1af88ac4fd1c2b07701af9326",
+      "size_bytes": 49620
+    },
+    "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/completion_manifest.json": {
+      "sha256": "811ed297b67aeec15ea7b0839f2a35272887f15766768f6d4af3835b4ca0a281",
+      "size_bytes": 15582
+    },
+    "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/historical_canonical_to_candidate_column_diff.csv": {
+      "sha256": "18b926b65151c2b28ccc1a1f169d7fad1ef2286a2edfb6f37d9c86e0fbc4f96a",
+      "size_bytes": 12807
+    },
+    "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/promotion_source_to_candidate_column_diff.csv": {
+      "sha256": "1a828db1cef3c1f1131883aeadc2299071db144a682327844de8f5477eb179ec",
+      "size_bytes": 17364
+    },
+    "results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/run_manifest.json": {
+      "sha256": "06f4a873770abc7b3488ba7d1d904a8824be583d4bb1898ae7fde4b7dcfdee27",
+      "size_bytes": 50439
+    }
+  },
+  "run_id": "v7_3_reconstructed_pv_mainline_candidate_r3",
+  "schema_version": "iris-thesis-v7.3-step2d-candidate-r3-package-manifest-v1",
+  "self_hash_omission_statement": "package_manifest.json registers every required Step 2D Candidate R3 package file except itself; its own SHA-256 is deliberately omitted because a manifest cannot contain its own digest.",
+  "self_hash_omitted": true,
+  "status": "CANDIDATE_PASS_PENDING_INDEPENDENT_2D_A_AUDIT"
+}
