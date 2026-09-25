@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
 from src.production_successor_stack_v7_3 import (  # noqa: E402
     ProductionAuthorityError,
     ProductionExecutionNotAuthorized,
+    console_json_default,
     run_eob_production,
     run_successor_stack,
 )
@@ -97,7 +98,14 @@ def main(argv: list[str] | None = None) -> int:
             "production_execution_attempted": False,
         }
         code = 1
-    print(json.dumps(payload, indent=None if args.compact else 2, sort_keys=True))
+    print(
+        json.dumps(
+            payload,
+            default=console_json_default,
+            indent=None if args.compact else 2,
+            sort_keys=True,
+        )
+    )
     return code
 
 

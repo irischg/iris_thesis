@@ -1171,6 +1171,129 @@ class PublicationDefectRegressionTests(unittest.TestCase):
         self.assertTrue(math.isfinite(1.0))
 
 
+class ConsoleJsonSerializationTests(unittest.TestCase):
+    """Regression for the 2026-09-25 core-three console wrapper failure.
+
+    The production run itself completed and published correctly; only the CLI's
+    stdout echo raised ``TypeError: Object of type Timestamp is not JSON
+    serializable`` on cases -> audits -> resilience -> binding_end_exclusive.
+    No solver is involved anywhere in this class.
+    """
+
+    def resilience_payload(self) -> dict:
+        """Shaped exactly like the live resilience audit from 19b."""
+
+        return {
+            "cases": [
+                {
+                    "case_id": "a0.60_b04",
+                    "audits": {
+                        "resilience": {
+                            "status": "PASS",
+                            "binding_start": pd.Timestamp("2025-09-16 12:00:00"),
+                            "binding_end_exclusive": pd.Timestamp("2025-09-16 16:00:00"),
+                            "binding_start_index": np.int64(7668),
+                            "valid_start_count": 8757,
+                            "minimum_terminal_margin_kwh": np.float64(0.0),
+                            "circular_wrap": False,
+                            "surplus_pv_recharge": False,
+                        }
+                    },
+                }
+            ]
+        }
+
+    def test_raw_json_dumps_reproduces_the_reported_defect(self) -> None:
+        with self.assertRaises(TypeError) as caught:
+            json.dumps(self.resilience_payload(), sort_keys=True)
+        self.assertIn("Timestamp", str(caught.exception))
+
+    def test_resilience_payload_serializes_with_console_default(self) -> None:
+        text = json.dumps(
+            self.resilience_payload(),
+            default=stack.console_json_default,
+            indent=2,
+            sort_keys=True,
+        )
+        resilience = json.loads(text)["cases"][0]["audits"]["resilience"]
+        self.assertEqual(resilience["binding_end_exclusive"], "2025-09-16 16:00:00")
+        self.assertEqual(resilience["binding_start"], "2025-09-16 12:00:00")
+        self.assertEqual(resilience["binding_start_index"], 7668)
+        self.assertEqual(resilience["minimum_terminal_margin_kwh"], 0.0)
+        self.assertEqual(resilience["status"], "PASS")
+
+    def test_console_representation_matches_published_artifact_bytes(self) -> None:
+        """Console output must agree with what _json_safe already wrote to disk."""
+
+        published = json.loads(
+            json.dumps(stack._json_safe({"t": pd.Timestamp("2025-09-16 16:00:00")}))
+        )
+        console = json.loads(
+            json.dumps(
+                {"t": pd.Timestamp("2025-09-16 16:00:00")},
+                default=stack.console_json_default,
+            )
+        )
+        self.assertEqual(console, published)
+        self.assertEqual(console["t"], "2025-09-16 16:00:00")
+
+    def test_unsupported_types_are_not_silently_swallowed(self) -> None:
+        class Unexpected:
+            def __str__(self) -> str:
+                return "should-never-be-used"
+
+        with self.assertRaisesRegex(TypeError, "Unsupported type"):
+            stack.console_json_default(Unexpected())
+        with self.assertRaisesRegex(TypeError, "Unsupported type"):
+            json.dumps({"x": Unexpected()}, default=stack.console_json_default)
+        with self.assertRaisesRegex(TypeError, "Unsupported type"):
+            json.dumps({"x": object()}, default=stack.console_json_default)
+        with self.assertRaisesRegex(TypeError, "Unsupported type"):
+            json.dumps({"x": {1, 2}}, default=stack.console_json_default)
+
+    def test_datetime_and_numpy_scalar_coverage(self) -> None:
+        import datetime as _dt
+
+        self.assertEqual(
+            stack.console_json_default(_dt.datetime(2025, 9, 16, 16, 0, 0)),
+            "2025-09-16 16:00:00",
+        )
+        self.assertEqual(stack.console_json_default(_dt.date(2025, 9, 16)), "2025-09-16")
+        self.assertEqual(stack.console_json_default(np.int64(5)), 5)
+        self.assertEqual(stack.console_json_default(np.float64(2.5)), 2.5)
+        self.assertIs(stack.console_json_default(np.bool_(True)), True)
+        self.assertIsNone(stack.console_json_default(np.float64("nan")))
+
+    def test_all_three_clis_use_the_console_encoder(self) -> None:
+        for path in NEW_SOURCES[1:]:
+            source = path.read_text(encoding="utf-8")
+            with self.subTest(cli=path.name):
+                self.assertIn("default=console_json_default", source)
+                self.assertNotIn("default=str", source)
+
+    def test_published_core_three_resilience_values_round_trip(self) -> None:
+        """Anchor on the real accepted artifact if it is present."""
+
+        run = (
+            ROOT
+            / "results/layer_a/final_81_v7_3/runs"
+            / "20260925T062317399837Z_bb564f7b55"
+        )
+        audits = run / "cases/a0.60_b04/mandatory_audits.json"
+        if not audits.is_file():
+            self.skipTest("accepted core-three run not present in this checkout")
+        resilience = json.loads(audits.read_text(encoding="utf-8"))["resilience"]
+        revived = {
+            "binding_start": pd.Timestamp(resilience["binding_start"]),
+            "binding_end_exclusive": pd.Timestamp(resilience["binding_end_exclusive"]),
+        }
+        echoed = json.loads(json.dumps(revived, default=stack.console_json_default))
+        self.assertEqual(echoed["binding_start"], resilience["binding_start"])
+        self.assertEqual(
+            echoed["binding_end_exclusive"], resilience["binding_end_exclusive"]
+        )
+
+
 class ProductionExecutionInterlockTests(unittest.TestCase):
     """Section 6 — the two-flag interlock, proven without any live production path."""
 

@@ -22,7 +22,7 @@ import uuid
 from contextlib import ExitStack
 from copy import deepcopy
 from dataclasses import dataclass, replace
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Mapping, Protocol, Sequence
 from unittest.mock import patch
@@ -1375,6 +1375,31 @@ def _json_safe(value: Any) -> Any:
         except (TypeError, ValueError):
             pass
     return str(value)
+
+
+def console_json_default(value: Any) -> Any:
+    """Narrow, fail-closed encoder for the production CLIs' stdout echo.
+
+    Published artifacts are serialized by :func:`_json_safe` and are unaffected by
+    this function.  The CLIs additionally echo the returned payload to stdout, and
+    that payload carries live pandas/NumPy objects straight from the audit adapters
+    — notably the resilience audit's ``binding_start`` and ``binding_end_exclusive``
+    timestamps built in ``scripts/19b_run_final_layer_a_81_cases.py``.
+
+    Only datetime-like values and NumPy scalars are converted, using exactly the
+    representation the published artifacts already carry, so console output and
+    published bytes agree.  Every other unsupported type raises ``TypeError`` so the
+    CLI fails closed rather than silently stringifying an unexpected object; this is
+    deliberately narrower than ``json.dumps(..., default=str)``.
+    """
+
+    if isinstance(value, (pd.Timestamp, datetime, date)):
+        return str(value)
+    if isinstance(value, np.generic):
+        return _json_safe(value.item())
+    raise TypeError(
+        f"Unsupported type for production console JSON: {type(value).__name__}"
+    )
 
 
 def _exclusive_json(path: Path, payload: Mapping[str, Any]) -> None:

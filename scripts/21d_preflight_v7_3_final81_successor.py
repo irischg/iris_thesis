@@ -17,6 +17,7 @@ from src.production_successor_stack_v7_3 import (  # noqa: E402
     PRODUCTION_CASE_SETS,
     ProductionAuthorityError,
     ProductionExecutionNotAuthorized,
+    console_json_default,
     run_layer_a_production,
     run_successor_stack,
     select_production_cases,
@@ -115,7 +116,14 @@ def main(argv: list[str] | None = None) -> int:
             "production_execution_attempted": False,
         }
         code = 1
-    print(json.dumps(payload, indent=None if args.compact else 2, sort_keys=True))
+    print(
+        json.dumps(
+            payload,
+            default=console_json_default,
+            indent=None if args.compact else 2,
+            sort_keys=True,
+        )
+    )
     return code
 
 
