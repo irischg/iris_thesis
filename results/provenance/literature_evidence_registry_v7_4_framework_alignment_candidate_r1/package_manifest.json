@@ -1,0 +1,132 @@
+{
+  "all_registered_files_exist": true,
+  "all_static_verification_gates_pass": true,
+  "branch": "thesis-v7",
+  "byte_counts_match": true,
+  "candidate_identity": "LITERATURE_EVIDENCE_REGISTRY_V7_4_FRAMEWORK_ALIGNMENT_CANDIDATE_R1",
+  "candidate_revision_semantics": "Candidate R1 is a provenance revision identifier only; the formal future evidence-version name is Registry v7.4, never 'Registry v7.4 R1'",
+  "candidate_status_only": true,
+  "changed_file_inventory": [
+    "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+    "docs/checkpoints/literature_evidence_registry_v7_4_framework_alignment_candidate_2026-09-26.md",
+    "results/provenance/literature_evidence_registry_v7_4_framework_alignment_candidate_r1/completion_manifest.json",
+    "results/provenance/literature_evidence_registry_v7_4_framework_alignment_candidate_r1/package_manifest.json"
+  ],
+  "checkpoint_path": "docs/checkpoints/literature_evidence_registry_v7_4_framework_alignment_candidate_2026-09-26.md",
+  "checkpoint_sha256": "4bdfb8ab0dc7e72e634610a5734124d7808a7d5a3b85852a5e3f0088e8d13deb",
+  "created_date": "2026-09-26",
+  "created_files_are_additive_only": true,
+  "execution_counts": {
+    "core_three_reruns": 0,
+    "eob_reruns": 0,
+    "full81_runs": 0,
+    "milp_solves": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "sensitivity_solves": 0
+  },
+  "external_registered_artifacts": {
+    "data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18.parquet": {
+      "role": "historical promotion-source lineage / project evidence only; NOT the current canonical planning input",
+      "sha256": "1c1dbc265b092415e649bba23232f645f7ba5c74e0f074f2914c1ed7ac9d7cd9",
+      "size_bytes": 556721
+    },
+    "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet": {
+      "role": "CLOSED / ACCEPTED planning input; role reconstructed_pv_mainline; 8760 rows; single accepted planning-layer identity",
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "size_bytes": 554037
+    },
+    "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md": {
+      "role": "Framework v7.4 methodology acceptance / lifecycle-closure evidence",
+      "sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f",
+      "size_bytes": 18809
+    },
+    "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md": {
+      "role": "governing provenance/lifecycle protocol",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "size_bytes": 19977
+    },
+    "docs/research_framework_v7_3_2026-09-23.md": {
+      "role": "accepted methodology predecessor; immutable historical lineage",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "size_bytes": 181798
+    },
+    "docs/research_framework_v7_4_2026-09-26_r2.md": {
+      "role": "CLOSED / ACCEPTED methodology authority (formal name Framework v7.4); alignment target",
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "size_bytes": 216186
+    },
+    "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md": {
+      "role": "accepted immutable evidence predecessor; current evidence authority until this candidate is independently accepted; re-hashed unchanged after authoring",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "size_bytes": 187796
+    },
+    "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md": {
+      "role": "accepted v7.3 methodology/evidence lifecycle closure; bytes not edited",
+      "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "size_bytes": 12358
+    },
+    "results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556": {
+      "current_governance_status": "CLOSED_ACCEPTED",
+      "historical_execution_time_manifest_status": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+      "modified_by_this_pass": false,
+      "role": "accepted EOB production run directory; per-file hashes in its own immutable manifests"
+    },
+    "results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55": {
+      "current_governance_status": "CLOSED_ACCEPTED",
+      "historical_execution_time_manifest_status": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+      "modified_by_this_pass": false,
+      "role": "accepted Layer A core-three run directory (LOW 0.60/4h, CENTRAL 0.80/8h, HIGH 1.00/12h); per-file hashes in its own immutable manifests"
+    },
+    "results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json": {
+      "role": "Framework v7.4 acceptance manifest",
+      "sha256": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33",
+      "size_bytes": 15144
+    }
+  },
+  "formal_future_evidence_version_name": "Registry v7.4",
+  "hashes_match": true,
+  "independent_read_only_audit_required": true,
+  "new_external_literature_additions": 0,
+  "new_registry_candidate_path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+  "new_registry_candidate_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+  "no_acceptance_artifacts_created": true,
+  "no_closure_artifacts_created": true,
+  "no_code_changes": true,
+  "no_data_changes": true,
+  "no_model_changes": true,
+  "no_parameter_changes": true,
+  "no_self_acceptance": true,
+  "no_solve": true,
+  "omitted_file": "results/provenance/literature_evidence_registry_v7_4_framework_alignment_candidate_r1/package_manifest.json",
+  "package_files": {
+    "docs/checkpoints/literature_evidence_registry_v7_4_framework_alignment_candidate_2026-09-26.md": {
+      "sha256": "4bdfb8ab0dc7e72e634610a5734124d7808a7d5a3b85852a5e3f0088e8d13deb",
+      "size_bytes": 22369
+    },
+    "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md": {
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "size_bytes": 245125
+    },
+    "results/provenance/literature_evidence_registry_v7_4_framework_alignment_candidate_r1/completion_manifest.json": {
+      "sha256": "555621c939d229cb0096ef7e94d62fd774aed06b2c69cb577bc20191b5005aea",
+      "size_bytes": 20296
+    }
+  },
+  "post_authoring_commit": "RECORDED_IN_FINAL_REPORT",
+  "pre_authoring_head": "2fe2105180c68d9289eddc2668399687d4c49d2e",
+  "predecessor_registry_bytes_modified": false,
+  "predecessor_registry_path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+  "predecessor_registry_sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+  "predecessor_registry_status": "CLOSED_ACCEPTED",
+  "production_authority_refreeze_performed": false,
+  "push_performed": false,
+  "registry_acceptance_performed": false,
+  "required_files_registered": true,
+  "schema_version": "iris-thesis-registry-v7.4-task2-candidate-r1-package-manifest-v1",
+  "self_hash_omission_statement": "package_manifest.json registers every file in this Candidate R1 package except itself; its own SHA-256 is deliberately omitted to avoid a circular self-hash and is reported externally in the Task-2 final report after generation.",
+  "self_hash_omitted": true,
+  "stale_current_status_contradictions_remain": false,
+  "status": "CANDIDATE_R1_PENDING_INDEPENDENT_READ_ONLY_AUDIT",
+  "tag_created": false
+}
