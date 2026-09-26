@@ -1,0 +1,339 @@
+{
+  "accepted_authority": {
+    "candidate_revision_identity": "Candidate R2 provenance revision identifier only; not part of the formal methodology version name",
+    "canonical_accepted_framework_byte_count": 216186,
+    "canonical_accepted_framework_path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+    "canonical_accepted_framework_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+    "formal_methodology_version_name": "Framework v7.4",
+    "path_suffix_semantics": "the _r2 suffix is retained in the canonical repository path for provenance traceability only",
+    "status": "CLOSED_ACCEPTED",
+    "status_role": "current methodology authority"
+  },
+  "accepted_planning_input": {
+    "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+    "role": "reconstructed_pv_mainline",
+    "rows": 8760,
+    "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+    "size_bytes": 554037,
+    "status": "CLOSED_ACCEPTED",
+    "unchanged_by_framework_v7_4": true
+  },
+  "accepted_predecessor_authorities": {
+    "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md": {
+      "role": "governing provenance/lifecycle protocol",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "size_bytes": 19977
+    },
+    "docs/research_framework_v7_3_2026-09-23.md": {
+      "role": "accepted methodology predecessor; immutable historical lineage",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "size_bytes": 181798,
+      "status": "CLOSED_ACCEPTED"
+    },
+    "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md": {
+      "role": "current accepted evidence authority; unchanged by this closure",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "size_bytes": 187796,
+      "status": "CLOSED_ACCEPTED"
+    },
+    "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md": {
+      "role": "accepted v7.3 methodology/evidence lifecycle closure; immutable",
+      "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "size_bytes": 12358
+    }
+  },
+  "accepted_production_results": {
+    "core_three": {
+      "cases": {
+        "CENTRAL": {
+          "alpha": 0.8,
+          "beta_hours": 8
+        },
+        "HIGH": {
+          "alpha": 1.0,
+          "beta_hours": 12
+        },
+        "LOW": {
+          "alpha": 0.6,
+          "beta_hours": 4
+        }
+      },
+      "current_governance_status": "CLOSED_ACCEPTED",
+      "historical_execution_time_manifest_status": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+      "numerical_results_unchanged": true,
+      "path": "results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55",
+      "planning_input_identity_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "rerun_required": false,
+      "surplus_pv_recharge": false,
+      "valid_under_framework_v7_4": true
+    },
+    "eob": {
+      "current_governance_status": "CLOSED_ACCEPTED",
+      "historical_execution_time_manifest_status": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+      "numerical_result_unchanged": true,
+      "path": "results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556",
+      "planning_input_identity_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "rerun_required": false,
+      "valid_under_framework_v7_4": true
+    },
+    "full81": "NOT_YET_EXECUTED",
+    "status_semantics_note": "historical execution-time manifest status and current governance lifecycle status are distinct layers; the immutable run manifests do NOT themselves contain CLOSED_ACCEPTED and were not modified"
+  },
+  "accepted_scientific_delta_vs_framework_v7_3": {
+    "change_a_zero_winter_role": {
+      "accepted_current_role": "historical conservative validation / provenance evidence supporting reconstructed-PV promotion/adjudication",
+      "is_equal_status_alternative_planning_baseline": false,
+      "is_mandatory_eob_sensitivity": false,
+      "is_mandatory_layer_a_sensitivity": false,
+      "is_mandatory_layer_b_sensitivity_or_stress": false,
+      "new_zero_winter_solve_required": false,
+      "verdict": "ACCEPTED"
+    },
+    "change_b_pv_epistemic_routing": {
+      "forbidden_descriptions": [
+        "observed historical PV truth",
+        "exact ground truth",
+        "exact recovery of the unavailable historical series",
+        "online forecast information"
+      ],
+      "historical_empirical_calibration_layer": "observed data wherever valid",
+      "hybrid_routing_authorized": false,
+      "model_equation_changed": false,
+      "planning_counterfactual_layer": "accepted reconstructed full-year PV (single artifact identity)",
+      "planning_layer_consumers": [
+        "EOB",
+        "Layer A",
+        "Full81",
+        "R(alpha,beta)",
+        "P_out",
+        "binding-outage identification/classification",
+        "Layer A outage consistency replay",
+        "baseline Layer B"
+      ],
+      "required_descriptions": [
+        "weather-informed",
+        "model-based",
+        "separately validated",
+        "best-estimate planning baseline"
+      ],
+      "verdict": "ACCEPTED"
+    },
+    "change_c_kappa_claim_boundary": {
+      "calibration_basis_unchanged": true,
+      "calibration_period_unchanged": true,
+      "estimator": "through-origin least squares",
+      "estimator_unchanged": true,
+      "is_billing_demand_representation_proxy": true,
+      "is_fifteen_minute_chronology_reconstruction": false,
+      "is_proof_of_sub_hourly_physical_power_adequacy": false,
+      "production_value_scientifically_unchanged": true,
+      "reconstructed_planning_pv_redefines_kappa": false,
+      "verdict": "ACCEPTED"
+    },
+    "other_accepted_scientific_change_categories": 0
+  },
+  "candidate_lineage": {
+    "candidate_r1": {
+      "artifacts": {
+        "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md": {
+          "sha256": "a9df7162ee27bfd037b500e531a64bc921a001ab39a103543a9031d7141d551e",
+          "size_bytes": 19041
+        },
+        "docs/research_framework_v7_4_2026-09-26.md": {
+          "sha256": "52459a06a6c527413c74bd5d740992975284b1d41216168aad5869c585da6cda",
+          "size_bytes": 212268
+        },
+        "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/completion_manifest.json": {
+          "sha256": "923343ab7958e9739e194fced97a6372fd4f81e6ddd97a38ae86d3a7f6c98d0b",
+          "size_bytes": 15909
+        },
+        "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/package_manifest.json": {
+          "sha256": "e6592857561bf3940c2468704a7108633b4f0ea198ea432acb9ff8b2c00de124",
+          "size_bytes": 5582
+        }
+      },
+      "independent_verdict": "CONDITIONAL PASS / REVISE",
+      "modified_by_this_closure": false,
+      "role": "immutable non-accepted historical candidate provenance"
+    },
+    "candidate_r2": {
+      "artifacts": {
+        "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_r2_2026-09-26.md": {
+          "sha256": "61e02ccbee55a4da99fb46bc8ecb7f42feb182a9492e3b929f3b221879b355c7",
+          "size_bytes": 11816
+        },
+        "docs/research_framework_v7_4_2026-09-26_r2.md": {
+          "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+          "size_bytes": 216186
+        },
+        "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r2/completion_manifest.json": {
+          "sha256": "08fe8b7575e23cc7f89afc132fcf8c6fde0287ce138887bc81916443d6aef891",
+          "size_bytes": 9891
+        },
+        "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r2/package_manifest.json": {
+          "sha256": "1f3c6b4a2f3351b6e79d6d46465a5d6b311af05a4bf65d57a866d1da6fc6bfd0",
+          "size_bytes": 5491
+        }
+      },
+      "modified_by_this_closure": false,
+      "role": "canonical accepted Framework v7.4 bytes; provenance revision identifier only"
+    },
+    "candidate_r3": "NOT_REQUIRED_NOT_CREATED"
+  },
+  "closure_identity": "FRAMEWORK_V7_4_METHODOLOGY_ACCEPTANCE_CLOSURE",
+  "created_date": "2026-09-26",
+  "execution_counts": {
+    "accepted_result_changes": 0,
+    "code_changes": 0,
+    "core_three_reruns": 0,
+    "data_changes": 0,
+    "eob_reruns": 0,
+    "full81_runs": 0,
+    "milp_solves": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "sensitivity_solves": 0,
+    "tags_created": 0
+  },
+  "frozen_methodology_reaffirmed": {
+    "a1_a4": "CLOSED",
+    "b1_b2": "CLOSED",
+    "gate_1_gate_2": "CLOSED",
+    "inherited_unchanged": [
+      "research questions",
+      "research positioning",
+      "Layer A / Layer B / DG boundaries",
+      "alpha grid",
+      "beta grid",
+      "9x9=81 case universe",
+      "valid-start non-circular semantics",
+      "stationary LFP",
+      "SOCmin = 0.10",
+      "SOCmax = 0.90",
+      "eta_c = eta_d = 0.90",
+      "AC/PCS power boundary",
+      "battery-side energy state",
+      "constant worst-case reserve floor",
+      "outage replay semantics",
+      "annual regular contract capacity",
+      "Taipower tariff semantics",
+      "kappa estimator",
+      "kappa production identity/value",
+      "degradation formulation",
+      "Xu-adapted intertemporal PWL semantics",
+      "rainflow role",
+      "real 5% discount rate",
+      "20-year horizon",
+      "constant NTD-2023 monetary basis",
+      "PNNL 10 MW-scale package mainline",
+      "PNNL 1 MW cost sensitivity",
+      "surplus_pv_recharge=False",
+      "Layer A equations"
+    ],
+    "kappa_estimator_unchanged": true,
+    "kappa_production_value": 1.0103668594376984,
+    "kappa_production_value_scientifically_unchanged": true
+  },
+  "governance_state_after_closure": {
+    "final_cross_document_alignment_audit": "NOT_YET_EXECUTED",
+    "final_production_authority_refreeze": "NOT_YET_PERFORMED",
+    "framework_v7_4": "CLOSED_ACCEPTED",
+    "full81": "NOT_YET_EXECUTED",
+    "layer_a_preregistration_checkpoint": "NOT_YET_CREATED",
+    "push_performed": false,
+    "registry_v7_3_r3": "CLOSED_ACCEPTED_CURRENT_EVIDENCE_AUTHORITY",
+    "registry_v7_4": "NOT_YET_CREATED",
+    "tag_created": false,
+    "task_2_authorized": false
+  },
+  "independent_adjudication": {
+    "a1_a4": "CLOSED",
+    "authoring_side_self_acceptance": false,
+    "b1_b2": "CLOSED",
+    "candidate_r2_is_provenance_revision_identifier_only": true,
+    "candidate_r2_verdict": "PASS",
+    "candidate_r3_required": false,
+    "core_three_valid_under_framework_v7_4": true,
+    "documentation_correction_still_required": false,
+    "eob_valid_under_framework_v7_4": true,
+    "evidence_basis": [
+      "Candidate R2 primary repository bytes",
+      "R1 to R2 additive-only diff",
+      "accepted v7.3 authority bytes",
+      "accepted reconstructed planning-input identity",
+      "accepted EOB/core-three primary execution artifacts",
+      "independent verification of no equation/parameter/tariff/degradation/reserve/planning-input/solver-facing change",
+      "independent full-text verification that stale-status contradiction Class D = 0",
+      "current governance handoff state"
+    ],
+    "formal_methodology_version_name": "Framework v7.4",
+    "gate_1_gate_2": "CLOSED",
+    "kappa_claim_boundary": "PASS",
+    "kappa_estimator": "UNCHANGED",
+    "kappa_production_value": "SCIENTIFICALLY_UNCHANGED",
+    "performed_by": "separate independent adjudicator outside the authoring agent",
+    "pv_epistemic_routing": "PASS",
+    "safe_to_accept_framework_v7_4_using_candidate_r2_bytes": true,
+    "scientific_methodology_defect": "NONE",
+    "scientific_rerun_required": false,
+    "stale_current_status_contradiction_class_d": 0,
+    "zero_winter_role": "PASS"
+  },
+  "package_files": {
+    "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md": {
+      "role": "Framework v7.4 acceptance/closure checkpoint",
+      "sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f",
+      "size_bytes": 18809
+    }
+  },
+  "pass_type": "additive acceptance materialization; documentation/provenance only",
+  "provenance_disclosures": {
+    "r1_independent_audit_durability": {
+      "acceptance_depends_solely_on_this_report": false,
+      "audit_occurred": true,
+      "disposition": "NOT_A_FRAMEWORK_R2_ACCEPTANCE_BLOCKER",
+      "independently_rederived_facts": [
+        "no equation change",
+        "no parameter change",
+        "no solver-facing methodology change",
+        "no planning-input identity change",
+        "EOB remains scientifically valid",
+        "core-three remains scientifically valid",
+        "no scientific rerun required"
+      ],
+      "issue": "the Candidate R1 independent audit report was available in project-conversation governance history but was not stored as a repository artifact",
+      "limitation_class": "provenance durability limitation",
+      "repository_artifact_exists": false,
+      "repository_path_or_hash_asserted": false,
+      "resolution": "disclosed explicitly in the acceptance closure; Candidate R2 was not rewritten and no Candidate R3 was created to remove references to the historical R1 audit",
+      "verdict_recorded": "CONDITIONAL PASS / REVISE"
+    },
+    "run_manifest_pending_acceptance_status": {
+      "closure_claims_manifests_say_closed_accepted": false,
+      "current_governance_status": "CLOSED_ACCEPTED",
+      "disposition": "NOT_A_SCIENTIFIC_OR_FRAMEWORK_R2_ACCEPTANCE_BLOCKER",
+      "historical_status_is_error": false,
+      "historical_status_value": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+      "issue": "the accepted EOB and core-three completion manifests retain an execution-time pending-acceptance status",
+      "manifests_modified": false,
+      "production_results_rerun": false,
+      "resolution": "the closure distinguishes historical execution-time manifest status from later governance lifecycle acceptance status; the immutable manifest bytes are unchanged and later governance acceptance supersedes the historical lifecycle state for current-status purposes only"
+    }
+  },
+  "repository_state": {
+    "ahead_behind": "0/0",
+    "branch": "thesis-v7",
+    "live_remote_origin_thesis_v7_pre_closure": "52be8dec7b8529b6fcb411bbee765f1aa4c745df",
+    "pre_closure_head": "52be8dec7b8529b6fcb411bbee765f1aa4c745df",
+    "pre_closure_staged_files": 0,
+    "pre_closure_tracked_dirty_files": 0,
+    "preexisting_untracked_files_count": 8,
+    "preexisting_untracked_files_preserved": true,
+    "repository": "irischg/iris_thesis",
+    "tags_at_pre_closure_head": 0
+  },
+  "schema_version": "iris-thesis-framework-v7.4-acceptance-closure-manifest-v1",
+  "self_hash_omission_statement": "acceptance_manifest.json registers every file in this closure package except itself; its own SHA-256 is deliberately omitted to avoid a circular self-hash and is reported externally in the closure report after generation.",
+  "self_hash_omitted": true,
+  "status": "FRAMEWORK_V7_4_CLOSED_ACCEPTED"
+}
