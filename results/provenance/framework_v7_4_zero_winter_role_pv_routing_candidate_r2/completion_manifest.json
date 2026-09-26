@@ -1,0 +1,233 @@
+{
+  "acceptance_or_freeze_artifact_created": false,
+  "artifact_identities": {
+    "accepted_planning_input": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "role": "reconstructed_pv_mainline",
+      "rows": 8760,
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "size_bytes": 554037,
+      "status": "CLOSED_ACCEPTED"
+    },
+    "framework_v7_3_accepted_predecessor": {
+      "path": "docs/research_framework_v7_3_2026-09-23.md",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "size_bytes": 181798
+    },
+    "framework_v7_4_candidate_r1_immediate_predecessor": {
+      "path": "docs/research_framework_v7_4_2026-09-26.md",
+      "sha256": "52459a06a6c527413c74bd5d740992975284b1d41216168aad5869c585da6cda",
+      "size_bytes": 212268
+    },
+    "framework_v7_4_candidate_r1_checkpoint": {
+      "path": "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md",
+      "sha256": "a9df7162ee27bfd037b500e531a64bc921a001ab39a103543a9031d7141d551e",
+      "size_bytes": 19041
+    },
+    "framework_v7_4_candidate_r1_completion_manifest": {
+      "path": "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/completion_manifest.json",
+      "sha256": "923343ab7958e9739e194fced97a6372fd4f81e6ddd97a38ae86d3a7f6c98d0b",
+      "size_bytes": 15909
+    },
+    "framework_v7_4_candidate_r1_package_manifest": {
+      "path": "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/package_manifest.json",
+      "sha256": "e6592857561bf3940c2468704a7108633b4f0ea198ea432acb9ff8b2c00de124",
+      "size_bytes": 5582
+    },
+    "framework_v7_4_candidate_r2": {
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "size_bytes": 216186
+    },
+    "framework_v7_4_candidate_r2_checkpoint": {
+      "path": "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_r2_2026-09-26.md",
+      "sha256": "61e02ccbee55a4da99fb46bc8ecb7f42feb182a9492e3b929f3b221879b355c7",
+      "size_bytes": 11816
+    },
+    "governing_provenance_protocol": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "size_bytes": 19977
+    },
+    "registry_v7_3_r3_accepted_authority": {
+      "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "size_bytes": 187796
+    },
+    "v7_3_authority_freeze": {
+      "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+      "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "size_bytes": 12358
+    }
+  },
+  "candidate_identity": "FRAMEWORK_V7_4_ZERO_WINTER_ROLE_PV_ROUTING_CANDIDATE_R2",
+  "candidate_status_only": true,
+  "correction_scope": {
+    "allowed_r2_only_categories": [
+      "STATUS_CORRECTION",
+      "HISTORICAL_SCOPING",
+      "PROVENANCE_R2_PLUMBING"
+    ],
+    "blocking_class_from_r1_audit": "stale candidate-era implementation/status wording",
+    "change_d_scientific_category_added": false,
+    "correction_type": "documentation/status/provenance only",
+    "r1_independent_verdict": "CONDITIONAL PASS / REVISE",
+    "scientific_methodology_defect_found": false,
+    "accepted_numerical_result_defect_found": false
+  },
+  "created_date": "2026-09-26",
+  "current_accepted_state": {
+    "accepted_core_three": {
+      "cases": {
+        "CENTRAL": {
+          "alpha": 0.8,
+          "beta_hours": 8
+        },
+        "HIGH": {
+          "alpha": 1.0,
+          "beta_hours": 12
+        },
+        "LOW": {
+          "alpha": 0.6,
+          "beta_hours": 4
+        }
+      },
+      "path": "results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55",
+      "status": "CLOSED_ACCEPTED",
+      "valid_under_v7_4": true
+    },
+    "accepted_eob": {
+      "path": "results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556",
+      "status": "CLOSED_ACCEPTED",
+      "valid_under_v7_4": true
+    },
+    "full81": "NOT_YET_EXECUTED_NOT_AUTHORIZED",
+    "methodology_rerun_required": false,
+    "production_routing_used_by_accepted_eob_core_three": "COMPLETED_ACCEPTED"
+  },
+  "diff_audit": {
+    "r1_to_r2": {
+      "allowed_substantive_categories_only": true,
+      "changed_equations": 0,
+      "changed_parameters": 0,
+      "new_equations": 0,
+      "new_parameters": 0,
+      "new_sensitivity_designs": 0,
+      "solver_facing_methodology_changes": 0,
+      "unclassified_substantive_hunks": 0
+    },
+    "v7_3_to_r2": {
+      "change_categories": [
+        "A_ZERO_WINTER_ROLE",
+        "B_OBSERVED_VS_PLANNING_PV_ROUTING",
+        "C_KAPPA_CLAIM_BOUNDARY"
+      ],
+      "other_scientific_change_categories": 0,
+      "scientific_delta_matches_r1_exactly": true
+    }
+  },
+  "equation_audit": {
+    "boxed_count_r1": 50,
+    "boxed_count_r2": 50,
+    "boxed_count_v7_3": 50,
+    "display_math_blocks_r1": 154,
+    "display_math_blocks_r2": 154,
+    "display_math_blocks_v7_3": 152,
+    "method": "deterministic extraction of backslash-bracket display-math blocks, whitespace-normalized multiset comparison, plus boxed occurrence count",
+    "r1_to_r2_multiset_difference": 0,
+    "v7_3_blocks_added": 2,
+    "v7_3_blocks_removed_or_altered": 0,
+    "v7_3_to_r2_added_block": "P_t^{grid,hist}=L_t^{obs}-PV_t^{obs}",
+    "v7_3_to_r2_added_block_role": "two duplicate routing restatements inherited unchanged from R1 Change B; not new model equations"
+  },
+  "execution_counts": {
+    "code_changes": 0,
+    "core_three_reruns": 0,
+    "data_changes": 0,
+    "eob_reruns": 0,
+    "full81_runs": 0,
+    "milp_solves": 0,
+    "model_changes": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "parameter_changes": 0,
+    "sensitivity_solves": 0,
+    "solver_setting_changes": 0,
+    "zero_winter_solves": 0
+  },
+  "governance_state": {
+    "fresh_independent_r2_audit_required": true,
+    "layer_a_preregistration_authorized": false,
+    "layer_a_preregistration_checkpoint_created": false,
+    "methodology_acceptance_performed": false,
+    "production_authority_refreeze_performed": false,
+    "registry_successor_authorized": false,
+    "registry_successor_created": false,
+    "self_acceptance": false,
+    "task_2_authorized": false
+  },
+  "repository_state": {
+    "branch": "thesis-v7",
+    "live_origin_thesis_v7_before_correction": "5d81ee989856d42a21e715def4625162ea9fc0af",
+    "pre_authoring_head": "5d81ee989856d42a21e715def4625162ea9fc0af",
+    "pre_authoring_head_parent": "1651b31008c565e105fc79a958f9ca98a194aa80",
+    "preexisting_untracked_files": [
+      "0629開會逐字稿Iris.docx",
+      "Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md",
+      "Claude outputs/P2_Literature_Positioning_v7.2.pptx",
+      "Claude outputs/iris_thesis_independent_audit_2026-09-13.md",
+      "Claude outputs/iris_thesis_repo_audit_2026-09-13.md",
+      "EOB_Attempt3_20260924T184038809594Z_59116b1556.zip",
+      "docs/CATOCKERTEAIPOTEP rctㄐㄚPV  I.html",
+      "docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf"
+    ],
+    "preexisting_untracked_files_count": 8,
+    "preexisting_untracked_files_preserved": true,
+    "preexisting_untracked_porcelain_reconstructed_sha256": "2720879eb0de989bf50e4755e2c5518748a832a5295ecc5e1cdde237c3edbcd8",
+    "preexisting_untracked_porcelain_reconstructed_size_bytes": 447
+  },
+  "schema_version": "iris-thesis-framework-v7.4-task1-candidate-r2-completion-manifest-v1",
+  "scientific_immutability": {
+    "a1_a4_unchanged": true,
+    "accepted_core_three_result_unchanged": true,
+    "accepted_eob_result_unchanged": true,
+    "b1_b2_unchanged": true,
+    "equations_unchanged_from_r1": true,
+    "gate_1_gate_2_unchanged": true,
+    "kappa_estimator_unchanged": true,
+    "kappa_production_value": 1.0103668594376984,
+    "kappa_production_value_unchanged": true,
+    "parameters_unchanged": true,
+    "pv_routing_unchanged_from_r1": true,
+    "zero_winter_role_unchanged_from_r1": true
+  },
+  "stale_status_search": {
+    "case_insensitive_exact_occurrences": true,
+    "category_totals": {
+      "A_correct_current_state": 40,
+      "B_clearly_historical_snapshot": 23,
+      "C_future_v7_4_governance_state": 31,
+      "D_stale_contradiction": 0,
+      "total": 94
+    },
+    "phrase_counts": {
+      "NOT_YET_ACCEPTED": {"A": 0, "B": 1, "C": 0, "D": 0, "total": 1},
+      "NOT_YET_AUTHORIZED": {"A": 0, "B": 4, "C": 16, "D": 0, "total": 20},
+      "NOT_YET_CREATED": {"A": 0, "B": 4, "C": 11, "D": 0, "total": 15},
+      "Registry v7.3": {"A": 12, "B": 2, "C": 0, "D": 0, "total": 14},
+      "after v7.3 acceptance": {"A": 0, "B": 0, "C": 0, "D": 0, "total": 0},
+      "before v7.3 acceptance": {"A": 0, "B": 0, "C": 0, "D": 0, "total": 0},
+      "candidate evidence only": {"A": 0, "B": 1, "C": 0, "D": 0, "total": 1},
+      "canonical routing": {"A": 0, "B": 1, "C": 0, "D": 0, "total": 1},
+      "future EOB": {"A": 0, "B": 0, "C": 0, "D": 0, "total": 0},
+      "future canonical": {"A": 0, "B": 2, "C": 0, "D": 0, "total": 2},
+      "pending": {"A": 6, "B": 3, "C": 4, "D": 0, "total": 13},
+      "production rerun": {"A": 0, "B": 1, "C": 0, "D": 0, "total": 1},
+      "representative cases": {"A": 1, "B": 2, "C": 0, "D": 0, "total": 3},
+      "rerun": {"A": 21, "B": 2, "C": 0, "D": 0, "total": 23}
+    },
+    "stale_current_status_contradictions_remain": false
+  },
+  "status": "CANDIDATE_R2_PENDING_FRESH_INDEPENDENT_READ_ONLY_AUDIT",
+  "self_hash_omission_statement": "completion_manifest.json deliberately omits its own digest; package_manifest.json records it after generation."
+}

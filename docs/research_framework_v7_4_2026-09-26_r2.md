@@ -1,0 +1,4293 @@
+# 研究框架 v7.4（2026-09-26，zero-winter validation-role / observed-vs-planning PV routing / \(\kappa\) claim-boundary successor candidate R2）
+
+> **Version lineage:** Framework v7.4 Candidate R2 is a minimal, additive documentation/status correction to the immutable immediate candidate predecessor `research_framework_v7_4_2026-09-26.md` (Candidate R1; SHA-256 `52459a06a6c527413c74bd5d740992975284b1d41216168aad5869c585da6cda`). The accepted methodology predecessor remains the immutable `research_framework_v7_3_2026-09-23.md` (SHA-256 `44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a`), which remains the current accepted methodology authority until this R2 candidate passes a fresh independent audit. The independent R1 audit returned **CONDITIONAL PASS / REVISE**: no scientific methodology defect and no accepted numerical-result defect were found, but stale candidate-era implementation/status wording prevented acceptance. R2 preserves R1's complete scientific delta exactly: **(A)** zero-winter current role = historical conservative validation / provenance evidence; **(B)** formal observed-versus-planning PV epistemic routing; **(C)** the \(\kappa\) historical-calibration versus planning-use claim boundary without recalibration. R2 adds no fourth scientific change category. Every R2-only substantive difference is status correction, historical scoping, or R2 provenance plumbing. No equation, parameter, numerical setting, solver setting, production input, or accepted numerical result is changed.
+
+> **Source manifest / provenance**
+>
+> | Source artifact | Role in v7.4 Candidate R2 | SHA-256 |
+> |---|---|---|
+> | `docs/research_framework_v7_3_2026-09-23.md` | **Accepted methodology predecessor**; accepted current methodology authority; immutable historical provenance; remains authoritative until independent acceptance of R2 | `44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a` |
+> | `docs/research_framework_v7_4_2026-09-26.md` | **Immediate candidate predecessor — Candidate R1**; `CONDITIONAL PASS / REVISE`; non-accepted immutable historical candidate provenance; not modified by R2 | `52459a06a6c527413c74bd5d740992975284b1d41216168aad5869c585da6cda` |
+> | `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md` | Accepted current evidence authority; **unchanged context**, not modified by this pass; a Registry successor is required only after this Framework candidate is independently accepted | `e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d` |
+> | `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` | Accepted v7.3 methodology/evidence lifecycle closure; immutable; **not edited**. Its §E.2 zero-winter role statement is a v7.3-era current-prescriptive clause that this candidate supersedes additively if and only if it is independently accepted | `23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d` |
+> | `docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md` | Governing provenance/lifecycle protocol for this successor | `c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696` |
+> | `docs/research_framework_v7_2_2026-08-24.md` | Historical accepted predecessor of v7.3; **historical lineage only**, never current authority | `bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5` |
+> | `docs/research_framework_v7_4_2026-09-26_r2.md` | This additive v7.4 **Candidate R2** | `SELF-HASH: recorded externally in the R2 candidate checkpoint and manifest after generation` |
+>
+> **Supersession rule:** this v7.4 Candidate R2 file is a **candidate** and is **not self-accepting**. Candidate R1 remains immutable, non-accepted historical candidate provenance. Framework v7.3 remains the current accepted methodology authority, and Registry v7.3 R3 remains the current accepted evidence authority, until a fresh independent read-only Framework audit accepts R2. Once and only if accepted, v7.4 supersedes v7.3 **solely** in the three scientific change categories declared above and enumerated in §36; everywhere else v7.3's inherited methodology governs unchanged. All predecessor frameworks, candidates, registries, checkpoints, audits, freezes, manifests, and results remain preserved byte-identically for provenance, regression, historical-lineage, replication, and comparison. The v7.1 §16.1 cost-bracket rule remains superseded exactly as in v7.2 and v7.3.
+
+> **Candidate status:** **FRAMEWORK V7.4 ZERO-WINTER-ROLE / PV-ROUTING / \(\kappa\)-CLAIM-BOUNDARY SUCCESSOR — CANDIDATE R2**. This document is **not** `CLOSED`, **not** `ACCEPTED`, **not** `FINAL`, and **not** `PROMOTED`. **A fresh independent read-only R2 audit is required before promotion to methodology authority.** Registry v7.4 = `NOT_YET_CREATED / NOT_YET_AUTHORIZED`; Layer A robustness/preregistration checkpoint = `NOT_YET_CREATED / NOT_YET_AUTHORIZED`; final cross-document audit = `NOT_YET_EXECUTED`; production-authority re-freeze under v7.4 = `NOT_YET_AUTHORIZED`; Full81 = `NOT_YET_EXECUTED / NOT AUTHORIZED`. This R2 correction performed **zero** model constructions, **zero** `optimize()` calls, **zero** MILP solves, **zero** EOB or core-three reruns, **zero** Full81 runs, and **zero** sensitivity solves, and changed no code, data, model, parameter, or accepted numerical result.
+
+## 校園 PV–BESS 服務連續性之成本–韌性規劃框架
+
+> **文件用途**：本文件是研究規格書（research specification），用來鎖定研究問題、模型邊界、實驗順序、指標定義、驗證要求與舊結果處理方式。它不是論文章節全文，但可直接作為第一至四章的骨架。
+>
+> **版本原則**：v7.4 直接以**已接受且不可變更的 v7.3（2026-09-23）**為完整 base framework，採 additive successor 而非改寫舊版。A1–A4、B1–B2、Gate 1、Gate 2、Layer A/B/DG boundaries、SOC 10–90%、\(\eta_c=\eta_d=0.90\)、tariff、degradation、annual regular contract-capacity（CC）semantics、alpha–beta grid、\(9\times9=81\) case universe、1,463-hour long-block PV 的 planning-baseline assignment、valid-start non-circular semantics、Layer-A analytical reserve formula、\(\kappa\) estimator 與 production value、cost package、monetary basis、CRF 與主要 equations **全部逐字延續**。本版只做 §36 明列的三類 methodology/claim-boundary 更新：(A) zero-winter 的 **current role**；(B) observed-vs-planning PV epistemic routing 的形式化；(C) \(\kappa\) 的 historical-calibration / planning-use claim boundary。不得以 v7.4 名義重開其他已鎖定方法，也不得新增任何 equation、parameter 或 numerical sensitivity design。
+>
+> **文獻分流**：本框架只記錄 framework-level decision、source role 與 claim boundary；Q1 文獻、official source、project evidence 與 exact parameter lineage 仍由 Literature/Evidence Registry 與 machine-readable parameter registry 控制。**current accepted evidence authority 為 Registry v7.3 R3**（`docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md`，SHA-256 `e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d`），本 pass 不修改它。**Registry v7.4 尚未建立**（`NOT_YET_CREATED / NOT_YET_AUTHORIZED`）；在本 Framework candidate 通過獨立審核之前，不得開始 Registry successor 工作，不得把 Registry v7.3 R3 改稱 v7.4，也不得宣稱 framework–registry pair 已在 v7.4 完成對齊。Registry v7.3 R3 目前記載的 zero-winter `conservative stress/sensitivity` 角色，是 v7.3 authority 之下正確的陳述；它與本 candidate 的 Change A 之間的對齊，必須由獨立審核接受本 candidate 之後、另以 Registry successor 處理，不得在此 pass 內預先宣告。
+>
+> **v7.4 candidate 相對於已接受 v7.3 的三項（且僅三項）授權更新**：
+>
+> 1. **CHANGE A — zero-winter current role**：zero-winter treatment 的 **current role** 為 **historical conservative validation / provenance evidence**，用以支持 reconstructed-PV 的 promotion/adjudication decision。它**不是** mandatory 的新 Layer A sensitivity、**不是** mandatory 的新 Layer B sensitivity/stress、**也不是** equal-status alternative planning baseline；不要求任何新的 zero-winter EOB / Layer A / Layer B solve。既有 reconstructed-vs-zero-winter 比較仍是有效的 **historical project validation / adjudication evidence**，必須在 provenance/history 中保存，不得被靜默刪除；僅在未來另有獨立正當理由時才可重啟。（**歷史事實保留**：v7.2 曾以 zero-winter 為 mainline；v7.3 曾將其列為 conservative stress/sensitivity。這兩項 past-scoped 陳述在本文件中仍然為真，並僅作歷史陳述。）詳見 §36.1。
+> 2. **CHANGE B — formal observed-vs-planning PV routing**：明確區分 **historical empirical / calibration layer**（一律使用 observed data）與 **planning / counterfactual model layer**（一律使用 accepted reconstructed full-year PV），並禁止任何 hybrid routing。此為 epistemic routing 的形式化，**不改變任何 model equation**。詳見 §36.2。
+> 3. **CHANGE C — \(\kappa\) claim boundary**：明確界定 \(\kappa\) 的 historical-calibration 與 planning-use claim boundary。**production \(\kappa\)、其 estimator 與 calibration-period definition 完全不變**；accepted reconstructed planning PV **不得**用來重新定義或重新估計 production \(\kappa\)。詳見 §36.3。
+>
+> **v7.3 既有方法決定全數延續（以下逐字沿用，不因本版改變）**：
+>
+> 4. **Reconstructed-PV planning mainline 延續**：2024/11–12 的 1,463-hour corrected reconstructed PV block 仍是 full-year **best-estimate planning baseline**。
+> 5. **Required epistemic statement（延續，不得弱化）:** The winter PV reconstruction is a model-based, weather-informed, separately validated estimate for planning use; it is not observed meter data, not exact ground truth, and not an exact recovery of the missing historical series.
+>
+>    **Required thesis-language boundary (v7.4 current wording):** The prolonged unavailable winter PV block is represented, in the planning layer, using a separately validated weather-informed reconstruction as the best-estimate planning baseline. The prior zero-availability treatment is retained as historical conservative validation evidence supporting that representation decision; it is not a required alternative planning baseline and not a required downstream sensitivity. Reconstructed values are model-based planning estimates rather than observed historical PV measurements.
+> 6. 同一套 accepted reconstructed full-year \(PV_t^{base}\) 必須一致送入 EOB/economic optimization、Layer A 的 \(R_t\)、\(P_t^{out}\)、binding classification 與 outage replay，以及 baseline Layer B。禁止 EOB 採 reconstructed PV、但 Layer A/B 又改用 zero-winter 或任何其他 annual PV identity 的 hybrid/no-credit routing。
+> 7. corrected 17b promotion-source candidate 為 `data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18.parquet`（SHA-256 `1c1dbc265b092415e649bba23232f645f7ba5c74e0f074f2914c1ed7ac9d7cd9`）。其 canonical / promotion 狀態由 v7.3 lineage 與現行 implementation-status 文件（`docs/ai_handoff/CURRENT_STATE.md`）控制；本 documentation pass 不建立、不改名、不授權任何 canonical artifact，也不杜撰任何 path/hash。
+> 8. historical billing calibration 繼續只使用 observed Load/PV；\(\kappa\) 的定義、estimator、calibration sample/period 與 production 數值皆不因 reconstructed planning baseline 改變。
+> 9. Layer A 公式不變，包含 consistency replay 中 outage-period PV surplus 不得 recharge 的既有規則（`surplus_pv_recharge=False`）；本版是 role/claim-boundary clarification，不是 equation change。
+>
+> **v7.2 economic integration freeze 全數延續**：
+>
+> 1. **Gate 1 CLOSED — ex-ante BESS cost scale**：PNNL v2024-derived **10 MW-scale package 固定為 mainline**；**1 MW-scale package 固定為 higher-cost / reduced-scale-economy sensitivity**。cost package 必須在 EOB / Layer A optimization 前指定，不得依 preliminary 或 final optimized \(P^B\) 回頭切換。
+> 2. 1 MW / 10 MW 表示 **cost-scale source cases**，不是 BESS power rating 的硬邊界，也不表示 \(P^B\) 必須等於 1 MW 或 10 MW。mainline/sensitivity 必須整包切換 \(C_E,C_P,FOM,C_{rep}\) 與由 \(C_{rep}\) 衍生的 \(\lambda_k\)，不得混搭不同 bracket。
+> 3. PNNL v2024 LFP cost derivation 的 fitting window 固定為 **4 / 6 / 8 / 10 h**；replacement-cost basis \(C_{rep}\) 固定採 **DC Storage Block** 在 4 / 6 / 8 / 10 h source cases 的 arithmetic mean。exact coefficients 保存在 parameter artifacts，不在 framework 重複抄值。
+> 4. PNNL cost monetary normalization 固定為 **2023 USD → constant NTD-2023**，FX = **31.150 NTD/USD**；不對 PNNL 2023 cost 再做 inflation adjustment。
+> 5. **Gate 2 CLOSED — monetary basis**：所有 optimization-facing monetary terms 統一使用 **constant NTD-2023**。case-year Taipower official tariffs / bills 保留其原始 2024/2025 nominal NTD 作 institutional validation；送入 EOB / Layer A objective 前，另建立可追溯的 constant-2023 tariff layer。
+> 6. \(r=5\%\) 在 v7.2 正式解讀為 **real discount-rate modeling assumption**；\(n=20\) yr、\(CRF=0.0802426\) 不變。5% 不宣稱為 NTUST 真實 WACC；real interpretation 是為了與 constant-dollar accounting 一致。
+> 7. 正式 optimization / thesis economic results 以 **NTD-2023 (constant)** 為主。若管理溝通需要，可另報 2025 nominal-equivalent，但只能作 supplementary reporting conversion，不得回饋 optimization 或取代正式結果 basis。
+> 8. billing-demand \(\kappa\) 的 production scripted reproduction 已完成；其數值仍是 NTUST site-specific empirical calibration，不是 Taipower / literature universal coefficient。
+> 9. PNNL cost/FOM/replacement/degradation parameter packages 已完成 dual-bracket construction；Xu intertemporal segment-state semantics 已完成 production-oriented audit；\(\lambda_k\) 必須由 bracket-specific \(C_{rep}\) 自動產生，不得獨立 hard-code。
+> 10. Taipower tariff registry production gate（13b）與 pure-season monthly bill-component regression（13c）已通過。Project tariff treatment使用 **SCHOOL/FROZEN high-voltage** 作 NTUST case institutional label；這是 project audit / implementation classification，不宣稱它是 Taipower 對所有學校用戶的 universal official tariff-category name。non-summer peak在本 case tariff semantics中為 **N/A（period not applicable）**，不得以 0-rate peak period 代替。May/October 50/50 basic-charge transition treatment僅能稱 **NTUST case-validated empirical transition rule**；在沒有官方條文明示前，不宣稱為 Taipower universal official rule。
+> 11. **Subsidy/accounting boundary**：objective 直接使用 audited effective billed tariff / normalized optimization tariff；不另建立獨立 subsidy credit/debit cash-flow term。若政策支持已反映在適用費率或帳單中，不得再以 subsidy 項目重複加減，以避免 double counting。
+> 12. v7.2/Step-17 historical EOB、Layer A、rainflow、paired sensitivity 與其他 outputs 保留其原始證據角色；在 Framework v7.3 candidate authoring stage即已禁止為配合新 candidate而改寫，該歷史 provenance 規則延續不變。17a 保持 `PASS_FOR_SENSITIVITY`；17b 保持 sensitivity-only lineage；corrected 17b/17c 保持 corrected source/run 與 paired-sensitivity/adjudication evidence。它們都不是 v7.3 canonical production authorization。
+
+---
+# 0. 研究狀態與決策分級
+
+## 0.1 已鎖定的核心決策
+
+下列內容除非發現程式、資料或 source transcription 錯誤，否則不再回到舊版：
+
+- 研究主線為 **PV + BESS 的 zero-combustion service-continuity planning**；NTUST 是 demonstration case，不是研究問題本身。
+- \(\alpha\) 與 \(\beta\) 是 decision-maker-specified planning targets，不是法定標準，也不是模型自行最佳化的偏好。
+- Layer A 使用 dense \(9\times9=81\) 的 \(\alpha,\beta\) grid 與 case-year 內所有 valid historical outage starts 的 worst-case reserve；year-end 不做 circular wrap。
+- BESS mainline technology 為 stationary LFP；\(E^N\) 為 installed/nameplate energy sizing variable，\(e_t\) 為 battery-side stored-energy state。
+- 主線 \(SOC_{min}=0.10\)、\(SOC_{max}=0.90\)，因此 \(E^U=0.8E^N\)。normal-operation reserve 必須位於 technical SOCmin 之上。
+- charge/discharge power 以 AC/PCS-side 定義；**A1 已關閉：\(\eta_c=\eta_d=0.90\) fixed**，效率只套用一次，不做 efficiency curve mainline。
+- **A2 已關閉**：annual optimization 與 outage replay 是兩個分離的 model stages。annual normal operation 使用 constant worst-case reserve floor；outage replay 從最低 preparedness state 開始，停電期間 reserve 可被使用，只維持 technical SOCmin。
+- 正式 case year 為 **2024-11-01 00:00 ≤ \(t\) < 2025-11-01 00:00（Asia/Taipei）**，\(\Delta t=1\) h，\(T=8760\)。source hour-ending timestamp 轉 interval-start 後再產生 calendar/TOU/billing labels。
+- observed Load/PV 與 planning-baseline Load/PV 分離；historical billing calibration 使用 observed series，annual planning 使用 baseline/available series。
+- **A3 已關閉**：NTUST mainline 只最佳化一個 annual regular contract capacity \(CC\)；supplementary contracts 固定於 NTUST case values（0）；四 TOU periods、period-specific basic rates、non-duplication 與 2×/3× over-contract rules 保留。
+- **A4 已關閉**：solver 內 cost-facing demand/exceedance variables 不當作 exact diagnostics；各 period/month maximum demand 一律由 optimized grid profile ex-post 重算。
+- Taipower 15-min billing demand 使用 site-specific calibrated hourly proxy。production scripted reproduction 已由 canonical observed grid-import / billed-overall-max pairs 完成，\(\kappa\) 約為 1.01037；final numerical source-of-truth 為 scripted audit output，不得 hard-code 為無 lineage 常數。
+- **B1 已關閉**：mainline degradation = **PNNL-calibrated adaptation of Xu et al.'s intertemporal convex PWL DOD-sensitive cycle-aging formulation**；segment states 跨時間延續。Harry-style hourly-reset PWL 不作 mainline，linear throughput 只作 benchmark，rainflow 只作 ex-post validation。
+- **B2 已關閉且不改總成本結構**：annualized CAPEX + annual FOM + operating costs（含 cycling degradation）維持；不額外加入 full replacement/augmentation cash-flow stream。
+- high-voltage summer calendar 固定為 **May 16–October 15**，不得使用整月 shortcut。
+- BESS mainline CAPEX source 為 PNNL v2024-derived **10 MW-scale** energy/power planning package；1 MW-scale package為 cost-scale sensitivity。所有 BESS economic inputs採 constant NTD-2023；\(r=5\%\) 明確為 real modeling discount rate、\(n=20\) yr、\(CRF=0.0802426\)。
+- 1 MW / 10 MW cost package 是 exogenous scale-economy assumption，不是 \(P^B\) bound；不得依 optimization result 反向更換 package。
+- case-year Taipower nominal tariffs 保留作 official/bill validation；optimization-facing tariff 另轉為 constant NTD-2023。Project institutional treatment標記為 **SCHOOL/FROZEN high-voltage**；non-summer peak = **N/A（period not applicable）**，不得編碼為 0-rate peak period。May/October 50/50 basic-charge transition只保留為 NTUST case-validated empirical rule，不升格為 universal official rule。
+- subsidy不作獨立 objective cash-flow component；模型以 audited effective tariff作 institutional price signal。任何已內含於適用費率／帳單的政策支持不得再次以 subsidy credit/debit 加減。
+- Layer B 固定 Layer A 設計，不重新擴充設備；Layer B structured scenarios 不是可靠度機率。
+- BESS site/fire-code/interconnection constraints 不進主線 optimization；輸出稱 modeled planning requirements，不稱 final recommended installation。
+- existing emergency DG 不進 aggregate campus service mainline；hypothetical campus-serving DG 為獨立外生 coverage extension。
+- DG extension 同時報告成本、燃料與 onsite CO₂，不強迫用任意碳價加權成單一 objective。
+
+## 0.2 待 Layer A 完成後決定
+
+- Layer B 最終使用 3、5 或 9 組 benchmark designs。
+- benchmark designs 的實際 \((\alpha,\beta)\) 座標。
+- Layer A 是否存在 knee / transition region。
+- DG sweep 是否需要在某一區間做 5% 細化。
+- 是否保留 24 h 作為 boundary case。
+
+## 0.3 已定方法、candidate progress 與 remaining production gates
+
+A1–A4、B1–B2 以及 v7.2 Gate 1–2 均 **methodologically closed**。Framework v7.3 與 Registry v7.3 R3 均已 **CLOSED / ACCEPTED**；v7.4 Candidate R2 只修正 Candidate R1 的 stale implementation/status wording，並不重新開啟任何已關閉的方法或新增科學方法決定。下列為 R2 建立時的 current implementation / governance state。
+
+### 已完成 / 已接受
+
+- **Framework v7.3：CLOSED / ACCEPTED.**
+- **Registry v7.3 R3：CLOSED / ACCEPTED.**
+- **Accepted reconstructed planning input：** `data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet`；SHA-256 `3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428`；role = `reconstructed_pv_mainline`；rows = 8,760。
+- **Accepted production routing used by the accepted EOB and core-three：COMPLETED / ACCEPTED.** EOB/economic、Layer A residual-load / \(R\) / \(P^{out}\) / binding classification / outage replay使用同一 accepted reconstructed planning artifact identity；此 factual status 不新增或改變 routing methodology。
+- **Accepted EOB：CLOSED / ACCEPTED.** `results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556`。
+- **Accepted core-three：CLOSED / ACCEPTED.** `results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55`；LOW = \(\alpha=0.60,\beta=4\text{ h}\)，CENTRAL = \(\alpha=0.80,\beta=8\text{ h}\)，HIGH = \(\alpha=1.00,\beta=12\text{ h}\)。
+- **Scripts 01–05 component preprocessing CLOSED / PASSED.**
+- **Script 06 v7.2 integrated annual input completed / audited**：其 Load/PV baseline、observed columns、interval-start chronology、calendar / summer / TOU / billing tags構成 accepted v7.2 historical/canonical lineage；pre-v7 同名 legacy artifacts 不得取代它。Framework v7.3 candidate authoring stage已禁止為配合 candidate而靜默改寫此 artifact；這是 past-scoped provenance fact，不是 current candidate-status assertion。
+- billing-demand calibration 已完成 scripted reproduction；\(\kappa\) 保持 NTUST site-specific empirical coefficient，production value由 canonical input + billing registry重算。
+- **Scripts 11f / 11g / 11h** 已完成 PNNL v2024 LFP cost profiling / linearization / normalization 與 dual-bracket package construction：1 MW / 10 MW 的 \(C_E,C_P,FOM,C_{rep}\) 與 bracket-specific \(\lambda_k\) candidates均保留；4/6/8/10 h fitting window、FOM split、DC Storage Block replacement-cost basis、2023 USD→NTD-2023（FX 31.150）已完成可追溯 derivation。這些 scripts 故意不替 framework 決定 mainline bracket。
+- bracket-specific \(C_{rep}\) 已能自動生成對應 PWL \(\lambda_k\) candidates；legacy slope sets不得控制 production。
+- **Script 12a** 已完成 Xu-derived intertemporal segment-state semantics production-oriented audit，且明確不替 cost-scale Gate 1 選 1 MW / 10 MW bracket；hourly-reset Harry proxy仍排除 mainline。
+- **13b Taipower tariff registry production gate CLOSED / PASS.**
+- **13c pure-season Taipower monthly bill-component regression CLOSED / PASS.**
+- **Gate 1 CLOSED**：10 MW package = ex-ante mainline；1 MW package = cost-scale sensitivity。
+- **Gate 2 CLOSED**：optimization monetary basis = constant NTD-2023；\(r=5\%\) = real modeling discount rate。
+
+### Pending governance / production work（R2 不預先授權）
+
+下列項目仍為 pending；列示順序不構成 Task 2 / Task 3 或 production execution 的預先授權：
+
+- **fresh independent read-only audit of Framework v7.4 Candidate R2**；R2 不得 self-accept；
+- later Registry v7.4 successor（`NOT_YET_CREATED / NOT_YET_AUTHORIZED`）；
+- later Layer A robustness/preregistration checkpoint（`NOT_YET_CREATED / NOT_YET_AUTHORIZED`）；
+- final cross-document alignment audit（`NOT_YET_EXECUTED`）；
+- possible one-time production-authority re-freeze（`NOT_YET_AUTHORIZED`）；
+- Full81（`NOT_YET_EXECUTED / NOT AUTHORIZED`）。
+
+### Downstream status boundary
+
+- Step 17a / corrected 17b / Step 17c 保留其原始 historical validation / promotion-source / adjudication evidence roles；它們不取代 accepted EOB 或 accepted core-three。
+- R1 independent audit已裁定 **EOB VALID UNDER V7.4 = YES**、**CORE-THREE VALID UNDER V7.4 = YES**、**METHODOLOGY RERUN REQUIRED = NO**。R2 只修正狀態文字，不建立新的 EOB/core-three rerun requirement。
+- Full81 與 accepted core-three 是不同 execution states；core-three 已接受，Full81 尚未執行且未授權。
+- Layer B benchmark subset與 DG extension的後續 gates維持原方法順序，R2 不執行也不預先授權。
+
+# 1. 建議論文定位
+
+## 1.1 核心問題
+
+當一個大型用電場域希望在停電期間維持一定比例的服務，但又不希望主線依賴現地燃燒式備援時，PV 與 BESS 必須同時承擔：
+
+1. 正常運轉下的電費、契約容量與削峰功能；
+2. 停電發生前的能量儲備；
+3. 停電期間的能量與瞬時功率供應。
+
+因此，韌性不是額外加上一顆獨立備援電池，而是限制同一個 BESS 在平時可自由使用的程度，並可能要求更大的 energy capacity 與 power capacity。
+
+本研究要量化的是：
+
+> 在不同服務比例 \(\alpha\) 與設計停電時長 \(\beta\) 下，PV–BESS 系統需要增加多少儲能容量、功率容量與年度成本；這些固定設計在 PV 衰減與需求成長下何時失效；若允許 hypothetical DG，成本與現地碳排如何交換。
+
+## 1.2 研究主張應控制在什麼程度
+
+### 可以主張
+
+- 提出一個結合台灣高壓用戶契約容量經濟與歷史 all-start outage adequacy 的應用型規劃框架。
+- 量化 \(\alpha\)、\(\beta\) 對 BESS energy、power、contract capacity 與 cost premium 的影響。
+- 辨識 marginal cost、binding mechanisms、knee 或 no-knee 結果。
+- 分析固定設計對 PV deterioration 與 demand growth 的失效條件。
+- 以 hypothetical DG extension 呈現 zero-combustion 與 fossil-assisted preparedness 的成本–排放權衡。
+
+### 不應主張
+
+- 不宣稱模型保證任何未來真實停電一定成功。
+- 不宣稱 structured-scenario coverage 等於實際可靠度機率。
+- 不宣稱 \(\alpha L_t\) 是完整的校園 critical-load inventory。
+- 不宣稱沒有場地上限的結果就是校園應實際安裝的容量。
+- 不宣稱 50% DG 是普遍最佳比例。
+- 不宣稱由年度成本與單次事件排放形成的比值是無條件市場碳價。
+- 不宣稱提出全新的 resilience theory 或 optimization algorithm。
+
+## 1.3 題目方向（待老師定稿）
+
+### 英文建議
+
+**A Cost–Resilience Trade-off Framework for Campus PV–BESS Planning under Historical All-Start Outage Requirements: A Diesel-Backup Counterfactual**
+
+### 中文建議
+
+**基於歷史全年任意停電起點要求之校園 PV–BESS 成本–韌性規劃框架：柴油備援反事實分析**
+
+也可弱化「任意」一詞，改成：
+
+**校園 PV–BESS 服務連續性之成本–韌性規劃：全年停電起點適足性與柴油備援對照**
+
+---
+
+# 2. 研究問題
+
+## RQ1：成本–韌性 response surface
+
+在正常運轉成本最佳化中加入 \((\alpha,\beta)\) 服務連續性要求後：
+
+- BESS energy capacity 如何變化？
+- BESS power capacity 如何變化？
+- contract capacity 如何變化？
+- annualized total cost 與 resilience premium 如何變化？
+
+## RQ2：容量與成本的結構性機制
+
+- \(\alpha\) 主要推動 power requirement，還是 energy requirement？
+- \(\beta\) 主要推動 energy requirement，還是也顯著改變 power requirement？
+- resilience premium 主要來自 BESS CAPEX、正常營運彈性損失，或契約容量變化？
+- response surface 是否存在 knee / threshold？若沒有，是否呈現穩定的邊際成本規律？
+
+## RQ3：固定設計的 off-design capability
+
+Layer A 選出的固定設計，在下列條件下：
+
+- PV availability 下降；
+- campus demand 成長；
+- 不同 baseline outage archetype；
+
+會從何時開始出現 service shortfall？其 ENS 與 worst-hour shortfall 為何？
+
+## RQ4：DG-assisted counterfactual
+
+若允許一個 hypothetical campus-serving DG，且 DG 容量以外生 coverage ratio 增加：
+
+- BESS energy 與 power 可以下降多少？
+- annual fixed preparedness cost 可以下降多少？
+- 每次 outage 的柴油量與現地 CO₂ 增加多少？
+- 是否存在成本快速下降後邊際效益遞減的 knee region？
+- 結論對 BESS cost、DG cost 與 diesel price 是否穩健？
+
+---
+
+# 3. 研究邊界與核心定義
+
+## 3.1 系統邊界
+
+### 納入
+
+- NTUST aggregate campus load（依實際 meter boundary）。
+- 外生 PV profile 與固定 PV capacity。
+- BESS energy capacity、power capacity 與 annual dispatch。
+- grid import。
+- annual regular contract capacity、TOU energy charge、basic charge、Taipower period-specific non-duplicative over-contract charge。
+- PNNL-calibrated adaptation of Xu et al.'s intertemporal convex PWL DOD-sensitive BESS cycle-aging formulation。
+- outage service target \(\alpha L_t\)。
+
+### 主線排除
+
+- PV capacity sizing。
+- grid export revenue。
+- feeder-level power flow、bus voltage、line congestion、protection coordination。
+- 真實 critical-load circuit inventory。
+- 現有 life-safety emergency DG。
+- outage probability distribution。
+- stochastic Monte Carlo reliability probability。
+- component forced-outage probability。
+- site-specific BESS siting、fire-code compliance、construction constraints、interconnection engineering 與 institutional budget constraints。
+- explicit battery calendar-aging state、SOH transition、augmentation schedule 與 full replacement schedule。
+
+因此 \(E^{N*}\)、\(P^{B*}\) 應解讀為指定 resilience target 下的 **modeled planning requirements**，不是 NTUST 的 final recommended/physically deployable installation size。
+
+## 3.2 服務比例 \(\alpha\)
+
+\[
+0<\alpha\le 1
+\]
+
+\(\alpha\) 表示停電時希望維持的 **aggregate campus service ratio proxy**：
+
+\[
+L^{service}_t=\alpha L_t
+\]
+
+### 正確解讀
+
+- \(\alpha=0.8\)：每個時段要求供應 baseline aggregate load 的 80%。
+- 它是規劃代理變數，用來建立成本–服務曲線。
+
+### 限制
+
+- 它不代表已辨識出哪些建築或設備屬於 critical load。
+- 它不代表真實 load-shedding priority。
+- 未來若取得 critical-load inventory，可用分群負載取代比例代理。
+
+## 3.3 設計停電時長 \(\beta\)
+
+\(\beta\) 是決策者要求系統在歷史 baseline 條件下可維持服務的 design-duration target。
+
+### 正確解讀
+
+- \(\beta=8\) h 表示此設計按 8 小時停電需求 sizing。
+- 若決策者要 12 h resilience，應在 Layer A 設定 \(\beta=12\) h，而不是先設計 8 h 再把 12 h 當主要 sensitivity。
+
+### 非正確解讀
+
+- \(\beta\) 不是預測實際停電一定持續多久。
+- \(\beta\) 不是 outage duration probability。
+
+## 3.4 主分析範圍
+
+建議主線 grid：
+
+\[
+\alpha\in\{0.60,0.65,0.70,0.75,0.80,0.85,0.90,0.95,1.00\}
+\]
+
+\[
+\beta\in\{4,5,6,7,8,9,10,11,12\}\text{ h}
+\]
+
+共 81 組。
+
+### 補充邊界
+
+- \(\beta=24\) h 可作 boundary/extrapolation case，但不與主線 4–12 h 等同解讀。
+- 0.60–1.00 與 4–12 h 是研究者設定的 analysis domain，不是普遍政策標準。
+
+---
+
+# 4. 資料與參數
+
+## 4.1 正式時序資料與 chronology
+
+正式 model year 固定為：
+
+\[
+2024\text{-}11\text{-}01\ 00{:}00
+\le t
+<
+2025\text{-}11\text{-}01\ 00{:}00
+\]
+
+時區為 Asia/Taipei，時間解析度為：
+
+\[
+\Delta t=1\text{ h},\qquad T=8760.
+\]
+
+source electricity data 以 **hour-ending** 解讀。canonical raw timestamp 必須由可靠的 `Date + Time` 欄位重建，不直接沿用舊 combined CSV 的 `DateTime` 欄位（該欄位曾在 2024/12/02 出現已知 corruption）。raw timestamp \(t^{raw}\) 再轉為：
+
+\[
+t^{start}=t^{raw}-1h
+\]
+
+再從 \(t^{start}\) 重建 year、month、date、weekday、hour、summer/non-summer、TOU tag 與 billing month。
+
+正式 annual filtering 必須依 timestamp half-open interval 執行，不可用 `df.iloc[:8760]` 或其他 row-position truncation。完成後必須 assert exactly 8,760 consecutive hourly intervals。
+
+### 4.1.1 observed 與 planning-baseline series
+
+final dataset 同時保存：
+
+\[
+L_t^{obs},\quad PV_t^{obs}
+\]
+
+與：
+
+\[
+L_t^{base},\quad PV_t^{base}.
+\]
+
+- observed series：保留 meter/source 真實紀錄；historical billing calibration只使用這一層的 observed Load/PV。
+- baseline series：供 EOB/annual economic optimization、Layer A 的 \(R_t\)、\(P_t^{out}\)、binding classification 與 outage replay，以及 Layer B baseline conditions 使用。所有這些 consumers 必須讀取相同的 full-year reconstructed-mainline PV series。
+
+本框架後續若未加上 superscript，\(L_t\)、\(PV_t\) 預設指 **planning-baseline series**。
+
+#### 4.1.1-R Formal observed-vs-planning epistemic routing（v7.4 CHANGE B）
+
+本小節把 v7.3 已有的 observed / planning-baseline 分離提升為**明確且內部一致的 epistemic routing rule**。它不改變任何 EOB、Layer A、Layer B 或 billing 公式，只固定「哪一層問題使用哪一套 series」。
+
+| Layer | Question it answers | PV / Load identity |
+|---|---|---|
+| **HISTORICAL EMPIRICAL / CALIBRATION LAYER** | 「實際發生了什麼？」——歷史量測與帳單事實 | **observed data wherever valid**（\(L_t^{obs}\)、\(PV_t^{obs}\)） |
+| **PLANNING / COUNTERFACTUAL MODEL LAYER** | 「在此設計與假設下，規劃結果會是什麼？」 | **accepted reconstructed full-year PV**（\(PV_t^{base}\)），全層單一 identity |
+
+**Historical empirical / calibration layer 至少包含：**
+
+1. historical billing-demand calibration；
+2. Taipower bill regression（含 13b/13c pure-season bill-component regression）；
+3. tariff / institutional validation；
+4. 任何「實際發生了什麼」的 historical empirical check。
+
+historical grid-import calibration 固定維持：
+
+\[
+P_t^{grid,hist}=L_t^{obs}-PV_t^{obs}
+\]
+
+僅取 **valid observed-PV periods**，並對應 **actual billing target**。此定義與 §4.3 完全一致，本版不做任何修改。
+
+**Planning / counterfactual model layer 至少包含：**
+
+1. EOB planning optimization；
+2. Full81 / Layer A；
+3. \(R(\alpha,\beta)\)；
+4. \(P^{out}(\alpha)\)；
+5. binding-outage identification / classification；
+6. Layer A outage consistency replay；
+7. baseline Layer B；
+8. 所有 downstream planning scenarios，除非該 scenario 被**明確宣告**為 alternative scenario。
+
+**No hybrid routing is authorized.** 具體禁止：讓 EOB 使用 reconstructed PV，同時讓 Layer A / Layer B 在相同 1,463 hours 上改用 zero-winter 或任何**其他** annual PV identity。整個 planning layer 必須共用同一個 artifact identity；整個 historical layer 必須共用 observed identity。
+
+**Accepted reconstructed full-year PV 的必要描述**（正向與禁止並存）：
+
+- 必須描述為：**weather-informed**、**model-based**、**separately validated**、**best-estimate planning baseline**；
+- **不得**描述為：observed historical PV truth、exact ground truth、或 exact recovery of the unavailable historical PV series。
+
+**Guardrail：**reconstructed planning PV 是 retrospective planning-baseline construction，**不是** online forecast information，也不是 operator 在事件當時可得的 information advantage。它在 planning layer 內對所有比較對象一致適用，因此不構成 baseline 之間的 information asymmetry；但也因此 planning 結論恆為 model-conditional（見 §22）。
+
+### 4.1.2 歷史 outage-contaminated short gaps：site-validated production rules
+
+歷史 grid outage 造成 Load 與 PV 同時為零的時段，不得直接解讀為 baseline demand/resource 同時為零。formal observed series 必須原樣保留，僅在 planning-baseline / available series 中重建 outage-contaminated intervals。
+
+Script 01 identified exactly **10 outage-contaminated hours** within the formal case year：
+
+- 2025-04-19 14:00–16:00：3 h unplanned outage；
+- 2025-08-02 09:00–15:00：7 h planned outage。
+
+#### Load short-gap production rule
+
+Load reconstruction 採 NTUST pseudo-gap validation 後鎖定的：
+
+\[
+\boxed{\text{same weekday},\ \pm 6\text{ weeks},\ K=1}
+\]
+
+with matching metric:
+
+\[
+\boxed{\text{same-calendar-day outside-gap RMSE}}
+\]
+
+production method label：
+
+`same_weekday_pm6weeks_top1_context_rmse`
+
+Implementation rules：
+
+- donor candidates 以 exact integer-week offsets 搜尋，且與 target 為 same weekday；
+- donor calendar day 必須具完整 24 h；
+- donor hours 必須 `load_status=normal` 且 `observed_load_kw>0`；
+- actual outage days不得作 donor；
+- target-day context 使用 outage block 以外之同日觀測時段；
+- 依 outside-gap context RMSE 選出最相似 donor；
+- \(K=1\)，因此不存在 mean / median aggregation choice；
+- 只替換 `baseline_load_kw` 的 outage-contaminated hours；`observed_load_kw` 不修改。
+
+Script 02 artificial pseudo-gap validation 使用兩種 observed outage shapes，共 **92 pseudo-events / 460 gap-hours**。selected \(\pm6\) weeks / \(K=1\) result：
+
+- MAE = **100.436957 kW**；
+- RMSE = **174.069420 kW**；
+- signed energy bias = **+0.252411%**；
+- mean event absolute energy bias = **436.771739 kWh**。
+
+原 framework candidate \(\pm8\) weeks / \(K=3\) 在相同 pseudo-gap framework 下明顯較差，因此不再作 production rule。精確的 \(\pm6/K1\) 是 **NTUST site-specific empirical choice**，不是由外部文獻直接提供的 universal hyperparameter。
+
+Script 03 將此 rule 套用於兩個真實 outage blocks，重建 exactly 10 Load hours；所有 non-outage hours之 `baseline_load_kw` 與 `observed_load_kw` 完全一致。
+
+> **Retrospective-use boundary:** same-day outside-gap context 可使用 target day 中 gap 前後的已觀測時段；這是歷史 planning-baseline reconstruction，不是 real-time / online forecasting method。
+
+#### PV short-gap production rule
+
+PV short-gap method selection分成兩階段。
+
+**Stage 1 — donor benchmark validation.** Script 04 以 observed outage shapes 建立 **604 pseudo-events / 3,020 gap-hours**，比較 calendar-day donors。原 v7 candidate `±30 days / K=5 / no weekday restriction` 的 **mean** aggregation是具競爭力的 donor benchmark：
+
+- MAE = **34.625033 kW**；
+- RMSE = **49.998621 kW**；
+- signed energy bias = **+1.113409%**；
+- mean event absolute energy bias = **135.937748 kWh**。
+
+但此結果只建立「validated donor benchmark」，尚不足以證明 donor 是最好的 available reconstruction family。
+
+**Stage 2 — donor vs CWA head-to-head validation.** Script 04b 在與 Script 04 **完全相同的 604 pseudo-events** 上比較 donor benchmark與 CWA GHI-based models，並對每一 pseudo-event排除 entire target calendar day from model fitting，以避免 target-day leakage。
+
+CWA timestamp alignment必須遵守：
+
+1. CODiS exact `23:59` daily-end labels先加 1 minute 正規化為 next-day `00:00` hour-ending label；
+2. 再依 v7 electricity convention減 1 hour轉為 interval-start。
+
+final production short-gap model：
+
+\[
+\boxed{\texttt{hourly\_ghi\_ratio\_median}}
+\]
+
+production method label：
+
+`cwa_hourly_ghi_ratio_median_leave_target_day_out`
+
+Core fitting semantics：
+
+- 只使用 valid、non-outage observed PV / CWA overlap observations；
+- 對每一 real/pseudo target event，entire target calendar day不進 fit；
+- hour-specific median \(PV/GHI\) ratio為 primary coefficient；
+- global median ratio為 fallback；
+- low/no-irradiance period預測為 zero；
+- prediction不得超過 training observations 支持的 fixed-system output range。
+
+Head-to-head aggregate result：
+
+| metric | CWA `hourly_ghi_ratio_median` | donor `±30d/K5 mean` |
+|---|---:|---:|
+| MAE (kW) | **16.954595** | 34.625033 |
+| RMSE (kW) | **29.741402** | 49.998621 |
+| signed energy bias (%) | +1.669484 | **+1.113409** |
+| mean event absolute energy bias (kWh) | **51.967974** | 135.937748 |
+
+Paired-event wins out of 604 pseudo-events：
+
+- MAE：CWA **486** vs donor 118；
+- RMSE：CWA **479** vs donor 125；
+- event energy error：CWA **454** vs donor 150。
+
+因此 short outage PV production reconstruction正式採 **CWA `hourly_ghi_ratio_median`**。donor `±30 days / K=5 mean` 保留作 validated benchmark，不再是 mainline production rule。
+
+Script 05依此 production method重建 exactly 10 real outage PV hours：
+
+- 2025-04-19 14:00–16:00：reconstructed event energy = **211.887706 kWh**；
+- 2025-08-02 09:00–15:00：reconstructed event energy = **965.124933 kWh**。
+
+`observed_pv_kw` 完全不修改；只更新 short outage hours 的 `pv_available_kw` / reconstruction provenance。
+
+#### Claim boundary
+
+外部文獻只支持 energy / solar missing-data reconstruction需利用 temporal/pattern information並透過 artificial-gap validation選方法。以下精確 production choices皆屬 **NTUST project empirical evidence**：
+
+- Load：same weekday ±6 weeks / K=1 / same-day outside-gap RMSE；
+- PV short-gap：CWA `hourly_ghi_ratio_median` with leave-target-day-out fitting。
+
+不得將上述 exact rules寫成 literature constants。
+
+#### Contamination / recovery-envelope status
+
+v7（2026-08-14）中的「core-only vs expanded contamination-envelope 對 81-point \(R(\alpha,\beta)\) 與 \(P^{out}(\alpha)\) 無影響」**不得保留為 current validated finding**，因為 Scripts 02–05 並未在新的 empirical production rules下重做該 Layer-A-level robustness comparison。
+
+Current rule：
+
+- formal outage start/restoration logs若可明確界定 contamination period，以 formal log為準；
+- 若沒有額外 recovery envelope evidence，不自行發明 statistical recovery window；
+- 若 final data audit後仍存在合理的 expanded-envelope alternative，於 final production acceptance前做 targeted preprocessing robustness check；
+- 未完成前不得宣稱 expanded envelope已證實對 final Layer A 81 points無影響。
+
+---
+
+### 4.1.3 2024/11–12 prolonged PV unavailability — planning-baseline assignment（v7.3 決定延續；v7.4 更新 zero-winter 的 current role）
+
+長時間 PV 資料不可用必須與短期 outage contamination分開處理。
+
+Formal Script-01 status counts：
+
+- `pre_system` = **600 h**；
+- `missing_winter` = **863 h**；
+- total long unavailable PV = **1,463 h**。
+
+已接受的 Framework v7.3 best-estimate planning baseline固定採用經 corrected 17b source保存、並由 Step 17a long-block/monthly holdout與 Step 17c paired comparison分開驗證的 reconstructed PV：
+
+\[
+\boxed{
+PV_t^{base}=\widehat{PV}_t^{winter,recon},\qquad
+t\in\{\texttt{pre\_system},\texttt{missing\_winter}\}
+}
+\]
+
+其 epistemic status 必須逐字保留為：
+
+> **The winter PV reconstruction is a model-based, weather-informed, separately validated estimate for planning use; it is not observed meter data, not exact ground truth, and not an exact recovery of the missing historical series.**
+
+因此 reconstructed values 不得寫成 observed generation、exact truth 或 exact historical recovery。`observed_pv_kw` 在 1,463-hour unavailable block 的原始狀態保持不變；只有 planning-baseline/available layer 使用 reconstruction。
+
+Script 04b / Script 05 的 CWA superiority證據仍只針對 observed outage shapes所代表的 **3 h / 7 h short gaps**，不得外推作 long-block validation。1,463-hour promotion依據是獨立的 Step 17a long-block/monthly holdout validation、corrected 17b run與 Step 17c paired-sensitivity/adjudication evidence；各 artifact 保持原始 acceptance boundary。
+
+#### Current planning authority與 promotion-source lineage
+
+- **current accepted planning authority：** `data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet`；
+- SHA-256：`3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428`；
+- role：`reconstructed_pv_mainline`；rows：8,760；status：**CLOSED / ACCEPTED**；
+- **historical promotion-source lineage only：** `data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18.parquet`（SHA-256 `1c1dbc265b092415e649bba23232f645f7ba5c74e0f074f2914c1ed7ac9d7cd9`）；
+- corrected Sep-18 source不得被刪除、改寫或誤稱為 current planning authority；它保留為 accepted artifact promotion lineage。
+
+#### Planning-layer identity 與 zero-winter current role（v7.4 CHANGE A + CHANGE B）
+
+- accepted reconstructed full-year PV = EOB/economic、Layer A adequacy（\(R_t\)、\(P_t^{out}\)、binding classification、outage replay）與 baseline Layer B **共用的唯一 planning-layer input identity**；
+- **zero-winter 的 current role = historical conservative validation / provenance evidence**，用以支持 reconstructed-PV 的 promotion/adjudication decision。它**不是** mandatory 的新 Layer A sensitivity、**不是** mandatory 的新 Layer B sensitivity/stress、**也不是** equal-status alternative planning baseline；**不要求**任何新的 zero-winter EOB / Layer A / Layer B solve；
+- zero-winter 的歷史描述仍固定為 **conservatively assigned zero PV availability due to unavailable observations**，不得寫成「實際 PV generation = 0」；
+- 既有的 reconstructed-vs-zero-winter 比較（Step 17c paired evidence）仍是**有效的 historical project validation / adjudication evidence**，必須在 provenance/history 中原樣保存，**不得被靜默刪除**；僅在未來另有獨立正當理由時才可重啟；
+- **禁止 hybrid/no-credit routing**：不得讓 EOB/economic 接受 reconstructed winter PV credit，卻讓 Layer A 的 \(R_t\)、\(P_t^{out}\)、binding classification、outage replay 或 baseline Layer B 回退至 zero-winter PV 或任何其他 annual PV identity；此禁止不因 zero-winter 的 role 更新而放寬；
+- 若未來另經獨立授權執行 zero-winter branch，它必須是明確、成套、可追溯且**分離**的 branch，不得與 planning-layer consumer 混接；但本框架**不要求**執行它；
+- historical billing calibration 與 \(\kappa\) reproduction 屬 historical empirical layer，不切換到 reconstructed values，仍使用 observed Load/PV（見 §4.1.1-R、§4.3、§36.3）。
+
+**歷史陳述保留（past-scoped，仍為真）**：在 Framework v7.2 之下 zero-winter 曾是 mainline；在 Framework v7.3 之下 zero-winter 曾被列為 conservative stress/sensitivity。這兩項陳述是**歷史 provenance**，不是 v7.4 的 current prescription。
+
+#### Formula boundary
+
+本節只改變 \(PV_t^{base}\) 的 input-role assignment，不改變任何 EOB、Layer A 或 Layer B 公式。尤其 Layer A consistency replay 中 outage-period PV surplus 不得 recharge 的既有規則仍有效；reconstructed PV只依原公式進入 residual-load/adequacy計算。
+
+---
+
+### 4.1.4 最低 provenance fields與 current audited data lineage
+
+final integrated thesis dataset至少保留：
+
+**Time**
+- `timestamp_raw_end`（若來源層仍可追溯）；
+- `timestamp_start` 或 canonical `timestamp`；
+- `time_index`。
+
+**Observed Load / baseline Load**
+- `observed_load_kw`；
+- `baseline_load_kw`；
+- `load_status`；
+- `outage_contaminated_flag` / equivalent explicit provenance；
+- `load_reconstructed`；
+- `load_reconstruction_method`；
+- donor provenance（對 reconstructed rows至少可追到 donor timestamp / offset / context metric）。
+
+**Observed PV / available PV**
+- `observed_pv_kw`；
+- `pv_available_kw`；
+- `pv_status`；
+- `pv_reconstructed`；
+- `pv_reconstruction_method`；
+- CWA production model / fit provenance sufficient to reproduce short-gap estimates；
+- long-unavailable hours須能與 short-gap reconstructed hours明確區分；
+- prolonged-winter reconstruction method/model/version、weather-source lineage與 source-artifact hash；
+- original `pre_system` / `missing_winter` status、`pv_reconstructed` flag、planning-role（planning-layer mainline reconstructed；zero-winter 僅為 historical conservative validation / provenance lineage，不是 current planning role）與 canonical/candidate status。
+
+**Weather, if merged into production annual input**
+- `ghi_kwh_m2`；
+- `air_temperature_c`（若後續 model/sensitivity需要）。
+
+**Regenerated calendar / institutional tags**
+- year；
+- month；
+- date/day；
+- weekday；
+- hour；
+- summer/non-summer；
+- TOU tag；
+- billing usage-period identifier。
+
+所有 calendar / TOU / billing tags必須從 canonical interval-start timestamp重新生成，不沿用未審核 legacy labels。
+
+Raw observed input immutable。任何 reconstruction不得覆寫 observed columns；每一個 reconstructed / conservatively assigned value都必須由 status或method field追溯其來源。historical billing-calibration view 必須可證明只讀取 observed Load/PV，且不得因 v7.3 baseline role reversal 改變 \(\kappa\)。
+
+Current audited lineage：
+
+```text
+raw cleaned observed source
+        ↓
+Script 01
+ntust_case_year_observed.*
+        ├───────────────┐
+        ↓               ↓
+Script 02           Script 04
+Load validation     PV donor validation
+        ↓               ↓
+Script 03           Script 04b
+load_annual_        donor vs CWA
+baseline.*              ↓
+                    Script 05
+                    pv_annual_baseline.*
+        └───────────────┘
+                ↓
+      v7.2 integrated annual input
+      [ACCEPTED HISTORICAL/CANONICAL LINEAGE]
+                ↓
+      corrected Sep-18 reconstructed-PV
+      promotion-source candidate
+                ↓
+      accepted v7.3 reconstructed-mainline planning input
+      annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet
+      [CLOSED / ACCEPTED; SHA-256 3ac8dda4...0c428; 8,760 rows]
+```
+
+---
+
+## 4.2 電價與契約容量
+
+正式 tariff parameter registry 必須對應 **case-year historical usage/billing period**，不能用論文定稿當下的最新費率回填歷史年，也不能把 bill-title month 當成實際用電月份。
+
+source-of-truth 優先序：
+
+1. NTUST 實際 Taipower bills；
+2. 對應 effective-date 的 Taipower detailed tariff tables/rules。
+
+### 4.2.0 NTUST institutional tariff treatment / accounting boundary
+
+Production audit 對 NTUST case 使用 **`SCHOOL/FROZEN` high-voltage** 作 institutional-treatment label。此 label 用來記錄本 case 的 tariff handling / case classification，**不宣稱是 Taipower 對所有學校用戶公布的 universal official tariff-category 名稱**；論文若描述制度，仍以 actual bill + effective-date official tariff wording 為準。
+
+本 case 的 tariff-period semantics 必須保留 **non-summer peak = N/A（not applicable）**。N/A 表示該 period 在對應非夏月 tariff structure中不成立／不適用，**不是存在一個 rate = 0 的 peak period**；code、parameter registry與報表都不得把 N/A 靜默改寫為 0-rate charge。
+
+**Subsidy/accounting boundary：** optimization 不另加入 subsidy credit、subsidy revenue 或 subsidy offset 作獨立 cash-flow term。模型直接使用 audited effective billed tariff（再依 Gate 2 轉為 constant NTD-2023）；若任何政策支持已反映在 applicable tariff / bill 中，視為已內含於 price signal，不再第二次加入，以避免 double counting。
+
+至少保存：
+
+| 欄位 | 定義 |
+|---|---|
+| tariff/service category | 校園實際適用類別 |
+| usage_period_start / end | 實際計價用電期間；billing join 的主索引 |
+| bill_title_month | 帳單標題月份；僅作文件識別，不用來切 hourly data |
+| effective start/end date | 費率／規則有效期間 |
+| summer/non-summer | 依日期邊界，不用整月 shortcut |
+| TOU period definition | peak / half-peak / Saturday-half-peak / off-peak |
+| energy-charge rate | NTD/kWh |
+| regular contract capacity | NTD/kW-month 對應的 regular/peak CC |
+| supplementary contract capacities | half-peak / Saturday-half-peak / off-peak；NTUST mainline case 固定為 0 |
+| period-specific basic-charge rate | 各 TOU period 的 applicable contract/basic rate |
+| over-contract rule | cumulative threshold、non-duplication、2×/3× tier |
+| source | bill filename / official tariff version |
+
+高壓／特高壓 summer calendar 在本 case-year 固定為：
+
+\[
+\boxed{\text{May 16--October 15}}
+\]
+
+非夏月為 January 1–May 15 與 October 16–December 31。code 不得使用 `summer_months=[6,7,8,9]` 類型整月判定。
+
+### 4.2.1 Contract-capacity decision boundary（A3 CLOSED）
+
+NTUST mainline 只最佳化一個年度 regular contract capacity：
+
+\[
+\boxed{CC=CC^{regular}}
+\]
+
+Taipower 制度本身允許 supplementary half-peak、Saturday-half-peak、off-peak contract capacities；本研究不是宣稱制度只有一個 CC，而是依 NTUST case 將 supplementary components 固定為實際值 0，不把 tariff-design / multi-contract optimization 擴張成新的研究問題。
+
+四個 TOU periods 仍必須保留，因為 energy rates、period maxima 與 over-contract applicable basic rates不同。
+
+### 4.2.2 Billed maximum 與 over-contract rule
+
+對 usage period \(m\)，帳單四時段 15-min maxima 記為：
+
+\[
+B_{m,q},\qquad q\in\{peak,half,sat,off\}.
+\]
+
+帳單 overall maximum demand 定義為：
+
+\[
+\boxed{B_m=\max_q B_{m,q}}.
+\]
+
+此 \(B_m\) 用於 §4.3 的 hourly-to-billing calibration。
+
+over-contract charge **不得把四時段超約量直接相加**。production tariff module 必須依 Taipower 三段式時間電價規則使用 period-specific cumulative contract thresholds，並扣除前面已計收之超約，使同一 kW 不重複計費；各新增超約區段使用其所屬 TOU period 的 applicable basic-charge rate。
+
+超約 tier 固定依 official case-year rule：
+
+- 契約容量 10% 以內的超約部分：2× applicable basic rate；
+- 超過 10% 的部分：3× applicable basic rate。
+
+已核對的 regression case：2025/10 標題帳單實際對應 2025/09/01–09/30 usage period；四時段 maxima 為 4896 / 5016 / 3352 / 3776 kW，因此 overall max = 5016 kW。regular CC=5000 kW，當期只有 half-peak exceedance 16 kW；以 half-peak summer basic rate 166.9 NTD/kW-month、2× tier 得：
+
+\[
+16\times166.9\times2=\boxed{5,340.8\text{ NTD}},
+\]
+
+production billing code 必須精確重現此值。
+
+### 4.2.3 Monetary-basis separation（Gate 2 CLOSED）
+
+Taipower institutional / billing evidence 與 optimization monetary basis 必須分成兩層保存：
+
+1. **Official validation layer**：保留 case-year effective-date tariff 與實際 bills 的原始 **nominal NTD**。13b / 13c、official rule audit、bill reproduction均使用這一層；不得因 monetary normalization 覆寫 official source values。
+2. **Optimization layer**：EOB / Layer A objective 中所有 tariff-facing monetary coefficients必須轉為 **constant NTD-2023**，與 PNNL BESS CAPEX/FOM/degradation basis一致。
+
+若某 nominal tariff value \(T_y^{nom}\) 對應 price index / deflator \(I_y\)，constant-2023 conversion寫為：
+
+\[
+\boxed{
+T_{2023}^{real}=T_y^{nom}\frac{I_{2023}}{I_y}
+}
+\]
+
+exact official index series、period mapping、source version與轉換值必須保存在 parameter/institutional registry與 production artifact；framework 不 hard-code尚未由 script生成的 normalized tariff數值。
+
+**Discount-rate consistency：** 因 objective 使用 constant NTD-2023，\(r=5\%\) 在本研究定義為 **real discount-rate modeling assumption**。不得將 nominal tariff cash flows與 real rate混用，也不得將 constant-dollar cash flows與 nominal rate混用。
+
+**Reporting rule：** 正式 economic outputs以 NTD-2023 (constant) 為主。若另提供 2025 nominal-equivalent，只能作 supplementary interpretation，且不得回饋 optimization。
+
+**May/October transition claim boundary：** 目前 50/50 basic-charge treatment可精確重現 NTUST case evidence，但在缺乏 official universal wording 前，只能稱 **case-validated empirical transition rule**，不得宣稱所有 Taipower customers / years 一律適用。
+
+## 4.3 15-min demand 與 hourly billing proxy
+
+Taipower billing maximum demand 以 15-min average kW 為基礎；本研究維持 hourly optimization，因此不宣稱精確重建 sub-hourly metering profile。
+
+historical calibration 使用 **final audited integrated annual input 中的 observed historical grid import**，不得使用 outage-reconstructed planning baseline：
+
+\[
+\boxed{
+P_t^{grid,hist}
+=
+observed\_load\_kw_t
+-
+observed\_pv\_kw_t
+}
+\]
+
+File name 本身不是 source-of-truth。若 final integrated artifact 仍命名為 `annual_input_existing_pv.csv/.parquet`，該檔案必須：
+
+1. 由 current audited `load_annual_baseline.*` + `pv_annual_baseline.*` 重新生成；
+2. 保留 Script-01 observed values 不變；
+3. 使用 current audited interval-start 8,760-hour timeline；
+4. 重新生成 calendar / TOU / billing-period fields；
+5. 通過 final integration audit。
+
+任何 pre-v7 同名檔案皆視為 legacy，不得用於 final billing calibration、EOB、Layer A 或 Layer B。
+
+Billing calibration 只能使用 `observed_load_kw - observed_pv_kw`；不得使用 `baseline_load_kw - pv_available_kw`，因後者含 counterfactual reconstruction，與帳單實際量測邊界不一致。
+
+正式 status schema 以 `pv_status` 為 current production concept；若 final merged file 為向後相容另保留 `solar_status` alias，必須在 data dictionary 明確註明兩者映射，不可讓 legacy naming 控制 production logic。
+
+對 calibration usage period \(m\)：
+
+\[
+H_m=\max_{t\in m}P_t^{grid,hist},
+\qquad
+B_m=\max_q B_{m,q}^{15min,bill}.
+\]
+
+Mainline 以 2025/01–2025/10 十個 `pv_status=valid` usage months 做 through-origin least-squares calibration：
+
+\[
+\boxed{
+\kappa=
+\frac{\sum_m H_mB_m}{\sum_m H_m^2}
+}
+\]
+
+production scripted reproduction 已完成，audited value 約為：
+
+\[
+\boxed{\kappa\approx1.01037},
+\]
+
+final numerical source-of-truth 為 production calibration audit output。production model **不得只 hard-code 1.01037**；任何 future rerun 均須從 canonical hourly input + billing registry 重建十組 \((H_m,B_m)\)、重算 \(\kappa\)，並保存可追溯 audit table。
+
+### 4.3.1 \(\kappa\) 的方法定位
+
+\(\kappa\) 是 NTUST site-specific empirical multiplicative calibration，不是文獻給定的 universal coefficient，也不沿用 lab predecessor 固定值。through-origin least squares 是針對比例式 proxy \(B_m\approx\kappa H_m\) 所採 estimator；temporal-resolution 文獻只支持 hourly aggregation 對 peak/power quantity 可能產生偏差，不提供本研究的 \(\kappa\) 或 estimator 公式。
+
+2024/11 與 2024/12 **只排除 coefficient estimation**，不從 12-month simulation 刪除：前者為 pre-system/pre-PV regime，後者為 `missing_winter`，都無法與 2025/01–10 valid-PV usage months 用同一 observed grid-import definition 建立 calibration pair。
+
+#### 4.3.1-K \(\kappa\) historical-calibration / planning-use claim boundary（v7.4 CHANGE C）
+
+本小節只固定 claim boundary。**\(\kappa\) 的數值、estimator 與 calibration-period definition 完全不變。**
+
+**Preserved production identity（不變）：**
+
+- estimator：through-origin least squares，\(\kappa=\left(\sum_m H_mB_m\right)/\left(\sum_m H_m^2\right)\)（見 §4.3）；
+- calibration basis：valid observed periods、observed Load/PV、usage-period-aligned actual billed maxima；
+- calibration sample：2025/01–2025/10 十個 `pv_status=valid` usage months；2024/11 與 2024/12 仍只排除 coefficient estimation，不從 12-month simulation 刪除；
+- production value：\(\kappa\approx1.01037\)，production-pinned full precision 為 **`1.0103668594376984`**（本文件僅**記錄**該已凍結 production identity 以界定 claim boundary；§4.3 的規則不變，production model 仍**不得**只 hard-code 常數，future rerun 仍須由 canonical hourly input + billing registry 重建十組 \((H_m,B_m)\) 並重算 \(\kappa\)，final numerical source-of-truth 仍為 production calibration audit output）。
+
+**Epistemic-layer separation（明確陳述）：**
+
+1. **historical \(\kappa\) calibration 回答的是一個 historical billing-representation question**：在實際歷史量測與實際帳單之下，hourly grid-import maximum 如何代表 15-min billed demand；
+2. **accepted reconstructed full-year PV 回答的是一個 planning-baseline question**：在規劃層的 counterfactual 模型中，全年 PV 應以什麼 best estimate 進入 optimization；
+3. 這兩者屬於**不同的 epistemic layers**（見 §4.1.1-R），因此**彼此並不矛盾**：一個使用 observed data 校準歷史帳單表徵，另一個為 planning 提供 model-based baseline；
+4. 因此 **accepted reconstructed planning PV 不得被用來重新定義或重新估計 production \(\kappa\)**，也不得被用來替換 calibration sample 或 calibration target。
+
+**\(\kappa\) 的 claim boundary（不得逾越）：**
+
+- \(\kappa\) **是** billing-demand representation proxy；
+- \(\kappa\) **不是** 15-minute chronology 的 reconstruction；
+- \(\kappa\) **不證明** 模型已捕捉 sub-hourly BESS physical power peaks；
+- \(\kappa\) **不消除** hourly temporal-resolution limitation（該 limitation 仍完整保留於 §22 limitations 5–6 與 §23.11）。
+
+正式用語仍為 **calibrated hourly proxy for the 15-minute billing demand**，不得寫成 exact 15-min billing reconstruction。
+
+### 4.3.2 Billing-period alignment
+
+所有 \(H_m\) 必須使用與帳單 \(B_m\) 完全相同的 **usage period**。例如標題 2025/10 的帳單代表 2025/09/01–09/30 用電，因此應配對 September hourly maximum，而不是 October hourly data。
+
+`billing_demand_registry.csv` 至少保存：
+
+- usage-period start/end；
+- regular/supplementary CC；
+- peak / half / sat-half / off-peak maxima；
+- \(B_m=\max_q B_{m,q}\)；
+- source bill filename。
+
+`calibrate_kappa.py` 輸出至少包含：
+
+- \(H_m\)、四時段 billed maxima、\(B_m\)；
+- \(B_m/H_m\)；
+- fitted \(\hat B_m=\kappa H_m\)；
+- residual；
+- final \(\kappa\)。
+
+### 4.3.3 Optimization 與 exact demand reporting（A4 CLOSED）
+
+optimization 中可使用 period-specific epigraph/exceedance variables 服務 tariff constraints，例如對每個 usage period/TOU period：
+
+\[
+D_{m,q}^{opt}\ge \kappa p_t^{grid},\qquad t\in(m,q),
+\]
+
+或直接以 exceedance variables 對 \(\kappa p_t^{grid}-CC_q^{threshold}\) 建 constraint。這些變數的角色是 **cost-facing optimization auxiliaries**，不是報表上的 exact maximum。
+
+solve 後一律由 optimized hourly grid profile ex-post 重算：
+
+\[
+\boxed{
+D_{m,q}^{exact}=\max_{t\in(m,q)}\kappa p_t^{grid}
+}
+\]
+
+\[
+\boxed{
+D_m^{exact}=\max_q D_{m,q}^{exact}
+}
+\]
+
+因此不再依賴可能 floating 的單一 \(D_m^{proxy}\) 作 monthly diagnostic。正式用語仍為：
+
+> calibrated hourly proxy for the 15-minute billing demand.
+
+不得寫成 exact 15-min billing reconstruction。
+
+## 4.4 BESS 技術、成本與 degradation 參數
+
+### 4.4.1 技術 reference（A1 CLOSED）
+
+- battery chemistry：stationary LFP。
+- nameplate energy capacity：\(E^N\)。
+- power rating：\(P^B\)。
+- mainline \(SOC_{min}=0.10\)、\(SOC_{max}=0.90\)。
+- derived usable energy：
+
+\[
+E^U=0.8E^N.
+\]
+
+- 20–80% SOC window 可作 deliberately more restrictive technical sensitivity，不宣稱 universal optimum。
+- \(p_t^{ch}\)、\(p_t^{dis}\)、\(P^B\) 定義於 AC/PCS side。
+- \(e_t\) 為 battery-side stored energy。
+- **mainline efficiency fixed**：
+
+\[
+\boxed{\eta_c=\eta_d=0.90}.
+\]
+
+因此 one-step state transition 為：
+
+\[
+e_{t+1}=e_t+0.90\,p_t^{ch}\Delta t-\frac{p_t^{dis}\Delta t}{0.90}.
+\]
+
+0.95/0.90 與由 PNNL system RTE 對稱拆解的約 0.91/0.91 均不再是 mainline candidates。Qi et al. (2025, *Applied Energy*) 的 system-level battery formulation作直接文獻 precedent；PNNL system-level RTE僅作 boundary-consistency sanity check，不用來重新拆效率。
+
+mainline 不做 efficiency curve 或效率 sensitivity full sweep；若 reviewer 要求，可做小型 robustness check，但不重新打開 A1。
+
+### 4.4.2 BESS capital-cost basis（Gate 1 + Gate 2 CLOSED）
+
+正式 purchase basis：
+
+\[
+CAPEX_{BESS}=C_EE^N+C_PP^B.
+\]
+
+\(C_E\) 必須以 installed/nameplate kWh 為 denominator；若 source 是 usable-kWh basis，先轉換後才可入模。
+
+#### A. PNNL cost-scale package selection（ex ante）
+
+mainline numerical cost source為 **PNNL v2024 LFP cost data 的 thesis-derived energy/power-separated linear planning approximation**，fitting window固定使用 4 / 6 / 8 / 10 h source cases。
+
+v7.2 已明確鎖定、且 v7.3 原樣延續：
+
+\[
+\boxed{\text{10 MW-scale PNNL package = mainline}}
+\]
+
+\[
+\boxed{\text{1 MW-scale PNNL package = cost-scale sensitivity}}
+\]
+
+此選擇在 EOB / Layer A optimization **之前**固定。1 MW / 10 MW 是 source-supported cost-scale cases，不是 \(P^B\) 的 lower/upper bound；不得使用 preliminary 或 final optimized \(P^B\) 來決定要載入哪個 package。
+
+每個 scale package必須一致包含：
+
+- \(C_E\)；
+- \(C_P\)；
+- annual FOM；
+- replacement-cost basis \(C_{rep}\)；
+- 由該 bracket \(C_{rep}\) 與固定 PNNL DOD–cycle-life calibration自動生成的 \(\lambda_k\)。
+
+不得混用「10 MW CAPEX + 1 MW replacement/degradation」或其他 cross-bracket combination。
+
+replacement-cost basis固定採 PNNL v2024 LFP **DC Storage Block** 在 4 / 6 / 8 / 10 h source cases的 arithmetic mean。exact numerical values與 workbook provenance由 production parameter artifacts控制，不在 framework重複抄寫。
+
+#### B. Monetary normalization
+
+PNNL source values代表 2023 cost vintage。本研究固定：
+
+\[
+\boxed{2023\ USD\rightarrow NTD\text{-}2023}
+\]
+
+with
+
+\[
+\boxed{FX=31.150\ \mathrm{NTD/USD}}.
+\]
+
+PNNL BESS CAPEX、FOM、\(C_{rep}\) 與衍生 \(\lambda_k\) 均以 **constant NTD-2023** 進入 objective；不對已定義為 2023 cost vintage 的 PNNL package再做額外 inflation escalation。
+
+Taipower nominal case-year monetary inputs則依 §4.2.3 另建立 constant NTD-2023 optimization layer，避免 2023 equipment cost與2024/2025 nominal tariff直接相加。
+
+#### C. Annualization
+
+經濟假設固定：
+
+\[
+r_{real}=0.05,\qquad n=20\text{ yr}
+\]
+
+\[
+CRF(r,n)=
+\frac{r(1+r)^n}{(1+r)^n-1}
+=
+\boxed{0.0802426}.
+\]
+
+因此：
+
+\[
+C^{annual}_{BESS,cap}
+=
+CRF(C_EE^N+C_PP^B).
+\]
+
+FOM 若已是 annual basis，直接加至 objective，**不得再乘 CRF**。
+
+5% 是 transparent **real modeling discount-rate assumption**，不是 NTUST-specific WACC estimate。20-year horizon仍是 financial analysis period，不是 battery physical-life hard gate。
+
+legacy 813.75、694.4、CRF=0.07 僅保留 replication/lineage，不得控制 mainline results.
+
+### 4.4.3 Cycling degradation（B1 CLOSED）
+
+mainline 採：
+
+\[
+\boxed{
+\text{PNNL-calibrated adaptation of Xu et al.'s intertemporal convex PWL DOD-sensitive cycle-aging formulation}
+}
+\]
+
+此模型的目標是讓 multi-hour cycle depth 對 cycling wear 有作用，同時維持可整合進年度 sizing/dispatch optimization 的 convex/PWL 結構。它不是完整 electrochemical lifetime model。
+
+**Attribution boundary：** Xu et al. (2018) 控制的是 intertemporal PWL cycle-aging formulation 的核心數學語義（segment-specific charge/discharge、cross-time segment-energy states、convex shallow-to-deep priority 與 rainflow benchmark rationale）；PNNL 控制 LFP DOD–cycle-life technical calibration。本研究另自行處理 PNNL sparse/nonuniform calibration、equal-slope merging、endogenous \(E^N\) segment widths、10–90% SOC 對應的 effective depth domain，以及 annual cyclic segment boundary。因此本方法不得簡稱為「the Xu model」或宣稱 Xu 的 theorem 已直接證明本研究完整 sizing extension。
+
+#### A. Technical calibration：PNNL LFP DOD–cycle-life points
+
+固定 technical calibration input：
+
+| Effective / lifetime-average DOD \(\delta\) | Cycle life \(N(\delta)\) |
+|---:|---:|
+| 0.05 | 192,000 |
+| 0.30 | 32,000 |
+| 0.60 | 8,000 |
+| 0.70 | 6,000 |
+| 0.80 | 4,800 |
+
+PNNL raw reported DOD 與 lifetime-average/effective DOD 並非總是一致；raw-to-effective interpretation、source page 與 provenance 必須保存在 literature/parameter registry，code 不得靜默把 reported DOD 當 model cycle depth。
+
+由於 0–5% 與 5–30% 的 derived marginal slope 相同、60–70% 與 70–80% 的 slope相同，production effective breakpoints 可合併為：
+
+\[
+\boxed{b=(0,\ 0.30,\ 0.60,\ 0.80)}.
+\]
+
+原始五點仍完整保留於 registry；三段只是數學合併，不是刪除 provenance。
+
+#### B. Economic wear curve
+
+以 final replacement-cost basis \(C_{rep}\) 定義：
+
+\[
+G(0)=0,
+\qquad
+G(\delta)=\frac{C_{rep}}{N(\delta)}\quad(\delta>0).
+\]
+
+PWL marginal slopes：
+
+\[
+\boxed{
+\lambda_k=
+\frac{G(b_k)-G(b_{k-1})}{b_k-b_{k-1}}
+}
+\]
+
+必須區分：
+
+- \(N(\delta)\)：固定 technical cycle-life calibration；
+- \(C_{rep}\)：final economic replacement-cost basis；
+- \(\lambda_k\)：由前兩者導出的 marginal cycling-wear coefficient。
+
+在本研究 convention 中，\(\lambda_k\) 明確定義為：
+
+\[
+\boxed{\lambda_k:\ \mathrm{NTD/(battery\text{-}side\ discharged\ kWh)}}.
+\]
+
+因此 \(\lambda_k\) 本身**不含** discharge-efficiency conversion；若 segment discharge power \(p_{t,k}^{dis}\) 定義於 AC/PCS side，objective 必須使用 \(p_{t,k}^{dis}\Delta t/\eta_d\) 轉為 battery-side discharged energy。這與 Xu et al. Eq. (5)–(7) 將 \(1/\eta^{dis}\) 直接吸收到 AC-side marginal cost coefficient \(c_j\) 的 convention 代數等價；兩種 convention 不得混用，否則會 double-count discharge efficiency。
+
+\(\lambda_k\) **不得獨立 hard-code**。Harry-era \(C_{rep}=5107.57\) NTD/kWh 與 legacy slopes 0.532 / 1.596 / 2.128 只能作 replication/regression test，不得控制 mainline。
+
+#### C. Intertemporal segment-state requirement
+
+每個 degradation segment \(k\) 必須有跨時間 stored-energy state \(e_{t,k}^{seg}\)，而不是每小時重新分配 discharge throughput。設 segment capacity：
+
+\[
+\bar E_k=(b_k-b_{k-1})E^N.
+\]
+
+定義 shifted usable state：
+
+\[
+x_t=e_t-SOC_{min}E^N,
+\qquad
+x_t=\sum_k e_{t,k}^{seg}.
+\]
+
+segment bounds：
+
+\[
+0\le e_{t,k}^{seg}\le \bar E_k.
+\]
+
+aggregate charge/discharge：
+
+\[
+p_t^{ch}=\sum_k p_{t,k}^{ch},
+\qquad
+p_t^{dis}=\sum_k p_{t,k}^{dis}.
+\]
+
+segment dynamics：
+
+\[
+e_{t+1,k}^{seg}
+=
+e_{t,k}^{seg}
++\eta_c p_{t,k}^{ch}\Delta t
+-\frac{p_{t,k}^{dis}\Delta t}{\eta_d}.
+\]
+
+annual periodicity 同時要求 total state 與 segment states cyclic：
+
+\[
+e_T=e_0,
+\qquad
+e_{T,k}^{seg}=e_{0,k}^{seg}\quad\forall k.
+\]
+
+production implementation 必須遵循 Xu-derived convex segment-priority semantics：較淺 depth segment 具有不高於較深 segment 的 marginal cost，並以 cross-time segment state 維持 multi-interval depth history。不得使用 Harry-style「每小時 reset、每小時重新從最便宜 segment 開始」的 proxy 作 final mainline。
+
+#### D. AC / battery-side degradation boundary
+
+DOD 與 segment capacity 是 **battery-side energy fraction**。因 \(p_t^{dis}\) 定義於 AC side，segment cycling cost 應以 battery-side discharged energy計：
+
+\[
+\boxed{
+C_{cycling}^{deg}
+=
+\sum_t\sum_k
+\lambda_k\frac{p_{t,k}^{dis}\Delta t}{\eta_d}
+}
+\]
+
+不得直接把 AC-side discharged kWh 當成 DOD energy，否則會低估 battery-side depth/use。
+
+#### E. Model boundary / validation
+
+mainline 不加入：
+
+- calendar-aging state；
+- temperature-dependent aging；
+- C-rate aging；
+- dwell-SOC aging；
+- dynamic SOH transition；
+- augmentation schedule；
+- explicit battery replacement schedule。
+
+因此論文 claim 是 **DOD-sensitive cycling economic wear approximation**，不是完整 physical lifetime prediction。
+
+full rainflow cycle counting **不嵌入 optimization**；只作 ex-post validation，至少比較 realized cycle-depth distribution、PWL cycling cost 與 rainflow-derived benchmark cost。linear discharge-throughput model保留為 model-form benchmark；若 reserve-heavy Layer A solutions 局部落在 shallow region、PWL 自然近似 linear，應報告為 empirical result，而不是事前 simplification。
+
+#### F. B2 accounting guardrail（no structural change）
+
+B1 改變的是 \(C_{cycling}^{deg}\) 的計算方式，不改 overall accounting：annualized BESS CAPEX + annual FOM + operating costs的結構維持。mainline 不另加 full replacement/augmentation cash-flow stream，以避免與 annualized ownership cost + marginal cycling wear重複計價。20-year horizon 是 financial analysis period，不是 battery physical-life hard constraint。
+
+## 4.5 Locked parameter / setting register snapshot
+
+> 本表是 framework-level snapshot，用來防止 production code、registry 與正文出現新舊參數混用。v7.2 已將核心 BESS cost / billing calibration parameters更新為 populated / scripted-audited status，v7.3原樣延續；仍未完成的項目以 implementation / validation gate另行標示，不得以 legacy值補缺。
+
+| 項目 | Mainline 值／設定 | 狀態 | Source / implementation rule |
+|---|---|---|---|
+| Battery chemistry | stationary LFP | **LOCKED** | PNNL-aligned technical reference |
+| \(SOC_{min}\) | 0.10 | **LOCKED** | mainline technical window |
+| \(SOC_{max}\) | 0.90 | **LOCKED** | mainline technical window |
+| usable fraction | 0.80 \(E^N\) | **DERIVED / LOCKED** | \(SOC_{max}-SOC_{min}\) |
+| charge efficiency \(\eta_c\) | 0.90 | **LOCKED (A1)** | system-level AC→battery boundary |
+| discharge efficiency \(\eta_d\) | 0.90 | **LOCKED (A1)** | battery→AC boundary |
+| annual normal reserve floor | \(e_t\ge0.10E^N+R(\alpha,\beta)\) | **LOCKED (A2)** | constant worst-case reserve mainline |
+| outage initial state | \(e_0=0.10E^N+R\) | **LOCKED (A2)** | lowest preparedness state |
+| outage technical lower bound | \(e_\tau\ge0.10E^N\) | **LOCKED (A2)** | reserve may be consumed during outage |
+| outage terminal requirement | \(e_\beta\ge0.10E^N\)；不要求恢復 \(R\) | **LOCKED (A2)** | separate replay semantics |
+| reserve-floor robustness | 6 points: \(\alpha=0.60,0.80,1.00\) × \(\beta=4,12\) | **LOCKED targeted check** | constant vs perfect-information variable floor |
+| regular contract capacity \(CC\) | one annual decision variable | **LOCKED (A3)** | NTUST planning decision |
+| supplementary CCs | half / Sat-half / off = 0 | **LOCKED NTUST case setting** | not optimized |
+| TOU demand periods | peak / half / Sat-half / off | **LOCKED** | Taipower case-year tariff |
+| summer calendar | May 16–Oct 15 | **LOCKED** | Taipower case-year rule |
+| over-contract tier 1 | first 10% exceedance ×2 | **LOCKED (A3)** | period-specific applicable basic rate |
+| over-contract tier 2 | beyond 10% exceedance ×3 | **LOCKED (A3)** | period-specific applicable basic rate |
+| non-duplication | required across TOU exceedance accounting | **LOCKED (A3)** | Taipower rule |
+| billing calibration quantity | observed Load − observed PV | **LOCKED** | canonical file observed columns only |
+| calibration usage months | 2025/01–2025/10 | **LOCKED** | valid-PV periods |
+| billed calibration target \(B_m\) | max of four TOU billed maxima | **LOCKED** | usage-period aligned |
+| \(\kappa\) estimator | through-origin LS | **LOCKED** | site-specific multiplicative calibration |
+| \(\kappa\) numerical value | ≈1.01037 | **SCRIPT-REPRODUCED / CLOSED** | final source = production calibration audit output |
+| exact modeled billing maxima | post-solve \(D_{m,q}^{exact},D_m^{exact}\) | **LOCKED (A4)** | do not report floating auxiliary variable |
+| degradation formulation | PNNL calibration + Xu et al. intertemporal PWL adaptation | **LOCKED (B1)** | DOD-sensitive cycling wear |
+| raw effective-DOD calibration | (0.05,192000), (0.30,32000), (0.60,8000), (0.70,6000), (0.80,4800) | **LOCKED technical inputs** | PNNL LFP cycle-life calibration |
+| effective PWL breakpoints | (0, 0.30, 0.60, 0.80) | **LOCKED** | equal-slope segments merged |
+| \(C_{rep}\) | bracket-specific PNNL v2024 DC Storage Block 4/6/8/10 h arithmetic mean | **POPULATED / LOCKED BY PACKAGE** | 10 MW mainline; 1 MW sensitivity |
+| \(\lambda_k\) | bracket-specific, derived from \(C_{rep}\) and DOD table | **DERIVED / NO HARD-CODE** | entire slope set follows selected cost package; NTD-2023 per battery-side discharged kWh |
+| rainflow | ex-post validation only | **LOCKED** | not embedded in objective |
+| linear degradation | benchmark/equivalence diagnostic only | **LOCKED secondary role** | not mainline |
+| mainline cost scale | PNNL 10 MW-scale package | **LOCKED (Gate 1)** | selected ex ante; never from optimized \(P^B\) |
+| cost-scale sensitivity | PNNL 1 MW-scale package | **LOCKED sensitivity** | full-package swap, not mixed coefficients |
+| PNNL cost fitting window | 4 / 6 / 8 / 10 h | **LOCKED** | energy/power/FOM/replacement derivation provenance |
+| PNNL monetary basis | constant NTD-2023 | **LOCKED (Gate 2)** | 2023 USD × 31.150 NTD/USD |
+| optimization tariff basis | constant NTD-2023 | **LOCKED (Gate 2)** | derived from raw case-year nominal tariff; raw source retained |
+| discount rate \(r\) | 0.05 real | **LOCKED** | constant-dollar modeling assumption; not NTUST WACC |
+| analysis horizon \(n\) | 20 yr | **LOCKED** | financial horizon, not physical-life gate |
+| CRF | 0.0802426 | **DERIVED / LOCKED** | code derives from \(r,n\) |
+| \(C_E,C_P,FOM\) | bracket-specific PNNL v2024 package values | **POPULATED / LOCKED BY PACKAGE** | 10 MW mainline; 1 MW sensitivity; constant NTD-2023 |
+| B2 accounting | annualized CAPEX + annual FOM + operating costs | **LOCKED / NO STRUCTURAL CHANGE** | no explicit replacement stream |
+
+Production `parameter_registry` remains the machine-readable source of truth; this table is the human-readable specification snapshot. Any numerical parameter not explicitly represented by an audited/locked package or an identified implementation gate must not be silently introduced into production code.
+
+---
+# 5. 變數與單位定義
+
+## 5.1 BESS nameplate、usable energy 與 stored-energy state
+
+正式定義：
+
+- \(E^N\)：installed/nameplate BESS energy capacity（kWh），Layer A sizing decision variable，也是 energy CAPEX 的容量基礎。
+- \(E^U\)：SOC operating window 內的 derived usable energy（kWh），不是獨立 sizing variable。
+- \(e_t\)：actual stored battery energy（kWh），正式論文與 code audit 的 primary physical state。
+- \(x_t\)：SOCmin 以上的 shifted usable state，只作輔助解釋，不作主 state。
+
+一般式：
+
+\[
+E^U=(SOC_{\max}-SOC_{\min})E^N.
+\]
+
+mainline 10–90% SOC：
+
+\[
+\boxed{E^U=0.8E^N}.
+\]
+
+stored-energy bounds：
+
+\[
+\boxed{
+SOC_{\min}E^N
+\le e_t
+\le
+SOC_{\max}E^N
+}
+\]
+
+即：
+
+\[
+0.10E^N\le e_t\le0.90E^N.
+\]
+
+輔助 shifted state：
+
+\[
+x_t=e_t-SOC_{\min}E^N,
+\qquad
+0\le x_t\le E^U.
+\]
+
+resilience reserve \(R(\alpha,\beta)\) 是 technical minimum SOC **之上**額外必須保留的 usable energy，因此正式 reserve constraint 為：
+
+\[
+\boxed{
+e_t\ge SOC_{\min}E^N+R(\alpha,\beta)
+}
+\]
+
+且必須有：
+
+\[
+(SOC_{\max}-SOC_{\min})E^N\ge R(\alpha,\beta).
+\]
+
+mainline 因而得到：
+
+\[
+\boxed{
+E^N\ge\frac{R(\alpha,\beta)}{0.8}
+}.
+\]
+
+## 5.2 其他決策／輔助變數
+
+### Core design / dispatch variables
+
+- \(P^B\)：BESS charge/discharge power rating（kW）。
+- \(CC\)：annual regular contract capacity（kW）。
+- \(p_t^{grid}\)：grid import（kW）。
+- \(p_t^{ch}\)：battery charging power，AC/PCS side（kW）。
+- \(p_t^{dis}\)：battery discharging power，AC/PCS side（kW）。
+- \(PV_t^{use}\)：used PV power（kW）。
+- \(PV_t^{curt}\)：curtailed PV power（kW）。
+
+### Degradation auxiliary variables
+
+- \(e_{t,k}^{seg}\)：Xu-derived degradation segment \(k\) 的 intertemporal battery-side stored-energy state（kWh）。
+- \(p_{t,k}^{ch}\)、\(p_{t,k}^{dis}\)：segment-level AC-side charge/discharge power（kW）。
+- segment capacities \(\bar E_k=(b_k-b_{k-1})E^N\)；不是獨立 sizing variables。
+
+### Billing auxiliary variables
+
+optimization 可使用 period-specific demand epigraph/exceedance variables以實作 tariff cost，但它們不是報表上的 exact maxima。exact \(D_{m,q}^{exact}\)、\(D_m^{exact}\) 一律 post-solve 由 optimized \(p_t^{grid}\) 計算。
+
+supplementary contract capacities不是 decisions；NTUST case 固定為 0。
+
+# 6. Baseline：economic-only design（EOB）
+
+在加入 resilience requirement 前，先求一個 economic-only baseline：
+
+\[
+(\alpha,\beta)\text{ constraint absent}
+\]
+
+輸出：
+
+- \(E^N_{EOB}\)
+- \(P^B_{EOB}\)
+- \(CC_{EOB}\)
+- \(C_{EOB}\)
+- annual dispatch、TOU cost、basic charge、over-contract penalty、degradation cost。
+
+EOB 是所有 resilience premium 的比較基準：
+
+\[
+\Delta C(\alpha,\beta)=C(\alpha,\beta)-C_{EOB}
+\]
+
+\[
+Premium\%(\alpha,\beta)=\frac{\Delta C(\alpha,\beta)}{C_{EOB}}\times100\%
+\]
+
+---
+
+# 7. Layer A：All-start resilience-constrained annual planning
+
+## 7.1 Layer A 的功能
+
+Layer A 回答：
+
+> 在正式 case-year baseline load–PV chronology 與模型技術假設下，為了在每一個完整 \(\beta\)-hour trajectory 均位於該 case year 內的 valid historical outage start 維持 \(\alpha\) 比例服務，年度固定 BESS/CC 設計至少需要多少容量與成本？
+
+Layer A 是 sizing layer，不是 outage probability model。
+
+## 7.2 淨服務缺口
+
+對給定 \(\alpha\)：
+
+\[
+d_t(\alpha)=\left[\alpha L_t-PV_t\right]^+
+\]
+
+其中本章 \(L_t\)、\(PV_t\) 預設指 §4.1 的 planning-baseline series。v7.3 mainline 的 \(PV_t\) 是含 1,463-hour corrected reconstruction 的同一套 full-year series；此 identity 必須與 EOB/economic、binding classification、outage replay及 baseline Layer B一致，不得在本章另套 zero-winter/no-credit override。且：
+
+\[
+[z]^+=\max(z,0).
+\]
+
+### 為何 \(\alpha\) 必須放在 max 內
+
+PV 是先抵減「需要維持的服務負載」\(\alpha L_t\)，不是先抵減 full load 再乘 \(\alpha\)。
+
+正確：
+
+\[
+[\alpha L_t-PV_t]^+
+\]
+
+不建議：
+
+\[
+\alpha[L_t-PV_t]^+.
+\]
+
+兩者的物理意義不同。
+
+## 7.3 case-year valid-start energy reserve
+
+設時間步長為 \(\Delta t\) 小時，\(n_\beta=\beta/\Delta t\)。
+
+正式 valid-start set：
+
+\[
+\boxed{
+\mathcal S_\beta=\{s:\ s+n_\beta\le T\}
+}.
+\]
+
+對每個 \(s\in\mathcal S_\beta\)：
+
+\[
+G_s(\alpha,\beta)=
+\sum_{k=0}^{n_\beta-1}
+d_{s+k}(\alpha)\Delta t.
+\]
+
+**Mainline 不做 circular year-end wrap。** 只有完整 \(\beta\)-hour trajectory 被正式 case-year chronology 觀察到的 outage start 才進入 maximum。若未來有真實 next-year continuation data，才可另行擴展 end-of-year starts。
+
+reserve 定義為：
+
+\[
+\boxed{
+R(\alpha,\beta)=
+\frac{1}{\eta_d}
+\max_{s\in\mathcal S_\beta}G_s(\alpha,\beta)
+}.
+\]
+
+### 物理意義
+
+- 掃描 formal case year 內所有 valid \(\beta\)-hour outage starts。
+- 對每個窗口計算需由 BESS 放出的 positive residual energy。
+- 取 valid starts 中的最大值。
+- 除以 discharge efficiency，換成 outage 開始前必須存在 battery-side 的 usable stored energy above SOCmin。
+
+### 保守性
+
+此 reserve 以 \([\alpha L-PV]^+\) 加總，**不依賴 outage 期間的 PV surplus 再充電**。因此它是一個透明、保守的 energy adequacy requirement。
+
+- 若 outage 中出現 PV surplus，實際 dispatch 可能比此 reserve 更有利。
+- 不可把 \(R\) 稱為考慮所有動態後的唯一精確最小 reserve，除非另以 exhaustive dynamic replay 證明。
+
+## 7.4 瞬時 power adequacy
+
+\[
+P^{out}(\alpha)=\max_t d_t(\alpha).
+\]
+
+Layer A 必須要求：
+
+\[
+P^B\ge P^{out}(\alpha).
+\]
+
+白話：energy capacity 是水箱大小，power rating 是水管粗細。總電量足夠不代表單一小時能吐出足夠功率。
+
+## 7.5 年度 reserve policy
+
+正式 state 使用 actual stored energy \(e_t\)。
+
+全年 reserve floor：
+
+\[
+\boxed{
+e_t\ge
+SOC_{\min}E^N+R(\alpha,\beta),
+\qquad\forall t
+}
+\]
+
+同時：
+
+\[
+\boxed{
+(SOC_{\max}-SOC_{\min})E^N
+\ge R(\alpha,\beta)
+}.
+\]
+
+mainline 10–90% SOC 下：
+
+\[
+E^N\ge\frac{R(\alpha,\beta)}{0.8}.
+\]
+
+這表示正常運轉時可以用 BESS 做削峰與 TOU shifting，但 technical minimum SOC 與 resilience reserve 均不可被正常經濟 dispatch 侵蝕。
+
+### 研究意義
+
+resilience premium 可能包含：
+
+1. 額外購買 energy capacity；
+2. 額外購買 power capacity；
+3. 因 reserve floor 而失去一部分正常經濟 dispatch freedom；
+4. 因 BESS/CC 聯合最佳化導致的 contract capacity 變化。
+
+## 7.6 正常運轉 power balance
+
+若不允許 export：
+
+\[
+p^{grid}_t+p^{dis}_t+PV^{use}_t=L_t+p^{ch}_t
+\]
+
+\[
+0\le PV^{use}_t\le PV_t
+\]
+
+\[
+PV^{curt}_t=PV_t-PV^{use}_t
+\]
+
+\[
+p^{grid}_t\ge0.
+\]
+
+## 7.7 BESS dynamics
+
+AC-side charge/discharge power 與 battery-side stored energy 的 state transition：
+
+\[
+\boxed{
+e_{t+1}
+=
+e_t
++0.90\,p_t^{ch}\Delta t
+-\frac{p_t^{dis}\Delta t}{0.90}
+}
+\]
+
+亦即 mainline：
+
+\[
+\boxed{\eta_c=\eta_d=0.90}.
+\]
+
+\[
+0\le p_t^{ch}\le P^B,
+\qquad
+0\le p_t^{dis}\le P^B.
+\]
+
+annual normal-operation state bounds：
+
+\[
+\boxed{
+SOC_{min}E^N+R(\alpha,\beta)
+\le e_t
+\le
+SOC_{max}E^N
+}.
+\]
+
+### 年度 state boundary
+
+annual economic dispatch 使用 \(T+1\) 個 state index：
+
+\[
+\boxed{e_T=e_0}.
+\]
+
+Xu-derived degradation segment states 同樣使用 periodic boundary：
+
+\[
+\boxed{e_{T,k}^{seg}=e_{0,k}^{seg}\quad\forall k}.
+\]
+
+annual state cyclicity 與 §7.3 禁止 outage-window circular wrap 是不同概念：前者防止年度 optimization 在研究邊界免費耗盡／累積 energy；後者禁止把 year-end outage trajectory 人工接回 case-year 開頭。
+
+不得使用語意不明的 `e[0]=e[8759]`；transition 必須明確由 \(t\) 到 \(t+1\)。
+
+### 充放電互斥
+
+主線優先維持 convex/LP-compatible formulation，前提是完成以下 audit：
+
+- 全年無顯著 simultaneous aggregate charge/discharge；
+- efficiency loss 與 cycling degradation cost 使 simultaneous operation 無經濟誘因；
+- segment-level allocation符合 Xu-derived convex ordering semantics；
+- 若仍出現實質性同充同放或 solver exploitation，才加入必要 binary/complementarity constraints，並記錄計算影響。
+
+## 7.8 Layer A objective
+
+概念上：
+
+\[
+\min C^{annual}.
+\]
+
+其中：
+
+\[
+\boxed{
+C^{annual}
+=
+C^{annual}_{BESS,cap}
++
+C^{FOM}
++
+C^{TOU}
++
+C^{CC}
++
+C^{over}
++
+C^{deg}_{cycling}
+}
+\]
+
+### 7.8.1 Annualized BESS capital cost
+
+\[
+CAPEX_{BESS}=C_EE^N+C_PP^B
+\]
+
+\[
+\boxed{
+C^{annual}_{BESS,cap}
+=
+0.0802426\left(C_EE^N+C_PP^B\right)
+}
+\]
+
+其中 \(C_E,C_P\) 由 ex-ante selected PNNL scale package提供；mainline固定為10 MW-scale package、1 MW-scale package只作cost sensitivity。coefficients以nameplate energy/power basis定義，先統一為constant NTD-2023，再乘CRF。
+
+FOM 若已是 annual value，直接加入 objective，不得 CRF twice。
+
+### 7.8.2 Cycling degradation cost
+
+mainline 使用 §4.4.3 鎖定的 **PNNL-calibrated adaptation of Xu et al.'s intertemporal convex PWL DOD-sensitive cycle-aging formulation**。
+
+有效 breakpoints：
+
+\[
+\boxed{b=(0,0.30,0.60,0.80)}.
+\]
+
+segment capacity：
+
+\[
+\bar E_k=(b_k-b_{k-1})E^N.
+\]
+
+shifted usable state 與 segment states 必須一致：
+
+\[
+x_t=e_t-SOC_{min}E^N=\sum_k e_{t,k}^{seg}.
+\]
+
+segment dynamics：
+
+\[
+e_{t+1,k}^{seg}
+=
+e_{t,k}^{seg}
++\eta_c p_{t,k}^{ch}\Delta t
+-\frac{p_{t,k}^{dis}\Delta t}{\eta_d}.
+\]
+
+aggregate power：
+
+\[
+p_t^{ch}=\sum_kp_{t,k}^{ch},
+\qquad
+p_t^{dis}=\sum_kp_{t,k}^{dis}.
+\]
+
+cycling cost：
+
+\[
+\boxed{
+C_{cycling}^{deg}
+=
+\sum_t\sum_k
+\lambda_k\frac{p_{t,k}^{dis}\Delta t}{\eta_d}
+}
+\]
+
+其中 \(\lambda_k\) 由 final \(C_{rep}\) + PNNL DOD–cycle-life table自動產生，不 hard-code。
+
+**禁止 final mainline 使用 hourly-reset PWL**：不得在每小時把 total discharge throughput重新從 cheapest segment 分配；segment stored-energy state必須跨時間延續，使 multi-hour deep cycle 能進入較高 marginal wear region。
+
+full rainflow 不進 objective；post-processing 以 rainflow-derived cycle-depth/cost作 validation。linear throughput只作 model-form benchmark/equivalence check。
+
+Xu et al. Appendix Theorem 1 支持在**給定 feasible battery dispatch、convex marginal aging curve**下 shallow-to-deep segment priority 的最小 aging-cost性質；Theorem 2 支持其等寬 PWL sequence 在 segment 數趨近無限時收斂至 rainflow-based benchmark cost。這些結果是本研究 intertemporal PWL representation 的理論基礎，但**不直接證明** endogenous \(E^N\) sizing、PNNL 非等寬有限分段、equal-slope merging 或 annual cyclic adaptation；上述 thesis-specific extensions 必須以 unit tests 與 ex-post rainflow comparison 自行驗證。
+
+### 7.8.3 其他成本
+
+1. grid TOU energy charge。
+2. contract capacity basic charge。
+3. Taipower period-specific non-duplicative over-contract penalties，作用於 §4.2–4.3 的 cost-facing demand/exceedance constraints。
+4. BESS FOM。
+5. cycling degradation economic wear。
+
+PV 為外生既有資產時，其 sunk CAPEX 不進入不同 \((\alpha,\beta)\) 的增量比較；但論文須清楚說明。
+
+**Tariff-subsidy accounting guardrail：** objective 不另設 subsidy credit/debit。若 NTUST 適用之政策／學校費率支持已反映在 audited effective tariff或帳單數字中，其經濟效果由 tariff term 本身承接，不得再額外加上一筆 subsidy cash flow。
+
+mainline 不另加 full battery replacement/augmentation stream，以免和 annualized CAPEX、cycling wear proxy 產生 double counting。
+
+## 7.9 單一 outage anchor 的新角色
+
+### 不再做
+
+- 不事先選 9/16 或其他單一日期作為 sizing source。
+- 不宣稱一個 common anchor 對所有 \(\alpha\) 都具有代表性。
+- 不以單一 outage branch 建立 arbitrary-start guarantee。
+
+### 改為 ex-post binding window
+
+對每個 \((\alpha,\beta)\)：
+
+\[
+s^*(\alpha,\beta)=
+\arg\max_{s\in\mathcal S_\beta}G_s(\alpha,\beta).
+\]
+
+此窗口可用來：
+
+- 解釋為何某組設計需要特定 reserve；
+- 畫 load、PV、residual gap 與 BESS dispatch；
+- 研究 binding window 是否隨 \(\alpha\)、\(\beta\) 改變。
+
+建議稱：
+
+- binding critical window；
+- ex-post worst historical window；
+- illustrative high-stress window。
+
+避免再稱它為預先指定的 universal design-basis anchor。
+
+## 7.10 Exhaustive adequacy audit / outage replay（A2 CLOSED）
+
+annual normal-operation optimization 與 outage replay 是 **兩個分離的 programs/stages**，不是在同一 annual model 裡用 outage binary 切換 regime。
+
+完成每個 Layer A design 後固定：
+
+- \(E^N\)、\(E^U\)、\(P^B\)、\(CC\)；
+- 與該 design 的 EOB/economic solve完全相同、含 corrected winter reconstruction 的 full-year mainline \(PV_t^{base}\) artifact identity；
+- outage initial stored energy採 annual policy允許的最低 preparedness state：
+
+\[
+\boxed{
+e_0=SOC_{min}E^N+R(\alpha,\beta)
+}
+\]
+
+- outage grid import：
+
+\[
+\boxed{p_\tau^{grid}=0}.
+\]
+
+停電 replay 中 reserve 被視為可用 preparedness energy，因此 state bound 改為 technical SOC window：
+
+\[
+\boxed{
+SOC_{min}E^N
+\le e_\tau
+\le
+SOC_{max}E^N
+}
+\]
+
+**不得**在 outage replay 中繼續要求 \(e_\tau\ge SOC_{min}E^N+R\)。
+
+replay 期末只要求：
+
+\[
+\boxed{e_\beta\ge SOC_{min}E^N}
+\]
+
+不要求 outage 結束立即恢復 \(R\)。
+
+### Layer A analytical-consistency replay
+
+對所有 \(s\in\mathcal S_\beta\) 執行 \(\beta\)-hour replay。為與 §7.3 analytical reserve
+
+\[
+R=\max_s\sum[\alpha L-PV]^+\Delta t/\eta_d
+\]
+
+完全一致，這個 **Layer A consistency audit 不允許 outage 期間利用 PV surplus 對 BESS 再充電**。本規則在 v7.3 不變：reconstructed winter PV依原式降低當時的 positive residual load，但任何超過 \(\alpha L\) 的 surplus仍不得用來 recharge。其目的不是模擬最靈活的 island operation，而是驗證 analytical reserve、efficiency、power limit、indexing 與 state transition沒有錯誤。
+
+對真正 binding worst-case window，若只有 energy constraint binding，應有：
+
+\[
+|e_\beta-SOC_{min}E^N|\le\epsilon
+\]
+
+（容許 solver tolerance）。
+
+### Layer B distinction
+
+Layer B 是 fixed-design actual-capability stress test，可允許 outage 中 PV surplus recharge；不得把 Layer B 較靈活的 dispatch semantics反向拿來改寫 Layer A analytical reserve定義。
+
+### audit 目的
+
+- 驗證所有 valid baseline historical starts均可達 service target；
+- 檢查 annual reserve floor與 outage-consumption semantics是否一致；
+- 檢查 efficiency、state transition、power constraint、timestamp/indexing；
+- 驗證 analytical reserve與power lower bound無 implementation錯誤。
+
+正式描述：
+
+> Exhaustive replay is a model-consistency audit of the valid-start all-start adequacy formulation under the stated outage-dispatch assumptions.
+
+不得描述為未來停電保證或可靠度機率。
+
+## 7.11 Layer A 保證範圍
+
+可寫：
+
+> For every valid historical outage start whose complete \(\beta\)-hour trajectory is observed within the formal case-year load–PV chronology, the design satisfies the modeled energy and power adequacy requirements under the stated technical assumptions.
+
+不可寫：
+
+> The design guarantees any future outage.
+
+因為未納入：
+
+- 未來 load/PV 分布改變；
+- 設備故障；
+- inverter/transformer/network constraints；
+- BESS degradation-induced available-capacity loss；
+- outage probability 與 weather correlation。
+
+---
+
+# 8. Layer A 實驗設計與輸出
+
+## 8.1 計算順序
+
+1. EOB baseline。
+2. 預計算每個 \((\alpha,\beta)\) 的 \(R\)、\(P^{out}\)、\(s^*\)。
+3. 跑 81 組 annual optimization。
+4. 跑 all-start adequacy audit。
+5. 匯總 response surface。
+6. 完成結果解讀後，才鎖定 Layer B benchmark designs。
+
+## 8.2 核心輸出矩陣
+
+對每組 \((\alpha,\beta)\) 報告：
+
+- \(R(\alpha,\beta)\)；
+- \(P^{out}(\alpha)\)；
+- \(E^N\)、\(E^U\)、\(P^B\)、\(CC\)；
+- annualized total cost；
+- resilience premium；
+- TOU、CC、over-contract penalty、FOM、cycling degradation、annualized CAPEX 分解；
+- binding critical window；
+- ex-post exact demand diagnostics：各 usage period / TOU period \(D_{m,q}^{exact}\) 與 overall \(D_m^{exact}\)；
+- degradation diagnostics：各 segment annual battery-side discharged energy、segment cost contribution、total cycling degradation cost、degradation cost share；
+- realized SOC range、maximum hourly discharge fraction（僅作 power/use intensity diagnostic，不稱 DOD）；
+- ex-post rainflow cycle-depth summary：maximum/median/energy-weighted DOD、depth-bin counts/energy、PWL-vs-rainflow cost difference；
+- reserve-floor binding frequency / normal-operation SOC headroom；
+- solver status、runtime、optimality gap（若適用）。
+
+## 8.3 應產出的圖
+
+1. Premium vs. \(\alpha\)，分不同 \(\beta\)。
+2. Premium vs. \(\beta\)，分不同 \(\alpha\)。
+3. \(E^N\) heatmap。
+4. \(P^B\) heatmap。
+5. \(CC\) heatmap。
+6. resilience premium heatmap。
+7. marginal cost heatmap。
+8. binding-window calendar map。
+9. premium decomposition。
+10. degradation segment utilization / degradation-cost contribution summary（主文或 appendix，依結果重要性）。
+11. ex-post realized DOD / rainflow depth distribution 與 PWL-vs-rainflow validation summary。
+
+本研究不再要求 site-feasible/infeasible overlay 作核心輸出。
+
+## 8.4 邊際變化
+
+### \(\alpha\) 方向
+
+\[
+MC_\alpha(\alpha,\beta)\approx\frac{C(\alpha+\Delta\alpha,\beta)-C(\alpha,\beta)}{\Delta\alpha}
+\]
+
+### \(\beta\) 方向
+
+\[
+MC_\beta(\alpha,\beta)\approx\frac{C(\alpha,\beta+\Delta\beta)-C(\alpha,\beta)}{\Delta\beta}
+\]
+
+報告：
+
+- 服務比例每增加 5 percentage points 的成本；
+- outage target 每增加 1 h 的成本；
+- 邊際成本是否遞增、遞減或近似固定。
+
+## 8.5 knee / no-knee 判斷
+
+不得因期待管理結論而硬找 knee。
+
+### 若有 knee
+
+- 報告 knee region，而不是單一神奇點。
+- 檢查 knee 對 BESS cost sensitivity 是否穩健。
+
+### 若無 knee
+
+將 no-knee 作為正式結果：
+
+> 成本–服務關係呈平滑、近似單調的邊際交換，無不依賴偏好的自然最佳服務水準。
+
+此時決策仍需外部偏好、預算或 implementation constraints；本研究不替管理者做最終部署決策。
+
+## 8.6 近似決策規則
+
+若結果支持，可估計：
+
+\[
+\Delta C
+\approx
+CRF\left(C_E\Delta E^N+C_P\Delta P^B\right)
++\Delta C^{op}.
+\]
+
+其中 \(\Delta C^{op}\) 應包含 FOM、TOU、CC/over-contract 與 cycling-degradation 的淨變化。
+
+若 \(\Delta C^{op}\) 很小，可進一步提出簡化報價規則；但必須報告全 81 格的 approximation error，不能只挑成功案例。
+
+---
+
+# 9. Layer B benchmark design selection
+
+## 9.1 原則
+
+Layer B design subset 必須在看完 Layer A 結果後選定。
+
+不得先寫：
+
+> \(0.6/0.8/1.0\times4/8/12\) 是 representative designs。
+
+可寫：
+
+> A benchmark subset was selected after observing the Layer A cost–capacity response surface.
+
+建議用詞：
+
+- selected benchmark designs；
+- illustrative designs spanning the investigated space；
+- Layer A design subset。
+
+慎用 representative，除非明確說明代表的是 design-space coverage，而不是統計代表性。
+
+## 9.2 選點程序需預先鎖定
+
+在查看 Layer B 結果前，先凍結 selection rule，以免 cherry-picking。
+
+### 情況 A：Layer A 有明顯 knee
+
+選：
+
+1. knee 前低要求設計；
+2. knee/transition 設計；
+3. knee 後高要求設計；
+4. 視需要加 α 與 β 對照點。
+
+### 情況 B：Layer A 無明顯 knee
+
+建議：
+
+#### 精簡版：3 designs
+
+- low requirement / low premium；
+- middle of response surface；
+- high requirement / high premium。
+
+#### 完整版：5 designs
+
+- low-low corner；
+- high-high corner；
+- center；
+- high-α / lower-β contrast；
+- lower-α / high-β contrast。
+
+目的不是宣稱五點最有代表性，而是分辨：
+
+- service ratio effect；
+- duration effect；
+- combined high-requirement effect。
+
+## 9.3 原本九點的處理
+
+原本九點可在 Layer A 完成後重新被選中，但必須符合 selection rule。
+
+正確因果順序：
+
+> 先跑完整 surface → 再依結果選 benchmark subset。
+
+不是：
+
+> 先決定九點 → 再用 dense grid 替九點找理由。
+
+---
+
+# 10. Layer B：Fixed-design off-design capability stress test
+
+## 10.1 Layer B 的功能
+
+Layer B 回答：
+
+> 在設備容量完全固定時，若 baseline PV 或需求假設惡化，設計最多能維持多少服務，以及從何種條件開始失效？
+
+Layer B 不重新 sizing，因此反映 fixed-asset capability。
+
+## 10.2 刪除的舊維度
+
+### 刪除 initial SOC 30/50/80%
+
+原因：
+
+- Layer A 已內生建立全年 reserve policy。
+- outage start state 使用最低允許 actual stored-energy state \(e_0=SOC_{\min}E^N+R\)。
+- 再任意設定 30/50/80% 會混淆 reserve policy 與外生假設。
+
+### 刪除 realized outage duration 4/8/12/24 h
+
+原因：
+
+- 每套設計本身已由其 \(\beta\) 定義。
+- 若要 12 h service，應在 Layer A 建 12 h design。
+- 以 4 h design 測 12 h 可作極端延伸，但不應成為主 sensitivity 維度。
+
+## 10.3 保留的 stress dimensions
+
+### A. Outage archetype
+
+每一個 benchmark design 使用自己的 \(\alpha\)、\(\beta\)，由其 \(\beta\)-hour baseline windows 建立 archetype。
+
+為避免 cherry-picking，建議預先註冊：
+
+1. **Severe**：\(G_s\) 最接近 95th percentile 的非 binding window；binding maximum 另在 Layer A audit/illustration 報告。
+2. **Typical**：\(G_s\) 最接近 50th percentile 的 window。
+3. **Solar-assisted**：先選 PV contribution ratio 位於 top decile 的 windows，再取其中 \(G_s\) 接近中位數者。
+
+PV contribution ratio 可定義：
+
+\[
+H_s=\frac{\sum_k\min(PV_{s+k},\alpha L_{s+k})\Delta t}{\sum_k\alpha L_{s+k}\Delta t}
+\]
+
+### 注意
+
+- archetype 是 nested within each design’s \(\alpha,\beta\)。
+- 不宜宣稱這是完整 factorial experiment 中 archetype 的獨立主效應。
+
+### B. PV availability multiplier
+
+建議：
+
+\[
+\gamma_{PV}\in\{1.0,0.5,0\}
+\]
+
+含義：
+
+- 1.0：v7.3 reconstructed full-year mainline baseline PV，必須與 EOB/economic及 Layer A 使用同一 artifact identity；
+- 0.5：顯著 availability deterioration；
+- 0：PV unavailable。
+
+先前 zero-winter annual definition 不是 \(\gamma_{PV}=1.0\) baseline；在 v7.4 之下它的 current role 是 **historical conservative validation / provenance evidence**，**不是** Layer B 的 required sensitivity/stress，也不是 equal-status alternative annual baseline（見 §36.1）。Layer B baseline **不得**用 zero-winter annual series 取代 planning-layer reconstructed-mainline series；這項禁止完全保留，且不影響 Layer B event-level \(\gamma_{PV}\in\{1.0,0.5,0\}\) availability stress design —— 後者是既有且不變的 Layer B event-level 設計維度，與 annual PV identity 無關。
+
+### C. Demand multiplier
+
+建議：
+
+\[
+\lambda_L\in\{1.0,1.1,1.2\}
+\]
+
+含義：
+
+- baseline；
+- +10%；
+- +20%。
+
+## 10.4 案例數
+
+每組 benchmark design：
+
+\[
+3\text{ archetypes}\times3\text{ PV levels}\times3\text{ demand levels}=27
+\]
+
+- 3 designs：81 replays。
+- 5 designs：135 replays。
+- 9 designs：243 replays。
+
+案例數應由研究問題與結果覆蓋決定，不以 243 為目標。
+
+## 10.5 固定容量
+
+Layer B 固定：
+
+- \(E^N\)、\(E^U\)；
+- \(P^B\)；
+- \(CC\)（雖 outage 中不直接供電，仍保留 design identity）；
+- \(R(\alpha,\beta)\)。
+
+outage initial state：
+
+\[
+\boxed{
+e_0=SOC_{\min}E^N+R(\alpha,\beta)
+}
+\]
+
+這是最低允許 preparedness state，不是平均 SOC，也不是隨機 SOC。
+
+## 10.6 Shortfall formulation
+
+對 outage hour \(\tau\)：
+
+\[
+p^{dis}_\tau+\gamma_{PV}PV^{use}_\tau+s_\tau
+=\lambda_L\alpha L_\tau+p^{ch}_\tau
+\]
+
+\[
+s_\tau\ge0
+\]
+
+以 lexicographic 或足夠大的 penalty 最小化：
+
+\[
+ENS=\sum_\tau s_\tau\Delta t
+\]
+
+先最大化服務／最小化 ENS，再在同等 ENS 下最小化不必要 cycling 或 fuel。
+
+## 10.7 Perfect foresight 定位
+
+若 Layer B 在每個 outage window 內知道完整未來 PV/load trajectory，正式稱為：
+
+> **maximum achievable service capability under perfect foresight**
+
+或：
+
+> **asset capability upper bound under full trajectory information**
+
+不得直接稱為：
+
+- actual operational reliability；
+- real-time robustness；
+- actual success probability。
+
+### 可選加強
+
+選少數高風險案例，加一個 rolling-horizon 或 simple rule-based dispatch 對照，用來量化 perfect foresight uplift。這是加強項，不是主線必要條件。
+
+## 10.8 Layer B 指標
+
+### Energy Not Served
+
+\[
+ENS=\sum_\tau s_\tau\Delta t
+\]
+
+### Normalized ENS
+
+\[
+nENS=\frac{ENS}{\sum_\tau\lambda_L\alpha L_\tau\Delta t}
+\]
+
+### Service achievement ratio
+
+\[
+SAR=1-nENS
+\]
+
+### Worst-hour shortfall
+
+\[
+WHS=\max_\tau s_\tau
+\]
+
+### Worst-hour shortfall ratio
+
+\[
+WHSR=\max_\tau\frac{s_\tau}{\lambda_L\alpha L_\tau}
+\]
+
+### Structured-scenario coverage
+
+\[
+Coverage=\frac{\#\{cases: ENS\le\epsilon\}}{\#\{structured\ cases\}}
+\]
+
+必須稱：
+
+- structured-scenario coverage；
+- stress-test pass proportion。
+
+不得稱為 outage success probability。
+
+## 10.9 Layer B 最終要回答的管理問題
+
+- 哪類 design 對 demand growth 最敏感？
+- 哪類 design 對 PV deterioration 最敏感？
+- severe window 中的 failure threshold 在哪？
+- energy shortfall 還是 power shortfall 主導失效？
+- 增加 \(\alpha\) 與增加 \(\beta\) 對 off-design margin 的影響有何不同？
+
+---
+
+# 11. Implementation boundary：BESS site feasibility 不進主線
+
+## 11.1 正式決定
+
+BESS site feasibility / deployment limit 已從 methodological blocker 移除。
+
+Layer A **不加入**任意：
+
+\[
+E^N\le E^{site}
+\]
+
+或：
+
+\[
+P^B\le P^{site}
+\]
+
+作 mainline constraint，也不要求 site、fire-code、interconnection 或 budget data 才能進行 production Layer A。
+
+研究問題是量化：
+
+\[
+(\alpha,\beta)
+\rightarrow
+(E^{N*},P^{B*},CC^*,C^*)
+\]
+
+的 resilience–capacity–cost trade-off，而不是完成 NTUST turnkey engineering design。
+
+## 11.2 結果用語
+
+推薦：
+
+- modeled BESS capacity requirement；
+- planning capacity requirement；
+- cost-minimizing capacity under the specified resilience target。
+
+避免：
+
+- NTUST should install X MWh；
+- recommended campus installation size；
+- physically deployable capacity；
+- site-feasible design。
+
+## 11.3 Site information 的角色
+
+physical siting、fire-code compliance、interconnection capacity、construction constraints 與 institutional budget limits 只屬 **optional implementation context / future engineering overlay**。
+
+若未來另做 site-specific engineering assessment，可在本研究 response surface 之上再疊加這些限制；但不回寫為本論文 Layer A 的必要 constraints，也不新增 RQ。
+
+---
+
+# 12. DG 雙軌邊界
+
+## 12.1 Existing emergency DG
+
+經校方設施單位確認：
+
+- 既有 DG 供應法定 life-safety/emergency circuits；
+- 不供應本研究 aggregate campus service load；
+- 不參與正常 grid-connected operation；
+- 不可將其 nameplate capacity 直接放入 campus service model。
+
+因此在本研究 load boundary 中：
+
+\[
+P_{DG,existing}^{campus-service}=0
+\]
+
+建議論文文字：
+
+> Existing emergency diesel generators are excluded from the main resilience model because they are dedicated to statutory life-safety circuits and are not available to supply the aggregate campus service load represented in this study.
+
+### 校園 DG 實際規格是否必要
+
+- 對主模型：非必要。
+- 對 site description：有則更完整。
+- 不應用其容量替 hypothetical campus-serving DG 定標。
+
+## 12.2 Hypothetical campus-serving DG
+
+定義為：
+
+- 可在 outage 時支援 aggregate campus service load；
+- 主線不在正常運轉使用；
+- 非 NTUST 現有設備；
+- 為 framework counterfactual。
+
+目的：
+
+> 衡量允許 dispatchable fossil backup 後，可交換到多少 BESS/成本下降，以及增加多少燃料與現地排放。
+
+---
+
+# 13. DG external coverage sweep
+
+## 13.1 不進主模型自由 co-sizing
+
+DG 不與 BESS 在 Layer A 主線一起自由最佳化，原因：
+
+- 保留 zero-combustion mainline 的研究識別。
+- 避免研究問題變成一般 least-cost PV–BESS–DG sizing。
+- 直接辨識「多允許一點 fossil backup，會換到多少成本下降」。
+
+## 13.2 固定 reference power
+
+建立全研究固定的 strict reference gap：
+
+\[
+G^{ref}=\max_t\left[\alpha^{max}L_t-PV_t\right]^+
+\]
+
+建議：
+
+\[
+\alpha^{max}=1.0
+\]
+
+DG capacity：
+
+\[
+P_{DG}^{max}(\delta)=\delta G^{ref}
+\]
+
+\[
+\delta\in[0,1]
+\]
+
+### 為何固定 \(G^{ref}\)
+
+- 同一個 physical DG asset 在不同 \(\alpha,\beta\) 下保持相同容量意義。
+- 避免每個 design 都把 50% 定義成不同大小的發電機。
+- 提升跨 design 比較的可解釋性。
+
+## 13.3 主 sweep
+
+建議：
+
+\[
+\delta\in\{0,0.1,0.2,\ldots,1.0\}
+\]
+
+只套用 Layer A 後選定的 3–5 組 benchmark designs。
+
+### 局部加密
+
+若 10% sweep 顯示某區域存在快速曲率變化，再於該區域補 5% 點。
+
+例如：
+
+\[
+\delta\in\{0.40,0.45,0.50,0.55,0.60\}
+\]
+
+若無 knee，不加密、不硬找 sweet spot。
+
+## 13.4 DG-assisted residual gap
+
+在簡化的 fully-dispatchable DG assumption 下：
+
+\[
+d_t^{DG}(\alpha,\delta)=\left[\alpha L_t-PV_t-P_{DG}^{max}(\delta)\right]^+
+\]
+
+\[
+R^{DG}(\alpha,\beta,\delta)=\frac{1}{\eta_d}\max_{s\in\mathcal S_\beta}\sum_k d_{s+k}^{DG}(\alpha,\delta)\Delta t
+\]
+
+\[
+P^{out,DG}(\alpha,\delta)=\max_t d_t^{DG}(\alpha,\delta)
+\]
+
+在每個 \(\delta\) 下，重新最佳化：
+
+- BESS energy；
+- BESS power；
+- contract capacity；
+- annual normal-operation dispatch。
+
+DG capacity 本身固定，不由 optimizer 改變。
+
+## 13.5 DG dispatch assumptions
+
+主版本可採：
+
+\[
+0\le p^{DG}_\tau\le P_{DG}^{max}
+\]
+
+- 只在 outage replay 使用。
+- 不計 normal-operation revenue。
+- 若不建模 minimum loading、start-up 與 ramp，須列為 simplifying assumption。
+
+### 加強版 fuel curve
+
+\[
+Fuel_\tau=aP_{DG}^{max}y_\tau+bp^{DG}_\tau
+\]
+
+\[
+y_\tau\in\{0,1\}
+\]
+
+此形式納入 no-load/idling fuel。因 outage horizon 短，即使成為 MILP，計算量通常可控。
+
+### Fuel availability
+
+若取得油箱資料，可加：
+
+\[
+\sum_\tau Fuel_\tau\le Fuel^{available}
+\]
+
+若無資料，燃料供應視為充足，但列為 limitation。
+
+---
+
+# 14. DG 成本與碳排會計
+
+## 14.1 年度固定 preparedness cost
+
+無論是否停電都存在：
+
+\[
+C_{DG}^{fixed}=CRF_{DG}\cdot CAPEX_{DG}\cdot P_{DG}^{max}+FOM_{DG}\cdot P_{DG}^{max}
+\]
+
+每個 DG coverage case 必須支付其自己的固定成本。
+
+## 14.2 單次事件變動成本
+
+只在 outage 發生時產生：
+
+\[
+C_{DG}^{event}=DieselPrice\times Fuel^{event}
+\]
+
+報告單位：
+
+- NTD/event；
+- L/event；
+- 可另報 NTD/kWh-DG generated。
+
+## 14.3 單次事件現地碳排
+
+\[
+CO_2^{event}=EF_{diesel}\times Fuel^{event}
+\]
+
+報告：
+
+- kg-CO₂/event；
+- t-CO₂/event。
+
+若只算燃燒排放，明確稱 onsite operational emissions；不要稱完整 lifecycle emissions。
+
+## 14.4 不混用時間尺度
+
+主結果分開呈現：
+
+### Annual fixed preparedness cost
+
+\[
+C^{preparedness}=C^{BESS,fixed}+C_{DG}^{fixed}+\Delta C^{normal-op}
+\]
+
+### Event outcomes
+
+- fuel/event；
+- fuel cost/event；
+- CO₂/event。
+
+不得直接用：
+
+\[
+\frac{annual\ cost\ difference}{single-event\ CO_2}
+\]
+
+並稱為無條件 carbon price。
+
+## 14.5 條件式等效年度分析（可選）
+
+若要提供 outage-frequency sensitivity，定義：
+
+\[
+n=\text{assumed design events per year}
+\]
+
+\[
+C^{equiv annual}(n)=C^{fixed}+nC^{event}
+\]
+
+\[
+CO_2^{annual}(n)=nCO_2^{event}
+\]
+
+可示範：
+
+- \(n=0.2\)：五年一次；
+- \(n=1\)：每年一次；
+- \(n=2\)：每年兩次。
+
+但必須稱 illustrative assumption，不代表實際校園停電頻率。
+
+## 14.6 Implied abatement cost
+
+只有時間尺度對齊後才可計算：
+
+\[
+IAC(n)=\frac{C_{zero}^{equiv annual}(n)-C_{DG}^{equiv annual}(n)}{CO_{2,DG}^{annual}(n)-CO_{2,zero}^{annual}(n)}
+\]
+
+名稱可用：
+
+- implied abatement cost；
+- incremental cost of avoided onsite emissions；
+- break-even carbon value under assumed outage frequency。
+
+不得稱：
+
+- Taiwan carbon fee；
+- market carbon price；
+- universal social cost of carbon。
+
+---
+
+# 15. DG 結果呈現
+
+## 15.1 每個 coverage 點的輸出
+
+- \(P_{DG}^{max}\)；
+- \(E^N_{BESS}\)、\(P^B_{BESS}\)；
+- contract capacity；
+- annual BESS cost；
+- annual DG fixed cost；
+- annual fixed preparedness cost；
+- fuel/event；
+- fuel cost/event；
+- onsite CO₂/event；
+- BESS reduction relative to \(\delta=0\)。
+
+## 15.2 主要圖
+
+1. DG coverage vs BESS energy。
+2. DG coverage vs BESS power。
+3. DG coverage vs annual fixed preparedness cost。
+4. DG coverage vs fuel/event。
+5. DG coverage vs CO₂/event。
+6. Annual fixed cost vs CO₂/event trade-off scatter。
+7. Marginal BESS reduction per additional DG kW。
+
+## 15.3 sweet spot 的判斷規則
+
+### 可以說
+
+- best-performing tested configuration；
+- cost-minimizing coverage under baseline assumptions；
+- knee region around X–Y%；
+- marginal benefit begins to diminish beyond X%。
+
+### 不可以說
+
+- 50% is the universal optimum；
+- literature recommends 50%；
+- 50% is proven sweet spot，若只跑 25/50/100%。
+
+### 若無 knee
+
+正式結論：
+
+> DG coverage creates a smooth cost–emissions trade-off without a preference-independent optimum; the final choice depends on the decision maker’s emissions tolerance or carbon valuation.
+
+---
+
+# 16. Sensitivity analysis
+
+## 16.1 Layer A targeted sensitivity / robustness
+
+Layer A 不追求「每個參數都掃一輪」的 generic sensitivity；\(\alpha\times\beta\) 81-point grid 是核心 planning response surface，不另稱 sensitivity analysis。
+
+最低限度：
+
+- **BESS cost scale（Gate 1 CLOSED）**：10 MW-scale PNNL package事前固定為mainline；1 MW-scale package作higher-cost / reduced-scale-economy sensitivity。兩者均為exogenous cost scenarios，**不得依 preliminary 或 final optimized \(P^B\) 切換**；sensitivity必須整包更換 \(C_E,C_P,FOM,C_{rep},\lambda_k\)。
+- **SOC operating window**：10–90% mainline；20–80% 作 deliberately more restrictive technical sensitivity。
+- **reserve-floor formulation robustness（A2）**：mainline constant worst-case reserve floor vs perfect-information time-varying floor，只跑 6 個 targeted points：
+
+\[
+\alpha\in\{0.60,0.80,1.00\},
+\qquad
+\beta\in\{4,12\}\text{ h}.
+\]
+
+  constant-floor結果可直接重用81-grid mainline，只需新增6個 variable-floor solves。此檢查是 model-form screening，不是第二個 research question。若6點皆穩定即停止；只有出現 material shift時才可補 \(\beta=8\) 的3點，不自動擴張。
+- **outage-load / short-gap reconstruction**：production methods 已由 Scripts 02–05 的 site-specific validation 鎖定；不重做 full hyperparameter sweep。若 final integration audit 顯示 formal outage logs 支持一個合理的 expanded contamination/recovery envelope，再做 targeted preprocessing robustness check；未驗證前不得宣稱 expanded envelope 對 final 81-point \(R/P^{out}\) 無影響。
+- **efficiency**：A1 已鎖 \(0.90/0.90\)，不做 full efficiency sweep；只有 reviewer 明確要求才做小型 robustness check。
+
+**zero-winter 不在上列最低限度之內（v7.4 CHANGE A）。**zero-winter treatment 的 current role 是 **historical conservative validation / provenance evidence**，支持 reconstructed-PV 的 promotion/adjudication decision；它**不是** Layer A 的 mandatory sensitivity、**不是** Layer B 的 mandatory stress、**也不是** equal-status alternative planning baseline，且**不要求**任何新的 zero-winter solve。既有 Step 17c paired reconstructed-vs-zero-winter 比較保留為 historical validation/adjudication evidence，必須保存、不得靜默刪除。**本更新不以任何其他 sensitivity 取代它**：上列最低限度項目數因此減少一項，不做等量替換。§4.1.1-R / §4.1.3 / §36.2 的 single planning-layer artifact identity 與 hybrid-routing 禁止規則完全不受影響，仍為 hard requirement。
+
+### Degradation validation / benchmark（不是重新打開 B1）
+
+B1 mainline 已鎖 PNNL-calibrated adaptation of Xu et al.'s intertemporal PWL DOD-sensitive cycle-aging formulation。另做：
+
+1. 全部 final EOB + Layer A solutions 的 ex-post rainflow cycle-depth / cost validation；
+2. linear throughput cost只作 benchmark/equivalence diagnostic，不作第二個 mainline；
+3. 若 PWL-vs-rainflow cost error 或 sizing implication異常，先檢查 segment implementation / calibration，再決定是否需要額外 selected-case model-form test。
+
+不做 discount-rate sweep；\(r=5\%\) fixed and interpreted as **real**，\(n=20\) yr fixed。monetary-basis本身不是 sensitivity dimension；mainline objective固定使用constant NTD-2023。
+
+目的：
+
+- 檢查 premium 金額、response shape、knee/no-knee、binding mechanism 是否對關鍵假設穩健；
+- 驗證 constant reserve-floor 保守性是否 materially 改變 sizing；
+- 驗證 DOD-sensitive degradation implementation 的 cycle-depth fidelity，而不是增加沒有決策意義的 parameter sweep。
+
+## 16.2 DG sensitivity
+
+建議 one-at-a-time：
+
+1. BESS cost；
+2. DG CAPEX/FOM；
+3. diesel price。
+
+使用較粗 coverage：
+
+\[
+\delta\in\{0,0.25,0.5,0.75,1.0\}
+\]
+
+主版本可只套用 3 組 benchmark designs。
+
+### 計算量
+
+\[
+3\text{ designs}\times5\text{ coverage}\times3\text{ parameters}\times2\text{ alt levels}=90\text{ solves}
+\]
+
+基準值可由 main sweep 重用。
+
+## 16.3 不建議的過度計算
+
+不做：
+
+- 81 designs × 11 DG points × 所有敏感度的全交叉；
+- 3×3×3 full factorial cost assumptions；
+- 為了得到一個精確 DG 百分比而無限加密。
+
+研究價值來自 trade-off 結構，不是案例數量。
+
+---
+
+# 17. 計算量規劃
+
+## 17.1 Layer A
+
+- EOB：1 solve。
+- dense grid：81 solves。
+- A2 variable-floor targeted robustness：最多新增 6 solves（若 material difference 才選擇性補 3 個 \(\beta=8\) points）。
+- optional 24 h boundary：依選定 α 值增加 1–9 solves。
+- all-start adequacy audit：可用解析／向量化 replay，不需要把每個 outage start 重新做年度 optimization。
+- ex-post rainflow / DOD validation：post-processing，不計入 annual optimization solve 數。
+
+## 17.2 Layer B
+
+- 3 benchmark designs：81 short outage replays。
+- 5 benchmark designs：135 short outage replays。
+- 9 designs：243 short outage replays。
+
+## 17.3 DG
+
+### Main sweep
+
+- 3 designs × 11 levels = 33 solves。
+- 5 designs × 11 levels = 55 solves。
+
+### Local refinement
+
+- 每 design 約 2–4 extra points。
+
+### OAT sensitivity
+
+- 3 designs：約 90 solves。
+- 5 designs：約 150 solves。
+
+### 推薦總量
+
+- Layer A：82 左右。
+- Layer B：81–135。
+- DG main + sensitivity：123 左右（3-design 版本）。
+- 合計約 286–340 個主要 solve/replay，且不少為短 horizon、可平行或重用。
+
+---
+
+# 18. 驗證與 sanity checks
+
+## 18.1 Data / chronology audit
+
+正式 EOB 或 Layer A 前必須 assert：
+
+1. exactly 8,760 intervals；
+2. first model timestamp = 2024/11/01 00:00；
+3. last model timestamp = 2025/10/31 23:00；
+4. timezone = Asia/Taipei；
+5. no duplicate timestamps；
+6. every adjacent timestep = 1 h；
+7. no missing timestamps；
+8. model calendar/TOU labels由 interval-start timestamp 重建；
+9. all reconstructed intervals有 provenance flags；
+10. outage-contaminated observations 未經明確 reconstruction decision 不得直接作 baseline；
+11. `pre_system` / `missing_winter` PV intervals保留原始 unavailable-observation status，另以 explicit provenance標記 v7.3 reconstructed-mainline values；不得覆寫為 observed，也不得在 Layer A/B hybrid回退為 zero；
+12. load/PV 單位一致，negative/nighttime PV 等基本異常完成檢查。
+
+另保留：
+
+- Scripts 02 / 04 / 04b 的 pseudo-gap / head-to-head validation artifacts；
+- 若 formal outage-log evidence 支持 expanded contamination/recovery envelope，執行 targeted preprocessing robustness check；否則不自行發明 recovery window；
+- final integrated input 完成後重算 81-case \(R/P^{out}\)，作為 downstream data-integration consistency check。
+
+## 18.2 公式與單位
+
+- kW × h = kWh。
+- reserve 公式明列 \(\Delta t\)。
+- \(\eta_c,\eta_d\) 只套用一次，AC-side power / battery-side energy boundary 一致。
+- \(C_E\) 的 denominator 與 \(E^N\) nameplate definition 一致。
+- raw CAPEX → currency/base-year normalization → CRF annualization；順序不得混淆。
+- FOM 若 already annual 不再乘 CRF。
+- annual fixed cost 與 event cost 不混用。
+
+## 18.3 BESS state / efficiency / degradation audit
+
+### Aggregate state
+
+- \(E^U=0.8E^N\) under mainline 10–90% SOC。
+- annual normal operation：\(0.10E^N+R\le e_t\le0.90E^N\)。
+- \(0.8E^N\ge R(\alpha,\beta)\)。
+- mainline \(\eta_c=\eta_d=0.90\)；AC-side power / battery-side stored-energy boundary一致且效率只套一次。
+- aggregate state-balance residual接近0；annual \(e_T=e_0\) 正確。
+- no simultaneous charge/discharge audit。
+- CAPEX charged to \(E^N\)，not \(E^U\)。
+
+### Xu-derived intertemporal PWL degradation structure
+
+- \(\lambda_k\) 由 final \(C_{rep}\) + locked PNNL DOD/cycle-life table 自動產生；不得 hard-code legacy slopes。
+- \(x_t=e_t-SOC_{min}E^N=\sum_ke_{t,k}^{seg}\) 全年一致。
+- \(0\le e_{t,k}^{seg}\le(b_k-b_{k-1})E^N\)。
+- segment dynamics residual接近0；\(e_{T,k}^{seg}=e_{0,k}^{seg}\)。
+- aggregate \(p_t^{ch/dis}\) 等於 segment-level power和。
+- cycling cost 使用 battery-side discharged energy \(p_{t,k}^{dis}\Delta t/\eta_d\)。
+- 明確測試 multi-hour deep-discharge synthetic trajectory，確認不會像 Harry hourly-reset proxy 一樣每小時重新回到 cheapest segment。
+- 保存 segment energy/cost diagnostics、realized SOC range、maximum hourly discharge fraction。
+- ex-post rainflow cycle-depth/cost 與 PWL結果比較；若差異異常，先修 implementation/calibration，不以文字合理化。
+
+B2 accounting不另設 physical-life ≥20 yr hard gate；20 yr只作 financial analysis horizon。
+
+## 18.4 Layer A adequacy / outage semantics
+
+- EOB/economic、\(R\)、\(P^{out}\)、binding classification、all-start outage replay與 baseline Layer B 的 PV artifact identity相同，且對應 v7.3 reconstructed-mainline input；hybrid/no-credit routing為 hard failure。
+- \(\mathcal S_\beta\) 僅含完整 trajectory位於 case year內的 starts；不允許 year-end circular wrap。
+- \(R\) 對 \(\alpha,\beta\) 原則上非遞減；\(P^{out}\) 對 \(\alpha\) 非遞減。
+- annual normal-operation reserve floor全年滿足：\(e_t\ge SOC_{min}E^N+R\)。
+- outage replay initial state = \(SOC_{min}E^N+R\)。
+- outage replay中 **不得** 繼續要求 reserve floor；只要求 technical \(SOC_{min}E^N\le e_\tau\le SOC_{max}E^N\)。
+- Layer A consistency replay grid import=0，且不利用 outage PV surplus再充電。
+- replay terminal只要求 \(e_\beta\ge SOC_{min}E^N\)，不要求恢復 \(R\)。
+- valid-start baseline exhaustive replay皆無 shortfall；binding window與預計算一致。
+- 對 energy-binding worst-case window，terminal state應接近 \(SOC_{min}E^N\) within tolerance。
+- Layer B 可允許 PV-surplus outage recharge；不可和 Layer A consistency semantics混用。
+- 若 audit失敗，先修模型，不得靠文字解釋。
+
+## 18.5 Billing / contract-capacity audit
+
+至少保存：
+
+- 12 個 usage periods 的四時段 Taipower billed maxima與 overall \(B_m=\max_qB_{m,q}\)；
+- regular CC 與 supplementary CC components（NTUST case應固定為0）；
+- bill-title month 與 actual usage-period start/end；
+- 2025/01–10 十個 calibration-period historical hourly grid maxima \(H_m\)；
+- \(B_m/H_m\)、fitted values、residuals；
+- through-origin reproduced \(\kappa\)（production scripted reproduction已完成、約1.01037；future rerun若不同則追查資料/period alignment，不硬保留舊值）；
+- gross-load vs observed-grid-import comparison；
+- 5/16–10/15 summer-date audit；
+- billing category / tariff source / effective dates；
+- post-solve \(D_{m,q}^{exact}\)、\(D_m^{exact}\) 與 cost-facing epigraph/exceedance variables 的一致性檢查。
+
+至少手算並由 code 精確重現：
+
+- 2025/09 usage period（2025/10 標題帳單）：regular CC 5000 kW；四時段 maxima 4896 / 5016 / 3352 / 3776；half-peak exceedance 16 kW；\(16\times166.9\times2=5,340.8\) NTD。
+
+另選至少一個不同 season/TOU binding pattern 的月份核對 energy charge、basic charge與 over-contract non-duplication logic。
+
+## 18.6 DG audit
+
+- \(\delta=0\) 必須重現 PV+BESS mainline。
+- DG capacity 隨 \(\delta\) 線性增加。
+- BESS requirement 原則上不應隨 DG coverage 增加而上升；若上升需解釋成本 coupling 或程式錯誤。
+- fixed cost 與 event cost 分開。
+- fuel 與 CO₂ 單位一致。
+- 不允許 existing emergency DG 被誤標成 modeled campus-serving DG。
+
+## 18.7 Solver reporting
+
+每個 case 保存：
+
+- status；
+- objective；
+- runtime；
+- MIP gap（若有 binary）；
+- infeasibility diagnostics；
+- framework version；
+- parameter-registry version/hash；
+- input file hash；
+- code/version hash。
+
+---
+
+# 19. 舊結果的處理
+
+## 19.1 原 81-point Layer A
+
+原 81-point Layer A 不得直接升級為 final results。
+
+原因不是 Layer A 架構失效，而是 production specification 已實質更新：
+
+- state 改以 \(e_t\) 為 primary stored-energy state；
+- SOC window 鎖定 10–90%，reserve floor 明確位於 SOCmin 之上；
+- all-start outage windows 改為 case-year valid starts，移除 circular wrap；
+- Load/PV 改採 observed/baseline 分離與 outage-contamination reconstruction；
+- tariff calendar、billing proxy 與 scripted-reproduced \(\kappa\) 已鎖定；
+- BESS capital-cost/annualization 改為 PNNL v2024-derived 10 MW mainline package（1 MW sensitivity）+ constant NTD-2023 + \(r=5\%\) real、\(n=20\)；
+- degradation 改為 PNNL-calibrated adaptation of Xu et al.'s intertemporal PWL DOD-sensitive cycle-aging formulation；Harry hourly-reset proxy 不再是 final mainline。
+
+因此 legacy與v7.2/Step-17 81-point outputs只保留其原始 regression、historical、diagnostic或candidate evidence角色；此歷史限制不適用於後來形成並已接受的 v7.3 production evidence。
+
+Current accepted distinction：
+
+- accepted EOB 已完成並 **CLOSED / ACCEPTED**：`results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556`；
+- accepted core-three 已完成並 **CLOSED / ACCEPTED**：`results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55`，包含 \((\alpha,\beta)=(0.60,4\text{ h}),(0.80,8\text{ h}),(1.00,12\text{ h})\)；
+- Full81 = **NOT YET EXECUTED**。
+
+R1 independent audit已裁定 accepted EOB與accepted core-three在 v7.4 scientific delta下持續有效，且 **METHODOLOGY RERUN REQUIRED = NO**。R2 不建立 EOB或core-three rerun requirement。未來若另經授權執行 Full81，才對其結果與legacy outputs逐項解釋差異；不得把 Full81 pending狀態倒推為 EOB/core-three pending。
+
+## 19.2 原 243 Layer B replays
+
+定位為：
+
+- preliminary debugging / exploratory results。
+
+不得直接作 final Layer B，因為：
+
+- design subset 尚未依 Layer A 結果正式選定；
+- archetype selection 需預先註冊；
+- perfect foresight 語意需鎖定；
+- coverage 不得解讀為 reliability probability。
+
+## 19.3 原 27 DG results
+
+定位為：
+
+- sparse exploratory comparison。
+
+不得保留的舊結論：
+
+- 「50% 是 sweet spot」；
+- 「119 萬 NTD/t 是碳價」。
+
+可保留的用途：
+
+- 程式介面測試；
+- 初步證明 DG 可以大量替代 BESS；
+- 指導後續 0–100% sweep。
+
+## 19.4 原 design-basis anchor
+
+- 從 sizing 核心移除。
+- 可保留作歷史方法說明或 ex-post illustrative window。
+- 不再作為 arbitrary-start guarantee 的來源。
+
+---
+
+# 20. 建議章節結構
+
+## Chapter 1 Introduction
+
+1. 低碳轉型與停電服務連續性。
+2. 同一 BESS 同時承擔正常運轉與 resilience 的管理衝突。
+3. 既有研究多聚焦成本最佳化、單一 outage 或一般 microgrid sizing；本研究聚焦台灣高壓用戶 CC 經濟與 all-start service requirements 的整合量化。
+4. 研究問題 RQ1–RQ4。
+5. 貢獻與限制。
+
+## Chapter 2 Literature Review
+
+### 2.1 BESS multi-service economics
+
+- TOU、peak shaving、contract capacity、degradation。
+
+### 2.2 Microgrid resilience and outage survivability
+
+- critical-load/service requirement；
+- deterministic design event；
+- stochastic islanding；
+- all-start/worst-case preparedness。
+
+### 2.3 SOC reserve and preparedness
+
+- minimum SOC；
+- economic cost vs disaster preparedness。
+
+### 2.4 Fixed-design validation and stress testing
+
+- ENS、shortfall、full-trajectory evaluation；
+- perfect foresight vs executable operation。
+
+### 2.5 PV–BESS–DG trade-offs
+
+- life-cycle cost；
+- DG reliability；
+- cost–emission Pareto；
+- sensitivity。
+
+### 2.6 Research gap
+
+不要宣稱沒有任何相關研究；應定位為：
+
+> 缺少一個在台灣校園高壓用戶 tariff/CC 制度下，以 dense service-target response surface、全年 all-start deterministic reserve、fixed-design off-design test 與 external DG counterfactual 共同構成的決策量化案例。
+
+## Chapter 3 Methodology
+
+1. System boundary and formal case-year data pipeline。
+2. Economic-only baseline。
+3. \(\alpha\)、\(\beta\)、aggregate service proxy 定義。
+4. all-start valid-start energy reserve。
+5. power adequacy。
+6. BESS state/SOC/reserve policy。
+7. BESS cost annualization、billing proxy、PWL degradation。
+8. annual BESS/CC model。
+9. Layer A experiment。
+10. benchmark selection rule。
+11. Layer B stress test。
+12. DG counterfactual。
+13. sensitivity、validation、limitations。
+
+## Chapter 4 Results and Discussion
+
+### 4.1 EOB baseline
+
+### 4.2 Layer A response surface
+
+- capacities；
+- costs；
+- marginal changes；
+- binding mechanisms；
+- knee/no-knee。
+
+### 4.3 Implementation boundary
+
+- 明確說明 Layer A capacities 是 modeled planning requirements。
+- site/fire-code/interconnection/budget 不進 mainline optimization。
+- 若取得相關資料，只作 discussion context，不新增 core result layer。
+
+### 4.4 Benchmark selection
+
+先說規則，再列選點。
+
+### 4.5 Layer B fixed-design capability
+
+- ENS/nENS/WHS；
+- failure thresholds；
+- perfect-foresight caveat。
+
+### 4.6 DG counterfactual
+
+- coverage sweep；
+- BESS substitution；
+- annual fixed cost；
+- event fuel/CO₂；
+- knee/no-knee；
+- sensitivity。
+
+### 4.7 Management implications
+
+每一組圖必須回答：
+
+> So what should a campus planner know or do differently?
+
+## Chapter 5 Conclusion
+
+1. 回答 RQ1–RQ4。
+2. 給三至五條決策規則。
+3. 清楚限制。
+4. Future work：critical-load inventory、stochastic outage frequency、rolling control、network constraints、DG reliability/co-sizing、site engineering feasibility。
+
+---
+
+# 21. 預期貢獻的安全寫法
+
+## Contribution 1
+
+建立一個將 annual tariff/contract-capacity economics 與 historical all-start outage adequacy 結合的 campus PV–BESS planning framework。
+
+## Contribution 2
+
+以 dense \((\alpha,\beta)\) response surface 取代少數預設點，量化容量、成本、邊際成本與 binding mechanisms。
+
+## Contribution 3
+
+提出一個在 Layer A 結果後選擇 benchmark designs 的 fixed-design off-design stress-test workflow，辨識 PV deterioration 與 demand growth 的失效條件。
+
+## Contribution 4
+
+以外生 DG coverage sweep 呈現 zero-combustion preparedness 與 fossil-assisted preparedness 的 BESS–cost–emissions trade-off，同時避免把 DG 改成主線 least-cost co-sizing 問題。
+
+### 貢獻類型
+
+- integrative；
+- case-based；
+- decision-quantification；
+- management-oriented。
+
+不是新最佳化演算法或普遍理論。
+
+---
+
+# 22. 主要 limitations
+
+1. \(\alpha\) 是 aggregate service ratio proxy，不是真實 critical-load inventory。
+2. historical adequacy claim 只針對正式 case year 內具有完整 \(\beta\)-hour trajectory 的 valid historical starts 與模型假設。
+3. all-start worst-case reserve 是 conservative deterministic preparedness，不是 probabilistic reliability optimization。
+4. BESS siting、fire-code、interconnection、construction 與 institutional budget 不進主模型，因此輸出是 modeled planning requirements，不是 deployable engineering recommendation。
+5. hourly optimization 不能精確重現 15-min metering、intra-hour BESS dispatch、sub-hourly SOC/ramping 或瞬時 power adequacy；\(\kappa\) 只校準 monthly billing-demand proxy，不是 15-min profile reconstruction。
+6. \(\kappa\) 以 **pre-BESS historical grid-import profiles** 與實際帳單校準後套用到 BESS reshaped grid profiles；這隱含 hourly-to-15-min multiplicative relationship在 BESS dispatch後仍近似可轉移。缺少 post-BESS 15-min metering時無法完全驗證此 transferability。
+7. 2024/11–12 prolonged PV observations 不可用；planning layer 採 model-based、weather-informed、separately validated reconstruction，因此 annual economics 與 deterministic historical-start adequacy 部分依賴 reconstruction validity，且仍有 model/form uncertainty。它不是 observed meter data、exact ground truth、exact recovery 或 probabilistic PV forecast model，也不是 online forecast information。prior zero-winter annual treatment 保留作 **historical conservative validation / provenance evidence**（不是 required downstream sensitivity，見 §36.1）。adequacy 結論仍是 model-conditional，不能證明 future-outage reliability 或 physical islanding capability。
+8. degradation mainline雖為 intertemporal DOD-sensitive convex PWL，但仍是 cycling economic-wear approximation；未顯式建模 calendar aging、temperature、C-rate、dwell SOC、dynamic SOH、augmentation與 replacement scheduling。
+9. PNNL DOD–cycle-life points是 calibration data；三段有效 PWL為本研究的 convex approximation。ex-post rainflow用於 validation，但不代表模型可預測 cell-level physical lifetime。
+10. 20-year horizon是 financial analysis period，不是 battery physical lifetime guarantee，也不是「implied life 必須 ≥20 yr」的 feasibility requirement。
+11. outage replay若使用 PV，隱含 PV–BESS system具有適當 island-capable controls/protection/grid-forming capability；本研究不做 inverter/protection/interconnection engineering design。Layer B 的 \(\gamma_{PV}=0\) 只提供保守 capability boundary，不能替代 islanding-engineering validation。
+12. Layer B perfect foresight 是 capability upper bound。
+13. archetype × PV × demand 是 structured stress design，不是概率抽樣。
+14. 主線未納入配電網路、component forced outages、BESS availability 或 DG reliability。
+15. hypothetical DG 不是 NTUST existing emergency DG。
+16. 若沒有 outage frequency，annual fixed preparedness cost 與 event fuel/emissions分開報告。
+17. onsite CO₂ 不等同完整 lifecycle emissions。
+18. 參數與結論轉移到其他場域前需重新校準 load、PV、tariff、billing proxy、cost 與 infrastructure context。
+
+# 23. Q1／權威文獻錨點與用途
+
+> 下列文獻用來支持方法方向，不代表它們原封不動使用本研究的 \(R(\alpha,\beta)\) 公式或研究參數。
+
+## 23.1 Resilience valuation and islandable premium
+
+- Laws, N., Anderson, K., Li, X., McLaren, J., & DiOrio, N. (2018). **Impacts of Valuing Resilience on Cost-Optimal PV and Storage Systems for Commercial Buildings.** *Renewable Energy, 127*.  
+  用途：支持 resilience capability 會形成額外 islandable premium，且應與停電服務價值比較。
+
+## 23.2 Stochastic islanding and uncertainty of outage timing
+
+- Wu, R., & Sansavini, G. (2020). **Integrating reliability and resilience to support the transition from passive distribution grids to islanding microgrids.** *Applied Energy, 272*, 115254. https://doi.org/10.1016/j.apenergy.2020.115254  
+  用途：支持 islanding occurrence/duration 具有不確定性，單一已知 outage 不是唯一研究路徑。
+
+- Lee, J., Joung, S., & Lee, K. (2024). **Scalable optimization approaches for microgrid operation under stochastic islanding and net load.** *Applied Energy, 374*, 124040. https://doi.org/10.1016/j.apenergy.2024.124040  
+  用途：支持 stochastic islanding、sequential realization 與 non-anticipative operation 是更高階方法；本研究因缺可信機率資料採 deterministic worst-case。
+
+## 23.3 SOC reserve and preparedness
+
+- Son, Y., Woo, H., Noh, J., Dehghanian, P., Zhang, X., & Choi, S. (2024). **Optimization of energy storage scheduling considering variable-type minimum SOC for enhanced disaster preparedness.** *Journal of Energy Storage, 93*, 112366. https://doi.org/10.1016/j.est.2024.112366  
+  用途：支持以 minimum SOC/reserve 犧牲部分經濟性以提升 outage preparedness。
+
+## 23.4 Backup capability across load and outage conditions
+
+- Gorman, W., Barbose, G., Carvallo, J. P., Baik, S., Miller, C., White, P., & Praprost, M. (2023). **County-level assessment of behind-the-meter solar and storage to mitigate long duration power interruptions for residential customers.** *Applied Energy, 342*, 121166. https://doi.org/10.1016/j.apenergy.2023.121166  
+  用途：支持 whole-load/critical-load fraction、不同 outage duration 與 temporally aligned load/PV backup assessment。
+
+## 23.5 Annual chronology and cyclic storage boundary
+
+- Gabrielli, P., Gazzani, M., Martelli, E., & Mazzotti, M. (2018). **Optimal design of multi-energy systems with seasonal storage.** *Applied Energy, 219*, 408–424. https://doi.org/10.1016/j.apenergy.2017.07.142  
+  用途：支持 long-horizon storage scheduling 與合理的 cyclic boundary treatment。
+
+## 23.6 PV–battery–diesel resilience and reliability
+
+- Marqusee, J., Becker, W., & Ericson, S. (2021). **Resilience and economics of microgrids with PV, battery storage, and networked diesel generators.** *Advances in Applied Energy, 3*, 100049. https://doi.org/10.1016/j.adapen.2021.100049  
+  用途：支持 hybrid microgrid 的 lifecycle economics、DG reduction opportunities 與 component reliability 必須完整考慮。
+
+- Marqusee, J., & Jenket, D. (2020). **Reliability of emergency and standby diesel generators: Impact on energy resiliency solutions.** *Applied Energy*, 114918. https://doi.org/10.1016/j.apenergy.2020.114918  
+  用途：支持 emergency DG 並非完全可靠；若未來擴充 reliability model，不應假設 DG 100% available。
+
+## 23.7 Cost–emissions Pareto and DG sizing
+
+- **Multi-objective optimization minimizing cost and life cycle emissions of stand-alone PV–wind–diesel systems with batteries storage.** (2011). *Applied Energy, 88*(11), 4033–4041. https://doi.org/10.1016/j.apenergy.2011.04.019  
+  用途：支持成本與排放應以 Pareto trade-off 呈現，而非預先指定單一權重或固定最佳 DG 比例。
+
+- **Optimal allocation and sizing of PV/Wind/Split-diesel/Battery hybrid energy system for minimizing life cycle cost, carbon emission and dump energy of remote residential building.** (2016). *Applied Energy, 171*, 153–171. https://doi.org/10.1016/j.apenergy.2016.03.051  
+  用途：支持 PV–battery–diesel 系統需同時看 lifecycle cost、CO₂ 與 unused energy。
+
+- **A multi-objective optimization model for sizing an off-grid hybrid energy microgrid with optimal dispatching of a diesel generator.** (2023). *Journal of Energy Storage, 68*, 107621.  
+  用途：支持 DG capacity/loading 與 battery capacity 應系統化研究；不可用少數離散點宣稱通用 optimum。
+
+- **New modelling approach for the optimal sizing of an islanded microgrid considering economic and environmental challenges.** (2023). *Energy Conversion and Management, 277*, 116636. https://doi.org/10.1016/j.enconman.2022.116636  
+  用途：支持成本、lifecycle emissions 與 sensitivity analysis 的共同呈現。
+
+- **Optimal sizing and energy management of a microgrid: A joint MILP approach for minimization of energy cost and carbon emission.** (2024). *Renewable Energy*, 120186. https://doi.org/10.1016/j.renene.2024.120186  
+  用途：支持以 Pareto front 呈現 economic–environmental trade-off。
+
+## 23.8 BESS efficiency boundary
+
+- Qi, N., Huang, K., Fan, Z., & Xu, B. (2025). **Long-term energy management for microgrid with hybrid hydrogen-battery energy storage: A prediction-free coordinated optimization framework.** *Applied Energy, 377*, 124485. https://doi.org/10.1016/j.apenergy.2024.124485  
+  用途：作 system-level BESS charge/discharge efficiency formulation 的近期 Q1 precedent；本研究據此鎖定 \(\eta_c=\eta_d=0.90\)。PNNL system-level round-trip efficiency另作 boundary-consistency cross-check，而不直接對稱拆成0.91/0.91。
+
+## 23.9 DOD-sensitive cycling degradation
+
+- Xu, B., Zhao, J., Zheng, T., Litvinov, E., & Kirschen, D. S. (2018). **Factoring the Cycle Aging Cost of Batteries Participating in Electricity Markets.** *IEEE Transactions on Power Systems*.  
+  用途：支持以 convex piecewise-linear marginal cycle-aging costs與跨時間 segment energy states近似 cycle-depth aging，並可與 rainflow benchmark比較。production implementation 必須保留 intertemporal segment-state semantics；不得把 Harry-style hourly-reset proxy誤稱為 Xu-equivalent。
+
+- Shi, Y., Xu, B., Tan, Y., & Zhang, B. (2018). **A Convex Cycle-based Degradation Model for Battery Energy Storage Planning and Operation.**  
+  用途：支持 rainflow-based cycle degradation cost 的 convexity與 planning/operation relevance；本研究不嵌 full rainflow optimization，而把 rainflow降為 ex-post validation。
+
+PNNL LFP DOD–cycle-life points與 v2024 cost package是 technical/economic calibration source；完整版本、頁碼、raw/effective-DOD interpretation 與 parameter lineage統一保存於 literature/parameter registry。
+
+## 23.10 BESS cost source pointer
+
+Blocker 1/7 已將 mainline BESS cost source 改為 PNNL v2024-derived LFP planning cost package；詳細資料列、版本、currency conversion、linearization 與 source pages **不在本 framework 重複列出**，統一移至 literature/parameter registry。
+
+舊 NREL cost sensitivity 可保留為 legacy comparison source，但不再是 mainline BESS cost basis。
+
+## 23.11 Temporal-resolution evidence pointer
+
+hourly-resolution limitation 的近期主證據改以 **Omoyele et al. (2024)** 與 **Browne & Williams (2023)** 為主。它們的角色是支持：hourly aggregation 對 annual/planning quantities 可作近似，但對 power sizing、peak demand、battery operation / SOC 與 reliability-related quantities 可能更敏感。
+
+這些文獻 **不提供** 本研究的 \(\kappa=1.01037\)，也不提供 through-origin estimator；\(\kappa\) 是 §4.3 的 NTUST site-specific empirical calibration。完整 citation、source pages、claim/anti-claim 與 evidence role 統一放入 literature evidence registry。
+
+---
+
+# 24. 最終決策邏輯圖（文字版）
+
+```text
+Raw NTUST Load / PV / bills
+            │
+            ▼
+Formal case-year data pipeline
+(hour-ending → interval-start; observed/base split;
+outage-gap reconstruction; provenance flags)
+            │
+            ├───────────────┐
+            ▼               ▼
+Historical billing      Planning baseline
+calibration view        Load / available PV
+(observed Load-PV)            │
+            │                 │
+            ▼                 │
+billing_demand_registry       │
++ calibrate_kappa.py          │
+κ + 10-pair audit table       │
+            │                 │
+            └────────┬────────┘
+                     ▼
+Economic-only baseline (EOB)
+annual regular CC + 10–90% SOC
+ηc = ηd = 0.90
+PNNL-v2024 CAPEX + CRF
+PNNL-calibrated adaptation of Xu et al.'s intertemporal PWL DOD-sensitive cycle-aging formulation
+                     │
+                     ▼
+For each α,β: scan every valid historical outage start
+    ├─ energy requirement R(α,β)
+    ├─ power requirement Pout(α)
+    └─ ex-post binding critical window
+                     │
+                     ▼
+Annual normal-operation optimization
+constant reserve floor:
+e_t ≥ SOCmin E^N + R
+                     │
+                     ▼
+Separate outage consistency replay
+start = SOCmin E^N + R
+grid = 0; technical SOCmin only;
+no reserve restoration requirement
+                     │
+                     ▼
+Dense Layer A cost–capacity response surface
++ exact post-solve billing maxima
++ ex-post rainflow/DOD validation
+                     │
+                     ├─ 6-point reserve-floor robustness
+                     ▼
+Select benchmark designs only after Layer A
+                     │
+                     ▼
+Fixed-design Layer B capability stress test
+(archetype × PV availability × demand growth;
+outage PV-surplus recharge allowed)
+                     │
+                     ▼
+Failure thresholds / ENS / normalized shortfall
+
+Implementation-stage boundary:
+site / fire-code / interconnection / budget
+are NOT Layer A constraints in this thesis.
+
+Separate extension:
+Selected Layer A designs
+        │
+        ▼
+External DG coverage sweep δ = 0…100%
+        │
+        ├─ re-optimize BESS/CC at fixed DG capacity
+        ├─ annual fixed preparedness cost
+        ├─ fuel and CO₂ per outage event
+        └─ cost–emissions trade-off / knee or no-knee
+```
+
+# 25. v7.4 candidate 後續 governance 執行順序
+
+## Phase 1：v7.4 governance acceptance（documentation-only；不含 solve）
+
+1. independent read-only audit 本 additive v7.4 framework candidate；candidate 不得 self-promote。
+2. audit acceptance 後才建立並獨立接受 Registry v7.4 successor；Registry v7.3 R3 在此之前保持 current accepted evidence authority，且永久保持 immutable accepted 記錄。
+3. 建立 Layer A robustness/preregistration checkpoint 並獨立審核；本 pass 未建立它。
+4. 完成 final cross-document alignment audit（Framework ↔ Registry ↔ checkpoint）。
+5. 依獨立審核結果決定是否需要 production-authority re-freeze；本 pass 未執行 re-freeze。
+6. historical billing calibration 維持 observed Load/PV（historical empirical layer）；\(\kappa\) 的 estimator、calibration period 與 production value 不變，且不得由 reconstructed planning PV 重新估計。
+7. 保留且驗證既有 Gate 1/2、tariff、degradation、SOC、efficiency、annual regular CC、alpha–beta、\(9\times9=81\) case universe、non-circular starts 與 reserve-formula guards。
+8. 不在本 framework-only step 執行 solve、EOB rerun、core-three rerun、representative cases、Step 11A/11B/11C 或 final 81-point production run。
+9. **不要求**任何新的 zero-winter solve（見 §36.1）。
+
+## Phase 2：later Layer A preregistration / Full81 gate（須另行授權）
+
+Accepted EOB與accepted core-three已完成，且 R1 independent audit裁定兩者在v7.4下持續有效、無方法 rerun requirement；不得在本 governance sequence中把它們重新列為待執行工作。Full81仍為 `NOT_YET_EXECUTED / NOT AUTHORIZED`。如未來另行授權，才依已接受的方法與屆時完成的preregistration/authority gates執行：
+
+1. 81-point dense grid（Full81）；
+2. all-start Layer A analytical-consistency outage audit；
+3. ex-post exact billing diagnostics + rainflow/DOD validation；
+4. 6-point constant-vs-variable reserve-floor robustness；只有 material difference 才補 3 個 \(\beta=8\) points；
+5. response surfaces、marginal costs、binding-window analysis、knee/no-knee。
+
+## Phase 3：Benchmark selection
+
+1. 在查看 Layer B 結果前凍結 selection rule。
+2. 選 3–5 組 designs。
+3. 原本九點降為候選，不作預設 representative set。
+
+## Phase 4：Layer B final run
+
+1. 預先註冊 archetypes。
+2. 27 scenarios/design。
+3. outage replay使用 technical SOC floor；可允許 PV-surplus recharge。
+4. 輸出 ENS、nENS、WHS、WHSR、structured coverage。
+5. Layer B 定位為 perfect-foresight capability upper bound。
+
+## Phase 5：DG extension
+
+1. 建立 fixed \(G^{ref}\)。
+2. 跑 0–100% 每 10% coverage。
+3. 視曲線局部加密。
+4. 完整 annual fixed cost accounting。
+5. 報 fuel/event 與 CO₂/event。
+6. 做 BESS cost、DG cost、diesel price OAT sensitivity。
+7. 不再使用「50% sweet spot」或無條件 carbon-price敘事。
+
+## Phase 6：論文與口試
+
+1. 方法章先鎖定 claim boundary。
+2. Chapter 4 每張圖回答 management implication。
+3. limitation 主動寫出，不等口委指出。
+4. 口試能白話解釋：energy vs power、constant reserve vs outage consumption、annual vs replay state semantics、billing usage period、\(\kappa\)、DOD-sensitive PWL vs hourly throughput proxy、rainflow validation、financial horizon vs physical lifetime、perfect foresight、annual/event accounting。
+
+# 26. 一頁式口試定調
+
+> 本研究不是預測停電機率，也不是替校方選擇唯一服務水準或提供 site-specific BESS 工程設計。研究先將 NTUST 原始時序整理成固定 2024-11-01 至 2025-10-31 case-year chronology，並明確區分兩個 epistemic layers：**historical empirical / calibration layer 一律使用 observed data**，**planning / counterfactual model layer 一律使用 accepted reconstructed full-year PV**，不允許 hybrid routing。歷史帳單校準屬前者，只使用 observed Load–PV，並由實際 usage periods 的四時段 billed maxima 建立 site-specific hourly-to-15-min demand proxy \(\kappa\)；\(\kappa\) 是 billing-demand representation proxy，不是 15-min chronology reconstruction，也不消除 hourly resolution limitation。年度 planning 的 best-estimate baseline 使用含 1,463-hour corrected winter reconstruction 的同一套 full-year PV；該 reconstruction 是 model-based、weather-informed、separately validated planning estimate，不是 observation、exact truth 或 exact recovery；prior zero-winter treatment 則保留為 **historical conservative validation / provenance evidence**，不是必跑的 sensitivity。對每組服務比例 \(\alpha\) 與設計停電時長 \(\beta\) 掃描所有 valid historical starts，建立 conservative energy reserve \(R\) 與瞬時 power requirement。正常運轉 optimization 使用同一套 LFP BESS、10–90% SOC、固定 \(\eta_c=\eta_d=0.90\)、SOCmin 以上 constant worst-case reserve、annual regular contract capacity、**PNNL 10 MW-scale mainline cost package（1 MW sensitivity）與 constant NTD-2023 / real-5% accounting basis**，以及 PNNL-calibrated adaptation of Xu et al.'s intertemporal PWL DOD-sensitive cycle-aging formulation。停電 adequacy 不在 annual model 內用同一 reserve floor 硬撐，而以獨立 replay 從最低 preparedness state 開始、允許消耗 reserve 至 technical SOCmin；Layer A consistency replay 使用同一 reconstructed PV 但不利用 outage PV surplus recharge，Layer B capability stress test 則可允許。billing maxima 與 DOD/rainflow diagnostics 都在 solve 後由實際 dispatch 重算。完成 dense Layer A response surface 與 targeted robustness 後才選 benchmark designs 做 fixed-design Layer B stress test；existing emergency DG 不進主線，hypothetical campus-serving DG 另以外生 coverage sweep 呈現年度固定成本與單次事件燃料/碳排 trade-off。
+
+# 27. 與 `session_summary_0715.md` 的逐項涵蓋稽核
+
+> **目的**：本節不是新增研究方法，而是確保 2026-07-15 摘要中所有有效資訊都已在本框架中被保留、修正、降級或明確標示為待核實。原摘要同時混合了「方法決策、初步結果、專案待辦與舊版錯誤敘事」；因此新版不應逐字照搬，而應依資訊性質重新安置。
+
+## 27.1 稽核結論
+
+截至本版，`session_summary_0715.md` 的內容分成五種處理結果：
+
+1. **保留並細化**：研究定位、EOB、dense Layer A、SOC reserve、R3/R4、annual state boundary、Layer B fixed-design stress test、DG 雙軌、敏感度與口試推導。
+2. **修正後保留**：\(\alpha,\beta\) 的來源、single anchor 的角色、Layer B design subset、pass-rate 解讀、DG sweet spot、碳價解讀。
+3. **降級為 legacy/exploratory evidence**：原 81-point Layer A、243 Layer B、27 DG results。
+4. **保留為專案管理附錄**：校方設施邊界紀錄、外部資料核實、舊輸出檔名、工作順序與原定 deadline；existing emergency DG 與 BESS site information 均僅保留為 optional documentation / implementation context，不是 production-model prerequisite。
+5. **明確刪除的錯誤主張**：共用 design-basis anchor 建立任意起點保證、九點事先具有代表性、50% DG 已證明為最佳、119 萬 NTD/t 是無條件碳價、structured pass rate 等同可靠度機率。
+
+因此，本版的「涵蓋」不是逐句複製，而是確保每一條舊資訊都有明確去向。
+
+## 27.2 研究定位的對照
+
+| `session_summary_0715` 內容 | 本版處理 | 目前狀態 |
+|---|---|---|
+| 低碳轉型使 PV+BESS 承擔服務連續性成本 | §1.1、§1.2、§21 | 保留並細化 |
+| NTUST 降為 demonstration | §0.1、§1.2 | 保留 |
+| 輸出是曲線而非單值 | §0.1、RQ1–RQ2、§8 | 保留並發展成 dense response surface |
+| \(\alpha,\beta\) 為外部政策輸入 | §0.1、§3.2–3.3 | **修正**為 decision-maker-specified planning targets；只有有法規證據時才稱 policy requirement |
+| 不替校方選唯一 \(\alpha\) | §0.1、§1.2 | 保留 |
+| 題目待老師定稿 | §1.3 | 保留 |
+
+## 27.3 Layer A 的對照
+
+| 舊內容 | v6.2 處理 | 目前狀態 |
+|---|---|---|
+| 年化投資＋TOU＋CC 基本費＋兩段超約＋退化 | §4、§7.8 | 結構保留；CAPEX/annualization、billing proxy、degradation numerical method 已依 audit 更新 |
+| PV 外生 sunk | §3.1、§7.8 | 保留 |
+| 全年 \(e_t\ge R\) | §5.1、§7.5 | **修正**為 \(e_t\ge SOC_{\min}E^N+R\) |
+| outage 起點 \(e_0=R\) | §7.10 | **修正**為 \(e_0=SOC_{\min}E^N+R\) |
+| R3：全年所有 start、\(\alpha\) 在 max 內、除 \(\eta_d\) | §7.2–7.3 | 保留核心；start set 修正為 case-year valid starts，不做 circular wrap |
+| R4：全年最大瞬時缺口 | §7.4 | 保留 |
+| 任意起點保證 | §7.10–7.11 | 限縮為 complete trajectory observed within formal case year 的 historical-data conditional adequacy |
+| anchor β-specific、不同 α 共用 | §7.9、§19.4 | 刪除為 sizing 規則；改為每個 \((\alpha,\beta)\) ex-post binding critical window |
+| annual cyclic \(e_T=e_0\) | §7.7、§18.3 | 保留；明確與 outage-window circular wrap 分離 |
+| 純 LP 可省充放互斥 | §7.7、§18.3 | 保留為可接受簡化，但必須做 no-simultaneous audit |
+| BESS state / SOC semantics unresolved | §4.4、§5.1、§7.5–7.7 | **已關閉**：LFP、\(E^N\)、\(e_t\)、10–90% SOC、reserve above SOCmin |
+| fixed throughput degradation | §4.4.3、§7.8.2 | **已替換**為 PNNL-calibrated adaptation of Xu et al.'s intertemporal convex PWL DOD-sensitive cycle-aging formulation；linear throughput只作 benchmark |
+| 15-min demand proxy unresolved | §4.3、§18.5 | **已關閉且 scripted reproduced**：observed historical grid-import × billed overall maximum calibration；future rerun仍需由canonical inputs重建 \(\kappa\) |
+| BESS cost/CRF provenance unresolved | §4.4.2、§7.8.1、§34 | **已關閉**：PNNL 10 MW mainline / 1 MW sensitivity，constant NTD-2023，\(r=5\%\) real、\(n=20\)、CRF derived |
+| \(E^{site},P^{site}\) / site overlay | §11 | **移出 core methodology**；只保留 optional implementation context |
+
+## 27.4 Layer B 的對照
+
+| 舊內容 | 本版處理 | 目前狀態 |
+|---|---|---|
+| 五維砍成三維 | §10.2–10.3 | 保留 |
+| 刪 realized duration | §10.2 | 保留；\(\beta\) 已是設計承諾，不再另設實際 duration 維度 |
+| 刪 initial SOC | §10.2 | 保留；由全年 reserve policy 取代 |
+| archetype／PV／demand | §10.3 | 保留並要求 archetype selection rule 預先註冊 |
+| 27 情境 × 9 設計 = 243 | §9、§10.4、§19.2 | **修正**：27 scenarios/design 保留；design 數量待 Layer A 後選 3–5，原九點僅為候選或 exploratory subset |
+| soft shortfall \(\min\sum s_\tau\) | §10.6 | 保留 |
+| 描述性、非因果、非機率 | §10.8–10.9、§22 | 保留並細化 |
+| 原 pass rate | §10.8 | 改稱 structured-scenario coverage / stress-test pass proportion |
+| 重新最佳化 outage dispatch | §10.7 | 保留，但明確定位為 perfect-foresight maximum achievable capability upper bound |
+
+## 27.5 DG 的對照
+
+| 舊內容 | 本版處理 | 目前狀態 |
+|---|---|---|
+| 現有 life-safety DG 排除 | §12.1 | 保留 |
+| 校園實際 DG 規格不擋主模型 | §12.1、§29 | 保留 |
+| hypothetical campus-serving DG 另案 | §12.2 | 保留 |
+| DG 不與 BESS 在主線 co-sizing | §13.1 | 保留 |
+| 原 25/50/100% | §13.3、§19.3 | 降級為 sparse exploratory comparison；正式版改 0–100% 規則化 sweep |
+| 原以每組最壞缺口定標 | §13.2 | 修正為全研究固定 \(G^{ref}\)，提升跨 design 物理可比性 |
+| fuel＋CO₂ 事後報告 | §14 | 保留並拆成 annual fixed cost 與 event variable outcomes |
+| 50% sweet spot | §15.3、§19.3 | 刪除；只有完整 curve 顯示轉折時才稱 knee region |
+| 119 萬 NTD/t | §14.4–14.6、§19.3 | 刪除無條件碳價解讀；僅能作明示 outage-frequency 假設下的 implied abatement cost |
+
+## 27.6 參數、結果、文獻與待辦的對照
+
+- 舊參數與舊數值結果仍由 §28 保存，但 813.75／694.4／CRF 0.07／constant \(c_{deg}\) 已明確降級為 replication-only。
+- v7 final results 必須由新的 data chronology、state/SOC、billing proxy、PWL degradation 與 PNNL-derived cost package 重跑；legacy outputs 只作 regression targets/hypotheses。
+- Blocker 1–5、7 的詳細 literature/source evidence 不再塞入本 framework，改由獨立 literature/parameter registry 管理。
+- 舊 Q1/權威文獻錨點仍可保留作研究定位；若與新 registry 重複，以 registry 為 source of truth。
+- 舊營繕組 DG「必問」清單已取消；existing emergency DG 僅保留既已確認的研究邊界與 optional documentation context。BESS site-feasibility 資料同樣維持 optional implementation context。
+- 舊輸出檔名與工作關鍵路徑由 §31 保存。
+
+---
+
+# 28. Legacy 參數與數值結果登錄表
+
+> **重要**：本節保存 `session_summary_0715.md` 的歷史數值，避免新版框架把已完成工作遺失。除非通過 §18 的 code/data audit，以下數值不得直接當 final thesis results。引用時應標為 **legacy/preliminary output generated under the v4/v5 specification**。
+
+## 28.1 Legacy main parameter set
+
+| 參數 | 舊值 | v7 狀態 |
+|---|---:|---|
+| BESS energy annualized coefficient \(c_E\) | 813.75 | **legacy/replication only**；不得作 mainline |
+| BESS power annualized coefficient \(c_P\) | 694.4 | **legacy/replication only**；不得作 mainline |
+| CRF | 0.07 | **legacy/replication only**；mainline 由 \(r=5\%,n=20\) 算得 0.0802426 |
+| degradation cost \(c_{deg}\) | 0.55 | **legacy only**；mainline 改 PNNL-calibrated adaptation of Xu et al.'s intertemporal PWL DOD-sensitive cycle-aging formulation |
+| summer regular-contract basic rate | 223.6 | case-year tariff example / legacy lineage；正式 tariff module 以 usage-period effective rule + period-specific rates為準 |
+| 166.9 historical rate label | 166.9 | **不得再泛稱 non-summer regular basic charge**；2025/09 bill audit中166.9為 summer half-peak applicable rate |
+| over-contract multiplier 1 | 2 | **mainline confirmed rule**；within first 10% exceedance，仍由 official case-year tariff registry治理 |
+| over-contract multiplier 2 | 3 | **mainline confirmed rule**；beyond first 10% exceedance，仍由 official case-year tariff registry治理 |
+| charge efficiency \(\eta_c\) | 0.95 | **legacy only**；mainline fixed \(0.90\) |
+| discharge efficiency \(\eta_d\) | 0.90 | **mainline retained**；paired with \(\eta_c=0.90\) |
+| NREL BESS sensitivity | 334 USD/kWh | legacy comparison source；非 v7 mainline cost basis |
+
+### 參數使用規則
+
+1. 正式 run 使用獨立 `parameter_registry` 作 source of truth。
+2. 正式 `parameter_registry` 至少使用以下 12 個 machine-readable fields：`parameter_name`、`value`、`unit`、`currency`、`currency_base_year`、`source`、`source_version`、`capacity_basis`、`annualized`、`annualization_method`、`mainline_or_legacy`、`notes`。其中 `mainline_or_legacy` 為防止 legacy 數值混入 production run 的必要 guardrail，不得只靠自由文字備註取代。
+3. PNNL v2024-derived \(C_E,C_P,FOM,C_{rep}\) 以完整 scale package管理：10 MW mainline、1 MW sensitivity；先完成 unit/currency normalization 至 constant NTD-2023，再進 model，禁止依 optimized \(P^B\) 切換。
+4. \(r=0.05\) 定義為 real mainline modeling rate、\(n=20\) 為 fixed financial horizon；CRF 由 code 自動計算，禁止獨立 hard-code。
+5. PWL \(\lambda_k\) 必須由 final \(C_{rep}\) 與 cycle-depth table 自動生成；segment states 必須跨時間並以 battery-side discharge energy計價。
+6. \(\eta_c=\eta_d=0.90\)、\(SOC_{min}=0.10\)、\(SOC_{max}=0.90\)、\(r_{real}=0.05\)、\(n=20\) 與 constant NTD-2023 monetary basis為已鎖 mainline assumptions；不得和 legacy候選值或 nominal/real cash-flow basis混用。
+7. legacy coefficients 只用於 reproducing/diagnosing old results，不得混入 final cases。
+8. lab-predecessor values（包含 legacy \(\kappa\) 或成本係數）不作 academic benchmark；學術 benchmark 優先使用官方規則、peer-reviewed mainstream/recent literature 與 authoritative technical reports。
+8. 813.75／694.4 等歷史成本的 reconstructed lineage 若需保存，放在 registry 的 `legacy` 紀錄並標示 provenance confidence；不在 framework 中包裝成 verified mainline source。
+
+## 28.2 Legacy Layer A outputs
+
+`session_summary_0715.md` 記錄「Layer A 85 solves」，但主網格為 81 組，另含 EOB 與可能的 boundary/diagnostic cases。**正式版必須先從 case manifest 對齊 85 的組成，不能只沿用總數。**
+
+### EOB legacy result
+
+| 指標 | 舊值 |
+|---|---:|
+| BESS energy | 5.0 MWh |
+| BESS power | 874 kW |
+| contract capacity | 3,770 kW |
+| annualized total cost | 90.06 million NTD/year |
+
+Current treatment：
+
+- 此數值只作 legacy regression / historical comparison target；不得冒充 current accepted EOB。
+- 「v6.2 更新後 final EOB 必須重跑」是當時的 historical task requirement，後來已完成；current accepted EOB為 `results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556`（**CLOSED / ACCEPTED**）。
+- legacy EOB不應在摘要或結論中取代 accepted EOB；v7.4 R2不要求重跑 accepted EOB。
+
+### Legacy structural findings
+
+1. **Operating-space relation**：舊結果曾觀察
+   \[
+   E^*=R+6.09\text{ MWh}
+   \]
+   且在 12 個檢查案例中精確一致。
+2. **Power binding**：舊結果曾觀察
+   \[
+   P^*=\max_t[\alpha L_t-PV_t]^+
+   \]
+   且 \(\alpha\) 每增加 0.05，power 約增加 259 kW。
+3. **CC change**：舊結果顯示 CC 約增加 2.3%，超約罰款約由 515,000 NTD 降至 191,000 NTD。
+4. **TOU effect**：韌性案例的 TOU cost 反而較低，因此舊版推論 flexibility-locking cost 為負或二階、premium 主要來自 CAPEX。
+5. **Premium range**：主線約 +13% 至 +57%；\((1.0,24h)\) boundary 約 +89%。
+6. **No-knee observation**：
+   - β = 4/8/12 h 時，\(\alpha\) 每 +0.05 的舊邊際成本約 +1.10／+1.97／+2.71 million NTD；
+   - \(\alpha=1.0\) 時，沿 β 的每小時邊際成本約由 4.31 降至 3.34 million NTD。
+7. **Closed-form approximation**：
+   \[
+   \Delta C\approx c_E R+c_P\Delta P
+   \]
+   舊 81 格誤差約 +0.8% 至 +3.6%。
+8. **NREL sensitivity**：premium 約降至 +9% 至 +43%，舊版認為結構性結論不變。
+
+### 本版對 legacy Layer A findings 的處理
+
+- 上述 1–8 項全部保留為 **待重現的 hypotheses / regression checks**；不得直接沿用為 v7 findings。
+- 「無 knee」只有在 final dense surface、更新參數與一致 state definition 下仍成立，才可升級為 final finding。
+- 「premium 幾乎純 CAPEX」必須由正式 cost decomposition 證明，不能只因 TOU cost 下降就概括。
+- closed-form approximation 應重新計算誤差分布、最大誤差與可能失效區域。
+- 24 h 僅作 boundary case，不與 4–12 h mainline 混在同一結論。
+
+## 28.3 Legacy site-limit overlay
+
+舊 hypothetical overlay（30/40/60/80 MWh 等）保留在 archive 只作歷史紀錄。
+
+v6.2 處理：
+
+- 不再作 mainline method demonstration。
+- 不再要求重畫 site frontier。
+- 不得稱為 NTUST actual deployability evidence。
+- site/fire-code/interconnection/budget 若未來取得，可作 implementation-stage discussion 或 future work；不回寫為 core RQ/Layer A constraint。
+
+## 28.4 Legacy DG outputs
+
+| 舊結果 | 舊值／現象 | 本版正確定位 |
+|---|---|---|
+| \((\alpha,\beta)=(1.0,12h)\) pure BESS premium | +51.6 million NTD | sparse exploratory result，需在完整成本 audit 後重現 |
+| 100% DG premium | +3.9 million NTD | 同上 |
+| BESS energy change | 66.5 → 5.0 MWh | 可保留作 DG 替代 BESS 的初步證據 |
+| event CO₂ | 39.1 t-CO₂/event | 需核實 fuel curve、排放係數與 event dispatch |
+| 50% coverage | 舊稱「砍 premium 6–8 成，排放為 full case 約 55%」 | 不再稱 sweet spot；只視為三個測試點中的 intermediate outcome |
+| \(\alpha=0.6\)：100% DG 比 50% 稍貴 | 過大固定成本無法被 BESS savings 抵銷 | 可作假設，但需由完整 annual fixed-cost accounting 重現 |
+| 119 萬 NTD/t | 舊稱隱含碳價 | 取消無條件解讀；若保留，必須明示 outage frequency 與同一時間尺度 |
+
+## 28.5 Legacy Layer B outputs
+
+| 舊結果 | 舊值 | 本版處理 |
+|---|---:|---|
+| baseline PV100% × demand100% | 27/27 pass，含 Severe | 保留為 preliminary consistency evidence，不是 R3 的數學證明 |
+| failure cases | 72 | 保留為旧 9-design subset exploratory count |
+| failure pattern | 100% 為 Severe × 任一劣化 | 待 archetype preregistration 與 final benchmark subset 後重驗 |
+| Typical/Solar | 81/81 pass | 同上 |
+| demand growth tolerance | < +10% | 不可先當 final threshold；需依 final design subset 回報 |
+| worst-hour shortfall | 4,487 kW | 保存為 regression target |
+| near-worst-window margin | 約 0 | 可作成本最適 binding hypothesis，需正式 dual/binding analysis |
+
+### Layer B 解讀修正
+
+- 原「27/27 全過是任意起點保證的實證」改為：它與 Layer A adequacy formulation 一致，但保證來自 R/R4 定義與 exhaustive audit。
+- 原 72/243 不能換算成現實失敗機率。
+- final Layer B 應按每個 benchmark design 分開報 ENS、nENS、WHS、WHSR 與 structured coverage，而非只給總 pass count。
+
+---
+
+# 29. 校方設施資料清單與用途
+
+> 本節以 DG 邊界確認為主。BESS site/fire-code/interconnection 資料在 v6.2 僅屬 optional implementation context，不是 Layer A prerequisite，也不影響 core RQ validity。
+
+## 29.1 Existing emergency DG：boundary documentation only / optional
+
+### 已確認且足以支撐主模型的邊界
+
+依既有校方設施單位確認，本研究採用下列正式邊界：
+
+- 校內既有 emergency DG 服務法定 life-safety / emergency circuits；
+- 不供應本研究定義的 aggregate campus service load；
+- 不參與正常 grid-connected operation；
+- 因此其實際 nameplate capacity、台數、位置、燃料儲備與 ATS 細節不進入 Layer A、Layer B 或 hypothetical DG counterfactual 的 production-model inputs。
+
+在本研究 load boundary 中維持：
+
+\[
+P_{DG,existing}^{campus-service}=0
+\]
+
+### 是否還需要向營繕組索取資料
+
+**不需要把任何 additional existing-DG facility data 視為 production prerequisite。**
+
+若校方容易提供，以下資料可自願保存作 case-study documentation，但不影響模型是否可正式執行：
+
+1. emergency DG 的設備用途或可引用的書面說明；
+2. 設備台數、位置與額定容量；
+3. ATS / 啟動模式的一般描述；
+4. 測試或維護紀錄的摘要。
+
+取得上述資料的用途僅限於：
+
+- Chapter 1 / Chapter 3 的 case-site description；
+- corroborate existing DG 與 aggregate campus service-load boundary；
+- future engineering / implementation discussion。
+
+### 不得如何使用 existing DG 資料
+
+即使取得實際設備規格，也不得：
+
+- 將 existing emergency DG capacity 直接加入 aggregate campus outage supply；
+- 以 existing DG nameplate capacity 作 hypothetical campus-serving DG 的 \(G^{ref}\)；
+- 因設備存在而宣稱 NTUST 已具備本研究定義的 campus-wide resilience capability；
+- 把設備台數、燃料或 ATS 細節變成 v7 production run 的必要條件。
+
+因此，若不再向營繕組索取 additional DG data，**不會造成 v7 模型缺少必要輸入，也不影響 RQ1–RQ4 的成立。**
+
+## 29.2 BESS site/implementation context：選擇性取得
+
+若資料容易取得，可保存：
+
+1. 可設置面積或 container footprint context；
+2. 消防／用途分區的一般限制；
+3. interconnection / transformer power context；
+4. institutional budget / phased-deployment preference；
+5. 是否已有 BESS 規劃或消防審查經驗。
+
+但這些資料：
+
+- 不作 production Layer A blocker；
+- 不形成 \(E^{site},P^{site}\) mainline constraints；
+- 不要求建立 feasibility heatmap；
+- 不影響 RQ1–RQ4 是否成立。
+
+## 29.3 資料在論文中的去向
+
+- Chapter 1 Scope/Limitations：說明 existing DG 與研究負載邊界；site engineering 明確列為 scope outside。
+- Chapter 3 Case Study：若有正式 DG 書面資料，記錄設備用途、確認日期與資料來源。
+- Chapter 4：不設 core site-feasibility result section；必要時只在 discussion 補一小段 implementation context。
+- DG extension：現有 DG 容量不作 \(G^{ref}\)；最多作 site description 或 future-work context。
+
+---
+
+# 30. 文獻與參數核實追蹤表
+
+> v6.2 不新增 Blocker 1–5、7 的完整 citation dump。這些 audit-specific literature、source pages、cost tables、tariff documents 與 parameter lineage 將移至獨立 literature/parameter registry；本節只保留 v6.1 原本的研究定位型追蹤資訊。
+
+## 30.1 已納入本版的核心錨點
+
+- BESS cost source：v7.2鎖定且v7.3延續 PNNL v2024-derived **10 MW-scale LFP planning package**為mainline；1 MW-scale package為cost sensitivity；完整 citation/parameter extraction、monetary normalization與Q1 scale-economy evidence移至registry。
+- Gabrielli et al. (2018), *Applied Energy*：long-horizon storage / cyclic boundary。
+- Laws et al. (2018), *Renewable Energy*：islandable/resilience premium。
+- Marqusee et al. (2021), *Advances in Applied Energy*：PV–battery–diesel economics and reliability。
+- Gorman et al. (2023), *Applied Energy*：critical-load fraction、outage duration、temporally aligned backup assessment。
+- Wu & Sansavini (2020), *Applied Energy*：stochastic islanding/reliability–resilience。
+- Son et al. (2024), *Journal of Energy Storage*：minimum SOC preparedness。
+- Qi et al. (2025), *Applied Energy*：system-level BESS efficiency formulation；mainline \(\eta_c=\eta_d=0.90\)。
+- Xu et al. (2018), *IEEE Transactions on Power Systems*：intertemporal convex PWL cycle-aging segment model。
+- Shi et al. (2018)：convex rainflow/cycle-based degradation planning/operation reference；rainflow作 ex-post validation。
+- Taipower case-year detailed tariff + NTUST actual bills：annual regular CC、four-period billed maxima、usage-period alignment、non-duplication與2×/3× over-contract rule。
+
+## 30.2 舊摘要列為「待自行核實」的來源
+
+下列來源不得因曾出現在舊 MD 就自動視為可引用。正式寫作前需確認完整作者、題名、期刊、年份、DOI、真正支持的敘述與期刊分區：
+
+- İşcan & Arıkan (2025)
+- Rodriguez (2024)
+- Bazdar (2024)
+- Chen & Liao (2011)
+- Sepúlveda-Mora & Hegedus (2022)
+- Harry-era C_BE／C_BP／CRF：僅作 legacy lineage；不再是 mainline source blocker
+- 台灣 DG 排放係數或柴油排放因子（環境部或其他官方來源）
+- DG相關台電/官方排放與燃料參數；**BESS tariff/CC/over-contract已由 case-year Taipower tariff + NTUST bills 關閉，不再列待核實 blocker**
+
+## 30.3 文獻使用原則
+
+1. Q1 文獻支持方法方向，不代表直接提供本研究的 \(\alpha,\beta\)、DG coverage 或 reserve formula。
+2. 學長論文可作 model lineage/context，不應取代原始技術與成本來源。
+3. 官方費率與排放因子優先於二手論文。
+4. 對「主流」「Q1」「現行規定」等會隨時間改變的敘述，定稿時重新查證。
+
+---
+
+# 31. 舊輸出資產、待辦與關鍵路徑
+
+## 31.1 既有輸出檔案清冊
+
+### 論文草稿
+
+- `Iris_thesis_Ch1.md`
+- `Iris_thesis_Ch2.md`
+- `Iris_thesis_Ch3_part1.md`
+- `Iris_thesis_Ch3_part2.md`
+- `Iris_thesis_Ch4_Ch5_skeleton.md`
+
+### 結果資料
+
+- `layerA_results_v4_main.csv`
+- `layerA_results_v4_nrel_sensitivity.csv`（舊摘要寫作 `_nrel_sensitivity.csv`，正式清冊需確認精確檔名）
+- `layerA_dense_grid_81.csv`
+- `dg_comparison_27.csv`
+- `layerB_243_replays.csv`
+- `reserve_table_3_3_v4.csv`
+
+### 圖表
+
+- `fig1_premium_vs_alpha.png`
+- `fig2_premium_vs_beta.png`
+- `fig3_heatmap_site_frontier.png`
+
+### 程式與框架
+
+- `layerA_gurobi.py`：舊摘要稱已含 R3/R4；正式版仍需 §18 audit。
+- `research_framework_v5.md`：歷史版本。
+- `research_framework_v6_1_coverage_audited_2026-07-29.md`：上一版 audited framework。
+- `research_framework_v6_2_blockers_resolved_2026-08-10.md`：historical predecessor / archived framework；僅供 lineage、regression 與 comparison，不得覆蓋或補寫 v7 mainline specification。
+
+## 31.2 每一類舊資產的處理
+
+| 資產 | 處理 |
+|---|---|
+| Layer A CSV | 舊 CSV 僅作 regression / historical evidence；不得改標為 current accepted results。Current accepted EOB與core-three分別位於 `results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556` 與 `results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55`；Full81仍未執行 |
+| Layer B 243 CSV | 作 exploratory archive；final subset 與 archetype freeze 後重跑 |
+| DG 27 CSV | 作 sparse-interface test；正式 DG curve 重跑 |
+| 舊圖 | 不直接進 final thesis；只由相應 accepted/future-authorized results重建；site-frontier 圖保留 archive only |
+| 舊 Chapter 1–3 | 依本框架重點修改，不直接假設已同步 |
+| Chapter 4–5 skeleton | 保留骨架，等待 final results |
+| `layerA_gurobi.py` | 建立 version hash、unit tests、case manifest、solver log |
+
+## 31.3 待辦優先順序
+
+### COMPLETED / ACCEPTED（不再列為 future work）
+
+1. **Framework v7.3：CLOSED / ACCEPTED.**
+2. **Registry v7.3 R3：CLOSED / ACCEPTED.**
+3. **Reconstructed planning artifact：CLOSED / ACCEPTED** — `data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet`；SHA-256 `3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428`；role `reconstructed_pv_mainline`；8,760 rows。
+4. **Production routing used by the accepted EOB/core-three：COMPLETED / ACCEPTED.**
+5. **EOB：CLOSED / ACCEPTED** — `results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556`。
+6. **Core-three：CLOSED / ACCEPTED** — `results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55`；LOW \((0.60,4\text{ h})\)，CENTRAL \((0.80,8\text{ h})\)，HIGH \((1.00,12\text{ h})\)。
+7. Scripts 01–13c、billing-demand calibration、PNNL package construction、Gate 1 / Gate 2與既有 implementation audits保留其各自 accepted evidence roles。
+
+### PENDING（本 R2 不執行、不預先授權）
+
+1. Framework v7.4 Candidate R2 fresh independent read-only audit。
+2. Later Registry v7.4 successor（Framework R2 accepted前不得開始）。
+3. Later Layer A robustness/preregistration checkpoint及其獨立審核。
+4. Final cross-document alignment audit。
+5. Possible one-time production-authority re-freeze（only if later authorized/required）。
+6. **Full81：NOT_YET_EXECUTED / NOT AUTHORIZED.** Core-three acceptance不得被誤寫成Full81完成；Full81 pending也不得被誤寫成EOB/core-three pending。
+7. Full81之後才依既定方法freeze Layer B benchmark subset、執行Layer B與DG extension；R2不授權這些工作。
+8. 寫作與口試同步只能使用其正確 evidence role：accepted EOB/core-three可作accepted evidence；legacy/Step-17/candidate values必須清楚標示；Full81不得虛構為完成。
+
+## 31.4 關鍵路徑與時程
+
+舊摘要的關鍵路徑是：
+
+```text
+solver/code audit  ||  slide synchronization
+           ↓
+Layer A final results
+           ↓
+Chapter 4 results
+           ↓
+Chapter 5 / abstract
+           ↓
+oral-defense preparation
+```
+
+本版加入兩個不能跳過的 gates：
+
+```text
+Layer A final surface
+           ↓
+benchmark selection frozen
+           ↓
+Layer B + DG extension
+```
+
+`session_summary_0715.md` 記錄的 working deadline 為 **2026 年 9 月底**。本版保留它作專案時程假設，但應由研究者確認是否仍是正式 deadline。BESS site data 不阻擋 Layer A，且不再是 core methodology requirement；production run 真正必須完成的是 data chronology、billing/tariff、BESS state/degradation/cost parameter population 與 code audit。
+
+---
+
+# 32. Coverage gate — current replacement status + inherited historical checklist
+
+> **Historical-snapshot scope.** 本節原有 checkbox checklist 是 Framework v7.3 candidate-era 的 dated historical snapshot，用來保存當時的 implementation coverage vocabulary；它**不是**R2建立時的 current prescription，也不得用未勾選項目否定其後已接受的 Framework v7.3、Registry v7.3 R3、reconstructed planning artifact、production routing、EOB或core-three。原 checklist保留在下方只作historical traceability。Current status只由緊接的replacement table控制。
+
+| Current item at Framework v7.4 Candidate R2 creation | Status |
+|---|---|
+| Framework v7.3 | **CLOSED / ACCEPTED** |
+| Registry v7.3 R3 | **CLOSED / ACCEPTED** |
+| Reconstructed planning artifact | **CLOSED / ACCEPTED** — `data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet`; SHA-256 `3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428`; role `reconstructed_pv_mainline`; 8,760 rows |
+| Production routing used by accepted EOB/core-three | **COMPLETED / ACCEPTED** |
+| Accepted EOB | **CLOSED / ACCEPTED** — `results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556` |
+| Accepted core-three | **CLOSED / ACCEPTED** — LOW \((0.60,4\text{ h})\), CENTRAL \((0.80,8\text{ h})\), HIGH \((1.00,12\text{ h})\); `results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55` |
+| Framework v7.4 Candidate R2 acceptance | **PENDING FRESH INDEPENDENT AUDIT** |
+| Registry v7.4 successor | `NOT_YET_CREATED / NOT_YET_AUTHORIZED` |
+| Layer A robustness/preregistration checkpoint | `NOT_YET_CREATED / NOT_YET_AUTHORIZED` |
+| Final cross-document audit | `NOT_YET_EXECUTED` |
+| Production-authority re-freeze under v7.4 | `NOT_YET_AUTHORIZED` |
+| Full81 | **NOT_YET_EXECUTED / NOT AUTHORIZED** |
+
+**Everything from “Research positioning / unchanged core” through the end of this section is the inherited v7.3-candidate-era historical checklist. Checkbox states below are not current implementation-status declarations.**
+
+### Research positioning / unchanged core
+- [ ] 研究定位與題目方向已同步。
+- [ ] \(\alpha,\beta\) 未誤稱為外部政策標準。
+- [ ] RQ 只保留 RQ1–RQ4；site feasibility 不再是條件式 RQ。
+- [ ] Layer B selection rule 在 final Layer B 結果前凍結。
+- [ ] Layer B 不再使用 initial-SOC 與 realized-duration 維度。
+- [ ] structured coverage 不被稱為可靠度機率。
+- [ ] DG 使用固定 \(G^{ref}\) 與規則化 coverage sweep。
+- [ ] annual fixed cost 與 event outcomes 未混用。
+- [ ] 50% DG 與 119 萬 NTD/t 的舊過度解讀已從簡報、正文與口試稿移除。
+
+### Blocker 1 — BESS semantics
+- [ ] stationary LFP reference、\(E^N\)、\(E^U\)、\(e_t\) definitions 已同步至 code。
+- [ ] mainline SOC = 10–90%，\(E^U=0.8E^N\)。
+- [ ] reserve floor = \(SOC_{\min}E^N+R\)。
+- [ ] outage replay initial \(e_0=SOC_{\min}E^N+R\)。
+- [ ] AC/DC efficiencies 各套用一次。
+- [ ] CAPEX charged to \(E^N\)，not \(E^U\)。
+
+### Blocker 2 — chronology / baseline data
+
+- [x] **Component preprocessing Scripts 01–05 passed**：
+  - exact 8,760 interval-start observed timeline；
+  - observed Load/PV preserved；
+  - Load short-gap production rule = same weekday ±6 weeks / K=1 / outside-gap RMSE；
+  - exactly 10 Load hours reconstructed in planning baseline；
+  - PV donor benchmark validated；
+  - CWA vs donor head-to-head completed on the same 604 pseudo-events；
+  - PV short-gap production rule = CWA `hourly_ghi_ratio_median` with leave-target-day-out fitting；
+  - exactly 10 short-gap PV hours reconstructed；
+  - 1,463 long unavailable PV hours在此 v7.1/v7.2 preprocessing snapshot中 assigned zero；此為 historical predecessor treatment，不是 v7.3 current mainline。
+- [x] **v7.2 integrated annual input passed (Script 06; historical accepted predecessor)**：
+  - generated from current audited `load_annual_baseline.*` and `pv_annual_baseline.*`；
+  - exact 8,760 chronology；
+  - observed equality verified；
+  - reconstruction/status provenance retained；
+  - interval-start calendar / summer / TOU / billing-period fields regenerated and audited；
+  - no pre-v7 baseline artifact contamination。
+- [ ] \(\mathcal S_\beta\) 不做 circular wrap。
+- [ ] 若 formal outage-log evidence 支持 expanded contamination/recovery envelope，targeted robustness check 已完成；否則已記錄「無額外 recovery-envelope evidence，不自行發明 window」。
+- [x] Step 17a long-block/monthly holdout validation保留 `PASS_FOR_SENSITIVITY`；17b sensitivity-only與corrected Sep-18 source/run已保存。
+- [x] Step 17c paired reconstructed-vs-zero-winter sensitivity/adjudication evidence已保存；其 EOB adjudication仍是 candidate evidence。
+- [ ] Registry v7.3 已建立並 independently accepted。
+- [ ] 新 canonical reconstructed-mainline annual artifact已由 corrected Sep-18 promotion source建立、驗證並授權；在此之前 path/hash = `NOT_YET_CREATED / NOT_YET_AUTHORIZED`。
+- [ ] EOB/economic、Layer A \(R\)/\(P^{out}\)/binding/outage replay與 baseline Layer B已通過 same-artifact routing audit；不存在 hybrid/no-credit fallback。
+
+### Blocker 3 — degradation
+- [ ] constant \(c_{deg}=0.55\) 已退出 mainline。
+- [ ] 五個固定 LFP DOD–cycle-life calibration points（0.05/192000、0.30/32000、0.60/8000、0.70/6000、0.80/4800）已寫入 machine-readable registry，且 interpretation metadata 完整。
+- [ ] PWL breakpoints / \(C_{rep}\) lineage 在 registry 鎖定；legacy Harry-era replacement basis 不得作 mainline。
+- [ ] \(\lambda_k\) 由 final \(C_{rep}\) 與固定 cycle-life calibration 自動產生。
+- [ ] segment energy/cost 與 \(r_{\max}\) diagnostics 已輸出。
+- [ ] degradation claim 與實際 implementation fidelity 一致。
+
+### Blocker 4 — billing/tariff
+- [x] historical grid import—not gross Load—用於 \(\kappa\) calibration。
+- [x] \(\kappa\) 已由 2025/01–10 valid-PV months scripted reproduction（約 1.01037；final value以audit output為準）。
+- [ ] Nov/Dec 仍留在 12-month simulation。
+- [x] summer boundary = 5/16–10/15。
+- [x] case-year tariff registry與pure-season bill-component regression完成13b/13c audit；May/October 50/50仍標示case-validated empirical rule。
+- [x] NTUST case institutional treatment保留 `SCHOOL/FROZEN` high-voltage project label；non-summer peak = N/A，而非 0-rate peak period。
+- [x] subsidy accounting boundary已鎖定：不另加 subsidy credit/debit；effective tariff / bill中已反映的政策支持不得 double count。
+- [ ] hourly model 未被描述成 exact 15-min reconstruction；\(\kappa\) 僅作用於 monthly billing-demand proxy。
+- [ ] \(\kappa\) 被標為 NTUST site-specific empirical calibration，而非 literature/universal 或 lab-predecessor benchmark。
+- [ ] temporal-resolution evidence registry 以 Omoyele et al. (2024) 與 Browne & Williams (2023) 支撐 hourly limitation claim。
+
+### Blocker 5 — site feasibility
+- [ ] \(E^{site},P^{site}\) 未進 mainline constraints。
+- [ ] site/fire-code/interconnection/budget 未列為 production blocker。
+- [ ] outputs 稱 modeled/planning requirements，不稱 final recommended installation。
+
+### Blocker 7 — capital cost / annualization
+- [x] PNNL v2024-derived 1 MW / 10 MW \(C_E,C_P,FOM,C_{rep}\) package candidates已完成 production derivation；10 MW mainline / 1 MW sensitivity角色已在v7.2 freeze。
+- [x] Script lineage已鎖定：11f/11g/11h = dual-bracket cost/FOM/\(C_{rep}\)/\(\lambda_k\) package evidence；12a = Xu intertemporal segment-state semantics audit；這些 scripts 不自行選 mainline bracket。
+- [ ] `parameter_registry` 完整 12-field schema 已實作，包含 `mainline_or_legacy` 與 `notes`。
+- [x] PNNL cost package currency/base year/capacity basis/raw-vs-annual provenance已建立；optimization tariff的constant-2023 normalized layer仍須由production interface輸出。
+- [x] \(r=5\%\) real、\(n=20\) yr。
+- [x] CRF 由 code 算得 0.0802426，非獨立 hard-code legacy 0.07。
+- [x] Gate 1：10 MW full package = ex-ante mainline；1 MW full package = cost-scale sensitivity；禁止依 optimized \(P^B\) 切換。
+- [x] Gate 2 methodology：objective monetary basis = constant NTD-2023；raw Taipower nominal layer與optimization normalized layer分離；\(r=5\%\) = real modeling rate。
+- [ ] optimization-facing Taipower tariff 已由official nominal source透過正式 price-index/deflator provenance轉為constant NTD-2023並通過production-interface audit。
+- [ ] raw CAPEX → normalization → CRF annualization 順序正確。
+- [ ] annual FOM 未再次 annualize。
+- [ ] 813.75／694.4／0.07 僅作 legacy replication。
+
+### Final rerun / traceability
+- [ ] final EOB + 81-point Layer A 已依 accepted v7.3 framework/Registry/canonical reconstructed-mainline input重跑；目前未授權。
+- [ ] representative cases與Steps 11A/11B/11C已依v7.3明確關閉；目前未關閉。
+- [ ] legacy EOB / Layer A 差異已解釋。
+- [ ] legacy output files 已封存，final outputs 使用明確版本名稱。
+- [ ] framework、parameter registry、input data、code 與 solver logs 可追溯。
+
+通過以上 checklist 後，才可將本版視為可執行、可追溯且與後續 audit resolutions 一致的 production research specification。
+
+
+---
+
+# 33. Preprocessing empirical freeze / traceability snapshot
+
+本節逐字保留 v7.1 相對於 v7 的 **historical preprocessing empirical snapshot**，供 code audit、thesis-method traceability 與 future regression 使用；它不是新的研究問題，也不覆蓋 §4.1.3 的 v7.3 mainline role reversal。
+
+### 33.1 Load
+
+Selected production method：
+
+`same_weekday_pm6weeks_top1_context_rmse`
+
+Validation：
+
+- 92 pseudo-events；
+- MAE 100.436957 kW；
+- RMSE 174.069420 kW；
+- signed energy bias +0.252411%；
+- mean event absolute energy bias 436.771739 kWh。
+
+Production：
+
+- 10 reconstructed hours；
+- 2025-04-19 event → 6,636 kWh；
+- 2025-08-02 event → 18,689 kWh；
+- observed Load unchanged。
+
+### 33.2 PV short gap
+
+Donor benchmark：
+
+`±30 days / K=5 / mean`
+
+- MAE 34.625033 kW；
+- RMSE 49.998621 kW；
+- signed energy bias +1.113409%；
+- mean event absolute energy bias 135.937748 kWh。
+
+Selected CWA production method：
+
+`cwa_hourly_ghi_ratio_median_leave_target_day_out`
+
+- MAE 16.954595 kW；
+- RMSE 29.741402 kW；
+- signed energy bias +1.669484%；
+- mean event absolute energy bias 51.967974 kWh；
+- paired event wins: 486/604 MAE, 479/604 RMSE, 454/604 event-energy error。
+
+Production：
+
+- 10 short-gap PV hours reconstructed；
+- reconstructed event energy 211.887706 kWh + 965.124933 kWh；
+- observed PV unchanged；
+- 1,463 long unavailable PV hours remain zero in the **historical v7.1/v7.2 mainline snapshot**；此句只屬歷史分類，v7.3 current mainline依 §4.1.3採 reconstructed PV。
+
+---
+
+---
+
+# 34. v7.2 economic integration freeze / traceability snapshot
+
+本節只記錄 v7.2 相對於 v7.1 的 **historical post-audit economic-integration snapshot**；其中「pending after v7.2」是當時狀態，不是 v7.3 current-status declaration。它不建立新的 RQ，也不重開 A1–A4 / B1–B2。
+
+## 34.1 Explicit supersession
+
+v7.1 §16.1 的：
+
+> mainline coefficient choice依 preliminary \(P^B\) range與 parameter registry 鎖定
+
+在 v7.2 **正式失效**。原因是 cost coefficient會影響 optimized \(P^B\)，若再用 optimized \(P^B\) 選 cost coefficient會形成 circular selection。
+
+v7.2 rule：
+
+\[
+\boxed{10\text{ MW cost-scale package = ex-ante mainline}}
+\]
+
+\[
+\boxed{1\text{ MW cost-scale package = sensitivity}}
+\]
+
+optimization result不得反向改變此角色分配。
+
+## 34.2 Cost-package freeze
+
+- PNNL v2024 stationary LFP；
+- fitting duration = 4 / 6 / 8 / 10 h；
+- \(C_E,C_P,FOM\) = bracket-specific thesis-derived package；
+- \(C_{rep}\) = DC Storage Block 4/6/8/10 h arithmetic mean；
+- source cost vintage = 2023 USD；
+- FX = 31.150 NTD/USD；
+- optimization BESS monetary basis = constant NTD-2023；
+- \(\lambda_k\) = bracket-specific \(C_{rep}\) + fixed PNNL DOD–cycle-life table derived；no hard-code；
+- 10 MW mainline與1 MW sensitivity都必須整包套用。
+
+## 34.3 Monetary-basis freeze
+
+正式 economic accounting basis：
+
+\[
+\boxed{\text{constant NTD-2023}}
+\]
+
+- PNNL BESS costs：已在 NTD-2023 basis；
+- Taipower source tariff / bills：保留case-year nominal NTD作institutional validation；
+- optimizer：使用由official nominal source推導的constant NTD-2023 tariff layer；
+- \(r=5\%\)：real modeling discount rate；
+- \(n=20\) yr；
+- \(CRF=0.0802426\)；
+- formal thesis economic results：NTD-2023；
+- optional 2025 nominal-equivalent：reporting only。
+
+## 34.4 Post-v7.1 audit status incorporated
+
+- final annual input integration（Script 06）：completed；
+- \(\kappa\) scripted reproduction：completed；
+- Scripts 11f / 11g / 11h：PNNL 1 MW / 10 MW dual-bracket cost/FOM/\(C_{rep}\) packages + bracket-specific \(\lambda_k\) candidates completed；scripts preserve both packages and do not choose the mainline role；
+- Script 12a：Xu intertemporal segment-state semantics audit completed；does not choose 1 MW / 10 MW cost bracket；
+- 13b Taipower tariff registry production gate：PASS；
+- 13c pure-season bill-component regression：PASS；
+- 13b/13c validated implementation evidence includes period-specific tariff handling, non-duplication, and 2×/3× over-contract semantics within the audited case boundary；
+- NTUST tariff institutional treatment：`SCHOOL/FROZEN` high-voltage project label retained；non-summer peak = N/A, not a 0-rate peak period；
+- subsidy accounting boundary：no separate subsidy cash-flow term; effective billed tariff is the modeled institutional price signal；
+- May/October 50/50 transition：case-validated empirical treatment only，not universal-official claim。
+
+## 34.5 Historical status at the v7.2 framework freeze
+
+- production-interface implementation of constant-2023 Taipower tariff layer + package routing / preflight；
+- EOB；
+- 81-point Layer A；
+- post-solve exact optimized demand maxima；
+- ex-post rainflow validation；
+- winter-PV long-block alternative sensitivity（當時 pending；後續 Step 17 evidence見 §35）；
+- Layer B benchmark selection / stress tests；
+- DG external coverage analysis。
+
+因此 v7.2 的意義是：
+
+> **economic/methodological ambiguity closed; production optimization results not yet generated.**
+
+---
+
+# 35. v7.3 reconstructed-PV mainline successor freeze（**inherited historical record**；current role 更新見 §36）
+
+本節是 **v7.3 相對於 v7.2 的 additive methodology delta 與 v7.3-era current-state freeze**，在 v7.4 中原樣保留為 **immutable historical provenance / inherited record**。它只改變 prolonged-winter PV 的 planning role，不改變公式、tariff、degradation、cost package 或任何已關閉的 A1–A4 / B1–B2 / Gate 1–2 decision。**閱讀規則：**本節中關於 zero-winter 的 role 陳述、mandatory-wording 指定與 status 表格，是 **v7.3-era 陳述**；凡與 §36 的三項 v7.4 更新（A/B/C）相衝突之處，以 §36 為 current prescription，本節僅作歷史記錄。本節文字不構成 v7.4 的 current requirement。
+
+## 35.1 Decision and epistemic boundary
+
+**Methodology decision（v7.3-era 記錄）:** reconstructed full-year PV（包含 2024/11–12 共 1,463 個 unavailable-observation hours）是 v7.3 的 mainline best-estimate planning baseline；v7.2 的 zero-winter treatment 在 v7.3 之下改列 conservative stress/sensitivity。**v7.4 current role 更新：**planning-baseline 決定延續不變，但 zero-winter 的 current role 改為 **historical conservative validation / provenance evidence**，不再是 required downstream sensitivity/stress，也不是 equal-status alternative planning baseline（見 §36.1）。
+
+下句在 v7.3 與 v7.4 皆為 mandatory thesis wording，不得弱化或改寫成 observed/true/recovered：
+
+> **The winter PV reconstruction is a model-based, weather-informed, separately validated estimate for planning use; it is not observed meter data, not exact ground truth, and not an exact recovery of the missing historical series.**
+
+以下為 **v7.3-era** 正式 thesis-language boundary，原樣保留為歷史記錄；**v7.4 的 current thesis-language boundary 見文件頂端 delta block 第 5 項與 §36.1**（差異僅在 zero-winter 的 current role 描述）：
+
+> **The prolonged unavailable winter PV block is represented using a separately validated weather-informed reconstruction as the best-estimate planning baseline. The prior zero-availability treatment is retained as a conservative stress/sensitivity case. Reconstructed values are model-based estimates rather than observed historical PV measurements.**
+
+本決定是 **methodology role correction**，不是 reconstruction values 的重新估計，也不是新公式。它不聲稱 long-block values等於歷史真值。
+
+## 35.2 Same-artifact mainline rule
+
+未來經授權的 canonical reconstructed-mainline annual artifact必須同時且原樣供給：
+
+1. EOB與 annual economic optimization；
+2. Layer A residual-load series、\(R(\alpha,\beta)\)、\(P^{out}(\alpha)\)、binding-window classification與 exhaustive outage replay；
+3. baseline Layer B（\(\gamma_{PV}=1.0\)）與其 archetype selection inputs。
+
+任何「EOB/economic 使用 reconstructed winter PV，但 Layer A 或 baseline Layer B 對相同 1,463 hours 設零」的 hybrid/no-credit implementation 均違反本框架；v7.4 §36.2 進一步禁止 planning layer 內使用**任何其他** annual PV identity。**v7.3-era 陳述（歷史記錄）：**zero-winter 若執行，必須是完整、明示且分離的 conservative stress/sensitivity branch。**v7.4 current role：**zero-winter 為 historical conservative validation / provenance evidence，**不要求**執行；若未來另經獨立授權執行，則仍必須是完整、明示且分離的 branch，不得與 planning-layer consumer 混接（見 §36.1）。
+
+Layer A analytical-consistency replay的公式與 dispatch boundary維持不變：它使用 reconstructed-mainline PV計算 positive residual load，但不允許 outage-period PV surplus對 BESS recharge。Layer B event replay仍可依既有規則允許 surplus recharge；這項 stage distinction不是 PV input identity的例外。
+
+## 35.3 Calibration boundary
+
+historical billing calibration 只使用 observed Load/PV 與實際 billing records。v7.3 與 v7.4 均**不得**以 reconstructed winter PV 重新估計、替換或調整 \(\kappa\)。planning-baseline promotion 與 billing calibration 是兩個分離的 data views。v7.4 的完整 \(\kappa\) claim boundary 見 §4.3.1-K 與 §36.3。
+
+## 35.4 Promotion source and future canonical identity
+
+| Item | Identity / status |
+|---|---|
+| Corrected promotion-source candidate | `data/processed/alternatives/annual_input_v7_2_winter_pv_sensitivity_corrected_authority_project_venv_2026-09-18.parquet` |
+| Promotion-source SHA-256 | `1c1dbc265b092415e649bba23232f645f7ba5c74e0f074f2914c1ed7ac9d7cd9` |
+| Promotion-source role | corrected, separately validated candidate source; **not canonical** |
+| Prior SHA-256 `023cba88416b965c7dedf4139e9a495602039117ecc827e52a372f10a1aad986` artifact | immutable September-07 historical sensitivity lineage only; not the v7.3 promotion source |
+| Future canonical reconstructed-mainline path/hash | `NOT_YET_CREATED / NOT_YET_AUTHORIZED` |
+
+禁止把 corrected promotion-source candidate直接重新命名為 canonical，也禁止在 artifact尚未由受控流程建立前杜撰 path/hash。promotion必須建立新的 provenance record、驗證 observed-column immutability與same-artifact routing，並經獨立接受。
+
+## 35.5 Evidence-preservation matrix
+
+| Evidence | Preserved role under v7.3 | Not authorized to claim |
+|---|---|---|
+| Step 17a | `PASS_FOR_SENSITIVITY`; separate long-block/monthly holdout validation evidence | observed truth、exact recovery、單獨完成 canonical promotion |
+| Original Step 17b | sensitivity-only historical run/evidence | v7.3 canonical mainline |
+| Corrected Sep-18 17b source/run | corrected promotion-source candidate and corrected sensitivity evidence | canonical artifact或production authorization |
+| Step 17c | paired reconstructed-vs-zero-winter sensitivity and adjudication evidence | accepted v7.3 EOB/final production rerun |
+| All prior EOB/Layer A/rainflow/continuation outputs | immutable historical, diagnostic, sensitivity, candidate, or predecessor evidence according to original manifests | silent reclassification as v7.3 final |
+
+## 35.6 Current authorization state
+
+| Layer | State at candidate creation |
+|---|---|
+| Reconstructed-PV methodology | **DECIDED** in this candidate |
+| Framework v7.3 | **CANDIDATE PASS**; independent acceptance pending |
+| Registry v7.3 | `NOT_YET_CREATED / NOT_YET_ACCEPTED` |
+| New canonical reconstructed-mainline annual artifact | `NOT_YET_CREATED / NOT_YET_AUTHORIZED` |
+| v7.3 canonical routing | `NOT_YET_AUTHORIZED` |
+| Step 17c EOB adjudication | candidate evidence only |
+| Representative cases | not closed under v7.3 |
+| Steps 11A / 11B / 11C | not closed under v7.3 |
+| Final 81-point production run | not authorized under v7.3 |
+
+## 35.7 Preserved closed decisions
+
+以下內容不因 PV role reversal而改變：A1–A4、B1–B2、Gate 1、Gate 2、mainline SOC 10–90%、\(\eta_c=\eta_d=0.90\)、case-year tariff與constant-NTD-2023 accounting、intertemporal DOD-sensitive PWL degradation、annual regular contract capacity、alpha–beta design grid、non-circular valid-start set、reserve formula、annual/replay stage separation與Layer A no-surplus-recharge consistency semantics。
+
+## 35.8 v7.3 candidate disposition（historical record）
+
+v7.3 framework successor 當時的文件內狀態為（歷史記錄；v7.3 其後已被獨立審核接受並凍結）：
+
+> **FRAMEWORK V7.3 RECONSTRUCTED-PV MAINLINE SUCCESSOR — CANDIDATE PASS**
+
+這個 disposition 只表示該文件當時已完整表達決定與邊界；它不等於 canonical acceptance、Registry acceptance、artifact promotion、routing authorization 或 production-run authorization。**本 v7.4 文件自身的 disposition 見 §36.8。**
+---
+
+# 36. v7.4 zero-winter-role / PV-routing / \(\kappa\)-claim-boundary successor freeze
+
+本節是 v7.4 相對於**已接受且不可變更的 v7.3** 的 additive methodology/claim-boundary delta，
+以及本 candidate 的 current-state 陳述。它**不改變任何 equation、parameter、numerical setting、
+solver setting、production input 或任何已接受的 numerical result**。
+
+## 36.0 Successor identity and authorized change scope
+
+| Item | Value |
+|---|---|
+| This document | `docs/research_framework_v7_4_2026-09-26.md` |
+| Lifecycle status | **CANDIDATE**（not `CLOSED`, not `ACCEPTED`, not `FINAL`, not `PROMOTED`） |
+| Direct predecessor | `docs/research_framework_v7_3_2026-09-23.md` |
+| Predecessor accepted SHA-256 | `44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a` |
+| Predecessor status | **CLOSED / ACCEPTED**；**immutable historical provenance**；本 pass 未修改其任何 byte |
+| Successor type | **ADDITIVE SUCCESSOR**（完整繼承 v7.3，非重寫） |
+| Self-acceptance | **NOT PERFORMED**；authoring session 無此權限 |
+| Independent audit | **REQUIRED before promotion to methodology authority** |
+| Current accepted methodology authority at candidate creation | Framework **v7.3**（不是本文件） |
+| Current accepted evidence authority at candidate creation | Registry **v7.3 R3**，unchanged by this pass |
+| Registry v7.4 | `NOT_YET_CREATED / NOT_YET_AUTHORIZED` |
+| Layer A robustness/preregistration checkpoint | `NOT_YET_CREATED / NOT_YET_AUTHORIZED` |
+| Production-authority re-freeze under v7.4 | `NOT_YET_AUTHORIZED` |
+| Full81 under v7.4 | `NOT AUTHORIZED` |
+
+**Exactly three** substantive change categories are authorized in this successor:
+
+| Category | Change |
+|---|---|
+| **A** | zero-winter **current role** → historical conservative validation / provenance evidence |
+| **B** | formal, internally consistent **observed-vs-planning PV epistemic routing** |
+| **C** | **\(\kappa\)** historical-calibration / planning-use **claim boundary**, without recalibration |
+
+除上列三類（以及為表達它們所必需的 version/provenance/status plumbing）之外，
+**v7.3 的全部 methodology 均逐字繼承、不變**。本 successor 未新增 equation、未改寫 equation、
+未變更 parameter、未設計任何新的 numerical sensitivity。
+
+## 36.1 CHANGE A — zero-winter current role
+
+**Current role:**
+
+> **zero-winter = historical conservative validation / provenance evidence supporting the
+> reconstructed-PV promotion / adjudication decision.**
+
+明確界定（皆為 current prescription）：
+
+1. zero-winter **不是** mandatory 的新 Layer A sensitivity；
+2. zero-winter **不是** mandatory 的新 Layer B sensitivity/stress；
+3. zero-winter **不是** equal-status alternative planning baseline；
+4. **不要求**任何新的 zero-winter EOB solve；
+5. **不要求**任何新的 zero-winter Layer A solve；
+6. **不要求**任何新的 zero-winter Layer B solve；
+7. 既有的 reconstructed-vs-zero-winter 比較（Step 17a holdout validation、corrected Step 17b、
+   Step 17c paired comparison）**仍是有效的 historical project validation / adjudication evidence**；
+8. zero-winter **必須**在 provenance/history 中原樣保存；
+9. zero-winter **不得**被靜默刪除、覆寫、改名或從 evidence lineage 移除；
+10. zero-winter 僅在未來另有**獨立正當理由（separately justified future reason）**被建立時才可重啟。
+
+**Replacement rule:** 本更新**不以任何其他 sensitivity 取代** zero-winter。
+§16.1 的最低限度 sensitivity 項目因此**淨減一項**，不做等量替換。
+
+**Historical truthfulness（必須保留，不得抹除）：**
+
+| Authority | zero-winter 當時的 role | Scope |
+|---|---|---|
+| Framework v7.2 | mainline | **historical**（past-scoped，仍為真） |
+| Framework v7.3 | conservative stress/sensitivity | **historical**（past-scoped，仍為真） |
+| Framework v7.4（本 candidate） | historical conservative validation / provenance evidence | **current prescription** |
+
+凡本框架中 past-scoped 且清楚標示為歷史的 zero-winter 陳述，一律保留；
+本更新只移除／supersede 仍使下游 zero-winter sensitivity **成為 mandatory** 的 current-prescriptive wording。
+
+**Downstream accepted-artifact effect:** 本 role 更新**不**授權刪除、改寫或重新分類任何既有 zero-winter
+artifact、manifest、checkpoint 或 audit 記錄。它們維持原有 acceptance boundary 與 evidence role。
+
+**Cross-document note:** `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` §E.2 與
+Registry v7.3 R3 目前記載 zero-winter 為 `conservative stress/sensitivity`。這些是 **v7.3 authority
+之下正確的陳述**，其 bytes 不得修改。若且僅若本 candidate 通過獨立審核，本 §36.1 才以 additive successor
+方式取代該 current-prescriptive role assignment；相應的 Registry 對齊必須由**後續**獨立授權的 Registry
+successor 處理，不在本 pass 範圍。
+
+## 36.2 CHANGE B — formal observed-vs-planning PV routing
+
+完整 routing rule 見 **§4.1.1-R**，此處為 freeze 陳述。
+
+| Layer | Data identity | Membership（至少包含） |
+|---|---|---|
+| **HISTORICAL EMPIRICAL / CALIBRATION** | **observed data wherever valid** | historical billing-demand calibration；Taipower bill regression；tariff/institutional validation；任何「實際發生了什麼」的 historical empirical check |
+| **PLANNING / COUNTERFACTUAL MODEL** | **accepted reconstructed full-year PV**（單一 artifact identity） | EOB planning optimization；Full81 / Layer A；\(R(\alpha,\beta)\)；\(P^{out}\)；binding-outage identification/classification；Layer A outage consistency replay；baseline Layer B；所有 downstream planning scenarios，除非明確宣告為 alternative scenario |
+
+**Historical grid-import calibration 維持不變：**
+
+\[
+P_t^{grid,hist}=L_t^{obs}-PV_t^{obs}
+\]
+
+僅取 valid observed-PV periods，並對應 actual billing target。
+
+**No hybrid routing is authorized.** 明確禁止：`EOB = reconstructed PV` 同時
+`Layer A / Layer B = zero-winter 或任何其他 annual PV identity`。
+
+**Accepted reconstructed full-year PV 的必要 / 禁止描述：**
+
+| 必須描述為 | 不得描述為 |
+|---|---|
+| weather-informed | observed historical PV truth |
+| model-based | exact ground truth |
+| separately validated | exact recovery of the unavailable historical PV |
+| best-estimate planning baseline | online forecast information |
+
+**Equation boundary:** 本 routing clarification **不改變任何 model equation**。
+Layer A analytical-consistency replay 的 `surplus_pv_recharge=False` 語意不變；
+Layer B event replay 的既有 surplus-recharge 規則不變；該 stage distinction 不是 PV input identity 的例外。
+
+## 36.3 CHANGE C — \(\kappa\) historical-calibration / planning-use claim boundary
+
+完整陳述見 **§4.3.1-K**，此處為 freeze 陳述。
+
+**Preserved exactly（不變）：**
+
+| Item | Status |
+|---|---|
+| production \(\kappa\) | **UNCHANGED** — \(\approx1.01037\)；production-pinned `1.0103668594376984` |
+| estimator | **UNCHANGED** — through-origin least squares |
+| calibration-period definition | **UNCHANGED** — 2025/01–2025/10 十個 `pv_status=valid` usage months |
+| calibration basis | **UNCHANGED** — valid observed periods、observed Load/PV、usage-period-aligned actual billed maxima |
+| scripted-reproduction requirement | **UNCHANGED** — future rerun 仍須由 canonical input + billing registry 重算 |
+
+**Explicit claim boundary:**
+
+1. historical \(\kappa\) calibration 回答一個 **historical billing-representation question**；
+2. accepted reconstructed full-year PV 回答一個 **planning-baseline question**；
+3. 兩者屬於**不同的 epistemic layers**，**並不互相矛盾**；
+4. \(\kappa\) **是** billing-demand representation proxy；
+5. \(\kappa\) **不是** 15-minute chronology 的 reconstruction；
+6. \(\kappa\) **不證明**已捕捉 sub-hourly BESS physical power peaks；
+7. \(\kappa\) **不消除** hourly temporal-resolution limitation。
+
+**Prohibition:** accepted reconstructed planning PV **不得**被用來重新定義或重新估計 production
+\(\kappa\)，也不得替換其 calibration sample 或 calibration target。
+
+## 36.4 Inherited unchanged（non-exhaustive freeze inventory）
+
+以下全部自 v7.3 **逐字繼承、未變更**，本 successor 未觸及：
+
+research questions；research positioning；Layer A boundary；Layer B boundary；DG boundary；
+alpha grid；beta grid；Layer A \(9\times9=81\) case universe；valid-start non-circular semantics；
+stationary LFP；\(SOC_{min}=0.10\)；\(SOC_{max}=0.90\)；usable-energy semantics；
+\(\eta_c=0.90\)；\(\eta_d=0.90\)；AC/PCS-side charge/discharge power；battery-side stored-energy state；
+A1；A2；A3；A4；B1；B2；constant worst-case mainline reserve floor；outage initial-state semantics；
+outage technical lower bound；outage replay semantics；reserve equations；Layer A analytical equations；
+annual regular contract capacity；supplementary-contract treatment；Taipower tariff semantics；
+billing-period semantics；over-contract 2× / 3× semantics；non-duplication treatment；
+\(\kappa\) estimator；\(\kappa\) production value；degradation formulation；
+Xu-adapted intertemporal PWL semantics；rainflow role；B2 cost-accounting structure；
+PNNL 10 MW-scale full package = mainline；PNNL 1 MW-scale full package = cost sensitivity；
+cost-package full-package switching rules；constant NTD-2023 optimization monetary basis；
+real 5% discount-rate modeling assumption；20-year financial horizon；CRF treatment；
+accepted Layer A consistency-replay `surplus_pv_recharge=False` 語意；accepted EOB numerical results；
+accepted core-three numerical results；production code；solver settings；solver fingerprint；
+production inputs/data。
+
+**NO new equation. NO equation rewrite. NO parameter change. NO new numerical sensitivity design.**
+
+## 36.5 Scientific / model-audit guardrails
+
+本 successor 是 governance/methodology-role clarification，明確防範：
+
+- **data leakage** 與 **look-ahead bias**：reconstructed planning PV 是 retrospective planning-baseline
+  construction，**不是** online forecast information，也不賦予任何 operator 事件當時的 information advantage；
+- **retrospective / operational information confusion**：planning layer 的 perfect-foresight 語意維持
+  v7.3 既有界定（Layer B = capability upper bound），本版未擴張；
+- **unfair baseline comparison**：planning layer 內所有比較對象共用同一 PV artifact identity，
+  因此不存在 PV-identity 造成的 baseline 不對稱；
+- **observed vs reconstructed conflation** 與 **historical-vs-planning epistemic conflation**：由 §36.2 的
+  two-layer routing 明確隔離；
+- **billing proxy vs physical-power semantics**：由 §36.3 的 \(\kappa\) claim boundary 明確隔離；
+- **unit / scale drift**、**implementation-vs-methodology drift**、**silent model-equation drift**：
+  本 pass 未觸及任何 equation、parameter、code 或 data，故無 drift surface。
+
+明確不主張：reconstructed PV 是 online forecast information；historical \(\kappa\) calibration 是
+planning-PV calibration；solver success 證明 methodological validity。
+
+## 36.6 EOB / core-three / downstream status boundary
+
+Candidate R1 的獨立 read-only audit已完成 downstream-impact adjudication；Candidate R2只把該已裁定狀態正確帶入本文，不自行重作或擴張裁定：
+
+- **EOB VALID UNDER V7.4 = YES**；accepted EOB = `results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556`（**CLOSED / ACCEPTED**）；
+- **CORE-THREE VALID UNDER V7.4 = YES**；accepted core-three = `results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55`（**CLOSED / ACCEPTED**），含 LOW \((0.60,4\text{ h})\)、CENTRAL \((0.80,8\text{ h})\)、HIGH \((1.00,12\text{ h})\)；
+- **METHODOLOGY RERUN REQUIRED = NO**；Framework 版本改變本身不構成 rerun依據，R2亦不建立新的EOB/core-three rerun requirement；
+- Full81仍為 **NOT_YET_EXECUTED / NOT AUTHORIZED**；不得把Full81 pending倒推為EOB/core-three pending；
+- R2 **未授權** 任何 EOB rerun、core-three rerun、Full81 run、zero-winter solve 或其他 sensitivity solve；
+- R2執行的 model constructions = **0**；`optimize()` calls = **0**；MILP solves = **0**；EOB reruns = **0**；core-three reruns = **0**；Full81 runs = **0**；sensitivity solves = **0**；
+- live implementation / production status仍須以 `docs/ai_handoff/CURRENT_STATE.md` 與 live repository evidence查核；本節記錄的是R2建立時由accepted evidence與R1 independent audit支持的snapshot。
+
+## 36.7 Current authorization state at Candidate R2 creation
+
+| Layer | State |
+|---|---|
+| Framework v7.4 Candidate R1 | **CONDITIONAL PASS / REVISE**；no scientific methodology defect；no accepted numerical-result defect；immutable non-accepted predecessor candidate |
+| Change A / B / C scientific delta | R1 independent audit found the delta scientifically coherent；R2 preserves it exactly；R2仍須fresh independent audit且不得self-accept |
+| Framework v7.4 Candidate R2 | **CANDIDATE**；fresh independent audit required；not accepted |
+| Framework v7.3 | **CLOSED / ACCEPTED**；current methodology authority；immutable |
+| Registry v7.3 R3 | **CLOSED / ACCEPTED**；current evidence authority；unchanged by this pass |
+| Accepted reconstructed planning input | **CLOSED / ACCEPTED**；`data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet`；SHA-256 `3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428`；role `reconstructed_pv_mainline`；8,760 rows |
+| Production routing used by accepted EOB/core-three | **COMPLETED / ACCEPTED** |
+| Accepted EOB | **CLOSED / ACCEPTED**；`results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556` |
+| Accepted core-three | **CLOSED / ACCEPTED**；LOW \((0.60,4\text{ h})\)、CENTRAL \((0.80,8\text{ h})\)、HIGH \((1.00,12\text{ h})\)；`results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55` |
+| Registry v7.4 | `NOT_YET_CREATED / NOT_YET_AUTHORIZED` |
+| Layer A robustness / preregistration checkpoint | `NOT_YET_CREATED / NOT_YET_AUTHORIZED` |
+| Final cross-document alignment audit | `NOT_YET_EXECUTED` |
+| Production-authority re-freeze under v7.4 | `NOT_YET_AUTHORIZED` |
+| Full81 under v7.4 | `NOT_YET_EXECUTED / NOT AUTHORIZED` |
+| EOB continuing validity under v7.4 | **YES**（R1 independent audit） |
+| Core-three continuing validity under v7.4 | **YES**（R1 independent audit） |
+| Methodology rerun required | **NO**（R1 independent audit） |
+| New zero-winter solve requirement | `NOT REQUIRED`（見 §36.1） |
+
+## 36.8 Candidate disposition
+
+本 framework successor 的文件內狀態為：
+
+> **FRAMEWORK V7.4 ZERO-WINTER-ROLE / PV-ROUTING / \(\kappa\)-CLAIM-BOUNDARY SUCCESSOR — CANDIDATE R2**
+
+這個 disposition 只表示文件已完整表達三項授權更新與其邊界。它**不**等於 methodology acceptance、
+Registry acceptance、artifact promotion、routing authorization、production-authority re-freeze
+或 production-run authorization。
+
+> **Framework v7.4 Candidate R2 is NOT the accepted methodology authority. A fresh independent read-only
+> R2 audit is required before any Registry successor work may begin.**

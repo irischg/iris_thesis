@@ -1,0 +1,106 @@
+{
+  "all_build_gates_pass": true,
+  "branch": "thesis-v7",
+  "candidate_identity": "FRAMEWORK_V7_4_ZERO_WINTER_ROLE_PV_ROUTING_CANDIDATE_R2",
+  "candidate_status_only": true,
+  "changed_file_inventory": [
+    "docs/research_framework_v7_4_2026-09-26_r2.md",
+    "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_r2_2026-09-26.md",
+    "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r2/completion_manifest.json",
+    "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r2/package_manifest.json"
+  ],
+  "checkpoint_path": "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_r2_2026-09-26.md",
+  "checkpoint_sha256": "61e02ccbee55a4da99fb46bc8ecb7f42feb182a9492e3b929f3b221879b355c7",
+  "created_date": "2026-09-26",
+  "execution_counts": {
+    "core_three_reruns": 0,
+    "eob_reruns": 0,
+    "full81_runs": 0,
+    "milp_solves": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "sensitivity_solves": 0
+  },
+  "external_registered_artifacts": {
+    "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet": {
+      "role": "accepted reconstructed_pv_mainline planning input; 8760 rows",
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "size_bytes": 554037
+    },
+    "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md": {
+      "role": "immutable Candidate R1 checkpoint",
+      "sha256": "a9df7162ee27bfd037b500e531a64bc921a001ab39a103543a9031d7141d551e",
+      "size_bytes": 19041
+    },
+    "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md": {
+      "role": "governing provenance protocol",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "size_bytes": 19977
+    },
+    "docs/research_framework_v7_3_2026-09-23.md": {
+      "role": "accepted methodology predecessor and current authority",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "size_bytes": 181798
+    },
+    "docs/research_framework_v7_4_2026-09-26.md": {
+      "role": "immutable immediate candidate predecessor R1",
+      "sha256": "52459a06a6c527413c74bd5d740992975284b1d41216168aad5869c585da6cda",
+      "size_bytes": 212268
+    },
+    "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md": {
+      "role": "accepted evidence authority",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "size_bytes": 187796
+    },
+    "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md": {
+      "role": "accepted v7.3 lifecycle closure",
+      "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "size_bytes": 12358
+    },
+    "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/completion_manifest.json": {
+      "role": "immutable Candidate R1 completion manifest",
+      "sha256": "923343ab7958e9739e194fced97a6372fd4f81e6ddd97a38ae86d3a7f6c98d0b",
+      "size_bytes": 15909
+    },
+    "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/package_manifest.json": {
+      "role": "immutable Candidate R1 package manifest",
+      "sha256": "e6592857561bf3940c2468704a7108633b4f0ea198ea432acb9ff8b2c00de124",
+      "size_bytes": 5582
+    }
+  },
+  "fresh_independent_r2_audit_required": true,
+  "immediate_candidate_predecessor_commit": "5d81ee989856d42a21e715def4625162ea9fc0af",
+  "methodology_acceptance_performed": false,
+  "new_framework_candidate_path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+  "new_framework_candidate_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+  "no_code_changes": true,
+  "no_data_changes": true,
+  "no_model_changes": true,
+  "no_solve": true,
+  "omitted_file": "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r2/package_manifest.json",
+  "package_files": {
+    "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_r2_2026-09-26.md": {
+      "sha256": "61e02ccbee55a4da99fb46bc8ecb7f42feb182a9492e3b929f3b221879b355c7",
+      "size_bytes": 11816
+    },
+    "docs/research_framework_v7_4_2026-09-26_r2.md": {
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "size_bytes": 216186
+    },
+    "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r2/completion_manifest.json": {
+      "sha256": "08fe8b7575e23cc7f89afc132fcf8c6fde0287ce138887bc81916443d6aef891",
+      "size_bytes": 9891
+    }
+  },
+  "post_authoring_commit": "RECORDED_IN_FINAL_REPORT",
+  "pre_authoring_head": "5d81ee989856d42a21e715def4625162ea9fc0af",
+  "predecessor_framework_path": "docs/research_framework_v7_3_2026-09-23.md",
+  "predecessor_framework_sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+  "production_authority_refreeze_performed": false,
+  "registry_successor_created": false,
+  "schema_version": "iris-thesis-framework-v7.4-task1-candidate-r2-package-manifest-v1",
+  "self_hash_omission_statement": "package_manifest.json registers every R2 package file except itself; its own SHA-256 is deliberately omitted to avoid circular self-hash and is reported externally after generation.",
+  "self_hash_omitted": true,
+  "stale_current_status_contradictions_remain": false,
+  "status": "CANDIDATE_R2_PENDING_FRESH_INDEPENDENT_READ_ONLY_AUDIT"
+}
