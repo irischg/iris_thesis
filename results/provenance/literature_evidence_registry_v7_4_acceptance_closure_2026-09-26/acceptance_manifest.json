@@ -1,0 +1,332 @@
+{
+  "accepted_authority": {
+    "candidate_revision_identity": "Candidate R1 provenance revision identifier only; not part of the formal evidence version name",
+    "canonical_accepted_registry_byte_count": 245125,
+    "canonical_accepted_registry_path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+    "canonical_accepted_registry_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+    "formal_evidence_version_name": "Registry v7.4",
+    "forbidden_formal_name": "Registry v7.4 R1",
+    "path_suffix_semantics": "the accepted Registry path carries no _r1 suffix, following the existing first-candidate convention; any later correction must be additive as a new candidate revision, never an overwrite of these accepted bytes",
+    "status": "CLOSED_ACCEPTED",
+    "status_role": "current evidence authority"
+  },
+  "accepted_planning_input": {
+    "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+    "role": "reconstructed_pv_mainline",
+    "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+    "size_bytes": 554037,
+    "status": "CLOSED_ACCEPTED",
+    "unchanged_by_registry_v7_4_closure": true
+  },
+  "accepted_predecessor_authority": {
+    "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md": {
+      "formal_name_before_this_closure": "Registry v7.3",
+      "lifecycle_after_this_closure": "historical accepted predecessor",
+      "modified_by_this_closure": false,
+      "role": "accepted evidence predecessor; immutable; permanently preserved for provenance, regression, historical-lineage, replication, and comparison",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "size_bytes": 187796,
+      "status": "CLOSED_ACCEPTED",
+      "supersession_scope": "superseded solely in the three accepted alignment groups A/B/C; elsewhere its inherited evidence content governs unchanged"
+    },
+    "failed_immutable_provenance_note": "Registry v7.3 R1/R2 remain failed immutable provenance and are not current authority"
+  },
+  "accepted_production_results": {
+    "core_three": {
+      "cases_executed": 3,
+      "current_governance_status": "CLOSED_ACCEPTED",
+      "modified_by_this_closure": false,
+      "path": "results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55",
+      "planning_input_identity_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "rerun_required": false,
+      "valid_under_registry_v7_4": true
+    },
+    "eob": {
+      "current_governance_status": "CLOSED_ACCEPTED",
+      "modified_by_this_closure": false,
+      "path": "results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556",
+      "planning_input_identity_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "rerun_required": false,
+      "valid_under_registry_v7_4": true
+    },
+    "full81": "NOT_YET_EXECUTED",
+    "lifecycle_unchanged_by_this_closure": true
+  },
+  "accepted_scientific_alignment_groups": {
+    "group_a_zero_winter_current_role": {
+      "accepted_current_role": "historical conservative validation / provenance evidence supporting the reconstructed-PV promotion/adjudication decision",
+      "is_current_mainline_planning_pv": false,
+      "is_equal_status_alternative_planning_baseline": false,
+      "is_mandatory_eob_sensitivity": false,
+      "is_mandatory_layer_a_sensitivity": false,
+      "is_mandatory_layer_b_sensitivity_or_stress": false,
+      "new_zero_winter_solve_required": false,
+      "verdict": "ACCEPTED"
+    },
+    "group_b_observed_vs_planning_pv_epistemic_routing": {
+      "forbidden_descriptions": [
+        "observed historical PV truth",
+        "exact ground truth",
+        "exact recovery of the unavailable historical series",
+        "online forecast information"
+      ],
+      "historical_empirical_layer_remains_distinct": true,
+      "hybrid_routing_authorized": false,
+      "required_descriptions": [
+        "weather-informed",
+        "model-based",
+        "separately validated",
+        "best-estimate planning baseline"
+      ],
+      "single_accepted_planning_identity": true,
+      "unauthorized_hybrid_routing_present": false,
+      "verdict": "ACCEPTED"
+    },
+    "group_c_kappa_boundary": {
+      "calibration_basis_unchanged": true,
+      "calibration_period_unchanged": true,
+      "estimator_unchanged": true,
+      "historical_calibration_remains_on_accepted_observed_data_basis": true,
+      "is_universal": false,
+      "kappa_role": "site-specific / project evidence within its accepted role",
+      "planning_reconstruction_silently_recalibrates_kappa": false,
+      "production_value_scientifically_unchanged": true,
+      "verdict": "ACCEPTED"
+    },
+    "other_accepted_scientific_change_categories": 0
+  },
+  "authority_after": {
+    "evidence_authority": "Registry v7.4",
+    "evidence_authority_path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+    "evidence_authority_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+    "methodology_authority": "Framework v7.4",
+    "methodology_authority_path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+    "methodology_authority_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273"
+  },
+  "authority_before": {
+    "evidence_authority": "Registry v7.3",
+    "evidence_authority_path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+    "evidence_authority_sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+    "methodology_authority": "Framework v7.4",
+    "methodology_authority_path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+    "methodology_authority_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+    "registry_v7_4_lifecycle": "CANDIDATE_ONLY_INDEPENDENTLY_AUDITED_PASS"
+  },
+  "candidate_lineage": {
+    "candidate_r1": {
+      "artifacts": {
+        "docs/checkpoints/literature_evidence_registry_v7_4_framework_alignment_candidate_2026-09-26.md": {
+          "role": "Candidate R1 producer checkpoint; immutable",
+          "sha256": "4bdfb8ab0dc7e72e634610a5734124d7808a7d5a3b85852a5e3f0088e8d13deb",
+          "size_bytes": 22369
+        },
+        "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md": {
+          "role": "canonical accepted Registry v7.4 bytes; adopted unchanged",
+          "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+          "size_bytes": 245125
+        },
+        "results/provenance/literature_evidence_registry_v7_4_framework_alignment_candidate_r1/completion_manifest.json": {
+          "role": "Candidate R1 completion manifest; immutable",
+          "sha256": "555621c939d229cb0096ef7e94d62fd774aed06b2c69cb577bc20191b5005aea",
+          "size_bytes": 20296
+        },
+        "results/provenance/literature_evidence_registry_v7_4_framework_alignment_candidate_r1/package_manifest.json": {
+          "role": "Candidate R1 package manifest; immutable",
+          "sha256": "134635ed2c4c9c6750b2d944deab0a9c49f4c749dc04180782cf5ac099a26c45",
+          "size_bytes": 7424
+        }
+      },
+      "artifact_count": 4,
+      "authoring_commit": "bf87b7f0659da17277fbb797099141b24343aa79",
+      "authoring_commit_additions": 4,
+      "authoring_commit_deletions": 0,
+      "authoring_commit_modifications": 0,
+      "bytes_verified_identical_to_authoring_commit": true,
+      "modified_by_this_closure": false,
+      "role": "provenance revision identity only; supplied the canonical accepted Registry v7.4 bytes",
+      "scope_verified_four_file_additive": true
+    },
+    "candidate_r2": "NOT_REQUIRED_NOT_CREATED",
+    "rewritten_accepted_copy_created": false,
+    "candidate_file_renamed": false,
+    "candidate_file_mutated_in_place": false
+  },
+  "closure_identity": "REGISTRY_V7_4_EVIDENCE_ACCEPTANCE_CLOSURE",
+  "closure_timestamp": "2026-09-26",
+  "created_date": "2026-09-26",
+  "execution_counts": {
+    "accepted_result_changes": 0,
+    "code_changes": 0,
+    "core_three_reruns": 0,
+    "data_changes": 0,
+    "eob_reruns": 0,
+    "files_deleted": 0,
+    "files_modified": 0,
+    "full81_runs": 0,
+    "milp_solves": 0,
+    "model_constructions": 0,
+    "model_input_changes": 0,
+    "optimize_calls": 0,
+    "pushes_performed": 0,
+    "sensitivity_solves": 0,
+    "tags_created": 0
+  },
+  "framework_acceptance_reference": {
+    "acceptance_checkpoint": {
+      "path": "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md",
+      "sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f",
+      "size_bytes": 18809
+    },
+    "acceptance_closure_commit": "2fe2105180c68d9289eddc2668399687d4c49d2e",
+    "acceptance_manifest": {
+      "path": "results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+      "sha256": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33",
+      "size_bytes": 15144
+    },
+    "framework_lifecycle_authority_source": "the Framework v7.4 acceptance closure artifacts listed here, NOT the Framework document's own authoring-time self-text",
+    "framework_status": "CLOSED_ACCEPTED",
+    "formal_methodology_version_name": "Framework v7.4",
+    "forbidden_formal_name": "Framework v7.4 R2",
+    "modified_by_this_closure": false
+  },
+  "governance_state_after_closure": {
+    "current_state_md_refresh": "NOT_YET_DONE_SEPARATE_NEXT_TASK",
+    "final_cross_document_alignment_audit": "NOT_YET_EXECUTED",
+    "final_production_authority_refreeze": "NOT_YET_PERFORMED",
+    "framework_v7_4": "CLOSED_ACCEPTED",
+    "full81": "NOT_YET_EXECUTED",
+    "full81_authorized_by_this_closure": false,
+    "layer_a_preregistration_checkpoint": "NOT_YET_CREATED",
+    "newer_accepted_registry_successor": "NONE_EXISTS",
+    "project_handoff_md_refresh": "NOT_YET_DONE_SEPARATE_NEXT_TASK",
+    "push_performed": false,
+    "registry_v7_3_r3": "CLOSED_ACCEPTED_HISTORICAL_ACCEPTED_PREDECESSOR",
+    "registry_v7_4": "CLOSED_ACCEPTED_CURRENT_EVIDENCE_AUTHORITY",
+    "tag_created": false,
+    "task_3_authorized": false
+  },
+  "independent_registry_audit": {
+    "acceptance_relevant_findings": 0,
+    "ac_dc_semantic_inconsistency_count": 0,
+    "audit_mode": "fresh independent read-only audit",
+    "audit_record_artifact": {
+      "created_by_this_closure": true,
+      "path": "docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md",
+      "reason_created": "the completed independent audit had no durable repository artifact; the preceding CURRENT_STATE.md recorded the independent Registry audit as PENDING",
+      "role": "durable transcription of the already-completed independent audit; not a second audit",
+      "sha256": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce",
+      "size_bytes": 7639
+    },
+    "audited_candidate_commit": "bf87b7f0659da17277fbb797099141b24343aa79",
+    "audited_candidate_path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+    "audited_candidate_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+    "authoring_side_self_acceptance": false,
+    "candidate_r1_four_file_additive_scope": "VERIFIED",
+    "candidate_r1_sha256_independently_verified": true,
+    "claim_to_source_mismatch_count": 0,
+    "class_d_count": 0,
+    "closed_methodology_continuity": "PASS",
+    "did_not_self_accept": true,
+    "eligible_for_separate_acceptance_closure": true,
+    "extra_candidate_scientific_changes": 0,
+    "fourth_scientific_change_count": 0,
+    "framework_change_group_count": 3,
+    "framework_v7_4_accepted_bytes_independently_verified": true,
+    "implementation_numerical_interference_count": 0,
+    "kappa_boundary": "PASS",
+    "leakage_lookahead_information_advantage_finding_count": 0,
+    "missing_framework_changes": 0,
+    "observed_reconstructed_planning_boundaries": "PASS",
+    "performed_by": "separate fresh session independent of the Candidate R1 authoring pass",
+    "registry_v7_3_r3_accepted_bytes_independently_verified_unchanged": true,
+    "repository_provenance_identity": "UNAMBIGUOUS",
+    "same_artifact_routing": "PASS",
+    "self_acceptance_finding_count": 0,
+    "three_change_groups_correctly_represented": true,
+    "unit_scale_inconsistency_count": 0,
+    "verdict": "PASS",
+    "zero_winter_temporal_current_role": "PASS"
+  },
+  "lifecycle": "acceptance_closure",
+  "manifest_role": "machine-readable Registry v7.4 evidence acceptance / closure manifest",
+  "non_blocking_observations": {
+    "obs_1_framework_authoring_time_self_text": {
+      "accepted_framework_bytes_modified": false,
+      "blocking": false,
+      "disposition": "historical authoring-time provenance; MUST NOT be fixed by modifying accepted Framework bytes",
+      "issue": "the immutable accepted Framework v7.4 primary bytes retain authoring-time self-text, including Candidate R2 candidate-status wording and predecessor-current statements written before Framework v7.4 acceptance",
+      "same_principle_applies_to_accepted_registry_bytes": true
+    },
+    "obs_2_current_state_stale_authority_wording": {
+      "action_required": false,
+      "blocking": false,
+      "issue": "a prior stale authority statement in docs/ai_handoff/CURRENT_STATE.md",
+      "resolved_by_commit": "9e2f05c93d7642fc07881210983a030550455a17",
+      "status": "ALREADY_RESOLVED_BEFORE_THIS_CLOSURE"
+    }
+  },
+  "non_reopen_statement": {
+    "a1_a4": "CLOSED_NOT_REOPENED",
+    "alpha_beta_grid": "UNCHANGED",
+    "b1_b2": "CLOSED_NOT_REOPENED",
+    "constant_ntd_2023_monetary_basis": "UNCHANGED",
+    "degradation": "UNCHANGED",
+    "gate_1_gate_2": "CLOSED_NOT_REOPENED",
+    "layer_a_layer_b_dg_boundaries": "UNCHANGED",
+    "literature_added": 0,
+    "literature_browsed": 0,
+    "literature_removed_or_rerolled_outside_groups_abc": 0,
+    "observed_vs_reconstructed_boundaries": "UNCHANGED",
+    "outage_replay_semantics": "UNCHANGED",
+    "pnnl_10mw_mainline_1mw_sensitivity_roles": "UNCHANGED",
+    "rainflow_role": "UNCHANGED",
+    "reconstructed_planning_input": "UNCHANGED",
+    "resilience_definitions": "UNCHANGED",
+    "solver_fingerprint": "UNCHANGED",
+    "tariff_semantics": "UNCHANGED"
+  },
+  "package_files": {
+    "docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md": {
+      "role": "Registry v7.4 acceptance/closure checkpoint",
+      "sha256": "4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977",
+      "size_bytes": 16944
+    },
+    "docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md": {
+      "role": "durable transcription of the completed independent Candidate R1 audit",
+      "sha256": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce",
+      "size_bytes": 7639
+    }
+  },
+  "pass_type": "additive acceptance materialization; documentation/provenance only",
+  "repository_state": {
+    "ahead_behind_pre_closure": "0/0",
+    "branch": "thesis-v7",
+    "live_remote_origin_thesis_v7_pre_closure": "9e2f05c93d7642fc07881210983a030550455a17",
+    "local_origin_thesis_v7_pre_closure": "9e2f05c93d7642fc07881210983a030550455a17",
+    "pre_closure_head": "9e2f05c93d7642fc07881210983a030550455a17",
+    "pre_closure_staged_files": 0,
+    "pre_closure_tracked_dirty_files": 0,
+    "preexisting_untracked_files_count": 8,
+    "preexisting_untracked_files_preserved": true,
+    "repository": "irischg/iris_thesis",
+    "unchanged_by_this_closure": [
+      "docs/ai_handoff/CURRENT_STATE.md",
+      "docs/ai_handoff/PROJECT_HANDOFF.md",
+      "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+      "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "all Candidate R1 checkpoint and manifest artifacts",
+      "all Framework acceptance artifacts",
+      "code",
+      "data",
+      "model inputs",
+      "numerical results"
+    ]
+  },
+  "schema_version": "iris-thesis-registry-v7.4-acceptance-closure-manifest-v1",
+  "self_hash_omission_statement": "acceptance_manifest.json registers every file in this closure package except itself; its own SHA-256 is deliberately omitted to avoid a circular self-hash and is reported externally in the closure report after generation.",
+  "self_hash_omitted": true,
+  "status": "CLOSED_ACCEPTED",
+  "status_registry_v7_4": "REGISTRY_V7_4_CLOSED_ACCEPTED",
+  "next_governance_step": "refresh docs/ai_handoff/CURRENT_STATE.md and docs/ai_handoff/PROJECT_HANDOFF.md to state methodology authority = Framework v7.4 and evidence authority = Registry v7.4; then proceed through the existing governance sequence toward Task 3 (Layer A robustness / preregistration checkpoint). Registry v7.4 acceptance does NOT authorize Full81."
+}
