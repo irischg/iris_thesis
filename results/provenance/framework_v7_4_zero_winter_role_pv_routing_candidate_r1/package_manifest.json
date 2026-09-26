@@ -1,0 +1,99 @@
+{
+  "all_build_gates_pass": true,
+  "branch": "thesis-v7",
+  "builder": {
+    "note": "This Task-1 pass authored documents only. No repository code was created or changed, so no tracked builder script exists or is registered.",
+    "path": "scratchpad build script (documentation-governance pass; not a production runner and not added to the repository)"
+  },
+  "candidate_identity": "FRAMEWORK_V7_4_ZERO_WINTER_ROLE_PV_ROUTING_CANDIDATE_R1",
+  "candidate_status_only": true,
+  "changed_file_inventory": [
+    "docs/research_framework_v7_4_2026-09-26.md",
+    "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md",
+    "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/completion_manifest.json",
+    "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/package_manifest.json"
+  ],
+  "checkpoint_path": "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md",
+  "checkpoint_sha256": "a9df7162ee27bfd037b500e531a64bc921a001ab39a103543a9031d7141d551e",
+  "created_date": "2026-09-26",
+  "epistemic_boundary": "Accepted reconstructed full-year PV is a weather-informed, model-based, separately validated best-estimate planning baseline. It is not observed historical PV truth, not exact ground truth, not exact recovery of the unavailable historical series, and not online forecast information. Historical kappa calibration answers a historical billing-representation question and is not a planning-PV calibration. Solver success does not prove methodological validity.",
+  "execution_counts": {
+    "code_changes": 0,
+    "core_three_reruns": 0,
+    "data_regenerations": 0,
+    "eob_reruns": 0,
+    "full81_runs": 0,
+    "milp_solves": 0,
+    "model_changes": 0,
+    "model_constructions": 0,
+    "optimize_calls_actual": 0,
+    "optimize_calls_expected": 0,
+    "parameter_changes": 0,
+    "sensitivity_solves": 0,
+    "solver_setting_changes": 0,
+    "zero_winter_solves": 0
+  },
+  "external_registered_artifacts": {
+    "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "role": "governing provenance protocol",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "size_bytes": 19977
+    },
+    "docs/research_framework_v7_2_2026-08-24.md": {
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "role": "historical accepted predecessor of v7.3; lineage only",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5",
+      "size_bytes": 165917
+    },
+    "docs/research_framework_v7_3_2026-09-23.md": {
+      "path": "docs/research_framework_v7_3_2026-09-23.md",
+      "role": "immutable accepted predecessor; unchanged",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "size_bytes": 181798
+    },
+    "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md": {
+      "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+      "role": "current accepted evidence authority; unchanged context",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "size_bytes": 187796
+    },
+    "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md": {
+      "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+      "role": "accepted v7.3 lifecycle closure; immutable, not edited",
+      "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "size_bytes": 12358
+    }
+  },
+  "independent_audit_still_required": true,
+  "new_framework_candidate_path": "docs/research_framework_v7_4_2026-09-26.md",
+  "new_framework_candidate_sha256": "52459a06a6c527413c74bd5d740992975284b1d41216168aad5869c585da6cda",
+  "no_code_changes": true,
+  "no_data_changes": true,
+  "no_model_changes": true,
+  "no_solve": true,
+  "omitted_file": "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/package_manifest.json",
+  "package_files": {
+    "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md": {
+      "sha256": "a9df7162ee27bfd037b500e531a64bc921a001ab39a103543a9031d7141d551e",
+      "size_bytes": 19041
+    },
+    "docs/research_framework_v7_4_2026-09-26.md": {
+      "sha256": "52459a06a6c527413c74bd5d740992975284b1d41216168aad5869c585da6cda",
+      "size_bytes": 212268
+    },
+    "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/completion_manifest.json": {
+      "sha256": "923343ab7958e9739e194fced97a6372fd4f81e6ddd97a38ae86d3a7f6c98d0b",
+      "size_bytes": 15909
+    }
+  },
+  "post_authoring_commit": "RECORDED_IN_PASS_REPORT",
+  "pre_authoring_head": "1651b31008c565e105fc79a958f9ca98a194aa80",
+  "predecessor_framework_path": "docs/research_framework_v7_3_2026-09-23.md",
+  "predecessor_framework_sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+  "reused_prior_candidate_directory": false,
+  "schema_version": "iris-thesis-framework-v7.4-task1-candidate-r1-package-manifest-v1",
+  "self_hash_omission_statement": "package_manifest.json registers every Task-1 candidate package file except itself; its own SHA-256 is deliberately omitted because a manifest cannot contain its own digest. Its external SHA-256 is reported with the pass report after generation.",
+  "self_hash_omitted": true,
+  "status": "CANDIDATE_PASS_PENDING_INDEPENDENT_FRAMEWORK_AUDIT"
+}

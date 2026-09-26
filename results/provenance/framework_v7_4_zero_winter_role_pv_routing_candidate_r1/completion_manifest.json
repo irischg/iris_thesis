@@ -1,0 +1,318 @@
+{
+  "acceptance_or_freeze_artifact_created": false,
+  "artifact_identities": {
+    "framework_v7_2_historical_lineage": {
+      "path": "docs/research_framework_v7_2_2026-08-24.md",
+      "sha256": "bfe724a35dd019b9f29456a7a7b569e132aa63b399c21c82d2c69a9fd934c8d5",
+      "size_bytes": 165917
+    },
+    "framework_v7_3_predecessor": {
+      "path": "docs/research_framework_v7_3_2026-09-23.md",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "size_bytes": 181798
+    },
+    "framework_v7_4_candidate": {
+      "path": "docs/research_framework_v7_4_2026-09-26.md",
+      "sha256": "52459a06a6c527413c74bd5d740992975284b1d41216168aad5869c585da6cda",
+      "size_bytes": 212268
+    },
+    "framework_v7_4_checkpoint": {
+      "path": "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md",
+      "sha256": "a9df7162ee27bfd037b500e531a64bc921a001ab39a103543a9031d7141d551e",
+      "size_bytes": 19041
+    },
+    "governing_provenance_protocol": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "size_bytes": 19977
+    },
+    "registry_v7_3_r3_unchanged_context": {
+      "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "size_bytes": 187796
+    },
+    "v7_3_authority_freeze": {
+      "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+      "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "size_bytes": 12358
+    }
+  },
+  "authorized_change_scope": {
+    "A_zero_winter_role": {
+      "current_role": "historical conservative validation / provenance evidence supporting the reconstructed-PV promotion/adjudication decision",
+      "historical_v7_2_mainline_statement_preserved": true,
+      "historical_v7_3_stress_sensitivity_statement_preserved": true,
+      "new_zero_winter_eob_solve_required": false,
+      "new_zero_winter_layer_a_solve_required": false,
+      "new_zero_winter_layer_b_solve_required": false,
+      "not_equal_status_alternative_planning_baseline": true,
+      "not_mandatory_layer_a_sensitivity": true,
+      "not_mandatory_layer_b_sensitivity_or_stress": true,
+      "preserved_in_provenance_history": true,
+      "prior_comparison_remains_valid_historical_validation_evidence": true,
+      "removed_from_minimum_required_sensitivity_program": true,
+      "replaced_by_another_sensitivity": false,
+      "revisitable_only_with_separately_justified_future_reason": true,
+      "silently_deleted": false
+    },
+    "B_observed_vs_planning_pv_routing": {
+      "historical_empirical_layer_identity": "observed data wherever valid",
+      "historical_grid_import_calibration": "Load_obs - PV_obs for valid observed-PV periods against the actual billing target",
+      "historical_layer_members": [
+        "historical billing-demand calibration",
+        "Taipower bill regression",
+        "tariff/institutional validation",
+        "historical empirical checks of what actually occurred"
+      ],
+      "hybrid_routing_authorized": false,
+      "model_equation_changed": false,
+      "planning_layer_identity": "accepted reconstructed full-year PV (single artifact identity)",
+      "planning_layer_members": [
+        "EOB planning optimization",
+        "Full81 / Layer A",
+        "R(alpha,beta)",
+        "P_out",
+        "binding-outage identification/classification",
+        "Layer A outage consistency replay",
+        "baseline Layer B",
+        "downstream planning scenarios unless explicitly declared an alternative scenario"
+      ],
+      "reconstructed_pv_prohibited_descriptors": [
+        "observed historical PV truth",
+        "exact ground truth",
+        "exact recovery of the unavailable historical PV",
+        "online forecast information"
+      ],
+      "reconstructed_pv_required_descriptors": [
+        "weather-informed",
+        "model-based",
+        "separately validated",
+        "best-estimate planning baseline"
+      ]
+    },
+    "C_kappa_claim_boundary": {
+      "calibration_basis": "valid observed periods; observed Load/PV; usage-period-aligned actual billed maxima",
+      "calibration_period": "2025-01 to 2025-10, ten pv_status=valid usage months",
+      "calibration_period_definition_changed": false,
+      "estimator": "through-origin least squares",
+      "estimator_changed": false,
+      "kappa_demonstrates_subhourly_bess_power_peak_capture": false,
+      "kappa_eliminates_hourly_temporal_resolution_limitation": false,
+      "kappa_full_precision_source_evidence": [
+        "scripts/19a_preflight_final_layer_a_81_cases.py (kappa-drift guard)",
+        "docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-11.json",
+        "docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-10.json"
+      ],
+      "kappa_is_billing_demand_representation_proxy": true,
+      "kappa_is_reconstruction_of_15min_chronology": false,
+      "production_kappa_changed": false,
+      "production_kappa_reported_approximation": 1.01037,
+      "production_kappa_value": 1.0103668594376984,
+      "reconstructed_planning_pv_may_redefine_or_reestimate_kappa": false,
+      "scripted_reproduction_requirement_retained": true
+    },
+    "D_version_provenance_status_plumbing": "title, version lineage, source manifest, supersession rule, candidate status, versioning principle, literature-split note, delta block, section 0.3 gate list, section 25 governance sequence, section 35 re-scoping as inherited historical record, new section 36",
+    "count": 3,
+    "other_substantive_categories_present": false
+  },
+  "candidate_identity": "FRAMEWORK_V7_4_ZERO_WINTER_ROLE_PV_ROUTING_CANDIDATE_R1",
+  "change_scope_verdicts": {
+    "a1_a4_unchanged": "PASS",
+    "accepted_eob_and_core_three_numerical_results_unchanged": "PASS",
+    "b1_b2_unchanged": "PASS",
+    "cost_package_unchanged": "PASS",
+    "degradation_unchanged": "PASS",
+    "equations_unchanged": "PASS",
+    "kappa_claim_boundary_formalized_without_recalibration": "PASS",
+    "layer_a_81_grid_unchanged": "PASS",
+    "layer_a_b_dg_boundaries_unchanged": "PASS",
+    "no_code_changes": "PASS",
+    "no_data_changes": "PASS",
+    "no_model_changes": "PASS",
+    "observed_vs_planning_routing_formalized": "PASS",
+    "reserve_formulation_unchanged": "PASS",
+    "soc_and_efficiency_unchanged": "PASS",
+    "tariff_unchanged": "PASS",
+    "zero_winter_role_changed_exactly_as_authorized": "PASS"
+  },
+  "created_date": "2026-09-26",
+  "current_accepted_authority_at_candidate_creation": {
+    "evidence": {
+      "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "size_bytes": 187796
+    },
+    "lifecycle_closure": {
+      "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+      "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "size_bytes": 12358
+    },
+    "methodology": {
+      "path": "docs/research_framework_v7_3_2026-09-23.md",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "size_bytes": 181798
+    },
+    "note": "Framework v7.4 is NOT the accepted methodology authority."
+  },
+  "diff_audit": {
+    "every_hunk_classified_as_A_B_C_or_D": true,
+    "method": "line-level SequenceMatcher over pristine v7.3 bytes vs v7.4 bytes",
+    "non_equal_hunks": 40,
+    "predecessor_lines_changed_or_removed": 57,
+    "successor_lines_added_or_changed": 372,
+    "unclassified_substantive_hunks": 0,
+    "v7_3_content_lines": 3956,
+    "v7_4_content_lines": 4271
+  },
+  "eob_core_three_status_boundary": {
+    "author_self_certification_of_downstream_validity": false,
+    "continuing_validity_verdict_owner": "required independent Framework-successor downstream-impact audit",
+    "core_three_rerun_authorized_by_this_pass": false,
+    "eob_rerun_authorized_by_this_pass": false,
+    "framework_version_change_alone_justifies_rerun": false,
+    "live_implementation_status_source": "docs/ai_handoff/CURRENT_STATE.md plus live repository evidence",
+    "this_pass_changes": "methodology and document role definitions only"
+  },
+  "epistemic_boundary": "Accepted reconstructed full-year PV is a weather-informed, model-based, separately validated best-estimate planning baseline. It is not observed historical PV truth, not exact ground truth, not exact recovery of the unavailable historical series, and not online forecast information. Historical kappa calibration answers a historical billing-representation question and is not a planning-PV calibration. Solver success does not prove methodological validity.",
+  "equation_audit": {
+    "added_blocks": [
+      "P_t^{grid,hist}=L_t^{obs}-PV_t^{obs}"
+    ],
+    "added_blocks_role": "restatement of the existing accepted historical grid-import calibration definition in Section 4.1.1-R and Section 36.2; not a new or modified model equation",
+    "added_in_v7_4": 2,
+    "boxed_count_v7_3": 50,
+    "boxed_count_v7_4": 50,
+    "equations_inherited_unchanged": true,
+    "method": "deterministic extraction and whitespace-normalized multiset comparison of display-math blocks, plus \\boxed{} occurrence count",
+    "removed_or_altered_from_v7_3": 0,
+    "v7_3_display_math_blocks": 152,
+    "v7_4_display_math_blocks": 154
+  },
+  "execution_counts": {
+    "code_changes": 0,
+    "core_three_reruns": 0,
+    "data_regenerations": 0,
+    "eob_reruns": 0,
+    "full81_runs": 0,
+    "milp_solves": 0,
+    "model_changes": 0,
+    "model_constructions": 0,
+    "optimize_calls_actual": 0,
+    "optimize_calls_expected": 0,
+    "parameter_changes": 0,
+    "sensitivity_solves": 0,
+    "solver_setting_changes": 0,
+    "zero_winter_solves": 0
+  },
+  "final_verdict": "FRAMEWORK V7.4 ZERO-WINTER-ROLE / PV-ROUTING / KAPPA-CLAIM-BOUNDARY SUCCESSOR - CANDIDATE PASS",
+  "frozen_setting_audit": {
+    "all_deltas_are_additive_restatements": true,
+    "method": "literal occurrence-count comparison of frozen numerical/model tokens",
+    "tokens_audited": 33,
+    "tokens_with_count_decrease": 0,
+    "tokens_with_value_change": 0,
+    "verdict": "PASS"
+  },
+  "governance_sequence": [
+    "Framework successor (THIS PASS - COMPLETE)",
+    "independent Framework audit (REQUIRED, NOT_YET_EXECUTED)",
+    "Framework accepted (NOT_YET_EXECUTED)",
+    "Registry successor (NOT_YET_CREATED)",
+    "independent Registry audit (NOT_YET_EXECUTED)",
+    "Registry accepted (NOT_YET_EXECUTED)",
+    "Layer A robustness/preregistration checkpoint (NOT_YET_CREATED)",
+    "independent checkpoint audit (NOT_YET_EXECUTED)",
+    "final cross-document alignment audit (NOT_YET_EXECUTED)",
+    "production-authority re-freeze if required (NOT_YET_AUTHORIZED)",
+    "Full81 (NOT AUTHORIZED)"
+  ],
+  "guardrails_asserted": [
+    "data leakage",
+    "look-ahead bias",
+    "retrospective/operational information confusion",
+    "information advantage",
+    "unfair baseline comparison",
+    "observed-vs-reconstructed conflation",
+    "historical-vs-planning epistemic conflation",
+    "billing proxy vs physical-power semantics",
+    "unit/scale drift",
+    "implementation-vs-methodology drift",
+    "silent model-equation drift"
+  ],
+  "independent_audit_required": true,
+  "layer_a_preregistration_checkpoint_created": false,
+  "methodology_promotion_performed": false,
+  "next_required_gate": "independent read-only Framework audit of the v7.4 candidate and this package; no Registry successor work may begin before that audit accepts the Framework candidate",
+  "pass_type": "DOCUMENTATION_METHODOLOGY_GOVERNANCE_ONLY",
+  "production_authority_refreeze_performed": false,
+  "registry_successor_created": false,
+  "repository_state": {
+    "branch": "thesis-v7",
+    "changed_file_inventory": [
+      "docs/research_framework_v7_4_2026-09-26.md",
+      "docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md",
+      "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/completion_manifest.json",
+      "results/provenance/framework_v7_4_zero_winter_role_pv_routing_candidate_r1/package_manifest.json"
+    ],
+    "changed_file_inventory_note": "Additive new files only. Zero modifications to any tracked file. Zero deletions.",
+    "head_at_manifest_generation": "1651b31008c565e105fc79a958f9ca98a194aa80",
+    "origin_thesis_v7_at_manifest_generation": "1651b31008c565e105fc79a958f9ca98a194aa80",
+    "porcelain_snapshot_at_manifest_generation": {
+      "argv": [
+        "git",
+        "-c",
+        "core.quotePath=false",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "note": "Captured after the Framework candidate and checkpoint were written and before the authorized Task-1 commit. Raw subprocess bytes were hashed without stripping. The two provenance-package JSON files do not appear in this snapshot because '.gitignore:23 results/' excludes them from untracked listing; they are made Git-durable in the Task-1 commit by explicit force-add, following the tracked precedent of results/provenance/v7_3_reconstructed_pv_mainline_candidate_r3/ and protocol Section 18 (a gitignored surviving file is not Git-durable provenance).",
+      "raw_byte_count": 590,
+      "raw_sha256": "3108a17973e3d2eaf0b8529a2c7158895ba4bf7442b66707a21495ac37b89c59"
+    },
+    "post_commit_identity": "RECORDED_IN_PASS_REPORT",
+    "pre_authoring_head": "1651b31008c565e105fc79a958f9ca98a194aa80",
+    "pre_authoring_origin_thesis_v7": "1651b31008c565e105fc79a958f9ca98a194aa80",
+    "pre_authoring_staged_paths": 0,
+    "pre_authoring_unstaged_tracked_paths": 0,
+    "pre_authoring_untracked_paths": [
+      "0629開會逐字稿Iris.docx",
+      "Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md",
+      "Claude outputs/P2_Literature_Positioning_v7.2.pptx",
+      "Claude outputs/iris_thesis_independent_audit_2026-09-13.md",
+      "Claude outputs/iris_thesis_repo_audit_2026-09-13.md",
+      "EOB_Attempt3_20260924T184038809594Z_59116b1556.zip",
+      "docs/CATOCKERTEAIPOTEP rctㄐㄚPV  I.html",
+      "docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf"
+    ],
+    "pre_authoring_untracked_paths_count": 8,
+    "pre_existing_untracked_paths_touched": false,
+    "staged_paths_at_manifest_generation": [],
+    "stash_reset_clean_checkout_performed": false,
+    "unstaged_tracked_paths_at_manifest_generation": []
+  },
+  "schema_version": "iris-thesis-framework-v7.4-task1-candidate-r1-completion-manifest-v1",
+  "self_acceptance_performed": false,
+  "static_validation_not_performed": [
+    "any solve used as a validation step",
+    "model construction",
+    "optimizer invocation",
+    "data regeneration"
+  ],
+  "static_validation_performed": [
+    "predecessor Framework v7.3 SHA-256 re-verified before and after authoring",
+    "Registry v7.3 R3 SHA-256 re-verified unchanged",
+    "authority-freeze SHA-256 re-verified unchanged",
+    "provenance-protocol SHA-256 re-verified unchanged",
+    "no-existing-accepted-artifact-modified check via empty git diff and git diff --cached",
+    "explicit v7.3 to v7.4 structural diff audit with per-hunk A/B/C/D classification",
+    "display-math and \\boxed equation-block multiset audit",
+    "frozen numerical/model setting occurrence-count drift audit",
+    "stale current-prescriptive zero-winter mandate scan over all zero-winter-family lines",
+    "forbidden-claim scan with negation-aware classification",
+    "code/data/model non-mutation check over src, scripts, tests, data, results",
+    "git diff --check static whitespace/conflict check"
+  ],
+  "status": "CANDIDATE_PASS_PENDING_INDEPENDENT_FRAMEWORK_AUDIT",
+  "tag_created_or_retargeted": false
+}
