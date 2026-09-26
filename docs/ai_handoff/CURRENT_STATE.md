@@ -6,15 +6,16 @@ A stage below is marked complete only where a checkpoint/audit artifact supports
 because a script exists.
 
 Last reconstructed: 2026-09-26, from primary repository evidence at the observed pre-refresh base
-commit `bf87b7f0659da17277fbb797099141b24343aa79` ("Add Registry v7.4 Framework alignment candidate").
+commit `9050d0eabd0ee5c41626ba924c31a67f301c7293` ("Accept Registry v7.4 evidence authority").
 Every authority hash quoted below was re-derived from primary repository bytes at that base.
 Re-derive live Git and implementation authority before trusting this file after the repository advances.
 
-Last updated: 2026-09-26, for the **post-Framework-v7.4 handoff refresh** only. This refresh is
+Last updated: 2026-09-26, for the **post-Registry-v7.4 handoff refresh** only. This refresh is
 documentation-only: it changes no methodology, no evidence content, no data value, no result, and no
-production-routing authority; it performs no solve, no model construction, and no rerun. It does **not**
-accept Registry v7.4 Candidate R1 and does **not** begin the independent Registry audit. No Git
-publication (push or tag) is authorized by this refresh.
+production-routing authority; it performs no solve, no model construction, and no rerun. It records the
+already-completed Registry v7.4 acceptance closure; it does **not** itself accept, re-audit, or re-author
+any Registry artifact, and it does **not** begin Task 3. No Git publication (push or tag) is authorized
+by this refresh.
 
 **Self-reference convention — read this before trusting any HEAD/tag fact below.** This file is itself a
 tracked, committed file. Committing or amending it (like any other commit) advances the repository's
@@ -48,46 +49,78 @@ describes a specific past base point rather than whatever HEAD is live right now
   - Acceptance manifest:
     `results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json`
     (SHA-256 `5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33`).
-- **Evidence — current authority**: `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md`
-  (SHA-256 `e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d`;
-  `CLOSED / ACCEPTED`). **Registry v7.3 remains the current evidence authority.**
-- **Registry v7.4 — candidate provenance only, not authority**:
-  `docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md`
-  (SHA-256 `5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433`), authored in commit
-  `bf87b7f0659da17277fbb797099141b24343aa79`.
-  - Authoring disposition: `LITERATURE / EVIDENCE REGISTRY V7.4 FRAMEWORK-ALIGNMENT SUCCESSOR —
-    CANDIDATE R1` (**candidate pass only**).
-  - **Independent Registry audit: `PENDING`. Registry v7.4 formal acceptance: `NOT_YET_DONE`.**
-    Candidate R1 cannot self-promote and must not be cited as current evidence authority.
+- **Evidence — current authority**: `docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md`
+  (SHA-256 `5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433`;
+  `CLOSED / ACCEPTED`).
+  - **The formal evidence name is `Registry v7.4`, never "Registry v7.4 R1".** `Candidate R1` is
+    repository/provenance revision identity only; the accepted path carries no `_r1` suffix.
+  - Independent audit record:
+    `docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md`
+    (SHA-256 `bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce`).
+  - Acceptance checkpoint:
+    `docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md`
+    (SHA-256 `4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977`).
+  - Acceptance manifest:
+    `results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json`
+    (SHA-256 `53074cfe44c0276d6f319497cbe6f5aaf07b255ac0c335f9481174dd968063fe`).
+  - Acceptance commit: `9050d0eabd0ee5c41626ba924c31a67f301c7293`.
+- **Evidence — historical accepted predecessor**:
+  `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md`
+  (SHA-256 `e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d`). Registry v7.3 is a
+  `CLOSED / ACCEPTED` **historical accepted predecessor** and is no longer the current evidence
+  authority. Its bytes are immutable and unchanged; cite it for lineage, regression comparison, or the
+  historical v7.3-authority record only.
 
 Historical methodology/evidence lifecycle closure for the v7.3 pair:
 `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md`
-(`V7.3 METHODOLOGY / EVIDENCE CONTENT FREEZE — CLOSED / ACCEPTED`). Its bytes are immutable. On the
-**methodology** side it is now historical: Framework v7.4 supersedes its current-prescriptive role
-additively, going forward, from the v7.4 acceptance. On the **evidence** side Registry v7.3 R3 remains
-current, so its Registry-facing statements — including the v7.3 zero-winter role wording — remain
-correct under v7.3 evidence authority until a Registry v7.4 closure supersedes them.
+(`V7.3 METHODOLOGY / EVIDENCE CONTENT FREEZE — CLOSED / ACCEPTED`). Its bytes are immutable. It is now
+historical on **both** sides: Framework v7.4 superseded its methodology-side current-prescriptive role
+additively, going forward, from the v7.4 methodology acceptance, and Registry v7.4 likewise superseded
+its evidence-side current-prescriptive role additively from the Registry v7.4 acceptance closure
+(`9050d0eabd0ee5c41626ba924c31a67f301c7293`). Its Registry-facing statements — including the v7.3
+zero-winter role wording — remain correct **as historical v7.3-authority records**, and are read under
+the accepted v7.4 pair going forward.
 
 Lineage roles, for the record: Framework v7.3 is an accepted immutable predecessor and historical
-lineage. Framework v7.2 and Registry v7.2 are historical accepted predecessors only. Registry v7.3
-R1/R2 are failed immutable provenance only. Framework v7.4 Candidate R1 is immutable non-accepted
-candidate provenance; Candidate R2 supplied the accepted Framework v7.4 bytes; Candidate R3 was
-`NOT REQUIRED / NOT CREATED`. None of these is current authority.
+lineage. Registry v7.3 R3 is the historical accepted evidence predecessor. Framework v7.2 and Registry
+v7.2 are historical accepted predecessors only. Registry v7.3 R1/R2 are failed immutable provenance
+only. Framework v7.4 Candidate R1 is immutable non-accepted candidate provenance; Candidate R2 supplied
+the accepted Framework v7.4 bytes; Candidate R3 was `NOT REQUIRED / NOT CREATED`. **Registry v7.4
+Candidate R1 is the historical provenance identity of the exact bytes that were independently audited
+and then accepted unchanged as Registry v7.4** — it is not a separate document and not a current
+lifecycle state. Apart from the accepted v7.4 pair itself, none of these is current authority.
+
+### Registry v7.4 lifecycle — for the record
+
+| Stage | Identity | Status |
+|---|---|---|
+| Candidate R1 authoring | commit `bf87b7f0659da17277fbb797099141b24343aa79` | complete; immutable provenance |
+| Independent read-only audit | `docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md` | `PASS` — and it explicitly did **not** self-accept |
+| Acceptance closure | commit `9050d0eabd0ee5c41626ba924c31a67f301c7293` | `CLOSED / ACCEPTED` — current evidence authority |
+
+The accepted Registry v7.4 primary bytes are **exactly** the audited Candidate R1 bytes, SHA-256
+`5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433`. Acceptance was conferred by an
+additive governance/provenance closure; it did **not** create rewritten Registry bytes, rename the
+candidate file, or mutate it in place. The independent audit and the acceptance decision are two
+separate governance actions performed in separate passes — an audit `PASS` is never self-acceptance.
 
 ## 2. Git state — base HEAD observed at last reconstruction
 
 - Branch: `thesis-v7`
 - **Base HEAD observed before this handoff refresh**:
-  `bf87b7f0659da17277fbb797099141b24343aa79` — "Add Registry v7.4 Framework alignment candidate".
-  This commit adds the four Registry v7.4 Candidate R1 artifacts (candidate registry, candidate
-  checkpoint, completion manifest, package manifest) and nothing else.
+  `9050d0eabd0ee5c41626ba924c31a67f301c7293` — "Accept Registry v7.4 evidence authority". This commit
+  adds the Registry v7.4 independent-audit record, the Registry v7.4 acceptance closure checkpoint, and
+  the Registry v7.4 acceptance manifest, and nothing else.
   **This is not necessarily the live current HEAD** — obtain that fresh via `git rev-parse HEAD`.
-- Parent of that base: `2fe2105180c68d9289eddc2668399687d4c49d2e` — "Accept Framework v7.4 methodology
-  authority" (Framework v7.4 acceptance closure checkpoint + acceptance manifest).
+- Published lineage to that base, for the record:
+  `2fe2105180c68d9289eddc2668399687d4c49d2e` ("Accept Framework v7.4 methodology authority")
+  -> `bf87b7f0659da17277fbb797099141b24343aa79` (Registry v7.4 Candidate R1 authoring)
+  -> `9e2f05c93d7642fc07881210983a030550455a17` (post-Framework-v7.4 handoff refresh)
+  -> `9050d0eabd0ee5c41626ba924c31a67f301c7293` (Registry v7.4 acceptance closure).
 - At this reconstruction, local `origin/thesis-v7` and the live remote `origin/thesis-v7` both pointed
-  at `2fe2105180c68d9289eddc2668399687d4c49d2e`, with ahead/behind `1/0`. **The Registry v7.4
-  Candidate R1 commit `bf87b7f` is LOCAL ONLY and must not be amended.** Neither local commit is
-  pushed by this refresh.
+  at `9050d0eabd0ee5c41626ba924c31a67f301c7293`, with ahead/behind `0/0` — the Registry v7.4 acceptance
+  closure is published. **The commit carrying this handoff refresh is LOCAL ONLY and is not pushed by
+  this refresh**, and no earlier commit may be amended.
 - No code, data, script, test, solver, result, checkpoint, manifest, or production-routing artifact is
   changed by this handoff-only refresh.
 - Earlier base HEADs recorded by previous reconstructions, retained as historical observations only:
@@ -107,20 +140,29 @@ candidate provenance; Candidate R2 supplied the accepted Framework v7.4 bytes; C
 
 **Current v7.4 governance chain (most recent first):**
 
-1. `docs/checkpoints/literature_evidence_registry_v7_4_framework_alignment_candidate_2026-09-26.md`
-   — Registry v7.4 Candidate R1 producer checkpoint; disposition **CANDIDATE R1**, explicitly not
-   accepted, not promoted, not routing authorization. Companion manifests:
+1. `docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md` — Registry
+   v7.4 evidence acceptance/lifecycle closure, `CLOSED / ACCEPTED`, with
+   `results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json`.
+2. `docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md` — durable
+   record of the completed independent read-only audit of Registry v7.4 Candidate R1; verdict
+   `REGISTRY v7.4 CANDIDATE R1 INDEPENDENT AUDIT = PASS`, explicitly **not** a self-acceptance.
+3. `docs/checkpoints/literature_evidence_registry_v7_4_framework_alignment_candidate_2026-09-26.md`
+   — Registry v7.4 Candidate R1 producer checkpoint. Its authoring-time disposition **CANDIDATE R1**
+   was correctly not acceptance, not promotion, and not routing authorization *at that time*.
+   Companion manifests:
    `results/provenance/literature_evidence_registry_v7_4_framework_alignment_candidate_r1/completion_manifest.json`
-   and `.../package_manifest.json`. **Independent audit pending.**
-2. `docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md` — Framework v7.4
+   and `.../package_manifest.json`. These candidate artifacts keep their authoring-time wording as
+   immutable provenance; the current accepted lifecycle status is carried by items 1–2 above.
+4. `docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md` — Framework v7.4
    acceptance/lifecycle closure, `CLOSED / ACCEPTED`, with
    `results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json`.
-3. `docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_r2_2026-09-26.md`
+5. `docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_r2_2026-09-26.md`
    — accepted Framework v7.4 candidate (R2) checkpoint.
-4. `docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md`
-   — Candidate R1 checkpoint; immutable non-accepted candidate provenance.
+6. `docs/checkpoints/framework_v7_4_zero_winter_role_pv_routing_successor_candidate_2026-09-26.md`
+   — Framework v7.4 Candidate R1 checkpoint; immutable non-accepted candidate provenance.
 
-**Historical v7.3 methodology/evidence closure chain (complete; superseded on the methodology side):**
+**Historical v7.3 methodology/evidence closure chain (complete; superseded on both the methodology and
+evidence sides by the accepted v7.4 pair):**
 
 1. `docs/framework_v7_3_merge_audit_2026-09-23.md` — Framework successor merge audit, PASS/CLOSED.
 2. `docs/registry_v7_3_r3_merge_audit_2026-09-23.md` — Registry R3 successor merge audit, PASS/CLOSED.
@@ -161,8 +203,12 @@ authorizes current production execution.
   routing, and the \(\kappa\) claim boundary — and changed no equation, parameter, tariff rule,
   degradation rule, reserve rule, planning-input identity, or solver-facing methodology. It did **not**
   invalidate the accepted EOB or core-three results and required **no** rerun.
-- **Registry v7.4 Candidate R1: authoring complete, `CANDIDATE PASS`; independent audit `PENDING`.**
-  Current evidence authority remains Registry v7.3 (§1).
+- **Registry v7.4 evidence governance: `CLOSED / ACCEPTED`** (see §1). The independent read-only audit
+  of Candidate R1 returned `PASS` and did not self-accept; a separate acceptance closure
+  (`9050d0eabd0ee5c41626ba924c31a67f301c7293`) then promoted those exact audited bytes to current
+  evidence authority, with Registry v7.3 becoming the historical accepted predecessor. This acceptance
+  changed no equation, parameter, unit, data value, or result, required **no** rerun, and does **not**
+  authorize Full81.
 - **Accepted planning input — Step 2D, `CLOSED / ACCEPTED`:**
   - `data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet`
     (SHA-256 `3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428`;
@@ -212,7 +258,8 @@ authorizes current production execution.
   accepted both results, so their **current governance status** is `CLOSED / ACCEPTED`, superseding
   the historical run-lifecycle wording for current-status purposes without changing the historical
   manifest bytes.
-- **Full81: `NOT_YET_EXECUTED`** and not authorized by this refresh. Core-three acceptance must never
+- **Full81: `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`** — and not authorized by this refresh, nor by
+  the Registry v7.4 acceptance. Core-three acceptance must never
   be written as Full81 completion, and Full81's pending state must never be back-propagated into
   EOB/core-three status.
 - Historical accepted v7.2 implementation lineage, unchanged: Scripts 01 through 13c **CLOSED / PASS**
@@ -289,21 +336,23 @@ matters, not read off this file.
 
 ## 6. Unresolved IMPLEMENTATION / VALIDATION items (not methodology)
 
-- **Independent read-only audit of Registry v7.4 Candidate R1: `PENDING`** — the immediate open item.
-  Until it completes and a separate closure accepts Registry v7.4, the current evidence authority is
-  Registry v7.3 (§1).
-- **Layer A robustness / preregistration checkpoint: `NOT_YET_CREATED`.**
+- **Layer A robustness / preregistration checkpoint (Task 3): `NOT_YET_CREATED / NOT_YET_AUTHORIZED`**
+  — the immediate open item, and it has not begun. It becomes the next intended gate only after this
+  handoff refresh is itself committed, independently verified, published, and post-push verified.
+- **Independent preregistration audit of that checkpoint: `NOT_YET_EXECUTED`** — it cannot begin before
+  the checkpoint exists, and it must never be made to depend on a Full81 result.
 - **Final cross-document alignment audit: `NOT_YET_EXECUTED`.**
 - **Production-authority re-freeze: `NOT_YET_PERFORMED`, and required before Full81 if the gate does
   not pass live.** The current gate in `src/production_successor_stack_v7_3.py` requires, among other
   conditions, `HEAD == origin/thesis-v7`, no staged or unstaged tracked changes, no untracked paths
   under `src/`, `scripts/`, `tests/`, `data/`, `results/`, the Step-2E-1 commit as an ancestor of HEAD,
   the successor bytes committed in HEAD, and the accepted annual-input identity. At the base HEAD
-  observed for this refresh, `HEAD != origin/thesis-v7` (the Candidate R1 commit is unpushed) and
-  pre-existing unrelated untracked files are present in the working tree, so the gate would **not**
+  observed for this refresh `HEAD == origin/thesis-v7`, but pre-existing unrelated untracked files are
+  present in the working tree, and committing this handoff refresh itself leaves `HEAD` one commit ahead
+  of `origin/thesis-v7` until it is published — so the gate would **not**
   report `PRODUCTION_AUTHORITY_FROZEN` as observed. That is a status observation only — never an
   instruction to clean, bypass, weaken, or hand-patch the gate.
-- **Full81: `NOT_YET_EXECUTED` and not authorized.** No Full81 result exists.
+- **Full81: `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`.** No Full81 result exists.
 - Post-solve exact demand maxima and ex-post rainflow/cycle-depth validation beyond the accepted EOB
   and core-three runs remain pending for the Full81 surface, because Full81 has not been executed.
 - Corrected Sep-18 reconstructed-PV artifact: promotion-source candidate only; not canonical and must
@@ -317,22 +366,23 @@ matters, not read off this file.
 
 ## 7. Next intended gate
 
-> **Fresh independent read-only audit of Registry v7.4 Candidate R1.**
+> **Task 3 — Layer A robustness / preregistration checkpoint**, after this handoff refresh is itself
+> committed, independently verified, published, and post-push verified.
 
-That audit is **not** started by this handoff refresh and is not performed here. Candidate R1 must not
-self-promote; only an independent audit followed by a separate explicit closure can make Registry v7.4
-the evidence authority.
+Task 3 is **not** started by this handoff refresh, is not performed here, and has not begun. **Full81 is
+not the immediate next step.** Handoff synchronization confers no authority and is not Task 3 completion.
 
 **Current governance sequence — each step is separately gated, and none is pre-authorized here:**
 
-1. Framework v7.4 — `CLOSED / ACCEPTED`.
-2. Registry v7.4 Candidate R1 — authoring complete (`CANDIDATE PASS`); **independent audit pending**.
-3. Registry v7.4 acceptance / closure.
-4. Layer A robustness / preregistration checkpoint.
-5. Independent checkpoint audit.
+1. Framework v7.4 methodology acceptance — `CLOSED / ACCEPTED`.
+2. Registry v7.4 evidence acceptance — `CLOSED / ACCEPTED` (Candidate R1 authoring -> independent audit
+   `PASS` -> separate acceptance closure `9050d0e`).
+3. This handoff refresh — governance/provenance representation only.
+4. Task 3 — Layer A robustness / preregistration checkpoint.
+5. Independent preregistration audit.
 6. Final cross-document alignment audit.
 7. Production-authority re-freeze, if required.
-8. Full81.
+8. Full81 authorization and execution — only once every gate above has passed.
 
 **Step 2D is closed.** For the record, Step 2D was required to be separately authorized and followed by
 an independent canonical-artifact audit before any same-artifact production routing, and it was

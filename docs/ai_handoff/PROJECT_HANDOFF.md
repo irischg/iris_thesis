@@ -122,29 +122,68 @@ remains a billing-demand proxy — not sub-hourly physical validation.
    R2"; the `_r2` suffix is repository/provenance identity only. Its acceptance evidence is
    `docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md` and
    `results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json`.
-2. **`docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md`** — current evidence source of
-   truth (literature-vs-project-vs-implementation-choice mapping), `CLOSED / ACCEPTED`. **Registry
-   v7.3 remains the evidence authority.**
+2. **`docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md`** — current evidence source of
+   truth (literature-vs-project-vs-implementation-choice mapping), `CLOSED / ACCEPTED`. The formal
+   evidence name is **Registry v7.4**, never "Registry v7.4 R1"; `Candidate R1` is
+   repository/provenance revision identity only. Its acceptance evidence is
+   `docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md` (the completed
+   independent read-only audit of Candidate R1, verdict `PASS`, explicitly not a self-acceptance),
+   `docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md` (the separate
+   acceptance closure), and
+   `results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json`,
+   accepted in commit `9050d0eabd0ee5c41626ba924c31a67f301c7293`. The accepted bytes are **exactly**
+   the audited Candidate R1 bytes — acceptance created no rewritten Registry copy, renamed nothing, and
+   mutated nothing in place.
 3. **Current repository working tree + latest accepted applicable implementation checkpoint/audit** —
    current implementation state. Exact numeric values (parameters, hashes, cost coefficients) live in
    machine-readable artifacts (`data/reference/*.json`/`*.csv`, `results/parameter_audit/*`), not
    hard-coded in the framework text.
 
-**Registry v7.4 is a candidate, not authority.**
-`docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md` exists as **Candidate R1** provenance.
-Its independent audit is pending and it has not been accepted. It must never be cited as the current
-evidence authority; Registry v7.3 holds that role until an independent audit and a separate explicit
-closure say otherwise.
+**`docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md` (Registry v7.3) is the historical
+accepted evidence predecessor.** It is `CLOSED / ACCEPTED` and immutable, and it is no longer the current
+evidence authority — Registry v7.4 superseded that role additively at the acceptance closure recorded
+above. Registry v7.3 remains citable for lineage, labeled regression comparison, and the historical
+v7.3-authority record, never as current evidence authority.
+
+*Historically*, the same bytes now accepted as Registry v7.4 were first published as **Candidate R1**
+provenance, and were candidate-only — with the independent audit outstanding and acceptance not yet
+done — until that audit passed and a separate closure accepted them unchanged. Those past-scoped
+statements remain true as historical records and do not describe the current lifecycle state.
 
 Framework v7.3 is an accepted immutable predecessor and historical lineage; so are Framework v7.2 and
 Registry v7.2. `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` is the v7.3
-methodology/evidence lifecycle closure: its bytes are immutable, Framework v7.4 supersedes its
-methodology-side current-prescriptive role additively going forward, and its Registry-facing content
-remains correct under the still-current Registry v7.3 authority. Registry v7.3 R1 and R2, and
+methodology/evidence lifecycle closure: its bytes are immutable, and it is now historical on **both**
+sides — Framework v7.4 superseded its methodology-side current-prescriptive role additively going
+forward, and Registry v7.4 likewise superseded its evidence-side current-prescriptive role additively at
+the Registry v7.4 acceptance closure. Its Registry-facing content remains correct as a historical
+v7.3-authority record. Registry v7.3 R1 and R2, and
 Framework v7.4 Candidate R1, are failed or non-accepted immutable candidate provenance only. Earlier
 framework/registry versions and failed candidates are **provenance / regression / historical lineage
 only** unless the current accepted authorities explicitly assign another role. They may explain lineage
 or support a labeled regression comparison, never act as current methodology/evidence authority.
+
+### Current governance sequence and execution boundary
+
+Dated, detailed status stays in `CURRENT_STATE.md`; what follows is the stable ordering only. Each step
+is separately gated, and none is pre-authorized by this document:
+
+1. Framework v7.4 methodology acceptance — closed.
+2. Registry v7.4 evidence acceptance — closed.
+3. Handoff synchronization (`CURRENT_STATE.md`, `PROJECT_HANDOFF.md`) — governance representation only;
+   it confers no authority and is not Task 3.
+4. **Task 3 — Layer A robustness / preregistration checkpoint.**
+5. Independent preregistration audit.
+6. Final cross-document alignment audit.
+7. Production-authority re-freeze, if required.
+8. Full81 authorization and execution — only once every gate above has passed.
+
+Keep these governance distinctions intact: an independent audit is not an acceptance decision;
+acceptance is not publication; publication is not handoff synchronization; handoff synchronization is
+not Task 3 completion; and Registry acceptance is not Full81 authorization.
+
+**Full81 is `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`.** Accepting Framework v7.4 and Registry v7.4 did
+not authorize it, and the accepted representative core-three cases must never be written up as the
+complete Full81 surface. The preregistration checkpoint must not be made to depend on any Full81 result.
 
 ## 6. Methodology vs. implementation status — keep these separate
 
@@ -207,10 +246,11 @@ obstacle.
 |---|---|
 | Current methodology source of truth | `docs/research_framework_v7_4_2026-09-26_r2.md` (formal name: Framework v7.4) |
 | Framework v7.4 acceptance evidence | `docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md`, `results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json` |
-| Current evidence source of truth | `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md` (Registry v7.3) |
-| Registry v7.4 — candidate only, audit pending | `docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md`, with `docs/checkpoints/literature_evidence_registry_v7_4_framework_alignment_candidate_2026-09-26.md` |
-| v7.3 methodology/evidence lifecycle closure (methodology side now historical) | `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` |
-| Historical accepted predecessors | `docs/research_framework_v7_3_2026-09-23.md`, `docs/research_framework_v7_2_2026-08-24.md`, `docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md` |
+| Current evidence source of truth | `docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md` (formal name: Registry v7.4) |
+| Registry v7.4 acceptance evidence | `docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md`, `docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md`, `results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json` (acceptance commit `9050d0e`) |
+| Registry v7.4 Candidate R1 authoring provenance (historical) | `docs/checkpoints/literature_evidence_registry_v7_4_framework_alignment_candidate_2026-09-26.md`, `results/provenance/literature_evidence_registry_v7_4_framework_alignment_candidate_r1/` |
+| v7.3 methodology/evidence lifecycle closure (now historical on both the methodology and evidence sides) | `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` |
+| Historical accepted predecessors | `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md` (Registry v7.3), `docs/research_framework_v7_3_2026-09-23.md`, `docs/research_framework_v7_2_2026-08-24.md`, `docs/thesis_literature_evidence_registry_v7_2_2026-08-24.md` |
 | Non-accepted / failed immutable candidates | `docs/research_framework_v7_4_2026-09-26.md` (Framework v7.4 Candidate R1), `docs/thesis_literature_evidence_registry_v7_3_2026-09-23.md` (Registry R1), `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r2.md` (Registry R2) |
 | Earlier historical framework/registry lineage | `docs/research_framework_v7_2026-08-14.md`, `docs/research_framework_v7_1_2026-08-16.md`, `docs/thesis_literature_evidence_registry_v7_2026-08-14.md`, `docs/thesis_literature_evidence_registry_v7_1_2026-08-16.md` |
 | Numbered pipeline scripts | `scripts/` (active), `scripts_archive/` (superseded, do not use as production input) |
