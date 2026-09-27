@@ -1,0 +1,60 @@
+{
+  "schema_version": "iris-thesis-v7.3-to-v7.4-reconstructibility-matrix-v1",
+  "package_identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R2",
+  "controlled_vocabulary": [
+    "FULLY_RECONSTRUCTIBLE",
+    "PARTIALLY_RECONSTRUCTIBLE",
+    "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+    "NOT_YET_EXECUTED"
+  ],
+  "records": [
+    {
+      "package_identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R2",
+      "record_id": "R001",
+      "version_state": "FINAL_ACCEPTED_V7_3_BOUNDARY_AS_ACTUALLY_EXECUTED_AND_PRESERVED",
+      "reference_boundary": "commit 1651b31008c565e105fc79a958f9ca98a194aa80; accepted EOB/core-three execution authority commit b87575c24aa7e85f77f9c43419b460943d71a9da",
+      "code_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "input_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "execution_identity_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "full_execution_state_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "overall_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "current_surviving_bytes_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "git_history_durability": "PARTIALLY_RECONSTRUCTIBLE",
+      "limiting_artifacts": "Accepted EOB and core-three run directories are gitignored; EOB has an exact untracked ZIP copy, while no Git-durable core-three archive was found.",
+      "reconstruction_basis": "Tracked framework/registry/freeze, accepted planning parquet, core and route Git blobs; surviving immutable run authority/manifests/results; exact result hashes; transition commits and tags.",
+      "caution": "FULLY_RECONSTRUCTIBLE describes the accepted v7.3 current-route state, including that route's pending Full81 state; it is not a claim that no earlier-version Full81 ever executed."
+    },
+    {
+      "package_identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R2",
+      "record_id": "R002",
+      "version_state": "ACCEPTED_V7_4_CURRENT_STATE_AS_ACTUALLY_PRESERVED",
+      "reference_boundary": "Framework acceptance commit 2fe2105180c68d9289eddc2668399687d4c49d2e; Registry acceptance commit 9050d0eabd0ee5c41626ba924c31a67f301c7293; observed HEAD 53e3d5e38e68d000b25eea7d06d35b4600219c02",
+      "code_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "input_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "execution_identity_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "full_execution_state_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "overall_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "current_surviving_bytes_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "git_history_durability": "PARTIALLY_RECONSTRUCTIBLE",
+      "limiting_artifacts": "v7.4 reuses the accepted v7.3 EOB/core-three results; those run bytes remain gitignored and only survive in the working tree, with a separate exact EOB ZIP copy.",
+      "reconstruction_basis": "Accepted Framework/Registry v7.4 bytes and closures; unchanged tracked code/input blobs; surviving accepted run artifacts; seven-commit transition chain; current Git state.",
+      "caution": "No v7.4-specific numerical rerun exists or is required; reconstruction of current v7.4 therefore resolves to the retained v7.3 execution identities plus the new governance authorities."
+    },
+    {
+      "package_identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R2",
+      "record_id": "R003",
+      "version_state": "CURRENT_ACCEPTED_V7_3_V7_4_ROUTE_FULL81_NUMERICAL_OUTCOMES",
+      "reference_boundary": "NOT_YET_EXECUTED_OR_AUTHORIZED_ON_ACCEPTED_CURRENT_ROUTE",
+      "code_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "input_reconstructibility": "FULLY_RECONSTRUCTIBLE",
+      "execution_identity_reconstructibility": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+      "full_execution_state_reconstructibility": "NOT_YET_EXECUTED",
+      "overall_reconstructibility": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+      "current_surviving_bytes_reconstructibility": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+      "git_history_durability": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+      "limiting_artifacts": "No authorized or completed Full81 execution, result set, completion manifest, or production re-freeze exists on the accepted v7.3/v7.4 route using the accepted reconstructed-PV planning input. The surviving historical v7.2 R9 Full81 is a different route/input lineage.",
+      "reconstruction_basis": "Current route: accepted Framework/Registry v7.4 closures, accepted reconstructed-PV input, and the three-case final_81_v7_3 run establish NOT_YET_EXECUTED / NOT_YET_AUTHORIZED. Historical context: the surviving v7.2 R9 run has 2,196 files, 81 case directories, COMPLETE_PASS, 81 optimization calls, and a manifest-pinned annual_input_v7_1.parquet identity. Historical current-bytes reconstructibility is strong but Git durability is partial because run/input bytes are ignored.",
+      "caution": "No valid v7.3/v7.4 Full81 numerical comparison exists. The historical v7.2 R9 surface is not a controlled counterfactual and cannot support a causal v7.3-to-v7.4 numerical delta."
+    }
+  ]
+}

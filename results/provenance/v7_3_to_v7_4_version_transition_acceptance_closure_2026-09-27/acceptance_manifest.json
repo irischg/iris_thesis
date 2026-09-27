@@ -1,0 +1,331 @@
+{
+  "schema_version": "iris-thesis-v7.3-to-v7.4-version-transition-acceptance-closure-manifest-v1",
+  "closure_identity": "V7_3_TO_V7_4_VERSION_TRANSITION_ACCEPTANCE_CLOSURE",
+  "created_date": "2026-09-27",
+  "status": "CLOSED_ACCEPTED",
+  "lifecycle": "acceptance_closure",
+  "pass_type": "additive acceptance materialization after separate independent cross-agent read-only audit; governance/provenance only",
+  "accepted_candidate": {
+    "identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R2",
+    "lifecycle_before": "CANDIDATE_NOT_ACCEPTED_NOT_CLOSED",
+    "lifecycle_after": "CLOSED_ACCEPTED",
+    "accepted_bytes_modified": false,
+    "acceptance_authority_source": "this additive acceptance checkpoint and manifest, not Candidate R2 authoring-time self-text",
+    "checkpoint": {
+      "path": "docs/checkpoints/v7_3_to_v7_4_version_transition_candidate_r2_2026-09-27.md",
+      "size_bytes": 13693,
+      "sha256": "817a8ad54e2ba475b426bfd75b1e5085cf7433417f085562375b374a37b1b383"
+    },
+    "package_manifest": {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/package_manifest.json",
+      "size_bytes": 9185,
+      "sha256": "7b1b0f85a12b4d1a8742820a0a645497a966ebc7237a415323999fb845f1f858"
+    }
+  },
+  "candidate_lineage": {
+    "candidate_r1": {
+      "identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R1",
+      "lifecycle": "IMMUTABLE_HISTORICAL_STOP_PROVENANCE",
+      "artifact_count": 11,
+      "modified_by_this_closure": false,
+      "promoted_to_accepted": false,
+      "artifacts": {
+        "docs/checkpoints/v7_3_to_v7_4_version_transition_candidate_r1_2026-09-27.md": {
+          "size_bytes": 17667,
+          "sha256": "a8f137ab528ea602e87e802f46d103b57763226932bc86191335f058611f31bf"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/authority_transition_matrix.csv": {
+          "size_bytes": 10429,
+          "sha256": "4887aeca6a23f152bf4ccbe0e9cbbf50b598b27e5a1f3053d3f98ac1b8e26c1e"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/authority_transition_matrix.json": {
+          "size_bytes": 14552,
+          "sha256": "ad2019a839914205a6b8212cc5c945c5feed7386886c629c7f51d916fba8a8e1"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/git_state_snapshot.json": {
+          "size_bytes": 6570,
+          "sha256": "d8e71b28f23a984d390271542fc7a50d97cc30492488f4190d98c651381ec83a"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/package_manifest.json": {
+          "size_bytes": 7386,
+          "sha256": "8eee7927114bf873a97e701bbb260c0f9ff670a354735f0c1a25b917e4f8c34b"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/reconstructibility_matrix.csv": {
+          "size_bytes": 3180,
+          "sha256": "36a40e21585e9d3752c1f45f8499454d32d4cc77f0bd010fab1fb2eae4b5ef02"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/reconstructibility_matrix.json": {
+          "size_bytes": 4463,
+          "sha256": "07e6ecb82a7d3cc12f055d518e76c00d201c53e67b671f5c26cb299462903775"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/source_artifact_inventory.json": {
+          "size_bytes": 32985,
+          "sha256": "e12dd9a8d4611e91edc0cde1b8e3f8016e7d1fe7fe085ea2e1a32b1d69123e7a"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/version_transition_difference_matrix.csv": {
+          "size_bytes": 24501,
+          "sha256": "2db945865dffca0886db774299956a2a8703dacc29a5685d92158d222149bb12"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/version_transition_difference_matrix.json": {
+          "size_bytes": 35011,
+          "sha256": "a11203aaf60d791a246c963631b8719eeaa04635dc9f239df9463026c87440a1"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r1/version_transition_summary.json": {
+          "size_bytes": 12734,
+          "sha256": "de3231e37b98410074c6870b49afd43e579a8d753425f1eeb9b920f675f1c166"
+        }
+      }
+    },
+    "candidate_r2": {
+      "identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R2",
+      "lifecycle": "CLOSED_ACCEPTED",
+      "authoring_time_self_text_retained": true,
+      "artifact_count": 11,
+      "modified_by_this_closure": false,
+      "artifacts": {
+        "docs/checkpoints/v7_3_to_v7_4_version_transition_candidate_r2_2026-09-27.md": {
+          "size_bytes": 13693,
+          "sha256": "817a8ad54e2ba475b426bfd75b1e5085cf7433417f085562375b374a37b1b383"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/authority_transition_matrix.csv": {
+          "size_bytes": 10689,
+          "sha256": "4a5977f7c73776e24f81a6dddda3496dc3200b9f26fb82db045e488215c679a6"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/authority_transition_matrix.json": {
+          "size_bytes": 14991,
+          "sha256": "36879efdd99533d6e2f752dab44edcc34637f7013619c2623e5ad463eb70a91c"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/git_state_snapshot.json": {
+          "size_bytes": 10790,
+          "sha256": "7b468e1b2493ebda9280c9899d55eff56a57d45947727285ee4cea5c26688302"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/package_manifest.json": {
+          "size_bytes": 9185,
+          "sha256": "7b1b0f85a12b4d1a8742820a0a645497a966ebc7237a415323999fb845f1f858"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/reconstructibility_matrix.csv": {
+          "size_bytes": 3841,
+          "sha256": "7d5373adec1b164002de4e6ee1db11111e544f9b55fcbe43a232fb6ee13cb53f"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/reconstructibility_matrix.json": {
+          "size_bytes": 5155,
+          "sha256": "7e4dedae4540ba5edbe7a3bca5682693c3371c9b07fe2b8e2a2b22c573cf80b7"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/source_artifact_inventory.json": {
+          "size_bytes": 43688,
+          "sha256": "58c28786972bf3ee4e59ea8be6311a2df5bb682dcfb12d58f971cbdc0f630edb"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/version_transition_difference_matrix.csv": {
+          "size_bytes": 25443,
+          "sha256": "cad256eff5f04dbb268454eda968ae0ad363ed94c2c6d3307b6bee2c585e3f02"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/version_transition_difference_matrix.json": {
+          "size_bytes": 36462,
+          "sha256": "861fc70b3d242790ae4b09c5da4493e74ab427f07004957bce79efa2bea47de0"
+        },
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/version_transition_summary.json": {
+          "size_bytes": 18272,
+          "sha256": "f9e10d6d1d6f22a2f9c48d867cd93f9776efc944a5b99016f8aef66999954887"
+        }
+      }
+    }
+  },
+  "independent_audit_basis": {
+    "mode": "separate independent cross-agent read-only audit",
+    "verdict": "PASS",
+    "candidate_r2_independently_acceptable": true,
+    "eligible_for_separately_authorized_acceptance_closure": true,
+    "authoring_side_self_acceptance": false,
+    "repository_audit_artifact_supplied": false,
+    "repository_audit_path_or_hash_asserted": false,
+    "durability_disclosure": "The audit occurred in cross-agent governance history; this closure does not fabricate a repository path or hash. Acceptance-critical candidate and primary-byte identities were freshly verified before closure.",
+    "verified_findings": {
+      "r1_artifacts_byte_identical": "11/11",
+      "historical_v7_2_r9_full81_exists": true,
+      "r003_corrected": true,
+      "d026_corrected": true,
+      "scientific_change_groups": 3,
+      "missing_scientific_groups": 0,
+      "extra_scientific_groups": 0,
+      "class_c_overbroad_negatives": 0,
+      "json_csv_parity": "27/27; 12/12; 3/3 exact",
+      "package_manifest": "PASS",
+      "source_inventory": "PASS",
+      "f02_modified": false,
+      "methodology_mutations": 0,
+      "evidence_mutations": 0,
+      "implementation_mutations": 0,
+      "numerical_executions": 0
+    }
+  },
+  "authority_state": {
+    "framework_v7_4": {
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "size_bytes": 216186,
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "status": "CLOSED_ACCEPTED"
+    },
+    "registry_v7_4": {
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "size_bytes": 245125,
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "status": "CLOSED_ACCEPTED"
+    },
+    "accepted_planning_input": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "size_bytes": 554037,
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "role": "reconstructed_pv_mainline",
+      "status": "CLOSED_ACCEPTED",
+      "modified_by_this_closure": false
+    }
+  },
+  "accepted_scientific_change_universe": {
+    "count": 3,
+    "groups": [
+      "zero-winter role",
+      "observed-versus-planning / no-hybrid PV routing",
+      "kappa historical-calibration/planning-use claim boundary"
+    ],
+    "missing": 0,
+    "extra": 0,
+    "fourth_scientific_change": false,
+    "governance_only_closure": true
+  },
+  "historical_v7_2_r9_full81": {
+    "path": "results/layer_a/final_81/runs/20260911T112258206802Z_4d0eb9e1da",
+    "status": "EXISTS_HISTORICAL_IMMUTABLE_NON_CURRENT",
+    "recursive_file_count": 2196,
+    "completion_manifest_artifact_registry_entries": 2195,
+    "count_difference_explanation": "completion_manifest.json is intentionally self-excluded from its artifact registry",
+    "staging_directory_file_count": 0,
+    "case_count": 81,
+    "optimization_calls": 81,
+    "completion_status": "COMPLETE_PASS",
+    "surface_solved": true,
+    "mode": "PRODUCTION",
+    "execution_flag": true,
+    "historical_input_path": "data/processed/annual_input_v7_1.parquet",
+    "historical_execution_pinned_input_sha256": "e0d4a8e84bee68c71f3d278e617df6fee0bb022a97c6fb5e9c49da6d6809fa0e",
+    "is_current_v7_4_full81": false,
+    "is_controlled_current_route_counterfactual": false,
+    "causal_v7_3_to_v7_4_delta_permitted": false,
+    "modified_by_this_closure": false
+  },
+  "accepted_production_state": {
+    "eob": {
+      "path": "results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556",
+      "status": "CLOSED_ACCEPTED",
+      "modified_by_this_closure": false,
+      "rerun_required": false
+    },
+    "core_three": {
+      "path": "results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55",
+      "status": "CLOSED_ACCEPTED",
+      "case_count": 3,
+      "modified_by_this_closure": false,
+      "rerun_required": false
+    },
+    "current_accepted_v7_3_v7_4_route_full81": {
+      "execution_status": "NOT_YET_EXECUTED",
+      "authorization_status": "NOT_YET_AUTHORIZED",
+      "authorized_by_this_closure": false
+    }
+  },
+  "governance_state_after_closure": {
+    "framework_v7_4": "CLOSED_ACCEPTED",
+    "registry_v7_4": "CLOSED_ACCEPTED",
+    "eob": "CLOSED_ACCEPTED",
+    "core_three": "CLOSED_ACCEPTED",
+    "candidate_r1": "IMMUTABLE_HISTORICAL_STOP_PROVENANCE",
+    "candidate_r2": "CLOSED_ACCEPTED",
+    "historical_v7_2_r9_full81": "EXISTS_HISTORICAL_IMMUTABLE_NON_CURRENT",
+    "current_accepted_v7_3_v7_4_route_full81": "NOT_YET_EXECUTED_NOT_YET_AUTHORIZED",
+    "f02": "DEFERRED_TO_SEPARATELY_AUTHORIZED_BOUNDED_HANDOFF_CORRECTION",
+    "task_3": "NOT_STARTED",
+    "production_authority_refreeze": "NOT_PERFORMED",
+    "full81_authorized_by_this_closure": false
+  },
+  "protected_nonmutation": {
+    "current_state_md": {
+      "path": "docs/ai_handoff/CURRENT_STATE.md",
+      "size_bytes": 29260,
+      "sha256": "e8d5fddf843e488f2db5f747b098e81f0ada84ccbef92fd82c186f8a731848f1",
+      "modified": false
+    },
+    "project_handoff_md": {
+      "path": "docs/ai_handoff/PROJECT_HANDOFF.md",
+      "size_bytes": 20260,
+      "sha256": "348e4b9f059cceb659dff58eece85683a2519717a94331f7730d92a1437a5aba",
+      "modified": false
+    },
+    "annual_scientific_core_sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+    "production_input_authority_sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+    "production_successor_stack_sha256": "f1d7125f0ee7897db0e25486eca7dd562369d13b5dae1f5364aa4e0384c27323",
+    "historical_full81_verification_inventory_sha256": "8bb4365e90f694003958db9406e2bfe9431b656c00af450cc45a712dfee9d7cc",
+    "eob_verification_inventory_sha256": "00677a313711609405b282a2b91f497a857b9c64ceb24ce7ffdff92d07c1ca6d",
+    "core_three_verification_inventory_sha256": "0079edba2a77a830f4e83d3dbe9947f47889256ef6589d8ab3f9b5df56d45529",
+    "verification_inventory_note": "sorted relative path, byte count, and per-file SHA-256; verification-only, not canonical directory identity"
+  },
+  "preclosure_repository_state": {
+    "repository": "irischg/iris_thesis",
+    "branch": "thesis-v7",
+    "head": "53e3d5e38e68d000b25eea7d06d35b4600219c02",
+    "parent": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+    "local_origin_thesis_v7": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+    "live_remote_origin_thesis_v7": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+    "ahead": 1,
+    "behind": 0,
+    "staged_paths": 0,
+    "unstaged_tracked_paths": 0,
+    "porcelain_untracked_records": 10,
+    "porcelain_raw_byte_count": 605,
+    "porcelain_raw_sha256": "376b5c22e983d7ad2d39222fb9d7e12aab83d70ea3d4d38dff0f2c05c27e698b",
+    "tag_ref_count": 10
+  },
+  "execution_counts": {
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "eob_reruns": 0,
+    "core_three_reruns": 0,
+    "historical_full81_reruns": 0,
+    "current_full81_runs": 0,
+    "sensitivity_solves": 0,
+    "code_changes": 0,
+    "data_changes": 0,
+    "accepted_result_changes": 0,
+    "candidate_r1_modifications": 0,
+    "candidate_r2_modifications": 0,
+    "current_state_md_modifications": 0,
+    "project_handoff_md_modifications": 0,
+    "tags_created": 0
+  },
+  "durability_scope": {
+    "candidate_r1_files": 11,
+    "candidate_r2_files": 11,
+    "new_closure_files": 2,
+    "total_commit_paths": 24,
+    "candidate_files_modified": 0,
+    "unrelated_untracked_paths_included": 0,
+    "commit_authorized": true,
+    "push_authorized": true,
+    "tag_required": false,
+    "tag_created": false,
+    "publication_state_at_manifest_creation": "AUTHORIZED_PENDING_PRECOMMIT_VERIFICATION"
+  },
+  "package_files": {
+    "docs/checkpoints/v7_3_to_v7_4_version_transition_acceptance_closure_2026-09-27.md": {
+      "role": "v7.3 to v7.4 version/provenance transition Candidate R2 acceptance/closure checkpoint",
+      "size_bytes": 12378,
+      "sha256": "8b1986351e9c2520b5ba8d82e12bd89cc4132a4957d36d0122cdb51c9c143499"
+    }
+  },
+  "required_closure_paths": [
+    "docs/checkpoints/v7_3_to_v7_4_version_transition_acceptance_closure_2026-09-27.md",
+    "results/provenance/v7_3_to_v7_4_version_transition_acceptance_closure_2026-09-27/acceptance_manifest.json"
+  ],
+  "self_hash_omitted": true,
+  "self_hash_omission_statement": "acceptance_manifest.json registers the other physical file in this two-file closure package and all immutable candidate identities, but deliberately omits its own SHA-256 and byte count to avoid circular self-identity; its digest and the containing commit are reported externally after publication.",
+  "next_governance_step": "F-02 bounded handoff wording correction is the next separately authorized governance task. Task 3 and Full81 are not automatically authorized, and F-02 is not performed by this closure."
+}

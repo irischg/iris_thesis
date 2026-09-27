@@ -1,0 +1,288 @@
+{
+  "schema_version": "iris-thesis-v7.3-to-v7.4-version-transition-summary-v1",
+  "package_identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R1",
+  "lifecycle_status": "CANDIDATE",
+  "created_date": "2026-09-27",
+  "title": "Iris Thesis v7.3 to v7.4 version / provenance transition record Candidate R1",
+  "disposition": "V7.3_TO_V7.4_VERSION_PROVENANCE_TRANSITION_RECORD_CANDIDATE_R1_CANDIDATE_PASS",
+  "self_acceptance": "NOT_PERFORMED",
+  "independent_read_only_audit_required": true,
+  "reconstruction_method": {
+    "approach": "PRIMARY_SOURCE_FIRST",
+    "primary_evidence_order": [
+      "governing provenance protocol",
+      "accepted Framework/Registry primary bytes and lifecycle closures",
+      "accepted planning-input bytes and Step 2D acceptance evidence",
+      "current and historical implementation bytes",
+      "accepted EOB/core-three run artifacts and manifests",
+      "Git commits, blobs, refs, and tags",
+      "handoff documents as late consistency checks only"
+    ],
+    "predecessor_matrix_reused": false,
+    "handoff_used_as_inventory_source": false,
+    "model_import_or_construction_used": false
+  },
+  "transition_boundaries": {
+    "final_v7_3_only_boundary_commit": "1651b31008c565e105fc79a958f9ca98a194aa80",
+    "final_v7_3_only_boundary_subject": "Repair post-core-three reporting JSON serialization",
+    "boundary_rationale": "It is the immediate parent of the first Framework v7.4 candidate commit and contains the final v7.3 reporting-compatible implementation state without any v7.4 artifact.",
+    "accepted_execution_authority_commit": "b87575c24aa7e85f77f9c43419b460943d71a9da",
+    "accepted_execution_authority_role": "Both accepted EOB and core-three authority.json files record HEAD=origin at this commit.",
+    "observed_task_start_head": "53e3d5e38e68d000b25eea7d06d35b4600219c02",
+    "observed_task_start_parent": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+    "observed_local_origin_thesis_v7": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+    "observed_live_remote_origin_thesis_v7": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+    "ahead": 1,
+    "behind": 0
+  },
+  "authority_transition": {
+    "methodology_before": {
+      "formal_name": "Framework v7.3",
+      "path": "docs/research_framework_v7_3_2026-09-23.md",
+      "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "status_after_transition": "CLOSED_ACCEPTED_HISTORICAL_PREDECESSOR"
+    },
+    "methodology_after": {
+      "formal_name": "Framework v7.4",
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "status": "CLOSED_ACCEPTED_CURRENT_AUTHORITY",
+      "acceptance_commit": "2fe2105180c68d9289eddc2668399687d4c49d2e"
+    },
+    "evidence_before": {
+      "formal_name": "Registry v7.3",
+      "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+      "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "status_after_transition": "CLOSED_ACCEPTED_HISTORICAL_PREDECESSOR"
+    },
+    "evidence_after": {
+      "formal_name": "Registry v7.4",
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "status": "CLOSED_ACCEPTED_CURRENT_AUTHORITY",
+      "acceptance_commit": "9050d0eabd0ee5c41626ba924c31a67f301c7293"
+    }
+  },
+  "accepted_scientific_delta": {
+    "group_count": 3,
+    "groups": [
+      {
+        "group": "A",
+        "name": "ZERO_WINTER_CURRENT_ROLE",
+        "before": "conservative stress/sensitivity under v7.3",
+        "after": "historical conservative validation / provenance evidence under v7.4",
+        "new_solve_required": false
+      },
+      {
+        "group": "B",
+        "name": "OBSERVED_VS_PLANNING_PV_EPISTEMIC_ROUTING",
+        "before": "observed historical calibration and reconstructed planning roles existed with a zero-winter hybrid prohibition",
+        "after": "formal two-layer routing with one accepted reconstructed planning identity and no hybrid fallback to any alternate annual PV identity",
+        "new_solve_required": false
+      },
+      {
+        "group": "C",
+        "name": "KAPPA_HISTORICAL_CALIBRATION_VS_PLANNING_USE_CLAIM_BOUNDARY",
+        "before": "observed-data calibration separated from reconstructed planning PV",
+        "after": "formal claim boundary with explicit proxy-only non-claims and no recalibration",
+        "new_solve_required": false
+      }
+    ],
+    "fourth_scientific_change": "NONE",
+    "equations_changed": 0,
+    "parameters_changed": 0,
+    "solver_settings_changed": 0,
+    "production_inputs_changed": 0,
+    "accepted_results_changed": 0,
+    "new_external_literature_sources": 0
+  },
+  "implementation_continuity": {
+    "planning_input": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "size_bytes": 554037,
+      "rows": 8760,
+      "role": "reconstructed_pv_mainline",
+      "changed": false
+    },
+    "scientific_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+      "git_blob": "4724023cbf98f414afa4d2cb8e2478a482f55f36",
+      "changed": false
+    },
+    "production_input_authority": {
+      "path": "src/production_input_authority_v7_3.py",
+      "sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+      "git_blob": "c4e21749a1ea16fb7650acf92b1190c3bfefd733",
+      "changed": false
+    },
+    "successor_stack_final_v7_3_boundary_and_current": {
+      "path": "src/production_successor_stack_v7_3.py",
+      "sha256": "f1d7125f0ee7897db0e25486eca7dd562369d13b5dae1f5364aa4e0384c27323",
+      "git_blob": "041a7252ca4a0939e620dff9c971233b3df8b3ae",
+      "changed_across_transition": false
+    },
+    "successor_stack_execution_time": {
+      "commit": "b87575c24aa7e85f77f9c43419b460943d71a9da",
+      "sha256": "5c5a9f7412c8eb40dafe65e52d54ba7cd725380ff4c9bc9e8948b2ecac915f20",
+      "git_blob": "de8d3e483b36139d4329516543351176fa2558ea",
+      "relation_to_final_v7_3_boundary": "1651b310 adds fail-closed console JSON encoding only; published artifacts and scientific formulation are unaffected."
+    },
+    "production_gate": "UNCHANGED_FAIL_CLOSED; no v7.4 production-authority re-freeze; candidate build state is not production-authorized",
+    "methodology_rerun_required": false
+  },
+  "accepted_numerical_artifacts": {
+    "eob": {
+      "path": "results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556",
+      "result_sha256": "14752e0fb78d585c4bb6f3ad3c8dcb14b60ad50311640840f3c8b7c248f52fe1",
+      "objective_ntd2023_per_year": 66622010.51124089,
+      "execution_manifest_status": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+      "current_governance_status": "CLOSED_ACCEPTED",
+      "valid_under_v7_4": true,
+      "rerun_required": false
+    },
+    "core_three": {
+      "path": "results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55",
+      "case_count": 3,
+      "cases": {
+        "LOW": "a0.60_b04",
+        "CENTRAL": "a0.80_b08",
+        "HIGH": "a1.00_b12"
+      },
+      "result_sha256": {
+        "a0.60_b04": "a70d784b94896fcb83586a7f3426bc496918637a7cc2d1c5f22db97fdd805ca0",
+        "a0.80_b08": "9973f2ce5c6c52ae2b19a3e170c8f7a17f6a199e4d1d6d5ebee6a9a4ec72417c",
+        "a1.00_b12": "9ad1cff430c644b97501c2216efafb5cb913785b4bb7ba48889189243123301f"
+      },
+      "execution_manifest_status": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+      "current_governance_status": "CLOSED_ACCEPTED",
+      "valid_under_v7_4": true,
+      "rerun_required": false
+    },
+    "full81": {
+      "new_value": "NOT_YET_EXECUTED",
+      "authorization": "NOT_YET_AUTHORIZED",
+      "changed": "UNKNOWN",
+      "change_type": "OPTIMIZATION_RESPONSE",
+      "numerical_delta": "NOT_APPLICABLE",
+      "relative_delta": "NOT_APPLICABLE"
+    }
+  },
+  "transition_commit_sequence": [
+    {
+      "commit": "1651b31008c565e105fc79a958f9ca98a194aa80",
+      "parent": "b87575c24aa7e85f77f9c43419b460943d71a9da",
+      "role": "FINAL_V7_3_ONLY_BOUNDARY",
+      "scope": "post-core-three console/report JSON serialization correction"
+    },
+    {
+      "commit": "5d81ee989856d42a21e715def4625162ea9fc0af",
+      "parent": "1651b31008c565e105fc79a958f9ca98a194aa80",
+      "role": "FRAMEWORK_V7_4_CANDIDATE_R1",
+      "scope": "four additive Framework candidate/provenance files"
+    },
+    {
+      "commit": "52be8dec7b8529b6fcb411bbee765f1aa4c745df",
+      "parent": "5d81ee989856d42a21e715def4625162ea9fc0af",
+      "role": "FRAMEWORK_V7_4_CANDIDATE_R2",
+      "scope": "four additive stale-status correction candidate/provenance files; no new scientific group"
+    },
+    {
+      "commit": "2fe2105180c68d9289eddc2668399687d4c49d2e",
+      "parent": "52be8dec7b8529b6fcb411bbee765f1aa4c745df",
+      "role": "FRAMEWORK_V7_4_ACCEPTANCE",
+      "scope": "additive acceptance checkpoint and manifest"
+    },
+    {
+      "commit": "bf87b7f0659da17277fbb797099141b24343aa79",
+      "parent": "2fe2105180c68d9289eddc2668399687d4c49d2e",
+      "role": "REGISTRY_V7_4_CANDIDATE_R1",
+      "scope": "four additive Registry alignment candidate/provenance files"
+    },
+    {
+      "commit": "9e2f05c93d7642fc07881210983a030550455a17",
+      "parent": "bf87b7f0659da17277fbb797099141b24343aa79",
+      "role": "POST_FRAMEWORK_HANDOFF_REFRESH",
+      "scope": "CURRENT_STATE.md and PROJECT_HANDOFF.md only"
+    },
+    {
+      "commit": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+      "parent": "9e2f05c93d7642fc07881210983a030550455a17",
+      "role": "REGISTRY_V7_4_ACCEPTANCE",
+      "scope": "independent audit record, acceptance checkpoint, and acceptance manifest"
+    },
+    {
+      "commit": "53e3d5e38e68d000b25eea7d06d35b4600219c02",
+      "parent": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+      "role": "POST_REGISTRY_HANDOFF_REFRESH",
+      "scope": "CURRENT_STATE.md and PROJECT_HANDOFF.md only"
+    }
+  ],
+  "relevant_tags": [
+    {
+      "name": "v7.3-step2d-r3-accepted-2026-09-24",
+      "tag_object": "d37e5f1fd1a562989038af895e31a68f89b03913",
+      "peeled_commit": "07200697d0da7567715ec77edf3d853acbc53918",
+      "role": "accepted planning-input durability freeze"
+    },
+    {
+      "name": "v7.3-step2e1-routing-authority-accepted-2026-09-24",
+      "tag_object": "22c4091cbd584a7267c78f7e43046e76959855be",
+      "peeled_commit": "d52d9584b22da2a41b51c8ce3e99a0335e39da2b",
+      "role": "accepted production-routing authority"
+    }
+  ],
+  "difference_matrix_counts": {
+    "total_records": 27,
+    "changed_yes": 9,
+    "changed_no": 17,
+    "changed_unknown": 1,
+    "by_transition_category": {
+      "A_METHODOLOGY_OR_SPECIFICATION_AUTHORITY": 7,
+      "B_EVIDENCE_AUTHORITY": 1,
+      "C_GOVERNANCE_OR_LIFECYCLE": 1,
+      "D_ARTIFACT_IDENTITY": 1,
+      "E_IMPLEMENTATION_IDENTITY": 1,
+      "F_EXECUTION_ROUTE_OR_GATE": 1,
+      "G_NUMERICAL_OUTPUT_OR_RESULT_STATE": 2,
+      "H_SOLVER_OR_CONFIGURATION_IDENTITY": 1,
+      "I_EVIDENCE_OR_VALIDATION_ROLE": 1,
+      "J_FINANCIAL_OR_ACCOUNTING_BASIS": 4,
+      "K_RESILIENCE_OR_CASE_UNIVERSE": 6,
+      "L_FUTURE_NOT_YET_EXECUTED": 1
+    },
+    "by_change_type": {
+      "AUTHORITY_PROMOTION": 2,
+      "SPECIFICATION_CHANGE": 1,
+      "CLAIM_BOUNDARY_FORMALIZATION": 4,
+      "SPECIFICATION_CLARIFICATION": 1,
+      "NO_CHANGE": 17,
+      "OPTIMIZATION_RESPONSE": 1,
+      "LIFECYCLE_ADJUDICATION": 1
+    }
+  },
+  "reconstructibility_conclusion": {
+    "v7_3_actual_state": "FULLY_RECONSTRUCTIBLE_FROM_CURRENT_SURVIVING_BYTES",
+    "v7_4_actual_state": "FULLY_RECONSTRUCTIBLE_FROM_CURRENT_SURVIVING_BYTES",
+    "durable_git_only_state": "PARTIALLY_RECONSTRUCTIBLE",
+    "future_v7_4_full81_outcomes": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+    "limitation": "Accepted EOB and core-three numerical run bytes are gitignored; EOB has a matching untracked ZIP copy, but the core-three run has no Git-durable archive identified."
+  },
+  "validation_counters": {
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "eob_reruns": 0,
+    "core_three_reruns": 0,
+    "full81_runs": 0,
+    "sensitivity_solves": 0,
+    "code_changes": 0,
+    "data_changes": 0,
+    "accepted_result_changes": 0,
+    "commits": 0,
+    "pushes": 0,
+    "tags_created_or_moved": 0
+  },
+  "candidacy_boundary": "This package is a producing-agent Candidate R1 only. It does not accept itself, change any authority, authorize production, authorize Full81, or supersede any accepted artifact."
+}

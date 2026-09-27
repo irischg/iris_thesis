@@ -1,0 +1,193 @@
+{
+  "schema_version": "iris-thesis-v7.3-to-v7.4-transition-package-manifest-v1",
+  "package_identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R2",
+  "lifecycle_status": "CANDIDATE_NOT_ACCEPTED_NOT_CLOSED",
+  "created_date": "2026-09-27",
+  "manifest_role": "Deterministic manifest for the uncommitted v7.3 to v7.4 version/provenance transition Candidate R2 bounded F-01 correction",
+  "package_namespace": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2",
+  "checkpoint_path": "docs/checkpoints/v7_3_to_v7_4_version_transition_candidate_r2_2026-09-27.md",
+  "predecessor_identity": "V7_3_TO_V7_4_VERSION_TRANSITION_CANDIDATE_R1",
+  "predecessor_lifecycle": "HISTORICAL_STOP_CANDIDATE",
+  "self_hash_omitted": true,
+  "self_hash_omission_statement": "package_manifest.json deliberately omits its own SHA-256 and byte count to avoid circular self-identity; all other required R2 artifacts are registered.",
+  "content_classes": {
+    "internal_r2_non_manifest_files": 9,
+    "external_r2_checkpoints": 1,
+    "manifest_self_files": 1,
+    "registered_primary_source_artifacts": 46,
+    "registered_git_objects": 17,
+    "historical_f01_external_artifact_ids": [
+      "S037",
+      "S038",
+      "S039",
+      "S040",
+      "S041",
+      "S042",
+      "S043",
+      "S044"
+    ],
+    "historical_r1_predecessor_artifact_ids": [
+      "S045",
+      "S046"
+    ],
+    "source_inventory_path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/source_artifact_inventory.json"
+  },
+  "registered_artifacts": [
+    {
+      "path": "docs/checkpoints/v7_3_to_v7_4_version_transition_candidate_r2_2026-09-27.md",
+      "location_class": "EXTERNAL_R2_CHECKPOINT",
+      "role": "Human-readable Candidate R2 bounded-correction checkpoint and verdict",
+      "size_bytes": 13693,
+      "sha256": "817a8ad54e2ba475b426bfd75b1e5085cf7433417f085562375b374a37b1b383"
+    },
+    {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/authority_transition_matrix.csv",
+      "location_class": "INTERNAL_R2_NON_MANIFEST_FILE",
+      "role": "JSON-cell-encoded CSV authority-transition ledger",
+      "size_bytes": 10689,
+      "sha256": "4a5977f7c73776e24f81a6dddda3496dc3200b9f26fb82db045e488215c679a6"
+    },
+    {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/authority_transition_matrix.json",
+      "location_class": "INTERNAL_R2_NON_MANIFEST_FILE",
+      "role": "Canonical authority-transition records",
+      "size_bytes": 14991,
+      "sha256": "36879efdd99533d6e2f752dab44edcc34637f7013619c2623e5ad463eb70a91c"
+    },
+    {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/git_state_snapshot.json",
+      "location_class": "INTERNAL_R2_NON_MANIFEST_FILE",
+      "role": "Byte-exact pre/post Git porcelain and structured repository state",
+      "size_bytes": 10790,
+      "sha256": "7b468e1b2493ebda9280c9899d55eff56a57d45947727285ee4cea5c26688302"
+    },
+    {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/reconstructibility_matrix.csv",
+      "location_class": "INTERNAL_R2_NON_MANIFEST_FILE",
+      "role": "JSON-cell-encoded CSV reconstructibility ledger",
+      "size_bytes": 3841,
+      "sha256": "7d5373adec1b164002de4e6ee1db11111e544f9b55fcbe43a232fb6ee13cb53f"
+    },
+    {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/reconstructibility_matrix.json",
+      "location_class": "INTERNAL_R2_NON_MANIFEST_FILE",
+      "role": "Canonical multi-axis reconstructibility records",
+      "size_bytes": 5155,
+      "sha256": "7e4dedae4540ba5edbe7a3bca5682693c3371c9b07fe2b8e2a2b22c573cf80b7"
+    },
+    {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/source_artifact_inventory.json",
+      "location_class": "INTERNAL_R2_NON_MANIFEST_FILE",
+      "role": "Primary-source and Git-object inventory including F-01 historical evidence",
+      "size_bytes": 43688,
+      "sha256": "58c28786972bf3ee4e59ea8be6311a2df5bb682dcfb12d58f971cbdc0f630edb"
+    },
+    {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/version_transition_difference_matrix.csv",
+      "location_class": "INTERNAL_R2_NON_MANIFEST_FILE",
+      "role": "JSON-cell-encoded CSV v7.3-to-v7.4 difference ledger",
+      "size_bytes": 25443,
+      "sha256": "cad256eff5f04dbb268454eda968ae0ad363ed94c2c6d3307b6bee2c585e3f02"
+    },
+    {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/version_transition_difference_matrix.json",
+      "location_class": "INTERNAL_R2_NON_MANIFEST_FILE",
+      "role": "Canonical 27-row scientific/governance/implementation difference ledger",
+      "size_bytes": 36462,
+      "sha256": "861fc70b3d242790ae4b09c5da4493e74ab427f07004957bce79efa2bea47de0"
+    },
+    {
+      "path": "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/version_transition_summary.json",
+      "location_class": "INTERNAL_R2_NON_MANIFEST_FILE",
+      "role": "Machine-readable transition summary, correction register, route distinction, and counters",
+      "size_bytes": 18272,
+      "sha256": "f9e10d6d1d6f22a2f9c48d867cd93f9776efc944a5b99016f8aef66999954887"
+    }
+  ],
+  "required_candidate_paths": [
+    "docs/checkpoints/v7_3_to_v7_4_version_transition_candidate_r2_2026-09-27.md",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/authority_transition_matrix.csv",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/authority_transition_matrix.json",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/git_state_snapshot.json",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/reconstructibility_matrix.csv",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/reconstructibility_matrix.json",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/source_artifact_inventory.json",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/version_transition_difference_matrix.csv",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/version_transition_difference_matrix.json",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/version_transition_summary.json",
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/package_manifest.json"
+  ],
+  "package_counts": {
+    "physical_files_in_package_directory_including_manifest": 10,
+    "internal_non_manifest_registered_files": 9,
+    "external_registered_checkpoints": 1,
+    "registered_non_manifest_artifacts": 10,
+    "total_required_candidate_paths_including_manifest": 11,
+    "unexpected_files_in_package_namespace": 0
+  },
+  "matrix_parity": {
+    "algorithm": "For each CSV data cell, json.loads-compatible decoding reconstructs the typed value; dictionaries reconstructed using the CSV header must equal the corresponding canonical JSON record exactly.",
+    "version_transition_difference_matrix": "27/27 exact",
+    "authority_transition_matrix": "12/12 exact",
+    "reconstructibility_matrix": "3/3 exact",
+    "schema_key_set_mismatches": 0,
+    "record_order_mismatches": 0,
+    "value_or_type_mismatches": 0
+  },
+  "source_inventory_verification": {
+    "artifact_records": 46,
+    "git_object_records": 17,
+    "physical_artifacts_checked": 44,
+    "special_identity_records": [
+      "S037_DIRECTORY_IDENTITY_NO_HASH",
+      "S043_MANIFEST_EMBEDDED_HISTORICAL_INPUT_IDENTITY"
+    ],
+    "registered_missing": 0,
+    "sha256_mismatches": 0,
+    "byte_count_mismatches": 0,
+    "wrong_roles": 0
+  },
+  "verification_counters": {
+    "registered_but_missing": 0,
+    "required_unregistered": 0,
+    "sha256_mismatches": 0,
+    "byte_count_mismatches": 0,
+    "unexpected_namespace_files": 0
+  },
+  "git_state_reference": {
+    "pre_r2_porcelain_sha256": "d193286aead0e82cdcda855a8f7624fe66145429939746548fe581d181466b4e",
+    "post_r2_porcelain_sha256": "376b5c22e983d7ad2d39222fb9d7e12aab83d70ea3d4d38dff0f2c05c27e698b",
+    "head_unchanged": true,
+    "tracked_and_staged_changes": 0,
+    "preexisting_untracked_preserved": true,
+    "candidate_results_namespace_ignored_by_git": true
+  },
+  "r1_immutability": {
+    "files_checked": 11,
+    "sha256_mismatches": 0,
+    "byte_count_mismatches": 0,
+    "lifecycle": "HISTORICAL_STOP_CANDIDATE"
+  },
+  "execution_counts": {
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "eob_reruns": 0,
+    "core_three_reruns": 0,
+    "historical_full81_reruns": 0,
+    "current_full81_runs": 0,
+    "sensitivity_solves": 0,
+    "code_changes": 0,
+    "data_changes": 0,
+    "accepted_result_changes": 0,
+    "commits": 0,
+    "pushes": 0,
+    "tags_created_or_moved": 0
+  },
+  "overbroad_negative_audit": {
+    "class_a_properly_scoped": 57,
+    "class_b_historical_or_r1_defect": 3,
+    "class_c_invalid_overbroad": 0
+  },
+  "candidate_disposition": "CANDIDATE_R2_PASS_PENDING_INDEPENDENT_CROSS_AGENT_READ_ONLY_AUDIT"
+}
