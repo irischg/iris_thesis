@@ -1,0 +1,101 @@
+{
+  "schema_version": "iris-thesis-exact-git-state-snapshot-v1",
+  "package_identity": "LAYER_A_ROBUSTNESS_PREREGISTRATION_CANDIDATE_R1",
+  "literal_status_argv": [
+    "git",
+    "-c",
+    "core.quotePath=false",
+    "status",
+    "--porcelain=v1",
+    "--untracked-files=all"
+  ],
+  "repository_identity": {
+    "root": "C:/Users/Iris C/OneDrive/Desktop/iris_thesis",
+    "branch": "thesis-v7",
+    "head": "a96cf7929b84374c8e3d5a62a3fed84093268b2c",
+    "parent": "55df7322fae9901b07d7334dcbc811ea94fbed2d",
+    "local_origin_thesis_v7": "a96cf7929b84374c8e3d5a62a3fed84093268b2c",
+    "live_remote_origin_thesis_v7": "a96cf7929b84374c8e3d5a62a3fed84093268b2c",
+    "ahead": 0,
+    "behind": 0,
+    "tag_count": 10,
+    "live_remote_verification": "git ls-remote --heads origin refs/heads/thesis-v7"
+  },
+  "pre_task": {
+    "capture_order": "BEFORE_ANY_TASK3_CANDIDATE_R1_FILE_OR_DIRECTORY_WAS_CREATED",
+    "exit_code": 0,
+    "stderr": "",
+    "raw_byte_count": 447,
+    "raw_sha256": "2720879eb0de989bf50e4755e2c5518748a832a5295ecc5e1cdde237c3edbcd8",
+    "raw_base64": "Pz8gMDYyOemWi+acg+mAkOWtl+eov0lyaXMuZG9jeAo/PyAiQ2xhdWRlIG91dHB1dHMvMDkzMF/pgLLluqbloLHlkYpf5oqV5b2x54mH5p625qeL6IiH6YCQ6aCB6Kyb56i/X3Y3LjIubWQiCj8/ICJDbGF1ZGUgb3V0cHV0cy9QMl9MaXRlcmF0dXJlX1Bvc2l0aW9uaW5nX3Y3LjIucHB0eCIKPz8gIkNsYXVkZSBvdXRwdXRzL2lyaXNfdGhlc2lzX2luZGVwZW5kZW50X2F1ZGl0XzIwMjYtMDktMTMubWQiCj8/ICJDbGF1ZGUgb3V0cHV0cy9pcmlzX3RoZXNpc19yZXBvX2F1ZGl0XzIwMjYtMDktMTMubWQiCj8/IEVPQl9BdHRlbXB0M18yMDI2MDkyNFQxODQwMzg4MDk1OTRaXzU5MTE2YjE1NTYuemlwCj8/ICJkb2NzL0NBVE9DS0VSVEVBSVBPVEVQIHJjdOOEkOOEmlBWICBJLmh0bWwiCj8/ICJkb2NzL0VTR0MgQ29zdCBQZXJmb3JtYW5jZSBSZXBvcnQgMjAyMiBQTk5MLTMzMjgzLnBkZiIK",
+    "decoded_utf8_exact": "?? 0629開會逐字稿Iris.docx\n?? \"Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md\"\n?? \"Claude outputs/P2_Literature_Positioning_v7.2.pptx\"\n?? \"Claude outputs/iris_thesis_independent_audit_2026-09-13.md\"\n?? \"Claude outputs/iris_thesis_repo_audit_2026-09-13.md\"\n?? EOB_Attempt3_20260924T184038809594Z_59116b1556.zip\n?? \"docs/CATOCKERTEAIPOTEP rctㄐㄚPV  I.html\"\n?? \"docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf\"\n",
+    "staged_paths": [],
+    "unstaged_tracked_paths": [],
+    "porcelain_untracked_count": 8,
+    "untracked_logical_paths": [
+      "0629開會逐字稿Iris.docx",
+      "Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md",
+      "Claude outputs/P2_Literature_Positioning_v7.2.pptx",
+      "Claude outputs/iris_thesis_independent_audit_2026-09-13.md",
+      "Claude outputs/iris_thesis_repo_audit_2026-09-13.md",
+      "EOB_Attempt3_20260924T184038809594Z_59116b1556.zip",
+      "docs/CATOCKERTEAIPOTEP rctㄐㄚPV  I.html",
+      "docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf"
+    ]
+  },
+  "post_build": {
+    "capture_order": "AFTER_THE_AUTHORIZED_CHECKPOINT_AND_CANDIDATE_PACKAGE_NAMESPACE_EXISTED; BEFORE_CONTENT_ONLY_PACKAGE_FINALIZATION",
+    "path_set_stability_note": "The candidate results namespace is ignored by the repository results/ rule. Content-only finalization inside existing candidate paths does not change the porcelain path set.",
+    "exit_code": 0,
+    "stderr": "",
+    "raw_byte_count": 529,
+    "raw_sha256": "4d771398e06ca5d17a916b648cb271b4aa99d5f74d85791bc200f1e7d0f49dcb",
+    "raw_base64": "Pz8gMDYyOemWi+acg+mAkOWtl+eov0lyaXMuZG9jeAo/PyAiQ2xhdWRlIG91dHB1dHMvMDkzMF/pgLLluqbloLHlkYpf5oqV5b2x54mH5p625qeL6IiH6YCQ6aCB6Kyb56i/X3Y3LjIubWQiCj8/ICJDbGF1ZGUgb3V0cHV0cy9QMl9MaXRlcmF0dXJlX1Bvc2l0aW9uaW5nX3Y3LjIucHB0eCIKPz8gIkNsYXVkZSBvdXRwdXRzL2lyaXNfdGhlc2lzX2luZGVwZW5kZW50X2F1ZGl0XzIwMjYtMDktMTMubWQiCj8/ICJDbGF1ZGUgb3V0cHV0cy9pcmlzX3RoZXNpc19yZXBvX2F1ZGl0XzIwMjYtMDktMTMubWQiCj8/IEVPQl9BdHRlbXB0M18yMDI2MDkyNFQxODQwMzg4MDk1OTRaXzU5MTE2YjE1NTYuemlwCj8/ICJkb2NzL0NBVE9DS0VSVEVBSVBPVEVQIHJjdOOEkOOEmlBWICBJLmh0bWwiCj8/ICJkb2NzL0VTR0MgQ29zdCBQZXJmb3JtYW5jZSBSZXBvcnQgMjAyMiBQTk5MLTMzMjgzLnBkZiIKPz8gZG9jcy9jaGVja3BvaW50cy9sYXllcl9hX3JvYnVzdG5lc3NfcHJlcmVnaXN0cmF0aW9uX2NhbmRpZGF0ZV9yMV8yMDI2LTA5LTI3Lm1kCg==",
+    "decoded_utf8_exact": "?? 0629開會逐字稿Iris.docx\n?? \"Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md\"\n?? \"Claude outputs/P2_Literature_Positioning_v7.2.pptx\"\n?? \"Claude outputs/iris_thesis_independent_audit_2026-09-13.md\"\n?? \"Claude outputs/iris_thesis_repo_audit_2026-09-13.md\"\n?? EOB_Attempt3_20260924T184038809594Z_59116b1556.zip\n?? \"docs/CATOCKERTEAIPOTEP rctㄐㄚPV  I.html\"\n?? \"docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf\"\n?? docs/checkpoints/layer_a_robustness_preregistration_candidate_r1_2026-09-27.md\n",
+    "staged_paths": [],
+    "unstaged_tracked_paths": [],
+    "porcelain_untracked_count": 9,
+    "preexisting_untracked_count": 8,
+    "authorized_new_porcelain_untracked_paths": [
+      "docs/checkpoints/layer_a_robustness_preregistration_candidate_r1_2026-09-27.md"
+    ],
+    "authorized_new_ignored_paths": [
+      "results/provenance/layer_a_robustness_preregistration_candidate_r1/preregistration_record.json",
+      "results/provenance/layer_a_robustness_preregistration_candidate_r1/source_artifact_inventory.json",
+      "results/provenance/layer_a_robustness_preregistration_candidate_r1/git_state_snapshot.json",
+      "results/provenance/layer_a_robustness_preregistration_candidate_r1/package_manifest.json"
+    ],
+    "ignore_rule": "repository results/ ignore rule",
+    "unexpected_new_paths": [],
+    "preexisting_untracked_preserved": true,
+    "untracked_logical_paths": [
+      "0629開會逐字稿Iris.docx",
+      "Claude outputs/0930_進度報告_投影片架構與逐頁講稿_v7.2.md",
+      "Claude outputs/P2_Literature_Positioning_v7.2.pptx",
+      "Claude outputs/iris_thesis_independent_audit_2026-09-13.md",
+      "Claude outputs/iris_thesis_repo_audit_2026-09-13.md",
+      "EOB_Attempt3_20260924T184038809594Z_59116b1556.zip",
+      "docs/CATOCKERTEAIPOTEP rctㄐㄚPV  I.html",
+      "docs/ESGC Cost Performance Report 2022 PNNL-33283.pdf",
+      "docs/checkpoints/layer_a_robustness_preregistration_candidate_r1_2026-09-27.md"
+    ]
+  },
+  "non_mutation_assessment": {
+    "branch_unchanged": true,
+    "head_unchanged": true,
+    "parent_unchanged": true,
+    "local_origin_unchanged": true,
+    "live_remote_origin_unchanged": true,
+    "ahead_behind_unchanged_0_0": true,
+    "staged_state_unchanged_empty": true,
+    "unstaged_tracked_state_unchanged_empty": true,
+    "only_authorized_candidate_paths_added": true,
+    "preexisting_untracked_deleted_or_modified_by_task": false,
+    "commit_performed": false,
+    "push_performed": false,
+    "tag_created_or_moved": false,
+    "accepted_or_historical_artifact_mutation": false,
+    "code_mutation": false,
+    "data_mutation": false
+  }
+}

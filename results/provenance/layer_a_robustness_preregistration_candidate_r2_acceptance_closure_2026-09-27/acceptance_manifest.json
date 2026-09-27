@@ -1,0 +1,354 @@
+{
+  "schema_version": "iris-thesis-layer-a-robustness-preregistration-acceptance-closure-manifest-v1",
+  "closure_identity": "LAYER_A_ROBUSTNESS_PREREGISTRATION_CANDIDATE_R2_ACCEPTANCE_CLOSURE",
+  "created_date": "2026-09-27",
+  "status": "CLOSED_ACCEPTED",
+  "lifecycle": "acceptance_closure",
+  "pass_type": "additive formal acceptance after separate fresh-session independent read-only audit; governance/provenance only",
+  "source_of_truth_banner": {
+    "framework": "V7.4",
+    "pipeline": "V7.4 CURRENT ACCEPTED ROUTE",
+    "registry": "V7.4"
+  },
+  "accepted_candidate": {
+    "identity": "LAYER_A_ROBUSTNESS_PREREGISTRATION_CANDIDATE_R2",
+    "lifecycle_before": "CANDIDATE_NOT_ACCEPTED_NOT_CLOSED",
+    "lifecycle_after": "CLOSED_ACCEPTED",
+    "accepted_bytes_modified": false,
+    "acceptance_authority_source": "this additive acceptance checkpoint and manifest, not Candidate R2 authoring-time self-text",
+    "checkpoint": {
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md",
+      "size_bytes": 15541,
+      "sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4"
+    },
+    "package_manifest": {
+      "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/package_manifest.json",
+      "size_bytes": 8116,
+      "sha256": "d28fabe9dad25b7d55416b84e13fff18ba576d06185e301639dab46307e9ec55"
+    }
+  },
+  "candidate_lineage": {
+    "candidate_r1": {
+      "identity": "LAYER_A_ROBUSTNESS_PREREGISTRATION_CANDIDATE_R1",
+      "lifecycle": "IMMUTABLE_HISTORICAL_STOP_CANDIDATE",
+      "artifact_count": 5,
+      "modified_by_this_closure": false,
+      "promoted_to_accepted": false,
+      "artifacts": {
+        "docs/checkpoints/layer_a_robustness_preregistration_candidate_r1_2026-09-27.md": {
+          "size_bytes": 17331,
+          "sha256": "6e5f9e9d469e18b756420b4ccb3da68fa1a824ff127f76f342db4a8737d25d32"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r1/git_state_snapshot.json": {
+          "size_bytes": 6750,
+          "sha256": "c5b01dd2b629db0e8d616061f8427dd111e215f40c1d31ff5a028e1de107f60c"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r1/package_manifest.json": {
+          "size_bytes": 6735,
+          "sha256": "af196c074ae0862be044340f02cb88da29f5eba2411771de114640bc68aba8a8"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r1/preregistration_record.json": {
+          "size_bytes": 25118,
+          "sha256": "70a11a842d8a28aba64238ae0ec7f072ea9469b15872e500476db68029935db0"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r1/source_artifact_inventory.json": {
+          "size_bytes": 14847,
+          "sha256": "5ae2bd56cc3fb63ed2023b431798fa321c8ff6a099402b9436bcc7a5404f326b"
+        }
+      }
+    },
+    "candidate_r2": {
+      "identity": "LAYER_A_ROBUSTNESS_PREREGISTRATION_CANDIDATE_R2",
+      "lifecycle": "CLOSED_ACCEPTED",
+      "authoring_time_self_text_retained": true,
+      "artifact_count": 5,
+      "modified_by_this_closure": false,
+      "artifacts": {
+        "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md": {
+          "size_bytes": 15541,
+          "sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r2/git_state_snapshot.json": {
+          "size_bytes": 8740,
+          "sha256": "32b68d6d6db447040365320f6d203f36946b0e185ba7710588a4d6e4d3db9b24"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r2/package_manifest.json": {
+          "size_bytes": 8116,
+          "sha256": "d28fabe9dad25b7d55416b84e13fff18ba576d06185e301639dab46307e9ec55"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json": {
+          "size_bytes": 29848,
+          "sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r2/source_artifact_inventory.json": {
+          "size_bytes": 19875,
+          "sha256": "0d077142933d7dfc9e36b76521ab4156d28cf5c4be5b25d6cbcb4f43a3fb2816"
+        }
+      }
+    }
+  },
+  "independent_audit_basis": {
+    "mode": "separate fresh-session independent read-only audit by a different agent",
+    "verdict": "PASS_WITH_ONE_NON_BLOCKING_OBSERVATION",
+    "acceptance_critical_findings": 0,
+    "candidate_r2_independently_acceptable": true,
+    "eligible_for_separately_authorized_acceptance_closure": true,
+    "authoring_side_self_acceptance": false,
+    "repository_audit_artifact_supplied": false,
+    "repository_audit_path_or_hash_asserted": false,
+    "durability_disclosure": "The independent audit occurred in cross-agent governance history. No repository audit path or hash is fabricated; candidate and primary-byte identities were freshly verified before closure.",
+    "verified_findings": {
+      "r1_immutable": true,
+      "r2_physical_identity_matches": true,
+      "locked_a2_count": 6,
+      "accepted_core_three_count": 3,
+      "intersection_count": 2,
+      "reusable_constant_floor_baselines": [
+        "a0.60_b04",
+        "a1.00_b12"
+      ],
+      "missing_constant_floor_baselines": 4,
+      "required_new_variable_floor_solves": 6,
+      "a1_00_b12_legitimately_reusable": true,
+      "source_inventory": "PASS",
+      "stale_active_r1_claims": 0,
+      "human_machine_parity": "PASS",
+      "materiality_threshold": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+      "u_01_through_u_07": "UNRESOLVED",
+      "leakage_findings": 0,
+      "look_ahead_findings": 0,
+      "information_advantage_findings": 0,
+      "scientific_non_regression": "PASS",
+      "implementation_non_regression": "PASS",
+      "full81_authorization_boundary": "PASS",
+      "package_integrity": "PASS",
+      "git_non_mutation": "PASS",
+      "execution_counters": "ALL_ZERO"
+    }
+  },
+  "non_blocking_observation": {
+    "count": 1,
+    "classification": "NON_BLOCKING_PROVENANCE_DOCUMENTATION_PRECISION",
+    "candidate_wording": "directory digest records describe ordering as sorted by relative forward-slash path",
+    "closure_interpretation": "directory digest ordering = relative forward-slash path, case-insensitive sort",
+    "inherited_from_r1": true,
+    "acceptance_critical": false,
+    "methodology_correction": false,
+    "scientific_correction": false,
+    "evidence_correction": false,
+    "implementation_correction": false,
+    "candidate_mutation": false,
+    "digests_reproduced_under_established_convention": true,
+    "file_counts_match": true,
+    "byte_totals_match": true,
+    "content_integrity_affected": false,
+    "candidate_digests_recomputed_or_replaced": false,
+    "r1_edited": false,
+    "r2_edited": false
+  },
+  "accepted_preregistration_state": {
+    "research_role": "ROBUSTNESS_MODEL_FORM_SCREENING_ONLY",
+    "locked_a2_cases": [
+      "a0.60_b04",
+      "a0.60_b12",
+      "a0.80_b04",
+      "a0.80_b12",
+      "a1.00_b04",
+      "a1.00_b12"
+    ],
+    "available_constant_floor_baselines": [
+      "a0.60_b04",
+      "a1.00_b12"
+    ],
+    "available_count": 2,
+    "missing_constant_floor_baselines": [
+      "a0.60_b12",
+      "a0.80_b04",
+      "a0.80_b12",
+      "a1.00_b04"
+    ],
+    "missing_count": 4,
+    "required_new_variable_floor_solves": 6,
+    "conditional_beta8_extension": [
+      "a0.60_b08",
+      "a0.80_b08",
+      "a1.00_b08"
+    ],
+    "conditional_extension_trigger": "ONLY_IF_FUTURE_FROZEN_MATERIAL_SHIFT_RULE_IS_TRIGGERED",
+    "automatic_expansion": false,
+    "full_factorial_expansion": false
+  },
+  "critical_unresolved_state": {
+    "threshold_decision": "THRESHOLD_DECISION_REQUIRED_BEFORE_EXECUTION",
+    "threshold_authority_status": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+    "accepted_numerical_threshold": null,
+    "selected_threshold_option": null,
+    "unresolved_register": {
+      "U-01": "materiality definition",
+      "U-02": "outcome/escalation taxonomy",
+      "U-03": "historical cost/SOC sensitivity sufficiency",
+      "U-04": "non-A2 robustness case universes",
+      "U-05": "robustness namespace / selected_scope",
+      "U-06": "v7.4 authority-bundle alignment",
+      "U-07": "variable-floor implementation classification"
+    },
+    "unresolved_count": 7,
+    "resolved_by_this_closure": 0
+  },
+  "leakage_and_information_boundary": {
+    "historical_v7_2_r9_full81_role": "HISTORICAL_VALIDATION_PROVENANCE_ONLY",
+    "historical_sensitivity_families_role": "HISTORICAL_NON_TUNING_EVIDENCE",
+    "accepted_eob_core_three_visibility": "VISIBLE_BUT_NOT_THRESHOLD_TUNING_AUTHORITY",
+    "a1_00_b12_registration_role": "PROVENANCE_COMPLETENESS_ONLY",
+    "leakage_findings": 0,
+    "look_ahead_findings": 0,
+    "information_advantage_findings": 0
+  },
+  "authority_boundaries": {
+    "current_full81": {
+      "execution_status": "NOT_YET_EXECUTED",
+      "authorization_status": "NOT_YET_AUTHORIZED",
+      "structural_dependency_equals_execution_authorization": false,
+      "authorized_by_this_closure": false,
+      "authorized_by_candidate_acceptance_alone": false
+    },
+    "implementation": {
+      "robustness_implementation_authorized": false,
+      "robustness_execution_authorized": false,
+      "known_blockers": [
+        "no robustness scope in PRODUCTION_CASE_SETS",
+        "no perfect-information variable-floor implementation",
+        "v7.4 Framework/Registry identities absent from current live pre-execution authority bundle"
+      ],
+      "blockers_fixed_by_this_closure": 0
+    },
+    "remaining_lifecycle": [
+      "FINAL_CROSS_DOCUMENT_ALIGNMENT_AUDIT",
+      "PRODUCTION_AUTHORITY_REFREEZE_IF_REQUIRED",
+      "SEPARATELY_AUTHORIZED_FULL81"
+    ],
+    "later_steps_performed_automatically": false
+  },
+  "governance_state_after_closure": {
+    "framework_v7_4": "CLOSED_ACCEPTED",
+    "registry_v7_4": "CLOSED_ACCEPTED",
+    "task3_candidate_r1": "IMMUTABLE_HISTORICAL_STOP_CANDIDATE",
+    "task3_candidate_r2": "CLOSED_ACCEPTED",
+    "u_01_through_u_07": "UNRESOLVED",
+    "materiality_threshold": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+    "current_full81": "NOT_YET_EXECUTED_NOT_YET_AUTHORIZED",
+    "robustness_implementation": "NOT_AUTHORIZED",
+    "robustness_execution": "NOT_AUTHORIZED"
+  },
+  "authority_state": {
+    "framework_v7_4": {
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "size_bytes": 216186,
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "status": "CLOSED_ACCEPTED"
+    },
+    "registry_v7_4": {
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "size_bytes": 245125,
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "status": "CLOSED_ACCEPTED"
+    },
+    "accepted_planning_input": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "size_bytes": 554037,
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "role": "reconstructed_pv_mainline",
+      "status": "CLOSED_ACCEPTED",
+      "modified_by_this_closure": false
+    }
+  },
+  "protected_nonmutation": {
+    "current_state_md": {
+      "path": "docs/ai_handoff/CURRENT_STATE.md",
+      "size_bytes": 31856,
+      "sha256": "99388f21cdce397849817c7ae80ecc24ba582f5f7ae03a2c7a0f18593aa4b07a",
+      "modified": false
+    },
+    "project_handoff_md": {
+      "path": "docs/ai_handoff/PROJECT_HANDOFF.md",
+      "size_bytes": 20612,
+      "sha256": "052d76e1afd0cba64e7536a72a5bb566c7e39fba957bb20c0f658a0517f2ebdd",
+      "modified": false
+    },
+    "annual_scientific_core_sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+    "production_input_authority_sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+    "production_successor_stack_sha256": "f1d7125f0ee7897db0e25486eca7dd562369d13b5dae1f5364aa4e0384c27323",
+    "historical_full81_verification_inventory_sha256": "8bb4365e90f694003958db9406e2bfe9431b656c00af450cc45a712dfee9d7cc",
+    "eob_verification_inventory_sha256": "00677a313711609405b282a2b91f497a857b9c64ceb24ce7ffdff92d07c1ca6d",
+    "core_three_verification_inventory_sha256": "0079edba2a77a830f4e83d3dbe9947f47889256ef6589d8ab3f9b5df56d45529",
+    "bess_cost_sensitivity_verification_inventory_sha256": "b533b39e2ce84055a1afedb0c84801278bf55276210a8cf291c1b9263cb87d71",
+    "soc_sensitivity_verification_inventory_sha256": "7ddbef91027b1e4b402a56eae03443337cddfd286b63600cc25ac1db956ea94e",
+    "zero_winter_verification_inventory_sha256": "569da6d280a5e6a867813874c351721eb1f5d9c369e00f7f23649975b4c6b5a0",
+    "directory_digest_ordering_interpretation": "relative forward-slash path, case-insensitive sort",
+    "verification_inventory_note": "verification-only aggregate over relative path, byte count, and per-file SHA-256; no candidate digest is recomputed or replaced"
+  },
+  "preclosure_repository_state": {
+    "repository": "irischg/iris_thesis",
+    "branch": "thesis-v7",
+    "head": "a96cf7929b84374c8e3d5a62a3fed84093268b2c",
+    "parent": "55df7322fae9901b07d7334dcbc811ea94fbed2d",
+    "local_origin_thesis_v7": "a96cf7929b84374c8e3d5a62a3fed84093268b2c",
+    "live_remote_origin_thesis_v7": "a96cf7929b84374c8e3d5a62a3fed84093268b2c",
+    "ahead": 0,
+    "behind": 0,
+    "staged_paths": 0,
+    "unstaged_tracked_paths": 0,
+    "porcelain_untracked_records": 10,
+    "porcelain_raw_byte_count": 611,
+    "porcelain_raw_sha256": "8440c4d9f8411fdafe7cb3c5f5a5e6c90b75fc92ad7b75f50658fd48dba35aa6",
+    "tag_ref_count": 10
+  },
+  "execution_counts": {
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "eob_reruns": 0,
+    "core_three_reruns": 0,
+    "historical_full81_reruns": 0,
+    "current_full81_runs": 0,
+    "robustness_solves": 0,
+    "sensitivity_solves": 0,
+    "implementation_changes": 0,
+    "code_changes": 0,
+    "data_changes": 0,
+    "accepted_result_changes": 0,
+    "candidate_r1_modifications": 0,
+    "candidate_r2_modifications": 0,
+    "current_state_md_modifications": 0,
+    "project_handoff_md_modifications": 0,
+    "tags_created": 0
+  },
+  "durability_scope": {
+    "candidate_r1_files": 5,
+    "candidate_r2_files": 5,
+    "new_closure_files": 2,
+    "total_commit_paths": 12,
+    "candidate_files_modified": 0,
+    "unrelated_untracked_paths_included": 0,
+    "commit_authorized": true,
+    "push_authorized": true,
+    "push_target": "origin/thesis-v7",
+    "tag_required": false,
+    "tag_created": false,
+    "publication_state_at_manifest_creation": "AUTHORIZED_PENDING_PRECOMMIT_VERIFICATION"
+  },
+  "package_files": {
+    "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md": {
+      "role": "Task 3 robustness preregistration Candidate R2 formal acceptance/closure checkpoint",
+      "size_bytes": 15261,
+      "sha256": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02"
+    }
+  },
+  "required_closure_paths": [
+    "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md",
+    "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json"
+  ],
+  "self_hash_omitted": true,
+  "self_hash_omission_statement": "acceptance_manifest.json registers the other physical file and all immutable candidate identities but deliberately omits its own SHA-256 and byte count to avoid circular self-identity; its digest and containing commit are reported externally after publication.",
+  "next_governance_step": "FINAL CROSS-DOCUMENT ALIGNMENT AUDIT; not performed automatically by this closure"
+}

@@ -1,0 +1,192 @@
+{
+  "schema_version": "iris-thesis-layer-a-robustness-preregistration-package-manifest-v2",
+  "package_identity": "LAYER_A_ROBUSTNESS_PREREGISTRATION_CANDIDATE_R2",
+  "created_date": "2026-09-27",
+  "lifecycle_status": "CANDIDATE_NOT_ACCEPTED_NOT_CLOSED",
+  "predecessor_identity": "LAYER_A_ROBUSTNESS_PREREGISTRATION_CANDIDATE_R1",
+  "predecessor_lifecycle": "IMMUTABLE_HISTORICAL_STOP_CANDIDATE",
+  "manifest_role": "Deterministic manifest for the bounded Task 3 preregistration Candidate R2 correction",
+  "package_namespace": "results/provenance/layer_a_robustness_preregistration_candidate_r2",
+  "checkpoint_path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md",
+  "self_hash_omitted": true,
+  "self_hash_omission_statement": "package_manifest.json deliberately omits its own SHA-256 and byte count to avoid circular self-identity. Delivery verification reports its exact post-creation identity externally.",
+  "manifest_self": {
+    "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/package_manifest.json",
+    "location_class": "MANIFEST_SELF",
+    "role": "Non-circular R2 package index, identity ledger, bounded correction gate, lifecycle boundary, and counters",
+    "sha256": "OMITTED_TO_AVOID_CIRCULAR_SELF_IDENTITY",
+    "size_bytes": "OMITTED_TO_AVOID_CIRCULAR_SELF_IDENTITY"
+  },
+  "registered_non_manifest_artifacts": [
+    {
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md",
+      "location_class": "EXTERNAL_CANDIDATE_CHECKPOINT",
+      "role": "Human-readable bounded correction, primary reconstruction, corrected dependency, preserved unresolved state, and lifecycle checkpoint",
+      "sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4",
+      "size_bytes": 15541
+    },
+    {
+      "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json",
+      "location_class": "INTERNAL_CANDIDATE_NON_MANIFEST_FILE",
+      "role": "Canonical machine-readable R2 correction, mechanical set reconstruction, preregistration, U-register, and authorization boundaries",
+      "sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f",
+      "size_bytes": 29848
+    },
+    {
+      "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/source_artifact_inventory.json",
+      "location_class": "INTERNAL_CANDIDATE_NON_MANIFEST_FILE",
+      "role": "Corrected primary-source inventory preserving R1 categories and adding accepted a1.00_b12 and run-level reconstruction evidence",
+      "sha256": "0d077142933d7dfc9e36b76521ab4156d28cf5c4be5b25d6cbcb4f43a3fb2816",
+      "size_bytes": 19875
+    },
+    {
+      "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/git_state_snapshot.json",
+      "location_class": "INTERNAL_CANDIDATE_NON_MANIFEST_FILE",
+      "role": "Byte-exact pre/post Git porcelain, R1 immutability identities, authorized path delta, and non-mutation assessment",
+      "sha256": "32b68d6d6db447040365320f6d203f36946b0e185ba7710588a4d6e4d3db9b24",
+      "size_bytes": 8740
+    }
+  ],
+  "required_candidate_paths": [
+    "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md",
+    "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json",
+    "results/provenance/layer_a_robustness_preregistration_candidate_r2/source_artifact_inventory.json",
+    "results/provenance/layer_a_robustness_preregistration_candidate_r2/git_state_snapshot.json",
+    "results/provenance/layer_a_robustness_preregistration_candidate_r2/package_manifest.json"
+  ],
+  "package_counts": {
+    "physical_files_in_package_directory_including_manifest": 4,
+    "internal_non_manifest_registered_files": 3,
+    "external_registered_checkpoints": 1,
+    "registered_non_manifest_artifacts": 4,
+    "total_required_candidate_paths_including_manifest": 5,
+    "unexpected_files_in_package_namespace": 0
+  },
+  "bounded_correction_verification": {
+    "authorized_correction_ids": [
+      "R2-C01",
+      "R2-C02",
+      "R2-C03",
+      "R2-C04",
+      "R2-C05",
+      "R2-C06",
+      "R2-C07"
+    ],
+    "additional_correction_classes": 0,
+    "locked_a2_count": 6,
+    "accepted_core_three_count": 3,
+    "mechanical_intersection": [
+      "a0.60_b04",
+      "a1.00_b12"
+    ],
+    "intersection_count": 2,
+    "missing_locked_a2_points": [
+      "a0.60_b12",
+      "a0.80_b04",
+      "a0.80_b12",
+      "a1.00_b04"
+    ],
+    "missing_count": 4,
+    "required_new_variable_floor_solves": 6,
+    "stale_active_claims": 0
+  },
+  "source_inventory_verification": {
+    "file_artifact_records": 33,
+    "directory_artifact_records": 6,
+    "r1_source_file_artifacts_preserved": 25,
+    "new_primary_file_artifacts_added_for_r2_reconstruction": 8,
+    "registered_missing": 0,
+    "sha256_mismatches": 0,
+    "byte_count_mismatches": 0,
+    "duplicate_paths": 0,
+    "unsupported_source_claims": 0,
+    "a1_00_b12_minimum_artifacts_registered": [
+      "result.json",
+      "case_definition.json",
+      "mandatory_audits.json",
+      "solver_settings.json"
+    ],
+    "a1_00_b12_completion_manifest_also_registered": true
+  },
+  "human_machine_parity": {
+    "available_a2_baselines": 2,
+    "missing_a2_baselines": 4,
+    "required_new_variable_floor_solves": 6,
+    "threshold_decision": "THRESHOLD_DECISION_REQUIRED_BEFORE_EXECUTION",
+    "threshold_authority_status": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+    "accepted_numerical_threshold_present": false,
+    "candidate_threshold_option_selected": false,
+    "unresolved_register_ids": [
+      "U-01",
+      "U-02",
+      "U-03",
+      "U-04",
+      "U-05",
+      "U-06",
+      "U-07"
+    ],
+    "unresolved_items_resolved_by_r2": 0,
+    "full81_status": "NOT_YET_EXECUTED_NOT_YET_AUTHORIZED",
+    "lifecycle": "CANDIDATE_NOT_ACCEPTED_NOT_CLOSED",
+    "parity_mismatches": 0
+  },
+  "r1_immutability": {
+    "checkpoint_sha256": "6e5f9e9d469e18b756420b4ccb3da68fa1a824ff127f76f342db4a8737d25d32",
+    "checkpoint_size_bytes": 17331,
+    "package_file_count": 4,
+    "hash_mismatches": 0,
+    "byte_count_mismatches": 0,
+    "mutation_by_r2": false,
+    "promotion_by_r2": false
+  },
+  "git_state_reference": {
+    "pre_r2_porcelain_sha256": "4d771398e06ca5d17a916b648cb271b4aa99d5f74d85791bc200f1e7d0f49dcb",
+    "post_r2_porcelain_sha256": "8440c4d9f8411fdafe7cb3c5f5a5e6c90b75fc92ad7b75f50658fd48dba35aa6",
+    "branch": "thesis-v7",
+    "head": "a96cf7929b84374c8e3d5a62a3fed84093268b2c",
+    "local_origin": "a96cf7929b84374c8e3d5a62a3fed84093268b2c",
+    "live_remote": "a96cf7929b84374c8e3d5a62a3fed84093268b2c",
+    "ahead": 0,
+    "behind": 0,
+    "tracked_and_staged_changes": 0,
+    "preexisting_untracked_preserved": true,
+    "candidate_results_namespace_ignored_by_git": true
+  },
+  "non_mutation_verification": {
+    "framework_v7_4": "UNCHANGED",
+    "registry_v7_4": "UNCHANGED",
+    "current_state": "UNCHANGED",
+    "project_handoff": "UNCHANGED",
+    "transition_r2_and_closure_records": "UNCHANGED",
+    "accepted_planning_input": "UNCHANGED",
+    "scientific_core": "UNCHANGED",
+    "production_successor_stack": "UNCHANGED",
+    "production_input_authority": "UNCHANGED",
+    "accepted_eob": "UNCHANGED",
+    "accepted_core_three": "UNCHANGED",
+    "historical_v7_2_r9_full81": "UNCHANGED",
+    "historical_sensitivity_families": "UNCHANGED",
+    "candidate_r1": "UNCHANGED",
+    "code": "UNCHANGED",
+    "data": "UNCHANGED"
+  },
+  "execution_counters": {
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "eob_reruns": 0,
+    "core_three_reruns": 0,
+    "historical_full81_reruns": 0,
+    "current_full81_runs": 0,
+    "robustness_solves": 0,
+    "sensitivity_solves": 0,
+    "implementation_changes": 0,
+    "code_changes": 0,
+    "data_changes": 0,
+    "commits": 0,
+    "pushes": 0,
+    "tags": 0
+  },
+  "candidate_disposition": "CANDIDATE_R2_PASS_PENDING_FRESH_SESSION_INDEPENDENT_READ_ONLY_AUDIT_BY_DIFFERENT_AGENT",
+  "next_legal_step": "Fresh-session independent read-only audit by a different agent only."
+}

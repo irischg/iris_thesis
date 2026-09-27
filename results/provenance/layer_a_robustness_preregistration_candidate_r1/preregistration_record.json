@@ -1,0 +1,543 @@
+{
+  "schema_version": "iris-thesis-layer-a-robustness-preregistration-v1",
+  "package_identity": "LAYER_A_ROBUSTNESS_PREREGISTRATION_CANDIDATE_R1",
+  "created_date": "2026-09-27",
+  "lifecycle": {
+    "status": "CANDIDATE_NOT_ACCEPTED_NOT_CLOSED",
+    "author_self_acceptance": false,
+    "scientific_execution_authorized": false,
+    "implementation_authorized": false,
+    "full81_authorized": false,
+    "candidate_disposition": "CANDIDATE_R1_PASS_FOR_INDEPENDENT_READ_ONLY_AUDIT_ONLY"
+  },
+  "source_of_truth_banner": {
+    "framework": "V7.4",
+    "pipeline": "V7.4 CURRENT ACCEPTED ROUTE",
+    "registry": "V7.4",
+    "framework_path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+    "registry_path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md"
+  },
+  "target_action_gate": {
+    "target_action": "CREATE_NEW_TASK3_PREREGISTRATION_CANDIDATE_R1",
+    "write_scope": "NEW_ADDITIVE_CANDIDATE_FILES_ONLY",
+    "solve_scope": "ZERO",
+    "implementation_scope": "ZERO",
+    "full81_scope": "ZERO"
+  },
+  "research_role": {
+    "name": "A2 reserve-floor formulation robustness",
+    "classification": "ROBUSTNESS_MODEL_FORM_SCREENING_ONLY",
+    "is_new_mainline": false,
+    "is_second_research_question": false,
+    "mainline_remains": "constant worst-case reserve floor",
+    "counterfactual": "perfect-information time-varying reserve floor"
+  },
+  "locked_a2_design": {
+    "status": "IN_SCOPE_LOCKED",
+    "constant_floor_arm_source": "accepted current-route Full81 surface",
+    "counterfactual_arm": "perfect-information variable reserve floor",
+    "targeted_cases_in_locked_order": [
+      "a0.60_b04",
+      "a0.60_b12",
+      "a0.80_b04",
+      "a0.80_b12",
+      "a1.00_b04",
+      "a1.00_b12"
+    ],
+    "alpha_values": [0.6, 0.8, 1.0],
+    "beta_hours": [4, 12],
+    "required_new_variable_floor_solves_when_separately_authorized": 6,
+    "conditional_extension": {
+      "case_count": 3,
+      "cases": [
+        "a0.60_b08",
+        "a0.80_b08",
+        "a1.00_b08"
+      ],
+      "trigger": "ONLY_IF_FUTURE_FROZEN_MATERIAL_SHIFT_RULE_IS_TRIGGERED",
+      "automatic_expansion": false,
+      "current_authorization": "NOT_AUTHORIZED"
+    }
+  },
+  "structural_full81_dependency": {
+    "constant_floor_reuse_rule": "Reuse the accepted current-route Full81 constant-floor arm; do not create duplicate constant-floor A2 solves.",
+    "required_constant_floor_case_count": 6,
+    "currently_available_in_accepted_core_three": [
+      "a0.60_b04"
+    ],
+    "not_available_in_accepted_core_three": [
+      "a0.60_b12",
+      "a0.80_b04",
+      "a0.80_b12",
+      "a1.00_b04",
+      "a1.00_b12"
+    ],
+    "conclusion": "A2 execution depends structurally on a separately authorized current-route Full81 for five remaining constant-floor baseline cases.",
+    "materiality_freeze_order": "The scientific materiality rule must be frozen before Full81.",
+    "current_full81_status": "NOT_YET_EXECUTED_NOT_YET_AUTHORIZED",
+    "this_candidate_authorizes_full81": false
+  },
+  "leakage_firewall": {
+    "historical_full81": {
+      "path": "results/layer_a/final_81/runs/20260911T112258206802Z_4d0eb9e1da/",
+      "classification": "HISTORICAL_V7.2_R9_PROVENANCE",
+      "explicit_outputs": [
+        "results/layer_a/final_81/runs/20260911T112258206802Z_4d0eb9e1da/case_matrix.csv",
+        "results/layer_a/final_81/runs/20260911T112258206802Z_4d0eb9e1da/surface_summary.csv",
+        "results/layer_a/final_81/runs/20260911T112258206802Z_4d0eb9e1da/surface_summary.json"
+      ],
+      "permitted_uses": [
+        "PROVENANCE",
+        "LINEAGE",
+        "LABELED_HISTORICAL_REGRESSION_CONTEXT"
+      ],
+      "prohibited_uses": [
+        "CURRENT_THRESHOLD_CALIBRATION",
+        "CURRENT_CASE_SELECTION",
+        "PASS_RULE_TUNING",
+        "CURRENT_V7.4_COUNTERFACTUAL_USE"
+      ]
+    },
+    "historical_non_tuning_sensitivity_directories": [
+      "results/sensitivity/bess_cost_scale_1mw/",
+      "results/sensitivity/soc_20_80/",
+      "results/sensitivity/winter_pv_17c/"
+    ],
+    "accepted_visible_information": [
+      "results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556/",
+      "results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55/"
+    ],
+    "accepted_visible_information_rule": "Accepted EOB and core-three are already visible information but shall not be used to tune a scientific materiality threshold.",
+    "firewall_result": "NO_SCIENTIFIC_THRESHOLD_TUNING_PERMITTED"
+  },
+  "data_role_boundaries": [
+    {
+      "role": "OBSERVED_HISTORICAL",
+      "meaning": "Measured historical evidence used only for its accepted observational role; it is not the planning input."
+    },
+    {
+      "role": "RECONSTRUCTED_PLANNING",
+      "meaning": "The sole accepted planning identity is data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet; all planning and counterfactual runs must use the same accepted identity."
+    },
+    {
+      "role": "HISTORICAL_VALIDATION_PROVENANCE",
+      "meaning": "Historical v7.2 R9 Full81, prior sensitivity directories, and zero-winter evidence remain labeled validation/provenance only."
+    },
+    {
+      "role": "ROBUSTNESS_COUNTERFACTUAL",
+      "meaning": "A future perfect-information variable-floor run is a controlled model-form counterfactual on the same accepted planning input, not a new planning baseline."
+    },
+    {
+      "role": "DIAGNOSTIC_ONLY",
+      "meaning": "Numerical, solver, and linear-throughput diagnostics cannot be silently promoted into scientific decision rules."
+    }
+  ],
+  "data_routing_hard_rules": {
+    "sole_planning_identity": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+    "planning_identity_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+    "planning_rows": 8760,
+    "hybrid_routing_permitted": false,
+    "historical_v7_2_full81_is_current_counterfactual": false,
+    "zero_winter_current_role": "HISTORICAL_VALIDATION_PROVENANCE"
+  },
+  "robustness_dimension_register": [
+    {
+      "dimension": "A2_RESERVE_FLOOR",
+      "status": "IN_SCOPE_LOCKED",
+      "execution_status": "NOT_AUTHORIZED"
+    },
+    {
+      "dimension": "BESS_1_MW_COST_PACKAGE",
+      "status": "FRAMEWORK_MINIMUM_LIST_ITEM_HISTORICAL_V7.2_ROUTE_EXECUTION_EXISTS_CURRENT_ROUTE_OBLIGATION_UNRESOLVED",
+      "execution_status": "BLOCKED_BY_U_03_AND_U_04"
+    },
+    {
+      "dimension": "SOC_20_80",
+      "status": "FRAMEWORK_MINIMUM_LIST_ITEM_HISTORICAL_V7.2_ROUTE_EXECUTION_EXISTS_CURRENT_ROUTE_OBLIGATION_UNRESOLVED",
+      "execution_status": "BLOCKED_BY_U_03_AND_U_04"
+    },
+    {
+      "dimension": "RAINFLOW_DOD_VALIDATION",
+      "status": "MANDATORY_IN_SCOPE_POST_PROCESSING",
+      "execution_status": "APPLIES_TO_EACH_FUTURE_AUTHORIZED_FINAL_SOLUTION"
+    },
+    {
+      "dimension": "LINEAR_THROUGHPUT",
+      "status": "DIAGNOSTIC_ONLY",
+      "execution_status": "NOT_A_SECOND_MAINLINE"
+    },
+    {
+      "dimension": "OUTAGE_RECOVERY_ENVELOPE_EXPANSION",
+      "status": "CONDITIONAL_CURRENT_CONDITION_UNMET_UNLESS_PRIMARY_EVIDENCE_PROVES_OTHERWISE",
+      "execution_status": "OUT_OF_CURRENT_EXECUTION_SCOPE"
+    },
+    {
+      "dimension": "EFFICIENCY_ROBUSTNESS",
+      "status": "REVIEWER_CONDITIONAL_OUT_OF_SCOPE",
+      "execution_status": "NOT_AUTHORIZED"
+    },
+    {
+      "dimension": "ZERO_WINTER",
+      "status": "ALREADY_CLOSED_OUT_OF_SCOPE_NO_SUBSTITUTE",
+      "execution_status": "NO_NEW_SOLVE"
+    },
+    {
+      "dimension": "DISCOUNT_RATE_SWEEP",
+      "status": "OUT_OF_SCOPE",
+      "execution_status": "NOT_AUTHORIZED"
+    },
+    {
+      "dimension": "BETA_24_HOUR_BOUNDARY",
+      "status": "DEFERRED_OUT_OF_SCOPE",
+      "execution_status": "NOT_AUTHORIZED"
+    },
+    {
+      "dimension": "SOLVER_PARAMETER_SENSITIVITY",
+      "status": "NOT_AUTHORIZED_SCIENTIFICALLY_DIAGNOSTIC_ONLY_IF_SEPARATELY_AUTHORIZED",
+      "execution_status": "NO_SETTINGS_CHANGE"
+    },
+    {
+      "dimension": "LAYER_B_DIMENSIONS",
+      "status": "OUT_OF_SCOPE",
+      "execution_status": "NOT_AUTHORIZED"
+    }
+  ],
+  "metric_partition": {
+    "interpretation": "The listed fields are preregistered extraction and reporting fields. Their inclusion does not resolve the scientific materiality formula, denominator, trigger, or pass rule.",
+    "PRIMARY_DECISION": [
+      {
+        "metric": "battery_nameplate_capacity",
+        "artifact_field": "result.json:sizing.E_N_kwh",
+        "unit": "battery-side kWh",
+        "comparison": "variable-floor minus paired constant-floor and the future-adjudicated relative or absolute form",
+        "materiality_rule_status": "UNRESOLVED_BY_CURRENT_AUTHORITY"
+      },
+      {
+        "metric": "battery_power_rating",
+        "artifact_field": "result.json:sizing.P_B_kw_ac",
+        "unit": "AC/PCS-side kW",
+        "comparison": "variable-floor minus paired constant-floor and the future-adjudicated relative or absolute form",
+        "materiality_rule_status": "UNRESOLVED_BY_CURRENT_AUTHORITY"
+      }
+    ],
+    "SECONDARY_EXPLANATORY": [
+      {
+        "metric": "annual_objective",
+        "artifact_field": "result.json:objective_ntd2023_per_year",
+        "unit": "constant NTD-2023/year",
+        "role": "Explain economic consequence; not silently promoted to the A2 material-shift trigger."
+      },
+      {
+        "metric": "contract_capacity",
+        "artifact_field": "result.json:sizing.CC_regular_kw",
+        "unit": "AC-side kW",
+        "role": "Explain tariff interaction."
+      },
+      {
+        "metric": "annual_energy_flows",
+        "artifact_field": "result.json:annual_energy.{battery_side_discharge_kwh,charge_ac_kwh,discharge_ac_kwh,grid_import_kwh,pv_curtailment_kwh}",
+        "unit": "kWh with battery-side or AC-side boundary stated by field name",
+        "role": "Explain dispatch mechanism."
+      },
+      {
+        "metric": "annual_cost_components",
+        "artifact_field": "result.json:cost_components_ntd2023_per_year.*",
+        "unit": "constant NTD-2023/year",
+        "role": "Explain objective composition."
+      },
+      {
+        "metric": "resilience_margins",
+        "artifact_field": "result.json:layer_a_resilience.{annual_reserve_floor,power_adequacy,reserve_kwh_battery,power_requirement_kw_ac}",
+        "unit": "battery-side kWh for reserve; AC-side kW for power; counts where stated",
+        "role": "Explain feasibility and binding mechanism."
+      },
+      {
+        "metric": "rainflow_cycle_depth_and_cost",
+        "artifact_field": "mandatory_audits.json:rainflow.summary.{energy_weighted_rainflow_DOD_fraction_nameplate,maximum_rainflow_DOD_fraction_nameplate,equivalent_full_cycles_nameplate,rainflow_degradation_cost_ntd2023,PWL_degradation_cost_from_dispatch_segments_ntd2023}",
+        "unit": "fraction, cycles, and constant NTD-2023 as named",
+        "role": "Mandatory post-processing explanation and validation."
+      }
+    ],
+    "DIAGNOSTIC": [
+      {
+        "metric": "solver_and_numerical_telemetry",
+        "artifact_field": "result.json:{mip_gap,runtime_sec_gurobi,runtime_sec_wall,node_count,iteration_count,physical_diagnostics.*}",
+        "unit": "mixed, explicitly field-labeled",
+        "role": "Technical validity and diagnostics only."
+      },
+      {
+        "metric": "linear_throughput_benchmark",
+        "artifact_field": "future mandatory audit diagnostic record; no current-route decision field is promoted",
+        "unit": "must be explicitly recorded when separately implemented or invoked",
+        "role": "DIAGNOSTIC_ONLY"
+      },
+      {
+        "metric": "billing_and_settlement_residuals",
+        "artifact_field": "mandatory_audits.json:{billing,cost,transition}",
+        "unit": "kW or constant NTD-2023 as named",
+        "role": "Invariant verification only."
+      }
+    ],
+    "PROVENANCE_ONLY": [
+      {
+        "metric": "artifact_identity",
+        "artifact_field": "path, SHA-256, byte count, run identity, input identity, authority identity",
+        "unit": "identity metadata",
+        "role": "Lineage and reproducibility only."
+      },
+      {
+        "metric": "historical_surface_values",
+        "artifact_field": "historical v7.2 R9 case_matrix/surface_summary outputs",
+        "unit": "historical artifact-defined units",
+        "role": "PROVENANCE_ONLY; prohibited for current threshold calibration, case selection, PASS tuning, or current counterfactual use."
+      }
+    ],
+    "layer_b_metrics_excluded_from_layer_a_decision_rules": [
+      "ENS",
+      "nENS",
+      "WHS",
+      "WHSR"
+    ]
+  },
+  "frozen_technical_gates": {
+    "technical_gate_is_not_scientific_materiality": true,
+    "solution_requirements": [
+      "status == OPTIMAL",
+      "has_solution == true",
+      "objective_ntd2023_per_year is finite",
+      "mip_gap <= 1e-6",
+      "all mandatory Layer A audits have status PASS"
+    ],
+    "mandatory_layer_a_audits": [
+      "solver",
+      "physical",
+      "resilience",
+      "billing",
+      "transition",
+      "cost",
+      "degradation",
+      "rainflow"
+    ],
+    "frozen_numerical_tolerances": [
+      {
+        "name": "MIP_GAP",
+        "value": 1e-6,
+        "source": "scripts/19a_preflight_final_layer_a_81_cases.py and current production route"
+      },
+      {
+        "name": "SIMULTANEOUS_TOL_KW",
+        "value": 1e-5,
+        "source": "src/annual_design_model_v7_2.py"
+      },
+      {
+        "name": "TRANSITION_OVERAGE_TOL_KW",
+        "value": 1e-6,
+        "source": "src/annual_design_model_v7_2.py"
+      },
+      {
+        "name": "BALANCE_TOL",
+        "value": 1e-5,
+        "source": "src/annual_design_model_v7_2.py"
+      },
+      {
+        "name": "TRANSITION_RATE_EQUALITY_TOL_NTD2023_PER_KW_MONTH",
+        "value": 1e-9,
+        "source": "src/annual_design_model_v7_2.py"
+      },
+      {
+        "name": "COST_RECONCILIATION_TOL_NTD",
+        "value": 0.001,
+        "source": "src/annual_design_model_v7_2.py"
+      },
+      {
+        "name": "RAINFLOW_PWL_NUMERICAL_COST_EQUIVALENCE_TOLERANCE_NTD",
+        "value": 0.05,
+        "source": "accepted current-route a0.60_b04 mandatory_audits.json"
+      }
+    ],
+    "required_invariants": [
+      "annual reserve-floor and power-adequacy checks PASS",
+      "physical/state/SOC/balance checks PASS",
+      "rainflow/PWL numerical-equivalence gates PASS",
+      "billing reconstruction and tariff-calendar structure PASS",
+      "transition settlement invariants PASS",
+      "cost reconciliation PASS"
+    ],
+    "new_tolerances_created_by_candidate": 0
+  },
+  "scientific_materiality": {
+    "decision_gate": "THRESHOLD_DECISION_REQUIRED_BEFORE_EXECUTION",
+    "authority_status": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+    "accepted_numerical_threshold": null,
+    "candidate_options_included": false,
+    "must_be_frozen_before": [
+      "FULL81_AUTHORIZATION",
+      "A2_EXECUTION"
+    ],
+    "required_future_decision_components": [
+      "metric_or_metrics",
+      "unit",
+      "denominator",
+      "relative_vs_absolute",
+      "trigger_value",
+      "sign_or_direction",
+      "equality_or_tie_treatment",
+      "beta_8_extension_trigger_semantics"
+    ],
+    "prohibition": "No accepted numerical threshold, implicit zero threshold, rounding-derived threshold, or tuned rule may be inferred from this candidate or visible historical/current results."
+  },
+  "unresolved_register": [
+    {
+      "id": "U-01",
+      "issue": "Numerical definition of material difference/material shift.",
+      "primary_evidence": "Framework v7.4 section 16.1 requires beta=8 extension only upon material shift and identifies materially changed sizing, but supplies no numerical threshold or complete decision function.",
+      "status": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+      "blocks": "Freezing the A2 PASS/extension rule, Full81 authorization, and A2 execution.",
+      "does_not_block": "Candidate documentation, source inventory, or independent read-only preregistration audit.",
+      "required_future_adjudication": "Named scientific owner must freeze metric(s), units, denominator, relative/absolute form, trigger, direction, equality/tie handling, and beta=8 semantics before execution.",
+      "prohibited_premature_inference": "Do not treat zero difference, solver tolerance, historical dispersion, core-three values, or any unstated percentage as the accepted threshold."
+    },
+    {
+      "id": "U-02",
+      "issue": "Outcome and escalation taxonomy beyond existing protocol vocabulary.",
+      "primary_evidence": "Framework v7.4 defines stable-stop versus material-shift beta=8 extension, while the governing version/provenance protocol governs candidate lifecycle but does not supply a complete scientific outcome taxonomy for A2.",
+      "status": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+      "blocks": "Final machine-actionable scientific outcome labels and escalation mapping.",
+      "does_not_block": "Recording the locked six cases, the conditional three beta=8 cases, or auditing this candidate.",
+      "required_future_adjudication": "Owner-approved vocabulary must map technical invalidity, non-material stability, material shift, and conditional extension without changing the locked design.",
+      "prohibited_premature_inference": "Do not invent or self-accept new PASS/FAIL/ESCALATE labels as current scientific authority."
+    },
+    {
+      "id": "U-03",
+      "issue": "Whether historical v7.2-route BESS-cost and SOC20-80 results satisfy v7.4's sensitivity obligation.",
+      "primary_evidence": "Framework v7.4 section 16.1 lists both as minimum items; historical directories exist, but current authority does not adjudicate their sufficiency for the current route.",
+      "status": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+      "blocks": "Claiming the current-route minimum sensitivity obligation satisfied or deciding that reruns are required.",
+      "does_not_block": "Preserving and labeling the historical directories as non-tuning provenance.",
+      "required_future_adjudication": "Independent scientific/governance owner must decide reuse versus new current-route execution and document the evidence basis.",
+      "prohibited_premature_inference": "Do not infer either that historical execution automatically satisfies v7.4 or that v7.4 automatically requires reruns."
+    },
+    {
+      "id": "U-04",
+      "issue": "Case universe for robustness dimensions other than locked A2.",
+      "primary_evidence": "Framework v7.4 locks six A2 points but does not state a complete current-route case universe for BESS cost, SOC20-80, or any conditionally activated dimension.",
+      "status": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+      "blocks": "Execution scope and solve counts for non-A2 dimensions.",
+      "does_not_block": "The six-point A2 design or its independent audit.",
+      "required_future_adjudication": "Owner must freeze each separately authorized non-A2 case universe before execution.",
+      "prohibited_premature_inference": "Do not copy a historical case set, core-three, or Full81 wholesale into a current robustness scope without authority."
+    },
+    {
+      "id": "U-05",
+      "issue": "Robustness output namespace and selected_scope identity.",
+      "primary_evidence": "The current production successor stack exposes low, central, high, core-three, historical-five, and full81 case sets, but no robustness scope or accepted Task 3 output namespace.",
+      "status": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+      "blocks": "Writing scientific outputs and invoking a production selected_scope for robustness.",
+      "does_not_block": "This documentation-only package in its dedicated provenance namespace.",
+      "required_future_adjudication": "Implementation/governance owner must approve a collision-free output namespace, selected_scope identity, manifest semantics, and retention rules.",
+      "prohibited_premature_inference": "Do not store robustness outputs in EOB, core-three, historical Full81, or current Full81 namespaces and do not overload an existing selected_scope."
+    },
+    {
+      "id": "U-06",
+      "issue": "Framework v7.4 and Registry v7.4 identities are absent from the current pre-execution authority bundle.",
+      "primary_evidence": "src/production_input_authority_v7_3.py AUTHORITY_FILES still pins Framework v7.3, Registry v7.3 R3, and the v7.3 lifecycle closure.",
+      "status": "UNRESOLVED_IMPLEMENTATION_AUTHORITY_ALIGNMENT",
+      "blocks": "Any claim that a future Task 3 production execution has passed a v7.4-aware live pre-execution authority gate.",
+      "does_not_block": "Authoring or independently auditing this non-executing candidate.",
+      "required_future_adjudication": "A separately authorized production-authority re-freeze must decide and publish the live v7.4 authority bundle before production execution.",
+      "prohibited_premature_inference": "Do not weaken, bypass, hand-patch, or reinterpret the current authority guard; accepted v7.4 documents alone do not mutate the live bundle."
+    },
+    {
+      "id": "U-07",
+      "issue": "Whether perfect-information variable-floor implementation is already-authorized robustness implementation or a methodology addition.",
+      "primary_evidence": "Framework v7.4 authorizes the A2 comparison scientifically, but the current annual model implements only a scalar constant reserve_kwh_battery floor at every hour and no perfect-information variable-floor execution path exists.",
+      "status": "UNRESOLVED_CLASSIFICATION",
+      "blocks": "Coding, review route, and acceptance criteria for variable-floor implementation.",
+      "does_not_block": "Recording the accepted A2 scientific design and current implementation gap.",
+      "required_future_adjudication": "Methodology and implementation owners must classify the change before code is written and specify its audit/acceptance route.",
+      "prohibited_premature_inference": "Do not assume scientific authorization of A2 is itself authorization to alter production equations or code."
+    }
+  ],
+  "implementation_readiness": {
+    "task_3_documentation": "READY_AS_IS",
+    "a2_robustness_execution": "SUBSTANTIAL_IMPLEMENTATION_REQUIRED",
+    "known_blockers": [
+      {
+        "id": "B-01",
+        "blocker": "No robustness scope exists in PRODUCTION_CASE_SETS.",
+        "evidence": "src/production_successor_stack_v7_3.py"
+      },
+      {
+        "id": "B-02",
+        "blocker": "No perfect-information variable reserve-floor implementation exists.",
+        "evidence": "src/annual_design_model_v7_2.py contains a scalar reserve_kwh_battery constraint applied at every t."
+      },
+      {
+        "id": "B-03",
+        "blocker": "Framework v7.4 and Registry v7.4 are not included in the live pre-execution authority bundle.",
+        "evidence": "src/production_input_authority_v7_3.py AUTHORITY_FILES"
+      }
+    ],
+    "implementation_changes_made": 0
+  },
+  "units_scale_and_boundaries": {
+    "E_N_kwh": "nameplate battery-side kWh",
+    "e_t": "battery-side stored energy kWh",
+    "P_B_kw_ac": "AC/PCS-side kW",
+    "p_ch": "AC/PCS-side kW",
+    "p_dis": "AC/PCS-side kW",
+    "R_alpha_beta": "battery-side kWh; eta_d is accounted for exactly once",
+    "P_out": "AC-side kW",
+    "C_rep": "DC Storage Block basis",
+    "monetary_basis": "constant NTD-2023",
+    "layer_b_metric_import_prohibited": true
+  },
+  "solver_policy": {
+    "settings_status": "FROZEN",
+    "scientific_solver_parameter_sensitivity": "NOT_AUTHORIZED",
+    "diagnostic_solver_sensitivity": "DIAGNOSTIC_ONLY_IF_SEPARATELY_AUTHORIZED",
+    "settings": {
+      "mode": "binary",
+      "MIPGap": 1e-6,
+      "NumericFocus": 1,
+      "OutputFlag": 0,
+      "TimeLimit": null,
+      "MIPFocus": 0,
+      "Threads": 0
+    },
+    "automatic_retry_with_changed_parameters": false,
+    "bitwise_cross_machine_equality_required": false,
+    "future_comparison_rule": "Use frozen numerical tolerances; do not alter solver settings to obtain a preferred scientific result."
+  },
+  "full81_authorization_boundary": {
+    "ordered_lifecycle": [
+      "CANDIDATE_R1_AUTHORING",
+      "INDEPENDENT_READ_ONLY_PREREGISTRATION_AUDIT",
+      "SEPARATE_ACCEPTANCE_CLOSURE_IF_PASS",
+      "FINAL_CROSS_DOCUMENT_ALIGNMENT_AUDIT",
+      "PRODUCTION_AUTHORITY_REFREEZE_IF_REQUIRED",
+      "SEPARATELY_AUTHORIZED_FULL81"
+    ],
+    "candidate_creation_authorizes_full81": false,
+    "candidate_acceptance_alone_authorizes_full81": false,
+    "current_full81_status": "NOT_YET_EXECUTED_NOT_YET_AUTHORIZED"
+  },
+  "execution_counters": {
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "eob_reruns": 0,
+    "core_three_reruns": 0,
+    "historical_full81_reruns": 0,
+    "current_full81_runs": 0,
+    "robustness_solves": 0,
+    "sensitivity_solves": 0,
+    "implementation_changes": 0,
+    "code_changes": 0,
+    "data_changes": 0,
+    "commits": 0,
+    "pushes": 0,
+    "tags": 0
+  },
+  "next_legal_step": "A fresh-session independent read-only preregistration audit by a different agent; no acceptance, implementation, execution, commit, push, tag, U-item resolution, or Full81 run is authorized."
+}
