@@ -5,17 +5,18 @@ methodology — see `PROJECT_HANDOFF.md` and the Framework itself for that.**
 A stage below is marked complete only where a checkpoint/audit artifact supports it — never merely
 because a script exists.
 
-Last reconstructed: 2026-09-26, from primary repository evidence at the observed pre-refresh base
-commit `9050d0eabd0ee5c41626ba924c31a67f301c7293` ("Accept Registry v7.4 evidence authority").
+Last reconstructed: 2026-09-27, from primary repository evidence at the observed pre-F-02 base
+commit `55df7322fae9901b07d7334dcbc811ea94fbed2d` ("Governance: accept v7.3-to-v7.4
+transition Candidate R2").
 Every authority hash quoted below was re-derived from primary repository bytes at that base.
 Re-derive live Git and implementation authority before trusting this file after the repository advances.
 
-Last updated: 2026-09-26, for the **post-Registry-v7.4 handoff refresh** only. This refresh is
-documentation-only: it changes no methodology, no evidence content, no data value, no result, and no
-production-routing authority; it performs no solve, no model construction, and no rerun. It records the
-already-completed Registry v7.4 acceptance closure; it does **not** itself accept, re-audit, or re-author
-any Registry artifact, and it does **not** begin Task 3. No Git publication (push or tag) is authorized
-by this refresh.
+Last updated: 2026-09-27, for the **F-02 bounded handoff wording correction** after the accepted
+v7.3→v7.4 version/provenance transition. This synchronization is documentation-only: it changes no
+methodology, evidence content, data value, result, or production-routing authority; it performs no
+solve, model construction, or rerun. It records transition Candidate R2 as `CLOSED / ACCEPTED` and
+correctly scopes current-route Full81 status while preserving the historical v7.2 R9 execution. It does
+**not** begin or authorize Task 3 or Full81.
 
 **Self-reference convention — read this before trusting any HEAD/tag fact below.** This file is itself a
 tracked, committed file. Committing or amending it (like any other commit) advances the repository's
@@ -104,25 +105,37 @@ additive governance/provenance closure; it did **not** create rewritten Registry
 candidate file, or mutate it in place. The independent audit and the acceptance decision are two
 separate governance actions performed in separate passes — an audit `PASS` is never self-acceptance.
 
+### v7.3→v7.4 version/provenance transition lifecycle — for the record
+
+- Candidate R1 remains `IMMUTABLE HISTORICAL STOP PROVENANCE`.
+- Candidate R2 is `CLOSED / ACCEPTED`; its authoring-time candidate bytes remain immutable.
+- The transition is `CLOSED / ACCEPTED` through
+  `docs/checkpoints/v7_3_to_v7_4_version_transition_acceptance_closure_2026-09-27.md`, published in
+  commit `55df7322fae9901b07d7334dcbc811ea94fbed2d`.
+- That closure is governance/provenance only; it did not authorize Task 3 or Full81.
+
 ## 2. Git state — base HEAD observed at last reconstruction
 
 - Branch: `thesis-v7`
-- **Base HEAD observed before this handoff refresh**:
-  `9050d0eabd0ee5c41626ba924c31a67f301c7293` — "Accept Registry v7.4 evidence authority". This commit
-  adds the Registry v7.4 independent-audit record, the Registry v7.4 acceptance closure checkpoint, and
-  the Registry v7.4 acceptance manifest, and nothing else.
+- **Base HEAD observed before this F-02 correction**:
+  `55df7322fae9901b07d7334dcbc811ea94fbed2d` — "Governance: accept v7.3-to-v7.4 transition Candidate
+  R2". This commit durably records the immutable R1/R2 transition packages and the additive Candidate
+  R2 acceptance closure.
   **This is not necessarily the live current HEAD** — obtain that fresh via `git rev-parse HEAD`.
 - Published lineage to that base, for the record:
   `2fe2105180c68d9289eddc2668399687d4c49d2e` ("Accept Framework v7.4 methodology authority")
   -> `bf87b7f0659da17277fbb797099141b24343aa79` (Registry v7.4 Candidate R1 authoring)
   -> `9e2f05c93d7642fc07881210983a030550455a17` (post-Framework-v7.4 handoff refresh)
-  -> `9050d0eabd0ee5c41626ba924c31a67f301c7293` (Registry v7.4 acceptance closure).
+  -> `9050d0eabd0ee5c41626ba924c31a67f301c7293` (Registry v7.4 acceptance closure)
+  -> `53e3d5e38e68d000b25eea7d06d35b4600219c02` (post-Registry-v7.4 handoff refresh)
+  -> `55df7322fae9901b07d7334dcbc811ea94fbed2d` (v7.3→v7.4 transition Candidate R2 acceptance closure).
 - At this reconstruction, local `origin/thesis-v7` and the live remote `origin/thesis-v7` both pointed
-  at `9050d0eabd0ee5c41626ba924c31a67f301c7293`, with ahead/behind `0/0` — the Registry v7.4 acceptance
-  closure is published. **The commit carrying this handoff refresh is LOCAL ONLY and is not pushed by
-  this refresh**, and no earlier commit may be amended.
+  at `55df7322fae9901b07d7334dcbc811ea94fbed2d`, with ahead/behind `0/0` — the transition closure is
+  published. The future commit containing this self-referential file is intentionally not embedded in
+  its own text; obtain and verify its identity live after publication. No earlier commit may be amended.
 - No code, data, script, test, solver, result, checkpoint, manifest, or production-routing artifact is
-  changed by this handoff-only refresh.
+  changed by this F-02 correction. `PROJECT_HANDOFF.md` receives only the corresponding current-route
+  Full81 scope correction.
 - Earlier base HEADs recorded by previous reconstructions, retained as historical observations only:
   `52e46e83678bf24393cf561062b16e59171a39a7` (v7.3 governance-freeze baseline, 2026-09-23) and
   `23bdadaa87bd4fbb1ce849a0c774e9394a4e2270` (Step 2D acceptance-closure update, 2026-09-24).
@@ -133,12 +146,21 @@ separate governance actions performed in separate passes — an audit `PASS` is 
   `v7.3-step2e1-routing-authority-accepted-2026-09-24` peeling to
   `d52d9584b22da2a41b51c8ce3e99a0335e39da2b` (Step 2E-1 routing authority). These are frozen
   provenance and must not be retargeted.
-- Tag state at this reconstruction: **no tag is created or moved by this refresh.** Any tag-vs-HEAD
+- Tag state at this reconstruction: **no tag is created or moved by this correction.** Any tag-vs-HEAD
   relationship above is an observation at this base and must be re-derived live from Git.
 
 ## 3. Checkpoint / audit chain
 
-**Current v7.4 governance chain (most recent first):**
+**Current v7.3→v7.4 version/provenance transition record:**
+
+1. `docs/checkpoints/v7_3_to_v7_4_version_transition_acceptance_closure_2026-09-27.md` — Candidate R2
+   acceptance/lifecycle closure, `CLOSED / ACCEPTED`, published in commit `55df7322fae9901b07d7334dcbc811ea94fbed2d`.
+2. `docs/checkpoints/v7_3_to_v7_4_version_transition_candidate_r2_2026-09-27.md` — immutable accepted
+   candidate provenance; its authoring-time candidate wording is not rewritten.
+3. `docs/checkpoints/v7_3_to_v7_4_version_transition_candidate_r1_2026-09-27.md` — immutable historical
+   STOP provenance; never promoted.
+
+**Framework/Registry v7.4 governance chain (most recent first):**
 
 1. `docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md` — Registry
    v7.4 evidence acceptance/lifecycle closure, `CLOSED / ACCEPTED`, with
@@ -209,6 +231,10 @@ authorizes current production execution.
   evidence authority, with Registry v7.3 becoming the historical accepted predecessor. This acceptance
   changed no equation, parameter, unit, data value, or result, required **no** rerun, and does **not**
   authorize Full81.
+- **v7.3→v7.4 version/provenance transition Candidate R2: `CLOSED / ACCEPTED`.** The additive closure
+  in commit `55df7322fae9901b07d7334dcbc811ea94fbed2d` preserves Candidate R1 as immutable historical STOP
+  provenance and Candidate R2's exact audited bytes. It changed no scientific content or numerical
+  state and did not authorize Task 3 or Full81.
 - **Accepted planning input — Step 2D, `CLOSED / ACCEPTED`:**
   - `data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet`
     (SHA-256 `3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428`;
@@ -258,10 +284,11 @@ authorizes current production execution.
   accepted both results, so their **current governance status** is `CLOSED / ACCEPTED`, superseding
   the historical run-lifecycle wording for current-status purposes without changing the historical
   manifest bytes.
-- **Full81: `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`** — and not authorized by this refresh, nor by
-  the Registry v7.4 acceptance. Core-three acceptance must never
-  be written as Full81 completion, and Full81's pending state must never be back-propagated into
-  EOB/core-three status.
+- **Current accepted v7.3/v7.4-route Full81: `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`** — no Full81
+  execution has yet occurred on the accepted current route using the accepted reconstructed-PV planning
+  input, and neither the Registry v7.4 acceptance nor the transition closure authorized it. Core-three
+  acceptance must never be written as Full81 completion, and Full81's pending state must never be
+  back-propagated into EOB/core-three status.
 - Historical accepted v7.2 implementation lineage, unchanged: Scripts 01 through 13c **CLOSED / PASS**
   (preprocessing, canonical annual input, billing/kappa calibration, PNNL cost dual-bracket
   construction, Xu degradation semantics audit, Taipower tariff registry + bill-component regression).
@@ -352,9 +379,16 @@ matters, not read off this file.
   of `origin/thesis-v7` until it is published — so the gate would **not**
   report `PRODUCTION_AUTHORITY_FROZEN` as observed. That is a status observation only — never an
   instruction to clean, bypass, weaken, or hand-patch the gate.
-- **Full81: `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`.** No Full81 result exists.
+- **Current accepted v7.3/v7.4-route Full81: `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`.** No Full81
+  execution has yet occurred on that route using the accepted reconstructed-PV planning input. A
+  historical v7.2 R9 Full81 production execution does exist: it completed 81 cases using
+  `data/processed/annual_input_v7_1.parquet` and is retained at
+  `results/layer_a/final_81/runs/20260911T112258206802Z_4d0eb9e1da` as immutable historical
+  provenance. It is not the current v7.3/v7.4 Full81 and cannot serve as a controlled current-route
+  counterfactual.
 - Post-solve exact demand maxima and ex-post rainflow/cycle-depth validation beyond the accepted EOB
-  and core-three runs remain pending for the Full81 surface, because Full81 has not been executed.
+  and core-three runs remain pending for the Full81 surface, because current-route Full81 has not been
+  executed.
 - Corrected Sep-18 reconstructed-PV artifact: promotion-source candidate only; not canonical and must
   not be renamed or mutated into the canonical artifact. It remains the accepted numerical promotion
   source **from which** the Step 2D canonical artifact was constructed; that does not make it
@@ -377,12 +411,13 @@ not the immediate next step.** Handoff synchronization confers no authority and 
 1. Framework v7.4 methodology acceptance — `CLOSED / ACCEPTED`.
 2. Registry v7.4 evidence acceptance — `CLOSED / ACCEPTED` (Candidate R1 authoring -> independent audit
    `PASS` -> separate acceptance closure `9050d0e`).
-3. This handoff refresh — governance/provenance representation only.
-4. Task 3 — Layer A robustness / preregistration checkpoint.
-5. Independent preregistration audit.
-6. Final cross-document alignment audit.
-7. Production-authority re-freeze, if required.
-8. Full81 authorization and execution — only once every gate above has passed.
+3. v7.3→v7.4 version/provenance transition Candidate R2 — `CLOSED / ACCEPTED` (`55df732`).
+4. This F-02 handoff correction — governance representation only; no production authority.
+5. Task 3 — Layer A robustness / preregistration checkpoint.
+6. Independent preregistration audit.
+7. Final cross-document alignment audit.
+8. Production-authority re-freeze, if required.
+9. Full81 authorization and execution — only once every gate above has passed.
 
 **Step 2D is closed.** For the record, Step 2D was required to be separately authorized and followed by
 an independent canonical-artifact audit before any same-artifact production routing, and it was

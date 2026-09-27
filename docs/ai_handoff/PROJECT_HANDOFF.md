@@ -181,9 +181,13 @@ Keep these governance distinctions intact: an independent audit is not an accept
 acceptance is not publication; publication is not handoff synchronization; handoff synchronization is
 not Task 3 completion; and Registry acceptance is not Full81 authorization.
 
-**Full81 is `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`.** Accepting Framework v7.4 and Registry v7.4 did
-not authorize it, and the accepted representative core-three cases must never be written up as the
-complete Full81 surface. The preregistration checkpoint must not be made to depend on any Full81 result.
+**Current accepted v7.3/v7.4-route Full81 is `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`.** No Full81
+execution has yet occurred on that route using the accepted reconstructed-PV planning input. A historical
+v7.2 R9 Full81 production execution exists as immutable historical provenance; it is not the current
+Full81 and cannot serve as a controlled current-route counterfactual. Accepting Framework v7.4 and
+Registry v7.4 did not authorize current-route Full81, and the accepted representative core-three cases
+must never be written up as the complete Full81 surface. The preregistration checkpoint must not be made
+to depend on any current-route Full81 result.
 
 ## 6. Methodology vs. implementation status — keep these separate
 
