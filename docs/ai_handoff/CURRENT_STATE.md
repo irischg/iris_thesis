@@ -5,18 +5,19 @@ methodology — see `PROJECT_HANDOFF.md` and the Framework itself for that.**
 A stage below is marked complete only where a checkpoint/audit artifact supports it — never merely
 because a script exists.
 
-Last reconstructed: 2026-09-27, from primary repository evidence at the observed pre-F-02 base
-commit `55df7322fae9901b07d7334dcbc811ea94fbed2d` ("Governance: accept v7.3-to-v7.4
-transition Candidate R2").
+Last reconstructed: 2026-09-27, from primary repository evidence at the observed pre-F-03 base
+commit `d07d34a163f0e45c8f8764526e81070f19d48747` ("Governance: accept Task 3 robustness
+preregistration Candidate R2").
 Every authority hash quoted below was re-derived from primary repository bytes at that base.
 Re-derive live Git and implementation authority before trusting this file after the repository advances.
 
-Last updated: 2026-09-27, for the **F-02 bounded handoff wording correction** after the accepted
-v7.3→v7.4 version/provenance transition. This synchronization is documentation-only: it changes no
-methodology, evidence content, data value, result, or production-routing authority; it performs no
-solve, model construction, or rerun. It records transition Candidate R2 as `CLOSED / ACCEPTED` and
-correctly scopes current-route Full81 status while preserving the historical v7.2 R9 execution. It does
-**not** begin or authorize Task 3 or Full81.
+Last updated: 2026-09-27, for the **F-03 bounded handoff synchronization** after Task 3 Candidate R2
+acceptance and the final cross-document alignment audit. This synchronization is documentation-only:
+it changes no methodology, evidence content, data value, result, implementation, or production-routing
+authority; it performs no solve, model construction, rerun, threshold decision, U-item resolution, or
+production-authority re-freeze. It records Task 3 Candidate R1 as immutable historical STOP provenance,
+Candidate R2 as `CLOSED / ACCEPTED`, and the final alignment audit as completed. It does **not** authorize
+implementation, robustness execution, or current-route Full81.
 
 **Self-reference convention — read this before trusting any HEAD/tag fact below.** This file is itself a
 tracked, committed file. Committing or amending it (like any other commit) advances the repository's
@@ -114,13 +115,28 @@ separate governance actions performed in separate passes — an audit `PASS` is 
   commit `55df7322fae9901b07d7334dcbc811ea94fbed2d`.
 - That closure is governance/provenance only; it did not authorize Task 3 or Full81.
 
+### Task 3 Layer A robustness preregistration lifecycle — current
+
+- Candidate R1 is an `IMMUTABLE HISTORICAL STOP CANDIDATE`; its bytes must not be edited.
+- Candidate R2 is `CLOSED / ACCEPTED`. Its exact immutable candidate bytes were accepted through
+  `docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md`
+  and its companion manifest, published in commit
+  `d07d34a163f0e45c8f8764526e81070f19d48747`.
+- The independent Candidate R2 audit is `COMPLETED`: verdict
+  `PASS WITH ONE NON-BLOCKING OBSERVATION`, acceptance-critical findings `0`. The observation concerned
+  directory-digest ordering documentation precision; the accepted interpretation is relative
+  forward-slash path, case-insensitive sort, classified
+  `NON_BLOCKING_PROVENANCE_DOCUMENTATION_PRECISION`. No repository audit artifact path is asserted.
+- This scientific/preregistration acceptance does not authorize threshold selection, U-item resolution,
+  implementation, robustness execution, production-authority re-freeze, or Full81.
+
 ## 2. Git state — base HEAD observed at last reconstruction
 
 - Branch: `thesis-v7`
-- **Base HEAD observed before this F-02 correction**:
-  `55df7322fae9901b07d7334dcbc811ea94fbed2d` — "Governance: accept v7.3-to-v7.4 transition Candidate
-  R2". This commit durably records the immutable R1/R2 transition packages and the additive Candidate
-  R2 acceptance closure.
+- **Base HEAD observed before this F-03 synchronization**:
+  `d07d34a163f0e45c8f8764526e81070f19d48747` — "Governance: accept Task 3 robustness preregistration
+  Candidate R2". This commit durably records the immutable Task 3 R1/R2 candidate families and the
+  additive Candidate R2 acceptance closure.
   **This is not necessarily the live current HEAD** — obtain that fresh via `git rev-parse HEAD`.
 - Published lineage to that base, for the record:
   `2fe2105180c68d9289eddc2668399687d4c49d2e` ("Accept Framework v7.4 methodology authority")
@@ -128,14 +144,15 @@ separate governance actions performed in separate passes — an audit `PASS` is 
   -> `9e2f05c93d7642fc07881210983a030550455a17` (post-Framework-v7.4 handoff refresh)
   -> `9050d0eabd0ee5c41626ba924c31a67f301c7293` (Registry v7.4 acceptance closure)
   -> `53e3d5e38e68d000b25eea7d06d35b4600219c02` (post-Registry-v7.4 handoff refresh)
-  -> `55df7322fae9901b07d7334dcbc811ea94fbed2d` (v7.3→v7.4 transition Candidate R2 acceptance closure).
+  -> `55df7322fae9901b07d7334dcbc811ea94fbed2d` (v7.3→v7.4 transition Candidate R2 acceptance closure)
+  -> `a96cf7929b84374c8e3d5a62a3fed84093268b2c` (F-02 bounded Full81 handoff correction)
+  -> `d07d34a163f0e45c8f8764526e81070f19d48747` (Task 3 Candidate R2 acceptance closure).
 - At this reconstruction, local `origin/thesis-v7` and the live remote `origin/thesis-v7` both pointed
-  at `55df7322fae9901b07d7334dcbc811ea94fbed2d`, with ahead/behind `0/0` — the transition closure is
+  at `d07d34a163f0e45c8f8764526e81070f19d48747`, with ahead/behind `0/0` — the Task 3 closure is
   published. The future commit containing this self-referential file is intentionally not embedded in
   its own text; obtain and verify its identity live after publication. No earlier commit may be amended.
 - No code, data, script, test, solver, result, checkpoint, manifest, or production-routing artifact is
-  changed by this F-02 correction. `PROJECT_HANDOFF.md` receives only the corresponding current-route
-  Full81 scope correction.
+  changed by this F-03 synchronization. Only this file and `PROJECT_HANDOFF.md` are synchronized.
 - Earlier base HEADs recorded by previous reconstructions, retained as historical observations only:
   `52e46e83678bf24393cf561062b16e59171a39a7` (v7.3 governance-freeze baseline, 2026-09-23) and
   `23bdadaa87bd4fbb1ce849a0c774e9394a4e2270` (Step 2D acceptance-closure update, 2026-09-24).
@@ -150,6 +167,19 @@ separate governance actions performed in separate passes — an audit `PASS` is 
   relationship above is an observation at this base and must be re-derived live from Git.
 
 ## 3. Checkpoint / audit chain
+
+**Current Task 3 Layer A robustness preregistration chain:**
+
+1. `docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md`
+   and its companion acceptance manifest — Candidate R2 acceptance/lifecycle closure,
+   `CLOSED / ACCEPTED`, published in commit `d07d34a163f0e45c8f8764526e81070f19d48747`.
+2. Separate fresh-session independent read-only Candidate R2 audit — `COMPLETED`, verdict
+   `PASS WITH ONE NON-BLOCKING OBSERVATION`, acceptance-critical findings `0`. The audit exists as an
+   external/read-only governance result; no committed audit artifact path is fabricated here.
+3. `docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md` — exact immutable
+   accepted candidate provenance; its authoring-time candidate wording is not rewritten.
+4. `docs/checkpoints/layer_a_robustness_preregistration_candidate_r1_2026-09-27.md` — immutable
+   historical STOP candidate; never promoted.
 
 **Current v7.3→v7.4 version/provenance transition record:**
 
@@ -235,6 +265,23 @@ authorizes current production execution.
   in commit `55df7322fae9901b07d7334dcbc811ea94fbed2d` preserves Candidate R1 as immutable historical STOP
   provenance and Candidate R2's exact audited bytes. It changed no scientific content or numerical
   state and did not authorize Task 3 or Full81.
+- **Task 3 Layer A robustness preregistration Candidate R2: `CLOSED / ACCEPTED`.** Candidate R1 remains
+  an immutable historical STOP candidate. The separate independent Candidate R2 audit completed with
+  verdict `PASS WITH ONE NON-BLOCKING OBSERVATION` and `0` acceptance-critical findings; the additive
+  acceptance closure was published in commit `d07d34a163f0e45c8f8764526e81070f19d48747`.
+  The accepted design is bounded as follows:
+  - locked A2 cases: `a0.60_b04`, `a0.60_b12`, `a0.80_b04`, `a0.80_b12`, `a1.00_b04`,
+    `a1.00_b12` — six targeted points, **not** a full factorial;
+  - reusable accepted current-route constant-floor baselines: `a0.60_b04`, `a1.00_b12` (`2`);
+  - missing current-route constant-floor baselines: `a0.60_b12`, `a0.80_b04`, `a0.80_b12`,
+    `a1.00_b04` (`4`);
+  - `required_new_variable_floor_solves = 6` for the perfect-information arm;
+  - conditional extension: `a0.60_b08`, `a0.80_b08`, `a1.00_b08`, **only** if a future frozen
+    material-shift rule triggers — never automatic, and no rule or threshold is selected here.
+  Acceptance is scientific/preregistration closure only; it is not implementation or execution authority.
+  The scientific firewall remains intact: `LEAKAGE_FINDINGS = 0`, `LOOK_AHEAD_FINDINGS = 0`, and
+  `INFORMATION_ADVANTAGE_FINDINGS = 0`. Historical v7.2 R9 Full81 and historical sensitivities remain
+  non-tuning provenance/validation context; accepted EOB/core-three establish baseline availability only.
 - **Accepted planning input — Step 2D, `CLOSED / ACCEPTED`:**
   - `data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet`
     (SHA-256 `3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428`;
@@ -361,24 +408,44 @@ real production case enumeration and staging and requires its own separate autho
 authorization must be re-determined live from the current repository-authority gate every time it
 matters, not read off this file.
 
-## 6. Unresolved IMPLEMENTATION / VALIDATION items (not methodology)
+## 6. Current governance, implementation, and validation state
 
-- **Layer A robustness / preregistration checkpoint (Task 3): `NOT_YET_CREATED / NOT_YET_AUTHORIZED`**
-  — the immediate open item, and it has not begun. It becomes the next intended gate only after this
-  handoff refresh is itself committed, independently verified, published, and post-push verified.
-- **Independent preregistration audit of that checkpoint: `NOT_YET_EXECUTED`** — it cannot begin before
-  the checkpoint exists, and it must never be made to depend on a Full81 result.
-- **Final cross-document alignment audit: `NOT_YET_EXECUTED`.**
-- **Production-authority re-freeze: `NOT_YET_PERFORMED`, and required before Full81 if the gate does
-  not pass live.** The current gate in `src/production_successor_stack_v7_3.py` requires, among other
-  conditions, `HEAD == origin/thesis-v7`, no staged or unstaged tracked changes, no untracked paths
-  under `src/`, `scripts/`, `tests/`, `data/`, `results/`, the Step-2E-1 commit as an ancestor of HEAD,
-  the successor bytes committed in HEAD, and the accepted annual-input identity. At the base HEAD
-  observed for this refresh `HEAD == origin/thesis-v7`, but pre-existing unrelated untracked files are
-  present in the working tree, and committing this handoff refresh itself leaves `HEAD` one commit ahead
-  of `origin/thesis-v7` until it is published — so the gate would **not**
-  report `PRODUCTION_AUTHORITY_FROZEN` as observed. That is a status observation only — never an
-  instruction to clean, bypass, weaken, or hand-patch the gate.
+- **Task 3 preregistration: `CLOSED / ACCEPTED`.** Candidate R1 is immutable historical STOP provenance;
+  Candidate R2 is the accepted design recorded in §4. This is not implementation or execution authority.
+- **Independent Task 3 Candidate R2 audit: `COMPLETED`.** Verdict
+  `PASS WITH ONE NON-BLOCKING OBSERVATION`; acceptance-critical findings `0`. The non-blocking
+  directory-digest wording observation and accepted ordering interpretation are recorded in §1.
+- **Final cross-document alignment audit: `COMPLETED`.** Verdict
+  `PASS WITH BOUNDED ALIGNMENT ACTIONS REQUIRED`; acceptance-critical findings `0`; blocking alignment
+  defects `0`. This F-03 synchronization is the bounded handoff action required by that external/read-only
+  audit. No repository audit artifact path is asserted where none exists.
+- **Materiality threshold: `THRESHOLD_DECISION_REQUIRED_BEFORE_EXECUTION` and
+  `UNRESOLVED_BY_CURRENT_AUTHORITY`.** Accepted numerical threshold = `null`; selected threshold option =
+  `null`. Neither technical tolerances nor historical Full81, core-three, EOB, historical sensitivities,
+  or literature values may be used to infer or tune it.
+- **Unresolved register — no item is resolved here:**
+  - `U-01` materiality definition — `UNRESOLVED`;
+  - `U-02` outcome / escalation taxonomy — `UNRESOLVED`;
+  - `U-03` historical cost/SOC sensitivity sufficiency — `UNRESOLVED`;
+  - `U-04` non-A2 robustness case universes — `UNRESOLVED`;
+  - `U-05` robustness namespace / `selected_scope` — `UNRESOLVED`;
+  - `U-06` v7.4 authority-bundle alignment — `UNRESOLVED_IMPLEMENTATION_AUTHORITY_ALIGNMENT`;
+  - `U-07` variable-floor implementation-versus-methodology classification —
+    `UNRESOLVED_CLASSIFICATION`.
+- **Current implementation blockers — implementation facts, not methodology decisions or authority to
+  repair them:** (B-01) no robustness scope exists in `PRODUCTION_CASE_SETS`; (B-02) no
+  perfect-information variable reserve-floor implementation exists; and (B-03) Framework v7.4 / Registry
+  v7.4 identities are absent from the current live pre-execution authority bundle. Robustness
+  implementation and execution remain `NO-GO`.
+- **Production-authority re-freeze: `RE_FREEZE_REQUIRED = YES`,
+  `RE_FREEZE_NOT_YET_PERFORMED`; `U-06 = UNRESOLVED`.** Its exact scope/content requires separately
+  authorized U-06 adjudication. This F-03 pass neither performs nor authorizes the re-freeze.
+- **Live-gate status observation only.** `_authority_untracked_paths` in the current successor stack
+  filters untracked paths under `src/`, `scripts/`, `tests/`, `data/`, and `results/`. At the observed
+  pre-F-03 base, the eight unrelated pre-existing untracked paths were outside that protected surface,
+  and `HEAD == origin/thesis-v7` with ahead/behind `0/0`. The production gate was **not run** here, so
+  `PRODUCTION_AUTHORITY_FROZEN` is not claimed and production is not authorized. The runner must
+  re-determine authority live at the then-live HEAD before any production execution.
 - **Current accepted v7.3/v7.4-route Full81: `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`.** No Full81
   execution has yet occurred on that route using the accepted reconstructed-PV planning input. A
   historical v7.2 R9 Full81 production execution does exist: it completed 81 cases using
@@ -398,26 +465,27 @@ matters, not read off this file.
 - DG extension CAPEX/FOM/fuel/emission parameter audit: not started; may proceed in parallel with
   Layer A per Framework §0.3, but has not been started as of this writing.
 
-## 7. Next intended gate
+## 7. Next legal step
 
-> **Task 3 — Layer A robustness / preregistration checkpoint**, after this handoff refresh is itself
-> committed, independently verified, published, and post-push verified.
+> **SEPARATELY AUTHORIZED U-ITEM ADJUDICATION.** It is not performed or authorized by this F-03
+> handoff synchronization.
 
-Task 3 is **not** started by this handoff refresh, is not performed here, and has not begun. **Full81 is
-not the immediate next step.** Handoff synchronization confers no authority and is not Task 3 completion.
+Current go/no-go state: Task 3 preregistration is `CLOSED / ACCEPTED`; this F-03 publication completes
+the bounded handoff synchronization; U-item adjudication is `NOT YET PERFORMED`; robustness
+implementation is `NO-GO`; current-route Full81 is `NO-GO / NOT_YET_AUTHORIZED / NOT_YET_EXECUTED`;
+robustness execution is `NO-GO`; and the production-authority re-freeze is required but not yet performed.
+Scientific acceptance must not be conflated with implementation or execution authorization.
 
-**Current governance sequence — each step is separately gated, and none is pre-authorized here:**
+**Next legal sequence — each item requires separate authorization, and none is pre-authorized here:**
 
-1. Framework v7.4 methodology acceptance — `CLOSED / ACCEPTED`.
-2. Registry v7.4 evidence acceptance — `CLOSED / ACCEPTED` (Candidate R1 authoring -> independent audit
-   `PASS` -> separate acceptance closure `9050d0e`).
-3. v7.3→v7.4 version/provenance transition Candidate R2 — `CLOSED / ACCEPTED` (`55df732`).
-4. This F-02 handoff correction — governance representation only; no production authority.
-5. Task 3 — Layer A robustness / preregistration checkpoint.
-6. Independent preregistration audit.
-7. Final cross-document alignment audit.
-8. Production-authority re-freeze, if required.
-9. Full81 authorization and execution — only once every gate above has passed.
+1. U-item adjudication, prioritizing `U-01` materiality-threshold freeze, `U-06` authority-bundle
+   alignment / re-freeze scope, and `U-07` variable-floor implementation classification.
+2. Production-authority re-freeze.
+3. Robustness implementation candidate.
+4. Independent audit / acceptance of that implementation as required.
+5. Current-route Full81 authorization.
+6. Full81 execution.
+7. A2 robustness execution.
 
 **Step 2D is closed.** For the record, Step 2D was required to be separately authorized and followed by
 an independent canonical-artifact audit before any same-artifact production routing, and it was

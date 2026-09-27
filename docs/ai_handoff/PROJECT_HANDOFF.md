@@ -164,30 +164,73 @@ or support a labeled regression comparison, never act as current methodology/evi
 
 ### Current governance sequence and execution boundary
 
-Dated, detailed status stays in `CURRENT_STATE.md`; what follows is the stable ordering only. Each step
-is separately gated, and none is pre-authorized by this document:
+Dated, detailed Git and implementation status stays in `CURRENT_STATE.md`. The current governance
+position is:
 
 1. Framework v7.4 methodology acceptance — closed.
 2. Registry v7.4 evidence acceptance — closed.
-3. Handoff synchronization (`CURRENT_STATE.md`, `PROJECT_HANDOFF.md`) — governance representation only;
-   it confers no authority and is not Task 3.
-4. **Task 3 — Layer A robustness / preregistration checkpoint.**
-5. Independent preregistration audit.
-6. Final cross-document alignment audit.
-7. Production-authority re-freeze, if required.
-8. Full81 authorization and execution — only once every gate above has passed.
+3. Task 3 Candidate R1 — `IMMUTABLE HISTORICAL STOP CANDIDATE`.
+4. Task 3 Candidate R2 — independently audited and `CLOSED / ACCEPTED` in commit
+   `d07d34a163f0e45c8f8764526e81070f19d48747`. Its current lifecycle authority is
+   `docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md`.
+   The independent audit verdict was
+   `PASS WITH ONE NON-BLOCKING OBSERVATION`, with `0` acceptance-critical findings. Its observation was
+   directory-digest ordering documentation precision; the accepted interpretation is relative
+   forward-slash path, case-insensitive sort (`NON_BLOCKING_PROVENANCE_DOCUMENTATION_PRECISION`).
+5. Final cross-document alignment audit — completed; verdict
+   `PASS WITH BOUNDED ALIGNMENT ACTIONS REQUIRED`, with `0` acceptance-critical findings and `0`
+   blocking alignment defects. This F-03 publication performs the required bounded handoff alignment;
+   no repository audit artifact path is invented for the external/read-only audit result.
 
 Keep these governance distinctions intact: an independent audit is not an acceptance decision;
 acceptance is not publication; publication is not handoff synchronization; handoff synchronization is
-not Task 3 completion; and Registry acceptance is not Full81 authorization.
+not scientific or execution authorization; and Registry or Task 3 acceptance is not Full81 authorization.
+
+The accepted Task 3 preregistration is a targeted six-point A2 model-form screen, **not** a full
+factorial. Its locked cases are `a0.60_b04`, `a0.60_b12`, `a0.80_b04`, `a0.80_b12`, `a1.00_b04`, and
+`a1.00_b12`. Accepted current-route constant-floor baselines are reusable for `a0.60_b04` and
+`a1.00_b12` (`2` available); `a0.60_b12`, `a0.80_b04`, `a0.80_b12`, and `a1.00_b04` are missing (`4`).
+`required_new_variable_floor_solves = 6` for the perfect-information arm. The only conditional
+extension is `a0.60_b08`, `a0.80_b08`, and `a1.00_b08`, and it applies only if a future **frozen**
+material-shift rule triggers; beta=8 expansion is not automatic, and no rule or threshold is selected here.
+
+The scientific firewall remains intact: `LEAKAGE_FINDINGS = 0`, `LOOK_AHEAD_FINDINGS = 0`, and
+`INFORMATION_ADVANTAGE_FINDINGS = 0`. Historical v7.2 R9 Full81 remains provenance/validation context
+only and cannot tune the threshold, PASS rule, or A2 case selection; accepted core-three establishes
+baseline availability only and likewise cannot tune the materiality threshold.
+
+The threshold state is `THRESHOLD_DECISION_REQUIRED_BEFORE_EXECUTION` and
+`UNRESOLVED_BY_CURRENT_AUTHORITY`; accepted numerical threshold = `null`, selected threshold option =
+`null`. `U-01` materiality definition, `U-02` outcome/escalation taxonomy, `U-03` historical cost/SOC
+sensitivity sufficiency, `U-04` non-A2 case universes, and `U-05` robustness namespace/`selected_scope`
+are `UNRESOLVED`; `U-06` v7.4 authority-bundle alignment is
+`UNRESOLVED_IMPLEMENTATION_AUTHORITY_ALIGNMENT`; and `U-07` variable-floor
+implementation-versus-methodology classification is `UNRESOLVED_CLASSIFICATION`. None is resolved here.
+
+Three current implementation facts remain blockers: no robustness scope exists in
+`PRODUCTION_CASE_SETS`; no perfect-information variable reserve-floor implementation exists; and the
+current live pre-execution authority bundle does not include Framework v7.4 / Registry v7.4 identities.
+These facts are not methodology decisions or authority to repair or implement anything. A
+production-authority re-freeze is required (`RE_FREEZE_REQUIRED = YES`) but has not been performed
+(`RE_FREEZE_NOT_YET_PERFORMED`), and `U-06` remains unresolved. Production authority must be
+re-determined live by the runner at the then-live HEAD; this handoff does not claim that the gate was run
+or that production is authorized.
 
 **Current accepted v7.3/v7.4-route Full81 is `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`.** No Full81
 execution has yet occurred on that route using the accepted reconstructed-PV planning input. A historical
 v7.2 R9 Full81 production execution exists as immutable historical provenance; it is not the current
 Full81 and cannot serve as a controlled current-route counterfactual. Accepting Framework v7.4 and
 Registry v7.4 did not authorize current-route Full81, and the accepted representative core-three cases
-must never be written up as the complete Full81 surface. The preregistration checkpoint must not be made
-to depend on any current-route Full81 result.
+must never be written up as the complete Full81 surface. The accepted preregistration did not depend
+on any current-route Full81 result.
+
+The next legal sequence, with every item separately authorized, is: (1) U-item adjudication, prioritizing
+`U-01`, `U-06`, and `U-07`; (2) production-authority re-freeze; (3) robustness implementation candidate;
+(4) independent implementation audit/acceptance as required; (5) current-route Full81 authorization;
+(6) Full81 execution; and (7) A2 robustness execution. This ordering authorizes none of those actions.
+Current go/no-go state: U-item adjudication is not yet performed, robustness implementation is `NO-GO`,
+current-route Full81 is `NO-GO / NOT_YET_AUTHORIZED / NOT_YET_EXECUTED`, robustness execution is
+`NO-GO`, and the required production-authority re-freeze has not been performed.
 
 ## 6. Methodology vs. implementation status — keep these separate
 
