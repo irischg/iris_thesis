@@ -19,6 +19,15 @@ production-authority re-freeze. It records Task 3 Candidate R1 as immutable hist
 Candidate R2 as `CLOSED / ACCEPTED`, and the final alignment audit as completed. It does **not** authorize
 implementation, robustness execution, or current-route Full81.
 
+Also updated: 2026-10-01, for the **bounded acceptance/closure of the V7.4 Results & Managerial-Insight
+Analysis Plan Candidate R2**. That pass is governance/provenance only: it changes no methodology,
+evidence content, equation, parameter, data value, result, implementation, or production-routing
+authority; it performs no solve, model construction, rerun, threshold decision, U-item resolution,
+production-authority re-freeze, or production-gate run. It records that plan's Candidate R1 as immutable
+historical candidate provenance and its Candidate R2 as `CLOSED / ACCEPTED`. It does **not** authorize
+implementation, an aggregation/reporting layer, robustness execution, A2, or current-route Full81, and it
+does **not** reconcile the `U-06` / `U-07` representation discrepancy.
+
 **Self-reference convention — read this before trusting any HEAD/tag fact below.** This file is itself a
 tracked, committed file. Committing or amending it (like any other commit) advances the repository's
 live HEAD; that does not invalidate the historical reconstruction record below, it only means the record
@@ -130,6 +139,34 @@ separate governance actions performed in separate passes — an audit `PASS` is 
 - This scientific/preregistration acceptance does not authorize threshold selection, U-item resolution,
   implementation, robustness execution, production-authority re-freeze, or Full81.
 
+### V7.4 Results & Managerial-Insight Analysis Plan lifecycle — current
+
+- Candidate R1 (`docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r1.md`;
+  15,477 bytes; SHA-256 `57fc4ac6fd13bd88f94251e7252bf7f4e44a65c52cead815f5f5b766ec1e93dd`) is
+  `IMMUTABLE HISTORICAL CANDIDATE PROVENANCE`; its bytes must not be edited and it is never promoted.
+- Candidate R2 (`docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r2_2026-10-01.md`;
+  45,741 bytes; SHA-256 `2c4931b9e07a969d93caf682e0b1483786ece0f13cb5bb63f2ab255ad28548c6`) is
+  `CLOSED / ACCEPTED`. Its exact immutable candidate bytes were accepted **as written**, with zero
+  wording changes applied, through
+  `docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r2_acceptance_closure_2026-10-01.md`
+  and its companion manifest
+  `results/provenance/v7_4_results_managerial_insight_analysis_plan_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json`.
+- The separate fresh-session independent read-only Candidate R2 audit is `COMPLETED`: verdict
+  `PASS_WITH_NONBLOCKING_WORDING_NOTES`, blocking corrections `0`, methodology leakage `0`, authority
+  conflicts `0`, R1-to-R2 corrections closed `21 / 21` (all Disposition A), firewalls holding `9 / 9`.
+  The three notes are `NON_BLOCKING_EDITORIAL` and required no change before acceptance. The audit
+  exists as an external/read-only governance result; no repository audit artifact path is asserted.
+- Candidate R3 is `NOT REQUIRED / NOT CREATED`.
+- The accepted scope is **interpretation discipline, not science**: it governs how accepted Layer A /
+  Full81 outputs are analyzed, reported, and described. It creates no scientific model, experiment,
+  case, sensitivity dimension, metric, benefit/utility function, threshold, materiality rule,
+  knee-identification rule, decision criterion, forecasting method, or reserve-floor definition.
+- This acceptance does **not** authorize implementation, an aggregation/reporting layer, robustness
+  implementation, A2, current-route Full81, a production gate, or a production-authority re-freeze, and
+  resolves no U-item.
+- Publication of this closure to `origin/thesis-v7` is **not yet performed** and requires separate
+  authorization.
+
 ## 2. Git state — base HEAD observed at last reconstruction
 
 - Branch: `thesis-v7`
@@ -167,6 +204,19 @@ separate governance actions performed in separate passes — an audit `PASS` is 
   relationship above is an observation at this base and must be re-derived live from Git.
 
 ## 3. Checkpoint / audit chain
+
+**Current V7.4 Results & Managerial-Insight Analysis Plan chain:**
+
+1. `docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r2_acceptance_closure_2026-10-01.md`
+   and its companion acceptance manifest — Candidate R2 acceptance/lifecycle closure,
+   `CLOSED / ACCEPTED`.
+2. Separate fresh-session independent read-only Candidate R2 audit — `COMPLETED`, verdict
+   `PASS_WITH_NONBLOCKING_WORDING_NOTES`, blocking corrections `0`. The audit exists as an
+   external/read-only governance result; no committed audit artifact path is fabricated here.
+3. `docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r2_2026-10-01.md` — exact
+   immutable accepted candidate provenance; its authoring-time candidate wording is not rewritten.
+4. `docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r1.md` — immutable
+   historical candidate provenance; never promoted.
 
 **Current Task 3 Layer A robustness preregistration chain:**
 
@@ -419,6 +469,20 @@ matters, not read off this file.
   `PASS WITH BOUNDED ALIGNMENT ACTIONS REQUIRED`; acceptance-critical findings `0`; blocking alignment
   defects `0`. This F-03 synchronization is the bounded handoff action required by that external/read-only
   audit. No repository audit artifact path is asserted where none exists.
+- **V7.4 Results & Managerial-Insight Analysis Plan Candidate R2: `CLOSED / ACCEPTED`.** Candidate R1
+  remains immutable historical candidate provenance. The separate independent Candidate R2 audit
+  completed with verdict `PASS_WITH_NONBLOCKING_WORDING_NOTES` and `0` blocking corrections; the
+  additive acceptance closure accepted the audited bytes as written. Candidate R3 is
+  `NOT REQUIRED / NOT CREATED`. This is interpretation-discipline acceptance only: it is not
+  implementation or execution authority, authorizes no aggregation/reporting layer, and resolves no
+  U-item. Publication of the closure to `origin/thesis-v7` is not yet performed.
+- **Current-route aggregation / reporting layer: `IMPLEMENTATION / OUTPUT-SCHEMA GAP`, recorded and
+  unresolved.** The historical v7.2 Full81 run emitted `surface_summary.*` and `case_matrix.csv`; the
+  current-route run directory emits no cross-case aggregation. The gap requires only
+  aggregation/reporting implementation from already-defined accepted outputs — **not** new methodology
+  or new scientific definitions. It is not designed, specified, implemented, or authorized, and any
+  future work on it requires separate authorization. An implementer must not add a
+  materiality-classification column, which would depend on the unresolved `U-01`.
 - **Materiality threshold: `THRESHOLD_DECISION_REQUIRED_BEFORE_EXECUTION` and
   `UNRESOLVED_BY_CURRENT_AUTHORITY`.** Accepted numerical threshold = `null`; selected threshold option =
   `null`. Neither technical tolerances nor historical Full81, core-three, EOB, historical sensitivities,

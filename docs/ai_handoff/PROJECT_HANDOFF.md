@@ -181,6 +181,19 @@ position is:
    `PASS WITH BOUNDED ALIGNMENT ACTIONS REQUIRED`, with `0` acceptance-critical findings and `0`
    blocking alignment defects. This F-03 publication performs the required bounded handoff alignment;
    no repository audit artifact path is invented for the external/read-only audit result.
+6. V7.4 Results & Managerial-Insight Analysis Plan Candidate R1 — `IMMUTABLE HISTORICAL CANDIDATE
+   PROVENANCE`; Candidate R2 — independently audited and `CLOSED / ACCEPTED`. Its current lifecycle
+   authority is
+   `docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r2_acceptance_closure_2026-10-01.md`.
+   The independent audit verdict was `PASS_WITH_NONBLOCKING_WORDING_NOTES`, with `0` blocking
+   corrections, `0` methodology leakage, `0` authority conflicts, `21 / 21` R1-to-R2 corrections closed,
+   and `9 / 9` firewalls holding. Its three notes are `NON_BLOCKING_EDITORIAL` and required no change
+   before acceptance; the audited bytes were accepted as written and Candidate R3 is
+   `NOT REQUIRED / NOT CREATED`. That plan governs interpretation discipline for Layer A / Full81
+   results — how accepted outputs are analyzed, reported, and described — and creates no scientific
+   definition. Its acceptance is not implementation or execution authority, authorizes no
+   aggregation/reporting layer, and resolves no U-item. Publication of that closure to
+   `origin/thesis-v7` is not yet performed.
 
 Keep these governance distinctions intact: an independent audit is not an acceptance decision;
 acceptance is not publication; publication is not handoff synchronization; handoff synchronization is
