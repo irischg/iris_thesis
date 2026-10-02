@@ -1,0 +1,91 @@
+{
+  "artifact_type": "U06_ACCEPTANCE_CLOSURE",
+  "schema_version": "iris-thesis-u06-r3-acceptance-closure-v1",
+  "lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+  "target_candidate_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+  "role": "acceptance_closure",
+  "phase": "PHASE_B_ACCEPTANCE",
+
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "audit_verdict": "PASS",
+  "audit_publication_commit": "6677e1e7bff4e344f1d220de2c107b1e4d407d25",
+
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+    "sha256": "f4a6da960a4cd527db4a4cdc71db888905704adf55676b662a4e6c88f2a8fa6b"
+  },
+  "candidate_manifest": {
+    "path": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json",
+    "sha256": "f78ad465bd781a6eb20e7961ac3f3d2a1fb4eaddba7e3a09e10ea35cb3176c1e"
+  },
+  "independent_audit_pass": {
+    "path": "results/provenance/u_06_v7_4_production_authority_independent_audit_r3/independent_audit_pass_record.json",
+    "sha256": "f0d3f50eb55a7850f90d6f12205ed190beb89c973907a64b33508c0f390dad33"
+  },
+  "implementation_identity_digest": "b854d0f133ee38f4e9e534c1accdf50b0438b18d681acdb035d8a97d90218e9a",
+  "implementation_identity_path_count": 20,
+
+  "audit_disposition": "PASS WITH NONBLOCKING FINDINGS",
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "r2_findings_disposition": {
+    "A-01": "CLOSED",
+    "A-02": "CLOSED",
+    "A-03": "CLOSED"
+  },
+  "r1_finding_disposition": {
+    "F-01": "CLOSED"
+  },
+  "nonblocking_findings_retained": [
+    {
+      "id": "F-R3-01",
+      "severity": "MAJOR",
+      "blocking": false,
+      "substance": "EOL / line-ending reproducibility finding.",
+      "remediated": false,
+      "note": "Retained without concealment or downgrade. Not remediated in Phase A or Phase B. No .gitattributes change, no EOL normalization, no blob-hash migration."
+    },
+    {"id": "F-R3-02", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-03", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-04", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-05", "severity": "MINOR", "blocking": false, "remediated": false}
+  ],
+
+  "post_publication_findings": [
+    {
+      "id": "F-POSTPUB-01",
+      "severity": "MINOR",
+      "blocking_phase_b_acceptance": false,
+      "substance": "After lawful Phase-A publication, two lifecycle-sensitive assertions in tests/test_21g_u06_r3_substitution_attacks.py fail: test_untracked_r3_artifacts_are_not_published_in_head (2 subtests) and test_arbitrary_ancestor_is_not_proof_for_a_file_absent_there. Both hard-code the pre-publication premise that the R3 candidate checkpoint and src/production_authority_lifecycle_u06.py are untracked and therefore absent from any published commit, and assert that publication proofs must fail. Phase-A publication necessarily falsified that premise. In all three cases the validator behaved correctly: require_published_in_head and require_published_in_commit now succeed because the artifacts are genuinely published in commit 6677e1e7bff4e344f1d220de2c107b1e4d407d25.",
+      "mechanical_blocking_determination": "NOT A PHASE-B ACCEPTANCE BLOCKER. Determined from the live lifecycle architecture, not by waiver: no production or lifecycle module executes tests or consults any test result; VALIDATION_IDENTITY_PATHS is consumed only by validation_identity() and runtime_dependency_report(), which hash files for read-only reporting; tests_are_runtime_production_authority is false; and neither the acceptance_closure nor the acceptance_manifest role contract references test state.",
+      "a01_core_attack_suite_status": "The core A-01 substitution attacks, including the auditor's exact five-artifact attack using real tracked published artifacts, still pass. 29 of 31 test_21g cases pass.",
+      "accepted_r3_test_bytes_modified": false,
+      "disposition": "DOCUMENTED NONBLOCKING POST-PUBLICATION FINDING, carried forward for the next independent auditor to adjudicate. Not remediated and not waived in this pass."
+    }
+  ],
+
+  "other_suite_results_observed": {
+    "tests/test_21a_v7_3_production_routing_preflight.py": "19/19 OK",
+    "tests/test_21b_21d_v7_3_production_successor_stack.py": "66/66 OK",
+    "tests/test_21e_v7_4_production_authority_bundle.py": "34/34 OK",
+    "tests/test_21f_u06_accepted_lifecycle_gate.py": "40/40 OK",
+    "tests/test_21g_u06_r3_substitution_attacks.py": "29 pass, 2 failing lifecycle-sensitive test methods (see F-POSTPUB-01)"
+  },
+
+  "acceptance_provenance": "Acceptance of the independently audited and published U-06 R3 candidate, authorized by the repository owner on the basis of the published U06_INDEPENDENT_AUDIT_PASS role artifact contained in audit publication commit 6677e1e7bff4e344f1d220de2c107b1e4d407d25. The candidate author did not self-accept.",
+  "candidate_author_is_not_self_accepting": true,
+
+  "production_authority_freeze_status_asserted": "NOT_FROZEN",
+  "authorizes_main_full81": false,
+  "is_production_authority_re_freeze": false,
+  "is_accepted_lifecycle_record": false,
+  "phase_c_complete": false,
+  "explicit_non_claims": [
+    "Production authority is NOT frozen by this acceptance closure.",
+    "Main Full81 is NOT authorized by this acceptance closure.",
+    "Phase C is NOT complete; no production-authority re-freeze and no accepted-lifecycle record exists.",
+    "Acceptance does not imply freeze, and freeze does not imply Full81 authorization.",
+    "U-01 remains OPEN / HOLD and A2 remains HARD_BLOCKED; neither is touched by this closure."
+  ],
+  "notes": "Machine-readable U06_ACCEPTANCE_CLOSURE role artifact for the U-06 R3 lineage. It binds the exact published R3 candidate checkpoint, R3 candidate manifest, and U06_INDEPENDENT_AUDIT_PASS role artifact, and names audit publication commit A so that Phase-A containment is re-proved from that exact commit rather than from ancestry. All hashes were recomputed from live bytes; the implementation identity digest was re-derived over all 20 accepted implementation paths."
+}

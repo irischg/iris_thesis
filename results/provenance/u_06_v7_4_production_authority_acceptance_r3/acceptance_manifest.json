@@ -1,0 +1,69 @@
+{
+  "artifact_type": "U06_ACCEPTANCE_MANIFEST",
+  "schema_version": "iris-thesis-u06-r3-acceptance-manifest-v1",
+  "lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+  "target_candidate_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+  "role": "acceptance_manifest",
+  "phase": "PHASE_B_ACCEPTANCE",
+
+  "acceptance_status": "CLOSED_ACCEPTED",
+
+  "acceptance_closure": {
+    "path": "results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_closure.json",
+    "sha256": "630d536822521a6ab0bdb98a187d9b74bb1c6d9b7a7743c63467b714698da8fe"
+  },
+  "independent_audit_pass": {
+    "path": "results/provenance/u_06_v7_4_production_authority_independent_audit_r3/independent_audit_pass_record.json",
+    "sha256": "f0d3f50eb55a7850f90d6f12205ed190beb89c973907a64b33508c0f390dad33"
+  },
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+    "sha256": "f4a6da960a4cd527db4a4cdc71db888905704adf55676b662a4e6c88f2a8fa6b"
+  },
+  "candidate_manifest": {
+    "path": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json",
+    "sha256": "f78ad465bd781a6eb20e7961ac3f3d2a1fb4eaddba7e3a09e10ea35cb3176c1e"
+  },
+  "implementation_identity_digest": "b854d0f133ee38f4e9e534c1accdf50b0438b18d681acdb035d8a97d90218e9a",
+  "implementation_identity_path_count": 20,
+
+  "audit_verdict": "PASS",
+  "audit_disposition": "PASS WITH NONBLOCKING FINDINGS",
+  "audit_publication_commit": "6677e1e7bff4e344f1d220de2c107b1e4d407d25",
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "r2_findings_disposition": {
+    "A-01": "CLOSED",
+    "A-02": "CLOSED",
+    "A-03": "CLOSED"
+  },
+  "nonblocking_findings_retained": [
+    {"id": "F-R3-01", "severity": "MAJOR", "blocking": false, "remediated": false,
+     "substance": "EOL / line-ending reproducibility finding."},
+    {"id": "F-R3-02", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-03", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-04", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-05", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-POSTPUB-01", "severity": "MINOR", "blocking": false, "remediated": false,
+     "substance": "Two lifecycle-sensitive test_21g assertions encode pre-publication premises and fail after lawful Phase-A publication; determined not to be a Phase-B acceptance blocker from the live architecture. See the acceptance closure for the full determination and evidence."}
+  ],
+
+  "acyclic_publication_semantics": {
+    "phase_a_commit": "6677e1e7bff4e344f1d220de2c107b1e4d407d25",
+    "phase_a_contained_artifacts": [
+      "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+      "results/provenance/u_06_v7_4_production_authority_independent_audit_r3/independent_audit_pass_record.json"
+    ],
+    "phase_b_commit_self_reference": null,
+    "phase_b_commit_self_reference_note": "This manifest deliberately does NOT declare the hash of the commit that will contain it. Phase-B publication containment is proved later by the production_authority_re_freeze role via its acceptance_publication_commit field, which the live validator checks with require_published_in_commit against the exact Phase-B commit. Self-hard-coding a containing commit hash is impossible and is not attempted.",
+    "a03_containment_semantics_preserved": true,
+    "arbitrary_ancestor_accepted_as_publication_proof": false
+  },
+
+  "production_authority_freeze_status_asserted": "NOT_FROZEN",
+  "authorizes_main_full81": false,
+  "is_production_authority_re_freeze": false,
+  "is_accepted_lifecycle_record": false,
+  "phase_c_complete": false,
+  "notes": "Machine-readable U06_ACCEPTANCE_MANIFEST role artifact for the U-06 R3 lineage. It cross-binds the exact acceptance closure, the published U06_INDEPENDENT_AUDIT_PASS, and the exact R3 candidate checkpoint and manifest, and agrees with every earlier role on lineage_id, target_candidate_id, candidate checkpoint identity, and implementation identity digest. Acceptance is not a production-authority freeze and does not authorize Main Full81."
+}
