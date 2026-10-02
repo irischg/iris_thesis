@@ -1,0 +1,76 @@
+{
+  "artifact_type": "U06_ACCEPTED_LIFECYCLE",
+  "schema_version": "iris-thesis-u06-r3-accepted-lifecycle-v1",
+  "lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+  "target_candidate_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+  "phase": "PHASE_C_ACCEPTED_LIFECYCLE",
+
+  "u06_alignment_status": "ACCEPTED",
+  "u06_independent_audit_status": "PASS",
+  "u06_acceptance_status": "CLOSED_ACCEPTED",
+  "production_authority_freeze_status": "FROZEN",
+  "authorizes_main_full81": false,
+
+  "implementation_identity_digest": "b854d0f133ee38f4e9e534c1accdf50b0438b18d681acdb035d8a97d90218e9a",
+  "implementation_identity_path_count": 20,
+
+  "roles": {
+    "implementation_candidate": {
+      "path": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json",
+      "sha256": "f78ad465bd781a6eb20e7961ac3f3d2a1fb4eaddba7e3a09e10ea35cb3176c1e"
+    },
+    "independent_audit_pass": {
+      "path": "results/provenance/u_06_v7_4_production_authority_independent_audit_r3/independent_audit_pass_record.json",
+      "sha256": "f0d3f50eb55a7850f90d6f12205ed190beb89c973907a64b33508c0f390dad33"
+    },
+    "acceptance_closure": {
+      "path": "results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_closure.json",
+      "sha256": "630d536822521a6ab0bdb98a187d9b74bb1c6d9b7a7743c63467b714698da8fe"
+    },
+    "acceptance_manifest": {
+      "path": "results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_manifest.json",
+      "sha256": "db9ab81b49fc964fd0a95a08b4de22d6439b07ac45bdf4fddc6856072b4f7e0e"
+    },
+    "production_authority_re_freeze": {
+      "path": "results/provenance/u_06_v7_4_production_authority_re_freeze_r3/production_authority_re_freeze_record.json",
+      "sha256": "ff0ede6c21e8444b4da6d282505ee7af1c84015a975b6953655006558fde93f5"
+    }
+  },
+
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+    "sha256": "f4a6da960a4cd527db4a4cdc71db888905704adf55676b662a4e6c88f2a8fa6b"
+  },
+
+  "publication_chain": {
+    "phase_a_audit_publication_commit": "6677e1e7bff4e344f1d220de2c107b1e4d407d25",
+    "phase_b_acceptance_publication_commit": "3da2078ebb248a01bfbacbb531999feaa374a594",
+    "phase_c_commit_self_reference": null,
+    "phase_c_commit_self_reference_note": "Phase C never self-hard-codes its own containing commit. The live gate proves from Git that this record and every role artifact are in HEAD, that HEAD blobs match live bytes, that paths are clean, that HEAD equals origin/thesis-v7, and that each last-modifying commit is in published ancestry.",
+    "arbitrary_ancestor_accepted_as_publication_proof": false
+  },
+
+  "lifecycle_distinction_note": "Five independent states, none implying another: alignment acceptance, independent audit outcome, acceptance closure, production-authority freeze, and Main Full81 authorization. This record establishes the first four. A frozen production authority still does not authorize Main Full81.",
+
+  "main_full81_separation": {
+    "full81_authorization_status": "NOT_AUTHORIZED",
+    "full81_authorization_artifact_created": false,
+    "full81_preflight_run": false,
+    "full81_executed": false
+  },
+  "u_01_status": "OPEN / HOLD",
+  "a2_status": "HARD_BLOCKED",
+
+  "nonblocking_findings_retained": [
+    {"id": "F-R3-01", "severity": "MAJOR", "blocking": false, "remediated": false,
+     "substance": "EOL / line-ending reproducibility finding."},
+    {"id": "F-R3-02", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-03", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-04", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-05", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-POSTPUB-01", "severity": "MINOR", "blocking": false, "remediated": false,
+     "substance": "Two lifecycle-sensitive test_21g assertions encode pre-publication premises and fail after lawful publication; see the re-freeze record and acceptance closure for the full determination. Does not affect freeze identity; may matter for future Full81 run gating."}
+  ],
+
+  "notes": "Machine-readable U06_ACCEPTED_LIFECYCLE aggregator for the U-06 R3 lineage. It cross-binds all five role artifacts by exact path and SHA-256; every role agrees on lineage_id, target_candidate_id, candidate checkpoint identity, and the 20-path implementation identity digest. Acceptance and freeze are recorded here; Main Full81 authorization is deliberately withheld and remains a separate act requiring its own authorization after independent verification of Phase C."
+}

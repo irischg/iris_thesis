@@ -1,0 +1,81 @@
+{
+  "artifact_type": "U06_PRODUCTION_AUTHORITY_RE_FREEZE",
+  "schema_version": "iris-thesis-u06-r3-production-authority-re-freeze-v1",
+  "lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+  "target_candidate_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+  "role": "production_authority_re_freeze",
+  "phase": "PHASE_C_RE_FREEZE",
+
+  "production_authority_status_intended": "FROZEN",
+  "authorizes_main_full81": false,
+  "acceptance_publication_commit": "3da2078ebb248a01bfbacbb531999feaa374a594",
+  "audit_publication_commit": "6677e1e7bff4e344f1d220de2c107b1e4d407d25",
+
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+    "sha256": "f4a6da960a4cd527db4a4cdc71db888905704adf55676b662a4e6c88f2a8fa6b"
+  },
+  "candidate_manifest": {
+    "path": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json",
+    "sha256": "f78ad465bd781a6eb20e7961ac3f3d2a1fb4eaddba7e3a09e10ea35cb3176c1e"
+  },
+  "independent_audit_pass": {
+    "path": "results/provenance/u_06_v7_4_production_authority_independent_audit_r3/independent_audit_pass_record.json",
+    "sha256": "f0d3f50eb55a7850f90d6f12205ed190beb89c973907a64b33508c0f390dad33"
+  },
+  "acceptance_closure": {
+    "path": "results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_closure.json",
+    "sha256": "630d536822521a6ab0bdb98a187d9b74bb1c6d9b7a7743c63467b714698da8fe"
+  },
+  "acceptance_manifest": {
+    "path": "results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_manifest.json",
+    "sha256": "db9ab81b49fc964fd0a95a08b4de22d6439b07ac45bdf4fddc6856072b4f7e0e"
+  },
+  "implementation_identity_digest": "b854d0f133ee38f4e9e534c1accdf50b0438b18d681acdb035d8a97d90218e9a",
+  "implementation_identity_path_count": 20,
+
+  "publication_containment": {
+    "phase_a_commit": "6677e1e7bff4e344f1d220de2c107b1e4d407d25",
+    "phase_a_contained": [
+      "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+      "results/provenance/u_06_v7_4_production_authority_independent_audit_r3/independent_audit_pass_record.json"
+    ],
+    "phase_b_commit": "3da2078ebb248a01bfbacbb531999feaa374a594",
+    "phase_b_contained": [
+      "results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_closure.json",
+      "results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_manifest.json"
+    ],
+    "arbitrary_ancestor_accepted_as_publication_proof": false,
+    "a03_containment_semantics_preserved": true,
+    "phase_c_commit_self_reference": null,
+    "phase_c_commit_self_reference_note": "This record does not declare the hash of the commit that will contain it. Phase-C publication is proved by the live gate from Git: each artifact must be in HEAD, HEAD blobs must match live bytes, paths must be clean, HEAD must equal origin/thesis-v7, and the last modifying commit must be in published ancestry."
+  },
+
+  "nonblocking_findings_retained": [
+    {"id": "F-R3-01", "severity": "MAJOR", "blocking": false, "remediated": false,
+     "substance": "EOL / line-ending reproducibility finding.",
+     "note": "Remains MAJOR / NONBLOCKING / UNREMEDIATED. No .gitattributes change, no EOL normalization, no blob-hash migration in any phase."},
+    {"id": "F-R3-02", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-03", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-04", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-R3-05", "severity": "MINOR", "blocking": false, "remediated": false},
+    {"id": "F-POSTPUB-01", "severity": "MINOR", "blocking": false, "remediated": false,
+     "substance": "Two lifecycle-sensitive assertions in tests/test_21g_u06_r3_substitution_attacks.py encode pre-publication premises (that the R3 candidate checkpoint and src/production_authority_lifecycle_u06.py are untracked and absent from any published commit) and fail after lawful Phase-A publication. The validator behaved correctly in all cases.",
+     "freeze_identity_impact": "None. Freeze identity is defined by the accepted role chain, the 20-path implementation identity, and Git publication containment. No production or lifecycle module executes tests or consults test results, and tests are excluded from the implementation identity.",
+     "note": "Not remediated and not reclassified as implementation drift. Carried forward; may matter for future Full81 run gating, which is a separate decision for the next independent auditor."}
+  ],
+
+  "main_full81_separation": {
+    "production_authority_frozen_implies_full81_authorized": false,
+    "full81_authorization_status": "NOT_AUTHORIZED",
+    "full81_authorization_artifact_created": false,
+    "full81_preflight_run": false,
+    "full81_executed": false,
+    "note": "A production-authority re-freeze never authorizes Main Full81. These are separate lifecycle states and Full81 authorization requires its own separate act, after independent verification of Phase C."
+  },
+
+  "u_01_status": "OPEN / HOLD",
+  "a2_status": "HARD_BLOCKED",
+  "re_freeze_provenance": "Production-authority re-freeze for the independently audited, published, and accepted U-06 R3 alignment, authorized by the repository owner. It binds the complete accepted upstream chain by exact path and SHA-256, and names Phase-A commit A and Phase-B commit B so that containment is re-proved from those exact commits rather than from ancestry.",
+  "notes": "Machine-readable U06_PRODUCTION_AUTHORITY_RE_FREEZE role artifact. It intends the FROZEN production-authority state and explicitly does not authorize Main Full81. All bound hashes were recomputed from live bytes; the implementation identity digest was re-derived over all 20 accepted implementation paths."
+}
