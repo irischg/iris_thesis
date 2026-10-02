@@ -1,0 +1,623 @@
+{
+  "schema_version": "iris-thesis-governance-sequencing-successor-acceptance-closure-manifest-v1",
+  "closure_identity": "TASK_3_GOVERNANCE_SEQUENCING_SUCCESSOR_CANDIDATE_R2_ACCEPTANCE_CLOSURE",
+  "created_date": "2026-10-01",
+  "status": "CLOSED_ACCEPTED",
+  "lifecycle": "acceptance_closure",
+  "pass_type": "additive formal acceptance after a separate fresh-session independent read-only R2 audit; governance-sequencing only",
+  "scope": "U_01_AND_MAIN_FULL81_AUTHORIZATION_AND_RESULT_EXPOSURE_ORDERING_ONLY",
+  "scientific_or_numerical_execution_required": false,
+  "source_of_truth_banner": {
+    "framework": "V7.4",
+    "pipeline": "V7.4 CURRENT ACCEPTED ROUTE",
+    "registry": "V7.4"
+  },
+  "authority_basis": {
+    "framework": {
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "status": "CLOSED_ACCEPTED",
+      "formal_name": "Framework v7.4",
+      "verified_from_primary_bytes": true
+    },
+    "registry": {
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "status": "CLOSED_ACCEPTED",
+      "formal_name": "Registry v7.4",
+      "verified_from_primary_bytes": true
+    },
+    "task_3_predecessor": {
+      "identity": "LAYER_A_ROBUSTNESS_PREREGISTRATION_CANDIDATE_R2",
+      "status": "CLOSED_ACCEPTED",
+      "immutable": true,
+      "modified_by_this_closure": false,
+      "artifacts": {
+        "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md": {
+          "role": "human-readable accepted candidate",
+          "sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json": {
+          "role": "machine-readable accepted record",
+          "sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f"
+        },
+        "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md": {
+          "role": "existing acceptance closure",
+          "sha256": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02"
+        },
+        "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json": {
+          "role": "existing acceptance manifest",
+          "sha256": "08a1e5b5929b5791e14b2ae887c4b9592dccbd803c7e0981c581f41561aa268d"
+        }
+      },
+      "task_3_candidate_r1": "IMMUTABLE_HISTORICAL_STOP_CANDIDATE"
+    },
+    "results_managerial_insight_analysis_plan_candidate_r2": {
+      "path": "docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r2_2026-10-01.md",
+      "sha256": "2c4931b9e07a969d93caf682e0b1483786ece0f13cb5bb63f2ab255ad28548c6",
+      "status": "CLOSED_ACCEPTED",
+      "modified_by_this_closure": false
+    }
+  },
+  "accepted_candidate": {
+    "identity": "TASK_3_GOVERNANCE_SEQUENCING_SUCCESSOR_CANDIDATE_R2",
+    "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_2026-10-01.md",
+    "size_bytes": 26332,
+    "sha256": "db20ea059c48b99bb5c57801dff5654b4b8e1b94ce51ce4ded6e82eec4ac922e",
+    "sha256_matches_expected": true,
+    "sha256_matches_independently_audited_bytes": true,
+    "rehashed_from_primary_bytes_immediately_before_closure": true,
+    "lifecycle_before": "CANDIDATE_NOT_ACCEPTED_NOT_CLOSED_NOT_YET_AUTHORITY",
+    "lifecycle_after": "CLOSED_ACCEPTED",
+    "accepted_bytes_modified": false,
+    "accepted_as_written": true,
+    "wording_changes_applied": 0,
+    "acceptance_authority_source": "this additive acceptance checkpoint and manifest, not Candidate R2 authoring-time self-text"
+  },
+  "candidate_lineage": {
+    "original_candidate": {
+      "identity": "TASK_3_GOVERNANCE_SEQUENCING_SUCCESSOR_CANDIDATE_ORIGINAL",
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md",
+      "size_bytes": 21221,
+      "sha256": "f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82",
+      "sha256_matches_expected": true,
+      "audit_verdict": "INDEPENDENT_AUDIT_CONDITIONAL_PASS_REMEDIATION_REQUIRED_BEFORE_ACCEPTANCE",
+      "lifecycle": "IMMUTABLE_HISTORICAL_CANDIDATE_PROVENANCE",
+      "modified_by_this_closure": false,
+      "promoted_to_accepted": false,
+      "audit_record_altered": false
+    },
+    "candidate_r3": {
+      "lifecycle": "NOT_REQUIRED_NOT_CREATED",
+      "reason": "fresh independent R2 audit returned zero blocking findings"
+    },
+    "full_lifecycle_chain": [
+      "original governance-sequencing successor candidate created",
+      "independent audit CONDITIONAL PASS - remediation required before acceptance",
+      "R2 remediation (one MAJOR + one MINOR finding closed)",
+      "fresh independent R2 audit PASS",
+      "acceptance / closure by this manifest and its companion checkpoint"
+    ],
+    "candidate_creation_is_not_acceptance": true,
+    "audit_pass_is_not_self_acceptance": true
+  },
+  "closure_checkpoint": {
+    "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md",
+    "size_bytes": 28760,
+    "sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851",
+    "role": "human-readable formal acceptance/closure authority"
+  },
+  "self_identity_note": "This manifest deliberately omits its own digest and byte count to avoid circular self-identity. Its external digest and containing commit are reported after publication.",
+  "independent_audit_basis": {
+    "audit_type": "fresh-session independent read-only R2 audit",
+    "primary_verdict": "INDEPENDENT_R2_AUDIT_PASS_R2_CANDIDATE_READY_FOR_ACCEPTANCE_CLOSURE",
+    "critical_findings": 0,
+    "major_findings": 0,
+    "minor_findings": 0,
+    "informational_findings": 1,
+    "informational_blocks_acceptance": false,
+    "blocking_corrections": 0,
+    "candidate_r3_required": false,
+    "eligible_for_separate_formal_acceptance": true,
+    "audit_self_accepted": false,
+    "repository_audit_artifact_path": null,
+    "repository_audit_artifact_note": "No separate committed repository audit file was supplied for this closure pass. No audit path or hash is fabricated. No substantive text for the single informational finding was supplied and none is invented. Acceptance rests on the explicit independent R2 audit authorization plus the fresh identity, primary-byte, and prospective-condition verification performed in this pass.",
+    "remediated_findings": [
+      {
+        "id": 1,
+        "severity": "MAJOR",
+        "subject": "Original candidate section 5 moved from acceptance to Full81 authorization/preflight while omitting the required intervening governance-bundle / production-authority alignment/re-freeze and its fresh independent verification, which its own section 13 required.",
+        "disposition": "Closed in R2 section 6, which states one authoritative mandatory lifecycle containing both intervening gates in order."
+      },
+      {
+        "id": 2,
+        "severity": "MINOR",
+        "subject": "Original candidate could be read as asserting that no current-route run directory existed, although the accepted three-case core-three run exists.",
+        "disposition": "Closed in R2 section 3.4, which states the precise facts: no current-route run has selected_scope = full81, none has case_count = 81, and no current V7.4 Full81 surface exists."
+      }
+    ]
+  },
+  "prospective_condition_recheck": {
+    "performed_in_this_pass": true,
+    "recomputed_from_primary_bytes": true,
+    "inherited_from_interrupted_session": false,
+    "overall_verdict": "PASS_CONDITIONS_UNCHANGED_SINCE_INDEPENDENT_AUDIT",
+    "current_route_selected_scope_full81_exists": false,
+    "current_route_case_count_81_exists": false,
+    "current_v7_4_full81_result_surface_exists": false,
+    "a2_variable_floor_execution_occurred": false,
+    "a2_result_exposure_occurred": false,
+    "paired_constant_vs_variable_robustness_difference_exists": false,
+    "core_three_run_is_not_full81_exposure": true,
+    "evidence": {
+      "current_route_run_root": "results/layer_a/final_81_v7_3/runs/",
+      "current_route_run_count": 1,
+      "current_route_run_id": "20260925T062317399837Z_bb564f7b55",
+      "authority_json_selected_scope": "core-three",
+      "completion_manifest_case_count": 3,
+      "case_directories": [
+        "a0.60_b04",
+        "a0.80_b08",
+        "a1.00_b12"
+      ],
+      "run_directory_contents": [
+        "authority.json",
+        "case_schedule.json",
+        "cases/",
+        "completion_manifest.json"
+      ],
+      "aggregated_response_surface_present": false,
+      "a2_variable_floor_namespace_present": false,
+      "a2_partial_result_or_solver_log_or_cache_present": false,
+      "production_case_sets_contains_robustness_scope": false,
+      "production_case_sets_note": "PRODUCTION_CASE_SETS in src/production_successor_stack_v7_3.py contains no robustness or variable-floor scope. The entry \"full81\": None is an available scope definition in the runner, not a selected scope in any executed run; no run has selected it.",
+      "historical_v7_2_r9_full81_surface": "historical provenance on a different route and input; not a current V7.4 Full81 result"
+    }
+  },
+  "accepted_governance_delta": {
+    "nature": "GOVERNANCE_SEQUENCING_ONLY",
+    "changes_gate_ordering_only": true,
+    "creates_materiality_rule": false,
+    "changes_any_scientific_model_equation_parameter_metric_case_result_or_interpretation": false,
+    "old_rule_preserved_as_historical_accepted_governance": {
+      "must_be_frozen_before": [
+        "FULL81_AUTHORIZATION",
+        "A2_EXECUTION"
+      ],
+      "materiality_freeze_order": "The scientific materiality rule must be frozen before Full81.",
+      "deleted_or_rewritten_or_backpatched_or_relabeled": false
+    },
+    "new_accepted_rule": {
+      "u_01_status": "OPEN_HOLD_PENDING_SUPERVISOR_METHODOLOGICAL_GUIDANCE",
+      "must_be_frozen_before": [
+        "A2_EXECUTION",
+        "A2_RESULT_EXPOSURE",
+        "A2_INTERPRETATION",
+        "A2_CONDITIONAL_EXTENSION_AUTHORIZATION"
+      ],
+      "full81_authorization_deliberately_absent_from_freeze_list": true
+    },
+    "u_01_no_longer_blocks_after_acceptance_and_all_later_required_gates": [
+      "MAIN_V7_4_FULL81_AUTHORIZATION",
+      "MAIN_FULL81_EXECUTION",
+      "MAIN_FULL81_INTEGRITY_INSPECTION",
+      "MAIN_FULL81_SCIENTIFIC_INSPECTION",
+      "MAIN_FULL81_RESPONSE_SURFACE_ANALYSIS",
+      "SUPERVISOR_DISCUSSION_OF_MAIN_FULL81"
+    ],
+    "conditionality_note": "The unblocking above is conditional on BOTH this acceptance AND completion, in order, of every later required lifecycle gate. Acceptance alone unblocks nothing executable.",
+    "bounded_supersession": {
+      "supersedes_task_3_candidate_r2_only_where": "Candidate R2 requires U-01 to be frozen before FULL81_AUTHORIZATION, or otherwise makes U-01 a prerequisite for Main V7.4 Full81 authorization, execution, result exposure, inspection, analysis, or discussion.",
+      "supersedes_task_3_candidate_r2_globally": false,
+      "unrelated_task_3_authority_inherited_unchanged": [
+        "locked A2 design",
+        "metric identities",
+        "case universe",
+        "conditional extension architecture",
+        "technical gates",
+        "scientific firewalls",
+        "unresolved-register content not expressly changed"
+      ]
+    }
+  },
+  "a2_firewall": {
+    "identity": "ZERO_A2_RESULT_EXPOSURE_FIREWALL",
+    "status_after_acceptance": "INTACT_ZERO_EXPOSURE",
+    "preserved_complete": true,
+    "weakened_by_this_acceptance": false,
+    "a2_hard_block": true,
+    "holds_until": "U-01 is scientifically resolved, independently audited, accepted, and frozen",
+    "prohibited_before_u_01_freeze": [
+      "A2 solves, including the six-point variable-floor optimization",
+      "conditional beta=8 A2 optimization",
+      "reading or exposing current-route A2 result artifacts",
+      "partial A2 results and partial A2 solve outputs",
+      "usable result magnitudes recovered from failed A2 runs",
+      "A2 magnitudes from solver logs, caches, temporary files, or debug artifacts",
+      "variable-floor sizing, cost, or objective outputs",
+      "computing or inspecting variable-floor minus constant-floor paired differences",
+      "A2 interpretation",
+      "conditional beta=8 extension authorization",
+      "any debug or preflight operation that calls optimize() for A2",
+      "any indirect or equivalent route to A2 result exposure or to an equivalent treatment-effect magnitude"
+    ],
+    "no_future_full81_gate_creates_an_exception": true
+  },
+  "claim_boundary": {
+    "u_01_fully_pre_full81_blinded_after_future_main_full81_exposure": false,
+    "prohibited_future_claims": [
+      "U-01 was selected before seeing Main Full81 results.",
+      "The materiality rule was fully result-blinded.",
+      "U-01 was preregistered before all Layer A result exposure."
+    ],
+    "defensible_future_claim": "U-01 was finalized after exposure to the Main constant-floor Full81 surface, but before any A2 variable-floor execution, result exposure, or paired robustness difference was observed.",
+    "required_stronger_qualification": "Mainline scale and structure were known when U-01 was finalized; the A2 robustness treatment effect remained prospectively blinded.",
+    "contamination_risk_may_be_described_as_zero": false
+  },
+  "prohibited_full81_to_u_01_calibration": {
+    "principle": "Knowledge acknowledged; calibration use prohibited; the later U-01 rationale must be independently documented.",
+    "full81_observations_that_must_not_drive_u_01": [
+      "magnitudes",
+      "distributions",
+      "ranges",
+      "variance",
+      "response-surface geometry",
+      "knee locations",
+      "transition density",
+      "plateau structure",
+      "binding patterns",
+      "case rankings"
+    ],
+    "must_not_be_used_to_calibrate": [
+      "absolute versus relative materiality",
+      "relative denominator",
+      "threshold magnitude",
+      "E/P AND-versus-OR logic",
+      "directionality or sign rules",
+      "equality or tie semantics",
+      "desired classification frequency of A2 material/non-material outcomes"
+    ],
+    "rule_must_not_be_selected_to_serve_a_preferred_narrative": true
+  },
+  "exposure_log_requirement": {
+    "mandatory": true,
+    "optional": false,
+    "entries_created_by_this_pass": 0,
+    "full81_exposure_authorized_by_this_pass": false,
+    "must_be_established_before": "the first scientific inspection of current V7.4 Full81 results",
+    "must_be_established_after": "completion, in order, of every post-acceptance lifecycle gate",
+    "namespace_authority": "the later Main Full81 authorization/preflight fixes the exact path and serialization; this closure creates no competing production namespace",
+    "required_events": [
+      "first scientific inspection of current V7.4 Full81 results",
+      "every supervisor discussion"
+    ],
+    "entries_are_additive_and_must_not_be_rewritten": true,
+    "required_fields": [
+      "date and time including timezone",
+      "person or persons exposed",
+      "artifact, figure, or table identity",
+      "provenance/hash identity of every exposed artifact",
+      "categories of information exposed",
+      "whether numerical magnitudes were visible",
+      "whether surface geometry, rankings, knees, or transitions were visible",
+      "whether supervisor discussion occurred",
+      "meeting date if applicable",
+      "U-01 status at exposure",
+      "explicit statement that no A2 variable-floor result or paired difference was exposed",
+      "acknowledgement that U-01 is no longer fully pre-Full81 blinded"
+    ],
+    "governance_failure_conditions": [
+      "omitted first-inspection event",
+      "omitted supervisor-discussion event",
+      "retrospective or fabricated exposure record"
+    ]
+  },
+  "post_acceptance_mandatory_lifecycle": {
+    "acceptance_alone_authorizes_full81": false,
+    "direct_acceptance_to_full81_authorization_path_exists": false,
+    "sequence": [
+      "R2 successor acceptance / closure (COMPLETED BY THIS CLOSURE)",
+      "governance-bundle / production-authority V7.4 alignment / re-freeze",
+      "fresh independent verification of that alignment",
+      "separate Main Full81 authorization / preflight",
+      "Main Full81 execution"
+    ],
+    "each_gate_requires_separate_authorization": true,
+    "gates_authorized_by_this_closure": 0
+  },
+  "production_authority_dependency": {
+    "verdict": "GOVERNANCE_BUNDLE_ALIGNMENT_REQUIRED_AFTER_SUCCESSOR_ACCEPTANCE",
+    "live_production_authority_version_bound": "V7.3",
+    "framework_v7_4_production_gate_bound": false,
+    "registry_v7_4_production_gate_bound": false,
+    "bundle_hash_bound_to_task_3_candidate_r2": false,
+    "bundle_hash_bound_to_this_governance_successor_closure": false,
+    "u_06_state": "UNRESOLVED_IMPLEMENTATION_AUTHORITY_ALIGNMENT",
+    "u_06_resolved_by_this_pass": false,
+    "alignment_is_next_gate": true,
+    "alignment_is_scientific_methodology_change": false,
+    "alignment_performed_by_this_pass": false,
+    "live_gate_entrypoints": {
+      "full81_entrypoint": "scripts/21d_preflight_v7_3_final81_successor.py",
+      "backing_stack": "src/production_successor_stack_v7_3.py",
+      "authority_list": "src/production_input_authority_v7_3.py:AUTHORITY_FILES",
+      "implementer_note": "A future implementer must read the live gate implementation directly rather than relying on this description."
+    },
+    "production_code_modified": false,
+    "production_input_authority_v7_3_modified": false,
+    "downstream_references_retained_unchanged_until_alignment": [
+      "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md",
+      "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json",
+      "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md",
+      "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json",
+      "docs/ai_handoff/CURRENT_STATE.md",
+      "docs/ai_handoff/PROJECT_HANDOFF.md",
+      "docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r2_acceptance_closure_2026-10-01.md",
+      "results/provenance/v7_4_results_managerial_insight_analysis_plan_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json"
+    ],
+    "unchanged_downstream_bytes_are_not_a_defect": true
+  },
+  "non_authorization_boundaries": {
+    "authorizes_main_v7_4_full81": false,
+    "authorizes_full81_execution": false,
+    "authorizes_a2": false,
+    "authorizes_a2_result_exposure_or_interpretation": false,
+    "authorizes_conditional_beta_8_extension": false,
+    "resolves_u_01": false,
+    "resolves_u_06": false,
+    "resolves_any_u_item": false,
+    "performs_governance_bundle_or_production_authority_alignment": false,
+    "constitutes_production_authority_refreeze": false,
+    "runs_production_gate": false,
+    "authorizes_robustness_implementation": false,
+    "authorizes_aggregation_layer": false,
+    "modifies_framework_registry_or_either_candidate": false,
+    "defines_materiality_threshold_or_any_element": false,
+    "creates_exposure_log_entry": false,
+    "full81_status": "NOT_YET_AUTHORIZED_PENDING_PRODUCTION_AUTHORITY_ALIGNMENT_AND_LATER_PREFLIGHT",
+    "note": "Structural permission is not execution authorization. An accepted governance-sequencing successor is not numerical-execution authority."
+  },
+  "dependency_state_after_acceptance": {
+    "U-01": "OPEN_HOLD",
+    "U-01_note": "Must be formally resolved, independently audited, accepted, and frozen before A2_EXECUTION, A2_RESULT_EXPOSURE, A2_INTERPRETATION, and A2_CONDITIONAL_EXTENSION_AUTHORIZATION.",
+    "U-02": "UNRESOLVED",
+    "U-03": "UNRESOLVED",
+    "U-04": "UNRESOLVED",
+    "U-05": "UNRESOLVED",
+    "U-06": "UNRESOLVED_IMPLEMENTATION_AUTHORITY_ALIGNMENT",
+    "U-07": "UNRESOLVED_CLASSIFICATION",
+    "materiality_threshold": {
+      "state": "THRESHOLD_DECISION_REQUIRED_BEFORE_A2",
+      "authority": "UNRESOLVED_BY_CURRENT_AUTHORITY",
+      "accepted_numerical_threshold": null,
+      "selected_threshold_option": null
+    },
+    "production_authority_refreeze": {
+      "required": true,
+      "performed": false,
+      "state": "RE_FREEZE_REQUIRED_YES_RE_FREEZE_NOT_YET_PERFORMED"
+    },
+    "production_gate": "NOT_RUN",
+    "robustness_implementation": "NOT_AUTHORIZED",
+    "current_route_main_full81": "NOT_YET_AUTHORIZED_NOT_YET_EXECUTED",
+    "a2_robustness_execution": "HARD_BLOCKED",
+    "aggregation_reporting_layer": "GAP_RECORDED_NOT_DESIGNED_NOT_AUTHORIZED"
+  },
+  "u06_u07_discrepancy": {
+    "reconciled_by_this_pass": false,
+    "live_repository_authority_preserved": true,
+    "resolution_inferred": false,
+    "items_altered_to_appear_consistent": false,
+    "note": "A working/session-level representation has previously asserted different adjudication states. This closure preserves the live repository authority state, records the discrepancy, and alters neither U-06 nor U-07. Reconciliation remains a separate, separately authorized governance action."
+  },
+  "scientific_non_change": {
+    "declaration": "GOVERNANCE_SEQUENCING_ONLY_ZERO_SCIENTIFIC_METHODOLOGY_CHANGE",
+    "framework_v7_4_modified_or_reinterpreted": false,
+    "registry_v7_4_modified_or_reinterpreted": false,
+    "results_managerial_insight_analysis_plan_r2_modified_or_reinterpreted": false,
+    "closed_methodological_decision_reopened": false,
+    "preserved_unchanged": [
+      "E_N_kwh",
+      "P_B_kw_ac",
+      "units and semantics",
+      "alpha/beta universe",
+      "reserve equations",
+      "constant-floor Main Layer A definition",
+      "variable-floor robustness definition",
+      "six-point A2 universe",
+      "conditional beta=8 extension",
+      "paired comparison definition",
+      "SOC conventions",
+      "efficiencies",
+      "tariff methodology",
+      "billing semantics",
+      "degradation methodology",
+      "cost basis",
+      "PNNL package decision",
+      "annual/replay separation",
+      "outage-replay semantics",
+      "solver settings and numerical acceptance",
+      "secondary-metric explanatory status",
+      "technical-tolerance versus scientific-materiality distinction",
+      "all other CLOSED methodology and all accepted result identities"
+    ],
+    "six_point_a2_universe": [
+      "a0.60_b04",
+      "a0.60_b12",
+      "a0.80_b04",
+      "a0.80_b12",
+      "a1.00_b04",
+      "a1.00_b12"
+    ],
+    "conditional_beta_8_extension": [
+      "a0.60_b08",
+      "a0.80_b08",
+      "a1.00_b08"
+    ],
+    "conditional_beta_8_is_automatic": false,
+    "paired_comparison_definition": "variable-floor minus constant-floor at the same (alpha, beta)",
+    "secondary_metric_promoted_to_u_01_trigger": false,
+    "technical_tolerance_reinterpreted_as_scientific_materiality": false,
+    "u_01_resolved": false,
+    "threshold_chosen": false,
+    "u_01_elements_selected_or_implied": {
+      "absolute_versus_relative_form": null,
+      "denominator": null,
+      "numerical_threshold": null,
+      "direction_or_sign_rule": null,
+      "e_p_and_versus_or_logic": null,
+      "equality_or_tie_handling": null,
+      "all_six_stable_numerical_semantics": null,
+      "missing_or_failed_case_treatment": null,
+      "new_materiality_family": null
+    }
+  },
+  "protected_artifact_non_mutation": {
+    "docs/research_framework_v7_4_2026-09-26_r2.md": {
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "modified": false
+    },
+    "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md": {
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "modified": false
+    },
+    "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md": {
+      "sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4",
+      "modified": false
+    },
+    "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md": {
+      "sha256": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02",
+      "modified": false
+    },
+    "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json": {
+      "sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f",
+      "modified": false
+    },
+    "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json": {
+      "sha256": "08a1e5b5929b5791e14b2ae887c4b9592dccbd803c7e0981c581f41561aa268d",
+      "modified": false
+    },
+    "docs/checkpoints/v7_4_results_managerial_insight_analysis_plan_candidate_r2_2026-10-01.md": {
+      "sha256": "2c4931b9e07a969d93caf682e0b1483786ece0f13cb5bb63f2ab255ad28548c6",
+      "modified": false
+    },
+    "src/production_input_authority_v7_3.py": {
+      "sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+      "modified": false
+    },
+    "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md": {
+      "size_bytes": 21221,
+      "sha256": "f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82",
+      "modified": false
+    },
+    "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_2026-10-01.md": {
+      "size_bytes": 26332,
+      "sha256": "db20ea059c48b99bb5c57801dff5654b4b8e1b94ce51ce4ded6e82eec4ac922e",
+      "modified": false
+    }
+  },
+  "execution_counters": {
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "other_optimizations": 0,
+    "production_solves": 0,
+    "eob_reruns": 0,
+    "core_three_reruns": 0,
+    "historical_full81_reruns": 0,
+    "current_full81_runs": 0,
+    "a2_robustness_solves": 0,
+    "sensitivity_solves": 0,
+    "result_generations": 0,
+    "result_inspections_beyond_prospective_condition_existence_check": 0,
+    "production_gates_run": 0,
+    "production_authority_refreezes": 0,
+    "production_authority_alignments": 0,
+    "exposure_log_entries_created": 0,
+    "implementation_changes": 0,
+    "code_changes": 0,
+    "data_changes": 0,
+    "accepted_result_changes": 0,
+    "framework_modifications": 0,
+    "registry_modifications": 0,
+    "original_candidate_modifications": 0,
+    "r2_candidate_modifications": 0,
+    "accepted_predecessor_modifications": 0,
+    "candidate_r3_created": 0,
+    "u_items_resolved": 0,
+    "thresholds_selected": 0,
+    "acceptance_artifacts_created": 2,
+    "pre_existing_files_modified": 0
+  },
+  "pre_closure_repository_identity": {
+    "working_tree": "C:/Users/Iris C/OneDrive/Desktop/iris_thesis",
+    "branch": "thesis-v7",
+    "pre_closure_head": "2b13f22c3e98f16c669d89256b29425cd91baa5f",
+    "local_origin_thesis_v7": "2b13f22c3e98f16c669d89256b29425cd91baa5f",
+    "ahead": 0,
+    "behind": 0,
+    "staged_paths": 0,
+    "unstaged_tracked_paths": 0,
+    "porcelain_untracked_records": 10,
+    "porcelain_byte_count": 672,
+    "porcelain_sha256": "ab403cb9148c664509d8940b2bd9ae9fe6cdda64bddbeb1f2b8d0a1879fe6922",
+    "tag_refs": 10,
+    "status_command": "git -c core.quotePath=false status --porcelain=v1 --untracked-files=all",
+    "unrelated_untracked_paths_preserved": true,
+    "unrelated_untracked_outside_protected_surface": true,
+    "untracked_record_composition": "eight unrelated pre-existing user paths plus the original and R2 governance-sequencing candidates"
+  },
+  "interrupted_pass_safety_verification": {
+    "prior_session_interrupted_by_usage_limit": true,
+    "prior_session_conclusions_treated_as_authoritative": false,
+    "all_hashes_recomputed_in_this_pass": true,
+    "mutation_found_from_interrupted_session": false,
+    "checks": {
+      "staged_changes": 0,
+      "modified_tracked_files": 0,
+      "stash_entries": 0,
+      "pre_existing_governance_sequencing_acceptance_artifact": "none",
+      "pre_existing_governance_sequencing_acceptance_manifest": "none",
+      "partial_or_temp_acceptance_files": "none",
+      "production_authority_changes": "none",
+      "reflog_beyond_2b13f22": "none",
+      "candidate_hashes_match_expected": true
+    },
+    "recent_modification_accounting": "Every path modified within the preceding 48 hours was accounted for by the already-committed V7.4 Results & Managerial-Insight Analysis Plan acceptance (commit 2b13f22, tracked and clean) plus the two untracked governance-sequencing candidate files."
+  },
+  "commit_push_tag_boundary": {
+    "staged": false,
+    "commit_performed": false,
+    "push_performed": false,
+    "tag_created": false,
+    "tag_moved": false,
+    "default_applied": "NO staging / NO commit / NO push / NO tag",
+    "rationale": "The authorizing task set no-staging as the default and no accepted repository convention requires staging as part of the acceptance act itself. Repository precedent performs publication as a separate bounded commit under separate authority.",
+    "publication_note": "Publication of this closure to origin/thesis-v7 requires separate authority that this task does not confer.",
+    "manifest_path_is_gitignored": true,
+    "gitignore_rule": ".gitignore:23 results/",
+    "force_add_required_for_ignored_results_path_at_future_publication": true,
+    "current_on_disk_tracking_state": {
+      "closure_checkpoint": "UNTRACKED_PRESENT_ON_DISK",
+      "acceptance_manifest": "UNTRACKED_GITIGNORED_PRESENT_ON_DISK"
+    },
+    "precedent_note": "The predecessor acceptance manifest at results/provenance/v7_4_results_managerial_insight_analysis_plan_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json is tracked because its separate publication step used a forced add against the same ignore rule. A future authorized publication of this closure must do likewise for the manifest path.",
+    "unrelated_untracked_staged": false,
+    "unrelated_untracked_touched": false
+  },
+  "final_lifecycle_state": {
+    "framework_v7_4": "CLOSED_ACCEPTED",
+    "registry_v7_4": "CLOSED_ACCEPTED",
+    "task_3_candidate_r1": "IMMUTABLE_HISTORICAL_STOP_CANDIDATE",
+    "task_3_candidate_r2": "CLOSED_ACCEPTED",
+    "results_managerial_insight_analysis_plan_candidate_r2": "CLOSED_ACCEPTED",
+    "governance_sequencing_successor_original_candidate": "IMMUTABLE_HISTORICAL_CANDIDATE_PROVENANCE",
+    "governance_sequencing_successor_candidate_r2": "CLOSED_ACCEPTED",
+    "governance_sequencing_successor_candidate_r3": "NOT_REQUIRED_NOT_CREATED",
+    "u_01": "OPEN_HOLD",
+    "a2": "HARD_BLOCKED",
+    "main_full81": "NOT_YET_AUTHORIZED"
+  },
+  "final_status": "GOVERNANCE-SEQUENCING SUCCESSOR R2 ACCEPTED / CLOSED — PRODUCTION-AUTHORITY ALIGNMENT REQUIRED BEFORE FULL81 AUTHORIZATION",
+  "next_legal_step": "Separately authorized governance-bundle / production-authority V7.4 alignment and re-freeze, followed by fresh independent verification of that alignment, then a separate Main Full81 authorization/preflight, then Main Full81 execution. Publication of this closure to origin/thesis-v7 also requires separate authority. This closure authorizes none of these steps."
+}
