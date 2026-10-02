@@ -1,0 +1,88 @@
+{
+  "artifact_type": "U06_INDEPENDENT_AUDIT_PASS",
+  "schema_version": "iris-thesis-u06-r3-independent-audit-pass-v1",
+  "lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+  "target_candidate_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+  "role": "independent_audit_pass",
+
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+    "sha256": "f4a6da960a4cd527db4a4cdc71db888905704adf55676b662a4e6c88f2a8fa6b"
+  },
+  "candidate_manifest": {
+    "path": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json",
+    "sha256": "f78ad465bd781a6eb20e7961ac3f3d2a1fb4eaddba7e3a09e10ea35cb3176c1e"
+  },
+  "implementation_identity_digest": "b854d0f133ee38f4e9e534c1accdf50b0438b18d681acdb035d8a97d90218e9a",
+  "implementation_identity_path_count": 20,
+
+  "verdict": "PASS",
+  "verdict_qualifier": "PASS WITH NONBLOCKING FINDINGS",
+  "disposition": "U-06 R3 READY FOR AUDIT PUBLICATION / ACCEPTANCE LIFECYCLE",
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "independent_audit": true,
+  "candidate_author_is_not_self_accepting": true,
+
+  "r2_findings_disposition": {
+    "A-01": "CLOSED",
+    "A-02": "CLOSED",
+    "A-03": "CLOSED"
+  },
+
+  "nonblocking_findings": [
+    {
+      "id": "F-R3-01",
+      "severity": "MAJOR",
+      "blocking": false,
+      "substance": "EOL / line-ending reproducibility finding.",
+      "blocks_u06_acceptance": false,
+      "blocks_future_full81": false,
+      "remediated_in_this_pass": false,
+      "remediation_note": "Deliberately NOT remediated during Phase A publication. No .gitattributes change, no EOL normalization, no blob-hash migration."
+    },
+    {
+      "id": "F-R3-02",
+      "severity": "MINOR",
+      "blocking": false,
+      "substance": null,
+      "remediated_in_this_pass": false
+    },
+    {
+      "id": "F-R3-03",
+      "severity": "MINOR",
+      "blocking": false,
+      "substance": null,
+      "remediated_in_this_pass": false
+    },
+    {
+      "id": "F-R3-04",
+      "severity": "MINOR",
+      "blocking": false,
+      "substance": null,
+      "remediated_in_this_pass": false
+    },
+    {
+      "id": "F-R3-05",
+      "severity": "MINOR",
+      "blocking": false,
+      "substance": null,
+      "remediated_in_this_pass": false
+    }
+  ],
+  "nonblocking_findings_count": 5,
+  "nonblocking_findings_substance_completeness": "F-R3-01 substance recorded as supplied by the authoritative disposition. F-R3-02..F-R3-05 severities and nonblocking status are recorded; their substance text was not supplied to this publication pass and is deliberately left null rather than invented.",
+
+  "audit_disposition_provenance": "Independent read-only audit of Candidate R3 performed outside this repository. Its verdict and finding dispositions were supplied to this Phase-A publication pass as authoritative governance state by the repository owner. This machine-readable role artifact is that disposition's machine-readable form; it is not itself the audit, and no prose audit report is asserted to exist at any repository path.",
+  "machine_readable_role_artifact": true,
+  "is_human_readable_audit_report": false,
+
+  "phase": "PHASE_A_AUDIT_PUBLICATION",
+  "authorizes_main_full81": false,
+  "is_acceptance": false,
+  "is_acceptance_manifest": false,
+  "is_re_freeze": false,
+  "is_accepted_lifecycle_record": false,
+  "production_authority_freeze_status_asserted": "NOT_FROZEN",
+  "notes": "Machine-readable U06_INDEPENDENT_AUDIT_PASS role artifact for the U-06 R3 lineage. An audit PASS is not acceptance, not an acceptance manifest, not a production-authority re-freeze, and not Main Full81 authorization. Candidate checkpoint and manifest SHA-256 values were recomputed from live bytes; the implementation identity digest was re-derived over all 20 accepted implementation paths."
+}

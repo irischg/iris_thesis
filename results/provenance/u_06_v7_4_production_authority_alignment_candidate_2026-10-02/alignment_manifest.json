@@ -1,0 +1,890 @@
+{
+  "authority_bundle": {
+    "alignment_status": "V7_4_ALIGNED",
+    "all_pins_reproduce_from_live_bytes": true,
+    "bundle_lineage": "ADDITIVE_SUCCESSOR_TO_V7_3_PRODUCTION_INPUT_AUTHORITY_NOT_A_REPLACEMENT",
+    "bundle_scope": "ADDITIVE_V7_4_PRODUCTION_AUTHORITY_BINDING_U_06_ALIGNMENT_ONLY",
+    "bundle_version": "v7.4-production-authority-bundle-2026-10-02-candidate-r1",
+    "canonical_planning_input_contract": {
+      "artifact_role": "reconstructed_pv_mainline",
+      "expected_columns": 51,
+      "expected_rows": 8760,
+      "filename_provenance_note": "The v7_3 filename segment is accepted provenance naming for the canonical planning input and must not be renamed, regenerated, or normalized.",
+      "integration_status": "passed",
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "renamed_regenerated_or_normalized": false,
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "window_end_inclusive": "2025-10-31 23:00:00",
+      "window_start": "2024-11-01 00:00:00"
+    },
+    "core_version": "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10",
+    "deliberately_not_bound": {
+      "historical_v7_2_runner_and_tag_artifacts": "Frozen historical provenance; never current production authority.",
+      "v7_3_to_v7_4_transition_closure_and_step_2d_records": "Lineage provenance, covered transitively by the accepted chains bound above.",
+      "v7_4_results_managerial_insight_analysis_plan_candidate_r2": "Interpretation discipline for already-produced results, not pre-execution production authority; its closure is not yet published to origin/thesis-v7, so binding it would make the gate depend on an unpublished artifact."
+    },
+    "hash_basis_observation": {
+      "basis": "WORKING_TREE_BYTES",
+      "core_autocrlf": "true",
+      "gitattributes_present": false,
+      "matches_existing_accepted_pin_convention": true,
+      "note": "A fresh Windows checkout under core.autocrlf=true would rewrite text files to CRLF and change these digests. That pre-existing repository-wide property applies identically to the already-accepted production_input_authority_v7_3, step2e1_preflight, and step2e1_test pins. It is not introduced by this alignment. No .gitattributes was added and nothing was renormalized, which would be an unrelated change. Recorded as an observation for the independent audit to classify.",
+      "pinned_source_line_endings": "LF"
+    },
+    "live_pin_agreement": {
+      "canonical_planning_input": {
+        "actual_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "exists": true,
+        "expected_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "matches": true,
+        "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet"
+      },
+      "framework_v7_4": {
+        "actual_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+        "exists": true,
+        "expected_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+        "matches": true,
+        "path": "docs/research_framework_v7_4_2026-09-26_r2.md"
+      },
+      "framework_v7_4_acceptance_closure": {
+        "actual_sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f",
+        "exists": true,
+        "expected_sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f",
+        "matches": true,
+        "path": "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md"
+      },
+      "framework_v7_4_acceptance_manifest": {
+        "actual_sha256": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33",
+        "exists": true,
+        "expected_sha256": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33",
+        "matches": true,
+        "path": "results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json"
+      },
+      "full81_runner": {
+        "actual_sha256": "f26ce15d83efe761d54b08c70bd30323f7a326f289572167fc6ebec9ca76949a",
+        "exists": true,
+        "expected_sha256": "f26ce15d83efe761d54b08c70bd30323f7a326f289572167fc6ebec9ca76949a",
+        "matches": true,
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py"
+      },
+      "governance_sequencing_successor_acceptance_closure": {
+        "actual_sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851",
+        "exists": true,
+        "expected_sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851",
+        "matches": true,
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md"
+      },
+      "governance_sequencing_successor_acceptance_manifest": {
+        "actual_sha256": "4bbd58b8e8bd92c292d44b7b3d8b6a2035c3d41dc894581697f52583a55b6476",
+        "exists": true,
+        "expected_sha256": "4bbd58b8e8bd92c292d44b7b3d8b6a2035c3d41dc894581697f52583a55b6476",
+        "matches": true,
+        "path": "results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json"
+      },
+      "governance_sequencing_successor_candidate_r2": {
+        "actual_sha256": "db20ea059c48b99bb5c57801dff5654b4b8e1b94ce51ce4ded6e82eec4ac922e",
+        "exists": true,
+        "expected_sha256": "db20ea059c48b99bb5c57801dff5654b4b8e1b94ce51ce4ded6e82eec4ac922e",
+        "matches": true,
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_2026-10-01.md"
+      },
+      "governance_sequencing_successor_original_candidate": {
+        "actual_sha256": "f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82",
+        "exists": true,
+        "expected_sha256": "f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82",
+        "matches": true,
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md"
+      },
+      "model_core": {
+        "actual_sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+        "exists": true,
+        "expected_sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+        "matches": true,
+        "path": "src/annual_design_model_v7_2.py"
+      },
+      "parameter_registry": {
+        "actual_sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+        "exists": true,
+        "expected_sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+        "matches": true,
+        "path": "data/reference/parameter_registry_v7_2.csv"
+      },
+      "production_input_authority_v7_3": {
+        "actual_sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+        "exists": true,
+        "expected_sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+        "matches": true,
+        "path": "src/production_input_authority_v7_3.py"
+      },
+      "production_successor_stack": {
+        "actual_sha256": "bef5ce7dea61ce82910347747ab8f6d7f5c97d05a7bbbddc05eeeb42d785ff79",
+        "exists": true,
+        "expected_sha256": "bef5ce7dea61ce82910347747ab8f6d7f5c97d05a7bbbddc05eeeb42d785ff79",
+        "matches": true,
+        "path": "src/production_successor_stack_v7_3.py"
+      },
+      "provenance_protocol": {
+        "actual_sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+        "exists": true,
+        "expected_sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+        "matches": true,
+        "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md"
+      },
+      "registry_v7_4": {
+        "actual_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+        "exists": true,
+        "expected_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+        "matches": true,
+        "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md"
+      },
+      "registry_v7_4_acceptance_closure": {
+        "actual_sha256": "4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977",
+        "exists": true,
+        "expected_sha256": "4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977",
+        "matches": true,
+        "path": "docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md"
+      },
+      "registry_v7_4_acceptance_manifest": {
+        "actual_sha256": "53074cfe44c0276d6f319497cbe6f5aaf07b255ac0c335f9481174dd968063fe",
+        "exists": true,
+        "expected_sha256": "53074cfe44c0276d6f319497cbe6f5aaf07b255ac0c335f9481174dd968063fe",
+        "matches": true,
+        "path": "results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json"
+      },
+      "registry_v7_4_independent_audit": {
+        "actual_sha256": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce",
+        "exists": true,
+        "expected_sha256": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce",
+        "matches": true,
+        "path": "docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md"
+      },
+      "step2e1_routing_preflight": {
+        "actual_sha256": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95",
+        "exists": true,
+        "expected_sha256": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95",
+        "matches": true,
+        "path": "scripts/21a_preflight_v7_3_production_routing.py"
+      },
+      "task_3_preregistration_acceptance_closure": {
+        "actual_sha256": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02",
+        "exists": true,
+        "expected_sha256": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02",
+        "matches": true,
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md"
+      },
+      "task_3_preregistration_acceptance_manifest": {
+        "actual_sha256": "08a1e5b5929b5791e14b2ae887c4b9592dccbd803c7e0981c581f41561aa268d",
+        "exists": true,
+        "expected_sha256": "08a1e5b5929b5791e14b2ae887c4b9592dccbd803c7e0981c581f41561aa268d",
+        "matches": true,
+        "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json"
+      },
+      "task_3_preregistration_candidate_r2": {
+        "actual_sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4",
+        "exists": true,
+        "expected_sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4",
+        "matches": true,
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md"
+      },
+      "task_3_preregistration_machine_record": {
+        "actual_sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f",
+        "exists": true,
+        "expected_sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f",
+        "matches": true,
+        "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json"
+      },
+      "v7_3_evidence": {
+        "actual_sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+        "exists": true,
+        "expected_sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+        "matches": true,
+        "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md"
+      },
+      "v7_3_lifecycle": {
+        "actual_sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+        "exists": true,
+        "expected_sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+        "matches": true,
+        "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md"
+      },
+      "v7_3_methodology": {
+        "actual_sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+        "exists": true,
+        "expected_sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+        "matches": true,
+        "path": "docs/research_framework_v7_3_2026-09-23.md"
+      },
+      "v7_4_alignment_test": {
+        "actual_sha256": "895f7474a30b54c19807bf28f381ea35256476dc01b12be8414d03a733fa17c7",
+        "exists": true,
+        "expected_sha256": "895f7474a30b54c19807bf28f381ea35256476dc01b12be8414d03a733fa17c7",
+        "matches": true,
+        "path": "tests/test_21e_v7_4_production_authority_bundle.py"
+      },
+      "v7_4_alignment_verifier": {
+        "actual_sha256": "666cceb164581d9ffe78f5b3a9476f7427ff14854fcbb4c0f83ce227b4d2fd72",
+        "exists": true,
+        "expected_sha256": "666cceb164581d9ffe78f5b3a9476f7427ff14854fcbb4c0f83ce227b4d2fd72",
+        "matches": true,
+        "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py"
+      }
+    },
+    "pins": {
+      "canonical_planning_input": {
+        "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+        "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428"
+      },
+      "framework_v7_4": {
+        "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+        "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273"
+      },
+      "framework_v7_4_acceptance_closure": {
+        "path": "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md",
+        "sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f"
+      },
+      "framework_v7_4_acceptance_manifest": {
+        "path": "results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+        "sha256": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33"
+      },
+      "full81_runner": {
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+        "sha256": "f26ce15d83efe761d54b08c70bd30323f7a326f289572167fc6ebec9ca76949a"
+      },
+      "governance_sequencing_successor_acceptance_closure": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md",
+        "sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851"
+      },
+      "governance_sequencing_successor_acceptance_manifest": {
+        "path": "results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json",
+        "sha256": "4bbd58b8e8bd92c292d44b7b3d8b6a2035c3d41dc894581697f52583a55b6476"
+      },
+      "governance_sequencing_successor_candidate_r2": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_2026-10-01.md",
+        "sha256": "db20ea059c48b99bb5c57801dff5654b4b8e1b94ce51ce4ded6e82eec4ac922e"
+      },
+      "governance_sequencing_successor_original_candidate": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md",
+        "sha256": "f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82"
+      },
+      "model_core": {
+        "path": "src/annual_design_model_v7_2.py",
+        "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+      },
+      "parameter_registry": {
+        "path": "data/reference/parameter_registry_v7_2.csv",
+        "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1"
+      },
+      "production_input_authority_v7_3": {
+        "path": "src/production_input_authority_v7_3.py",
+        "sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1"
+      },
+      "production_successor_stack": {
+        "path": "src/production_successor_stack_v7_3.py",
+        "sha256": "bef5ce7dea61ce82910347747ab8f6d7f5c97d05a7bbbddc05eeeb42d785ff79"
+      },
+      "provenance_protocol": {
+        "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+        "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696"
+      },
+      "registry_v7_4": {
+        "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+        "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433"
+      },
+      "registry_v7_4_acceptance_closure": {
+        "path": "docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md",
+        "sha256": "4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977"
+      },
+      "registry_v7_4_acceptance_manifest": {
+        "path": "results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+        "sha256": "53074cfe44c0276d6f319497cbe6f5aaf07b255ac0c335f9481174dd968063fe"
+      },
+      "registry_v7_4_independent_audit": {
+        "path": "docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md",
+        "sha256": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce"
+      },
+      "step2e1_routing_preflight": {
+        "path": "scripts/21a_preflight_v7_3_production_routing.py",
+        "sha256": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95"
+      },
+      "task_3_preregistration_acceptance_closure": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md",
+        "sha256": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02"
+      },
+      "task_3_preregistration_acceptance_manifest": {
+        "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json",
+        "sha256": "08a1e5b5929b5791e14b2ae887c4b9592dccbd803c7e0981c581f41561aa268d"
+      },
+      "task_3_preregistration_candidate_r2": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md",
+        "sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4"
+      },
+      "task_3_preregistration_machine_record": {
+        "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json",
+        "sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f"
+      },
+      "v7_3_evidence": {
+        "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+        "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d"
+      },
+      "v7_3_lifecycle": {
+        "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+        "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d"
+      },
+      "v7_3_methodology": {
+        "path": "docs/research_framework_v7_3_2026-09-23.md",
+        "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a"
+      },
+      "v7_4_alignment_test": {
+        "path": "tests/test_21e_v7_4_production_authority_bundle.py",
+        "sha256": "895f7474a30b54c19807bf28f381ea35256476dc01b12be8414d03a733fa17c7"
+      },
+      "v7_4_alignment_verifier": {
+        "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+        "sha256": "666cceb164581d9ffe78f5b3a9476f7427ff14854fcbb4c0f83ce227b4d2fd72"
+      }
+    },
+    "verified_pin_count": 28
+  },
+  "authorizing_basis": {
+    "external_alignment_audit_go_for_full81": false,
+    "external_alignment_audit_go_for_full81_preflight": false,
+    "external_alignment_audit_verdict": "GO_FOR_U06_ALIGNMENT",
+    "governing_closure": "TASK_3_GOVERNANCE_SEQUENCING_SUCCESSOR_CANDIDATE_R2_ACCEPTANCE_CLOSURE",
+    "governing_closure_published_commit": "fbdd5f0c056f6df8e97c5ef27a8d0c5e6942e0f0",
+    "governing_closure_verdict": "GOVERNANCE_BUNDLE_ALIGNMENT_REQUIRED_AFTER_SUCCESSOR_ACCEPTANCE",
+    "repository_audit_artifact_note": "The fresh independent final cross-document alignment audit exists as an external/read-only governance result. No committed repository audit artifact was supplied and none is fabricated here.",
+    "repository_audit_artifact_path": null
+  },
+  "candidate_identity": "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE",
+  "checkpoint": {
+    "path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_2026-10-02.md",
+    "role": "human-readable alignment-candidate record",
+    "sha256": "e202726ad0f70eff2d890d98811c4b6c1d5e661d1df6cb3912091bea7a34e3a2",
+    "size_bytes": 30823
+  },
+  "counters": {
+    "a2_result_exposures": 0,
+    "a2_runs": 0,
+    "canonical_input_files_modified": 0,
+    "commits": 0,
+    "cross_case_aggregation_layers_added": 0,
+    "exposure_log_entries_created": 0,
+    "framework_files_modified": 0,
+    "full81_authorizations": 0,
+    "full81_runs": 0,
+    "historical_production_result_artifacts_modified": 0,
+    "historical_v7_3_authority_files_modified": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "output_namespaces_renamed": 0,
+    "paths_staged": 0,
+    "production_gates_run_in_authorizing_mode": 0,
+    "production_run_directories_created": 0,
+    "pushes": 0,
+    "registry_files_modified": 0,
+    "solver_executions": 0,
+    "tags_created_or_moved": 0,
+    "thresholds_selected": 0,
+    "u_items_resolved": 0
+  },
+  "created_date": "2026-10-02",
+  "dependency_state_after_pass": {
+    "U-01": "OPEN_HOLD",
+    "U-02": "UNRESOLVED",
+    "U-03": "UNRESOLVED",
+    "U-04": "UNRESOLVED",
+    "U-05": "UNRESOLVED",
+    "U-06": "V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+    "U-07": "UNRESOLVED_CLASSIFICATION",
+    "a2_robustness_execution": "HARD_BLOCKED",
+    "accepted_numerical_threshold": null,
+    "aggregation_reporting_layer": "GAP_RECORDED_NOT_DESIGNED_NOT_AUTHORIZED",
+    "current_route_main_full81": "NOT_YET_AUTHORIZED_NOT_YET_EXECUTED",
+    "materiality_threshold": "THRESHOLD_DECISION_REQUIRED_BEFORE_A2",
+    "production_authority_alignment": "CANDIDATE_CREATED_NOT_ACCEPTED",
+    "production_authority_re_freeze_accepted": false,
+    "production_authority_re_freeze_required": true,
+    "robustness_implementation": "NOT_AUTHORIZED",
+    "u_07_blocks_main_full81": false,
+    "u_07_scope": "A2_ONLY"
+  },
+  "design_decision": {
+    "architecture": "ADDITIVE_V7_4_SUCCESSOR_BUNDLE_PLUS_BOUNDED_BINDING_IN_MUTABLE_SUCCESSOR_LAYER",
+    "destructive_replacement_performed": false,
+    "frozen_authority_integrity_surface_note": "run_successor_stack()'s accepted eight-key authority_integrity surface still carries the inherited V7.3 trio byte-for-byte; V7.4 authority is bound in the sibling key v7_4_authority_alignment.",
+    "frozen_authority_integrity_surface_preserved": true,
+    "new_parallel_runner_created": false,
+    "rejected_new_full81_runner": "The independent audit found the existing Full81 scientific path valid; a parallel runner would duplicate the grid, case plan, solver contract, and publication logic and create a second production route.",
+    "rejected_rewrite_v7_3_in_place": "Destructive rewrite of accepted immutable historical provenance; also hash-pinned in ADDITIONAL_AUTHORITY_FILES and listed in PROTECTED_METHODOLOGY_PATHS.",
+    "v7_3_authority_module_modified": false,
+    "v7_3_authority_module_renamed": false,
+    "why_stack_edit_is_precedent_consistent": "src/production_successor_stack_v7_3.py is the designed mutable successor layer: it is not hash-pinned by any authority list, and the accepted Macro Gate 2E-A record documents post-freeze additive corrections to it in commits 39af835, b87575c, 1651b31."
+  },
+  "diff_summary": {
+    "code_production_surface": {
+      "deletions": 0,
+      "existing_lines_modified": 0,
+      "files_changed": 2,
+      "insertions": 60,
+      "strictly_additive": true
+    },
+    "handoff_synchronization": {
+      "authority_binding_carried": false,
+      "files": [
+        "docs/ai_handoff/CURRENT_STATE.md",
+        "docs/ai_handoff/PROJECT_HANDOFF.md"
+      ],
+      "files_changed": 2,
+      "hash_pinned_by_any_gate": false,
+      "note": "Documentation-only synchronization of the current accepted governance position. Replaced status lines are the stale U-06 = UNRESOLVED_IMPLEMENTATION_AUTHORITY_ALIGNMENT wording, the pre-successor next-legal-step ordering, and the U-01-blocks-Full81 ordering superseded by the accepted governance-sequencing successor R2. Historical narrative is not rewritten beyond that.",
+      "strictly_additive": false
+    },
+    "whole_pass_files_changed": 4
+  },
+  "fail_closed_guards": {
+    "accepted_non_full81_scopes_newly_restricted": false,
+    "evaluated_before_repository_checks": true,
+    "require_a2_hard_block": {
+      "blocked_tokens": [
+        "a2",
+        "robust",
+        "variable_floor",
+        "variable-floor",
+        "varfloor",
+        "perfect_information",
+        "perfect-information"
+      ],
+      "status": "A2_HARD_BLOCKED"
+    },
+    "require_full81_scope_authorization": {
+      "reason": "MAIN_FULL81_AUTHORIZATION_ARTIFACT is None",
+      "rejects_unconditionally": true,
+      "status": "FULL81_AUTHORIZATION_NOT_GRANTED"
+    },
+    "verified_against_clean_snapshot": {
+      "a2_variable_floor": "A2_HARD_BLOCKED",
+      "core-three": "PRODUCTION_AUTHORITY_FROZEN",
+      "full81": "FULL81_AUTHORIZATION_NOT_GRANTED"
+    }
+  },
+  "files_added": {
+    "alignment_candidate_checkpoint": {
+      "path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_2026-10-02.md",
+      "sha256": "e202726ad0f70eff2d890d98811c4b6c1d5e661d1df6cb3912091bea7a34e3a2",
+      "size_bytes": 30823
+    },
+    "v7_4_alignment_test": {
+      "path": "tests/test_21e_v7_4_production_authority_bundle.py",
+      "sha256": "895f7474a30b54c19807bf28f381ea35256476dc01b12be8414d03a733fa17c7",
+      "size_bytes": 25444
+    },
+    "v7_4_alignment_verifier": {
+      "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+      "sha256": "666cceb164581d9ffe78f5b3a9476f7427ff14854fcbb4c0f83ce227b4d2fd72",
+      "size_bytes": 7800
+    },
+    "v7_4_authority_bundle": {
+      "path": "src/production_authority_bundle_v7_4.py",
+      "sha256": "48daa90d29ae499beb3a0d87fcc21e6ed06ac3d7d1bff0a3b900df952037539d",
+      "size_bytes": 33587
+    }
+  },
+  "files_modified": {
+    "full81_runner": {
+      "lines_added": 6,
+      "lines_removed": 0,
+      "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+      "sha256": "f26ce15d83efe761d54b08c70bd30323f7a326f289572167fc6ebec9ca76949a",
+      "size_bytes": 4667
+    },
+    "production_successor_stack": {
+      "lines_added": 54,
+      "lines_removed": 0,
+      "path": "src/production_successor_stack_v7_3.py",
+      "sha256": "bef5ce7dea61ce82910347747ab8f6d7f5c97d05a7bbbddc05eeeb42d785ff79",
+      "size_bytes": 73645
+    }
+  },
+  "final_disposition": {
+    "a2": "HARD_BLOCKED",
+    "lifecycle_status": "CANDIDATE_NOT_ACCEPTED_NOT_CLOSED_NOT_YET_AUTHORITY",
+    "main_full81": "STILL_REQUIRES_SEPARATE_AUTHORIZATION",
+    "next_required_gate": "FRESH_INDEPENDENT_READ_ONLY_AUDIT_OF_THIS_ALIGNMENT_CANDIDATE",
+    "production_authority": "V7_4_ALIGNED_CANDIDATE_PENDING_INDEPENDENT_VERIFICATION",
+    "u_01": "OPEN_HOLD",
+    "verdict": "U_06_ALIGNMENT_CANDIDATE_CREATED_READY_FOR_FRESH_INDEPENDENT_AUDIT"
+  },
+  "full81_authorization_separation": {
+    "alignment_implies_authorization": false,
+    "main_full81_authorization": "NOT_AUTHORIZED",
+    "main_full81_authorization_artifact": null,
+    "next_required_gate": "FRESH_INDEPENDENT_AUDIT_OF_THIS_U_06_ALIGNMENT",
+    "production_authority_alignment": "V7_4_ALIGNED",
+    "remaining_lifecycle": [
+      "V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE",
+      "FRESH_INDEPENDENT_VERIFICATION_OF_THAT_ALIGNMENT",
+      "SEPARATE_MAIN_FULL81_AUTHORIZATION_PREFLIGHT",
+      "MAIN_FULL81_EXECUTION"
+    ],
+    "separate_authorization_required": true
+  },
+  "governance_state": {
+    "a2_authorized_by_this_alignment": false,
+    "a2_conditional_beta8_escalation_authorized": false,
+    "a2_paired_difference_exposed": false,
+    "a2_result_exposure": "ZERO_A2_RESULT_EXPOSURE_FIREWALL_INTACT",
+    "a2_status": "HARD_BLOCKED",
+    "cross_case_aggregation": {
+      "implemented_by_this_alignment": false,
+      "note": "A cross-case surface-summary aggregation layer must not add a materiality-classification column, which would depend on the unresolved U-01.",
+      "prerequisite_for_full81_execution": false,
+      "required_before": [
+        "SUBSTANTIVE_RESPONSE_SURFACE_INTERPRETATION",
+        "MEETING_ANALYSIS"
+      ],
+      "status": "GAP_RECORDED_NOT_DESIGNED_NOT_IMPLEMENTED_NOT_AUTHORIZED"
+    },
+    "governing_authority": "TASK_3_GOVERNANCE_SEQUENCING_SUCCESSOR_CANDIDATE_R2_ACCEPTANCE_CLOSURE",
+    "governing_authority_published_commit": "fbdd5f0c056f6df8e97c5ef27a8d0c5e6942e0f0",
+    "main_full81_authorization": "NOT_AUTHORIZED",
+    "main_full81_authorized_by_this_alignment": false,
+    "main_full81_remaining_lifecycle": [
+      "V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE",
+      "FRESH_INDEPENDENT_VERIFICATION_OF_THAT_ALIGNMENT",
+      "SEPARATE_MAIN_FULL81_AUTHORIZATION_PREFLIGHT",
+      "MAIN_FULL81_EXECUTION"
+    ],
+    "materiality_threshold": {
+      "accepted_numerical_threshold": null,
+      "selected_by_this_alignment": false,
+      "selected_threshold_option": null,
+      "status": "THRESHOLD_DECISION_REQUIRED_BEFORE_A2"
+    },
+    "u_01_blocks_main_full81": false,
+    "u_01_does_not_block": [
+      "MAIN_FULL81_AUTHORIZATION",
+      "MAIN_FULL81_EXECUTION",
+      "MAIN_FULL81_INTEGRITY_INSPECTION",
+      "MAIN_FULL81_SCIENTIFIC_INSPECTION",
+      "MAIN_FULL81_RESPONSE_SURFACE_ANALYSIS",
+      "SUPERVISOR_DISCUSSION_OF_MAIN_FULL81"
+    ],
+    "u_01_must_be_frozen_before": [
+      "A2_EXECUTION",
+      "A2_RESULT_EXPOSURE",
+      "A2_INTERPRETATION",
+      "A2_CONDITIONAL_EXTENSION_AUTHORIZATION"
+    ],
+    "u_01_resolved_by_this_alignment": false,
+    "u_01_status": "OPEN_HOLD",
+    "u_07": {
+      "annual_model_accepts_time_varying_reserve_floor": false,
+      "blocks_main_full81": false,
+      "resolved_by_this_alignment": false,
+      "scope": "A2_ONLY",
+      "status": "UNRESOLVED_CLASSIFICATION",
+      "variable_floor_support_implemented": false
+    },
+    "unresolved_register": {
+      "U-01": "OPEN_HOLD",
+      "U-02": "UNRESOLVED",
+      "U-03": "UNRESOLVED",
+      "U-04": "UNRESOLVED",
+      "U-05": "UNRESOLVED",
+      "U-06": "V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+      "U-07": "UNRESOLVED_CLASSIFICATION"
+    }
+  },
+  "is_acceptance_or_closure": false,
+  "is_full81_authorization": false,
+  "is_independent_audit": false,
+  "lifecycle": "production_authority_alignment_candidate",
+  "live_production_gate_state_after_pass": {
+    "a2_scope_result": "A2_HARD_BLOCKED",
+    "authority_hashes_valid": true,
+    "authority_untracked_paths": [
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+      "src/production_authority_bundle_v7_4.py",
+      "tests/test_21e_v7_4_production_authority_bundle.py"
+    ],
+    "core_three_scope_reason": "Current v7.3 successor bytes are not committed in HEAD.",
+    "core_three_scope_result": "PRODUCTION_AUTHORITY_NOT_YET_FROZEN",
+    "full81_scope_result": "FULL81_AUTHORIZATION_NOT_GRANTED",
+    "gate_run_in_authorizing_mode": false,
+    "guard_bypassed_weakened_or_edited_around": false,
+    "interpretation": "Expected and correct. The candidate bytes are uncommitted, so the gate's own repository-authority check reports NOT_YET_FROZEN and reports this candidate's three new untracked paths exactly as designed. Production authority can become frozen only after separately authorized independent audit, acceptance, and commit.",
+    "manifest_hand_patched_outside_runner": false,
+    "successor_bytes_committed": false,
+    "tracked_unstaged_changes": true,
+    "v7_4_bundle_verified_inside_live_gate": true
+  },
+  "next_required_gate": "FRESH_INDEPENDENT_AUDIT_OF_THIS_U_06_ALIGNMENT",
+  "no_solve_declaration": {
+    "a2_execution_occurred": false,
+    "a2_paired_difference_exposed": false,
+    "a2_remains_hard_blocked": true,
+    "a2_result_exposure_occurred": false,
+    "canonical_input_unchanged": true,
+    "full81_authorization_occurred": false,
+    "full81_preflight_authorization_occurred": false,
+    "full81_result_exists_from_this_pass": false,
+    "next_required_gate": "FRESH_INDEPENDENT_AUDIT",
+    "scientific_implementation_unchanged": true,
+    "solve_occurred": false,
+    "solver_settings_unchanged": true,
+    "u_01_remains_open_hold": true,
+    "v7_3_production_authority_preserved_as_historical_provenance": true,
+    "v7_4_authority_successor_is_additive": true
+  },
+  "non_authorization_boundaries": {
+    "authorizes_a2": false,
+    "authorizes_a2_result_exposure_or_interpretation": false,
+    "authorizes_conditional_beta8_extension": false,
+    "authorizes_full81_execution": false,
+    "authorizes_full81_preflight": false,
+    "authorizes_main_v7_4_full81": false,
+    "commits_or_pushes": false,
+    "creates_exposure_log_entry": false,
+    "creates_or_moves_tag": false,
+    "implements_cross_case_aggregation": false,
+    "implements_variable_floor_support": false,
+    "is_acceptance_or_closure": false,
+    "is_independent_audit": false,
+    "is_production_authority_re_freeze_acceptance": false,
+    "modifies_framework_registry_canonical_input_or_historical_v7_3_authority": false,
+    "resolves_u_01_or_selects_threshold": false,
+    "resolves_u_02_to_u_05": false,
+    "resolves_u_07": false
+  },
+  "pass_type": "additive production-authority / provenance alignment; no solve, no Full81 preflight authorization, no Full81 authorization",
+  "pre_implementation_repository_identity": {
+    "ahead_behind": "0/0",
+    "branch": "thesis-v7",
+    "expected_head_matched_live_git": true,
+    "origin_thesis_v7": "fbdd5f0c056f6df8e97c5ef27a8d0c5e6942e0f0",
+    "pre_implementation_head": "fbdd5f0c056f6df8e97c5ef27a8d0c5e6942e0f0",
+    "protected_surface_untracked_paths_at_entry": 0,
+    "registry_v7_4_acceptance_commit": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+    "staged_paths_at_entry": 0,
+    "step2e1_accepted_commit": "d52d9584b22da2a41b51c8ce3e99a0335e39da2b",
+    "unstaged_tracked_paths_at_entry": 0
+  },
+  "provenance_reporting_alignment": {
+    "case_level_artifact": "results/layer_a/final_81_v7_3/runs/<unique-run-id>/cases/<case_id>/case_definition.json",
+    "case_level_fields_added": [
+      "v7_4_authority"
+    ],
+    "case_level_record_contents": [
+      "a2_status",
+      "alignment_status",
+      "bundle_version",
+      "canonical_planning_input",
+      "framework",
+      "full81_runner",
+      "governance_sequencing_successor",
+      "main_full81_authorization",
+      "model_core",
+      "parameter_registry",
+      "production_successor_stack",
+      "registry",
+      "task_3_authority",
+      "u_01_status"
+    ],
+    "cases_run_to_populate_provenance": 0,
+    "preflight_report": "scripts/21d_preflight_v7_3_final81_successor.py stdout payload",
+    "preflight_report_fields_added": [
+      "v7_4_authority_bundle_version",
+      "v7_4_authority_alignment"
+    ],
+    "run_level_artifact": "results/layer_a/final_81_v7_3/runs/<unique-run-id>/authority.json",
+    "run_level_fields_added": [
+      "v7_4_production_authority",
+      "solver_settings_contract",
+      "alpha_grid",
+      "beta_grid_h",
+      "expected_full_surface_cases",
+      "stack_version",
+      "core_module",
+      "core_version"
+    ],
+    "scientific_output_fields_added": 0
+  },
+  "schema_version": "iris-thesis-u06-v7-4-production-authority-alignment-candidate-manifest-v1",
+  "scientific_non_mutation": {
+    "acceptance_gates_relaxed": false,
+    "alpha_beta_grid_changed": false,
+    "billing_methodology_changed": false,
+    "canonical_input_bytes_changed": false,
+    "constraints_changed": false,
+    "cross_case_aggregation_added": false,
+    "degradation_methodology_changed": false,
+    "economic_package_changed": false,
+    "efficiencies_changed": false,
+    "exclusive_run_directory_creation_preserved": true,
+    "framework_v7_4_modified": false,
+    "historical_production_results_modified": false,
+    "historical_v7_3_authority_destructively_rewritten": false,
+    "mipgap_changed": false,
+    "model_equations_changed": false,
+    "objective_changed": false,
+    "outage_replay_semantics_changed": false,
+    "output_namespace_renamed": false,
+    "rainflow_methodology_changed": false,
+    "registry_v7_4_modified": false,
+    "reserve_equations_changed": false,
+    "soc_conventions_changed": false,
+    "solver_parameters_changed": false,
+    "tariff_methodology_changed": false,
+    "transition_settlement_methodology_changed": false,
+    "variable_floor_support_added": false
+  },
+  "scientific_or_numerical_execution_required": false,
+  "scope": "BOUNDED_U_06_V7_4_PRODUCTION_AUTHORITY_BINDING_ONLY",
+  "self_identity_note": "This manifest deliberately omits its own digest and byte count to avoid circular self-identification, per repository precedent.",
+  "source_of_truth_banner": {
+    "a2": "HARD_BLOCKED",
+    "framework": "V7.4",
+    "main_v7_4_full81": "NOT_YET_AUTHORIZED",
+    "pipeline": "V7.4 CURRENT ACCEPTED ROUTE",
+    "registry": "V7.4",
+    "task_3_governance_sequencing_successor_candidate_r2": "CLOSED_ACCEPTED_PUBLISHED",
+    "task_3_preregistration_candidate_r2": "CLOSED_ACCEPTED",
+    "u_01": "OPEN_HOLD"
+  },
+  "static_validation": {
+    "imports": "PASS",
+    "model_constructions_during_validation": 0,
+    "optimize_calls_during_validation": 0,
+    "production_run_directories_created": 0,
+    "py_compile": "PASS",
+    "script_21d_full81_preflight_no_solve": {
+      "cases_planned": 81,
+      "cases_solved": 0,
+      "exit_code": 0,
+      "main_full81_authorization": "NOT_AUTHORIZED",
+      "status": "PASS"
+    },
+    "script_21e_alignment_verifier": {
+      "exit_code": 0,
+      "pins_reproduced": 28,
+      "status": "PASS"
+    },
+    "test_21a_v7_3_production_routing_preflight": {
+      "passed": 19,
+      "ran": 19,
+      "result": "OK"
+    },
+    "test_21b_21d_v7_3_production_successor_stack": {
+      "passed": 66,
+      "ran": 66,
+      "result": "OK"
+    },
+    "test_21e_v7_4_production_authority_bundle": {
+      "passed": 34,
+      "ran": 34,
+      "result": "OK"
+    },
+    "tests_invoking_optimize_run": 0,
+    "worktree_mutated_by_verification": false
+  },
+  "status": "CANDIDATE_NOT_ACCEPTED_NOT_CLOSED_NOT_YET_AUTHORITY",
+  "u_06_root_cause": {
+    "classification": "IMPLEMENTATION_PROVENANCE_AUTHORITY_BINDING_STALE_NOT_SCIENTIFIC_DEFECT",
+    "confirmed": true,
+    "defects": [
+      "Framework V7.4 and Registry V7.4 absent from the live pre-execution authority bundle.",
+      "Accepted Task-3 Candidate R2 chain and accepted/published governance-sequencing successor R2 chain not hash-bound to the gate.",
+      "Model/core, parameter registry, successor stack, and Full81 runner not exact-hash bound in the pre-execution authority record."
+    ],
+    "exact_pinned_v7_3_trio": {
+      "evidence": {
+        "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+        "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d"
+      },
+      "lifecycle": {
+        "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+        "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d"
+      },
+      "methodology": {
+        "path": "docs/research_framework_v7_3_2026-09-23.md",
+        "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a"
+      }
+    },
+    "full81_scientific_path_valid": true,
+    "live_mechanism": "src/production_input_authority_v7_3.py::AUTHORITY_FILES",
+    "reached_via": [
+      "run_layer_a_production / run_eob_production",
+      "require_production_authority",
+      "inspect_deployment_snapshot",
+      "load_accepted_v7_3_annual_input",
+      "verify_authority_files"
+    ],
+    "scientific_implementation_valid": true
+  },
+  "verified_unchanged_constants": {
+    "alphas": [
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "betas_h": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "eob_solver_settings_mipgap": 1e-06,
+    "eta_d": 0.9,
+    "expected_cases": 81,
+    "layer_a_production_root": "results/layer_a/final_81_v7_3/runs",
+    "layer_a_solver_settings": {
+      "MIPFocus": 0,
+      "MIPGap": 1e-06,
+      "NumericFocus": 1,
+      "OutputFlag": 0,
+      "Threads": 0,
+      "TimeLimit": "INFINITY_UNSET",
+      "mode": "binary"
+    },
+    "mandatory_eob_audits": [
+      "solver",
+      "physical",
+      "billing",
+      "transition",
+      "cost",
+      "degradation",
+      "rainflow"
+    ],
+    "mandatory_layer_a_audits": [
+      "solver",
+      "physical",
+      "resilience",
+      "billing",
+      "transition",
+      "cost",
+      "degradation",
+      "rainflow"
+    ],
+    "production_case_sets": [
+      "central",
+      "core-three",
+      "full81",
+      "high",
+      "historical-five",
+      "low"
+    ],
+    "robustness_scope_added_to_production_case_sets": false,
+    "surplus_pv_recharge": false
+  }
+}

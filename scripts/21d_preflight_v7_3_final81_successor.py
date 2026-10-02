@@ -80,6 +80,24 @@ def main(argv: list[str] | None = None) -> int:
                 "selected_case_count": len(selected),
                 "selected_case_plan": selected,
                 "final81": final81,
+                # U-06: bind this preflight report to the accepted V7.4
+                # production authority. Reporting the alignment is not Full81
+                # authorization; `full81_authorization` inside the record states
+                # NOT_AUTHORIZED and a separate authorization gate is required.
+                "v7_4_authority_bundle_version": stack["v7_4_authority_bundle_version"],
+                "v7_4_authority_alignment": stack["v7_4_authority_alignment"],
+                # A ZERO-SOLVE PREFLIGHT PASS is not PRODUCTION_AUTHORITY_FROZEN,
+                # is not FULL81 AUTHORIZED, and is not FULL81 EXECUTED. The
+                # lifecycle block below reports each of those states separately.
+                "u06_accepted_lifecycle": stack["u06_accepted_lifecycle"],
+                "u06_lifecycle_module_version": stack["u06_lifecycle_module_version"],
+                "u06_lineage_id": stack["u06_lineage_id"],
+                "u06_runtime_dependency_report": stack[
+                    "u06_runtime_dependency_report"
+                ],
+                "u06_future_acceptance_requirements": stack[
+                    "u06_future_acceptance_requirements"
+                ],
                 "execution_counters": stack["execution_counters"],
                 "execution_boundary": stack["execution_boundary"],
             }

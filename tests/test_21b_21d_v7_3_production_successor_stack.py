@@ -27,8 +27,47 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from src import production_authority_lifecycle_u06 as u06  # noqa: E402
 from src import production_input_authority_v7_3 as authority  # noqa: E402
 from src import production_successor_stack_v7_3 as stack  # noqa: E402
+
+
+def accepted_lifecycle_fixture() -> dict:
+    """A structurally complete accepted U-06 lifecycle, for fixtures only.
+
+    Audit finding F-01 made an accepted U-06 lifecycle a precondition of
+    PRODUCTION_AUTHORITY_FROZEN, so the deployment-gate fixtures below must
+    supply one. This mapping is handed to a pure validator; it is never written
+    to disk and the live gate never reads it, so it confers no real acceptance.
+    Full F-01 evidence lives in tests/test_21f_u06_accepted_lifecycle_gate.py.
+    """
+
+    return {
+        "lifecycle_module_version": u06.LIFECYCLE_MODULE_VERSION,
+        "lineage_id": u06.LINEAGE_ID,
+        "target_candidate_id": u06.R3_CANDIDATE_ID,
+        "authorizes_main_full81": False,
+        "implementation_identity_digest": u06.implementation_identity_digest(ROOT),
+        "record_path": u06.ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix(),
+        "record_present": True,
+        "record_committed": True,
+        "record_published": True,
+        "self_accepted": False,
+        "u06_alignment_status": "ACCEPTED",
+        "u06_independent_audit_status": "PASS",
+        "u06_acceptance_status": "CLOSED_ACCEPTED",
+        "accepted_lifecycle_overlay": "PRESENT_VALID",
+        "production_authority_freeze_status": "FROZEN",
+        "freeze_blocked_reason": None,
+        "satisfied_roles": {
+            role: {"path": f"docs/fixture/{role}.json", "sha256": "0" * 64}
+            for role in u06.REQUIRED_ACCEPTED_ROLES
+        },
+        "missing_roles": [],
+        "lifecycle_distinctions": list(u06.LIFECYCLE_DISTINCTIONS),
+        "required_lifecycle_sequence": list(u06.REQUIRED_LIFECYCLE_SEQUENCE),
+        "candidate_r1_audit": dict(u06.CANDIDATE_R1_AUDIT_RECORD),
+    }
 
 
 NEW_SOURCES = (
@@ -261,6 +300,7 @@ class ProductionSuccessorStackV73Tests(unittest.TestCase):
             accepted_identity=self.expected_identity,
             csv_fallback_possible=False,
             authority_untracked_paths=(),
+            u06_accepted_lifecycle=accepted_lifecycle_fixture(),
         )
 
     def test_complete_stack_passes_with_exact_zero_solve_counters(self) -> None:
@@ -607,6 +647,17 @@ class ProductionSuccessorStackV73Tests(unittest.TestCase):
             ("hash_failure", {"authority_hashes_valid": False, "authority_error": "hash mismatch"}, True, "core-three", "hash mismatch"),
             ("csv", {"csv_fallback_possible": True}, True, "core-three", "CSV fallback"),
             ("untracked_authority", {"authority_untracked_paths": ("scripts/untracked.py",)}, True, "core-three", "Untracked authority-surface"),
+            # Audit finding F-01: an otherwise perfect repository must not freeze
+            # production authority while the U-06 lifecycle is unaccepted.
+            ("u06_lifecycle_absent", {"u06_accepted_lifecycle": None}, True, "core-three", "U-06 accepted lifecycle"),
+            ("u06_lifecycle_not_frozen", {"u06_accepted_lifecycle": dict(accepted_lifecycle_fixture(), production_authority_freeze_status="NOT_FROZEN")}, True, "core-three", "does not authorize a production-authority freeze"),
+            ("u06_acceptance_absent", {"u06_accepted_lifecycle": dict(accepted_lifecycle_fixture(), u06_acceptance_status="NOT_ACCEPTED")}, True, "core-three", "does not authorize a production-authority freeze"),
+            ("u06_audit_not_pass", {"u06_accepted_lifecycle": dict(accepted_lifecycle_fixture(), u06_independent_audit_status="PENDING")}, True, "core-three", "does not authorize a production-authority freeze"),
+            # Audit finding A-01: a lifecycle from another lineage is not this one.
+            ("u06_wrong_lineage", {"u06_accepted_lifecycle": dict(accepted_lifecycle_fixture(), lineage_id="U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R2")}, True, "core-three", "does not authorize a production-authority freeze"),
+            ("u06_wrong_candidate", {"u06_accepted_lifecycle": dict(accepted_lifecycle_fixture(), target_candidate_id="SOMETHING_ELSE")}, True, "core-three", "does not authorize a production-authority freeze"),
+            # Audit finding A-02: an acceptance never covers changed runtime code.
+            ("u06_implementation_drift", {"u06_accepted_lifecycle": dict(accepted_lifecycle_fixture(), implementation_identity_digest="0" * 64)}, True, "core-three", "does not match the live production dependency surface"),
         )
         for name, changes, execute, scope, message in cases:
             with self.subTest(name=name):

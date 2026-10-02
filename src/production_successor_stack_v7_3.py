@@ -30,6 +30,25 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
+from src.production_authority_bundle_v7_4 import (
+    BUNDLE_VERSION as V7_4_BUNDLE_VERSION,
+    ProductionAuthorityBundleError,
+    case_level_provenance as v7_4_case_level_provenance,
+    declared_authority_record as v7_4_declared_authority_record,
+    require_a2_hard_block as v7_4_require_a2_hard_block,
+    require_full81_scope_authorization as v7_4_require_full81_scope_authorization,
+    verify_v7_4_authority_bundle,
+)
+from src.production_authority_lifecycle_u06 import (
+    LIFECYCLE_MODULE_VERSION as U06_LIFECYCLE_MODULE_VERSION,
+    LINEAGE_ID as U06_LINEAGE_ID,
+    U06LifecycleError,
+    future_acceptance_requirements as u06_future_acceptance_requirements,
+    lifecycle_summary as u06_lifecycle_summary,
+    require_frozen_lifecycle_against_live_implementation as u06_require_frozen_lifecycle,
+    resolve_u06_lifecycle,
+    runtime_dependency_report as u06_runtime_dependency_report,
+)
 from src.production_input_authority_v7_3 import (
     ACCEPTED_ANNUAL_RELATIVE_PATH,
     ACCEPTED_ANNUAL_SHA256,
@@ -88,6 +107,12 @@ SUCCESSOR_RELATIVE_PATHS = (
     Path("scripts/21c_preflight_v7_3_layer_a_successor.py"),
     Path("scripts/21d_preflight_v7_3_final81_successor.py"),
     Path("tests/test_21b_21d_v7_3_production_successor_stack.py"),
+    Path("src/production_authority_bundle_v7_4.py"),
+    Path("src/production_authority_lifecycle_u06.py"),
+    Path("scripts/21e_preflight_v7_4_production_authority_alignment.py"),
+    Path("tests/test_21e_v7_4_production_authority_bundle.py"),
+    Path("tests/test_21f_u06_accepted_lifecycle_gate.py"),
+    Path("tests/test_21g_u06_r3_substitution_attacks.py"),
 )
 
 STEP2E1_ACCEPTED_COMMIT = "d52d9584b22da2a41b51c8ce3e99a0335e39da2b"
@@ -400,7 +425,9 @@ def _case_identity_contexts(identity: AnnualInputIdentity) -> dict[str, dict[str
     }
 
 
-def build_layer_a_successor_preflight(base: Mapping[str, Any]) -> dict[str, Any]:
+def build_layer_a_successor_preflight(
+    base: Mapping[str, Any], lifecycle: Mapping[str, Any] | None = None
+) -> dict[str, Any]:
     identity = _accepted_identity(base)
     analytical = base["analytical_surface_audit"]
     replay = base["analytical_replay_audit"]
@@ -413,11 +440,15 @@ def build_layer_a_successor_preflight(base: Mapping[str, Any]) -> dict[str, Any]
     _require(replay.get("surplus_pv_recharge") is False, "Surplus-PV recharge drift.")
 
     cases: list[dict[str, Any]] = []
+    v7_4_case_authority = v7_4_case_level_provenance(lifecycle)
     for source in analytical["cases"]:
         case = deepcopy(source)
         case["annual_identities"] = _case_identity_contexts(identity)
         case["authority_module"] = AUTHORITY_MODULE
         case["surplus_pv_recharge"] = False
+        # Additive case-level V7.4 provenance so a future case artifact can prove
+        # its applicable Framework/Registry/governance identities on its own.
+        case["v7_4_authority"] = deepcopy(v7_4_case_authority)
         cases.append(case)
 
     valid_counts = {
@@ -621,10 +652,12 @@ def run_successor_stack(
     reject_unauthorized_execution(execute_production)
     root = root.resolve()
     additional_authorities = verify_additional_authorities(root)
+    u06_lifecycle = resolve_u06_lifecycle(root)
+    v7_4_alignment = verify_v7_4_authority_bundle(root, u06_lifecycle)
     dependencies = verify_protected_methodology(root)
     base = run_accepted_routing_preflight(root)
     eob = build_eob_successor_preflight(base, dependencies)
-    layer_a = build_layer_a_successor_preflight(base)
+    layer_a = build_layer_a_successor_preflight(base, u06_lifecycle)
     final81 = build_final81_successor_preflight(layer_a, dependencies)
     validate_stack_same_artifact(eob, layer_a, final81)
     counters = deepcopy(base["execution_counters"])
@@ -636,6 +669,11 @@ def run_successor_stack(
     )
     accepted = base["accepted_annual_input"]
     base_authorities = accepted["authority_hashes"]
+    # ``authority_integrity`` is the accepted, frozen Macro-Gate-2E-A surface: it
+    # carries the HISTORICAL v7.3 methodology/evidence/lifecycle trio inherited
+    # from the unmodified v7.3 input-authority module.  It is deliberately left
+    # byte-for-byte unchanged.  Current accepted V7.4 authority is bound
+    # additively in the sibling ``v7_4_authority_alignment`` key below.
     authority_integrity = {
         "framework": base_authorities["methodology"],
         "registry": base_authorities["evidence"],
@@ -652,6 +690,16 @@ def run_successor_stack(
         "stack_version": STACK_VERSION,
         "authority_module": AUTHORITY_MODULE,
         "authority_integrity": authority_integrity,
+        "authority_integrity_lineage": (
+            "HISTORICAL_V7_3_INHERITED_SURFACE_SEE_V7_4_AUTHORITY_ALIGNMENT"
+        ),
+        "v7_4_authority_bundle_version": V7_4_BUNDLE_VERSION,
+        "v7_4_authority_alignment": v7_4_alignment,
+        "u06_lifecycle_module_version": U06_LIFECYCLE_MODULE_VERSION,
+        "u06_accepted_lifecycle": u06_lifecycle_summary(u06_lifecycle),
+        "u06_future_acceptance_requirements": u06_future_acceptance_requirements(),
+        "u06_lineage_id": U06_LINEAGE_ID,
+        "u06_runtime_dependency_report": u06_runtime_dependency_report(root),
         "protected_methodology": dependencies,
         "eob": eob,
         "layer_a": layer_a,
@@ -684,6 +732,10 @@ class DeploymentSnapshot:
     accepted_identity: AnnualInputIdentity | None
     csv_fallback_possible: bool
     authority_untracked_paths: tuple[str, ...]
+    # Resolved U-06 accepted-lifecycle overlay. ``None`` is the most restrictive
+    # value (ABSENT / NOT_FROZEN), so a snapshot built without it can never be
+    # read as acceptance.
+    u06_accepted_lifecycle: Mapping[str, Any] | None = None
 
 
 def _git_completed(root: Path, *args: str) -> subprocess.CompletedProcess[str]:
@@ -764,6 +816,10 @@ def inspect_deployment_snapshot(root: Path = ROOT) -> DeploymentSnapshot:
     csv_fallback_possible = True
     try:
         verify_additional_authorities(root)
+        # U-06: the live gate must also prove the accepted V7.4 authority bundle.
+        # A V7.4 drift or a destructive rewrite of the inherited v7.3 historical
+        # layer fails this closed through ``authority_hashes_valid``.
+        verify_v7_4_authority_bundle(root, None)
         accepted = load_accepted_v7_3_annual_input(root)
         identity = accepted.identity
         csv_fallback_possible = (root / IMPOSSIBLE_CSV_RELATIVE_PATH).exists()
@@ -783,6 +839,7 @@ def inspect_deployment_snapshot(root: Path = ROOT) -> DeploymentSnapshot:
         accepted_identity=identity,
         csv_fallback_possible=csv_fallback_possible,
         authority_untracked_paths=_authority_untracked_paths(root),
+        u06_accepted_lifecycle=resolve_u06_lifecycle(root),
     )
 
 
@@ -791,6 +848,7 @@ def validate_deployment_snapshot(
     *,
     execute_production: bool,
     selected_scope: str | None,
+    root: Path = ROOT,
 ) -> dict[str, Any]:
     """Apply the deployment gate in a stable, fail-closed order."""
 
@@ -802,6 +860,30 @@ def validate_deployment_snapshot(
         raise ProductionAuthorityError(
             "CASE_SCOPE_REQUIRED", "An explicit fixed production case scope is required."
         )
+    try:
+        # A2 / variable-floor remains hard blocked before a U-01 freeze, and V7.4
+        # production-authority alignment is explicitly NOT Main Full81
+        # authorization.  Both guards precede every repository check so that no
+        # amount of clean repository state can be read as authorizing them.
+        v7_4_require_a2_hard_block(selected_scope)
+        v7_4_require_full81_scope_authorization(selected_scope)
+    except ProductionAuthorityBundleError as exc:
+        raise ProductionAuthorityError(exc.status, str(exc)) from exc
+    try:
+        # U-06 audit finding F-01. Production authority may be frozen only when an
+        # accepted U-06 lifecycle exists: an independent audit PASS, an acceptance
+        # closure, an acceptance manifest, and an accepted re-freeze record, all
+        # named by exact hash, all tracked and clean, and all published. This runs
+        # BEFORE every repository-state check precisely so that committing,
+        # cleaning, and pushing candidate implementation bytes can never produce
+        # PRODUCTION_AUTHORITY_FROZEN. Candidate bytes, candidate documents, a
+        # clean HEAD, and matching authority hashes are each insufficient, alone
+        # or together.
+        lifecycle = u06_require_frozen_lifecycle(
+            root, snapshot.u06_accepted_lifecycle
+        )
+    except U06LifecycleError as exc:
+        raise ProductionAuthorityError(exc.status, str(exc)) from exc
     if selected_scope != "eob" and selected_scope not in PRODUCTION_CASE_SETS:
         raise ProductionAuthorityError(
             "CASE_SCOPE_REJECTED", f"Uncontrolled production scope: {selected_scope!r}"
@@ -872,6 +954,28 @@ def validate_deployment_snapshot(
         "selected_scope": selected_scope,
         "annual_identity": snapshot.accepted_identity.as_dict(),
         "successor_paths": [path.as_posix() for path in SUCCESSOR_RELATIVE_PATHS],
+        # Additive run-level V7.4 provenance.  ``authority_hashes_valid`` is
+        # required above, and the snapshot sets it only after
+        # ``verify_v7_4_authority_bundle`` proved these identities from live bytes.
+        # U-06 lifecycle state is read from the accepted overlay, never from a
+        # compile-time constant, so this record states the real lifecycle.
+        "v7_4_production_authority": v7_4_declared_authority_record(lifecycle),
+        "u06_accepted_lifecycle": u06_lifecycle_summary(lifecycle),
+        "production_authority_freeze_status": lifecycle[
+            "production_authority_freeze_status"
+        ],
+        "u06_acceptance_status": lifecycle["u06_acceptance_status"],
+        "u06_independent_audit_status": lifecycle["u06_independent_audit_status"],
+        "solver_settings_contract": {
+            "eob": dict(EOB_SOLVER_SETTINGS),
+            "layer_a": dict(LAYER_A_SOLVER_SETTINGS),
+        },
+        "alpha_grid": list(ALPHAS),
+        "beta_grid_h": list(BETAS_H),
+        "expected_full_surface_cases": EXPECTED_CASES,
+        "stack_version": STACK_VERSION,
+        "core_module": CORE_MODULE,
+        "core_version": CORE_VERSION,
     }
 
 
@@ -885,6 +989,7 @@ def require_production_authority(
         inspect_deployment_snapshot(root),
         execute_production=execute_production,
         selected_scope=selected_scope,
+        root=root,
     )
 
 

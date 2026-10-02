@@ -192,12 +192,58 @@ position is:
    `NOT REQUIRED / NOT CREATED`. That plan governs interpretation discipline for Layer A / Full81
    results — how accepted outputs are analyzed, reported, and described — and creates no scientific
    definition. Its acceptance is not implementation or execution authority, authorizes no
-   aggregation/reporting layer, and resolves no U-item. Publication of that closure to
-   `origin/thesis-v7` is not yet performed.
+   aggregation/reporting layer, and resolves no U-item. That closure **is published** — commit
+   `2b13f22c3e98f16c669d89256b29425cd91baa5f`, an ancestor of `origin/thesis-v7`. Being published does
+   **not** make it a production-authority pin: its role is downstream interpretation/analysis
+   governance, not production execution authority, so it is deliberately **not** bound into the V7.4
+   production-authority bundle.
+7. Task 3 governance-sequencing successor — original candidate `IMMUTABLE HISTORICAL CANDIDATE
+   PROVENANCE`; Candidate R2 independently audited (`INDEPENDENT_R2_AUDIT_PASS`, `CRITICAL 0 /
+   MAJOR 0 / MINOR 0`, one non-blocking `INFORMATIONAL`, `0` blocking corrections) and
+   `CLOSED / ACCEPTED`, published in commit `fbdd5f0c056f6df8e97c5ef27a8d0c5e6942e0f0`. Its current
+   lifecycle authority is
+   `docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md`.
+   Its bounded delta: **`U-01` remains `OPEN / HOLD` but no longer blocks Main V7.4 Full81
+   authorization, execution, inspection, analysis, or supervisor discussion.** The accepted freeze
+   order is `[A2_EXECUTION, A2_RESULT_EXPOSURE, A2_INTERPRETATION,
+   A2_CONDITIONAL_EXTENSION_AUTHORIZATION]`, with `FULL81_AUTHORIZATION` deliberately absent. `U-01`
+   must still be resolved, independently audited, accepted, and frozen before every one of those four
+   A2 events, and A2 stays `HARD BLOCKED` behind an intact zero-exposure firewall. The supersession of
+   Task 3 Candidate R2 is bounded to that ordering question only. That closure also fixed the mandatory
+   remaining lifecycle: production-authority V7.4 alignment / re-freeze -> fresh independent
+   verification of it -> separate Main Full81 authorization / preflight -> Main Full81 execution. There
+   is no direct acceptance-to-Full81 path.
+8. U-06 V7.4 production-authority alignment — three candidates, none accepted. **R1 FAILED its
+   independent audit** (`F-01`, lifecycle anchoring). **R2 received `NO-GO — CRITICAL GOVERNANCE
+   DEFECT`** on `A-01` (CRITICAL: arbitrary unrelated tracked/clean/hash-correct historical artifacts
+   could satisfy the lifecycle roles), `A-02` (incomplete runtime implementation identity), and `A-03`
+   (insufficient publication-containment proof); R2 must never be accepted, closed, frozen, committed
+   as production authority, or used to authorize Full81. Both are retained as immutable provenance and
+   their verdicts are not softened. The remediated **Candidate R3** is
+   `CANDIDATE / NOT ACCEPTED / NOT CLOSED / NOT FROZEN / PENDING FRESH INDEPENDENT AUDIT`, at
+   `docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md` with
+   `results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json`.
+   The implementation separates identity from lifecycle: `src/production_authority_bundle_v7_4.py`
+   holds the base V7.4 authority identity (`31` exact pins, reporting `CANDIDATE_ALIGNED`) and
+   `src/production_authority_lifecycle_u06.py` holds all audit/acceptance/freeze authority (currently
+   `ABSENT` / `NOT_FROZEN`) under lineage `U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3`. Every lifecycle
+   role must now prove **role authenticity** — a role-specific `artifact_type` and `schema_version`,
+   the exact lineage and candidate identity, the live implementation-identity digest, and the exact
+   identity of every earlier role — not merely a path, a digest, and a clean Git status. The accepted
+   implementation identity covers **20** traced runtime and gate-protected paths, tests excluded, and a
+   committed, clean, pushed change to any of them fails the freeze closed. Publication is proved by
+   **containment in a named commit**, not by arbitrary `HEAD` ancestry.
+   `src/production_input_authority_v7_3.py` is byte-identical and preserved as historical provenance.
+   R3 is **not accepted, not independently audited, not a production-authority re-freeze, and not
+   Full81 authorization**, and `F-01`/`A-01`/`A-02`/`A-03` are `REMEDIATION IMPLEMENTED — PENDING FRESH
+   INDEPENDENT VERIFICATION`. See `CURRENT_STATE.md` §1.1.
 
 Keep these governance distinctions intact: an independent audit is not an acceptance decision;
 acceptance is not publication; publication is not handoff synchronization; handoff synchronization is
-not scientific or execution authorization; and Registry or Task 3 acceptance is not Full81 authorization.
+not scientific or execution authorization; Registry or Task 3 acceptance is not Full81 authorization;
+and **production-authority V7.4 alignment is not Full81 authorization either** — the current
+implementation keeps `PRODUCTION_AUTHORITY_ALIGNMENT` and `MAIN_FULL81_AUTHORIZATION` as independent
+fields, with the `full81` scope rejected unconditionally until a separate authorization artifact exists.
 
 The accepted Task 3 preregistration is a targeted six-point A2 model-form screen, **not** a full
 factorial. Its locked cases are `a0.60_b04`, `a0.60_b12`, `a0.80_b04`, `a0.80_b12`, `a1.00_b04`, and
@@ -217,17 +263,26 @@ The threshold state is `THRESHOLD_DECISION_REQUIRED_BEFORE_EXECUTION` and
 `null`. `U-01` materiality definition, `U-02` outcome/escalation taxonomy, `U-03` historical cost/SOC
 sensitivity sufficiency, `U-04` non-A2 case universes, and `U-05` robustness namespace/`selected_scope`
 are `UNRESOLVED`; `U-06` v7.4 authority-bundle alignment is
-`UNRESOLVED_IMPLEMENTATION_AUTHORITY_ALIGNMENT`; and `U-07` variable-floor
-implementation-versus-methodology classification is `UNRESOLVED_CLASSIFICATION`. None is resolved here.
+`V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT` (Candidate R1 failed audit, Candidate R2 is
+a CRITICAL `NO-GO`, Candidate R3 is pending, and the live route now derives this status from the
+accepted-lifecycle overlay rather than a constant); and `U-07` variable-floor
+implementation-versus-methodology classification is `UNRESOLVED_CLASSIFICATION`, scope **A2-only**, and
+**not** a Main Full81 blocker. None is resolved here. `U-01` is `OPEN / HOLD`: still required before
+every A2 event, no longer a blocker of Main Full81.
 
-Three current implementation facts remain blockers: no robustness scope exists in
-`PRODUCTION_CASE_SETS`; no perfect-information variable reserve-floor implementation exists; and the
-current live pre-execution authority bundle does not include Framework v7.4 / Registry v7.4 identities.
-These facts are not methodology decisions or authority to repair or implement anything. A
-production-authority re-freeze is required (`RE_FREEZE_REQUIRED = YES`) but has not been performed
-(`RE_FREEZE_NOT_YET_PERFORMED`), and `U-06` remains unresolved. Production authority must be
-re-determined live by the runner at the then-live HEAD; this handoff does not claim that the gate was run
-or that production is authorized.
+Two A2-side implementation facts remain blockers: no robustness scope exists in `PRODUCTION_CASE_SETS`,
+and no perfect-information variable reserve-floor implementation exists. A third — that the live
+pre-execution authority bundle did not include Framework v7.4 / Registry v7.4 identities — now has an
+**unaccepted candidate remedy** in U-06 Candidate R3, which binds those identities in the live gate and
+verifies them from live bytes; it is not closed, because closure requires the fresh independent audit of
+R3 and a separate acceptance. These facts are not methodology
+decisions or authority to repair or implement anything. A production-authority re-freeze is required
+(`RE_FREEZE_REQUIRED = YES`) but has not been accepted (`RE_FREEZE_NOT_YET_ACCEPTED`). Production
+authority must be re-determined live by the runner at the then-live HEAD — read
+`src/production_successor_stack_v7_3.py`, `src/production_authority_bundle_v7_4.py`, and
+`src/production_authority_lifecycle_u06.py` directly; this handoff does not claim that the gate was run
+in authorizing mode or that production is authorized. With no accepted U-06 R3 lifecycle record, the
+gate currently fails closed for every production scope.
 
 **Current accepted v7.3/v7.4-route Full81 is `NOT_YET_EXECUTED` / `NOT_YET_AUTHORIZED`.** No Full81
 execution has yet occurred on that route using the accepted reconstructed-PV planning input. A historical
@@ -237,13 +292,22 @@ Registry v7.4 did not authorize current-route Full81, and the accepted represent
 must never be written up as the complete Full81 surface. The accepted preregistration did not depend
 on any current-route Full81 result.
 
-The next legal sequence, with every item separately authorized, is: (1) U-item adjudication, prioritizing
-`U-01`, `U-06`, and `U-07`; (2) production-authority re-freeze; (3) robustness implementation candidate;
-(4) independent implementation audit/acceptance as required; (5) current-route Full81 authorization;
-(6) Full81 execution; and (7) A2 robustness execution. This ordering authorizes none of those actions.
-Current go/no-go state: U-item adjudication is not yet performed, robustness implementation is `NO-GO`,
-current-route Full81 is `NO-GO / NOT_YET_AUTHORIZED / NOT_YET_EXECUTED`, robustness execution is
-`NO-GO`, and the required production-authority re-freeze has not been performed.
+The next legal sequence, with every item separately authorized, is: (1) fresh independent read-only
+audit of U-06 production-authority alignment Candidate R3, with the `A-01` substitution attack
+re-attempted against the live validator; (2) acceptance of that alignment, creation of the accepted
+U-06 R3 lifecycle record across its three publication phases, and the production-authority re-freeze it
+supports — noting that committing alone is explicitly insufficient for a freeze; (3) separate Main V7.4 Full81 authorization/preflight; (4) Main
+Full81 execution; (5) the cross-case surface-summary aggregation layer, required before substantive
+response-surface interpretation or meeting analysis but **not** a prerequisite for executing Full81;
+(6) `U-01` resolution, independent audit, acceptance, and freeze, required before any A2 event;
+(7) `U-07` classification, then the robustness implementation candidate and its independent
+audit/acceptance; and (8) A2 robustness execution. This ordering authorizes none of those actions.
+Current go/no-go state: U-06 Candidate R1 failed its independent audit, Candidate R2 is a CRITICAL
+`NO-GO`, and Candidate R3 exists as an unaccepted, un-audited candidate; production authority is
+`NOT_FROZEN`; robustness
+implementation is `NO-GO`; current-route Main Full81 is
+`NO-GO / NOT_YET_AUTHORIZED / NOT_YET_EXECUTED`; A2 robustness execution is `HARD BLOCKED`; and the
+required production-authority re-freeze has not been accepted. **No Full81 result exists.**
 
 ## 6. Methodology vs. implementation status — keep these separate
 
@@ -314,7 +378,12 @@ obstacle.
 | Non-accepted / failed immutable candidates | `docs/research_framework_v7_4_2026-09-26.md` (Framework v7.4 Candidate R1), `docs/thesis_literature_evidence_registry_v7_3_2026-09-23.md` (Registry R1), `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r2.md` (Registry R2) |
 | Earlier historical framework/registry lineage | `docs/research_framework_v7_2026-08-14.md`, `docs/research_framework_v7_1_2026-08-16.md`, `docs/thesis_literature_evidence_registry_v7_2026-08-14.md`, `docs/thesis_literature_evidence_registry_v7_1_2026-08-16.md` |
 | Numbered pipeline scripts | `scripts/` (active), `scripts_archive/` (superseded, do not use as production input) |
-| Current production routing authority and successor stack | `src/production_input_authority_v7_3.py`, `src/production_successor_stack_v7_3.py`, `scripts/21a`–`21d` |
+| Current production routing authority and successor stack | `src/production_input_authority_v7_3.py` (inherited, unmodified, historical v7.3 pins), `src/production_authority_bundle_v7_4.py` (additive V7.4 base authority identity — candidate), `src/production_authority_lifecycle_u06.py` (U-06 R3 accepted-lifecycle overlay — absent/not frozen), `src/production_successor_stack_v7_3.py`, `scripts/21a`–`21e`. The audited runtime production dependency surface is `RUNTIME_PRODUCTION_DEPENDENCY_PATHS` in the overlay module (16 executed paths; 20 including gate-protected ones). |
+| U-06 alignment Candidate R3 (current) | `docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md`, `results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json` |
+| U-06 alignment Candidate R2 (CRITICAL NO-GO, immutable) | `docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r2_2026-10-02.md`, `results/provenance/u_06_v7_4_production_authority_alignment_candidate_r2_2026-10-02/alignment_manifest.json` |
+| U-06 alignment Candidate R1 (failed audit, immutable) | `docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_2026-10-02.md`, `results/provenance/u_06_v7_4_production_authority_alignment_candidate_2026-10-02/alignment_manifest.json` |
+| U-06 superseded candidate source snapshot | `results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/superseded_sources/` |
+| Task 3 governance-sequencing successor acceptance evidence | `docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md`, `results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json` (published commit `fbdd5f0`) |
 | Core annual optimization model | `src/annual_design_model_v7_2.py` |
 | Rainflow ex-post validation | `src/rainflow_validation_v7_2.py` |
 | Data | `data/raw/`, `data/interim/`, `data/processed/` (accepted annual planning input, valid outage starts), `data/reference/` (tariffs, parameter registry, economic interface — machine-readable production parameters) |
