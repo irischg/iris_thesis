@@ -79,10 +79,7 @@ from typing import Any, Mapping, Sequence
 from src.production_input_authority_v7_3 import sha256_file
 
 
-LIFECYCLE_MODULE_VERSION = (
-    "v7.4-production-authority-accepted-lifecycle-overlay-2026-10-02-"
-    "full81-auth-mech-candidate-r2"
-)
+LIFECYCLE_MODULE_VERSION = "v7.4-u06-accepted-lifecycle-overlay-2026-10-02-r3"
 
 #: The one stable lineage identity every R3 lifecycle artifact must declare.
 #: Hard-coding this is the point: it is the anchor that makes an unrelated
@@ -125,16 +122,7 @@ class RoleContract:
 
     role: str
     artifact_type: str
-    #: Generation-independent artifact-type suffix.  The full ``artifact_type``
-    #: is ``<generation artifact-type prefix> + <suffix>``, so a role record of
-    #: one authority generation is detectably the wrong TYPE in another, not
-    #: merely the wrong schema.
-    artifact_type_suffix: str
     schema_version: str
-    #: Generation-independent schema suffix.  The full ``schema_version`` is
-    #: ``<generation schema prefix> + <suffix>``, which is what makes a role
-    #: record of one authority generation detectably unusable in another.
-    schema_suffix: str
     #: Earlier roles whose exact identity this role must itself bind.
     binds_roles: tuple[str, ...]
     #: Must this record declare the candidate manifest identity?  The
@@ -154,35 +142,14 @@ class RoleContract:
             "required_fields": list(self.required_fields),
         }
 
-    def for_generation_namespace(
-        self, artifact_type_prefix: str, schema_prefix: str
-    ) -> "RoleContract":
-        """This contract re-expressed in another generation's namespace."""
 
-        return RoleContract(
-            role=self.role,
-            artifact_type=artifact_type_prefix + self.artifact_type_suffix,
-            artifact_type_suffix=self.artifact_type_suffix,
-            schema_version=schema_prefix + self.schema_suffix,
-            schema_suffix=self.schema_suffix,
-            binds_roles=self.binds_roles,
-            declares_candidate_manifest=self.declares_candidate_manifest,
-            required_fields=self.required_fields,
-        )
-
-
-#: The accepted U-06 R3 namespace prefixes.  Unchanged values: the accepted
-#: role ``artifact_type`` and ``schema_version`` strings are reproduced exactly.
-_ARTIFACT_TYPE_PREFIX = "U06_"
 _SCHEMA_PREFIX = "iris-thesis-u06-r3-"
 
-ROLE_CONTRACT_TEMPLATES: Mapping[str, RoleContract] = {
+ROLE_CONTRACTS: Mapping[str, RoleContract] = {
     "implementation_candidate": RoleContract(
         role="implementation_candidate",
         artifact_type="U06_IMPLEMENTATION_CANDIDATE",
-        artifact_type_suffix="IMPLEMENTATION_CANDIDATE",
         schema_version=_SCHEMA_PREFIX + "implementation-candidate-v1",
-        schema_suffix="implementation-candidate-v1",
         binds_roles=(),
         declares_candidate_manifest=False,
         required_fields=("candidate_checkpoint", "implementation_identity_digest"),
@@ -190,9 +157,7 @@ ROLE_CONTRACT_TEMPLATES: Mapping[str, RoleContract] = {
     "independent_audit_pass": RoleContract(
         role="independent_audit_pass",
         artifact_type="U06_INDEPENDENT_AUDIT_PASS",
-        artifact_type_suffix="INDEPENDENT_AUDIT_PASS",
         schema_version=_SCHEMA_PREFIX + "independent-audit-pass-v1",
-        schema_suffix="independent-audit-pass-v1",
         binds_roles=("implementation_candidate",),
         declares_candidate_manifest=True,
         required_fields=(
@@ -206,9 +171,7 @@ ROLE_CONTRACT_TEMPLATES: Mapping[str, RoleContract] = {
     "acceptance_closure": RoleContract(
         role="acceptance_closure",
         artifact_type="U06_ACCEPTANCE_CLOSURE",
-        artifact_type_suffix="ACCEPTANCE_CLOSURE",
         schema_version=_SCHEMA_PREFIX + "acceptance-closure-v1",
-        schema_suffix="acceptance-closure-v1",
         binds_roles=("implementation_candidate", "independent_audit_pass"),
         declares_candidate_manifest=True,
         required_fields=("acceptance_status", "audit_publication_commit"),
@@ -216,9 +179,7 @@ ROLE_CONTRACT_TEMPLATES: Mapping[str, RoleContract] = {
     "acceptance_manifest": RoleContract(
         role="acceptance_manifest",
         artifact_type="U06_ACCEPTANCE_MANIFEST",
-        artifact_type_suffix="ACCEPTANCE_MANIFEST",
         schema_version=_SCHEMA_PREFIX + "acceptance-manifest-v1",
-        schema_suffix="acceptance-manifest-v1",
         binds_roles=(
             "implementation_candidate",
             "independent_audit_pass",
@@ -230,9 +191,7 @@ ROLE_CONTRACT_TEMPLATES: Mapping[str, RoleContract] = {
     "production_authority_re_freeze": RoleContract(
         role="production_authority_re_freeze",
         artifact_type="U06_PRODUCTION_AUTHORITY_RE_FREEZE",
-        artifact_type_suffix="PRODUCTION_AUTHORITY_RE_FREEZE",
         schema_version=_SCHEMA_PREFIX + "production-authority-re-freeze-v1",
-        schema_suffix="production-authority-re-freeze-v1",
         binds_roles=(
             "implementation_candidate",
             "independent_audit_pass",
@@ -248,16 +207,8 @@ ROLE_CONTRACT_TEMPLATES: Mapping[str, RoleContract] = {
     ),
 }
 
-#: Role order is the lifecycle order; later roles bind earlier ones.  Generation
-#: independent: every generation uses the same five roles in the same order.
-REQUIRED_ACCEPTED_ROLES: tuple[str, ...] = tuple(ROLE_CONTRACT_TEMPLATES)
-
-#: The accepted U-06 R3 generation role contracts, retained under their accepted
-#: name.  ``AuthorityGeneration.role_contracts`` supplies any other generation.
-ROLE_CONTRACTS: Mapping[str, RoleContract] = {
-    role: contract.for_generation_namespace(_ARTIFACT_TYPE_PREFIX, _SCHEMA_PREFIX)
-    for role, contract in ROLE_CONTRACT_TEMPLATES.items()
-}
+#: Role order is the lifecycle order; later roles bind earlier ones.
+REQUIRED_ACCEPTED_ROLES: tuple[str, ...] = tuple(ROLE_CONTRACTS)
 
 ACCEPTED_LIFECYCLE_ARTIFACT_TYPE = "U06_ACCEPTED_LIFECYCLE"
 LIFECYCLE_RECORD_SCHEMA_VERSION = _SCHEMA_PREFIX + "accepted-lifecycle-v1"
@@ -287,246 +238,6 @@ CANDIDATE_ARTIFACT_PATHS: tuple[str, ...] = (
 
 #: Directory prefixes that can never hold an acceptance-decision artifact.
 NON_GOVERNANCE_PREFIXES: tuple[str, ...] = ("src/", "scripts/", "tests/")
-
-
-# ---------------------------------------------------------------------------
-# H-01: production-authority GENERATIONS
-# ---------------------------------------------------------------------------
-#
-# Finding ``H-01`` (CRITICAL) against Candidate R1: this overlay was
-# single-generation and hard-bound to U-06 R3, so once accepted implementation
-# bytes changed there was no lawful path by which any successor could be
-# audited, accepted, or re-frozen.  Every lifecycle role rejected a successor
-# lineage with ``U06_LINEAGE_MISMATCH``, the implementation-candidate role was
-# path-pinned to the R3 alignment manifest, and the single accepted-lifecycle
-# record slot was already occupied by a committed record declaring the
-# predecessor digest.  Reaching ``FROZEN`` for changed bytes would have
-# required MUTATING accepted R3 artifacts.
-#
-# The remedy follows the repository own verified R2 -> R3 precedent, in which
-# the overlay advanced its generation namespace (new lineage, new candidate,
-# new schema prefix, new accepted-lifecycle record directory) while every
-# predecessor artifact stayed byte-identical.  That precedent is now
-# generalised rather than repeated by hand: a generation is a value, the
-# registry holds every generation ever declared, and exactly one is current.
-#
-# Advancing to a further generation therefore needs one new
-# :class:`AuthorityGeneration` plus a change of :data:`CURRENT_GENERATION` - it
-# never needs a validator rewrite, and it never touches a predecessor artifact.
-#
-# No digest and no commit is hard-coded here.  Predecessor identity is read
-# from the predecessor own on-disk record and from live Git, so this module
-# still contains zero 64-hex literals.
-
-
-@dataclass(frozen=True)
-class AuthorityGeneration:
-    """One production-authority lifecycle generation.
-
-    A generation owns its lineage identity, its candidate identity, the fixed
-    candidate artifacts an acceptance must be about, its accepted-lifecycle
-    record slot, and its schema namespace.  Two generations can never satisfy
-    each other roles: the lineage, the candidate id, the candidate paths and
-    every role ``schema_version`` all differ.
-    """
-
-    generation_id: str
-    lineage_id: str
-    candidate_id: str
-    candidate_checkpoint_path: str
-    candidate_manifest_path: str
-    accepted_lifecycle_record_path: str
-    artifact_type_prefix: str
-    schema_prefix: str
-    #: Candidate ids of failed/superseded candidates in this lineage, which a
-    #: role record may never name.
-    superseded_candidate_ids: tuple[str, ...]
-    #: Candidate artifact paths that may never fill roles 2-5 of this
-    #: generation.
-    candidate_artifact_paths: tuple[str, ...]
-    #: The accepted generation this one succeeds, or ``None`` for the first.
-    predecessor_generation_id: str | None
-    predecessor_lineage_id: str | None
-    predecessor_accepted_lifecycle_record_path: str | None
-    disposition: str
-
-    @property
-    def role_contracts(self) -> Mapping[str, RoleContract]:
-        """This generation five role contracts, in lifecycle order."""
-
-        return {
-            role: contract.for_generation_namespace(
-                self.artifact_type_prefix, self.schema_prefix
-            )
-            for role, contract in ROLE_CONTRACT_TEMPLATES.items()
-        }
-
-    @property
-    def lifecycle_record_artifact_type(self) -> str:
-        return self.artifact_type_prefix + "ACCEPTED_LIFECYCLE"
-
-    @property
-    def lifecycle_record_schema_version(self) -> str:
-        return self.schema_prefix + "accepted-lifecycle-v1"
-
-    def as_dict(self) -> dict[str, Any]:
-        return {
-            "generation_id": self.generation_id,
-            "lineage_id": self.lineage_id,
-            "candidate_id": self.candidate_id,
-            "candidate_checkpoint_path": self.candidate_checkpoint_path,
-            "candidate_manifest_path": self.candidate_manifest_path,
-            "accepted_lifecycle_record_path": self.accepted_lifecycle_record_path,
-            "artifact_type_prefix": self.artifact_type_prefix,
-            "schema_prefix": self.schema_prefix,
-            "lifecycle_record_artifact_type": (
-                self.lifecycle_record_artifact_type
-            ),
-            "lifecycle_record_schema_version": (
-                self.lifecycle_record_schema_version
-            ),
-            "role_artifact_types": {
-                role: c.artifact_type for role, c in self.role_contracts.items()
-            },
-            "role_schema_versions": {
-                role: c.schema_version for role, c in self.role_contracts.items()
-            },
-            "superseded_candidate_ids": list(self.superseded_candidate_ids),
-            "predecessor_generation_id": self.predecessor_generation_id,
-            "predecessor_lineage_id": self.predecessor_lineage_id,
-            "predecessor_accepted_lifecycle_record_path": (
-                self.predecessor_accepted_lifecycle_record_path
-            ),
-            "disposition": self.disposition,
-        }
-
-
-#: Generation 1 - U-06 R3.  ACCEPTED, FROZEN, and now an immutable historical
-#: predecessor.  Its values are byte-for-byte the ones it was accepted with;
-#: nothing here is rewritten.
-U06_R3_GENERATION = AuthorityGeneration(
-    generation_id="U06_V7_4_PRODUCTION_AUTHORITY_R3",
-    lineage_id=LINEAGE_ID,
-    candidate_id=R3_CANDIDATE_ID,
-    candidate_checkpoint_path=R3_CANDIDATE_CHECKPOINT_PATH,
-    candidate_manifest_path=R3_CANDIDATE_MANIFEST_PATH,
-    accepted_lifecycle_record_path=(
-        ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix()
-    ),
-    artifact_type_prefix=_ARTIFACT_TYPE_PREFIX,
-    schema_prefix=_SCHEMA_PREFIX,
-    superseded_candidate_ids=SUPERSEDED_CANDIDATE_IDS,
-    candidate_artifact_paths=CANDIDATE_ARTIFACT_PATHS,
-    predecessor_generation_id=None,
-    predecessor_lineage_id=None,
-    predecessor_accepted_lifecycle_record_path=None,
-    disposition="IMMUTABLE_HISTORICAL_ACCEPTED_PREDECESSOR_GENERATION",
-)
-
-#: Generation 2 - the Main Full81 authorization-mechanism successor.
-#: ``MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1`` FAILED its read-only
-#: audit on ``H-01`` / ``H-02`` and is on the rejection list below, so it can
-#: never be revived.  Candidate R2 is the bounded remediation and is itself a
-#: CANDIDATE: no artifact of this generation exists yet.
-FULL81_AUTHORIZATION_MECHANISM_R2_ARTIFACT_TYPE_PREFIX = (
-    "FULL81_AUTH_MECH_R2_"
-)
-FULL81_AUTHORIZATION_MECHANISM_R2_SCHEMA_PREFIX = "iris-thesis-full81-auth-mech-r2-"
-
-FULL81_AUTHORIZATION_MECHANISM_R2_CANDIDATE_CHECKPOINT_PATH = (
-    "docs/checkpoints/"
-    "main_full81_authorization_mechanism_candidate_r2_2026-10-02.md"
-)
-FULL81_AUTHORIZATION_MECHANISM_R2_CANDIDATE_MANIFEST_PATH = (
-    "results/provenance/"
-    "main_full81_authorization_mechanism_candidate_r2_2026-10-02/"
-    "authorization_mechanism_manifest.json"
-)
-FULL81_AUTHORIZATION_MECHANISM_R2_ACCEPTED_LIFECYCLE_RECORD_PATH = (
-    "results/provenance/"
-    "main_full81_authorization_mechanism_accepted_lifecycle_r2/"
-    "accepted_lifecycle_record.json"
-)
-
-#: Candidate R1 provenance, retained as immutable failed-candidate evidence and
-#: barred from filling any role of this generation.
-FULL81_AUTHORIZATION_MECHANISM_R1_CANDIDATE_CHECKPOINT_PATH = (
-    "docs/checkpoints/"
-    "main_full81_authorization_mechanism_candidate_r1_2026-10-02.md"
-)
-FULL81_AUTHORIZATION_MECHANISM_R1_CANDIDATE_MANIFEST_PATH = (
-    "results/provenance/"
-    "main_full81_authorization_mechanism_candidate_r1_2026-10-02/"
-    "authorization_mechanism_manifest.json"
-)
-
-FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION = AuthorityGeneration(
-    generation_id="MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
-    lineage_id="MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
-    candidate_id="MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
-    candidate_checkpoint_path=(
-        FULL81_AUTHORIZATION_MECHANISM_R2_CANDIDATE_CHECKPOINT_PATH
-    ),
-    candidate_manifest_path=(
-        FULL81_AUTHORIZATION_MECHANISM_R2_CANDIDATE_MANIFEST_PATH
-    ),
-    accepted_lifecycle_record_path=(
-        FULL81_AUTHORIZATION_MECHANISM_R2_ACCEPTED_LIFECYCLE_RECORD_PATH
-    ),
-    artifact_type_prefix=(
-        FULL81_AUTHORIZATION_MECHANISM_R2_ARTIFACT_TYPE_PREFIX
-    ),
-    schema_prefix=FULL81_AUTHORIZATION_MECHANISM_R2_SCHEMA_PREFIX,
-    superseded_candidate_ids=(
-        "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1",
-    ),
-    candidate_artifact_paths=(
-        FULL81_AUTHORIZATION_MECHANISM_R1_CANDIDATE_CHECKPOINT_PATH,
-        FULL81_AUTHORIZATION_MECHANISM_R1_CANDIDATE_MANIFEST_PATH,
-        FULL81_AUTHORIZATION_MECHANISM_R2_CANDIDATE_CHECKPOINT_PATH,
-        FULL81_AUTHORIZATION_MECHANISM_R2_CANDIDATE_MANIFEST_PATH,
-    ),
-    predecessor_generation_id=U06_R3_GENERATION.generation_id,
-    predecessor_lineage_id=U06_R3_GENERATION.lineage_id,
-    predecessor_accepted_lifecycle_record_path=(
-        U06_R3_GENERATION.accepted_lifecycle_record_path
-    ),
-    disposition="CURRENT_GENERATION_CANDIDATE_NOT_ACCEPTED_NOT_FROZEN",
-)
-
-#: Every generation ever declared, oldest first.  Predecessors are retained so
-#: that what they were stays provable, never so that they can authorise.
-AUTHORITY_GENERATIONS: tuple[AuthorityGeneration, ...] = (
-    U06_R3_GENERATION,
-    FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION,
-)
-
-#: The one generation that may freeze live production authority.
-CURRENT_GENERATION = FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION
-
-#: Superseded generations: provable, never authoritative.
-HISTORICAL_GENERATIONS: tuple[AuthorityGeneration, ...] = tuple(
-    g for g in AUTHORITY_GENERATIONS if g is not CURRENT_GENERATION
-)
-
-GENERATIONS_BY_ID: Mapping[str, AuthorityGeneration] = {
-    g.generation_id: g for g in AUTHORITY_GENERATIONS
-}
-GENERATIONS_BY_LINEAGE: Mapping[str, AuthorityGeneration] = {
-    g.lineage_id: g for g in AUTHORITY_GENERATIONS
-}
-
-
-def generation_for_lineage(lineage_id: Any) -> "AuthorityGeneration | None":
-    """The declared generation for `lineage_id`, or ``None`` if unknown."""
-
-    return GENERATIONS_BY_LINEAGE.get(str(lineage_id))
-
-
-def current_generation() -> "AuthorityGeneration":
-    """The one generation that may freeze live production authority."""
-
-    return CURRENT_GENERATION
 
 
 # ---------------------------------------------------------------------------
@@ -954,13 +665,7 @@ def _read_json(root: Path, relative: str, *, label: str) -> Mapping[str, Any]:
     return payload
 
 
-def _validate_role_path(
-    role: str,
-    relative: str,
-    record_relative: str,
-    generation: AuthorityGeneration | None = None,
-) -> None:
-    generation = generation or CURRENT_GENERATION
+def _validate_role_path(role: str, relative: str, record_relative: str) -> None:
     normalized = relative.replace("\\", "/").strip()
     _require(
         bool(normalized) and not normalized.startswith("/"),
@@ -969,15 +674,14 @@ def _validate_role_path(
     )
     if role == "implementation_candidate":
         _require(
-            normalized == generation.candidate_manifest_path,
+            normalized == R3_CANDIDATE_MANIFEST_PATH,
             "U06_ROLE_TARGET_MISMATCH",
-            f"The implementation-candidate role of generation "
-            f"{generation.generation_id} must be its candidate manifest "
-            f"{generation.candidate_manifest_path}; observed {normalized}.",
+            f"The implementation-candidate role must be the R3 candidate manifest "
+            f"{R3_CANDIDATE_MANIFEST_PATH}; observed {normalized}.",
         )
         return
     _require(
-        normalized not in generation.candidate_artifact_paths,
+        normalized not in CANDIDATE_ARTIFACT_PATHS,
         "U06_SELF_ACCEPTANCE_REJECTED",
         f"Role {role!r} may not be filled by a candidate artifact: {normalized}",
     )
@@ -1044,17 +748,10 @@ def validate_role_envelope(
     payload: Mapping[str, Any],
     *,
     live_digest: str,
-    generation: AuthorityGeneration | None = None,
 ) -> dict[str, Any]:
-    """Validate the common lineage/type/target envelope of one role record.
+    """Validate the common lineage/type/target envelope of one role record."""
 
-    ``generation`` selects the authority generation whose contract applies.
-    Omitting it uses :data:`CURRENT_GENERATION`, so an omission can never let a
-    superseded generation authorise anything.
-    """
-
-    generation = generation or CURRENT_GENERATION
-    contract = generation.role_contracts[role]
+    contract = ROLE_CONTRACTS[role]
     label = f"role {role!r} ({relative})"
 
     _require(
@@ -1071,34 +768,33 @@ def validate_role_envelope(
         f"{payload.get('schema_version')!r}",
     )
     _require(
-        payload.get("lineage_id") == generation.lineage_id,
+        payload.get("lineage_id") == LINEAGE_ID,
         "U06_LINEAGE_MISMATCH",
-        f"{label}: lineage_id must be {generation.lineage_id!r} for generation "
-        f"{generation.generation_id}; observed {payload.get('lineage_id')!r}",
+        f"{label}: lineage_id must be {LINEAGE_ID!r}; observed "
+        f"{payload.get('lineage_id')!r}",
     )
     target = payload.get("target_candidate_id")
     _require(
-        target not in generation.superseded_candidate_ids,
+        target not in SUPERSEDED_CANDIDATE_IDS,
         "U06_SUPERSEDED_CANDIDATE_REJECTED",
-        f"{label}: target_candidate_id {target!r} names a superseded candidate "
-        f"of generation {generation.generation_id}. A failed candidate may "
-        "never be revived.",
+        f"{label}: target_candidate_id {target!r} names a superseded candidate. "
+        "R1 failed its audit and R2 is NO-GO; neither may be revived.",
     )
     _require(
-        target == generation.candidate_id,
+        target == R3_CANDIDATE_ID,
         "U06_ROLE_TARGET_MISMATCH",
-        f"{label}: target_candidate_id must be {generation.candidate_id!r}; "
-        f"observed {target!r}",
+        f"{label}: target_candidate_id must be {R3_CANDIDATE_ID!r}; observed "
+        f"{target!r}",
     )
 
     checkpoint_rel, checkpoint_sha = _declared_identity(
         payload, "candidate_checkpoint", label=label
     )
     _require(
-        checkpoint_rel == generation.candidate_checkpoint_path,
+        checkpoint_rel == R3_CANDIDATE_CHECKPOINT_PATH,
         "U06_ROLE_TARGET_MISMATCH",
-        f"{label}: candidate_checkpoint must be "
-        f"{generation.candidate_checkpoint_path}; observed {checkpoint_rel}",
+        f"{label}: candidate_checkpoint must be {R3_CANDIDATE_CHECKPOINT_PATH}; "
+        f"observed {checkpoint_rel}",
     )
     _require_live_match(
         root, checkpoint_rel, checkpoint_sha, label=label, field="candidate_checkpoint"
@@ -1110,10 +806,10 @@ def validate_role_envelope(
             payload, "candidate_manifest", label=label
         )
         _require(
-            manifest_rel == generation.candidate_manifest_path,
+            manifest_rel == R3_CANDIDATE_MANIFEST_PATH,
             "U06_ROLE_TARGET_MISMATCH",
-            f"{label}: candidate_manifest must be "
-            f"{generation.candidate_manifest_path}; observed {manifest_rel}",
+            f"{label}: candidate_manifest must be {R3_CANDIDATE_MANIFEST_PATH}; "
+            f"observed {manifest_rel}",
         )
         _require_live_match(
             root,
@@ -1147,11 +843,10 @@ def validate_role_envelope(
     return {
         "role": role,
         "path": relative,
-        "generation_id": generation.generation_id,
         "artifact_type": contract.artifact_type,
         "schema_version": contract.schema_version,
-        "lineage_id": generation.lineage_id,
-        "target_candidate_id": generation.candidate_id,
+        "lineage_id": LINEAGE_ID,
+        "target_candidate_id": R3_CANDIDATE_ID,
         "candidate_checkpoint_sha256": checkpoint_sha,
         "candidate_manifest_sha256": manifest_sha,
         "implementation_identity_digest": declared_digest,
@@ -1164,12 +859,10 @@ def _validate_bound_roles(
     relative: str,
     payload: Mapping[str, Any],
     resolved: Mapping[str, Mapping[str, Any]],
-    generation: AuthorityGeneration | None = None,
 ) -> None:
     """Require this role to bind the exact identity of every earlier role."""
 
-    generation = generation or CURRENT_GENERATION
-    contract = generation.role_contracts[role]
+    contract = ROLE_CONTRACTS[role]
     label = f"role {role!r} ({relative})"
     for earlier in contract.binds_roles:
         if earlier == "implementation_candidate":
@@ -1204,11 +897,9 @@ def validate_role_specifics(
     relative: str,
     payload: Mapping[str, Any],
     resolved: Mapping[str, Mapping[str, Any]],
-    generation: AuthorityGeneration | None = None,
 ) -> None:
     """Role-specific semantics, beyond the shared envelope."""
 
-    generation = generation or CURRENT_GENERATION
     label = f"role {role!r} ({relative})"
 
     if role == "independent_audit_pass":
@@ -1253,7 +944,7 @@ def validate_role_specifics(
         require_published_in_commit(
             root,
             commit,
-            generation.candidate_checkpoint_path,
+            R3_CANDIDATE_CHECKPOINT_PATH,
             str(payload["candidate_checkpoint"]["sha256"]).lower(),
             label=f"{label} audit_publication_commit",
         )
@@ -1306,27 +997,13 @@ def validate_role_specifics(
 
 
 def validate_accepted_lifecycle_payload(
-    root: Path,
-    payload: Mapping[str, Any],
-    *,
-    record_relative: str,
-    generation: AuthorityGeneration | None = None,
+    root: Path, payload: Mapping[str, Any], *, record_relative: str
 ) -> dict[str, Any]:
     """Validate an accepted-lifecycle record and its whole role chain.
 
     Fail-closed, and ordered so the reported status names the real governance
     problem: envelope, then role authenticity, then chain consistency, then
     publication containment.
-
-    ``generation`` selects the authority generation whose contract applies.
-    When omitted it is resolved from the record own declared ``lineage_id``
-    against the generation registry, so a record of a superseded generation is
-    still validated by the contract it was written under rather than silently
-    judged by a newer one.  That resolution is a *pure validator* convenience:
-    live production authority comes from :func:`resolve_u06_lifecycle`, which
-    reads only the CURRENT generation record slot, and from
-    :func:`require_frozen_lifecycle`, which refuses any generation but the
-    current one.
     """
 
     root = root.resolve()
@@ -1337,40 +1014,25 @@ def validate_accepted_lifecycle_payload(
         "U06_LIFECYCLE_RECORD_INVALID",
         f"{label}: not a JSON object.",
     )
-    if generation is None:
-        declared_lineage = payload.get("lineage_id")
-        generation = generation_for_lineage(declared_lineage)
-        _require(
-            generation is not None,
-            "U06_LINEAGE_MISMATCH",
-            f"{label}: lineage_id {declared_lineage!r} is not a declared "
-            "production-authority generation lineage. Known lineages: "
-            f"{sorted(GENERATIONS_BY_LINEAGE)}.",
-        )
     _require(
-        payload.get("artifact_type") == generation.lifecycle_record_artifact_type,
+        payload.get("artifact_type") == ACCEPTED_LIFECYCLE_ARTIFACT_TYPE,
         "U06_ROLE_ARTIFACT_TYPE_MISMATCH",
-        f"{label}: artifact_type must be "
-        f"{generation.lifecycle_record_artifact_type!r} for generation "
-        f"{generation.generation_id}.",
+        f"{label}: artifact_type must be {ACCEPTED_LIFECYCLE_ARTIFACT_TYPE!r}.",
     )
     _require(
-        payload.get("schema_version")
-        == generation.lifecycle_record_schema_version,
+        payload.get("schema_version") == LIFECYCLE_RECORD_SCHEMA_VERSION,
         "U06_ROLE_SCHEMA_MISMATCH",
-        f"{label}: schema_version must be "
-        f"{generation.lifecycle_record_schema_version!r} for generation "
-        f"{generation.generation_id}.",
+        f"{label}: schema_version must be {LIFECYCLE_RECORD_SCHEMA_VERSION!r}.",
     )
     _require(
-        payload.get("lineage_id") == generation.lineage_id,
+        payload.get("lineage_id") == LINEAGE_ID,
         "U06_LINEAGE_MISMATCH",
-        f"{label}: lineage_id must be {generation.lineage_id!r}.",
+        f"{label}: lineage_id must be {LINEAGE_ID!r}.",
     )
     _require(
-        payload.get("target_candidate_id") == generation.candidate_id,
+        payload.get("target_candidate_id") == R3_CANDIDATE_ID,
         "U06_ROLE_TARGET_MISMATCH",
-        f"{label}: target_candidate_id must be {generation.candidate_id!r}.",
+        f"{label}: target_candidate_id must be {R3_CANDIDATE_ID!r}.",
     )
     for field, expected in (
         ("u06_alignment_status", ACCEPTED_ALIGNMENT_STATUS),
@@ -1437,7 +1099,7 @@ def validate_accepted_lifecycle_payload(
             "U06_LIFECYCLE_RECORD_INVALID",
             f"{label}: role {role!r} has no usable SHA-256.",
         )
-        _validate_role_path(role, relative, record_relative, generation)
+        _validate_role_path(role, relative, record_relative)
         _require(
             relative not in seen_paths,
             "U06_ROLE_ALIASING_REJECTED",
@@ -1457,19 +1119,10 @@ def validate_accepted_lifecycle_payload(
         )
         record = _read_json(root, relative, label=f"role {role!r}")
         envelope = validate_role_envelope(
-            root,
-            role,
-            relative,
-            record,
-            live_digest=live_digest,
-            generation=generation,
+            root, role, relative, record, live_digest=live_digest
         )
-        _validate_bound_roles(
-            root, role, relative, record, resolved, generation
-        )
-        validate_role_specifics(
-            root, role, relative, record, resolved, generation
-        )
+        _validate_bound_roles(root, role, relative, record, resolved)
+        validate_role_specifics(root, role, relative, record, resolved)
         resolved[role] = {
             "path": relative,
             "sha256": actual,
@@ -1481,21 +1134,13 @@ def validate_accepted_lifecycle_payload(
     targets = {r["target_candidate_id"] for r in resolved.values()}
     digests = {r["implementation_identity_digest"] for r in resolved.values()}
     checkpoints = {r["candidate_checkpoint_sha256"] for r in resolved.values()}
-    generations = {r["generation_id"] for r in resolved.values()}
     _require(
-        generations == {generation.generation_id},
-        "U06_CROSS_GENERATION_ROLE_REJECTED",
-        f"{label}: roles disagree on authority generation: {sorted(generations)}. "
-        "A lifecycle may never be assembled from roles of different "
-        "production-authority generations.",
-    )
-    _require(
-        lineages == {generation.lineage_id},
+        lineages == {LINEAGE_ID},
         "U06_LINEAGE_MISMATCH",
         f"{label}: roles disagree on lineage_id: {sorted(lineages)}",
     )
     _require(
-        targets == {generation.candidate_id},
+        targets == {R3_CANDIDATE_ID},
         "U06_ROLE_TARGET_MISMATCH",
         f"{label}: roles disagree on target_candidate_id: {sorted(targets)}",
     )
@@ -1535,13 +1180,8 @@ def validate_accepted_lifecycle_payload(
 
     return {
         "lifecycle_module_version": LIFECYCLE_MODULE_VERSION,
-        "generation_id": generation.generation_id,
-        "generation": generation.as_dict(),
-        "is_current_generation": (
-            generation.generation_id == CURRENT_GENERATION.generation_id
-        ),
-        "lineage_id": generation.lineage_id,
-        "target_candidate_id": generation.candidate_id,
+        "lineage_id": LINEAGE_ID,
+        "target_candidate_id": R3_CANDIDATE_ID,
         "record_path": record_relative,
         "record_present": True,
         "record_committed": True,
@@ -1571,24 +1211,16 @@ def validate_accepted_lifecycle_payload(
 
 
 def absent_lifecycle(
-    *,
-    reason: str | None = None,
-    record_path: str | None = None,
-    generation: AuthorityGeneration | None = None,
+    *, reason: str | None = None, record_path: str | None = None
 ) -> dict[str, Any]:
     """The most restrictive lifecycle state: nothing accepted, nothing frozen."""
 
-    generation = generation or CURRENT_GENERATION
     return {
         "lifecycle_module_version": LIFECYCLE_MODULE_VERSION,
-        "generation_id": generation.generation_id,
-        "generation": generation.as_dict(),
-        "is_current_generation": (
-            generation.generation_id == CURRENT_GENERATION.generation_id
-        ),
-        "lineage_id": generation.lineage_id,
-        "target_candidate_id": generation.candidate_id,
-        "record_path": record_path or generation.accepted_lifecycle_record_path,
+        "lineage_id": LINEAGE_ID,
+        "target_candidate_id": R3_CANDIDATE_ID,
+        "record_path": record_path
+        or ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix(),
         "record_present": False,
         "record_committed": False,
         "record_published": False,
@@ -1601,13 +1233,10 @@ def absent_lifecycle(
         "authorizes_main_full81": False,
         "freeze_blocked_reason": reason
         or (
-            "No accepted lifecycle record exists for the current "
-            f"production-authority generation {generation.generation_id} at "
-            f"{generation.accepted_lifecycle_record_path}. Production authority "
+            "No accepted U-06 R3 lifecycle record exists. Production authority "
             "cannot be frozen by an unaccepted candidate, by clean Git state, by "
-            "matching authority hashes, by publishing candidate bytes, by any "
-            "set of unrelated historical artifacts, or by a superseded "
-            "generation accepted lifecycle."
+            "matching authority hashes, by publishing candidate bytes, or by any "
+            "set of unrelated historical artifacts."
         ),
         "implementation_identity_digest": None,
         "required_future_roles": list(REQUIRED_ACCEPTED_ROLES),
@@ -1630,19 +1259,16 @@ def resolve_u06_lifecycle(root: Path) -> dict[str, Any]:
     """
 
     root = root.resolve()
-    generation = CURRENT_GENERATION
-    record_relative = generation.accepted_lifecycle_record_path
-    path = root / record_relative
+    record_relative = ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix()
+    path = root / ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH
 
     if not path.is_file():
-        return absent_lifecycle(
-            record_path=record_relative, generation=generation
-        )
+        return absent_lifecycle(record_path=record_relative)
 
     tracked, clean = is_tracked_and_clean(root, record_relative)
     if not tracked or not clean:
         state = absent_lifecycle(
-            record_path=record_relative, generation=generation,
+            record_path=record_relative,
             reason=(
                 "An accepted-lifecycle record exists in the working tree but is "
                 f"{'untracked' if not tracked else 'modified relative to HEAD'}. "
@@ -1657,7 +1283,7 @@ def resolve_u06_lifecycle(root: Path) -> dict[str, Any]:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
         state = absent_lifecycle(
-            record_path=record_relative, generation=generation,
+            record_path=record_relative,
             reason=f"Accepted-lifecycle record is not readable JSON: {exc}",
         )
         state["record_present"] = True
@@ -1667,14 +1293,11 @@ def resolve_u06_lifecycle(root: Path) -> dict[str, Any]:
 
     try:
         return validate_accepted_lifecycle_payload(
-            root,
-            payload,
-            record_relative=record_relative,
-            generation=generation,
+            root, payload, record_relative=record_relative
         )
     except U06LifecycleError as exc:
         state = absent_lifecycle(
-            record_path=record_relative, generation=generation, reason=f"{exc.status}: {exc}"
+            record_path=record_relative, reason=f"{exc.status}: {exc}"
         )
         state["record_present"] = True
         state["record_committed"] = True
@@ -1684,15 +1307,10 @@ def resolve_u06_lifecycle(root: Path) -> dict[str, Any]:
 
 
 #: Invariants a resolved lifecycle mapping must satisfy before any freeze.
-#: ``generation_id`` / ``is_current_generation`` are the H-01 gate: a complete,
-#: valid, published accepted lifecycle of a SUPERSEDED generation must never
-#: freeze live production authority.
 _FROZEN_INVARIANTS: Mapping[str, Any] = {
     "accepted_lifecycle_overlay": PRESENT_VALID_OVERLAY_STATUS,
-    "generation_id": CURRENT_GENERATION.generation_id,
-    "is_current_generation": True,
-    "lineage_id": CURRENT_GENERATION.lineage_id,
-    "target_candidate_id": CURRENT_GENERATION.candidate_id,
+    "lineage_id": LINEAGE_ID,
+    "target_candidate_id": R3_CANDIDATE_ID,
     "u06_alignment_status": ACCEPTED_ALIGNMENT_STATUS,
     "u06_independent_audit_status": ACCEPTED_AUDIT_STATUS,
     "u06_acceptance_status": ACCEPTED_ACCEPTANCE_STATUS,
@@ -1711,62 +1329,18 @@ def require_frozen_lifecycle(lifecycle: Mapping[str, Any] | None) -> dict[str, A
     if lifecycle is None:
         raise U06LifecycleError(
             "U06_ACCEPTED_LIFECYCLE_ABSENT",
-            "No accepted lifecycle was resolved. Production authority cannot be "
-            "frozen without an accepted lifecycle record of the current "
-            f"production-authority generation {CURRENT_GENERATION.generation_id}.",
+            "No U-06 accepted lifecycle was resolved. Production authority cannot "
+            "be frozen without an accepted U-06 R3 lifecycle record.",
         )
-
-    # Absence first: when no accepted-lifecycle record exists for the current
-    # generation at all, say so. It is the most informative answer and the most
-    # restrictive state.
-    if lifecycle.get("accepted_lifecycle_overlay") == PRE_ACCEPTANCE_OVERLAY_STATUS:
-        raise U06LifecycleError(
-            "U06_ACCEPTED_LIFECYCLE_ABSENT",
-            lifecycle.get("freeze_blocked_reason")
-            or (
-                "No accepted lifecycle record exists for the current "
-                f"production-authority generation "
-                f"{CURRENT_GENERATION.generation_id}."
-            ),
-        )
-
-    # Then completeness: a mapping that does not satisfy every role is
-    # incomplete, and saying so is more useful than naming a generation
-    # problem it also has.
-    satisfied = lifecycle.get("satisfied_roles")
-    if not isinstance(satisfied, Mapping) or set(satisfied) != set(
-        REQUIRED_ACCEPTED_ROLES
-    ):
-        raise U06LifecycleError(
-            "U06_ACCEPTED_LIFECYCLE_INCOMPLETE",
-            "Accepted lifecycle does not satisfy every required role: "
-            f"required={list(REQUIRED_ACCEPTED_ROLES)}, "
-            f"satisfied={sorted(satisfied) if isinstance(satisfied, Mapping) else satisfied}",
-        )
-    missing_first: Sequence[Any] = lifecycle.get("missing_roles") or []
-    if list(missing_first):
-        raise U06LifecycleError(
-            "U06_ACCEPTED_LIFECYCLE_INCOMPLETE",
-            f"Accepted lifecycle reports missing roles: {list(missing_first)}",
-        )
-
     for field, expected in _FROZEN_INVARIANTS.items():
         observed = lifecycle.get(field)
         if observed != expected:
-            if field in ("generation_id", "is_current_generation"):
-                observed_generation = lifecycle.get("generation_id")
-                status = (
-                    "U06_SUPERSEDED_GENERATION_REJECTED"
-                    if observed_generation in GENERATIONS_BY_ID
-                    else "U06_ACCEPTED_LIFECYCLE_INVALID"
-                )
-            elif (
-                lifecycle.get("accepted_lifecycle_overlay")
+            status = (
+                "U06_ACCEPTED_LIFECYCLE_ABSENT"
+                if lifecycle.get("accepted_lifecycle_overlay")
                 == PRE_ACCEPTANCE_OVERLAY_STATUS
-            ):
-                status = "U06_ACCEPTED_LIFECYCLE_ABSENT"
-            else:
-                status = "U06_ACCEPTED_LIFECYCLE_INVALID"
+                else "U06_ACCEPTED_LIFECYCLE_INVALID"
+            )
             reason = lifecycle.get("freeze_blocked_reason") or (
                 f"{field} must be {expected!r}; observed {observed!r}"
             )
@@ -1832,10 +1406,6 @@ def lifecycle_summary(lifecycle: Mapping[str, Any] | None) -> dict[str, Any]:
     resolved = dict(lifecycle) if lifecycle is not None else absent_lifecycle()
     return {
         "lifecycle_module_version": resolved.get("lifecycle_module_version"),
-        "generation_id": resolved.get("generation_id"),
-        "is_current_generation": resolved.get("is_current_generation"),
-        "current_generation_id": CURRENT_GENERATION.generation_id,
-        "current_generation_lineage_id": CURRENT_GENERATION.lineage_id,
         "lineage_id": resolved.get("lineage_id"),
         "target_candidate_id": resolved.get("target_candidate_id"),
         "u06_alignment_status": resolved.get("u06_alignment_status"),
@@ -1876,38 +1446,23 @@ def is_frozen(lifecycle: Mapping[str, Any] | None) -> bool:
 def future_acceptance_requirements() -> dict[str, Any]:
     """What a future acceptance pass must create. No digest is invented here."""
 
-    generation = CURRENT_GENERATION
     return {
-        "generation_id": generation.generation_id,
-        "generation": generation.as_dict(),
-        "historical_generations": [g.as_dict() for g in HISTORICAL_GENERATIONS],
-        "superseded_generation_can_freeze_live_authority": False,
-        "advancing_a_generation_requires_a_validator_rewrite": False,
-        "advancing_a_generation_mutates_a_predecessor_artifact": False,
-        "lineage_id": generation.lineage_id,
-        "target_candidate_id": generation.candidate_id,
-        "candidate_checkpoint_path": generation.candidate_checkpoint_path,
-        "candidate_manifest_path": generation.candidate_manifest_path,
-        "accepted_lifecycle_record_path": (
-            generation.accepted_lifecycle_record_path
-        ),
-        "accepted_lifecycle_artifact_type": (
-            generation.lifecycle_record_artifact_type
-        ),
-        "accepted_lifecycle_schema_version": (
-            generation.lifecycle_record_schema_version
-        ),
+        "lineage_id": LINEAGE_ID,
+        "target_candidate_id": R3_CANDIDATE_ID,
+        "candidate_checkpoint_path": R3_CANDIDATE_CHECKPOINT_PATH,
+        "candidate_manifest_path": R3_CANDIDATE_MANIFEST_PATH,
+        "accepted_lifecycle_record_path":
+            ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix(),
+        "accepted_lifecycle_artifact_type": ACCEPTED_LIFECYCLE_ARTIFACT_TYPE,
+        "accepted_lifecycle_schema_version": LIFECYCLE_RECORD_SCHEMA_VERSION,
         "record_exists_today": False,
         "role_contracts": {
-            role: contract.as_dict()
-            for role, contract in generation.role_contracts.items()
+            role: contract.as_dict() for role, contract in ROLE_CONTRACTS.items()
         },
         "roles_a_candidate_may_never_fill": list(NON_SELF_ACCEPTABLE_ROLES),
-        "forbidden_role_paths": list(generation.candidate_artifact_paths),
+        "forbidden_role_paths": list(CANDIDATE_ARTIFACT_PATHS),
         "forbidden_role_prefixes": list(NON_GOVERNANCE_PREFIXES),
-        "superseded_candidate_ids_rejected": list(
-            generation.superseded_candidate_ids
-        ),
+        "superseded_candidate_ids_rejected": list(SUPERSEDED_CANDIDATE_IDS),
         "runtime_production_dependency_paths": list(
             RUNTIME_PRODUCTION_DEPENDENCY_PATHS
         ),
@@ -1919,10 +1474,9 @@ def future_acceptance_requirements() -> dict[str, Any]:
             "a machine-readable JSON object",
             "of the role-specific artifact_type",
             "of the role-specific schema_version",
-            f"declaring lineage_id = {generation.lineage_id}",
-            f"declaring target_candidate_id = {generation.candidate_id}",
-            "declaring the exact candidate checkpoint path and live SHA-256 of "
-            f"generation {generation.generation_id}",
+            f"declaring lineage_id = {LINEAGE_ID}",
+            f"declaring target_candidate_id = {R3_CANDIDATE_ID}",
+            "declaring the exact R3 candidate checkpoint path and live SHA-256",
             "declaring the live accepted implementation identity digest",
             "binding the exact identity of every earlier role",
             "present on disk, hash-identical, tracked, and clean",
@@ -1954,9 +1508,7 @@ def future_acceptance_requirements() -> dict[str, Any]:
         "note": (
             "None of these artifacts exists. The overlay resolves to ABSENT / "
             "NOT_FROZEN and the production gate fails closed. No future digest is "
-            "guessed, reserved, or stubbed in this module. A superseded "
-            "generation accepted lifecycle, however complete and published, "
-            "cannot freeze live production authority."
+            "guessed, reserved, or stubbed in this module."
         ),
     }
 
@@ -1967,10 +1519,7 @@ def runtime_dependency_report(root: Path) -> dict[str, Any]:
     root = root.resolve()
     identity = implementation_identity(root)
     return {
-        "generation_id": CURRENT_GENERATION.generation_id,
-        "lineage_id": CURRENT_GENERATION.lineage_id,
-        "predecessor_generation_id": CURRENT_GENERATION.predecessor_generation_id,
-        "predecessor_lineage_id": CURRENT_GENERATION.predecessor_lineage_id,
+        "lineage_id": LINEAGE_ID,
         "runtime_production_dependency_count": len(
             RUNTIME_PRODUCTION_DEPENDENCY_PATHS
         ),

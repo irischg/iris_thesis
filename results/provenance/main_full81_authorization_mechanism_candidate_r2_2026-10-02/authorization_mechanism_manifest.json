@@ -1,0 +1,1367 @@
+{
+  "artifact_type": "FULL81_AUTH_MECH_R2_IMPLEMENTATION_CANDIDATE",
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+    "sha256": "c5ee72d9b50a217c53e2871c77d91e1c76fec3c603dfae66abc2f40d03a87631"
+  },
+  "candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+  "candidate_revision": "R2",
+  "date": "2026-10-02",
+  "files_changed": {
+    "accepted_test_bytes_modified": false,
+    "candidate_r1_provenance_modified": false,
+    "changed_from_candidate_r1": [
+      {
+        "classification": "RUNTIME_AND_IDENTITY_DEFINING",
+        "path": "src/production_authority_lifecycle_u06.py",
+        "reason": "H-01: generation-parameterised. Added AuthorityGeneration, the two declared generations, the registry, CURRENT_GENERATION, and threaded the generation through every validator. resolve_u06_lifecycle now reads only the current generation slot; require_frozen_lifecycle rejects a superseded generation; the aggregator rejects cross-generation role mixing. Every accepted R3 constant keeps its accepted value and the module still holds zero 64-hex literals.",
+        "sha256": "a35cdb6b5dfe35c74e89614d2a5fd7d90321c0f7d5d76e9b40108a1595a35a60"
+      },
+      {
+        "classification": "RUNTIME_AND_VALIDATION_AUTHORITY",
+        "path": "src/main_full81_authorization_v7_4.py",
+        "reason": "H-02: removed REQUIRED_U06_LINEAGE_ID; the expected generation, lineage and record path are now derived from the resolved lifecycle. Renamed u06_* binding fields to production_authority_*, added production_authority_generation_id, advanced the schema to v2 and the lawful path to the r2 namespace, barred the failed R1 candidate id and path, and derived REJECTED_LINEAGE_IDS from the generation registry.",
+        "sha256": "61000dd41171ab0304d22fe052fab5892660efa0e9d3f39bacfe687148409aa5"
+      },
+      {
+        "classification": "RUNTIME_AND_GATE_PROTECTED",
+        "path": "src/production_authority_bundle_v7_4.py",
+        "reason": "Re-pinned the changed alignment surface, advanced the bundle version and the two R2 pin lifecycles. No governance string rewritten.",
+        "sha256": "516725a24750149abc70b79e01c4fdae6338c62420daba60d6eb9adf17cd5b90"
+      },
+      {
+        "classification": "RUNTIME_AND_GATE",
+        "path": "src/production_successor_stack_v7_3.py",
+        "reason": "Additive: emits the current production-authority generation alongside the retained historical u06_lineage_id field.",
+        "sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda"
+      },
+      {
+        "classification": "RUNTIME_ENTRYPOINT",
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+        "reason": "RUNNER_VERSION advanced to candidate-r2 and the generation block is emitted as provenance. No preflight PASS semantics changed. NOT INVOKED in this pass.",
+        "sha256": "57af6b6f1102bff9edb9afc55f15bfe7c61f5ced276658dd270203c7aa30bfe2"
+      },
+      {
+        "classification": "VALIDATION_IDENTITY_NOT_RUNTIME_AUTHORITY",
+        "path": "tests/test_21h_main_full81_authorization_mechanism.py",
+        "reason": "Rewritten for Candidate R2: generation contract tests, the T1-T7 promotion control, cross-generation negative controls, the H-02 dynamic-binding controls, the retained authorization controls, the positive control, and the real-repository-unauthorized controls.",
+        "sha256": "ea9d377c09d1608566a7d1328a9d09ef4f185c448c24e72f5a3dc96a7baef5ce"
+      }
+    ],
+    "git_diff_name_only_against_head": [
+      "scripts/21d_preflight_v7_3_final81_successor.py",
+      "src/production_authority_bundle_v7_4.py",
+      "src/production_authority_lifecycle_u06.py",
+      "src/production_successor_stack_v7_3.py"
+    ],
+    "historical_or_frozen_artifacts_modified": false,
+    "newly_added_paths": [
+      {
+        "classification": "CANDIDATE_PROVENANCE",
+        "path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+        "reason": "Candidate R2 checkpoint, revised 2026-10-03 by the bounded provenance / documentation correction recorded under provenance_correction. Documentation only: no production code, test, methodology, Framework or Registry byte changed, and the Candidate-R2 implementation identity is unchanged.",
+        "sha256": "c5ee72d9b50a217c53e2871c77d91e1c76fec3c603dfae66abc2f40d03a87631"
+      },
+      {
+        "classification": "IMMUTABLE_FAILED_CANDIDATE_SOURCE_SNAPSHOT",
+        "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_main_full81_authorization_v7_4.py",
+        "reason": "Exact Candidate-R1 bytes of src/main_full81_authorization_v7_4.py, preserved under the A-06 snapshot precedent before R2 modification.",
+        "sha256": "94d82d44dcabc5a6584facd5edf5647c9cd63240ef791194713f9a20a214359f"
+      },
+      {
+        "classification": "IMMUTABLE_FAILED_CANDIDATE_SOURCE_SNAPSHOT",
+        "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_production_authority_lifecycle_u06.py",
+        "reason": "Exact Candidate-R1 bytes of src/production_authority_lifecycle_u06.py, preserved under the A-06 snapshot precedent before R2 modification.",
+        "sha256": "eabef43f66e94524c1fcbd87302da72229a97a0d70d0cb5ce9f9d3a230ff8660"
+      },
+      {
+        "classification": "IMMUTABLE_FAILED_CANDIDATE_SOURCE_SNAPSHOT",
+        "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_production_authority_bundle_v7_4.py",
+        "reason": "Exact Candidate-R1 bytes of src/production_authority_bundle_v7_4.py, preserved under the A-06 snapshot precedent before R2 modification.",
+        "sha256": "15ac4f474357958816a4ed82d96a095807bf622228b9d2a49ec938200af43db4"
+      },
+      {
+        "classification": "IMMUTABLE_FAILED_CANDIDATE_SOURCE_SNAPSHOT",
+        "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_production_successor_stack_v7_3.py",
+        "reason": "Exact Candidate-R1 bytes of src/production_successor_stack_v7_3.py, preserved under the A-06 snapshot precedent before R2 modification.",
+        "sha256": "e37587ea1247775a350317ef5cc970fc7ea67f3ef2bc4e4673fdd3d9aaa8eaa7"
+      },
+      {
+        "classification": "IMMUTABLE_FAILED_CANDIDATE_SOURCE_SNAPSHOT",
+        "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_21d_preflight_v7_3_final81_successor.py",
+        "reason": "Exact Candidate-R1 bytes of scripts/21d_preflight_v7_3_final81_successor.py, preserved under the A-06 snapshot precedent before R2 modification.",
+        "sha256": "489399bf7a39e5f35ac945444767f91f9277769bbeb1797a06b16a31a3f07d35"
+      },
+      {
+        "classification": "IMMUTABLE_FAILED_CANDIDATE_SOURCE_SNAPSHOT",
+        "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_test_21h_main_full81_authorization_mechanism.py",
+        "reason": "Exact Candidate-R1 bytes of tests/test_21h_main_full81_authorization_mechanism.py, preserved under the A-06 snapshot precedent before R2 modification.",
+        "sha256": "81b8cd6c4a5fc57cdf270fadb18fcb0b5717ff22fecf1f9d021dcc53f755d519"
+      }
+    ],
+    "u06_r3_artifacts_modified": false,
+    "verified_unchanged": [
+      {
+        "path": "tests/test_21a_v7_3_production_routing_preflight.py",
+        "sha256": "a039ae6620be859dfc7279e35b0b6bf0630e553f1e130fd27a330f9d337f22a6"
+      },
+      {
+        "path": "tests/test_21b_21d_v7_3_production_successor_stack.py",
+        "sha256": "043c94231efabd337fb7c107e7fcac9486d624b43ec5ce6b0f9e8efbaa16c2fe"
+      },
+      {
+        "path": "tests/test_21e_v7_4_production_authority_bundle.py",
+        "sha256": "d6d6e0b1179b76e632da51be3e64b895f226653eadc44b40292b07ed38803ac0"
+      },
+      {
+        "path": "tests/test_21f_u06_accepted_lifecycle_gate.py",
+        "sha256": "91dd6ec8452c8ca6ace61f995a83630cd38959eb8fea501b19be2e39c981cb8b"
+      },
+      {
+        "path": "tests/test_21g_u06_r3_substitution_attacks.py",
+        "sha256": "6f0d24ce993f0fa216081576efadc8b35a516a81ac438ad38a17629920d07272"
+      },
+      {
+        "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+        "sha256": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803"
+      },
+      {
+        "path": "src/production_input_authority_v7_3.py",
+        "sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1"
+      },
+      {
+        "path": "src/annual_design_model_v7_2.py",
+        "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+      },
+      {
+        "path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r1_2026-10-02.md",
+        "sha256": "6ee0d67d34174070a63a7f5034957de6103c5fce47917e3893ea48966cb384a1"
+      },
+      {
+        "path": "results/provenance/main_full81_authorization_mechanism_candidate_r1_2026-10-02/authorization_mechanism_manifest.json",
+        "sha256": "563ffa467cfac298cd3de3a1ee63976ebe98537c2d7169714636736c18205303"
+      },
+      {
+        "path": "results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json",
+        "sha256": "1006691da6f0b86f08fc4a9fd456b36619c034134920165e28642be2f4792148"
+      },
+      {
+        "path": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json",
+        "sha256": "f78ad465bd781a6eb20e7961ac3f3d2a1fb4eaddba7e3a09e10ea35cb3176c1e"
+      },
+      {
+        "path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+        "sha256": "f4a6da960a4cd527db4a4cdc71db888905704adf55676b662a4e6c88f2a8fa6b"
+      }
+    ]
+  },
+  "future_acceptance_requirements": {
+    "accepted_implementation_paths": [
+      "scripts/08_calibrate_kappa.py",
+      "scripts/09_build_valid_outage_start_sets.py",
+      "scripts/15a_benchmark_eob_charge_discharge_formulations.py",
+      "scripts/15b_freeze_production_eob_baseline.py",
+      "scripts/15c_validate_production_eob_rainflow.py",
+      "scripts/15d_run_corrected_eob_v7_2.py",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "scripts/19a_preflight_final_layer_a_81_cases.py",
+      "scripts/19b_run_final_layer_a_81_cases.py",
+      "scripts/21a_preflight_v7_3_production_routing.py",
+      "scripts/21b_preflight_v7_3_eob_successor.py",
+      "scripts/21c_preflight_v7_3_layer_a_successor.py",
+      "scripts/21d_preflight_v7_3_final81_successor.py",
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+      "src/annual_design_model_v7_2.py",
+      "src/main_full81_authorization_v7_4.py",
+      "src/production_authority_bundle_v7_4.py",
+      "src/production_authority_lifecycle_u06.py",
+      "src/production_input_authority_v7_3.py",
+      "src/production_successor_stack_v7_3.py",
+      "src/rainflow_validation_v7_2.py"
+    ],
+    "accepted_lifecycle_artifact_type": "FULL81_AUTH_MECH_R2_ACCEPTED_LIFECYCLE",
+    "accepted_lifecycle_record_path": "results/provenance/main_full81_authorization_mechanism_accepted_lifecycle_r2/accepted_lifecycle_record.json",
+    "accepted_lifecycle_schema_version": "iris-thesis-full81-auth-mech-r2-accepted-lifecycle-v1",
+    "advancing_a_generation_mutates_a_predecessor_artifact": false,
+    "advancing_a_generation_requires_a_validator_rewrite": false,
+    "arbitrary_ancestor_accepted_as_publication_proof": false,
+    "candidate_checkpoint_path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+    "candidate_manifest_path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/authorization_mechanism_manifest.json",
+    "every_role_record_must_be": [
+      "a machine-readable JSON object",
+      "of the role-specific artifact_type",
+      "of the role-specific schema_version",
+      "declaring lineage_id = MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+      "declaring target_candidate_id = MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+      "declaring the exact candidate checkpoint path and live SHA-256 of generation MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+      "declaring the live accepted implementation identity digest",
+      "binding the exact identity of every earlier role",
+      "present on disk, hash-identical, tracked, and clean",
+      "published in HEAD, with the HEAD blob matching live bytes"
+    ],
+    "forbidden_role_paths": [
+      "docs/checkpoints/main_full81_authorization_mechanism_candidate_r1_2026-10-02.md",
+      "results/provenance/main_full81_authorization_mechanism_candidate_r1_2026-10-02/authorization_mechanism_manifest.json",
+      "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+      "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/authorization_mechanism_manifest.json"
+    ],
+    "forbidden_role_prefixes": [
+      "src/",
+      "scripts/",
+      "tests/"
+    ],
+    "future_hashes_fabricated_now": false,
+    "gate_protected_dependency_paths": [
+      "scripts/08_calibrate_kappa.py",
+      "scripts/15a_benchmark_eob_charge_discharge_formulations.py",
+      "scripts/15b_freeze_production_eob_baseline.py",
+      "scripts/15c_validate_production_eob_rainflow.py"
+    ],
+    "generation": {
+      "accepted_lifecycle_record_path": "results/provenance/main_full81_authorization_mechanism_accepted_lifecycle_r2/accepted_lifecycle_record.json",
+      "artifact_type_prefix": "FULL81_AUTH_MECH_R2_",
+      "candidate_checkpoint_path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+      "candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+      "candidate_manifest_path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/authorization_mechanism_manifest.json",
+      "disposition": "CURRENT_GENERATION_CANDIDATE_NOT_ACCEPTED_NOT_FROZEN",
+      "generation_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+      "lifecycle_record_artifact_type": "FULL81_AUTH_MECH_R2_ACCEPTED_LIFECYCLE",
+      "lifecycle_record_schema_version": "iris-thesis-full81-auth-mech-r2-accepted-lifecycle-v1",
+      "lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+      "predecessor_accepted_lifecycle_record_path": "results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json",
+      "predecessor_generation_id": "U06_V7_4_PRODUCTION_AUTHORITY_R3",
+      "predecessor_lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+      "role_artifact_types": {
+        "acceptance_closure": "FULL81_AUTH_MECH_R2_ACCEPTANCE_CLOSURE",
+        "acceptance_manifest": "FULL81_AUTH_MECH_R2_ACCEPTANCE_MANIFEST",
+        "implementation_candidate": "FULL81_AUTH_MECH_R2_IMPLEMENTATION_CANDIDATE",
+        "independent_audit_pass": "FULL81_AUTH_MECH_R2_INDEPENDENT_AUDIT_PASS",
+        "production_authority_re_freeze": "FULL81_AUTH_MECH_R2_PRODUCTION_AUTHORITY_RE_FREEZE"
+      },
+      "role_schema_versions": {
+        "acceptance_closure": "iris-thesis-full81-auth-mech-r2-acceptance-closure-v1",
+        "acceptance_manifest": "iris-thesis-full81-auth-mech-r2-acceptance-manifest-v1",
+        "implementation_candidate": "iris-thesis-full81-auth-mech-r2-implementation-candidate-v1",
+        "independent_audit_pass": "iris-thesis-full81-auth-mech-r2-independent-audit-pass-v1",
+        "production_authority_re_freeze": "iris-thesis-full81-auth-mech-r2-production-authority-re-freeze-v1"
+      },
+      "schema_prefix": "iris-thesis-full81-auth-mech-r2-",
+      "superseded_candidate_ids": [
+        "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1"
+      ]
+    },
+    "generation_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+    "historical_generations": [
+      {
+        "accepted_lifecycle_record_path": "results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json",
+        "artifact_type_prefix": "U06_",
+        "candidate_checkpoint_path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+        "candidate_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+        "candidate_manifest_path": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json",
+        "disposition": "IMMUTABLE_HISTORICAL_ACCEPTED_PREDECESSOR_GENERATION",
+        "generation_id": "U06_V7_4_PRODUCTION_AUTHORITY_R3",
+        "lifecycle_record_artifact_type": "U06_ACCEPTED_LIFECYCLE",
+        "lifecycle_record_schema_version": "iris-thesis-u06-r3-accepted-lifecycle-v1",
+        "lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+        "predecessor_accepted_lifecycle_record_path": null,
+        "predecessor_generation_id": null,
+        "predecessor_lineage_id": null,
+        "role_artifact_types": {
+          "acceptance_closure": "U06_ACCEPTANCE_CLOSURE",
+          "acceptance_manifest": "U06_ACCEPTANCE_MANIFEST",
+          "implementation_candidate": "U06_IMPLEMENTATION_CANDIDATE",
+          "independent_audit_pass": "U06_INDEPENDENT_AUDIT_PASS",
+          "production_authority_re_freeze": "U06_PRODUCTION_AUTHORITY_RE_FREEZE"
+        },
+        "role_schema_versions": {
+          "acceptance_closure": "iris-thesis-u06-r3-acceptance-closure-v1",
+          "acceptance_manifest": "iris-thesis-u06-r3-acceptance-manifest-v1",
+          "implementation_candidate": "iris-thesis-u06-r3-implementation-candidate-v1",
+          "independent_audit_pass": "iris-thesis-u06-r3-independent-audit-pass-v1",
+          "production_authority_re_freeze": "iris-thesis-u06-r3-production-authority-re-freeze-v1"
+        },
+        "schema_prefix": "iris-thesis-u06-r3-",
+        "superseded_candidate_ids": [
+          "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE",
+          "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R2"
+        ]
+      }
+    ],
+    "lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+    "note": "None of these artifacts exists. The overlay resolves to ABSENT / NOT_FROZEN and the production gate fails closed. No future digest is guessed, reserved, or stubbed in this module. A superseded generation accepted lifecycle, however complete and published, cannot freeze live production authority.",
+    "placeholder_digests_present": false,
+    "publication_phases": {
+      "phase_a": "candidate + independent audit PASS published; later acceptance artifacts record audit_publication_commit = A, and validation proves both blobs exist in exactly A.",
+      "phase_b": "acceptance closure + acceptance manifest published; the re-freeze record records acceptance_publication_commit = B, and validation proves both blobs exist in exactly B.",
+      "phase_c": "re-freeze + accepted lifecycle record published; their own containing commit is never self-hard-coded. The live gate proves from Git that each artifact is in HEAD, that HEAD blobs match live bytes, that HEAD equals the upstream, that paths are clean, and that the last modifying commit is in published ancestry."
+    },
+    "record_exists_today": false,
+    "role_contracts": {
+      "acceptance_closure": {
+        "artifact_type": "FULL81_AUTH_MECH_R2_ACCEPTANCE_CLOSURE",
+        "binds_roles": [
+          "implementation_candidate",
+          "independent_audit_pass"
+        ],
+        "declares_candidate_manifest": true,
+        "required_fields": [
+          "acceptance_status",
+          "audit_publication_commit"
+        ],
+        "role": "acceptance_closure",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-acceptance-closure-v1"
+      },
+      "acceptance_manifest": {
+        "artifact_type": "FULL81_AUTH_MECH_R2_ACCEPTANCE_MANIFEST",
+        "binds_roles": [
+          "implementation_candidate",
+          "independent_audit_pass",
+          "acceptance_closure"
+        ],
+        "declares_candidate_manifest": true,
+        "required_fields": [
+          "acceptance_status"
+        ],
+        "role": "acceptance_manifest",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-acceptance-manifest-v1"
+      },
+      "implementation_candidate": {
+        "artifact_type": "FULL81_AUTH_MECH_R2_IMPLEMENTATION_CANDIDATE",
+        "binds_roles": [],
+        "declares_candidate_manifest": false,
+        "required_fields": [
+          "candidate_checkpoint",
+          "implementation_identity_digest"
+        ],
+        "role": "implementation_candidate",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-implementation-candidate-v1"
+      },
+      "independent_audit_pass": {
+        "artifact_type": "FULL81_AUTH_MECH_R2_INDEPENDENT_AUDIT_PASS",
+        "binds_roles": [
+          "implementation_candidate"
+        ],
+        "declares_candidate_manifest": true,
+        "required_fields": [
+          "verdict",
+          "blocking_critical",
+          "blocking_major",
+          "independent_audit",
+          "candidate_author_is_not_self_accepting"
+        ],
+        "role": "independent_audit_pass",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-independent-audit-pass-v1"
+      },
+      "production_authority_re_freeze": {
+        "artifact_type": "FULL81_AUTH_MECH_R2_PRODUCTION_AUTHORITY_RE_FREEZE",
+        "binds_roles": [
+          "implementation_candidate",
+          "independent_audit_pass",
+          "acceptance_closure",
+          "acceptance_manifest"
+        ],
+        "declares_candidate_manifest": true,
+        "required_fields": [
+          "production_authority_status_intended",
+          "authorizes_main_full81",
+          "acceptance_publication_commit"
+        ],
+        "role": "production_authority_re_freeze",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-production-authority-re-freeze-v1"
+      }
+    },
+    "roles_a_candidate_may_never_fill": [
+      "independent_audit_pass",
+      "acceptance_closure",
+      "acceptance_manifest",
+      "production_authority_re_freeze"
+    ],
+    "runtime_production_dependency_paths": [
+      "scripts/21b_preflight_v7_3_eob_successor.py",
+      "scripts/21c_preflight_v7_3_layer_a_successor.py",
+      "scripts/21d_preflight_v7_3_final81_successor.py",
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+      "src/production_successor_stack_v7_3.py",
+      "src/production_authority_bundle_v7_4.py",
+      "src/production_authority_lifecycle_u06.py",
+      "src/main_full81_authorization_v7_4.py",
+      "src/production_input_authority_v7_3.py",
+      "scripts/21a_preflight_v7_3_production_routing.py",
+      "src/annual_design_model_v7_2.py",
+      "src/rainflow_validation_v7_2.py",
+      "scripts/09_build_valid_outage_start_sets.py",
+      "scripts/15d_run_corrected_eob_v7_2.py",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "scripts/19a_preflight_final_layer_a_81_cases.py",
+      "scripts/19b_run_final_layer_a_81_cases.py"
+    ],
+    "self_referential_commit_hash_required": false,
+    "superseded_candidate_ids_rejected": [
+      "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1"
+    ],
+    "superseded_generation_can_freeze_live_authority": false,
+    "target_candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+    "tests_are_runtime_production_authority": false,
+    "validation_identity_paths": [
+      "tests/test_21a_v7_3_production_routing_preflight.py",
+      "tests/test_21b_21d_v7_3_production_successor_stack.py",
+      "tests/test_21e_v7_4_production_authority_bundle.py",
+      "tests/test_21f_u06_accepted_lifecycle_gate.py",
+      "tests/test_21g_u06_r3_substitution_attacks.py",
+      "tests/test_21h_main_full81_authorization_mechanism.py"
+    ]
+  },
+  "future_authorization_requirements": {
+    "accepted_annual_model": {
+      "path": "src/annual_design_model_v7_2.py",
+      "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+    },
+    "arbitrary_ancestor_accepted_as_publication_proof": false,
+    "authorization_implies_execution": false,
+    "authorization_record_path": "results/provenance/main_full81_authorization_r2/main_full81_authorization.json",
+    "authorized_next_act": "MAIN_FULL81_NO_SOLVE_PRODUCTION_PREFLIGHT",
+    "authorized_scope": "MAIN_FULL81",
+    "candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+    "canonical_annual_input": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428"
+    },
+    "every_authorization_must_be": [
+      "a machine-readable JSON object",
+      "at exactly results/provenance/main_full81_authorization_r2/main_full81_authorization.json",
+      "of artifact_type MAIN_FULL81_SCOPE_AUTHORIZATION",
+      "of schema_version iris-thesis-full81-authorization-v2",
+      "declaring lineage_id = MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+      "declaring the live accepted implementation identity digest",
+      "declaring the accepted U-06 lifecycle record path and live SHA-256",
+      "proving that record is published in exactly the named commit",
+      "declaring the exact runner path, version, and live SHA-256",
+      "declaring the exact 9x9 alpha/beta universe and case_count = 81",
+      "declaring the accepted solver parameter fingerprint",
+      "declaring restart_policy = FRESH_RUN_ONLY",
+      "explicitly excluding A2 and every unrelated scope",
+      "tracked, clean, present in HEAD with matching blob bytes",
+      "on a HEAD equal to origin/thesis-v7"
+    ],
+    "expected_production_authority_lineage_constant_exists": false,
+    "forbidden_scope_tokens": [
+      "a2",
+      "robust",
+      "variable_floor",
+      "variable-floor",
+      "varfloor",
+      "perfect_information",
+      "perfect-information",
+      "perfect information",
+      "dg",
+      "distributed_generation",
+      "sensitivity",
+      "treatment_effect",
+      "treatment-effect"
+    ],
+    "future_hashes_fabricated_now": false,
+    "grid_identity": {
+      "alpha_universe": [
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95,
+        1.0
+      ],
+      "beta_universe_h": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "case_count": 81
+    },
+    "lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+    "mutable_python_constant_can_authorize": false,
+    "note": "No authorization artifact exists. The resolver reports NOT_GRANTED and the Full81 scope guard fails closed. Creating or removing a future authorization requires no production-code modification.",
+    "observed_current_production_authority_generation_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+    "observed_current_production_authority_lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+    "parameter_registry": {
+      "path": "data/reference/parameter_registry_v7_2.csv",
+      "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1"
+    },
+    "placeholder_digests_present": false,
+    "production_authority_binding_is_resolved_not_static": true,
+    "publication_phases": {
+      "phase_f_a": "the accepted U-06 lifecycle record is already published; the authorization names production_authority_publication_commit and validation proves that blob exists in exactly that commit.",
+      "phase_f_b": "the authorization itself is proved published from live Git \u2014 in HEAD, HEAD blob equal to live bytes, tracked, clean, HEAD equal to the upstream, last modifying commit in published ancestry. Its own containing commit is never self-hard-coded."
+    },
+    "record_exists_today": false,
+    "rejected_candidate_ids": [
+      "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1"
+    ],
+    "rejected_historical_authorization_paths": [
+      "docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-10.json",
+      "docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-11.json"
+    ],
+    "rejected_lineage_ids": [
+      "v7.2-final81-runner-authority-1",
+      "v7.2-final81-runner-authority-2",
+      "V7_2_FINAL81_RUNNER_AUTHORITY",
+      "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3"
+    ],
+    "required_declared_exclusions": [
+      "A2",
+      "A2_VARIABLE_FLOOR_TREATMENT_EFFECT",
+      "PERFECT_INFORMATION",
+      "DG_EXTENSIONS",
+      "NEW_SENSITIVITIES",
+      "ALTERNATE_ANNUAL_INPUTS",
+      "ALTERED_ALPHA_BETA_GRIDS",
+      "NEW_SOLVER_SETTINGS",
+      "METHODOLOGY_CHANGES"
+    ],
+    "required_fields": [
+      "artifact_type",
+      "schema_version",
+      "lineage_id",
+      "candidate_id",
+      "authorization_status",
+      "authorization_scope",
+      "authorizes",
+      "authorizes_optimize_calls",
+      "authorizes_full81_execution",
+      "requires_no_solve_preflight_before_execution",
+      "production_authority_generation_id",
+      "production_authority_lineage_id",
+      "production_authority_accepted_lifecycle_record",
+      "production_authority_publication_commit",
+      "production_authority_freeze_status",
+      "implementation_identity_digest",
+      "target_runner",
+      "canonical_annual_input",
+      "accepted_annual_model",
+      "parameter_registry",
+      "alpha_universe",
+      "beta_universe_h",
+      "case_count",
+      "solver_parameter_fingerprint",
+      "restart_policy",
+      "excluded_scopes",
+      "a2_excluded",
+      "u_01_status",
+      "u_01_blocks_main_full81",
+      "u_01_must_be_frozen_before"
+    ],
+    "restart_policy": "FRESH_RUN_ONLY",
+    "role_contracts": {
+      "main_full81_scope_authorization": {
+        "artifact_type": "MAIN_FULL81_SCOPE_AUTHORIZATION",
+        "authorizes": "MAIN_FULL81_NO_SOLVE_PRODUCTION_PREFLIGHT",
+        "lawful_path": "results/provenance/main_full81_authorization_r2/main_full81_authorization.json",
+        "lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+        "required_fields": [
+          "artifact_type",
+          "schema_version",
+          "lineage_id",
+          "candidate_id",
+          "authorization_status",
+          "authorization_scope",
+          "authorizes",
+          "authorizes_optimize_calls",
+          "authorizes_full81_execution",
+          "requires_no_solve_preflight_before_execution",
+          "production_authority_generation_id",
+          "production_authority_lineage_id",
+          "production_authority_accepted_lifecycle_record",
+          "production_authority_publication_commit",
+          "production_authority_freeze_status",
+          "implementation_identity_digest",
+          "target_runner",
+          "canonical_annual_input",
+          "accepted_annual_model",
+          "parameter_registry",
+          "alpha_universe",
+          "beta_universe_h",
+          "case_count",
+          "solver_parameter_fingerprint",
+          "restart_policy",
+          "excluded_scopes",
+          "a2_excluded",
+          "u_01_status",
+          "u_01_blocks_main_full81",
+          "u_01_must_be_frozen_before"
+        ],
+        "role": "main_full81_scope_authorization",
+        "schema_version": "iris-thesis-full81-authorization-v2",
+        "scope": "MAIN_FULL81"
+      }
+    },
+    "self_referential_commit_hash_required": false,
+    "solver_parameter_fingerprint": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+    "superseded_authorization_schema_versions": [
+      "iris-thesis-full81-authorization-v1"
+    ],
+    "superseded_production_authority_generation_ids": [
+      "U06_V7_4_PRODUCTION_AUTHORITY_R3"
+    ],
+    "target_runner_path": "scripts/21d_preflight_v7_3_final81_successor.py",
+    "target_runner_version": "v7.4-main-full81-no-solve-preflight-runner-2026-10-02-candidate-r2"
+  },
+  "generation_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+  "h_01_remediation": {
+    "accepted_r3_constants_byte_stable": {
+      "ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH": "results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json",
+      "LIFECYCLE_RECORD_SCHEMA_VERSION": "iris-thesis-u06-r3-accepted-lifecycle-v1",
+      "LINEAGE_ID": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+      "R3_CANDIDATE_CHECKPOINT_PATH": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+      "R3_CANDIDATE_ID": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+      "R3_CANDIDATE_MANIFEST_PATH": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json"
+    },
+    "advancing_a_generation_mutates_a_predecessor_artifact": false,
+    "advancing_a_generation_requires_a_validator_rewrite": false,
+    "current_generation": {
+      "accepted_lifecycle_record_path": "results/provenance/main_full81_authorization_mechanism_accepted_lifecycle_r2/accepted_lifecycle_record.json",
+      "artifact_type_prefix": "FULL81_AUTH_MECH_R2_",
+      "candidate_checkpoint_path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+      "candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+      "candidate_manifest_path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/authorization_mechanism_manifest.json",
+      "disposition": "CURRENT_GENERATION_CANDIDATE_NOT_ACCEPTED_NOT_FROZEN",
+      "generation_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+      "lifecycle_record_artifact_type": "FULL81_AUTH_MECH_R2_ACCEPTED_LIFECYCLE",
+      "lifecycle_record_schema_version": "iris-thesis-full81-auth-mech-r2-accepted-lifecycle-v1",
+      "lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+      "predecessor_accepted_lifecycle_record_path": "results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json",
+      "predecessor_generation_id": "U06_V7_4_PRODUCTION_AUTHORITY_R3",
+      "predecessor_lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+      "role_artifact_types": {
+        "acceptance_closure": "FULL81_AUTH_MECH_R2_ACCEPTANCE_CLOSURE",
+        "acceptance_manifest": "FULL81_AUTH_MECH_R2_ACCEPTANCE_MANIFEST",
+        "implementation_candidate": "FULL81_AUTH_MECH_R2_IMPLEMENTATION_CANDIDATE",
+        "independent_audit_pass": "FULL81_AUTH_MECH_R2_INDEPENDENT_AUDIT_PASS",
+        "production_authority_re_freeze": "FULL81_AUTH_MECH_R2_PRODUCTION_AUTHORITY_RE_FREEZE"
+      },
+      "role_schema_versions": {
+        "acceptance_closure": "iris-thesis-full81-auth-mech-r2-acceptance-closure-v1",
+        "acceptance_manifest": "iris-thesis-full81-auth-mech-r2-acceptance-manifest-v1",
+        "implementation_candidate": "iris-thesis-full81-auth-mech-r2-implementation-candidate-v1",
+        "independent_audit_pass": "iris-thesis-full81-auth-mech-r2-independent-audit-pass-v1",
+        "production_authority_re_freeze": "iris-thesis-full81-auth-mech-r2-production-authority-re-freeze-v1"
+      },
+      "schema_prefix": "iris-thesis-full81-auth-mech-r2-",
+      "superseded_candidate_ids": [
+        "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1"
+      ]
+    },
+    "generation_dataclass": "AuthorityGeneration",
+    "generation_threaded_validators": [
+      "_validate_role_path",
+      "validate_role_envelope",
+      "_validate_bound_roles",
+      "validate_role_specifics",
+      "validate_accepted_lifecycle_payload",
+      "absent_lifecycle",
+      "resolve_u06_lifecycle",
+      "require_frozen_lifecycle",
+      "lifecycle_summary",
+      "future_acceptance_requirements",
+      "runtime_dependency_report"
+    ],
+    "generations_declared": [
+      "U06_V7_4_PRODUCTION_AUTHORITY_R3",
+      "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2"
+    ],
+    "h_01_closed": false,
+    "historical_generations": [
+      {
+        "accepted_lifecycle_record_path": "results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json",
+        "artifact_type_prefix": "U06_",
+        "candidate_checkpoint_path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+        "candidate_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+        "candidate_manifest_path": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json",
+        "disposition": "IMMUTABLE_HISTORICAL_ACCEPTED_PREDECESSOR_GENERATION",
+        "generation_id": "U06_V7_4_PRODUCTION_AUTHORITY_R3",
+        "lifecycle_record_artifact_type": "U06_ACCEPTED_LIFECYCLE",
+        "lifecycle_record_schema_version": "iris-thesis-u06-r3-accepted-lifecycle-v1",
+        "lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+        "predecessor_accepted_lifecycle_record_path": null,
+        "predecessor_generation_id": null,
+        "predecessor_lineage_id": null,
+        "role_artifact_types": {
+          "acceptance_closure": "U06_ACCEPTANCE_CLOSURE",
+          "acceptance_manifest": "U06_ACCEPTANCE_MANIFEST",
+          "implementation_candidate": "U06_IMPLEMENTATION_CANDIDATE",
+          "independent_audit_pass": "U06_INDEPENDENT_AUDIT_PASS",
+          "production_authority_re_freeze": "U06_PRODUCTION_AUTHORITY_RE_FREEZE"
+        },
+        "role_schema_versions": {
+          "acceptance_closure": "iris-thesis-u06-r3-acceptance-closure-v1",
+          "acceptance_manifest": "iris-thesis-u06-r3-acceptance-manifest-v1",
+          "implementation_candidate": "iris-thesis-u06-r3-implementation-candidate-v1",
+          "independent_audit_pass": "iris-thesis-u06-r3-independent-audit-pass-v1",
+          "production_authority_re_freeze": "iris-thesis-u06-r3-production-authority-re-freeze-v1"
+        },
+        "schema_prefix": "iris-thesis-u06-r3-",
+        "superseded_candidate_ids": [
+          "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE",
+          "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R2"
+        ]
+      }
+    ],
+    "mechanism": "PRODUCTION_AUTHORITY_GENERATION_REGISTRY",
+    "new_rejection_statuses": [
+      "U06_SUPERSEDED_GENERATION_REJECTED",
+      "U06_CROSS_GENERATION_ROLE_REJECTED"
+    ],
+    "overlay_64_hex_literal_count": 0,
+    "predecessor_digest_or_commit_hard_coded_in_overlay": false,
+    "resolver_reads_only_current_generation_slot": true,
+    "superseded_generation_can_freeze_live_authority": false
+  },
+  "h_02_remediation": {
+    "binding_derivation": [
+      "require_frozen_lifecycle_against_live_implementation(root, lifecycle)",
+      "resolved['is_current_generation'] must be True",
+      "resolved['generation_id'] -> production_authority_generation_id",
+      "resolved['lineage_id'] -> production_authority_lineage_id",
+      "resolved['record_path'] -> accepted-lifecycle record path"
+    ],
+    "current_schema_version": "iris-thesis-full81-authorization-v2",
+    "field_renames": {
+      "u06_accepted_lifecycle_record": "production_authority_accepted_lifecycle_record",
+      "u06_lineage_id": "production_authority_lineage_id",
+      "u06_publication_commit": "production_authority_publication_commit"
+    },
+    "h_02_closed": false,
+    "lawful_path_advanced_to": "results/provenance/main_full81_authorization_r2/main_full81_authorization.json",
+    "mechanism_40_hex_literal_count": 0,
+    "new_fields": [
+      "production_authority_generation_id"
+    ],
+    "new_rejection_status": "FULL81_AUTHORIZATION_PRODUCTION_AUTHORITY_BINDING_INVALID",
+    "predecessor_commit_hard_coded_in_mechanism": false,
+    "previous_schema_version": "iris-thesis-full81-authorization-v1",
+    "r1_authorization_path_barred": [
+      "results/provenance/main_full81_authorization_r1/main_full81_authorization.json"
+    ],
+    "rejected_candidate_ids": [
+      "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1"
+    ],
+    "rejected_lineage_ids": [
+      "v7.2-final81-runner-authority-1",
+      "v7.2-final81-runner-authority-2",
+      "V7_2_FINAL81_RUNNER_AUTHORITY",
+      "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3"
+    ],
+    "rejected_lineage_ids_derived_from_registry": true,
+    "removed_static_constant": "REQUIRED_U06_LINEAGE_ID",
+    "rename_rationale": "The fields must name whatever production authority is current. u06_* names encode a predecessor generation that is no longer current and would invite predecessor-generation confusion. Not cosmetic.",
+    "schema_version_advanced": true,
+    "static_expected_lineage_constant_exists": false,
+    "v1_artifacts_ever_created": 0
+  },
+  "historical_design_precedent": {
+    "features_not_carried_forward": {
+      "annual_input_v7_1_identity": "data/processed/annual_input_v7_1.parquet is not the current canonical production input; the accepted reconstructed-PV mainline R3 parquet is.",
+      "historical_defects": "No historical defect is carried forward merely because it existed. The recovered 20260911T065811Z decision was FAIL \u2014 81-CASE PRODUCTION EXECUTION NOT AUTHORIZED on F-01, and no superseding independent execution-authorization PASS artifact was recovered from Git history.",
+      "historical_v7_2_tag_as_current_authority": "v7.2-final81-runner-ready-r3 is immutable historical provenance and is never retargeted or reused as current authority.",
+      "ignored_runtime_inventory_pinning": "Not ported: the current gate controls untracked paths across the protected surface directly; re-introducing an ignored-file inventory would re-create the historical F-01 class of defect in which an untracked file became a reachable authority dependency.",
+      "obsolete_governance_semantics_superseded_by_r3": "Role authenticity, exact publication containment, and lifecycle anchoring follow the accepted U-06 R3 semantics, not the V7.2 file-identity-only model.",
+      "obsolete_v7_2_checkpoints_and_protected_identity_table": "The V7.2 protected-identity table pins superseded V7.2 identities; the current surface is the accepted 20-path U-06 implementation identity.",
+      "required_production_tag_interlock": "Not ported: the current accepted lifecycle proves publication by exact HEAD/commit containment against origin/thesis-v7, so an annotated-tag-at-HEAD requirement would add a second, weaker oracle rather than a stronger one.",
+      "self_produced_pre_solve_gate_as_independent_proof": "A runner-produced pre_solve_gate is self-attestation, never independent audit evidence."
+    },
+    "features_ported": [
+      "DEDICATED_EXTERNAL_MACHINE_READABLE_AUTHORIZATION_ARTIFACT",
+      "EXACT_RUNNER_PATH_VERSION_AND_SHA256_IDENTITY",
+      "EXACT_ALPHA_BETA_GRID_AND_CASE_COUNT_IDENTITY",
+      "EXTERNAL_SOLVER_PARAMETER_FINGERPRINT",
+      "FRESH_RUN_ONLY_RESTART_POLICY",
+      "PUBLICATION_AND_GIT_IDENTITY_REQUIREMENTS",
+      "CLEAN_AND_UPSTREAM_SYNCHRONIZED_REPOSITORY_STATE",
+      "PROTECTED_ACCEPTED_PRODUCTION_IDENTITIES",
+      "PRE_SOLVE_AUTHORITY_VALIDATION",
+      "NON_SELF_REFERENTIAL_PUBLICATION_PROOF"
+    ],
+    "historical_authority_manifest_path": "docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-11.json",
+    "historical_authority_manifest_sha256": "4af8a90a0039f97ff05e4eb5903a179d9c3541808d6094131863859fc7e1d9a9",
+    "historical_production_tag": "v7.2-final81-runner-ready-r3",
+    "historical_runner_path": "scripts/19b_run_final_layer_a_81_cases.py",
+    "historical_runner_sha256": "4abbda9dc2529f9d7531aff64a77fdf23c3b8b59173a6f3287fda0538def2bbe",
+    "historical_runner_version": "v7.2-final-layer-a-81-production-runner-2026-09-11-r3",
+    "historical_tag_peeled_commit": "b03721275c73b05d45517bdf84c1e0bd03833376",
+    "provenance_caveat": "Historical Full81 execution-authorization provenance is NOT claimed to be perfect. The early FAIL is not current authority, and the absence of a recovered superseding PASS is recorded rather than papered over."
+  },
+  "implementation_identity": {
+    "accepted_implementation_identity": {
+      "scripts/08_calibrate_kappa.py": "6014a24bee5028d0be1e3ab480ee67587e91c35bc4d57e4b0c324eb6b94141dc",
+      "scripts/09_build_valid_outage_start_sets.py": "3c67e91848c7093e974bf3d3b8440a4c3054ffe25a4fc99b68fd951883ae43d4",
+      "scripts/15a_benchmark_eob_charge_discharge_formulations.py": "504f31b37f2bbaca96792b088cd1adea087206539a3c3553298555f64fc6cff9",
+      "scripts/15b_freeze_production_eob_baseline.py": "9a5f61d19bc279920f51f67294ef96ddcd7623ffe240482ff66b88e029eafc60",
+      "scripts/15c_validate_production_eob_rainflow.py": "14fd9f3363979dd6af6f50723a75477e1525b9330265a0a820d11eec1774f408",
+      "scripts/15d_run_corrected_eob_v7_2.py": "90d19baac8c0b96e08de00b4769b7ae68dff745f71923b850433ffc2935091a8",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py": "5813119e258e83a45a245ec715ade4536bf9dbf880687f6d3f1e978cce8b06a0",
+      "scripts/19a_preflight_final_layer_a_81_cases.py": "a139f1cd1a76e0a6f0657adf025c521b8b966b2fcdd6f74e5f3936a70bab72d3",
+      "scripts/19b_run_final_layer_a_81_cases.py": "4abbda9dc2529f9d7531aff64a77fdf23c3b8b59173a6f3287fda0538def2bbe",
+      "scripts/21a_preflight_v7_3_production_routing.py": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95",
+      "scripts/21b_preflight_v7_3_eob_successor.py": "d12f39acfa33651e49f8f6762c159e5cff217958e34736fca1b15077bda45aa3",
+      "scripts/21c_preflight_v7_3_layer_a_successor.py": "9a38d5c1af9fe8b5a2c2676d9a77458be5ec264d89942925cb5bfa32a1e7df08",
+      "scripts/21d_preflight_v7_3_final81_successor.py": "57af6b6f1102bff9edb9afc55f15bfe7c61f5ced276658dd270203c7aa30bfe2",
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803",
+      "src/annual_design_model_v7_2.py": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+      "src/main_full81_authorization_v7_4.py": "61000dd41171ab0304d22fe052fab5892660efa0e9d3f39bacfe687148409aa5",
+      "src/production_authority_bundle_v7_4.py": "516725a24750149abc70b79e01c4fdae6338c62420daba60d6eb9adf17cd5b90",
+      "src/production_authority_lifecycle_u06.py": "a35cdb6b5dfe35c74e89614d2a5fd7d90321c0f7d5d76e9b40108a1595a35a60",
+      "src/production_input_authority_v7_3.py": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+      "src/production_successor_stack_v7_3.py": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+      "src/rainflow_validation_v7_2.py": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    },
+    "accepted_implementation_path_count": 21,
+    "accepted_implementation_paths": [
+      "scripts/08_calibrate_kappa.py",
+      "scripts/09_build_valid_outage_start_sets.py",
+      "scripts/15a_benchmark_eob_charge_discharge_formulations.py",
+      "scripts/15b_freeze_production_eob_baseline.py",
+      "scripts/15c_validate_production_eob_rainflow.py",
+      "scripts/15d_run_corrected_eob_v7_2.py",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "scripts/19a_preflight_final_layer_a_81_cases.py",
+      "scripts/19b_run_final_layer_a_81_cases.py",
+      "scripts/21a_preflight_v7_3_production_routing.py",
+      "scripts/21b_preflight_v7_3_eob_successor.py",
+      "scripts/21c_preflight_v7_3_layer_a_successor.py",
+      "scripts/21d_preflight_v7_3_final81_successor.py",
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+      "src/annual_design_model_v7_2.py",
+      "src/main_full81_authorization_v7_4.py",
+      "src/production_authority_bundle_v7_4.py",
+      "src/production_authority_lifecycle_u06.py",
+      "src/production_input_authority_v7_3.py",
+      "src/production_successor_stack_v7_3.py",
+      "src/rainflow_validation_v7_2.py"
+    ],
+    "accepted_predecessor_digest": "b854d0f133ee38f4e9e534c1accdf50b0438b18d681acdb035d8a97d90218e9a",
+    "authorization_module_version": "v7.4-main-full81-authorization-mechanism-2026-10-02-candidate-r2",
+    "bundle_verified_pin_count": 33,
+    "bundle_version": "v7.4-production-authority-bundle-2026-10-02-full81-authorization-mechanism-candidate-r2",
+    "candidate_r2_accepted": false,
+    "candidate_r2_digest": "1644c426f9dceba081cd3cccf0501623ccfbeeaef5b3131b565fbf928615900f",
+    "candidate_r2_frozen": false,
+    "digest_is_order_independent": true,
+    "failed_candidate_r1_digest": "2374a3286c0c7f781f7f26e531436bf6fa4eb39c0e46fdb755912c71fa32492f",
+    "gate_protected_dependency_count": 4,
+    "gate_protected_dependency_paths": [
+      "scripts/08_calibrate_kappa.py",
+      "scripts/15a_benchmark_eob_charge_discharge_formulations.py",
+      "scripts/15b_freeze_production_eob_baseline.py",
+      "scripts/15c_validate_production_eob_rainflow.py"
+    ],
+    "lifecycle_module_version": "v7.4-production-authority-accepted-lifecycle-overlay-2026-10-02-full81-auth-mech-candidate-r2",
+    "paths_added_since_candidate_r1": [],
+    "paths_changed_since_candidate_r1": [
+      "src/production_authority_lifecycle_u06.py",
+      "src/main_full81_authorization_v7_4.py",
+      "src/production_authority_bundle_v7_4.py",
+      "src/production_successor_stack_v7_3.py",
+      "scripts/21d_preflight_v7_3_final81_successor.py",
+      "tests/test_21h_main_full81_authorization_mechanism.py"
+    ],
+    "runtime_production_dependency_count": 17,
+    "runtime_production_dependency_paths": [
+      "scripts/21b_preflight_v7_3_eob_successor.py",
+      "scripts/21c_preflight_v7_3_layer_a_successor.py",
+      "scripts/21d_preflight_v7_3_final81_successor.py",
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+      "src/production_successor_stack_v7_3.py",
+      "src/production_authority_bundle_v7_4.py",
+      "src/production_authority_lifecycle_u06.py",
+      "src/main_full81_authorization_v7_4.py",
+      "src/production_input_authority_v7_3.py",
+      "scripts/21a_preflight_v7_3_production_routing.py",
+      "src/annual_design_model_v7_2.py",
+      "src/rainflow_validation_v7_2.py",
+      "scripts/09_build_valid_outage_start_sets.py",
+      "scripts/15d_run_corrected_eob_v7_2.py",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "scripts/19a_preflight_final_layer_a_81_cases.py",
+      "scripts/19b_run_final_layer_a_81_cases.py"
+    ],
+    "validation_identity": {
+      "tests/test_21a_v7_3_production_routing_preflight.py": "a039ae6620be859dfc7279e35b0b6bf0630e553f1e130fd27a330f9d337f22a6",
+      "tests/test_21b_21d_v7_3_production_successor_stack.py": "043c94231efabd337fb7c107e7fcac9486d624b43ec5ce6b0f9e8efbaa16c2fe",
+      "tests/test_21e_v7_4_production_authority_bundle.py": "d6d6e0b1179b76e632da51be3e64b895f226653eadc44b40292b07ed38803ac0",
+      "tests/test_21f_u06_accepted_lifecycle_gate.py": "91dd6ec8452c8ca6ace61f995a83630cd38959eb8fea501b19be2e39c981cb8b",
+      "tests/test_21g_u06_r3_substitution_attacks.py": "6f0d24ce993f0fa216081576efadc8b35a516a81ac438ad38a17629920d07272",
+      "tests/test_21h_main_full81_authorization_mechanism.py": "ea9d377c09d1608566a7d1328a9d09ef4f185c448c24e72f5a3dc96a7baef5ce"
+    },
+    "validation_identity_count": 6,
+    "validation_identity_paths": [
+      "tests/test_21a_v7_3_production_routing_preflight.py",
+      "tests/test_21b_21d_v7_3_production_successor_stack.py",
+      "tests/test_21e_v7_4_production_authority_bundle.py",
+      "tests/test_21f_u06_accepted_lifecycle_gate.py",
+      "tests/test_21g_u06_r3_substitution_attacks.py",
+      "tests/test_21h_main_full81_authorization_mechanism.py"
+    ]
+  },
+  "implementation_identity_digest": "1644c426f9dceba081cd3cccf0501623ccfbeeaef5b3131b565fbf928615900f",
+  "lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+  "no_solve_guarantee": {
+    "a2_cases_executed": 0,
+    "annual_milp_solves": 0,
+    "economic_evaluations": 0,
+    "full81_preflight_executions": 0,
+    "main_full81_cases_executed": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "production_run_directories_created": 0,
+    "real_accepted_lifecycle_records_created": 0,
+    "real_full81_authorization_artifacts_created": 0,
+    "real_lifecycle_role_artifacts_created": 0,
+    "real_re_freeze_records_created": 0,
+    "script_21d_invocations": 0,
+    "solver_entrypoint_call_sites_in_changed_sources": 0
+  },
+  "not_created_by_this_pass": [
+    "INDEPENDENT_AUDIT_PASS",
+    "ACCEPTANCE_CLOSURE",
+    "ACCEPTANCE_MANIFEST",
+    "PRODUCTION_AUTHORITY_RE_FREEZE_RECORD",
+    "ACCEPTED_LIFECYCLE_RECORD",
+    "REAL_MAIN_FULL81_AUTHORIZATION_ARTIFACT",
+    "FULL81_NO_SOLVE_PRODUCTION_PREFLIGHT_AUTHORIZATION",
+    "FULL81_EXECUTION_AUTHORIZATION"
+  ],
+  "open_findings": {
+    "I-04": {
+      "addressed_in_this_pass": false,
+      "classification": "PROMOTION_PATH_DEPENDENCY",
+      "detail_reference": "checkpoint section 5.3.1",
+      "eol_policy_altered_in_this_pass": false,
+      "facts": {
+        "core_autocrlf": "true",
+        "current_candidate_r2_promotion_artifacts_are_lf": true,
+        "fail_closed": true,
+        "fail_open": false,
+        "fresh_clone_could_fail_closed_with": "U06_LIFECYCLE_NOT_PUBLISHED",
+        "git_status_reports_those_files_clean": true,
+        "gitattributes_present": false,
+        "inherited_from": [
+          "A-05",
+          "F-03",
+          "J-04"
+        ],
+        "promotion_artifacts_depending_on_exact_containment": 6,
+        "publication_proof_compares": "live bytes against the HEAD blob (require_published_in_head)",
+        "publication_validation_succeeds_in_present_working_tree": true,
+        "tracked_files_where_head_blob_is_lf_but_clean_worktree_is_crlf": [
+          "scripts/check_env.py",
+          "scripts/check_gurobi.py",
+          "scripts/init_project_folders.py",
+          "src/utils/paths.py"
+        ]
+      },
+      "future_work": "Separate bounded EOL reproducibility hardening may be performed later if authorized, as its own pass with its own independent verification.",
+      "gitattributes_added_in_this_pass": false,
+      "implementation_bytes_modified_in_this_pass": false,
+      "severity": "MAJOR",
+      "source": "INDEPENDENT_READ_ONLY_AUDIT_2026_10_03",
+      "status": "CARRIED",
+      "summary": "CRLF / EOL publication-proof fragility, re-classified from an inherited note to a dependency of this candidate's promotion path."
+    },
+    "I-05": {
+      "accepted_r3_identity_path_count": 20,
+      "added_to_accepted_identity_in_this_pass": false,
+      "candidate_r2_added_paths": [
+        "src/main_full81_authorization_v7_4.py"
+      ],
+      "candidate_r2_reopens_or_repairs_this_surface": false,
+      "classification": "IDENTITY_COMPLETENESS_OBSERVATION",
+      "detail_reference": "checkpoint section 5.3.2",
+      "included_sibling_dependencies": [
+        "src/annual_design_model_v7_2.py",
+        "scripts/09_build_valid_outage_start_sets.py",
+        "scripts/16a_preflight_layer_a_representative_binary_cases.py"
+      ],
+      "inherited_from_accepted_r3_identity_surface": true,
+      "path": "scripts/20c_build_v7_3_reconstructed_pv_mainline_candidate_r3.py",
+      "pin_constant": "ACCEPTED_ANNUAL_SHA256",
+      "produced_parquet_independently_hash_pinned": true,
+      "severity": "MINOR",
+      "silent_exploit_demonstrated": false,
+      "source": "INDEPENDENT_READ_ONLY_AUDIT_2026_10_03",
+      "status": "CARRIED",
+      "summary": "scripts/20c_build_v7_3_reconstructed_pv_mainline_candidate_r3.py is enforced clean-against-HEAD by scripts/21a_preflight_v7_3_production_routing.py as a gate-protected dependency of a runtime production dependency, yet is absent from ACCEPTED_IMPLEMENTATION_PATHS, while its three sibling IMMUTABLE_DEPENDENCIES entries are included.",
+      "why_not": "Adding 20c would be an implementation-identity change and requires its own authorization and independent audit."
+    },
+    "I-06": {
+      "candidate_r1_manifest_sha256": "563ffa467cfac298cd3de3a1ee63976ebe98537c2d7169714636736c18205303",
+      "live_bytes_match_recorded_claim": true,
+      "preserved_source_inventory_independently_recomputed": "6/6 exact",
+      "severity": "INFORMATIONAL",
+      "source": "INDEPENDENT_READ_ONLY_AUDIT_2026_10_03",
+      "status": "CARRIED",
+      "summary": "The Candidate-R1 manifest is untracked and gitignored and declares neither its own digest nor a containing commit, so its immutability is not cryptographically self-anchored. Same class as A-06."
+    },
+    "I-07": {
+      "exploit_demonstrated": false,
+      "severity": "INFORMATIONAL",
+      "source": "INDEPENDENT_READ_ONLY_AUDIT_2026_10_03",
+      "status": "CARRIED",
+      "summary": "The current generation's production-authority lineage_id and the Full81 authorization LINEAGE_ID are the same string, MAIN_FULL81_AUTHORIZATION_MECHANISM_R1. REJECTED_LINEAGE_IDS enforces the stated production-authority / authorization separation only for historical generations, because the current generation is excluded by the != LINEAGE_ID filter.",
+      "why_not_exploitable": "The production_authority_* fields are validated against the resolved live lifecycle, not against this constant."
+    },
+    "I-08": {
+      "modified_in_this_pass": false,
+      "path": "docs/ai_handoff/CURRENT_STATE.md",
+      "recommendation": "SEPARATE_DOCUMENTATION_ONLY_REFRESH",
+      "severity": "INFORMATIONAL",
+      "source": "INDEPENDENT_READ_ONLY_AUDIT_2026_10_03",
+      "status": "CARRIED",
+      "summary": "CURRENT_STATE.md is stale: it still describes U-06 R3 as a pending candidate and states that no accepted U-06 lifecycle exists, whereas the accepted predecessor bytes resolve PRESENT_VALID / FROZEN."
+    },
+    "J-01": {
+      "accepted_test_bytes_modified": false,
+      "authoritative_accounting": {
+        "baseline_failures": 17,
+        "baseline_measured_at_accepted_predecessor_digest": "b854d0f133ee38f4e9e534c1accdf50b0438b18d681acdb035d8a97d90218e9a",
+        "current_failures": 14,
+        "newly_failing": 9,
+        "pre_existing_unchanged": 5,
+        "resolved": 12,
+        "source": "INDEPENDENT_READ_ONLY_AUDIT_2026_10_03",
+        "unit": "distinct failing test methods, across all five accepted suites"
+      },
+      "detail_reference": "checkpoint sections 5.2 and 5.2.1",
+      "every_current_failure_is_fail_closed": true,
+      "guard_test_attribution_corrected": {
+        "candidate_r2_failing_assertion": "line 250, assertTrue(lc.is_frozen(complete)) - a synthetic mapping with no declared generation can no longer freeze, so the failure occurs earlier",
+        "corrected_classification": "PRE_EXISTING_AT_ACCEPTED_PREDECESSOR",
+        "failing_assertion_moved_earlier": true,
+        "pre_correction_claim": "NEWLY_INTRODUCED_BY_CANDIDATE_R2",
+        "predecessor_failing_assertion": "line 254, assertFalse(lc.is_frozen(lc.resolve_u06_lifecycle(ROOT))) - the live predecessor lifecycle is genuinely PRESENT_VALID / FROZEN",
+        "substantive_point_upheld": "Making the line-250 assertion pass would require treating an ungenerationed lifecycle mapping as the current generation. That is fail-open and is not an acceptable production fix.",
+        "test": "tests/test_21f_u06_accepted_lifecycle_gate.py::FailClosedFreezeGateTests::test_the_guard_is_not_vacuous",
+        "test_modified": false
+      },
+      "previously_undisclosed_regressions": {
+        "a_01_behavioural_security_property_preserved": true,
+        "all_attacks_still_rejected": true,
+        "all_fail_closed": true,
+        "cause": "These tests construct R3-generation role records against a live implementation surface that is now Candidate R2's, so the implementation_identity_digest check in validate_role_envelope fires before the artifact_type / target_candidate_id check.",
+        "count": 3,
+        "historically_expected_status_class": "ARTIFACT_TYPE_OR_TARGET_STAGE_REJECTION",
+        "observed_status": "U06_IMPLEMENTATION_IDENTITY_DRIFT",
+        "production_fail_open_regression_hidden": false,
+        "rejected_one_gate_earlier": true,
+        "remedy_not_authorized_in_this_pass": "Restoring the historical diagnostic status would mean reordering the envelope checks so artifact_type precedes digest. Diagnostics only; not authorized here, and never by weakening a production check.",
+        "suite": "tests/test_21g_u06_r3_substitution_attacks.py",
+        "tests": [
+          "tests/test_21g_u06_r3_substitution_attacks.py::FiveArtifactAttackTests::test_all_json_substitution_is_rejected_on_artifact_type",
+          "tests/test_21g_u06_r3_substitution_attacks.py::FiveArtifactAttackTests::test_attack_with_a_correct_candidate_role_still_fails_at_the_audit",
+          "tests/test_21g_u06_r3_substitution_attacks.py::PerRoleSubstitutionTests::test_a_declared_digest_that_does_not_match_live_bytes_is_rejected"
+        ],
+        "why_governance_relevant": "test_21g is the suite that exists specifically to defend the CRITICAL A-01 finding, so any change in its outcome is governance-relevant."
+      },
+      "production_fail_open_regression_hidden": false,
+      "severity": "MINOR",
+      "summary": "Lifecycle-stale assertions in the accepted R3 suites change outcome under the lawful generation advance. No accepted test byte was modified and every current failure is fail-closed: the gate refused, it never accepted. The accounting published in the pre-correction revision of the checkpoint was materially inaccurate and is superseded by checkpoint section 5.2.",
+      "superseded_accounting": {
+        "baseline_failures": 15,
+        "current_failures": 14,
+        "newly_failing": 7,
+        "resolved": 8,
+        "status": "SUPERSEDED_MATERIALLY_INACCURATE",
+        "unit": "assertions attributable to the generation advance, in test_21b_21d and test_21f only"
+      }
+    },
+    "J-02": {
+      "modified_by_this_pass": false,
+      "severity": "INFORMATIONAL",
+      "summary": "scripts/21e still asserts the lifecycle gate must reject, so it fails when the lifecycle is lawfully frozen. Unmodified; outside this bounded scope."
+    },
+    "J-03": {
+      "severity": "INFORMATIONAL",
+      "summary": "The overlay module is still named production_authority_lifecycle_u06.py although it now hosts a generation registry. Retained as historical provenance naming to avoid breaking the accepted pin set and accepted R3 test imports."
+    },
+    "J-04": {
+      "severity": "INFORMATIONAL",
+      "summary": "A-05 LF/CRLF portability and A-04 verifier/test self-reference remain recorded only. All new bytes are LF. Superseded in part by I-04, which re-classifies the LF/CRLF question as a MAJOR carried promotion-path dependency.",
+      "superseded_in_part_by": "I-04"
+    },
+    "J-05": {
+      "severity": "INFORMATIONAL",
+      "summary": "The alpha/beta universe and Layer-A solver settings remain declared in the mechanism to avoid an import cycle, cross-checked against the live stack constants by tests/test_21h."
+    }
+  },
+  "predecessor_chain": {
+    "accepted_predecessor_commit": "e10f8f123af19c0796f5045a51807486cb58647a",
+    "accepted_predecessor_implementation_identity_digest": "b854d0f133ee38f4e9e534c1accdf50b0438b18d681acdb035d8a97d90218e9a",
+    "accepted_predecessor_lifecycle_publication_commit": "e10f8f123af19c0796f5045a51807486cb58647a",
+    "accepted_predecessor_lifecycle_record": {
+      "path": "results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json",
+      "sha256": "1006691da6f0b86f08fc4a9fd456b36619c034134920165e28642be2f4792148"
+    },
+    "accepted_production_authority_generation": {
+      "accepted_lifecycle_record_path": "results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json",
+      "artifact_type_prefix": "U06_",
+      "candidate_checkpoint_path": "docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md",
+      "candidate_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+      "candidate_manifest_path": "results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json",
+      "disposition": "IMMUTABLE_HISTORICAL_ACCEPTED_PREDECESSOR_GENERATION",
+      "generation_id": "U06_V7_4_PRODUCTION_AUTHORITY_R3",
+      "lifecycle_record_artifact_type": "U06_ACCEPTED_LIFECYCLE",
+      "lifecycle_record_schema_version": "iris-thesis-u06-r3-accepted-lifecycle-v1",
+      "lineage_id": "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3",
+      "predecessor_accepted_lifecycle_record_path": null,
+      "predecessor_generation_id": null,
+      "predecessor_lineage_id": null,
+      "role_artifact_types": {
+        "acceptance_closure": "U06_ACCEPTANCE_CLOSURE",
+        "acceptance_manifest": "U06_ACCEPTANCE_MANIFEST",
+        "implementation_candidate": "U06_IMPLEMENTATION_CANDIDATE",
+        "independent_audit_pass": "U06_INDEPENDENT_AUDIT_PASS",
+        "production_authority_re_freeze": "U06_PRODUCTION_AUTHORITY_RE_FREEZE"
+      },
+      "role_schema_versions": {
+        "acceptance_closure": "iris-thesis-u06-r3-acceptance-closure-v1",
+        "acceptance_manifest": "iris-thesis-u06-r3-acceptance-manifest-v1",
+        "implementation_candidate": "iris-thesis-u06-r3-implementation-candidate-v1",
+        "independent_audit_pass": "iris-thesis-u06-r3-independent-audit-pass-v1",
+        "production_authority_re_freeze": "iris-thesis-u06-r3-production-authority-re-freeze-v1"
+      },
+      "schema_prefix": "iris-thesis-u06-r3-",
+      "superseded_candidate_ids": [
+        "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE",
+        "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R2"
+      ]
+    },
+    "failed_immediate_candidate_predecessor": {
+      "candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1",
+      "checkpoint": {
+        "path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r1_2026-10-02.md",
+        "sha256": "6ee0d67d34174070a63a7f5034957de6103c5fce47917e3893ea48966cb384a1"
+      },
+      "committed_for_convenience": false,
+      "findings": {
+        "H-01": {
+          "remediation_status": "REMEDIATION_IMPLEMENTED_PENDING_FRESH_INDEPENDENT_VERIFICATION",
+          "severity": "CRITICAL",
+          "summary": "No lawful successor promotion / acceptance / re-freeze path existed: the lifecycle overlay was single-generation and hard-bound to U-06 R3. First impossible transition T2, U06_LINEAGE_MISMATCH."
+        },
+        "H-02": {
+          "remediation_status": "REMEDIATION_IMPLEMENTED_PENDING_FRESH_INDEPENDENT_VERIFICATION",
+          "severity": "MAJOR",
+          "summary": "The Full81 authorization validator statically bound REQUIRED_U06_LINEAGE_ID to the predecessor R3 lineage instead of the then-current accepted/frozen production-authority generation."
+        }
+      },
+      "findings_closed_by_this_candidate": false,
+      "implementation_identity_digest": "2374a3286c0c7f781f7f26e531436bf6fa4eb39c0e46fdb755912c71fa32492f",
+      "lifecycle": "IMMUTABLE_HISTORICAL_FAILED_CANDIDATE_PROVENANCE",
+      "manifest": {
+        "path": "results/provenance/main_full81_authorization_mechanism_candidate_r1_2026-10-02/authorization_mechanism_manifest.json",
+        "sha256": "563ffa467cfac298cd3de3a1ee63976ebe98537c2d7169714636736c18205303"
+      },
+      "provenance_edited_by_this_pass": false,
+      "rewritten_to_appear_successful": false,
+      "source_recoverable": true,
+      "source_snapshot": {
+        "r1_21d_preflight_v7_3_final81_successor.py": {
+          "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_21d_preflight_v7_3_final81_successor.py",
+          "sha256": "489399bf7a39e5f35ac945444767f91f9277769bbeb1797a06b16a31a3f07d35",
+          "size_bytes": 7017,
+          "snapshot_of": "scripts/21d_preflight_v7_3_final81_successor.py"
+        },
+        "r1_main_full81_authorization_v7_4.py": {
+          "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_main_full81_authorization_v7_4.py",
+          "sha256": "94d82d44dcabc5a6584facd5edf5647c9cd63240ef791194713f9a20a214359f",
+          "size_bytes": 58489,
+          "snapshot_of": "src/main_full81_authorization_v7_4.py"
+        },
+        "r1_production_authority_bundle_v7_4.py": {
+          "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_production_authority_bundle_v7_4.py",
+          "sha256": "15ac4f474357958816a4ed82d96a095807bf622228b9d2a49ec938200af43db4",
+          "size_bytes": 49275,
+          "snapshot_of": "src/production_authority_bundle_v7_4.py"
+        },
+        "r1_production_authority_lifecycle_u06.py": {
+          "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_production_authority_lifecycle_u06.py",
+          "sha256": "eabef43f66e94524c1fcbd87302da72229a97a0d70d0cb5ce9f9d3a230ff8660",
+          "size_bytes": 61445,
+          "snapshot_of": "src/production_authority_lifecycle_u06.py"
+        },
+        "r1_production_successor_stack_v7_3.py": {
+          "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_production_successor_stack_v7_3.py",
+          "sha256": "e37587ea1247775a350317ef5cc970fc7ea67f3ef2bc4e4673fdd3d9aaa8eaa7",
+          "size_bytes": 80286,
+          "snapshot_of": "src/production_successor_stack_v7_3.py"
+        },
+        "r1_test_21h_main_full81_authorization_mechanism.py": {
+          "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/superseded_sources/r1_test_21h_main_full81_authorization_mechanism.py",
+          "sha256": "81b8cd6c4a5fc57cdf270fadb18fcb0b5717ff22fecf1f9d021dcc53f755d519",
+          "size_bytes": 48168,
+          "snapshot_of": "tests/test_21h_main_full81_authorization_mechanism.py"
+        }
+      },
+      "source_snapshot_precedent": "U-06 R3 finding A-06: the snapshot practice begins with the superseding candidate, under <candidate dir>/superseded_sources/.",
+      "verdict": "NO_LAWFUL_SUCCESSOR_PROMOTION_OR_RE_FREEZE_PATH_EXISTS_CANDIDATE_REVISION_REQUIRED"
+    },
+    "predecessor_acceptance_is_not_acceptance_of_candidate_r2": true,
+    "predecessor_artifacts_mutated_by_this_pass": false
+  },
+  "promotion_path_control": {
+    "environment": "ISOLATED_THROWAWAY_GIT_REPOSITORIES_IN_SYSTEM_TEMP",
+    "real_artifacts_created": 0,
+    "requires_further_production_code_edit": false,
+    "requires_mutation_of_candidate_r2_provenance_after_audit": false,
+    "requires_mutation_of_u06_r3_artifacts": false,
+    "transitions": {
+      "T1": {
+        "artifact": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/authorization_mechanism_manifest.json",
+        "representable": true,
+        "role": "implementation_candidate",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-implementation-candidate-v1"
+      },
+      "T2": {
+        "publication_phase": "PHASE_A",
+        "representable": true,
+        "role": "independent_audit_pass",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-independent-audit-pass-v1"
+      },
+      "T3": {
+        "publication_phase": "PHASE_B",
+        "representable": true,
+        "role": "acceptance_closure",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-acceptance-closure-v1"
+      },
+      "T4": {
+        "publication_phase": "PHASE_B",
+        "representable": true,
+        "role": "acceptance_manifest",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-acceptance-manifest-v1"
+      },
+      "T5": {
+        "publication_phase": "PHASE_C",
+        "representable": true,
+        "role": "production_authority_re_freeze",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-production-authority-re-freeze-v1"
+      },
+      "T6": {
+        "artifact": "results/provenance/main_full81_authorization_mechanism_accepted_lifecycle_r2/accepted_lifecycle_record.json",
+        "artifact_type": "U06_ACCEPTED_LIFECYCLE",
+        "representable": true,
+        "role": "accepted_lifecycle_aggregator",
+        "schema_version": "iris-thesis-full81-auth-mech-r2-accepted-lifecycle-v1"
+      },
+      "T7": {
+        "bound_to": "CANDIDATE_R2_IMPLEMENTATION_IDENTITY",
+        "representable": true,
+        "state": "PRODUCTION_AUTHORITY_FROZEN"
+      }
+    }
+  },
+  "provenance_correction": {
+    "acceptance_artifacts_created": 0,
+    "accepted": false,
+    "accepted_historical_test_bytes_modified": false,
+    "candidate_r1_provenance_modified": false,
+    "checkpoint_bytes_changed_after_the_audit_read_them": true,
+    "correction_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2_PROVENANCE_CORRECTION_2026_10_03",
+    "corrects": [
+      "J-01 accounting",
+      "J-01 undisclosed test_21g regressions",
+      "test_the_guard_is_not_vacuous attribution",
+      "I-04 classification",
+      "I-05 record"
+    ],
+    "date": "2026-10-03",
+    "files_changed": [
+      {
+        "path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+        "reason": "Corrected section 5; recorded the audit outcome and the new required gate.",
+        "sha256_after": "c5ee72d9b50a217c53e2871c77d91e1c76fec3c603dfae66abc2f40d03a87631",
+        "sha256_before": "c98052420f18bb7c0ede19bcfef8c93de63f5503b6bbfd18700c88374b938dfc"
+      },
+      {
+        "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/authorization_mechanism_manifest.json",
+        "reason": "Re-bound candidate_checkpoint.sha256 (required: this manifest is the implementation_candidate role artifact and validate_role_envelope re-derives that hash from live bytes), updated the changed-file inventory entry for the checkpoint, and recorded the corrected and carried findings.",
+        "sha256_after": "DECLARED_BY_A_LATER_ROLE_NEVER_BY_THIS_MANIFEST",
+        "sha256_before": "753d01e57aa7d173e632349963282962f7fb53f7221743b0f7bc220ac5e88ebd"
+      }
+    ],
+    "framework_modified": false,
+    "frozen": false,
+    "h_01_or_h_02_reopened": false,
+    "implementation_identity": "1644c426f9dceba081cd3cccf0501623ccfbeeaef5b3131b565fbf928615900f",
+    "implementation_identity_changed": false,
+    "main_full81_authorizations_created": 0,
+    "methodology_changed": false,
+    "next_required_gate": "FRESH_INDEPENDENT_VERIFICATION_OF_THE_PROVENANCE_CORRECTION",
+    "no_published_lifecycle_role_artifact_bound_the_superseded_checkpoint_identity": true,
+    "production_code_modified": false,
+    "re_freeze_records_created": 0,
+    "registry_modified": false,
+    "scope": "PROVENANCE_AND_DOCUMENTATION_ONLY",
+    "staged_or_committed_or_pushed": false,
+    "superseded_sources_modified": false,
+    "tests_modified": false,
+    "trigger": "Independent read-only audit 2026-10-03 returned CONDITIONAL PASS with acceptance blocked pending correction of the J-01 accepted-suite disclosure.",
+    "u06_r3_artifacts_modified": false,
+    "why_nothing_is_invalidated": "No lifecycle role artifact of any generation exists in the real repository, so no published artifact bound the superseded checkpoint identity."
+  },
+  "real_repository_state": {
+    "accepted_lifecycle_overlay": "ABSENT",
+    "accepted_lifecycle_record_exists": false,
+    "accepted_lifecycle_record_path": "results/provenance/main_full81_authorization_mechanism_accepted_lifecycle_r2/accepted_lifecycle_record.json",
+    "current_generation_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+    "gate_checks_weakened": false,
+    "is_current_generation": true,
+    "is_frozen": false,
+    "live_gate_scope_results": {
+      "a2_variable_floor": "A2_HARD_BLOCKED",
+      "core-three": "U06_ACCEPTED_LIFECYCLE_ABSENT",
+      "eob": "U06_ACCEPTED_LIFECYCLE_ABSENT",
+      "full81": "FULL81_AUTHORIZATION_NOT_GRANTED"
+    },
+    "main_full81_authorization": "NOT_GRANTED",
+    "main_full81_authorization_overlay": "ABSENT",
+    "production_authority_freeze_status": "NOT_FROZEN",
+    "real_full81_authorization_artifact_exists": false,
+    "temporary_fixtures_can_move_the_real_gate": false
+  },
+  "schema_version": "iris-thesis-full81-auth-mech-r2-implementation-candidate-v1",
+  "self_reference_discipline": {
+    "future_authorization_digest_hard_coded_anywhere": false,
+    "future_lifecycle_digest_hard_coded_anywhere": false,
+    "placeholder_digests_present": false,
+    "this_manifest_declares_its_own_containing_commit": false,
+    "this_manifest_declares_its_own_hash": false
+  },
+  "status": {
+    "accepted": false,
+    "audit_verdict_attaches_to_checkpoint_identity": "c98052420f18bb7c0ede19bcfef8c93de63f5503b6bbfd18700c88374b938dfc",
+    "authorizes_full81_execution": false,
+    "authorizes_full81_preflight": false,
+    "authorizes_main_full81": false,
+    "closed": false,
+    "creates_real_full81_authorization_artifact": false,
+    "creates_real_lifecycle_role_artifact": false,
+    "frozen": false,
+    "h_01": "CLOSED",
+    "h_02": "CLOSED",
+    "independent_audit_date": "2026-10-03",
+    "independent_audit_scope": "FRESH_STRICTLY_INDEPENDENT_READ_ONLY",
+    "independent_audit_verdict": "CONDITIONAL_PASS_REMEDIATION_SOUND_ACCEPTANCE_BLOCKED_PENDING_SPECIFIED_NON_SCIENTIFIC_CORRECTION",
+    "independent_audit_verdict_is_not_acceptance": true,
+    "independently_audited": true,
+    "lifecycle": "CANDIDATE",
+    "next_required_gate": "FRESH_INDEPENDENT_VERIFICATION_OF_THE_PROVENANCE_CORRECTION",
+    "self_accepted": false,
+    "self_frozen": false
+  },
+  "target_candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2"
+}

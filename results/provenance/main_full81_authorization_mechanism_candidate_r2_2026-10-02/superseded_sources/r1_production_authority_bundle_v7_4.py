@@ -119,7 +119,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 BUNDLE_VERSION = (
     "v7.4-production-authority-bundle-2026-10-02-"
-    "full81-authorization-mechanism-candidate-r2"
+    "full81-authorization-mechanism-candidate-r1"
 )
 BUNDLE_SCOPE = "ADDITIVE_V7_4_PRODUCTION_AUTHORITY_BASE_IDENTITY_ONLY_NO_LIFECYCLE_AUTHORITY"
 BUNDLE_LINEAGE = "ADDITIVE_SUCCESSOR_TO_V7_3_PRODUCTION_INPUT_AUTHORITY_NOT_A_REPLACEMENT"
@@ -465,14 +465,14 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
     AuthorityPin(
         "production_successor_stack",
         "src/production_successor_stack_v7_3.py",
-        "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+        "e37587ea1247775a350317ef5cc970fc7ea67f3ef2bc4e4673fdd3d9aaa8eaa7",
         "PRODUCTION_SUCCESSOR_STACK_V7_4_AUTHORITY_BOUND",
         "U_06_ALIGNMENT_CANDIDATE_R3",
     ),
     AuthorityPin(
         "full81_runner",
         "scripts/21d_preflight_v7_3_final81_successor.py",
-        "57af6b6f1102bff9edb9afc55f15bfe7c61f5ced276658dd270203c7aa30bfe2",
+        "489399bf7a39e5f35ac945444767f91f9277769bbeb1797a06b16a31a3f07d35",
         "FULL81_PREFLIGHT_AND_DEPLOYMENT_GATED_ENTRY_POINT",
         "U_06_ALIGNMENT_CANDIDATE_R3",
     ),
@@ -486,7 +486,7 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
     AuthorityPin(
         "u06_lifecycle_overlay",
         "src/production_authority_lifecycle_u06.py",
-        "a35cdb6b5dfe35c74e89614d2a5fd7d90321c0f7d5d76e9b40108a1595a35a60",
+        "eabef43f66e94524c1fcbd87302da72229a97a0d70d0cb5ce9f9d3a230ff8660",
         "U_06_ACCEPTED_LIFECYCLE_OVERLAY_NO_SCIENTIFIC_CONTENT",
         "U_06_ALIGNMENT_CANDIDATE_R3",
     ),
@@ -514,16 +514,16 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
     AuthorityPin(
         "main_full81_authorization_mechanism",
         "src/main_full81_authorization_v7_4.py",
-        "61000dd41171ab0304d22fe052fab5892660efa0e9d3f39bacfe687148409aa5",
+        "94d82d44dcabc5a6584facd5edf5647c9cd63240ef791194713f9a20a214359f",
         "MAIN_FULL81_AUTHORIZATION_MECHANISM_NO_SCIENTIFIC_CONTENT",
-        "FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+        "FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1",
     ),
     AuthorityPin(
         "main_full81_authorization_test",
         "tests/test_21h_main_full81_authorization_mechanism.py",
-        "ea9d377c09d1608566a7d1328a9d09ef4f185c448c24e72f5a3dc96a7baef5ce",
+        "81b8cd6c4a5fc57cdf270fadb18fcb0b5717ff22fecf1f9d021dcc53f755d519",
         "MAIN_FULL81_AUTHORIZATION_MECHANISM_FAIL_CLOSED_SUITE",
-        "FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+        "FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1",
     ),
 )
 

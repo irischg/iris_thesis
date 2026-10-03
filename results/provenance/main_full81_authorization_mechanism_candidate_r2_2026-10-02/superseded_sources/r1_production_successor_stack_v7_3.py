@@ -50,8 +50,6 @@ from src.main_full81_authorization_v7_4 import (
     resolve_full81_authorization,
 )
 from src.production_authority_lifecycle_u06 import (
-    CURRENT_GENERATION as PRODUCTION_AUTHORITY_GENERATION,
-    HISTORICAL_GENERATIONS as PRODUCTION_AUTHORITY_HISTORICAL_GENERATIONS,
     LIFECYCLE_MODULE_VERSION as U06_LIFECYCLE_MODULE_VERSION,
     LINEAGE_ID as U06_LINEAGE_ID,
     U06LifecycleError,
@@ -717,23 +715,7 @@ def run_successor_stack(
         "u06_lifecycle_module_version": U06_LIFECYCLE_MODULE_VERSION,
         "u06_accepted_lifecycle": u06_lifecycle_summary(u06_lifecycle),
         "u06_future_acceptance_requirements": u06_future_acceptance_requirements(),
-        # Retained accepted field: the HISTORICAL U-06 lineage identity.
         "u06_lineage_id": U06_LINEAGE_ID,
-        # H-01 additive: the CURRENT production-authority generation. The
-        # overlay is no longer single-generation, so "which generation may
-        # freeze live authority?" is now a separate, explicit question.
-        "production_authority_generation_id": (
-            PRODUCTION_AUTHORITY_GENERATION.generation_id
-        ),
-        "production_authority_lineage_id": (
-            PRODUCTION_AUTHORITY_GENERATION.lineage_id
-        ),
-        "production_authority_generation": (
-            PRODUCTION_AUTHORITY_GENERATION.as_dict()
-        ),
-        "production_authority_historical_generations": [
-            g.as_dict() for g in PRODUCTION_AUTHORITY_HISTORICAL_GENERATIONS
-        ],
         "u06_runtime_dependency_report": u06_runtime_dependency_report(root),
         # Main Full81 authorization: a state separate from this zero-solve PASS,
         # from PRODUCTION_AUTHORITY_FROZEN, and from Full81 execution.

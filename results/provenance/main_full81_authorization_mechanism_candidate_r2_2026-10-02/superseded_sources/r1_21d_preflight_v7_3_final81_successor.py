@@ -24,7 +24,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 RUNNER_VERSION = (
-    "v7.4-main-full81-no-solve-preflight-runner-2026-10-02-candidate-r2"
+    "v7.4-main-full81-no-solve-preflight-runner-2026-10-02-candidate-r1"
 )
 
 from src.production_successor_stack_v7_3 import (  # noqa: E402
@@ -106,18 +106,6 @@ def main(argv: list[str] | None = None) -> int:
                 "u06_accepted_lifecycle": stack["u06_accepted_lifecycle"],
                 "u06_lifecycle_module_version": stack["u06_lifecycle_module_version"],
                 "u06_lineage_id": stack["u06_lineage_id"],
-                "production_authority_generation_id": stack[
-                    "production_authority_generation_id"
-                ],
-                "production_authority_lineage_id": stack[
-                    "production_authority_lineage_id"
-                ],
-                "production_authority_generation": stack[
-                    "production_authority_generation"
-                ],
-                "production_authority_historical_generations": stack[
-                    "production_authority_historical_generations"
-                ],
                 "u06_runtime_dependency_report": stack[
                     "u06_runtime_dependency_report"
                 ],
