@@ -1,0 +1,173 @@
+{
+  "a2_status_asserted": "HARD_BLOCKED",
+  "acceptance_provenance": "Acceptance of the independently audited and published Candidate R2 of the Main Full81 authorization-mechanism successor generation, authorized by the repository owner on the basis of the published FULL81_AUTH_MECH_R2_INDEPENDENT_AUDIT_PASS role artifact contained in audit publication commit 02b998b0a466eb07b109d62b0868cdc32f42dee4. Phase A was independently reviewed and accepted as valid before this Phase-B acceptance was authorized. The candidate author did not self-accept.",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "accepted_historical_test_bytes_modified_by_this_pass": false,
+  "accepted_lifecycle_status_asserted": "ABSENT",
+  "annual_production_model_constructed_by_this_pass": false,
+  "artifact_type": "FULL81_AUTH_MECH_R2_ACCEPTANCE_CLOSURE",
+  "audit_publication_commit": "02b998b0a466eb07b109d62b0868cdc32f42dee4",
+  "audit_verdict": "PASS",
+  "audit_verdict_qualifier": "PASS WITH NONBLOCKING FINDINGS",
+  "authorizes_full81_execution": false,
+  "authorizes_full81_preflight": false,
+  "authorizes_main_full81": false,
+  "authorizes_optimize_calls": false,
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "candidate_author_is_not_self_accepting": true,
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+    "sha256": "c5ee72d9b50a217c53e2871c77d91e1c76fec3c603dfae66abc2f40d03a87631"
+  },
+  "candidate_checkpoint_bytes_modified_by_this_pass": false,
+  "candidate_implementation_bytes_authored_by_this_pass": false,
+  "candidate_manifest": {
+    "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/authorization_mechanism_manifest.json",
+    "sha256": "4e29a7e04a97b2db95167cce5861e525c8985c5688dfccc4f031bb20b25fe897"
+  },
+  "candidate_manifest_bytes_modified_by_this_pass": false,
+  "carried_findings": [
+    {
+      "blocking": false,
+      "blocks_candidate_r2_acceptance": false,
+      "classification": "PROMOTION_PATH_DEPENDENCY",
+      "closed_by_this_acceptance": false,
+      "disposition_note": "Deliberately NOT remediated in this Phase-B acceptance pass, by instruction. No .gitattributes change, no EOL policy change, no blob-hash migration, no implementation byte modified. It remains a live dependency of the promotion path: Phase C must re-prove publication containment for the Phase-B artifacts from live Git.",
+      "id": "I-04",
+      "remediated_in_this_pass": false,
+      "severity": "MAJOR",
+      "severity_downgraded": false,
+      "status": "CARRIED",
+      "substance": "CRLF / EOL publication-proof fragility. No .gitattributes; core.autocrlf=true; tracked files already exist whose HEAD blob is LF while a clean working tree is CRLF. Publication proof compares live bytes to the HEAD blob, so a fresh clone could fail closed with U06_LIFECYCLE_NOT_PUBLISHED. Candidate R2 depends on exact publication containment for its promotion artifacts. Fail-closed, never fail-open. Inherited from A-05 / F-03 / J-04."
+    },
+    {
+      "blocking": false,
+      "blocks_candidate_r2_acceptance": false,
+      "classification": "IDENTITY_COMPLETENESS_OBSERVATION",
+      "closed_by_this_acceptance": false,
+      "disposition_note": "Deliberately NOT remediated. Adding 20c to ACCEPTED_IMPLEMENTATION_PATHS would change the accepted implementation identity and would require its own authorization and independent audit. The accepted 21-path identity surface is carried unchanged.",
+      "id": "I-05",
+      "remediated_in_this_pass": false,
+      "severity": "MINOR",
+      "severity_downgraded": false,
+      "status": "CARRIED",
+      "substance": "scripts/20c_build_v7_3_reconstructed_pv_mainline_candidate_r3.py is enforced clean-against-HEAD by scripts/21a as a gate-protected dependency of a runtime production dependency, yet is absent from ACCEPTED_IMPLEMENTATION_PATHS while its three sibling IMMUTABLE_DEPENDENCIES entries are included. Inherited from the accepted R3 20-path identity surface. No silent exploit was demonstrated; the parquet 20c produces remains independently hash-pinned by ACCEPTED_ANNUAL_SHA256."
+    },
+    {
+      "blocking": false,
+      "closed_by_this_acceptance": false,
+      "id": "I-06",
+      "remediated_in_this_pass": false,
+      "severity": "INFORMATIONAL",
+      "status": "CARRIED",
+      "substance": "The Candidate-R1 manifest was untracked-and-ignored at authoring time and declares neither its own digest nor a containing commit, so its immutability was not cryptographically self-anchored. Its live bytes match the recorded claim and the preserved R1 source inventory was independently recomputed as 6/6 exact. Phase-A publication tracks the R1 checkpoint and manifest, which anchors them in Git going forward. Same class as A-06."
+    },
+    {
+      "blocking": false,
+      "closed_by_this_acceptance": false,
+      "id": "I-07",
+      "remediated_in_this_pass": false,
+      "severity": "INFORMATIONAL",
+      "status": "CARRIED",
+      "substance": "The current generation's production-authority lineage_id and the Full81 authorization LINEAGE_ID are the same string, MAIN_FULL81_AUTHORIZATION_MECHANISM_R1. REJECTED_LINEAGE_IDS enforces the stated production-authority / authorization separation only for historical generations. No exploit was demonstrated: the production_authority_* fields are validated against the resolved live lifecycle, not against that constant."
+    },
+    {
+      "blocking": false,
+      "closed_by_this_acceptance": false,
+      "disposition_note": "Not modified by this Phase-B pass, whose file set is bounded to exactly the two acceptance role artifacts. Recommended for a separate documentation-only refresh.",
+      "id": "I-08",
+      "remediated_in_this_pass": false,
+      "severity": "INFORMATIONAL",
+      "status": "CARRIED",
+      "substance": "docs/ai_handoff/CURRENT_STATE.md is stale: it still describes U-06 R3 as a pending candidate and states that no accepted U-06 lifecycle exists, whereas the accepted predecessor bytes resolve PRESENT_VALID / FROZEN. Documentation only."
+    }
+  ],
+  "carried_findings_not_closed": [
+    "I-04",
+    "I-05",
+    "I-06",
+    "I-07",
+    "I-08"
+  ],
+  "explicit_non_claims": [
+    "Production authority is NOT frozen by this acceptance closure.",
+    "This acceptance closure is NOT a production-authority re-freeze.",
+    "This acceptance closure is NOT an accepted-lifecycle record.",
+    "Main Full81 is NOT authorized by this acceptance closure.",
+    "The Full81 no-solve production preflight is NOT authorized by this acceptance closure.",
+    "Full81 execution is NOT authorized by this acceptance closure.",
+    "Phase C is NOT complete; no production-authority re-freeze and no accepted-lifecycle record exists for this generation.",
+    "Acceptance does not imply freeze, and freeze does not imply Full81 authorization.",
+    "I-04 and I-05 are NOT closed, NOT downgraded, and NOT remediated by this acceptance.",
+    "U-01 remains OPEN / HOLD and A2 remains HARD_BLOCKED; neither is touched by this closure."
+  ],
+  "fabricated_future_hashes": false,
+  "failed_candidate_r1_provenance_modified_by_this_pass": false,
+  "findings_disposition": {
+    "H-01": {
+      "blocking": false,
+      "severity": "CRITICAL",
+      "status": "CLOSED",
+      "substance": "No lawful successor promotion / re-freeze path existed. Closed: the production-authority lifecycle is generation-parameterised, T1-T7 was independently reproduced, and a superseded generation provably cannot freeze current implementation bytes."
+    },
+    "H-02": {
+      "blocking": false,
+      "severity": "MAJOR",
+      "status": "CLOSED",
+      "substance": "Full81 authorization statically bound the predecessor U-06 R3 lineage. Closed: no expected-lineage constant remains, and the expected generation, lineage and accepted-lifecycle record are derived from the resolved current accepted/frozen lifecycle."
+    },
+    "J-01": {
+      "blocking": false,
+      "severity": "MINOR",
+      "status": "CORRECTION_VERIFIED",
+      "substance": "The accepted-suite regression disclosure was materially inaccurate. Corrected in checkpoint section 5.2 with both counting methods stated, the authoritative distinct-test counts (17 baseline to 14 current, 12 resolved, 9 newly failing, 5 pre-existing), the three previously undisclosed tests/test_21g regressions enumerated with their fail-closed disposition, and the test_the_guard_is_not_vacuous attribution corrected to pre-existing. No accepted test byte was modified."
+    }
+  },
+  "framework_v7_4_modified_by_this_pass": false,
+  "full81_execution_authorization_status_asserted": "NOT_AUTHORIZED",
+  "full81_preflight_authorization_status_asserted": "NOT_AUTHORIZED",
+  "full81_result_exists_from_this_pass": false,
+  "generation_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+  "implementation_identity_digest": "1644c426f9dceba081cd3cccf0501623ccfbeeaef5b3131b565fbf928615900f",
+  "implementation_identity_path_count": 21,
+  "independent_audit_pass": {
+    "path": "results/provenance/main_full81_authorization_mechanism_independent_audit_r2/independent_audit_pass_record.json",
+    "sha256": "c65beb4e15746e4a35936c7f5b34f6af9f9611d16e19aacd209e10c5e393e1d7"
+  },
+  "independent_audit_pass_bytes_modified_by_this_pass": false,
+  "is_acceptance_manifest": false,
+  "is_accepted_lifecycle_record": false,
+  "is_human_readable_audit_report": false,
+  "is_main_full81_authorization": false,
+  "is_production_authority_re_freeze": false,
+  "lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+  "machine_readable_role_artifact": true,
+  "main_full81_authorization_status_asserted": "NOT_GRANTED",
+  "milp_solves_this_pass": 0,
+  "notes": "Machine-readable FULL81_AUTH_MECH_R2_ACCEPTANCE_CLOSURE role artifact for the Main Full81 authorization-mechanism successor generation MAIN_FULL81_AUTHORIZATION_MECHANISM_R2. It binds the exact corrected Candidate-R2 checkpoint, the exact corrected Candidate-R2 manifest, and the exact published FULL81_AUTH_MECH_R2_INDEPENDENT_AUDIT_PASS role artifact, and names Phase-A publication commit 02b998b0a466eb07b109d62b0868cdc32f42dee4 so that Phase-A containment is re-proved from that exact commit rather than from ancestry. All SHA-256 values were recomputed from live bytes and the implementation identity digest was re-derived over all 21 accepted implementation paths. An acceptance is not a production-authority freeze, not an accepted-lifecycle record, and not Main Full81 authorization. It follows the accepted U-06 R3 Phase-B structure under this generation's own artifact type, schema, lineage and candidate.",
+  "optimize_calls_this_pass": 0,
+  "phase": "PHASE_B_ACCEPTANCE",
+  "phase_a_containment": {
+    "arbitrary_ancestor_accepted_as_publication_proof": false,
+    "containment_proof_method": "require_published_in_commit: the blob must be present in that exact commit and must hash to the declared SHA-256.",
+    "phase_a_commit": "02b998b0a466eb07b109d62b0868cdc32f42dee4",
+    "phase_a_contained_artifacts": [
+      "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+      "results/provenance/main_full81_authorization_mechanism_independent_audit_r2/independent_audit_pass_record.json"
+    ]
+  },
+  "phase_b_commit_self_reference": null,
+  "phase_b_commit_self_reference_note": "This closure deliberately does NOT declare the hash of the commit that will contain it. Phase-B publication containment is proved later by the production_authority_re_freeze role via its acceptance_publication_commit field, which the live validator checks with require_published_in_commit against the exact Phase-B commit. Self-hard-coding a containing commit hash is impossible and is not attempted.",
+  "phase_c_complete": false,
+  "phase_c_performed_by_this_pass": false,
+  "placeholder_digests_used": false,
+  "predecessor_generation_id": "U06_V7_4_PRODUCTION_AUTHORITY_R3",
+  "production_authority_freeze_status_asserted": "NOT_FROZEN",
+  "registry_v7_4_modified_by_this_pass": false,
+  "role": "acceptance_closure",
+  "schema_version": "iris-thesis-full81-auth-mech-r2-acceptance-closure-v1",
+  "scripts_21d_invocations_this_pass": 0,
+  "severity_is_not_blocking_disposition": "blocking_critical and blocking_major count BLOCKING findings only. I-04 is carried at severity MAJOR with blocking=false; its severity is not downgraded and it is not marked CLOSED. This follows the U-06 R3 precedent, whose F-R3-01 is likewise MAJOR and non-blocking alongside blocking_major = 0.",
+  "target_candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2"
+}

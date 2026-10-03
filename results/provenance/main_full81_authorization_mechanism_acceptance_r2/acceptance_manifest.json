@@ -1,0 +1,192 @@
+{
+  "a2_status_asserted": "HARD_BLOCKED",
+  "acceptance_closure": {
+    "path": "results/provenance/main_full81_authorization_mechanism_acceptance_r2/acceptance_closure.json",
+    "sha256": "f294c8bad0ab16e3b767f7e81a62f548680875d3426c3c41cb48cd0ac2fcd0fb"
+  },
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "accepted_historical_test_bytes_modified_by_this_pass": false,
+  "accepted_lifecycle_status_asserted": "ABSENT",
+  "acyclic_publication_semantics": {
+    "a03_containment_semantics_preserved": true,
+    "arbitrary_ancestor_accepted_as_publication_proof": false,
+    "phase_a_commit": "02b998b0a466eb07b109d62b0868cdc32f42dee4",
+    "phase_a_contained_artifacts": [
+      "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+      "results/provenance/main_full81_authorization_mechanism_independent_audit_r2/independent_audit_pass_record.json"
+    ],
+    "phase_b_commit_self_reference": null,
+    "phase_b_commit_self_reference_note": "This manifest deliberately does NOT declare the hash of the commit that will contain it. Phase-B publication containment is proved later by the production_authority_re_freeze role via its acceptance_publication_commit field, which the live validator checks with require_published_in_commit against the exact Phase-B commit. Self-hard-coding a containing commit hash is impossible and is not attempted."
+  },
+  "annual_production_model_constructed_by_this_pass": false,
+  "artifact_type": "FULL81_AUTH_MECH_R2_ACCEPTANCE_MANIFEST",
+  "audit_publication_commit": "02b998b0a466eb07b109d62b0868cdc32f42dee4",
+  "audit_verdict": "PASS",
+  "audit_verdict_qualifier": "PASS WITH NONBLOCKING FINDINGS",
+  "authorizes_full81_execution": false,
+  "authorizes_full81_preflight": false,
+  "authorizes_main_full81": false,
+  "authorizes_optimize_calls": false,
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "candidate_author_is_not_self_accepting": true,
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md",
+    "sha256": "c5ee72d9b50a217c53e2871c77d91e1c76fec3c603dfae66abc2f40d03a87631"
+  },
+  "candidate_checkpoint_bytes_modified_by_this_pass": false,
+  "candidate_implementation_bytes_authored_by_this_pass": false,
+  "candidate_manifest": {
+    "path": "results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/authorization_mechanism_manifest.json",
+    "sha256": "4e29a7e04a97b2db95167cce5861e525c8985c5688dfccc4f031bb20b25fe897"
+  },
+  "candidate_manifest_bytes_modified_by_this_pass": false,
+  "carried_findings": [
+    {
+      "blocking": false,
+      "classification": "PROMOTION_PATH_DEPENDENCY",
+      "closed_by_this_acceptance": false,
+      "id": "I-04",
+      "remediated_in_this_pass": false,
+      "severity": "MAJOR",
+      "severity_downgraded": false,
+      "status": "CARRIED",
+      "substance": "CRLF / EOL publication-proof fragility. Publication proof compares live bytes to the HEAD blob, so a fresh clone could fail closed with U06_LIFECYCLE_NOT_PUBLISHED. See the acceptance closure for the full substance and disposition."
+    },
+    {
+      "blocking": false,
+      "classification": "IDENTITY_COMPLETENESS_OBSERVATION",
+      "closed_by_this_acceptance": false,
+      "id": "I-05",
+      "remediated_in_this_pass": false,
+      "severity": "MINOR",
+      "severity_downgraded": false,
+      "status": "CARRIED",
+      "substance": "scripts/20c_build_v7_3_reconstructed_pv_mainline_candidate_r3.py is gate-enforced clean-against-HEAD yet absent from ACCEPTED_IMPLEMENTATION_PATHS. See the acceptance closure."
+    },
+    {
+      "blocking": false,
+      "closed_by_this_acceptance": false,
+      "id": "I-06",
+      "remediated_in_this_pass": false,
+      "severity": "INFORMATIONAL",
+      "status": "CARRIED",
+      "substance": "Candidate-R1 manifest self-anchoring observation."
+    },
+    {
+      "blocking": false,
+      "closed_by_this_acceptance": false,
+      "id": "I-07",
+      "remediated_in_this_pass": false,
+      "severity": "INFORMATIONAL",
+      "status": "CARRIED",
+      "substance": "Production-authority lineage_id and Full81 authorization LINEAGE_ID are the same string for the current generation."
+    },
+    {
+      "blocking": false,
+      "closed_by_this_acceptance": false,
+      "id": "I-08",
+      "remediated_in_this_pass": false,
+      "severity": "INFORMATIONAL",
+      "status": "CARRIED",
+      "substance": "docs/ai_handoff/CURRENT_STATE.md is stale."
+    }
+  ],
+  "carried_findings_not_closed": [
+    "I-04",
+    "I-05",
+    "I-06",
+    "I-07",
+    "I-08"
+  ],
+  "explicit_non_claims": [
+    "Production authority is NOT frozen by this acceptance manifest.",
+    "This acceptance manifest is NOT a production-authority re-freeze.",
+    "This acceptance manifest is NOT an accepted-lifecycle record.",
+    "Main Full81 is NOT authorized by this acceptance manifest.",
+    "The Full81 no-solve production preflight is NOT authorized by this acceptance manifest.",
+    "Full81 execution is NOT authorized by this acceptance manifest.",
+    "Phase C is NOT complete; no production-authority re-freeze and no accepted-lifecycle record exists for this generation.",
+    "I-04 and I-05 are NOT closed, NOT downgraded, and NOT remediated by this acceptance.",
+    "U-01 remains OPEN / HOLD and A2 remains HARD_BLOCKED; neither is touched by this manifest."
+  ],
+  "fabricated_future_hashes": false,
+  "failed_candidate_r1_provenance_modified_by_this_pass": false,
+  "findings_disposition": {
+    "H-01": {
+      "blocking": false,
+      "severity": "CRITICAL",
+      "status": "CLOSED"
+    },
+    "H-02": {
+      "blocking": false,
+      "severity": "MAJOR",
+      "status": "CLOSED"
+    },
+    "J-01": {
+      "blocking": false,
+      "severity": "MINOR",
+      "status": "CORRECTION_VERIFIED"
+    }
+  },
+  "framework_v7_4_modified_by_this_pass": false,
+  "full81_execution_authorization_status_asserted": "NOT_AUTHORIZED",
+  "full81_preflight_authorization_status_asserted": "NOT_AUTHORIZED",
+  "full81_result_exists_from_this_pass": false,
+  "generation_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+  "implementation_identity_digest": "1644c426f9dceba081cd3cccf0501623ccfbeeaef5b3131b565fbf928615900f",
+  "implementation_identity_path_count": 21,
+  "independent_audit_pass": {
+    "path": "results/provenance/main_full81_authorization_mechanism_independent_audit_r2/independent_audit_pass_record.json",
+    "sha256": "c65beb4e15746e4a35936c7f5b34f6af9f9611d16e19aacd209e10c5e393e1d7"
+  },
+  "independent_audit_pass_bytes_modified_by_this_pass": false,
+  "is_acceptance_closure": false,
+  "is_accepted_lifecycle_record": false,
+  "is_human_readable_audit_report": false,
+  "is_main_full81_authorization": false,
+  "is_production_authority_re_freeze": false,
+  "lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+  "machine_readable_role_artifact": true,
+  "main_full81_authorization_status_asserted": "NOT_GRANTED",
+  "milp_solves_this_pass": 0,
+  "notes": "Machine-readable FULL81_AUTH_MECH_R2_ACCEPTANCE_MANIFEST role artifact for the Main Full81 authorization-mechanism successor generation MAIN_FULL81_AUTHORIZATION_MECHANISM_R2. It cross-binds the exact acceptance closure, the exact published FULL81_AUTH_MECH_R2_INDEPENDENT_AUDIT_PASS, and the exact corrected Candidate-R2 checkpoint and manifest, and agrees with every earlier role on lineage_id, target_candidate_id, candidate checkpoint and manifest identity, audit identity, PASS verdict, blocking counts, and the 21-path implementation identity digest. I-04, I-05, I-06, I-07 and I-08 are carried without closure or downgrade. Acceptance is not a production-authority freeze and does not authorize Main Full81.",
+  "optimize_calls_this_pass": 0,
+  "phase": "PHASE_B_ACCEPTANCE",
+  "phase_b_publication_set": [
+    "results/provenance/main_full81_authorization_mechanism_acceptance_r2/acceptance_closure.json",
+    "results/provenance/main_full81_authorization_mechanism_acceptance_r2/acceptance_manifest.json"
+  ],
+  "phase_b_publication_set_count": 2,
+  "phase_c_complete": false,
+  "phase_c_performed_by_this_pass": false,
+  "placeholder_digests_used": false,
+  "predecessor_generation_id": "U06_V7_4_PRODUCTION_AUTHORITY_R3",
+  "production_authority_freeze_status_asserted": "NOT_FROZEN",
+  "registry_v7_4_modified_by_this_pass": false,
+  "role": "acceptance_manifest",
+  "role_agreement": {
+    "agreement_fields": [
+      "lineage_id",
+      "target_candidate_id",
+      "implementation_identity_digest",
+      "implementation_identity_path_count",
+      "candidate_checkpoint",
+      "candidate_manifest",
+      "audit_verdict",
+      "blocking_critical",
+      "blocking_major"
+    ],
+    "agreement_method": "Every agreement field was compared against the earlier role artifacts' own live bytes, and every SHA-256 recorded here was recomputed from live bytes. No value was transcribed from a narrative summary.",
+    "agrees_with_roles": [
+      "implementation_candidate",
+      "independent_audit_pass",
+      "acceptance_closure"
+    ],
+    "disagreements": []
+  },
+  "schema_version": "iris-thesis-full81-auth-mech-r2-acceptance-manifest-v1",
+  "scripts_21d_invocations_this_pass": 0,
+  "severity_is_not_blocking_disposition": "blocking_critical and blocking_major count BLOCKING findings only. I-04 is carried at severity MAJOR with blocking=false; its severity is not downgraded and it is not marked CLOSED.",
+  "target_candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2"
+}
