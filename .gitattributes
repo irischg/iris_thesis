@@ -80,6 +80,13 @@
 #    It is preserved, never normalized.
 # ---------------------------------------------------------------------------
 data/reference/parameter_registry_v7_2.csv -text
+# FULLSTACK-01 canonical runtime inputs are raw-byte SHA-256 authorities.  All
+# four accepted files are canonical CRLF; -text prevents clean/smudge filters
+# from changing the exact bytes without changing their scientific content.
+data/reference/production_economic_interface_v7_2.json -text
+data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv -text
+data/reference/taipower_transition_period_settlement_interface_v7_2.json -text
+data/reference/taipower_seasonal_settlement_matrix_v7_2.csv -text
 results/provenance/main_full81_preflight_authorization_guard_candidate_r1_2026-10-03/preflight_authorization_guard_manifest.json -text
 #
 #    Candidate R8: the Git-frozen pre-R8 historical trust root is a single

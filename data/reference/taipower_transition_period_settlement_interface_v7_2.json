@@ -1,0 +1,108 @@
+{
+  "interface_version": "v7.2",
+  "generated_by": "v7.2-transition-period-seasonal-settlement-preflight-2026-08-26",
+  "status": "READY_FOR_EOB_SEASONAL_SETTLEMENT_WIRING",
+  "case_year": {
+    "start": "2024-11-01T00:00:00",
+    "end_exclusive": "2025-11-01T00:00:00",
+    "hours": 8760,
+    "billing_usage_periods": [
+      "2024-11",
+      "2024-12",
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10"
+    ]
+  },
+  "season_rule": {
+    "summer_start_mmdd": "05-16",
+    "summer_end_mmdd": "10-15",
+    "assignment_basis": "hourly timestamp applicability",
+    "hourly_calendar_audit": "PASS",
+    "transition_periods": [
+      "2025-05",
+      "2025-10"
+    ]
+  },
+  "overcontract_rule": {
+    "tier1_threshold_fraction": 0.1,
+    "tier1_multiplier": 2.0,
+    "tier2_multiplier": 3.0,
+    "period_order": "peak>half>sat_half>off",
+    "non_duplication": true,
+    "basic_rate_mapping": {
+      "peak": "regular",
+      "half": "half",
+      "sat_half": "sat_half",
+      "off": "off"
+    },
+    "summer_applicable_periods": [
+      "peak",
+      "half",
+      "sat_half",
+      "off"
+    ],
+    "non_summer_applicable_periods": [
+      "half",
+      "sat_half",
+      "off"
+    ],
+    "non_summer_peak_semantics": "N/A_not_zero"
+  },
+  "monetary_basis": {
+    "currency": "NTD",
+    "currency_base_year": 2023,
+    "basis_label": "constant NTD-2023",
+    "normalized_tariff_registry": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\taipower_tariff_optimization_ntd2023_v7_2.csv"
+  },
+  "transition_regular_basic_boundary": {
+    "upstream_14a_label": "case_validated_empirical_50_50",
+    "upstream_13c_role": "case validation only",
+    "positive_overcontract_rule_inferred_from_basic_charge": false
+  },
+  "mixed_season_positive_overcontract_aggregation": {
+    "institutional_status": "OFFICIAL_CROSS_SEASON_AGGREGATION_NOT_EXPLICITLY_LOCATED",
+    "fabricated_default_allowed": false,
+    "season_specific_tariff_applicability_available": true,
+    "season_specific_demand_masks_available": true,
+    "final_cross_season_aggregation_formula_frozen": false,
+    "eob_requirement": "Use the exported season-specific masks/rates. After solve, report whether any mixed-season billing period has positive over-contract demand. Do not silently label an unverified cross-season aggregation formula as official."
+  },
+  "official_reference": {
+    "url": "https://www.taipower.com.tw/2289/2363/2388/2389/10732/normalPost",
+    "claim_scope": "Official Taipower public explanation of date-sensitive tariff applicability when a billing interval crosses different tariff-applicability periods; the published example expressly addresses allocation of electricity consumption (kWh), not a universal mixed-season positive-overcontract aggregation formula."
+  },
+  "artifacts": {
+    "seasonal_settlement_matrix": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\taipower_seasonal_settlement_matrix_v7_2.csv",
+    "transition_partition_summary": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\results\\parameter_audit\\taipower_transition_period_partition_v7_2.csv"
+  },
+  "inputs": {
+    "annual_input": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\processed\\annual_input_v7_1.parquet",
+      "sha256": "9142b8b6f81b3f423c4ab43ac049765b3e934aae57d33c761208f3452598518e"
+    },
+    "raw_tariff_registry_13b": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\taipower_tariff_registry_v7_1.csv",
+      "sha256": "20333b3c521ed77ebbc38cc427dd58a6c3acd61047ac95befdf3d3223f8226dd"
+    },
+    "normalized_tariff_registry_14a": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\taipower_tariff_optimization_ntd2023_v7_2.csv",
+      "sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395"
+    },
+    "economic_interface_14a": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\production_economic_interface_v7_2.json",
+      "sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9"
+    },
+    "bill_audit_13c": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\results\\billing_audit\\taipower_core_bill_regression_audit_v7_1.json",
+      "sha256": "e050291277863a807b4d6d2c654ca58c97233e7a87b10e94a66c108f0cc44e04"
+    }
+  }
+}

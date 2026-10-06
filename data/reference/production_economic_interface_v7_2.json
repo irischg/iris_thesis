@@ -1,0 +1,177 @@
+{
+  "interface_version": "v7.2",
+  "generated_by": "v7.2-production-economic-interface-cpi-sourcefile-2026-08-26-r1",
+  "status": "READY_FOR_EOB_OBJECTIVE_WIRING",
+  "monetary_basis": {
+    "currency": "NTD",
+    "currency_base_year": 2023,
+    "basis_label": "constant NTD-2023",
+    "discount_rate": 0.05,
+    "discount_rate_role": "real_modeling_discount_rate",
+    "analysis_horizon_years": 20,
+    "crf": 0.08024258719069129,
+    "consistency_rule": "constant-dollar cash flows + real discount rate"
+  },
+  "package_selector": {
+    "mainline_role": "10 MW PNNL full economic package",
+    "sensitivity_role": "1 MW PNNL full economic package",
+    "selection_timing": "ex ante before EOB / Layer A optimization",
+    "outcome_dependent_switching_allowed": false,
+    "labels_are_power_bounds": false,
+    "mainline": {
+      "package_id": "pnnl_v2024_lfp_2023_point_10mw_4to10h",
+      "power_scale_bracket_mw": 10.0,
+      "role": "mainline",
+      "cost_scale_label_only_not_power_bound": true,
+      "duration_window_hr": "4,6,8,10",
+      "currency": "NTD",
+      "currency_base_year": 2023,
+      "fx_ntd_per_usd": 31.15,
+      "capex_C_E_ntd2023_per_kwh": 11281.486474999998,
+      "capex_C_P_ntd2023_per_kw": 5392.906049999981,
+      "annualized_capex_C_E_ntd2023_per_kwh_year": 905.2556621107918,
+      "annualized_capex_C_P_ntd2023_per_kw_year": 432.74073392833,
+      "fom_E_ntd2023_per_kwh_year": 27.396424999999997,
+      "fom_P_ntd2023_per_kw_year": 33.673149999999914,
+      "crep_ntd2023_per_kwh": 5952.064124999999,
+      "production_breakpoints": "0,0.30,0.60,0.80",
+      "lambda_1_ntd2023_per_battery_side_discharged_kwh": 0.6200066796874999,
+      "lambda_2_ntd2023_per_battery_side_discharged_kwh": 1.8600200390625,
+      "lambda_3_ntd2023_per_battery_side_discharged_kwh": 2.4800267187499987,
+      "lambda_ratio": "1:3:4",
+      "package_selection_timing": "ex_ante_before_eob_or_layer_a"
+    },
+    "cost_scale_sensitivity": {
+      "package_id": "pnnl_v2024_lfp_2023_point_1mw_4to10h",
+      "power_scale_bracket_mw": 1.0,
+      "role": "sensitivity",
+      "cost_scale_label_only_not_power_bound": true,
+      "duration_window_hr": "4,6,8,10",
+      "currency": "NTD",
+      "currency_base_year": 2023,
+      "fx_ntd_per_usd": 31.15,
+      "capex_C_E_ntd2023_per_kwh": 12537.90615,
+      "capex_C_P_ntd2023_per_kw": 7246.985199999963,
+      "annualized_capex_C_E_ntd2023_per_kwh_year": 1006.0740274300796,
+      "annualized_capex_C_P_ntd2023_per_kw_year": 581.5168417806464,
+      "fom_E_ntd2023_per_kwh_year": 26.695550000000004,
+      "fom_P_ntd2023_per_kw_year": 60.77364999999988,
+      "crep_ntd2023_per_kwh": 6677.78125,
+      "production_breakpoints": "0,0.30,0.60,0.80",
+      "lambda_1_ntd2023_per_battery_side_discharged_kwh": 0.6956022135416666,
+      "lambda_2_ntd2023_per_battery_side_discharged_kwh": 2.0868066406250003,
+      "lambda_3_ntd2023_per_battery_side_discharged_kwh": 2.7824088541666656,
+      "lambda_ratio": "1:3:4",
+      "package_selection_timing": "ex_ante_before_eob_or_layer_a"
+    }
+  },
+  "billing_demand_proxy": {
+    "kappa": 1.0103668594376984,
+    "estimator": "through-origin least squares",
+    "calibration_usage_periods": [
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10"
+    ],
+    "source_pairs_file": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\results\\data_audit\\kappa_calibration_pairs_v7_1.csv",
+    "source_pairs_sha256": "c8e32a279f7f3c1b16cda6254831621147d03a9ccaadc4190fb44a7a7ba30020",
+    "site_specific": true,
+    "universal_taipower_coefficient": false
+  },
+  "taipower_tariff": {
+    "raw_nominal_registry": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\taipower_tariff_registry_v7_1.csv",
+    "raw_nominal_registry_sha256": "20333b3c521ed77ebbc38cc427dd58a6c3acd61047ac95befdf3d3223f8226dd",
+    "raw_nominal_registry_preserved": true,
+    "optimization_registry": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\taipower_tariff_optimization_ntd2023_v7_2.csv",
+    "optimization_currency": "constant NTD-2023",
+    "deflator_registry": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\taiwan_cpi_annual_registry_v7_2.csv",
+    "deflator_source_file": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\cpispl.xls",
+    "deflator_source_sha256": "b162edf6946f1e12d21090d56917f66edd59cb45a4cb197b9b4fe1a7305e511f",
+    "deflator_source_sheet": "CPI",
+    "deflator_source_index_base": "2021=100 (ROC 110=100)",
+    "deflator_method": "DGBAS annual-average CPI; chained relative to 2023=1",
+    "deflator_to_constant_ntd2023": {
+      "2024": 0.9786661719692051,
+      "2025": 0.9626824817518249
+    },
+    "non_summer_peak_semantics": "N/A_not_zero",
+    "school_frozen_label_scope": "NTUST project institutional-treatment label",
+    "may_october_basic_charge_transition": "case_validated_empirical_50_50",
+    "separate_subsidy_cashflow": false
+  },
+  "parameter_registry": {
+    "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\parameter_registry_v7_2.csv",
+    "schema_fields": [
+      "parameter_name",
+      "value",
+      "unit",
+      "currency",
+      "currency_base_year",
+      "source",
+      "source_version",
+      "capacity_basis",
+      "annualized",
+      "annualization_method",
+      "mainline_or_legacy",
+      "notes"
+    ],
+    "allowed_role_labels": [
+      "mainline",
+      "sensitivity",
+      "validation",
+      "legacy_or_replication"
+    ]
+  },
+  "degradation_accounting_boundary": {
+    "mainline_formulation": "PNNL-calibrated Xu-derived intertemporal PWL",
+    "lambda_unit": "NTD-2023 per battery-side discharged kWh",
+    "annual_fom_receives_crf": false,
+    "c_rep_receives_crf": false,
+    "second_full_replacement_cashflow": false
+  },
+  "preflight_guards": {
+    "legacy_values_blocked": true,
+    "dynamic_cost_bracket_switching_blocked": true,
+    "raw_tariff_overwrite_blocked": true,
+    "non_summer_peak_zero_fill_blocked": true,
+    "double_crf_on_fom_blocked": true,
+    "subsidy_double_counting_blocked": true
+  },
+  "inputs": {
+    "cost_packages_11g": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\results\\parameter_audit\\pnnl_v2024_lfp_ntd2023_candidate_cost_packages.csv",
+      "sha256": "f0c167001cf554804152d5f5eb114ee9403c784bb7937f3c5c90bf000203b3e7"
+    },
+    "degradation_packages_11h": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\results\\parameter_audit\\pnnl_calibrated_pwl_degradation_candidate_packages.csv",
+      "sha256": "6921ae2171da8318945a48280b41780a9c26ce70a15b373088f6dfb486a1eff3"
+    },
+    "raw_tariff_registry_13b": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\taipower_tariff_registry_v7_1.csv",
+      "sha256": "20333b3c521ed77ebbc38cc427dd58a6c3acd61047ac95befdf3d3223f8226dd"
+    },
+    "tariff_audit_13b": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\results\\parameter_audit\\taipower_tariff_registry_audit_v7_1.json",
+      "sha256": "a92e9e96dd039bbde126ee84caa891155051408bea5aca4a9e01ed311ab078f7"
+    },
+    "bill_audit_13c": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\results\\billing_audit\\taipower_core_bill_regression_audit_v7_1.json",
+      "sha256": "e050291277863a807b4d6d2c654ca58c97233e7a87b10e94a66c108f0cc44e04"
+    },
+    "kappa_pairs_08": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\results\\data_audit\\kappa_calibration_pairs_v7_1.csv",
+      "sha256": "c8e32a279f7f3c1b16cda6254831621147d03a9ccaadc4190fb44a7a7ba30020"
+    },
+    "official_cpi_source": {
+      "path": "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\data\\reference\\cpispl.xls",
+      "sha256": "b162edf6946f1e12d21090d56917f66edd59cb45a4cb197b9b4fe1a7305e511f"
+    }
+  }
+}

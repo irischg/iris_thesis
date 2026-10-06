@@ -406,6 +406,63 @@ EXPECTED_PARAMETER_REGISTRY_SHA256 = (
     "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1"
 )
 
+#: FULLSTACK-01.  These are the exact scientific/economic runtime inputs the
+#: accepted Full81 production backend loads after the execution boundary.  The
+#: identities are the accepted Script-15d dependency pins, promoted here only
+#: as an execution-input authority contract; their scientific bytes and loader
+#: semantics are unchanged.
+#:
+#: Keeping path and digest together is intentional.  The validator below joins
+#: each relative path only to :data:`REPOSITORY_ROOT`; it has no caller-supplied
+#: per-file path API, discovery fallback, wildcard, or "latest" lookup.  Correct
+#: bytes at any other path therefore cannot satisfy this contract.
+@dataclass(frozen=True)
+class ExecutionInputAuthorityPin:
+    """Exact canonical path/SHA-256 identity required before Full81 execution."""
+
+    label: str
+    relative_path: str
+    sha256: str
+
+    def as_dict(self) -> dict[str, str]:
+        return {
+            "label": self.label,
+            "path": self.relative_path,
+            "sha256": self.sha256,
+        }
+
+
+FULL81_EXECUTION_INPUT_AUTHORITY_PINS: tuple[ExecutionInputAuthorityPin, ...] = (
+    ExecutionInputAuthorityPin(
+        "economic_interface_14a",
+        "data/reference/production_economic_interface_v7_2.json",
+        "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+    ),
+    ExecutionInputAuthorityPin(
+        "normalized_tariff_14a",
+        "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+        "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+    ),
+    ExecutionInputAuthorityPin(
+        "settlement_interface_14b",
+        "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+        "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+    ),
+    ExecutionInputAuthorityPin(
+        "settlement_matrix_14b",
+        "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+        "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+    ),
+)
+FULLSTACK_01_REMEDIATION_STATUS = (
+    "REMEDIATION_CANDIDATE_READY_FOR_FRESH_INDEPENDENT_AUDIT"
+)
+
+#: Repository location is derived from this accepted module, not from a caller.
+#: Tests replace it only inside disposable fixtures; the production API exposes
+#: no root/path override capable of redirecting authority to alternate files.
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+
 #: Accepted Layer-A solver settings, copied for fingerprinting without importing
 #: the stack.  ``tests/test_21h`` asserts equality with the live stack mapping.
 EXPECTED_LAYER_A_SOLVER_SETTINGS: Mapping[str, Any] = {
@@ -1468,6 +1525,64 @@ def require_full81_preflight_authorization(
     return dict(authorization)
 
 
+def authenticate_full81_execution_inputs() -> dict[str, Any]:
+    """Authenticate the four canonical Full81 runtime inputs, fail closed.
+
+    This is deliberately an execution-boundary validator, not a loader.  It
+    reads raw bytes only, performs no scientific parsing or normalization, and
+    accepts no path overrides.  A symlink is refused so an alternate location
+    cannot masquerade as the canonical repository path.
+    """
+
+    authenticated: list[dict[str, Any]] = []
+    for pin in FULL81_EXECUTION_INPUT_AUTHORITY_PINS:
+        path = REPOSITORY_ROOT / Path(pin.relative_path)
+        _require(
+            path.exists(),
+            "FULL81_EXECUTION_INPUT_AUTHORITY_MISSING",
+            f"Required canonical Full81 execution input is missing: "
+            f"{pin.relative_path}.",
+        )
+        _require(
+            not path.is_symlink(),
+            "FULL81_EXECUTION_INPUT_AUTHORITY_SYMLINK_REJECTED",
+            f"Canonical Full81 execution input may not be a symlink: "
+            f"{pin.relative_path}.",
+        )
+        _require(
+            path.is_file(),
+            "FULL81_EXECUTION_INPUT_AUTHORITY_NOT_REGULAR_FILE",
+            f"Canonical Full81 execution input is not a regular file: "
+            f"{pin.relative_path}.",
+        )
+        actual = sha256_file(path)
+        _require(
+            actual == pin.sha256,
+            "FULL81_EXECUTION_INPUT_AUTHORITY_HASH_MISMATCH",
+            f"Canonical Full81 execution input {pin.relative_path} has SHA-256 "
+            f"{actual}, expected {pin.sha256}.",
+        )
+        authenticated.append(
+            {
+                **pin.as_dict(),
+                "reproduced_sha256": actual,
+                "byte_count": path.stat().st_size,
+            }
+        )
+    return {
+        "status": "FULL81_EXECUTION_INPUT_AUTHORITY_PASS",
+        "fullstack_01_remediation_status": FULLSTACK_01_REMEDIATION_STATUS,
+        "canonical_path_sha256": {
+            pin.relative_path: pin.sha256
+            for pin in FULL81_EXECUTION_INPUT_AUTHORITY_PINS
+        },
+        "inputs": authenticated,
+        "input_count": len(authenticated),
+        "path_override_allowed": False,
+        "wildcard_or_discovery_fallback": False,
+    }
+
+
 def require_full81_execution_authorization(
     authorization: Mapping[str, Any] | None,
 ) -> None:
@@ -1480,6 +1595,11 @@ def require_full81_execution_authorization(
     of that is granted by this candidate, so this guard always rejects.
     """
 
+    # FULLSTACK-01: exact canonical input authority is a prerequisite of the
+    # execution-authorization boundary itself.  It runs before the retained
+    # refusal below and therefore before any future execution authorization can
+    # be honoured, before model construction, and before optimize().
+    input_authority = authenticate_full81_execution_inputs()
     status = (
         (authorization or {}).get("full81_authorization_status") or NOT_GRANTED
     )
@@ -1489,8 +1609,9 @@ def require_full81_execution_authorization(
         f"authorization status is {status!r}, which authorizes only "
         f"{AUTHORIZED_NEXT_ACT}. Execution requires a separately authorized "
         "Full81 execution authorization and arming interlock that this "
-        "mechanism does not grant. No model was constructed and no optimization "
-        "ran.",
+        "mechanism does not grant. The four-file execution-input authority "
+        f"gate reported {input_authority['status']}. No model was constructed "
+        "and no optimization ran.",
     )
 
 
