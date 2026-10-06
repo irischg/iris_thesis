@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import inspect
+import os
 import runpy
 import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -112,6 +114,37 @@ class Fullstack01ExecutionInputAuthorityTests(unittest.TestCase):
         shutil.copyfile(canonical, alternate)
         canonical.unlink()
         self.assert_authority_fails("FULL81_EXECUTION_INPUT_AUTHORITY_MISSING")
+
+    def test_ancestor_junction_resolving_outside_repository_fails_closed(self) -> None:
+        reference = self.fixture_root / "data" / "reference"
+        with tempfile.TemporaryDirectory(
+            prefix=".fullstack01_external_", dir=ROOT
+        ) as external_name:
+            external_reference = Path(external_name) / "reference"
+            shutil.copytree(reference, external_reference)
+            shutil.rmtree(reference)
+            if os.name == "nt":
+                subprocess.run(
+                    [
+                        "cmd",
+                        "/c",
+                        "mklink",
+                        "/J",
+                        str(reference),
+                        str(external_reference),
+                    ],
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
+            else:
+                reference.symlink_to(external_reference, target_is_directory=True)
+            try:
+                self.assert_authority_fails(
+                    "FULL81_EXECUTION_INPUT_AUTHORITY_REPARSE_ESCAPE"
+                )
+            finally:
+                reference.rmdir()
 
     def test_caller_path_override_is_not_an_api(self) -> None:
         parameters = inspect.signature(

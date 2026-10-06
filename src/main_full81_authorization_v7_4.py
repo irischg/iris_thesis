@@ -1530,11 +1530,13 @@ def authenticate_full81_execution_inputs() -> dict[str, Any]:
 
     This is deliberately an execution-boundary validator, not a loader.  It
     reads raw bytes only, performs no scientific parsing or normalization, and
-    accepts no path overrides.  A symlink is refused so an alternate location
-    cannot masquerade as the canonical repository path.
+    accepts no path overrides.  A symlink is refused, and every path is
+    physically resolved inside the real repository so an ancestor junction or
+    reparse point cannot redirect a canonical path to an alternate location.
     """
 
     authenticated: list[dict[str, Any]] = []
+    real_repository_root = REPOSITORY_ROOT.resolve(strict=True)
     for pin in FULL81_EXECUTION_INPUT_AUTHORITY_PINS:
         path = REPOSITORY_ROOT / Path(pin.relative_path)
         _require(
@@ -1549,13 +1551,20 @@ def authenticate_full81_execution_inputs() -> dict[str, Any]:
             f"Canonical Full81 execution input may not be a symlink: "
             f"{pin.relative_path}.",
         )
+        resolved_path = path.resolve(strict=True)
         _require(
-            path.is_file(),
+            resolved_path.is_relative_to(real_repository_root),
+            "FULL81_EXECUTION_INPUT_AUTHORITY_REPARSE_ESCAPE",
+            f"Canonical Full81 execution input resolves outside the real "
+            f"repository: {pin.relative_path}.",
+        )
+        _require(
+            resolved_path.is_file(),
             "FULL81_EXECUTION_INPUT_AUTHORITY_NOT_REGULAR_FILE",
             f"Canonical Full81 execution input is not a regular file: "
             f"{pin.relative_path}.",
         )
-        actual = sha256_file(path)
+        actual = sha256_file(resolved_path)
         _require(
             actual == pin.sha256,
             "FULL81_EXECUTION_INPUT_AUTHORITY_HASH_MISMATCH",
@@ -1566,7 +1575,7 @@ def authenticate_full81_execution_inputs() -> dict[str, Any]:
             {
                 **pin.as_dict(),
                 "reproduced_sha256": actual,
-                "byte_count": path.stat().st_size,
+                "byte_count": resolved_path.stat().st_size,
             }
         )
     return {
