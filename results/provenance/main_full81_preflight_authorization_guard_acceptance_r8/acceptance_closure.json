@@ -1,0 +1,98 @@
+{
+  "schema_version": "iris-thesis-full81-preflight-auth-guard-r1-acceptance-closure-v1",
+  "artifact_type": "FULL81_PREFLIGHT_AUTH_GUARD_R1_ACCEPTANCE_CLOSURE",
+  "generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "target_candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+  "candidate_revision": "R8",
+  "role": "acceptance_closure",
+  "phase": "PHASE_B_ACCEPTANCE",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_state": "R8 — CLOSED / ACCEPTED",
+  "acceptance_basis": "Candidate R8 exists, its fresh independent audit returned PASS with zero blocking findings, Phase A published the exact candidate and audit-PASS bytes, and the current lifecycle role validator accepts this Phase-B chain.",
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+    "sha256": "1f3195cb31a9c5e6b43f8d2ca8d514faddcdea52a9faaacb6aa8ae68b08d1c18"
+  },
+  "candidate_manifest": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/preflight_authorization_guard_manifest.json",
+    "sha256": "bddf704ca7497280444d871b9988455fa421f4b38c8373cd4d0af977b0cd6491"
+  },
+  "candidate_change_ledger": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/candidate_change_ledger.json",
+    "sha256": "8f0adccf9016134094388e12c28dc47352cf1a69804ad63c691b31c2a5caec6f"
+  },
+  "implementation_identity_digest": "dcbd0fbe24e09e15141d403d47f97109457b1757350244ce3da66d096e3f78ba",
+  "implementation_identity_path_count": 21,
+  "independent_audit_pass": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_independent_audit_r8/independent_audit_pass_record.json",
+    "sha256": "76377435ea34e15ca18971992516bf17854f88292c076833cccf45c351a982cb"
+  },
+  "audit_publication_commit": "7c70760cc3cd64ac9a116dfe8836dfda75562da3",
+  "audit_verdict": "PASS",
+  "audit_verdict_qualifier": "INDEPENDENT AUDIT PASS WITH CARRIED NONBLOCKING FINDINGS",
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "candidate_author_is_not_self_accepting": true,
+  "phase_a_containment": {
+    "phase_a_commit": "7c70760cc3cd64ac9a116dfe8836dfda75562da3",
+    "phase_a_contained_artifacts": [
+      "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+      "results/provenance/main_full81_preflight_authorization_guard_independent_audit_r8/independent_audit_pass_record.json"
+    ],
+    "containment_proof_method": "require_published_in_commit over the exact Phase-A commit and exact SHA-256 identities",
+    "arbitrary_ancestor_accepted_as_publication_proof": false
+  },
+  "phase_b_commit_self_reference": null,
+  "phase_b_commit_self_reference_note": "This closure does not self-declare the hash of its containing Phase-B commit. Phase-C validation, if separately authorized, must prove Phase-B containment from the exact acceptance_publication_commit recorded by the future re-freeze role.",
+  "carried_findings": {
+    "R6-AUD-02": {
+      "status": "OPEN / CARRIED / NONBLOCKING",
+      "closed_by_this_acceptance": false
+    },
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY": {
+      "status": "OPEN / CARRIED / NONBLOCKING",
+      "closed_by_this_acceptance": false
+    },
+    "FULLSTACK-01": {
+      "status": "OPEN / CARRIED",
+      "closed_by_this_acceptance": false
+    }
+  },
+  "explicit_non_claims": [
+    "Production authority is NOT re-frozen by this acceptance closure.",
+    "Accepted-lifecycle Phase C is NOT complete.",
+    "This acceptance closure is NOT a production-authority re-freeze.",
+    "This acceptance closure is NOT an accepted-lifecycle record.",
+    "Main Full81 scope is NOT authorized.",
+    "Real 21d is NOT authorized.",
+    "Execution is NOT authorized.",
+    "Optimization and solve are NOT authorized.",
+    "R6-AUD-02, R7 binding/preservation Git durability, and FULLSTACK-01 are not closed or downgraded."
+  ],
+  "production_authority_freeze_status_asserted": "NOT_FROZEN",
+  "accepted_lifecycle_phase_c_status_asserted": "NOT_COMPLETE",
+  "main_full81_status_asserted": "NOT_AUTHORIZED",
+  "real_21d_status_asserted": "NOT_AUTHORIZED",
+  "execution_status_asserted": "NOT_AUTHORIZED",
+  "solve_status_asserted": "NOT_AUTHORIZED",
+  "authorizes_main_full81": false,
+  "authorizes_full81_preflight": false,
+  "authorizes_21d": false,
+  "authorizes_execution": false,
+  "authorizes_optimize_calls": false,
+  "authorizes_solve": false,
+  "phase_c_performed_by_this_pass": false,
+  "is_acceptance_manifest": false,
+  "is_production_authority_re_freeze": false,
+  "is_accepted_lifecycle_record": false,
+  "zero_execution": {
+    "optimize_calls": 0,
+    "solves": 0,
+    "full81_cases": 0,
+    "real_21d_runs": 0
+  },
+  "placeholder_digests_used": false,
+  "fabricated_future_hashes": false,
+  "notes": "Canonical Phase-B acceptance-closure role record for Candidate R8. It binds the exact R8 implementation digest, checkpoint, candidate manifest, change ledger, published independent-audit-PASS record, and Phase-A publication commit. Its maximum lifecycle claim is R8 — CLOSED / ACCEPTED."
+}
