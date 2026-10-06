@@ -1,0 +1,76 @@
+{
+  "artifact_type": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY_INDEPENDENT_AUDIT_PASS",
+  "schema_version": "iris-thesis-fullstack-01-execution-input-authority-independent-audit-pass-v1",
+  "generation_id": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY",
+  "lineage_id": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY",
+  "target_candidate_id": "82f04841ef0861c079eca57d9688e6cad3caadc6",
+  "role": "independent_audit_pass",
+  "candidate_commit": "82f04841ef0861c079eca57d9688e6cad3caadc6",
+  "candidate_paths": [
+    "src/main_full81_authorization_v7_4.py",
+    "tests/test_fullstack_01_execution_input_authority.py"
+  ],
+  "verdict": "PASS",
+  "verdict_qualifier": "READY_FOR_AUTHORITY_CLOSURE",
+  "disposition": "INDEPENDENT AUDIT PASS; READY FOR LATER AUTHORITY CLOSURE",
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "blocking_findings": [],
+  "independent_audit": true,
+  "candidate_author_is_not_self_accepting": true,
+  "candidate_author_is_not_self_accepting_meaning": "This record publishes an independently completed PASS and performs no acceptance. Authority closure is a separate future act.",
+  "candidate_implementation_bytes_authored_by_this_pass": false,
+  "verdict_originated_in_this_pass": false,
+  "audit_disposition_provenance": "The fresh independent read-only audit of candidate commit 82f04841ef0861c079eca57d9688e6cad3caadc6 was completed outside this Phase A publication pass. Its PASS / READY_FOR_AUTHORITY_CLOSURE verdict and exact verified facts were supplied to this publication pass as authoritative governance state by the repository owner. This machine-readable role record represents that completed disposition; it is not itself a new audit, and no unsupported auditor session identifier or repository audit-report path is asserted.",
+  "verification": {
+    "canonical_input_authority": {
+      "status": "FULL81_EXECUTION_INPUT_AUTHORITY_PASS",
+      "input_count": 4,
+      "all_sha256_identities_matched": true,
+      "canonical_path_sha256": {
+        "data/reference/production_economic_interface_v7_2.json": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+        "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+        "data/reference/taipower_transition_period_settlement_interface_v7_2.json": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+        "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79"
+      }
+    },
+    "independent_ancestor_junction_attack": {
+      "status": "FULL81_EXECUTION_INPUT_AUTHORITY_REPARSE_ESCAPE",
+      "attack_returned_pass": false,
+      "rejected_fail_closed": true
+    },
+    "focused_suite": {
+      "tests_run": 9,
+      "failures": 0,
+      "result": "PASS",
+      "summary": "9 passed, 0 failed"
+    }
+  },
+  "independent_audit_repository_mutation_count": 0,
+  "independent_audit_commit_count": 0,
+  "independent_audit_push_count": 0,
+  "independent_audit_21d_count": 0,
+  "independent_audit_optimize_count": 0,
+  "independent_audit_solve_count": 0,
+  "independent_audit_full81_count": 0,
+  "phase": "PHASE_A_AUDIT_PUBLICATION",
+  "machine_readable_role_artifact": true,
+  "is_human_readable_audit_report": false,
+  "is_acceptance": false,
+  "is_acceptance_manifest": false,
+  "is_re_freeze": false,
+  "is_accepted_lifecycle_record": false,
+  "is_main_full81_authorization": false,
+  "is_execution_authorization": false,
+  "production_authority_status_asserted": "UNCHANGED",
+  "main_full81_status_asserted": "UNCHANGED",
+  "real_21d_status_asserted": "NOT_RUN",
+  "execution_status_asserted": "NOT_AUTHORIZED",
+  "solve_status_asserted": "NOT_RUN",
+  "authorizes_main_full81": false,
+  "authorizes_full81_preflight": false,
+  "authorizes_21d": false,
+  "authorizes_execution": false,
+  "authorizes_solve": false,
+  "notes": "Phase A publishes one independent-audit-PASS role record for the exact candidate commit. It does not perform authority closure or acceptance, create an acceptance manifest, re-freeze production authority, recreate Main Full81 scope authorization, create execution authorization, run real 21d, optimize, solve, or execute Full81."
+}
