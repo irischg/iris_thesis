@@ -469,12 +469,30 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
         "PRODUCTION_SUCCESSOR_STACK_V7_4_AUTHORITY_BOUND",
         "U_06_ALIGNMENT_CANDIDATE_R3",
     ),
+    # N-04 re-pin. The Full81 runner was changed to REQUIRE the Main Full81
+    # scope authorization on its no-solve path instead of merely reporting it.
+    # This is the audited re-pin the pin contract above calls for: it restores
+    # byte-identity verification for the successor implementation and nothing
+    # else. It does NOT restore PRODUCTION_AUTHORITY_FROZEN, which is governed
+    # by the accepted-lifecycle record of the current generation and resolves
+    # ABSENT / NOT_FROZEN for these candidate bytes, and it does NOT authorize
+    # Main Full81, which resolves NOT_GRANTED.
+    #
+    # Candidate R2 deliberately does NOT re-pin this entry. The R1 -> R2
+    # iteration corrects publication/EOL compatibility and candidate ownership
+    # only; it changed no byte of the Full81 runner, which is already LF and
+    # carries forward from candidate R1 byte-identically. The ``lifecycle`` tag
+    # therefore still names candidate R1, which is where these exact bytes
+    # originate - the same convention under which other pins retain
+    # ``U_06_ALIGNMENT_CANDIDATE_R3`` and
+    # ``FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2``. Re-pinning an unchanged
+    # file would be an unnecessary repin.
     AuthorityPin(
         "full81_runner",
         "scripts/21d_preflight_v7_3_final81_successor.py",
-        "57af6b6f1102bff9edb9afc55f15bfe7c61f5ced276658dd270203c7aa30bfe2",
+        "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
         "FULL81_PREFLIGHT_AND_DEPLOYMENT_GATED_ENTRY_POINT",
-        "U_06_ALIGNMENT_CANDIDATE_R3",
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1",
     ),
     AuthorityPin(
         "v7_4_alignment_verifier",
@@ -483,47 +501,277 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
         "V7_4_AUTHORITY_ALIGNMENT_NO_SOLVE_VERIFIER",
         "U_06_ALIGNMENT_CANDIDATE_R3",
     ),
+    # N-04 re-pin: the overlay gained one additive AuthorityGeneration and
+    # advanced CURRENT_GENERATION. No predecessor generation value changed.
+    #
+    # Candidate R2 re-pin. The overlay advanced the CURRENT generation's
+    # candidate identity R1 -> R2 (same generation_id, same lineage_id, same
+    # accepted-lifecycle slot), repointed that generation's candidate checkpoint
+    # and manifest at the R2 artifacts, and barred candidate R1. That changes
+    # overlay bytes, so the pin must follow or the gate fails closed. It does
+    # NOT restore PRODUCTION_AUTHORITY_FROZEN and does NOT authorize Main Full81.
+    #
+    # Candidate R3 re-pin. The overlay advanced the CURRENT generation's
+    # candidate identity R2 -> R3 (same generation_id, same lineage_id, same
+    # accepted-lifecycle slot), repointed that generation's candidate checkpoint
+    # and manifest at the R3 artifacts, barred candidate R2, declared the
+    # R2-AUD-01 durable-publication requirements, and separated the active
+    # candidate's audit state from the historical U-06 alignment audit history
+    # (R2-AUD-03). That changes overlay bytes, so the pin must follow or the
+    # gate fails closed. It does NOT restore PRODUCTION_AUTHORITY_FROZEN and
+    # does NOT authorize Main Full81.
+    #
+    # Candidate R5 re-pin (R4-AUD-01). The overlay advanced the CURRENT
+    # generation's candidate identity R4 -> R5, barred candidate R4, added the
+    # R4 STOP preservation package, gave the live durable-publication report
+    # real canonical comparisons, and added the closed-world candidate-manifest
+    # identity contract enforced on the implementation-candidate role. That
+    # changes overlay bytes, so the pin must follow or the gate fails closed.
+    # It does NOT restore PRODUCTION_AUTHORITY_FROZEN and does NOT authorize
+    # Main Full81.
+    #
+    # Candidate R6 re-pin (R5-AUD-01). Candidate identity R5 -> R6, R5 barred,
+    # the R5 STOP package declared, candidate-manifest contract V2: checkpoint
+    # identities verified as role-owned canonical claims, and a bound,
+    # closed-world candidate change ledger. Not a freeze; not Full81.
+    #
+    # Candidate R7 re-pin (R6-AUD-01). Candidate identity R6 -> R7, R6 barred,
+    # the R6 STOP package declared, candidate-manifest contract V3: no identity
+    # accepted structurally in any mode; every identity bound to one
+    # closed-world role with an independently established value (historical
+    # roles via HISTORICAL_ROLE_IDENTITIES below). Not a freeze; not Full81.
+    #
+    # Candidate R8 re-pin (R7-AUD-01). Candidate identity R7 -> R8, R7 barred,
+    # the R7 STOP package declared, candidate-manifest contract V4: every
+    # historical role value and the predecessor change set are derived from
+    # the EXTERNAL historical authority (Git-frozen pre-R8 trust root ->
+    # accepted R7 binding -> authenticated R7 package) in every mode; the
+    # bundle table is a diagnostic assertion only. Not a freeze; not Full81.
     AuthorityPin(
         "u06_lifecycle_overlay",
         "src/production_authority_lifecycle_u06.py",
-        "a35cdb6b5dfe35c74e89614d2a5fd7d90321c0f7d5d76e9b40108a1595a35a60",
+        "aebd2c5924027eba15fb0114cf155dadaee3505929c2f45e2ffbfadb748a37f3",
         "U_06_ACCEPTED_LIFECYCLE_OVERLAY_NO_SCIENTIFIC_CONTENT",
-        "U_06_ALIGNMENT_CANDIDATE_R3",
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
     ),
+    # Candidate R3 re-pin. One assertion in this suite required the ACTIVE
+    # candidate's audit state to be the HISTORICAL U-06 alignment audit history
+    # ("R1_FAILED_R2_NO_GO_R3_PENDING"), so the suite encoded blocker R2-AUD-03
+    # instead of catching it. That assertion now requires the truthful active
+    # state, and two bounded regression guards were added: one proving the
+    # historical U-06 audit record cannot masquerade as the active candidate's
+    # audit state, one proving the R2-AUD-01 durable-publication requirement is
+    # declared. No production guard was weakened and no fail-closed assertion
+    # was removed or relaxed.
+    #
+    # Candidate R5 re-pin (R4-AUD-01). The active-candidate assertion advanced
+    # R4 -> R5 (a current pointer), Candidate R4 gained an explicit historical
+    # rejected-candidate assertion, and the live durable-publication report is
+    # now asserted never to equate presence with content. Every R1-R3
+    # historical assertion is retained unchanged; nothing was relaxed.
+    #
+    # Candidate R6 re-pin. Active-candidate pointer R5 -> R6, an explicit
+    # historical R5 rejection assertion, and the live report's change-ledger
+    # comparison asserted. No assertion removed or relaxed.
+    #
+    # Candidate R7 re-pin. Active-candidate pointer R6 -> R7 and an explicit
+    # historical R6 rejection assertion. No assertion removed or relaxed.
+    #
+    # Candidate R8 re-pin. Active-candidate pointer R7 -> R8 and an explicit
+    # historical R7 rejection assertion. No assertion removed or relaxed.
     AuthorityPin(
         "u06_lifecycle_test",
         "tests/test_21f_u06_accepted_lifecycle_gate.py",
-        "91dd6ec8452c8ca6ace61f995a83630cd38959eb8fea501b19be2e39c981cb8b",
+        "08e1d5cd440028b442f6b9e7defac71b01392131f595bd72b02f93b52700c827",
         "U_06_LIFECYCLE_GATE_STATIC_TEST_F_01_REGRESSION",
-        "U_06_ALIGNMENT_CANDIDATE_R3",
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
     ),
+    # Candidate R4 re-pin (R3-AUD-04). This A-01 suite was written when U-06 R3
+    # was the CURRENT generation and still drove the validator with a U-06 R3
+    # payload. U-06 R3 has since been lawfully accepted, frozen, published and
+    # superseded, so replaying the attack against it stopped at
+    # U06_IMPLEMENTATION_IDENTITY_DRIFT before reaching the role-authenticity
+    # layer the attack exists to test: still rejected, but no longer proving
+    # what it claims. The attack is now aimed at the CURRENT generation, whose
+    # candidate manifest declares the live implementation digest, and the U-06
+    # R3 cases are retained as explicitly historical controls. No negative
+    # control was deleted and no guard was weakened.
     AuthorityPin(
         "u06_r3_substitution_attack_test",
         "tests/test_21g_u06_r3_substitution_attacks.py",
-        "6f0d24ce993f0fa216081576efadc8b35a516a81ac438ad38a17629920d07272",
+        "d89b6216f0b3bc09e6d1f6f6804df39df828f46730fc12fdc1df0b90fb4e1cb6",
         "U_06_R3_ARBITRARY_ARTIFACT_SUBSTITUTION_ATTACK_SUITE",
-        "U_06_ALIGNMENT_CANDIDATE_R3",
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4",
     ),
     AuthorityPin(
         "v7_4_alignment_test",
         "tests/test_21e_v7_4_production_authority_bundle.py",
-        "d6d6e0b1179b76e632da51be3e64b895f226653eadc44b40292b07ed38803ac0",
+        "274e44b7862054737b52628c0a308b327b7fe161915de95f0b6aea9a2612a4e9",
         "V7_4_AUTHORITY_ALIGNMENT_STATIC_TEST",
-        "U_06_ALIGNMENT_CANDIDATE_R3",
+        # Candidate R4 re-pin (R2-AUD-03 / R3-AUD-04). One assertion here
+        # required the pre-acceptance U-06 register entry to be
+        # "V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT", the
+        # ownership string of the HISTORICAL U-06 alignment generation. The
+        # suite therefore REQUIRED blocker R2-AUD-03 instead of catching it.
+        # It now requires the candidate-neutral entry, asserts the historical
+        # string is never emitted as the active one, and additionally checks
+        # the explicit ownership fields. No assertion was removed or relaxed.
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4",
     ),
     AuthorityPin(
         "main_full81_authorization_mechanism",
         "src/main_full81_authorization_v7_4.py",
-        "61000dd41171ab0304d22fe052fab5892660efa0e9d3f39bacfe687148409aa5",
+        # N-04 re-pin: successor-compatibility advance of the lawful record
+        # path, the authorized runner version, and the mechanism identity, so a
+        # FUTURE authorization can target the successor implementation without
+        # overwriting the published R2 authorization. No authorization artifact
+        # was created and none is authorized by this change.
+        #
+        # Candidate R2 re-pin. CANDIDATE_ID advanced R1 -> R2 and candidate R1
+        # was added to SUPERSEDED_CANDIDATE_IDS_THIS_MECHANISM. LINEAGE_ID, the
+        # lawful record path and the authorization schema version are unchanged.
+        # The lawful record path remains deliberately empty: no authorization
+        # artifact exists, and none is authorized by this change.
+        #
+        # Candidate R3 re-pin. CANDIDATE_ID advanced R2 -> R3 and candidate R2
+        # was added to REJECTED_CANDIDATE_IDS, because candidate R2's fresh
+        # independent audit returned FAIL / NO-GO. LINEAGE_ID, the lawful record
+        # path and the authorization schema version are unchanged. The lawful
+        # record path remains deliberately empty: no authorization artifact
+        # exists, and none is authorized by this change.
+        #
+        # Candidate R4 re-pin. Candidate R3's own fresh independent audit
+        # returned FAIL / NO-GO, so R3 was added to REJECTED_CANDIDATE_IDS on
+        # exactly the footing R2 already had. Without that addition a future
+        # authorization could have named a candidate whose audit failed.
+        # LINEAGE_ID, the lawful record path and the authorization schema
+        # version are unchanged. The lawful record path remains deliberately
+        # empty: no authorization artifact exists, and none is authorized by
+        # this change.
+        #
+        # Candidate R5 re-pin. Candidate R4's own fresh independent audit
+        # returned FAIL / NO-GO on R4-AUD-01, so R4 was added to
+        # REJECTED_CANDIDATE_IDS and CANDIDATE_ID advanced R4 -> R5. LINEAGE_ID,
+        # the lawful record path, the authorization schema version, the N-04 /
+        # N-05 guard semantics and every execution-authorization rule are
+        # unchanged. No authorization artifact exists or is authorized.
+        #
+        # Candidate R6 re-pin. CANDIDATE_ID R5 -> R6 and R5 added to
+        # REJECTED_CANDIDATE_IDS; nothing else changed.
+        #
+        # Candidate R7 re-pin. CANDIDATE_ID R6 -> R7 and R6 added to
+        # REJECTED_CANDIDATE_IDS; nothing else changed.
+        #
+        # Candidate R8 re-pin. CANDIDATE_ID R7 -> R8 and R7 added to
+        # REJECTED_CANDIDATE_IDS; nothing else changed.
+        "075194395bee713f74a7a12d26afb0f1ea46245dd1f847ec4979389f8260d51b",
         "MAIN_FULL81_AUTHORIZATION_MECHANISM_NO_SCIENTIFIC_CONTENT",
-        "FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
     ),
+    # Candidate R3 re-pin. Pin 34 (`repository_eol_policy`) made `.gitattributes`
+    # a required authority file, and this suite's isolated promotion fixture is a
+    # miniature repository reconstruction. The fixture did not copy it, so the
+    # bundle correctly reported a missing required authority file and every
+    # positive control resolved NOT_GRANTED. The fixture now derives its
+    # authority-file set from `REQUIRED_DURABLE_PUBLICATION_PATHS`, so it cannot
+    # silently fall behind a future pin. The guard was not weakened: it fired
+    # correctly, and the fixture was completed to match it.
     AuthorityPin(
         "main_full81_authorization_test",
         "tests/test_21h_main_full81_authorization_mechanism.py",
-        "ea9d377c09d1608566a7d1328a9d09ef4f185c448c24e72f5a3dc96a7baef5ce",
+        "9f0ab66279952286ddb8d01e9cce057eede283297a720586d922ba94eec263fd",
         "MAIN_FULL81_AUTHORIZATION_MECHANISM_FAIL_CLOSED_SUITE",
-        "FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+        # Candidate R4 re-pin (R3-AUD-04). Three assertions encoded
+        # predecessor-generation premises: two reached a specific HISTORICAL
+        # generation through `CURRENT_GENERATION` rather than selecting it by
+        # id, and one tested "no hard-coded commit" by counting 40-hex tokens
+        # in the whole source file, so a commit hash cited in a provenance
+        # comment failed it although nothing had become hard-coded. All three
+        # now assert the real invariant: historical generations are selected
+        # explicitly by id, the current generation is derived from primary
+        # contracts, and the module is parsed so that only 40-hex literals
+        # reachable by EXECUTABLE code are constrained. Strictly stronger.
+        #
+        # Candidate R5 re-pin (R4-AUD-01). The current-generation assertion
+        # advanced R4 -> R5 and now also requires the candidate-manifest
+        # contract; Candidate R4 is asserted on every rejection list; and new
+        # promotion-fixture controls prove the manifest is bound only from
+        # OUTSIDE itself and that post-binding byte changes never freeze. No
+        # negative control was deleted or relaxed.
+        #
+        # Candidate R6 re-pin. Current-generation assertion R5 -> R6 (contract
+        # V2, change ledger) and R5 asserted on every rejection list.
+        #
+        # Candidate R7 re-pin. Current-generation assertion R6 -> R7 (contract
+        # V3), R6 asserted on every rejection list, and the GATE positive
+        # control no longer REQUIRES a structural identity class - it had
+        # encoded R6-AUD-01 as expected behaviour. Strictly stronger.
+        #
+        # Candidate R8 re-pin. Current-generation assertion R7 -> R8 (contract
+        # V4, V3 asserted superseded) and R7 asserted on every rejection list.
+        # No assertion removed or relaxed.
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+    ),
+)
+
+#: K.  Repository governance authority.
+#:
+#: Candidate R3 remediation of independent-audit blocker ``R2-AUD-02`` (MAJOR /
+#: BLOCKING).  The repository runs ``core.autocrlf=true`` and, through Candidate
+#: R2, carried no ``.gitattributes``.  A clean checkout therefore smudged every
+#: authority-critical LF text file to CRLF, which changed its raw SHA-256 and
+#: destroyed the canonical implementation identity -- so no third party could
+#: reconstruct the accepted bytes from published Git content alone.
+#:
+#: ``.gitattributes`` now fixes the checkout form of every authority-critical
+#: path explicitly.  That makes it a *reproducibility precondition of the
+#: production-authority route*, not a convenience file: edit it and the raw bytes
+#: that every other pin and the implementation digest are computed over can
+#: change underneath them.  An unbound file with that power is exactly the kind
+#: of silent authority surface this bundle exists to forbid, so it is pinned.
+#:
+#: Deliberate separation of concerns:
+#:
+#: * the 21-path *implementation identity* remains the runtime / gate-protected
+#:   implementation universe and is NOT expanded to 22 -- ``.gitattributes`` is
+#:   not imported, loaded, or executed on any production path;
+#: * ``.gitattributes`` is bound here as *governance/authority identity*.
+#:
+#: Because this bundle's own source now carries the pin, the bundle's SHA-256
+#: changes, and the bundle is one of the 21 implementation paths -- so the
+#: implementation digest advances as a natural consequence.  That is expected.
+#:
+#: This pin is identity only.  It is not an acceptance, not an audit outcome,
+#: not a freeze, and not Main Full81 authorization.
+#: Candidate R4 re-pin.  Declaring this pin was necessary but was not
+#: sufficient: the Candidate R3 verifier never actually verified the group it
+#: sits in (``R3-AUD-03``, CRITICAL), so deleting ``.gitattributes`` outright
+#: still returned ``PASS``.  The verifier now traverses :data:`PIN_GROUPS` and
+#: enforces declared-versus-verified set equality, which is what makes this pin
+#: fail closed.  The policy's own coverage advanced from a hand-maintained list
+#: to the complete raw-byte consumer universe derived from primary source
+#: (``R3-AUD-02``), so its bytes - and therefore this digest - advance with it.
+#: Candidate R5 re-pin (R4-AUD-01).  The derived raw-byte consumer universe
+#: gained exactly five consumers - the Candidate R5 checkpoint and manifest and
+#: the three files of the Candidate R4 STOP preservation package - and the
+#: policy gained exactly the five matching exact-path rules.  No rule was
+#: removed or broadened.
+#: Candidate R6 re-pin: exactly six more consumers (R6 checkpoint, manifest and
+#: change ledger; R5 STOP package) and exactly six matching exact-path rules.
+#: Candidate R7 re-pin: exactly six more consumers (R7 checkpoint, manifest and
+#: change ledger; R6 STOP package) and exactly six matching exact-path rules.
+#: Candidate R8 re-pin: exactly nine more consumers (R8 checkpoint, manifest and
+#: change ledger; R7 STOP package; the Git-frozen pre-R8 trust root and the R7
+#: binding it selects, which contract V4 reads by raw bytes; the R8 attack
+#: suite) and exactly nine matching exact-path rules.  No rule was removed or
+#: broadened.
+REPOSITORY_GOVERNANCE_AUTHORITY_V7_4: tuple[AuthorityPin, ...] = (
+    AuthorityPin(
+        "repository_eol_policy",
+        ".gitattributes",
+        "64e39b0787eda885b19566d7cf46aa225823387f7070b437fb261a39e66925fc",
+        "REPOSITORY_EOL_CHECKOUT_POLICY_REPRODUCIBILITY_PRECONDITION",
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
     ),
 )
 
@@ -543,17 +791,352 @@ INHERITED_V7_3_HISTORICAL_AUTHORITY: tuple[AuthorityPin, ...] = tuple(
 )
 
 
-def all_pins() -> tuple[AuthorityPin, ...]:
-    """Every pin this bundle verifies, in stable declaration order."""
+# ---------------------------------------------------------------------------
+# R3-AUD-03: ONE declared pin universe, verified exactly once
+# ---------------------------------------------------------------------------
+#
+# Candidate R3 received ``FAIL / NO-GO`` on ``R3-AUD-03`` (CRITICAL /
+# BLOCKING).  ``all_pins()`` was a hand-written sum of seven group constants
+# while :func:`verify_v7_4_authority_bundle` was a hand-written sequence of six
+# ``_verify_pins`` calls.  The two lists were maintained independently, the
+# ``REPOSITORY_GOVERNANCE_AUTHORITY_V7_4`` group was added to the first and not
+# the second, and ``verified_pin_count`` was populated from ``len(all_pins())``.
+# The verifier therefore reported 34 verified pins while verifying 33, and
+# deleting ``.gitattributes`` entirely still returned ``PASS``.
+#
+# The remedy is to delete the second list rather than to repair it.
+# :data:`PIN_GROUPS` is now the single declaration; ``all_pins()`` is derived
+# from it, and the verifier TRAVERSES it.  A new group is therefore verified
+# the moment it is declared, with no second edit that could be forgotten.
+#
+# Deriving both sides from one object makes agreement structural, not
+# incidental - but a fail-open defect of this class must not be defended by
+# structure alone.  :func:`declared_pin_inventory` independently re-derives the
+# declared set, and the verifier mechanically compares DECLARED to VERIFIED and
+# fails closed on any asymmetry, duplicate label, duplicate path, missing file
+# or SHA mismatch.  ``verified_pin_count`` is the count of pins this run
+# actually hashed, and is emitted only once that comparison has passed.
+PIN_GROUPS: Mapping[str, tuple[AuthorityPin, ...]] = {
+    "methodology_evidence_authority": METHODOLOGY_EVIDENCE_AUTHORITY_V7_4,
+    "task_3_authority": TASK_3_LAYER_A_PREREGISTRATION_R2,
+    "governance_sequencing_successor": TASK_3_GOVERNANCE_SEQUENCING_SUCCESSOR_R2,
+    "implementation_authority": IMPLEMENTATION_AUTHORITY_V7_4,
+    "alignment_surface": ALIGNMENT_SURFACE_V7_4,
+    "repository_governance_authority": REPOSITORY_GOVERNANCE_AUTHORITY_V7_4,
+    "inherited_v7_3_historical_authority": INHERITED_V7_3_HISTORICAL_AUTHORITY,
+}
 
-    return (
-        METHODOLOGY_EVIDENCE_AUTHORITY_V7_4
-        + TASK_3_LAYER_A_PREREGISTRATION_R2
-        + TASK_3_GOVERNANCE_SEQUENCING_SUCCESSOR_R2
-        + IMPLEMENTATION_AUTHORITY_V7_4
-        + ALIGNMENT_SURFACE_V7_4
-        + INHERITED_V7_3_HISTORICAL_AUTHORITY
-    )
+
+def all_pins() -> tuple[AuthorityPin, ...]:
+    """Every pin this bundle verifies, in stable declaration order.
+
+    Derived from :data:`PIN_GROUPS`, which is also what the verifier
+    traverses, so a declared group can never go unverified.
+    """
+
+    return tuple(pin for group in PIN_GROUPS.values() for pin in group)
+
+
+def declared_pin_inventory() -> dict[str, Any]:
+    """Independently re-derive the declared pin universe and its integrity.
+
+    Deliberately does NOT call :func:`all_pins`: it walks :data:`PIN_GROUPS`
+    itself, so the inventory is a second reading of the declaration rather than
+    a restatement of the first.  Reports duplicate labels and duplicate paths,
+    either of which would make a "verified once" claim unsound.
+    """
+
+    labels: list[str] = []
+    paths: list[str] = []
+    by_group: dict[str, list[str]] = {}
+    for group_name, group in PIN_GROUPS.items():
+        by_group[group_name] = [pin.label for pin in group]
+        for pin in group:
+            labels.append(pin.label)
+            paths.append(pin.relative_path)
+
+    duplicate_labels = sorted({label for label in labels if labels.count(label) > 1})
+    duplicate_paths = sorted({path for path in paths if paths.count(path) > 1})
+    return {
+        "group_count": len(PIN_GROUPS),
+        "group_names": list(PIN_GROUPS),
+        "labels_by_group": by_group,
+        "declared_labels": sorted(labels),
+        "declared_label_count": len(labels),
+        "declared_unique_label_count": len(set(labels)),
+        "duplicate_labels": duplicate_labels,
+        "duplicate_paths": duplicate_paths,
+        "integrity_ok": not duplicate_labels and not duplicate_paths,
+    }
+
+
+# ---------------------------------------------------------------------------
+# R6-AUD-01: pinned HISTORICAL ROLE IDENTITIES (not bundle pins)
+# ---------------------------------------------------------------------------
+#
+# Candidate R6 received ``FAIL / NO-GO`` on ``R6-AUD-01`` (CRITICAL): the
+# production GATE accepted predecessor preservation-package and predecessor-
+# evidence identities STRUCTURALLY, because their files are ignored and
+# unpublished, so a clean checkout has no bytes to verify them against.  Two
+# individually lawful digests swapped between roles therefore passed.
+#
+# Each such identity now has ONE closed-world semantic role, and that role's
+# authoritative value is pinned here, in the module whose job is to hold exact
+# hashes.  The lifecycle overlay's candidate-manifest contract (V3) binds every
+# historical identity to exactly this value in EVERY mode, and in
+# ``CANDIDATE_PACKAGE`` mode additionally proves each value against the
+# immutable preserved bytes (or the predecessor's immutable raw-byte index) it
+# describes.  Because this module is inside the accepted implementation
+# identity, changing any value here is implementation drift.
+#
+# Deliberate separation: these are NOT authority-bundle pins.  They are not in
+# :data:`PIN_GROUPS`, are not counted by :func:`all_pins` (still 7 groups / 34
+# pins), and are not verified by :func:`verify_v7_4_authority_bundle`, because
+# their targets are unpublished historical provenance rather than production
+# authority.  Role names are closed-world: the overlay rejects an unknown role,
+# a role pinned twice, a role whose path is not the path its name requires, and
+# a required role left unpinned (``historical_role_identities``).
+#
+# Roles:
+#   preservation:<candidate>:archive|index|stop_record  - every declared STOP
+#       preservation package (Candidates R1-R6);
+#   predecessor:implementation_digest|checkpoint|manifest|repository_eol_policy
+#       - the immediate predecessor, Candidate R6;
+#   predecessor:modified_file:<path> - the R6 bytes of every path Candidate R7
+#       modifies (the closed predecessor change set its ledger must list).
+#
+# ---------------------------------------------------------------------------
+# R7-AUD-01: the table above is DIAGNOSTIC ONLY (Candidate R8, contract V4)
+# ---------------------------------------------------------------------------
+#
+# Candidate R7 received ``FAIL / NO-GO`` on ``R7-AUD-01`` (CRITICAL): this
+# table is candidate-controlled source, and the implementation identity that
+# covers it is recomputable, so a recomputing author rewrote it together with
+# the manifest, ledger and checkpoint and restored GATE PASS with lawful
+# historical digests assigned to the wrong roles.  Pinning historical truth
+# HERE was the defect.
+#
+# Under contract V4 the lifecycle overlay derives every historical role value
+# from EXTERNAL evidence instead: the Git-frozen pre-R8 historical trust root
+# below -> the accepted R7 Preservation Authority Binding that trust root pins
+# -> the authenticated R7 preservation package.  The table that follows is kept
+# only as a DIAGNOSTIC ASSERTION of that derivation: the overlay requires it to
+# be exactly equal, never reads a value from it, and never falls back to it.
+# Rewriting it can only make the GATE fail.
+#
+# Roles asserted (Candidate R8):
+#   preservation:<candidate>:archive|index|stop_record - Candidates R1-R7;
+#   predecessor:implementation_digest|checkpoint|manifest|repository_eol_policy
+#       - the immediate predecessor, Candidate R7;
+#   predecessor:modified_file:<path> - the R7 bytes of every path of R7's
+#       preserved surface that Candidate R8 changes.
+
+
+@dataclass(frozen=True)
+class FrozenGitAuthority:
+    """The externally frozen Git identity of one pre-R8 governance artifact."""
+
+    tag_ref: str
+    tag_object: str
+    commit: str
+    path: str
+    blob: str
+    raw_sha256: str
+    byte_count: int
+
+
+#: The pre-R8 historical trust root, as frozen by its independently audited Git
+#: freeze gate BEFORE Candidate R8 existed: annotated tag, peeled commit,
+#: tracked path, blob, raw bytes.  Candidate R8 CONSUMES this identity; it does
+#: not choose it.  Every value is independently checkable against the published
+#: remote tag, and the overlay
+#: (:func:`~src.production_authority_lifecycle_u06.authenticate_pre_r8_trust_root`)
+#: verifies it through live Git objects - ref -> annotated tag object -> commit
+#: -> blob, published ancestry - and reads the trust root from the Git blob.  The
+#: R7 binding locator and SHA-256 are read FROM that blob; they are deliberately
+#: not restated anywhere in candidate source.
+PRE_R8_HISTORICAL_TRUST_ROOT = FrozenGitAuthority(
+    tag_ref="refs/tags/v7.4-main-full81-pre-r8-historical-trust-root-accepted-2026-10-06",
+    tag_object="6b31fef7c84bd0646a7171cf8168564ee969b10f",
+    commit="c8f3665d5c67e0cae3222073cd71b9a6231279b1",
+    path="docs/checkpoints/main_full81_preflight_pre_r8_historical_trust_root_2026-10-06.json",
+    blob="d10707b922004f3084ae6045fe3f1b1caf6eaea4",
+    raw_sha256="889964f9574ce4d90e6919b29c2425fe60ccf30b5b20bbcfb553fb3f9d8d2fb5",
+    byte_count=5496,
+)
+
+
+@dataclass(frozen=True)
+class HistoricalRoleIdentity:
+    """One DIAGNOSTIC assertion of an externally derived historical role value."""
+
+    role: str
+    relative_path: str | None
+    sha256: str
+
+
+HISTORICAL_ROLE_IDENTITIES: tuple[HistoricalRoleIdentity, ...] = (
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1:archive",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/candidate_r1_raw_bytes.zip",
+        "45ff1028fab900f13e0eede29abae56d9c06834e9605bda51b2bfd11f2827f6f",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1:index",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/candidate_r1_raw_byte_index.json",
+        "720fafade81b1cb8c0f22ddc0600611bfe5bad6f8e320270542bfaae2ba9f579",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1:stop_record",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/publication_stop_record.json",
+        "c8400b6da1bffe8ad1ca7c919569b9980024f7d459ed7f890a472f9a24e99911",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2:archive",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/candidate_r2_raw_bytes.zip",
+        "308646c16731a3695e340c48c53d5ce51f1af078e2729cdc43a0692eec3d3743",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2:index",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/candidate_r2_raw_byte_index.json",
+        "beaf1e53d25064ec22af5b6aa632fcd9bcbb310facd0a260cd34efe3978eed27",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2:stop_record",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/independent_audit_stop_record.json",
+        "5cddedbec20d194d17de64d6d9a0977898b310fee496c44e12c9edf0f19f0840",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3:archive",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/candidate_r3_raw_bytes.zip",
+        "6f616f748cd2d51f140707bffe99055741ecd413c9bd9706c50f6b381738918b",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3:index",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/candidate_r3_raw_byte_index.json",
+        "8209d12ec5a995780fcf4aa106e3ac5ae8b1617944c720b2a37c4fa921e11a17",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3:stop_record",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/independent_audit_stop_record.json",
+        "e66512336a3612994b6f9da6b379f915f0014bf114c200861f45b2d6a5093b02",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4:archive",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/candidate_r4_raw_bytes.zip",
+        "aecfb8f6b99b0a730205ee4ff958a2e2e52df34dd682bf4bec1813fa7f87cd3f",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4:index",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/candidate_r4_raw_byte_index.json",
+        "cc1c52ae6130987798fa5e29064bc73f60042c219216a02b25ef00000ec96121",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4:stop_record",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/independent_audit_stop_record.json",
+        "2385666eb1c2b7206e620780da12a1490ed93239f363ea97075b990cb3054c75",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5:archive",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/candidate_r5_raw_bytes.zip",
+        "f956f85aa8b163501e5310b674c428bc647c29b8e8ebfd15782a098d0510048e",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5:index",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/candidate_r5_raw_byte_index.json",
+        "ec2a1457715b300a4ef3406f5cdd4aa1c074b9c765d96c726a9e06618cff4420",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5:stop_record",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/independent_audit_stop_record.json",
+        "4ac15dde83bfc1ed7c76a21f04efe0d1da68426a645d7c7151481c5dc61c7385",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6:archive",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/candidate_r6_raw_bytes.zip",
+        "03559218fcc6e028f631ba00d311dfa9d0612f0494512fab63c8ee47376e1ce7",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6:index",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/candidate_r6_raw_byte_index.json",
+        "ab7df3b8bed4d21286ff1bff202777a53a908acb94ce6a4b62a7318d2d5efd29",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6:stop_record",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/independent_audit_stop_record.json",
+        "5abe9ddcabcc514cb9118b7909d9834d636fdbec471da2c25745cfcf48ef6b70",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7:archive",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_bytes.zip",
+        "5b9042a59f43852c0c9c19b37df2c10cdd7588952df2bd5eecaaf7c46af8a4ae",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7:index",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_byte_index.json",
+        "ebf2b1ad3185e78e918e86dd67420ace44be5ccc387ea142a5e85d468884b225",
+    ),
+    HistoricalRoleIdentity(
+        "preservation:MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7:stop_record",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/independent_audit_stop_record.json",
+        "4f48982132784aec932e0100202f16db5bb45544934adfb382127f23e0cc8066",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:implementation_digest",
+        None,
+        "cb78b3ac0c5bcee793757f0de7a3684f248b70abac1226e5b263f11fa6690b5c",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:checkpoint",
+        "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r7_2026-10-06.md",
+        "cff4273fc9cb1080dc3f4fb7d9060febc002262ac81ee4fb69e76e83ebdf150c",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:manifest",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_2026-10-06/preflight_authorization_guard_manifest.json",
+        "3d9a27f08ad60c9d08971e6fc652f7cdd31fa5dd89ef52057a51918de5bdeb6f",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:repository_eol_policy",
+        ".gitattributes",
+        "27187c9be7cfd2d2ab1fd39f4f0d94a48e63d81d9fa3f327996def6fb798a3aa",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:modified_file:.gitattributes",
+        ".gitattributes",
+        "27187c9be7cfd2d2ab1fd39f4f0d94a48e63d81d9fa3f327996def6fb798a3aa",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:modified_file:src/main_full81_authorization_v7_4.py",
+        "src/main_full81_authorization_v7_4.py",
+        "8dc2fb506f7506d7e2e864b17a9fca1a7fc329679db45c7566a6277ae0eeb35a",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:modified_file:src/production_authority_bundle_v7_4.py",
+        "src/production_authority_bundle_v7_4.py",
+        "50c680cf39d8383caf2ca81ef1b929b4920b93b6c81edba273fa42bc00178aa4",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:modified_file:src/production_authority_lifecycle_u06.py",
+        "src/production_authority_lifecycle_u06.py",
+        "ee81109c8414753fef1d0dae24d3a598bf43f8d1a8f9bf769b2318614705865b",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:modified_file:tests/test_21f_u06_accepted_lifecycle_gate.py",
+        "tests/test_21f_u06_accepted_lifecycle_gate.py",
+        "619c45a977800bf8b495788f89df7430aa4aad1eaef22bd2338c86a28ea3e774",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:modified_file:tests/test_21h_main_full81_authorization_mechanism.py",
+        "tests/test_21h_main_full81_authorization_mechanism.py",
+        "8b944b6982891c75ef3f3768451c1ba91e6bcbaca8a2f2c27a0d0abe7558553d",
+    ),
+    HistoricalRoleIdentity(
+        "predecessor:modified_file:tests/test_21j_authority_raw_byte_eol_coverage.py",
+        "tests/test_21j_authority_raw_byte_eol_coverage.py",
+        "49940a21cf281dba2e8fe07955373d7b6970faf810699fbdfbb80d147922bc11",
+    ),
+)
 
 
 # ---------------------------------------------------------------------------
@@ -593,12 +1176,41 @@ STATIC_UNRESOLVED_REGISTER = {
 }
 
 
+#: R2-AUD-03 remediation.  The pre-acceptance register entry is now
+#: candidate-NEUTRAL.  The string it replaces,
+#: ``V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT``, names the
+#: HISTORICAL U-06 V7.4 *alignment* candidate, and reporting it as the
+#: ownership of the active Main Full81 preflight-authorization-guard candidate
+#: was the defect.  This value names no generation and no candidate at all, so
+#: it cannot misattribute one to another; who the entry is ABOUT is carried in
+#: the explicit fields of :func:`u06_register_state` instead of being smuggled
+#: inside a status string.
+ACTIVE_CANDIDATE_PENDING_AUDIT_REGISTER_ENTRY = (
+    "ACTIVE_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT"
+)
+
+#: The historical string, retained ONLY so the substitution tests can prove it
+#: is never emitted as the active entry.  It is not used to derive any state.
+HISTORICAL_U06_ALIGNMENT_REGISTER_ENTRY = (
+    "V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT"
+)
+
+
 def u06_register_entry(lifecycle: Mapping[str, Any] | None) -> str:
     """Derive the ``U-06`` register entry from lifecycle state, not a constant.
 
-    Before acceptance this reads as a candidate pending audit; after a lawful
-    acceptance the same code reads as accepted/frozen, with no edit here and no
-    rewriting of any historical artifact.
+    Before acceptance this reads as a candidate-neutral "pending fresh
+    independent audit"; after a lawful acceptance the same code reads as
+    accepted/frozen, with no edit here and no rewriting of any historical
+    artifact.
+
+    Candidate R3 remediation of independent-audit blocker ``R2-AUD-03`` (MAJOR
+    / BLOCKING) corrected most audit fields but left this function returning
+    the historical U-06 *alignment* ownership string for the current
+    preflight-authorization-guard generation.  The pre-acceptance return value
+    is now candidate-neutral, and
+    :func:`u06_register_state` carries generation, lineage, candidate id and
+    candidate audit status as separate explicit fields.
     """
 
     summary = lifecycle_summary(lifecycle)
@@ -610,7 +1222,47 @@ def u06_register_entry(lifecycle: Mapping[str, Any] | None) -> str:
         return "CLOSED_ACCEPTED_PRODUCTION_AUTHORITY_NOT_YET_FROZEN"
     if summary["u06_independent_audit_status"] == "PASS":
         return "INDEPENDENT_AUDIT_PASS_PENDING_ACCEPTANCE"
-    return "V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT"
+    return ACTIVE_CANDIDATE_PENDING_AUDIT_REGISTER_ENTRY
+
+
+def u06_register_state(lifecycle: Mapping[str, Any] | None) -> dict[str, Any]:
+    """The ``U-06`` register entry WITH explicit ownership, never implied.
+
+    ``R2-AUD-03`` was possible because one status string had to carry both
+    "what state is this in?" and "whose state is it?".  Those are separated
+    here: ``entry`` is the state, and generation / lineage / candidate id /
+    candidate audit status say who it belongs to.  Every field is read from the
+    CURRENT generation through the resolved lifecycle, so a historical record
+    can never supply them.
+    """
+
+    summary = lifecycle_summary(lifecycle)
+    return {
+        "entry": u06_register_entry(lifecycle),
+        "entry_is_candidate_neutral": True,
+        "generation_id": summary["current_generation_id"],
+        "lineage_id": summary["current_generation_lineage_id"],
+        "candidate_id": summary["active_candidate_id"],
+        "candidate_audit_status": summary["u06_independent_audit_status"],
+        "candidate_audit_status_scope": (
+            summary["u06_independent_audit_status_scope"]
+        ),
+        "candidate_audit_status_candidate_id": summary["active_candidate_id"],
+        "historical_u06_alignment_audit_status": (
+            summary["historical_u06_alignment_audit_status"]
+        ),
+        "historical_u06_alignment_is_current": False,
+        "historical_u06_alignment_register_entry": (
+            HISTORICAL_U06_ALIGNMENT_REGISTER_ENTRY
+        ),
+        "historical_u06_alignment_register_entry_is_current": False,
+        "ownership_note": (
+            "entry describes the state of candidate_id in generation_id and of "
+            "nothing else. The historical U-06 alignment fields are retained "
+            "for provenance and are never the active candidate's state; "
+            "reporting them as such was blocker R2-AUD-03."
+        ),
+    }
 
 #: U-07 is an A2-only classification question and is not a Main Full81 blocker.
 #: No variable-floor support is implemented and no reserve-floor equation accepts
@@ -664,6 +1316,9 @@ def governance_state(
     register["U-06"] = u06_register_entry(lifecycle)
     return {
         "u06_lifecycle": summary,
+        # R2-AUD-03: the register entry WITH explicit ownership, so no consumer
+        # has to infer whose state the one-line entry describes.
+        "u06_register_state": u06_register_state(lifecycle),
         "u06_acceptance_status": summary["u06_acceptance_status"],
         "u06_independent_audit_status": summary["u06_independent_audit_status"],
         "production_authority_freeze_status": summary[
@@ -1050,12 +1705,65 @@ def verify_v7_4_authority_bundle(
     """
 
     root = root.resolve()
-    methodology = _verify_pins(root, METHODOLOGY_EVIDENCE_AUTHORITY_V7_4)
-    task_3 = _verify_pins(root, TASK_3_LAYER_A_PREREGISTRATION_R2)
-    governance = _verify_pins(root, TASK_3_GOVERNANCE_SEQUENCING_SUCCESSOR_R2)
-    implementation = _verify_pins(root, IMPLEMENTATION_AUTHORITY_V7_4)
-    alignment_surface = _verify_pins(root, ALIGNMENT_SURFACE_V7_4)
-    inherited = _verify_pins(root, INHERITED_V7_3_HISTORICAL_AUTHORITY)
+
+    # R3-AUD-03. Refuse before hashing anything if the DECLARATION itself is
+    # unsound: a duplicate label or path would make "every declared pin
+    # verified exactly once" unprovable.
+    inventory = declared_pin_inventory()
+    if not inventory["integrity_ok"]:
+        raise ProductionAuthorityBundleError(
+            "V7_4_AUTHORITY_PIN_DECLARATION_INVALID",
+            "The declared V7.4 authority pin universe is not well formed: "
+            f"duplicate labels={inventory['duplicate_labels']}, "
+            f"duplicate paths={inventory['duplicate_paths']}.",
+        )
+
+    # Traverse the ONE declaration. Every declared group is verified here
+    # because the verifier iterates the same object `all_pins()` is derived
+    # from; there is no second list to fall behind.
+    verified_groups: dict[str, dict[str, dict[str, Any]]] = {}
+    verified_labels: list[str] = []
+    for group_name, group in PIN_GROUPS.items():
+        verified = _verify_pins(root, group)
+        verified_groups[group_name] = verified
+        verified_labels.extend(verified)
+
+    # Mechanical DECLARED-vs-VERIFIED parity. This is the check that would
+    # have caught R3-AUD-03 even if the two lists had stayed separate.
+    declared_set = set(inventory["declared_labels"])
+    verified_set = set(verified_labels)
+    declared_unverified = sorted(declared_set - verified_set)
+    verified_undeclared = sorted(verified_set - declared_set)
+    duplicate_verified = sorted(
+        {label for label in verified_labels if verified_labels.count(label) > 1}
+    )
+    if declared_unverified or verified_undeclared or duplicate_verified:
+        raise ProductionAuthorityBundleError(
+            "V7_4_AUTHORITY_PIN_PARITY_FAIL",
+            "Declared and verified V7.4 authority pin sets disagree: "
+            f"declared-but-unverified={declared_unverified}, "
+            f"verified-but-undeclared={verified_undeclared}, "
+            f"verified-more-than-once={duplicate_verified}.",
+        )
+
+    # Only now is a pin count honest: it is the number of pins THIS RUN
+    # actually hashed, after exact set equality has been established. It is
+    # never len(all_pins()).
+    verified_pin_count = len(verified_labels)
+    if verified_pin_count != len(declared_set):
+        raise ProductionAuthorityBundleError(
+            "V7_4_AUTHORITY_PIN_PARITY_FAIL",
+            f"Verified {verified_pin_count} pins but {len(declared_set)} are "
+            "declared.",
+        )
+
+    methodology = verified_groups["methodology_evidence_authority"]
+    task_3 = verified_groups["task_3_authority"]
+    governance = verified_groups["governance_sequencing_successor"]
+    implementation = verified_groups["implementation_authority"]
+    alignment_surface = verified_groups["alignment_surface"]
+    repository_governance = verified_groups["repository_governance_authority"]
+    inherited = verified_groups["inherited_v7_3_historical_authority"]
 
     return {
         "status": "PASS",
@@ -1064,7 +1772,19 @@ def verify_v7_4_authority_bundle(
         "bundle_scope": BUNDLE_SCOPE,
         "bundle_lineage": BUNDLE_LINEAGE,
         "alignment_status": PRODUCTION_AUTHORITY_ALIGNMENT_STATUS,
-        "verified_pin_count": len(all_pins()),
+        "verified_pin_count": verified_pin_count,
+        "declared_pin_count": len(declared_set),
+        "pin_parity": {
+            "declared_pin_count": len(declared_set),
+            "verified_pin_count": verified_pin_count,
+            "declared_but_unverified": declared_unverified,
+            "verified_but_undeclared": verified_undeclared,
+            "verified_more_than_once": duplicate_verified,
+            "exact_set_equality": True,
+            "verified_groups": list(verified_groups),
+            "declared_groups": inventory["group_names"],
+            "count_source": "ACTUALLY_VERIFIED_UNIQUE_PINS_NOT_LEN_ALL_PINS",
+        },
         "methodology_evidence_authority": methodology,
         "task_3_authority": task_3,
         "governance_sequencing_successor": governance,
@@ -1073,6 +1793,7 @@ def verify_v7_4_authority_bundle(
         ),
         "implementation_authority": implementation,
         "alignment_surface": alignment_surface,
+        "repository_governance_authority": repository_governance,
         "inherited_v7_3_historical_authority": inherited,
         "canonical_planning_input": canonical_planning_input_contract(),
         "model_core": {

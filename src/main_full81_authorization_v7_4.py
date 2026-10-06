@@ -112,23 +112,157 @@ from src.production_input_authority_v7_3 import (
 )
 
 
+#: Advanced to candidate-r8 because this module's CONTRACT changed in
+#: Candidate R8: :data:`CANDIDATE_ID` advanced R7 -> R8 and candidate R7 was
+#: added to :data:`REJECTED_CANDIDATE_IDS` after its fresh independent audit
+#: returned FAIL / NO-GO.  Leaving the label at ``candidate-r7`` would
+#: attribute the current contract to a rejected candidate - the same
+#: misattribution class as ``R2-AUD-03``.  This string is reported, never used
+#: as an acceptance criterion.
 AUTHORIZATION_MODULE_VERSION = (
-    "v7.4-main-full81-authorization-mechanism-2026-10-02-candidate-r2"
+    "v7.4-main-full81-authorization-mechanism-2026-10-06-candidate-r8"
 )
 
 #: The successor lineage this mechanism belongs to.  Deliberately **not** a
 #: U-06 revision: U-06 R3 was accepted and frozen, not STOPped, and U-06's own
 #: accepted scope excludes Full81 authorization.  Deliberately **not** ``U-07``,
 #: which is reserved as ``UNRESOLVED_CLASSIFICATION / A2_ONLY``.
-LINEAGE_ID = "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1"
-CANDIDATE_ID = "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2"
+#: Advanced for the ``N-04`` successor.  Finding ``N-04`` (MAJOR) required the
+#: no-solve runner to *require* this authorization rather than report it, which
+#: changed runner bytes, the accepted implementation digest, and therefore the
+#: production-authority generation (see
+#: :data:`~src.production_authority_lifecycle_u06.CURRENT_GENERATION`).  The
+#: mechanism's own pinned contract changed with it: the lawful record path and
+#: the authorized runner version below are both different.  Reusing the R2
+#: lineage / candidate identity for that changed contract would let the
+#: historical, lawfully published R2 authorization satisfy the lineage and
+#: candidate checks against a successor it was never about.
+#: Candidate iteration R1 -> R2.  The LINEAGE is unchanged: candidate R2 is the
+#: publication-compatible successor of candidate R1 inside the SAME production-
+#: authority generation, not a new guard generation.  Only the CANDIDATE
+#: identity advances, so a future authorization must name candidate R2 and the
+#: never-published candidate R1 identity can no longer satisfy the candidate
+#: check below.
+#: Candidate iteration R2 -> R3.  The LINEAGE is again unchanged: candidate R3
+#: is the bounded provenance/governance remediation of the three BLOCKING
+#: findings of candidate R2's fresh independent audit (``R2-AUD-01`` parameter-
+#: registry publication durability, ``R2-AUD-02`` repository EOL checkout
+#: authority, ``R2-AUD-03`` truthful candidate audit-state reporting) inside the
+#: SAME production-authority generation, not a new guard generation.  Only the
+#: CANDIDATE identity advances, so a future authorization must name candidate R3
+#: and neither the never-published candidate R1 identity nor the audit-rejected
+#: candidate R2 identity can satisfy the candidate check below.
+#: Candidate iteration R3 -> R4.  The LINEAGE is again unchanged: candidate R4
+#: is the bounded remediation of the five BLOCKING findings of candidate R3's
+#: fresh independent audit (``R3-AUD-01`` stale/cyclic candidate package
+#: binding, ``R3-AUD-02`` incomplete EOL authority coverage, ``R3-AUD-03``
+#: CRITICAL fail-open bundle verifier, ``R2-AUD-03`` stale historical ownership
+#: in the current register entry, ``R3-AUD-04`` predecessor premises in the
+#: validation surface) inside the SAME production-authority generation, not a
+#: new guard generation.  Only the CANDIDATE identity advances.
+#:
+#: This advance is REQUIRED, not cosmetic.  Candidate R3 is now listed in
+#: :data:`REJECTED_CANDIDATE_IDS`, so leaving ``CANDIDATE_ID`` at R3 would make
+#: this mechanism self-contradictory: the hard ``candidate_id == CANDIDATE_ID``
+#: equality below would demand the very identity the rejection list bars.  A
+#: future authorization must name candidate R4, and none of the never-published
+#: candidate R1 identity, the audit-rejected candidate R2 identity, or the
+#: audit-rejected candidate R3 identity can satisfy the candidate check below.
+#: Candidate iteration R4 -> R5.  The LINEAGE is again unchanged: candidate R5
+#: is the bounded remediation of the single BLOCKING finding of candidate R4's
+#: fresh independent audit (``R4-AUD-01``, a frozen live durable-publication
+#: snapshot with stale and self-referential SHA claims that no validator
+#: checked) inside the SAME production-authority generation.  Only the
+#: CANDIDATE identity advances, and for the same reason as R3 -> R4 the advance
+#: is required: candidate R4 is now in :data:`REJECTED_CANDIDATE_IDS`, so the
+#: hard ``candidate_id == CANDIDATE_ID`` equality may not demand it.
+#: Candidate iteration R5 -> R6.  The LINEAGE is again unchanged: candidate R6
+#: is the bounded remediation of candidate R5's two BLOCKING findings
+#: (``R5-AUD-01`` checkpoint identity role ownership, ``R5-AUD-02`` test
+#: disposable-write containment) inside the SAME production-authority
+#: generation.  Only the CANDIDATE identity advances, and the advance is
+#: required for the same reason: candidate R5 is now rejected.
+#: Candidate iteration R6 -> R7.  The LINEAGE is again unchanged: candidate R7
+#: remediates the defect classes of candidate R6's two BLOCKING findings
+#: (``R6-AUD-01`` semantic role ownership / obligation verification,
+#: ``R6-AUD-02`` test write-containment) inside the SAME production-authority
+#: generation.  Only the CANDIDATE identity advances, and the advance is
+#: required for the same reason: candidate R6 is now rejected.
+#: Candidate iteration R7 -> R8.  The LINEAGE is again unchanged: candidate R8
+#: repairs the defect class of candidate R7's BLOCKING finding
+#: (``R7-AUD-01``: candidate-controlled historical expected values in the
+#: GATE) inside the SAME production-authority generation.  Only the
+#: CANDIDATE identity advances, and the advance is required for the same
+#: reason: candidate R7 is now rejected.
+LINEAGE_ID = "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1"
+CANDIDATE_ID = "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8"
+
+#: The predecessor mechanism identity, retained as historical evidence.  It was
+#: accepted, frozen and lawfully used to publish the R2 authorization; it is not
+#: rejected, it is superseded, and it may never authorise this generation.
+SUPERSEDED_LINEAGE_IDS_THIS_MECHANISM: tuple[str, ...] = (
+    "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+)
+#: ``MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1`` is this lineage's
+#: own superseded candidate.  It PASSED its fresh independent read-only audit;
+#: it is therefore NOT a rejected candidate.  Its candidate-publication pass
+#: STOPPED on the ``I-04`` Git clean-filter / EOL raw-byte incompatibility, so
+#: it was never accepted, never committed, and no authorization artifact naming
+#: it was ever created.  It is listed here so that what is being refused stays
+#: explicit and auditable, alongside the hard ``candidate_id == CANDIDATE_ID``
+#: equality check that already bars it.
+SUPERSEDED_CANDIDATE_IDS_THIS_MECHANISM: tuple[str, ...] = (
+    "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1",
+)
 
 #: Candidate ids in this lineage that FAILED and may never authorise.
 #: ``MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1`` failed its read-only
 #: audit on ``H-01`` (no lawful successor promotion path) and ``H-02`` (static
 #: predecessor-lineage coupling).
+#:
+#: ``MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2`` belongs here, not
+#: merely in the superseded list above: its fresh independent audit returned
+#: FAIL / NO-GO on three MAJOR BLOCKING findings (``R2-AUD-01``, ``R2-AUD-02``,
+#: ``R2-AUD-03``).  The distinction is the one this module already draws -
+#: candidate R1 of this guard lineage PASSED its audit and merely stopped at
+#: publication, so it is *superseded*; candidate R2 FAILED its audit, so it is
+#: *rejected*.  Its exact audited bytes are preserved under
+#: ``results/provenance/main_full81_preflight_authorization_guard_candidate_r2_
+#: audit_stop_2026-10-04/`` and its namespace may never be reused.
+#:
+#: Candidate R4 addition.  Candidate R3 of this same guard lineage also failed
+#: its fresh independent audit -- ``R3-AUD-01`` (stale/cyclic checkpoint-manifest
+#: binding), ``R3-AUD-02`` (incomplete EOL authority coverage), ``R3-AUD-03``
+#: (CRITICAL: fail-open bundle verifier), ``R2-AUD-03`` (stale historical
+#: ownership in the current register entry) and ``R3-AUD-04`` (predecessor
+#: premises in the validation surface) -- so it is REJECTED on exactly the same
+#: footing as candidate R2 and is barred here for the same reason.  Omitting it
+#: would have left a future authorization able to name a candidate whose audit
+#: returned FAIL / NO-GO.  Its exact audited bytes are preserved under
+#: ``results/provenance/main_full81_preflight_authorization_guard_candidate_r3_
+#: audit_stop_2026-10-05/`` and its namespace may never be reused.
+#:
+#: Candidate R5 addition.  Candidate R4 of this same guard lineage also failed
+#: its fresh independent audit, on ``R4-AUD-01``, so it is REJECTED on exactly
+#: the same footing as candidates R2 and R3.  Its exact audited bytes are
+#: preserved under ``results/provenance/main_full81_preflight_authorization_
+#: guard_candidate_r4_audit_stop_2026-10-05/`` and its namespace may never be
+#: reused.
 REJECTED_CANDIDATE_IDS: tuple[str, ...] = (
     "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1",
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2",
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3",
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4",
+    #: Candidate R6 addition: candidate R5 failed its fresh independent audit
+    #: on R5-AUD-01 / R5-AUD-02 and is rejected on the same footing.
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5",
+    #: Candidate R7 addition: candidate R6 failed its fresh independent audit
+    #: on R6-AUD-01 / R6-AUD-02 and is rejected on the same footing.
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6",
+    #: Candidate R8 addition: candidate R7 failed its fresh independent audit
+    #: on R7-AUD-01 and is rejected on the same footing.
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7",
 )
 
 # ---------------------------------------------------------------------------
@@ -177,13 +311,30 @@ SUPERSEDED_AUTHORIZATION_SCHEMA_VERSIONS: tuple[str, ...] = (
 #: Deterministic lawful path.  Fixed in code, the artifact itself is not: this is
 #: what lets a future authorization be created or removed with no production-code
 #: modification and no implementation-identity drift.
+#: Advanced to an ``r3`` slot for the ``N-04`` successor generation.  The ``r2``
+#: path below holds a lawfully published authorization artifact; creating the
+#: successor authorization there would OVERWRITE published history, which is
+#: forbidden.  A new slot is therefore mandatory, and it is deliberately empty:
+#: no authorization artifact for this generation exists.
 AUTHORIZATION_RECORD_RELATIVE_PATH = Path(
-    "results/provenance/main_full81_authorization_r2/main_full81_authorization.json"
+    "results/provenance/main_full81_authorization_r3/main_full81_authorization.json"
 )
 
 #: Candidate R1 authorization path, never created and now barred.
 REJECTED_AUTHORIZATION_PATHS_THIS_LINEAGE: tuple[str, ...] = (
     "results/provenance/main_full81_authorization_r1/"
+    "main_full81_authorization.json",
+)
+
+#: The ``r2`` authorization path.  Unlike the rejected ``r1`` path this artifact
+#: was lawfully created, validated and published (publication commit
+#: ``b560816e59f61aad2efe0ed5797c516a214df563``).  It is preserved untouched as
+#: historical evidence of what was authorized for the PREDECESSOR implementation
+#: and may never authorise this successor generation: its declared runner
+#: SHA-256, runner version, implementation identity digest, lineage and candidate
+#: all name the predecessor.
+SUPERSEDED_AUTHORIZATION_PATHS_THIS_MECHANISM: tuple[str, ...] = (
+    "results/provenance/main_full81_authorization_r2/"
     "main_full81_authorization.json",
 )
 
@@ -222,8 +373,24 @@ EXPECTED_CASE_COUNT = 81
 #: declared by the authorization artifact and re-derived from live bytes, so this
 #: module never needs re-editing when the runner is lawfully re-accepted.
 EXPECTED_RUNNER_RELATIVE_PATH = "scripts/21d_preflight_v7_3_final81_successor.py"
+#: Advanced with the runner for ``N-04``.  The runner now REQUIRES this
+#: authorization on its no-solve path instead of merely reporting it, so the
+#: version string it must declare changed with that contract.  Without this
+#: advance no future authorization could ever name the remediated runner.
+#:
+#: Candidate R4 deliberately does NOT advance this.  It is not a label for the
+#: current candidate: it is the exact identity
+#: ``scripts/21d_preflight_v7_3_final81_successor.py`` declares in its own
+#: ``RUNNER_VERSION``, and Candidate R4 leaves that runner byte-identical.
+#: Advancing it here would break the contract with an unchanged runner and make
+#: every future authorization unsatisfiable.
 EXPECTED_RUNNER_VERSION = (
-    "v7.4-main-full81-no-solve-preflight-runner-2026-10-02-candidate-r2"
+    "v7.4-main-full81-no-solve-preflight-runner-2026-10-03-candidate-r3"
+)
+#: The fail-open predecessor runner version, retained so what was superseded
+#: stays provable.  An authorization naming it describes the pre-N-04 runner.
+SUPERSEDED_RUNNER_VERSIONS: tuple[str, ...] = (
+    "v7.4-main-full81-no-solve-preflight-runner-2026-10-02-candidate-r2",
 )
 
 #: Accepted production identities an authorization must bind.  Paths and digests
@@ -651,6 +818,14 @@ def validate_authorization_payload(
         "never authorise the current generation.",
     )
     _require(
+        normalized not in SUPERSEDED_AUTHORIZATION_PATHS_THIS_MECHANISM,
+        "FULL81_AUTHORIZATION_SUPERSEDED_GENERATION_PATH_REJECTED",
+        f"{normalized} is the lawfully published authorization of a PREDECESSOR "
+        "production-authority generation. It is immutable historical evidence "
+        "of what was authorized for the predecessor implementation and never "
+        "carries forward to the successor implementation.",
+    )
+    _require(
         normalized == contract.lawful_path,
         "FULL81_AUTHORIZATION_ROLE_PATH_INVALID",
         f"A Main Full81 authorization is only lawful at {contract.lawful_path}; "
@@ -678,6 +853,13 @@ def validate_authorization_payload(
         "U-06 lineage is production authority, not Full81 authorization.",
     )
     _require(
+        declared_lineage not in SUPERSEDED_LINEAGE_IDS_THIS_MECHANISM,
+        "FULL81_AUTHORIZATION_SUPERSEDED_GENERATION_REJECTED",
+        f"lineage_id {declared_lineage!r} names the PREDECESSOR authorization "
+        "mechanism generation. Its authorization is immutable historical "
+        "evidence and never authorises the successor implementation.",
+    )
+    _require(
         declared_lineage == LINEAGE_ID,
         "FULL81_AUTHORIZATION_LINEAGE_MISMATCH",
         f"lineage_id must be {LINEAGE_ID!r}; observed {declared_lineage!r}",
@@ -689,6 +871,13 @@ def validate_authorization_payload(
         f"candidate_id {declared_candidate!r} names a FAILED candidate of this "
         "lineage. Candidate R1 failed its read-only audit on H-01 and H-02 and "
         "may never be revived.",
+    )
+    _require(
+        declared_candidate not in SUPERSEDED_CANDIDATE_IDS_THIS_MECHANISM,
+        "FULL81_AUTHORIZATION_SUPERSEDED_GENERATION_REJECTED",
+        f"candidate_id {declared_candidate!r} names the PREDECESSOR accepted "
+        "candidate. It was lawfully authorized for the predecessor "
+        "implementation and may never authorise this successor.",
     )
     _require(
         declared_candidate == CANDIDATE_ID,
@@ -1423,6 +1612,18 @@ def future_authorization_requirements() -> dict[str, Any]:
             SUPERSEDED_AUTHORIZATION_SCHEMA_VERSIONS
         ),
         "rejected_candidate_ids": list(REJECTED_CANDIDATE_IDS),
+        # N-04 successor provenance: what was superseded, and what must never be
+        # carried forward to this generation.
+        "superseded_lineage_ids_this_mechanism": list(
+            SUPERSEDED_LINEAGE_IDS_THIS_MECHANISM
+        ),
+        "superseded_candidate_ids_this_mechanism": list(
+            SUPERSEDED_CANDIDATE_IDS_THIS_MECHANISM
+        ),
+        "superseded_authorization_paths_this_mechanism": list(
+            SUPERSEDED_AUTHORIZATION_PATHS_THIS_MECHANISM
+        ),
+        "superseded_runner_versions": list(SUPERSEDED_RUNNER_VERSIONS),
         "every_authorization_must_be": [
             "a machine-readable JSON object",
             f"at exactly {AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()}",

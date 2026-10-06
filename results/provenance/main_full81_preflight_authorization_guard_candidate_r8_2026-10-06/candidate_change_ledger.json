@@ -1,0 +1,279 @@
+{
+  "schema_version": "iris-thesis-full81-preflight-auth-guard-r1-candidate-change-ledger-v1",
+  "artifact_type": "FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_CHANGE_LEDGER",
+  "ledger_semantics": "INDEX_OF_CANDIDATE_CHANGES_RAW_BYTE_DIFFERENCE_IS_AUTHORITATIVE",
+  "generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+  "candidate_artifact_paths": {
+    "checkpoint": "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+    "manifest": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/preflight_authorization_guard_manifest.json",
+    "change_ledger": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/candidate_change_ledger.json"
+  },
+  "predecessor": {
+    "candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7",
+    "independent_audit": "FAIL_NO_GO",
+    "blocking_findings": [
+      "R7-AUD-01"
+    ],
+    "nonblocking_findings": [],
+    "preserved_identity": {
+      "implementation_digest": "cb78b3ac0c5bcee793757f0de7a3684f248b70abac1226e5b263f11fa6690b5c",
+      "checkpoint": {
+        "path": "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r7_2026-10-06.md",
+        "raw_sha256": "cff4273fc9cb1080dc3f4fb7d9060febc002262ac81ee4fb69e76e83ebdf150c"
+      },
+      "manifest": {
+        "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_2026-10-06/preflight_authorization_guard_manifest.json",
+        "raw_sha256": "3d9a27f08ad60c9d08971e6fc652f7cdd31fa5dd89ef52057a51918de5bdeb6f"
+      },
+      "repository_eol_policy": {
+        "path": ".gitattributes",
+        "raw_sha256": "27187c9be7cfd2d2ab1fd39f4f0d94a48e63d81d9fa3f327996def6fb798a3aa"
+      },
+      "stop_package": {
+        "directory": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06",
+        "archive_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_bytes.zip",
+        "archive_sha256": "5b9042a59f43852c0c9c19b37df2c10cdd7588952df2bd5eecaaf7c46af8a4ae",
+        "index_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_byte_index.json",
+        "index_sha256": "ebf2b1ad3185e78e918e86dd67420ace44be5ccc387ea142a5e85d468884b225",
+        "stop_record_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/independent_audit_stop_record.json",
+        "stop_record_sha256": "4f48982132784aec932e0100202f16db5bb45544934adfb382127f23e0cc8066"
+      }
+    }
+  },
+  "modified_files": [
+    {
+      "path": ".gitattributes",
+      "predecessor_raw_sha256": "27187c9be7cfd2d2ab1fd39f4f0d94a48e63d81d9fa3f327996def6fb798a3aa",
+      "candidate_raw_sha256": "64e39b0787eda885b19566d7cf46aa225823387f7070b437fb261a39e66925fc",
+      "classification": "EOL_POLICY_EXACT_PATH_EXTENSION",
+      "summary": "Nine exact-path rules for the nine new raw-byte consumers (R8 checkpoint, manifest and change ledger; R7 STOP archive, index and STOP record; the Git-frozen pre-R8 trust root; the R7 binding it selects; the R8 attack suite). No rule removed or broadened; no renormalization."
+    },
+    {
+      "path": "src/main_full81_authorization_v7_4.py",
+      "predecessor_raw_sha256": "8dc2fb506f7506d7e2e864b17a9fca1a7fc329679db45c7566a6277ae0eeb35a",
+      "candidate_raw_sha256": "075194395bee713f74a7a12d26afb0f1ea46245dd1f847ec4979389f8260d51b",
+      "classification": "CANDIDATE_POINTER_ADVANCE",
+      "summary": "CANDIDATE_ID advanced R7 to R8 and R7 added to REJECTED_CANDIDATE_IDS. Full81 authorization semantics, N-04 and N-05 unchanged."
+    },
+    {
+      "path": "src/production_authority_bundle_v7_4.py",
+      "predecessor_raw_sha256": "50c680cf39d8383caf2ca81ef1b929b4920b93b6c81edba273fa42bc00178aa4",
+      "candidate_raw_sha256": "c4946af57ce1fe4c60baf3d8c7a89f8ab13526a22acce769f7fbc2cb6c82efba",
+      "classification": "AUTHORITY_PIN_VALUE_UPDATE_AND_EXTERNAL_TRUST_ROOT_IDENTITY",
+      "summary": "R7-AUD-01: the consumed Git-frozen pre-R8 trust-root identity (PRE_R8_HISTORICAL_TRUST_ROOT); HISTORICAL_ROLE_IDENTITIES demoted to a diagnostic assertion of the external derivation; values and lifecycle tags of the five pins whose targets changed. 7 groups / 34 pins unchanged."
+    },
+    {
+      "path": "src/production_authority_lifecycle_u06.py",
+      "predecessor_raw_sha256": "ee81109c8414753fef1d0dae24d3a598bf43f8d1a8f9bf769b2318614705865b",
+      "candidate_raw_sha256": "aebd2c5924027eba15fb0114cf155dadaee3505929c2f45e2ffbfadb748a37f3",
+      "classification": "LIFECYCLE_VALIDATOR_CORRECTION",
+      "summary": "R7-AUD-01: contract V4 - every historical role value and the predecessor change set are derived in every mode from the external historical authority (Git-frozen trust root -> accepted R7 binding -> authenticated R7 package); the candidate-local table must equal it with no fallback; candidate advance R7 to R8; R7 STOP package declared."
+    },
+    {
+      "path": "tests/test_21f_u06_accepted_lifecycle_gate.py",
+      "predecessor_raw_sha256": "619c45a977800bf8b495788f89df7430aa4aad1eaef22bd2338c86a28ea3e774",
+      "candidate_raw_sha256": "08e1d5cd440028b442f6b9e7defac71b01392131f595bd72b02f93b52700c827",
+      "classification": "TEST_CURRENT_CANDIDATE_POINTER_UPDATE",
+      "summary": "Active-candidate pointer R7 to R8; historical R7 rejection asserted."
+    },
+    {
+      "path": "tests/test_21h_main_full81_authorization_mechanism.py",
+      "predecessor_raw_sha256": "8b944b6982891c75ef3f3768451c1ba91e6bcbaca8a2f2c27a0d0abe7558553d",
+      "candidate_raw_sha256": "9f0ab66279952286ddb8d01e9cce057eede283297a720586d922ba94eec263fd",
+      "classification": "TEST_CURRENT_CANDIDATE_POINTER_UPDATE",
+      "summary": "Current-generation assertion R7 to R8 (contract V4; V3 asserted superseded); R7 asserted on every rejection list."
+    },
+    {
+      "path": "tests/test_21j_authority_raw_byte_eol_coverage.py",
+      "predecessor_raw_sha256": "49940a21cf281dba2e8fe07955373d7b6970faf810699fbdfbb80d147922bc11",
+      "candidate_raw_sha256": "fd542995cae441317cb1b2c8df0b30278ce88be4b8373a877094b271c4f4b754",
+      "classification": "TEST_NEGATIVE_CONTROL_ALIGNMENT_TO_EXTERNAL_HISTORICAL_AUTHORITY",
+      "summary": "R6-AUD-01 / R7-AUD-01 controls realigned to contract V4: GATE fixtures carry the external historical evidence and a read-only shared Git object store; a clean checkout without that evidence now fails closed; historical permutations are refused as external-authority mismatches; current-candidate pointer R7 to R8. No negative control removed."
+    }
+  ],
+  "implementation_identity": {
+    "path_count": 21,
+    "digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8",
+    "digest": "dcbd0fbe24e09e15141d403d47f97109457b1757350244ce3da66d096e3f78ba",
+    "paths": {
+      "scripts/08_calibrate_kappa.py": "6014a24bee5028d0be1e3ab480ee67587e91c35bc4d57e4b0c324eb6b94141dc",
+      "scripts/09_build_valid_outage_start_sets.py": "3c67e91848c7093e974bf3d3b8440a4c3054ffe25a4fc99b68fd951883ae43d4",
+      "scripts/15a_benchmark_eob_charge_discharge_formulations.py": "504f31b37f2bbaca96792b088cd1adea087206539a3c3553298555f64fc6cff9",
+      "scripts/15b_freeze_production_eob_baseline.py": "9a5f61d19bc279920f51f67294ef96ddcd7623ffe240482ff66b88e029eafc60",
+      "scripts/15c_validate_production_eob_rainflow.py": "14fd9f3363979dd6af6f50723a75477e1525b9330265a0a820d11eec1774f408",
+      "scripts/15d_run_corrected_eob_v7_2.py": "90d19baac8c0b96e08de00b4769b7ae68dff745f71923b850433ffc2935091a8",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py": "5813119e258e83a45a245ec715ade4536bf9dbf880687f6d3f1e978cce8b06a0",
+      "scripts/19a_preflight_final_layer_a_81_cases.py": "a139f1cd1a76e0a6f0657adf025c521b8b966b2fcdd6f74e5f3936a70bab72d3",
+      "scripts/19b_run_final_layer_a_81_cases.py": "4abbda9dc2529f9d7531aff64a77fdf23c3b8b59173a6f3287fda0538def2bbe",
+      "scripts/21a_preflight_v7_3_production_routing.py": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95",
+      "scripts/21b_preflight_v7_3_eob_successor.py": "d12f39acfa33651e49f8f6762c159e5cff217958e34736fca1b15077bda45aa3",
+      "scripts/21c_preflight_v7_3_layer_a_successor.py": "63d9e8b9b3ca968b3df6d76c457ee5329697cfc9a648f2a35978ce23a4eaf0ed",
+      "scripts/21d_preflight_v7_3_final81_successor.py": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803",
+      "src/annual_design_model_v7_2.py": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+      "src/main_full81_authorization_v7_4.py": "075194395bee713f74a7a12d26afb0f1ea46245dd1f847ec4979389f8260d51b",
+      "src/production_authority_bundle_v7_4.py": "c4946af57ce1fe4c60baf3d8c7a89f8ab13526a22acce769f7fbc2cb6c82efba",
+      "src/production_authority_lifecycle_u06.py": "aebd2c5924027eba15fb0114cf155dadaee3505929c2f45e2ffbfadb748a37f3",
+      "src/production_input_authority_v7_3.py": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+      "src/production_successor_stack_v7_3.py": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+      "src/rainflow_validation_v7_2.py": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    }
+  },
+  "authority_route": {
+    "runtime_production_dependency_paths": [
+      "scripts/21b_preflight_v7_3_eob_successor.py",
+      "scripts/21c_preflight_v7_3_layer_a_successor.py",
+      "scripts/21d_preflight_v7_3_final81_successor.py",
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+      "src/production_successor_stack_v7_3.py",
+      "src/production_authority_bundle_v7_4.py",
+      "src/production_authority_lifecycle_u06.py",
+      "src/main_full81_authorization_v7_4.py",
+      "src/production_input_authority_v7_3.py",
+      "scripts/21a_preflight_v7_3_production_routing.py",
+      "src/annual_design_model_v7_2.py",
+      "src/rainflow_validation_v7_2.py",
+      "scripts/09_build_valid_outage_start_sets.py",
+      "scripts/15d_run_corrected_eob_v7_2.py",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "scripts/19a_preflight_final_layer_a_81_cases.py",
+      "scripts/19b_run_final_layer_a_81_cases.py"
+    ],
+    "gate_protected_dependency_paths": [
+      "scripts/08_calibrate_kappa.py",
+      "scripts/15a_benchmark_eob_charge_discharge_formulations.py",
+      "scripts/15b_freeze_production_eob_baseline.py",
+      "scripts/15c_validate_production_eob_rainflow.py"
+    ],
+    "validation_identity_paths": [
+      "tests/test_21a_v7_3_production_routing_preflight.py",
+      "tests/test_21b_21d_v7_3_production_successor_stack.py",
+      "tests/test_21e_v7_4_production_authority_bundle.py",
+      "tests/test_21f_u06_accepted_lifecycle_gate.py",
+      "tests/test_21g_u06_r3_substitution_attacks.py",
+      "tests/test_21h_main_full81_authorization_mechanism.py",
+      "tests/test_21i_main_full81_preflight_authorization_guard.py",
+      "tests/test_21j_authority_raw_byte_eol_coverage.py",
+      "tests/test_21k_external_historical_authority_attacks.py"
+    ]
+  },
+  "scientific_authority": {
+    "framework_v7_4": {
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "raw_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273"
+    },
+    "registry_v7_4": {
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "raw_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433"
+    },
+    "canonical_planning_input": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "raw_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428"
+    }
+  },
+  "tests_executed": [
+    {
+      "suite": "tests/test_21a_v7_3_production_routing_preflight.py",
+      "raw_sha256": "a039ae6620be859dfc7279e35b0b6bf0630e553f1e130fd27a330f9d337f22a6",
+      "ran": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "suite": "tests/test_21b_21d_v7_3_production_successor_stack.py",
+      "raw_sha256": "25a6256f71ceba64d1295217c98c65ee2fbe3e5ae24fb3fcd4fee0b10abcb61e",
+      "ran": 67,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "suite": "tests/test_21e_v7_4_production_authority_bundle.py",
+      "raw_sha256": "274e44b7862054737b52628c0a308b327b7fe161915de95f0b6aea9a2612a4e9",
+      "ran": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "suite": "tests/test_21f_u06_accepted_lifecycle_gate.py",
+      "raw_sha256": "08e1d5cd440028b442f6b9e7defac71b01392131f595bd72b02f93b52700c827",
+      "ran": 54,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "suite": "tests/test_21g_u06_r3_substitution_attacks.py",
+      "raw_sha256": "d89b6216f0b3bc09e6d1f6f6804df39df828f46730fc12fdc1df0b90fb4e1cb6",
+      "ran": 31,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "suite": "tests/test_21h_main_full81_authorization_mechanism.py",
+      "raw_sha256": "9f0ab66279952286ddb8d01e9cce057eede283297a720586d922ba94eec263fd",
+      "ran": 72,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "suite": "tests/test_21i_main_full81_preflight_authorization_guard.py",
+      "raw_sha256": "5954738053d32a5e541a2bf9db8d8e4fd360e2fa70945734f9de2fe6fdadebd8",
+      "ran": 50,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "OK"
+    },
+    {
+      "suite": "tests/test_21j_authority_raw_byte_eol_coverage.py",
+      "raw_sha256": "fd542995cae441317cb1b2c8df0b30278ce88be4b8373a877094b271c4f4b754",
+      "ran": 124,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "result": "OK"
+    },
+    {
+      "suite": "tests/test_21k_external_historical_authority_attacks.py",
+      "raw_sha256": "27a6cba9ac021216a962b1c420fdd8c6c2a5ec95bd64a5ec3a0d13c738ddad43",
+      "ran": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "OK"
+    }
+  ],
+  "execution_status": {
+    "production_solve": false,
+    "main_full81_execution": false,
+    "real_21c": false,
+    "real_21d": false,
+    "production_model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "full81_cases": 0,
+    "a2_actions": 0
+  },
+  "lifecycle_status": {
+    "candidate_disposition": "ACTIVE_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+    "independent_audit": "NOT_YET_PERFORMED",
+    "publication": "NOT_YET_AUTHORIZED",
+    "acceptance": "NOT_YET_ACCEPTED",
+    "production_authority": "NOT_FROZEN",
+    "main_full81_authorization": "NOT_GRANTED",
+    "a2": "HARD_BLOCKED"
+  }
+}

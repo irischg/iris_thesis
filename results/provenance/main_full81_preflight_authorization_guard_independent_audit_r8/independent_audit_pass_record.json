@@ -1,0 +1,113 @@
+{
+  "artifact_type": "FULL81_PREFLIGHT_AUTH_GUARD_R1_INDEPENDENT_AUDIT_PASS",
+  "schema_version": "iris-thesis-full81-preflight-auth-guard-r1-independent-audit-pass-v1",
+  "generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "target_candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+  "candidate_revision": "R8",
+  "role": "independent_audit_pass",
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+    "sha256": "1f3195cb31a9c5e6b43f8d2ca8d514faddcdea52a9faaacb6aa8ae68b08d1c18"
+  },
+  "candidate_manifest": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/preflight_authorization_guard_manifest.json",
+    "sha256": "bddf704ca7497280444d871b9988455fa421f4b38c8373cd4d0af977b0cd6491"
+  },
+  "candidate_change_ledger": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/candidate_change_ledger.json",
+    "sha256": "8f0adccf9016134094388e12c28dc47352cf1a69804ad63c691b31c2a5caec6f"
+  },
+  "implementation_identity_digest": "dcbd0fbe24e09e15141d403d47f97109457b1757350244ce3da66d096e3f78ba",
+  "implementation_identity_path_count": 21,
+  "verdict": "PASS",
+  "verdict_qualifier": "INDEPENDENT AUDIT PASS WITH CARRIED NONBLOCKING FINDINGS",
+  "disposition": "R8 INDEPENDENT AUDIT PASS; READY FOR PHASE A PUBLICATION / LATER ACCEPTANCE LIFECYCLE",
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "blocking_findings": [],
+  "independent_audit": true,
+  "candidate_author_is_not_self_accepting": true,
+  "candidate_author_is_not_self_accepting_meaning": "This record publishes an independently completed PASS and performs no acceptance. Phase B acceptance is a separate future act.",
+  "candidate_implementation_bytes_authored_by_this_pass": false,
+  "verdict_originated_in_this_pass": false,
+  "audit_disposition_provenance": "The fresh independent read-only audit of Candidate R8 was completed outside this Phase A publication pass. Its PASS verdict and exact findings disposition were supplied to this publication pass as authoritative governance state by the repository owner. This machine-readable role record represents that completed disposition; it is not itself a new audit, and no unsupported auditor session identifier or repository audit-report path is asserted.",
+  "r6_aud_01_status": "INDEPENDENTLY_CLOSED",
+  "external_historical_authority_verification": {
+    "real_gate_uses_external_historical_authority": true,
+    "candidate_local_32_role_table_role": "ASSERTION_ONLY",
+    "candidate_local_history_fallback": "ABSENT",
+    "null_recomputation": "PASS",
+    "fully_recomputed_wrong_role_attacks": [
+      {
+        "id": "two_role_swap",
+        "result": "REJECTED",
+        "status": "U06_EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH"
+      },
+      {
+        "id": "three_role_cycle",
+        "result": "REJECTED",
+        "status": "U06_EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH"
+      },
+      {
+        "id": "lawful_historical_digest_substitution",
+        "result": "REJECTED",
+        "status": "U06_EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH"
+      },
+      {
+        "id": "authority_bundle_digest_in_historical_role",
+        "result": "REJECTED",
+        "status": "U06_EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH"
+      }
+    ]
+  },
+  "test_result": {
+    "tests_run": 464,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "result": "PASS",
+    "summary": "464 tests completed with 0 failures and 0 errors; one Windows symlink-privilege case was an environmental skip, not a PASS assertion.",
+    "environmental_skip": {
+      "count": 1,
+      "platform": "Windows",
+      "reason": "Symbolic-link creation unavailable because the required privilege was not held."
+    }
+  },
+  "eol_scope_disposition": "NECESSARY IN-SCOPE PLUMBING / NONBLOCKING",
+  "independent_audit_repository_mutation_count": 0,
+  "carried_findings": {
+    "R6-AUD-02": {
+      "status": "UNRESOLVED / CARRIED / NONBLOCKING FOR R8 ACCEPTANCE",
+      "closed_by_this_record": false
+    },
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY": {
+      "status": "OPEN / CARRIED / NONBLOCKING",
+      "closed_by_this_record": false
+    },
+    "FULLSTACK-01": {
+      "status": "OPEN / CARRIED",
+      "blocking_before": "FULL SUCCESSOR PREFLIGHT / EXECUTION",
+      "closed_by_this_record": false
+    }
+  },
+  "phase": "PHASE_A_AUDIT_PUBLICATION",
+  "machine_readable_role_artifact": true,
+  "is_human_readable_audit_report": false,
+  "is_acceptance": false,
+  "is_acceptance_manifest": false,
+  "is_re_freeze": false,
+  "is_accepted_lifecycle_record": false,
+  "is_main_full81_authorization": false,
+  "production_authority_status_asserted": "NOT_YET_FROZEN",
+  "main_full81_status_asserted": "NOT_AUTHORIZED",
+  "real_21d_status_asserted": "NOT_AUTHORIZED",
+  "execution_status_asserted": "NOT_AUTHORIZED",
+  "solve_status_asserted": "NOT_AUTHORIZED",
+  "authorizes_main_full81": false,
+  "authorizes_full81_preflight": false,
+  "authorizes_21d": false,
+  "authorizes_execution": false,
+  "authorizes_solve": false,
+  "notes": "Phase A publishes the exact independently audited Candidate R8 bytes and this one independent-audit-PASS role record. It does not close or accept R8, create an acceptance manifest, re-freeze production authority, authorize Main Full81, authorize real 21d, authorize execution, or authorize any solve."
+}

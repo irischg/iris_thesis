@@ -1,0 +1,594 @@
+{
+  "schema_version": "iris-thesis-full81-preflight-auth-guard-r1-implementation-candidate-v1",
+  "artifact_type": "FULL81_PREFLIGHT_AUTH_GUARD_R1_IMPLEMENTATION_CANDIDATE",
+  "role": "implementation_candidate",
+  "candidate_manifest_contract": "FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4",
+  "date": "2026-10-06",
+  "generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+  "target_candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+  "candidate_revision": "R8",
+  "scope": "REPAIR_OF_THE_R6_AUD_01_DEFECT_CLASS_AS_EXPOSED_BY_R7_AUD_01_ONLY_EXTERNAL_HISTORICAL_AUTHORITY_NO_SCIENTIFIC_CHANGE",
+  "disposition": "ACTIVE_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+  "self_accepted": false,
+  "package_binding": {
+    "scheme": "ACYCLIC_MANIFEST_TO_CHECKPOINT_ONLY",
+    "direction": "manifest -> checkpoint",
+    "manifest_self_identity": "EXTERNAL_LIFECYCLE_ROLE_BINDING",
+    "rationale": "The manifest binds the checkpoint and the change ledger by path and raw SHA-256. The checkpoint states identities only as canonical claims of role-bound manifest identity pointers and names the manifest by path only. The manifest's own final identity can never be embedded in its own bytes, so it is bound externally by the later lifecycle role records listed in durable_publication_declaration.",
+    "predecessor_defect": {
+      "findings": [
+        "R7-AUD-01"
+      ],
+      "predecessor_candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7",
+      "evidence_class": "HISTORICAL_PREDECESSOR_DEFECT_EVIDENCE_NOT_A_LIVE_BINDING",
+      "predecessor_candidate_checkpoint": {
+        "path": "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r7_2026-10-06.md",
+        "raw_sha256": "cff4273fc9cb1080dc3f4fb7d9060febc002262ac81ee4fb69e76e83ebdf150c"
+      },
+      "predecessor_candidate_manifest": {
+        "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_2026-10-06/preflight_authorization_guard_manifest.json",
+        "raw_sha256": "3d9a27f08ad60c9d08971e6fc652f7cdd31fa5dd89ef52057a51918de5bdeb6f"
+      },
+      "defect_location": "PRODUCTION_VALIDATOR_AND_TEST_CODE_NOT_RECORDED_IDENTITY_VALUES",
+      "recorded_in_stop_record": {
+        "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/independent_audit_stop_record.json"
+      }
+    }
+  },
+  "candidate_checkpoint_path": "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+    "sha256": "1f3195cb31a9c5e6b43f8d2ca8d514faddcdea52a9faaacb6aa8ae68b08d1c18"
+  },
+  "candidate_manifest_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/preflight_authorization_guard_manifest.json",
+  "implementation_identity_digest": "dcbd0fbe24e09e15141d403d47f97109457b1757350244ce3da66d096e3f78ba",
+  "implementation_identity": {
+    "path_count": 21,
+    "derivation": "ACCEPTED_IMPLEMENTATION_PATHS, re-derived from primary source; .gitattributes is deliberately NOT an implementation path (it is bound as the repository_eol_policy authority pin).",
+    "digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8",
+    "implementation_digest": "dcbd0fbe24e09e15141d403d47f97109457b1757350244ce3da66d096e3f78ba",
+    "paths": {
+      "scripts/08_calibrate_kappa.py": "6014a24bee5028d0be1e3ab480ee67587e91c35bc4d57e4b0c324eb6b94141dc",
+      "scripts/09_build_valid_outage_start_sets.py": "3c67e91848c7093e974bf3d3b8440a4c3054ffe25a4fc99b68fd951883ae43d4",
+      "scripts/15a_benchmark_eob_charge_discharge_formulations.py": "504f31b37f2bbaca96792b088cd1adea087206539a3c3553298555f64fc6cff9",
+      "scripts/15b_freeze_production_eob_baseline.py": "9a5f61d19bc279920f51f67294ef96ddcd7623ffe240482ff66b88e029eafc60",
+      "scripts/15c_validate_production_eob_rainflow.py": "14fd9f3363979dd6af6f50723a75477e1525b9330265a0a820d11eec1774f408",
+      "scripts/15d_run_corrected_eob_v7_2.py": "90d19baac8c0b96e08de00b4769b7ae68dff745f71923b850433ffc2935091a8",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py": "5813119e258e83a45a245ec715ade4536bf9dbf880687f6d3f1e978cce8b06a0",
+      "scripts/19a_preflight_final_layer_a_81_cases.py": "a139f1cd1a76e0a6f0657adf025c521b8b966b2fcdd6f74e5f3936a70bab72d3",
+      "scripts/19b_run_final_layer_a_81_cases.py": "4abbda9dc2529f9d7531aff64a77fdf23c3b8b59173a6f3287fda0538def2bbe",
+      "scripts/21a_preflight_v7_3_production_routing.py": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95",
+      "scripts/21b_preflight_v7_3_eob_successor.py": "d12f39acfa33651e49f8f6762c159e5cff217958e34736fca1b15077bda45aa3",
+      "scripts/21c_preflight_v7_3_layer_a_successor.py": "63d9e8b9b3ca968b3df6d76c457ee5329697cfc9a648f2a35978ce23a4eaf0ed",
+      "scripts/21d_preflight_v7_3_final81_successor.py": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803",
+      "src/annual_design_model_v7_2.py": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+      "src/main_full81_authorization_v7_4.py": "075194395bee713f74a7a12d26afb0f1ea46245dd1f847ec4979389f8260d51b",
+      "src/production_authority_bundle_v7_4.py": "c4946af57ce1fe4c60baf3d8c7a89f8ab13526a22acce769f7fbc2cb6c82efba",
+      "src/production_authority_lifecycle_u06.py": "aebd2c5924027eba15fb0114cf155dadaee3505929c2f45e2ffbfadb748a37f3",
+      "src/production_input_authority_v7_3.py": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+      "src/production_successor_stack_v7_3.py": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+      "src/rainflow_validation_v7_2.py": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    },
+    "predecessor_digest": "cb78b3ac0c5bcee793757f0de7a3684f248b70abac1226e5b263f11fa6690b5c",
+    "predecessor_digest_carried_forward": false
+  },
+  "generation_advance_lawfulness_at_construction": {
+    "generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    "candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+    "accepted_lifecycle_record_path": "results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json",
+    "same_generation_advance_lawful": true,
+    "new_generation_created": false,
+    "superseded_candidate_ids": [
+      "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R1",
+      "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+      "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+      "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1",
+      "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2",
+      "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3",
+      "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4",
+      "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5",
+      "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6",
+      "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7"
+    ],
+    "accepted_lifecycle_record_existed_at_construction": false
+  },
+  "authority_bundle": {
+    "declared_pin_groups": 7,
+    "declared_pin_count": 34,
+    "pins": {
+      "framework_v7_4": {
+        "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+        "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273"
+      },
+      "framework_v7_4_acceptance_closure": {
+        "path": "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md",
+        "sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f"
+      },
+      "framework_v7_4_acceptance_manifest": {
+        "path": "results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+        "sha256": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33"
+      },
+      "registry_v7_4": {
+        "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+        "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433"
+      },
+      "registry_v7_4_independent_audit": {
+        "path": "docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md",
+        "sha256": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce"
+      },
+      "registry_v7_4_acceptance_closure": {
+        "path": "docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md",
+        "sha256": "4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977"
+      },
+      "registry_v7_4_acceptance_manifest": {
+        "path": "results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+        "sha256": "53074cfe44c0276d6f319497cbe6f5aaf07b255ac0c335f9481174dd968063fe"
+      },
+      "task_3_preregistration_candidate_r2": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md",
+        "sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4"
+      },
+      "task_3_preregistration_machine_record": {
+        "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json",
+        "sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f"
+      },
+      "task_3_preregistration_acceptance_closure": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md",
+        "sha256": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02"
+      },
+      "task_3_preregistration_acceptance_manifest": {
+        "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json",
+        "sha256": "08a1e5b5929b5791e14b2ae887c4b9592dccbd803c7e0981c581f41561aa268d"
+      },
+      "governance_sequencing_successor_candidate_r2": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_2026-10-01.md",
+        "sha256": "db20ea059c48b99bb5c57801dff5654b4b8e1b94ce51ce4ded6e82eec4ac922e"
+      },
+      "governance_sequencing_successor_acceptance_closure": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md",
+        "sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851"
+      },
+      "governance_sequencing_successor_acceptance_manifest": {
+        "path": "results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json",
+        "sha256": "4bbd58b8e8bd92c292d44b7b3d8b6a2035c3d41dc894581697f52583a55b6476"
+      },
+      "governance_sequencing_successor_original_candidate": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md",
+        "sha256": "f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82"
+      },
+      "canonical_planning_input": {
+        "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+        "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428"
+      },
+      "model_core": {
+        "path": "src/annual_design_model_v7_2.py",
+        "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+      },
+      "parameter_registry": {
+        "path": "data/reference/parameter_registry_v7_2.csv",
+        "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1"
+      },
+      "production_input_authority_v7_3": {
+        "path": "src/production_input_authority_v7_3.py",
+        "sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1"
+      },
+      "step2e1_routing_preflight": {
+        "path": "scripts/21a_preflight_v7_3_production_routing.py",
+        "sha256": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95"
+      },
+      "provenance_protocol": {
+        "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+        "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696"
+      },
+      "production_successor_stack": {
+        "path": "src/production_successor_stack_v7_3.py",
+        "sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda"
+      },
+      "full81_runner": {
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+        "sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1"
+      },
+      "v7_4_alignment_verifier": {
+        "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+        "sha256": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803"
+      },
+      "u06_lifecycle_overlay": {
+        "path": "src/production_authority_lifecycle_u06.py",
+        "sha256": "aebd2c5924027eba15fb0114cf155dadaee3505929c2f45e2ffbfadb748a37f3"
+      },
+      "u06_lifecycle_test": {
+        "path": "tests/test_21f_u06_accepted_lifecycle_gate.py",
+        "sha256": "08e1d5cd440028b442f6b9e7defac71b01392131f595bd72b02f93b52700c827"
+      },
+      "u06_r3_substitution_attack_test": {
+        "path": "tests/test_21g_u06_r3_substitution_attacks.py",
+        "sha256": "d89b6216f0b3bc09e6d1f6f6804df39df828f46730fc12fdc1df0b90fb4e1cb6"
+      },
+      "v7_4_alignment_test": {
+        "path": "tests/test_21e_v7_4_production_authority_bundle.py",
+        "sha256": "274e44b7862054737b52628c0a308b327b7fe161915de95f0b6aea9a2612a4e9"
+      },
+      "main_full81_authorization_mechanism": {
+        "path": "src/main_full81_authorization_v7_4.py",
+        "sha256": "075194395bee713f74a7a12d26afb0f1ea46245dd1f847ec4979389f8260d51b"
+      },
+      "main_full81_authorization_test": {
+        "path": "tests/test_21h_main_full81_authorization_mechanism.py",
+        "sha256": "9f0ab66279952286ddb8d01e9cce057eede283297a720586d922ba94eec263fd"
+      },
+      "repository_eol_policy": {
+        "path": ".gitattributes",
+        "sha256": "64e39b0787eda885b19566d7cf46aa225823387f7070b437fb261a39e66925fc"
+      },
+      "v7_3_methodology": {
+        "path": "docs/research_framework_v7_3_2026-09-23.md",
+        "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a"
+      },
+      "v7_3_evidence": {
+        "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+        "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d"
+      },
+      "v7_3_lifecycle": {
+        "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+        "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d"
+      }
+    }
+  },
+  "repository_eol_policy": {
+    "path": ".gitattributes",
+    "sha256": "64e39b0787eda885b19566d7cf46aa225823387f7070b437fb261a39e66925fc",
+    "bundle_pin_label": "repository_eol_policy",
+    "coverage_at_construction": {
+      "satisfied": true,
+      "universe_path_count": 120,
+      "rule_count": 120,
+      "uncovered_count": 0,
+      "wrongly_treated_count": 0,
+      "overreaching_rule_count": 0,
+      "unused_rule_count": 0,
+      "absent_lawful_future_slot_count": 3,
+      "absent_lawful_future_slots": [
+        "results/provenance/main_full81_authorization_r1/main_full81_authorization.json",
+        "results/provenance/main_full81_authorization_r3/main_full81_authorization.json",
+        "results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json"
+      ],
+      "added_consumers_in_candidate_r8": [
+        "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/preflight_authorization_guard_manifest.json",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/candidate_change_ledger.json",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_bytes.zip",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_byte_index.json",
+        "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/independent_audit_stop_record.json",
+        "docs/checkpoints/main_full81_preflight_pre_r8_historical_trust_root_2026-10-06.json",
+        "results/provenance/main_full81_preflight_guard_r7_preservation_authority_binding_2026-10-06/r7_preservation_authority_binding.json",
+        "tests/test_21k_external_historical_authority_attacks.py"
+      ],
+      "deliberately_unfiltered_prefixes": [
+        "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/"
+      ],
+      "derivation": "Universe derived from primary source by authority_raw_byte_consumer_universe(); coverage derived from the live .gitattributes by eol_policy_coverage()."
+    },
+    "historical_blobs_normalized": false,
+    "renormalize_run": false,
+    "core_autocrlf_changed": false
+  },
+  "parameter_registry_durability": {
+    "path": "data/reference/parameter_registry_v7_2.csv",
+    "canonical_sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+    "bundle_pin_label": "parameter_registry",
+    "eol_rule": "-text",
+    "canonical_eol_class": "CRLF",
+    "scientific_content_modified": false,
+    "r2_aud_01_status": "CORRECTION_VERIFIED"
+  },
+  "durable_publication_declaration": {
+    "semantics": "STATIC_DECLARATION_NOT_A_LIVE_SNAPSHOT",
+    "live_status_source": "src.production_authority_lifecycle_u06.durable_publication_requirements",
+    "required_paths": [
+      "data/reference/parameter_registry_v7_2.csv",
+      ".gitattributes",
+      "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+      "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/preflight_authorization_guard_manifest.json",
+      "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/candidate_change_ledger.json"
+    ],
+    "entries": {
+      "data/reference/parameter_registry_v7_2.csv": {
+        "identity_source": "AUTHORITY_BUNDLE_PIN",
+        "pin_label": "parameter_registry",
+        "expected_raw_sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1"
+      },
+      ".gitattributes": {
+        "identity_source": "AUTHORITY_BUNDLE_PIN",
+        "pin_label": "repository_eol_policy",
+        "expected_raw_sha256": "64e39b0787eda885b19566d7cf46aa225823387f7070b437fb261a39e66925fc"
+      },
+      "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md": {
+        "identity_source": "MANIFEST_CANDIDATE_CHECKPOINT_FIELD",
+        "identity_field": "candidate_checkpoint.sha256"
+      },
+      "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/preflight_authorization_guard_manifest.json": {
+        "identity_source": "EXTERNAL_LIFECYCLE_ROLE_BINDING",
+        "external_binding_fields": [
+          "independent_audit_pass.candidate_manifest.sha256",
+          "acceptance_closure.candidate_manifest.sha256",
+          "acceptance_manifest.candidate_manifest.sha256",
+          "production_authority_re_freeze.candidate_manifest.sha256",
+          "accepted_lifecycle_record.roles.implementation_candidate.sha256"
+        ]
+      },
+      "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/candidate_change_ledger.json": {
+        "identity_source": "MANIFEST_CANDIDATE_CHANGE_LEDGER_FIELD",
+        "identity_field": "candidate_change_ledger.sha256"
+      }
+    }
+  },
+  "candidate_preservation_packages": {
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1": {
+      "directory": "results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04",
+      "stop_class": "PUBLICATION_STOP",
+      "archive_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/candidate_r1_raw_bytes.zip",
+      "archive_sha256": "45ff1028fab900f13e0eede29abae56d9c06834e9605bda51b2bfd11f2827f6f",
+      "index_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/candidate_r1_raw_byte_index.json",
+      "index_sha256": "720fafade81b1cb8c0f22ddc0600611bfe5bad6f8e320270542bfaae2ba9f579",
+      "stop_record_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/publication_stop_record.json",
+      "stop_record_sha256": "c8400b6da1bffe8ad1ca7c919569b9980024f7d459ed7f890a472f9a24e99911"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2": {
+      "directory": "results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04",
+      "stop_class": "INDEPENDENT_AUDIT_STOP",
+      "archive_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/candidate_r2_raw_bytes.zip",
+      "archive_sha256": "308646c16731a3695e340c48c53d5ce51f1af078e2729cdc43a0692eec3d3743",
+      "index_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/candidate_r2_raw_byte_index.json",
+      "index_sha256": "beaf1e53d25064ec22af5b6aa632fcd9bcbb310facd0a260cd34efe3978eed27",
+      "stop_record_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/independent_audit_stop_record.json",
+      "stop_record_sha256": "5cddedbec20d194d17de64d6d9a0977898b310fee496c44e12c9edf0f19f0840"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3": {
+      "directory": "results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05",
+      "stop_class": "INDEPENDENT_AUDIT_STOP",
+      "archive_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/candidate_r3_raw_bytes.zip",
+      "archive_sha256": "6f616f748cd2d51f140707bffe99055741ecd413c9bd9706c50f6b381738918b",
+      "index_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/candidate_r3_raw_byte_index.json",
+      "index_sha256": "8209d12ec5a995780fcf4aa106e3ac5ae8b1617944c720b2a37c4fa921e11a17",
+      "stop_record_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/independent_audit_stop_record.json",
+      "stop_record_sha256": "e66512336a3612994b6f9da6b379f915f0014bf114c200861f45b2d6a5093b02"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4": {
+      "directory": "results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05",
+      "stop_class": "INDEPENDENT_AUDIT_STOP",
+      "archive_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/candidate_r4_raw_bytes.zip",
+      "archive_sha256": "aecfb8f6b99b0a730205ee4ff958a2e2e52df34dd682bf4bec1813fa7f87cd3f",
+      "index_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/candidate_r4_raw_byte_index.json",
+      "index_sha256": "cc1c52ae6130987798fa5e29064bc73f60042c219216a02b25ef00000ec96121",
+      "stop_record_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/independent_audit_stop_record.json",
+      "stop_record_sha256": "2385666eb1c2b7206e620780da12a1490ed93239f363ea97075b990cb3054c75"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5": {
+      "directory": "results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05",
+      "stop_class": "INDEPENDENT_AUDIT_STOP",
+      "archive_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/candidate_r5_raw_bytes.zip",
+      "archive_sha256": "f956f85aa8b163501e5310b674c428bc647c29b8e8ebfd15782a098d0510048e",
+      "index_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/candidate_r5_raw_byte_index.json",
+      "index_sha256": "ec2a1457715b300a4ef3406f5cdd4aa1c074b9c765d96c726a9e06618cff4420",
+      "stop_record_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/independent_audit_stop_record.json",
+      "stop_record_sha256": "4ac15dde83bfc1ed7c76a21f04efe0d1da68426a645d7c7151481c5dc61c7385"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6": {
+      "directory": "results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05",
+      "stop_class": "INDEPENDENT_AUDIT_STOP",
+      "archive_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/candidate_r6_raw_bytes.zip",
+      "archive_sha256": "03559218fcc6e028f631ba00d311dfa9d0612f0494512fab63c8ee47376e1ce7",
+      "index_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/candidate_r6_raw_byte_index.json",
+      "index_sha256": "ab7df3b8bed4d21286ff1bff202777a53a908acb94ce6a4b62a7318d2d5efd29",
+      "stop_record_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/independent_audit_stop_record.json",
+      "stop_record_sha256": "5abe9ddcabcc514cb9118b7909d9834d636fdbec471da2c25745cfcf48ef6b70"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7": {
+      "directory": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06",
+      "stop_class": "INDEPENDENT_AUDIT_STOP",
+      "archive_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_bytes.zip",
+      "archive_sha256": "5b9042a59f43852c0c9c19b37df2c10cdd7588952df2bd5eecaaf7c46af8a4ae",
+      "index_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_byte_index.json",
+      "index_sha256": "ebf2b1ad3185e78e918e86dd67420ace44be5ccc387ea142a5e85d468884b225",
+      "stop_record_path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/independent_audit_stop_record.json",
+      "stop_record_sha256": "4f48982132784aec932e0100202f16db5bb45544934adfb382127f23e0cc8066"
+    }
+  },
+  "candidate_change_ledger": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/candidate_change_ledger.json",
+    "sha256": "8f0adccf9016134094388e12c28dc47352cf1a69804ad63c691b31c2a5caec6f"
+  },
+  "external_historical_authority": {
+    "semantics": "CONSUMED_EXTERNALLY_FROZEN_HISTORICAL_AUTHORITY_NOT_SELECTED_OR_REDEFINED_BY_THIS_CANDIDATE",
+    "trust_root": {
+      "tag_ref": "refs/tags/v7.4-main-full81-pre-r8-historical-trust-root-accepted-2026-10-06",
+      "tag_object": "6b31fef7c84bd0646a7171cf8168564ee969b10f",
+      "commit": "c8f3665d5c67e0cae3222073cd71b9a6231279b1",
+      "path": "docs/checkpoints/main_full81_preflight_pre_r8_historical_trust_root_2026-10-06.json",
+      "blob": "d10707b922004f3084ae6045fe3f1b1caf6eaea4"
+    },
+    "binding_locator_source": "PRE_R8_TRUST_ROOT_GIT_BLOB",
+    "binding_path": "results/provenance/main_full81_preflight_guard_r7_preservation_authority_binding_2026-10-06/r7_preservation_authority_binding.json",
+    "predecessor_candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7",
+    "predecessor_package_directory": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06",
+    "historical_role_value_source": "EXTERNAL_HISTORICAL_AUTHORITY",
+    "candidate_local_historical_table": "DIAGNOSTIC_ASSERTION_ONLY_NO_FALLBACK"
+  },
+  "predecessor_candidates": {
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1": {
+      "candidate_revision": "R1",
+      "independent_audit": "PASS_WITH_NONBLOCKING_FINDINGS",
+      "publication": "STOP",
+      "acceptance": "NOT_ACCEPTED",
+      "disposition": "SUPERSEDED_HISTORICAL_PREDECESSOR_IMMUTABLE",
+      "disposition_reason": "Its independent logic audit PASSED (N-04 and N-05 both CLOSED / CORRECTION_VERIFIED) but its candidate-publication pass STOPPED on the I-04 Git clean-filter / EOL raw-byte incompatibility. It is superseded, NOT rejected.",
+      "preservation_package": "results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2": {
+      "candidate_revision": "R2",
+      "independent_audit": "FAIL_NO_GO",
+      "publication": "NOT_PERFORMED",
+      "acceptance": "NOT_ACCEPTED",
+      "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+      "disposition_reason": "Its fresh independent audit returned FAIL / NO-GO on R2-AUD-01 (parameter registry absent from HEAD), R2-AUD-02 (no .gitattributes under core.autocrlf=true) and R2-AUD-03 (stale historical U-06 audit state reported as the current candidate's audit state). It is REJECTED, not merely superseded, and may never authorise.",
+      "blocking_findings": [
+        "R2-AUD-01",
+        "R2-AUD-02",
+        "R2-AUD-03"
+      ],
+      "preservation_package": "results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3": {
+      "candidate_revision": "R3",
+      "independent_audit": "FAIL_NO_GO",
+      "publication": "NOT_PERFORMED",
+      "acceptance": "NOT_ACCEPTED",
+      "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+      "disposition_reason": "Bounded provenance/governance remediation of R2-AUD-01, R2-AUD-02 and R2-AUD-03. R2-AUD-01 was CORRECTION_VERIFIED, but its own fresh independent audit returned FAIL / NO-GO on R3-AUD-01 (stale/cyclic candidate checkpoint-manifest binding), R3-AUD-02 (twelve historical accepted-lifecycle artifacts omitted from the EOL policy), R3-AUD-03 (CRITICAL: the production bundle verifier never verified the repository-governance pin group it declared, and reported verified_pin_count from len(all_pins())), R2-AUD-03 (u06_register_entry still reported historical U-06 alignment ownership for the current candidate) and R3-AUD-04 (predecessor premises retained in the required validation surface). It is REJECTED, not merely superseded, and may never authorise.",
+      "blocking_findings": [
+        "R3-AUD-01",
+        "R3-AUD-02",
+        "R3-AUD-03",
+        "R2-AUD-03",
+        "R3-AUD-04"
+      ],
+      "preservation_package": "results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4": {
+      "candidate_revision": "R4",
+      "independent_audit": "FAIL_NO_GO",
+      "publication": "NOT_PERFORMED",
+      "acceptance": "NOT_ACCEPTED",
+      "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+      "disposition_reason": "Bounded remediation of the five Candidate R3 blockers. Its fresh independent audit verified the acyclic primary manifest-to-checkpoint binding, the 94-path EOL authority coverage and the 34 / 34 declared-versus-verified pin parity, but returned FAIL / NO-GO on R4-AUD-01 (MAJOR): its manifest froze a snapshot of the LIVE durable-publication report, carrying stale live_sha256 values for the candidate checkpoint and for the manifest's own path while asserting live_content_matches_canonical=true and placeholder_or_stale_sha_used=false, and no production validator read those fields. It is REJECTED, not merely superseded, and may never authorise.",
+      "blocking_findings": [
+        "R4-AUD-01"
+      ],
+      "preservation_package": "results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5": {
+      "candidate_revision": "R5",
+      "independent_audit": "FAIL_NO_GO",
+      "publication": "NOT_PERFORMED",
+      "acceptance": "NOT_ACCEPTED",
+      "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+      "disposition_reason": "Bounded remediation of R4-AUD-01. Its fresh independent audit returned FAIL / NO-GO on R5-AUD-01 (CRITICAL): the checkpoint identity guard proved only that each checkpoint digest occurred somewhere in the manifest, not that its stated role was the role of the manifest obligation owning it, so a lawful implementation digest under a 'Manifest SHA-256' label passed the GATE validator; and on R5-AUD-02 (MAJOR): a test-suite disposable-write helper did not keep its write target inside the disposable root. It is REJECTED, not merely superseded, and may never authorise.",
+      "blocking_findings": [
+        "R5-AUD-01",
+        "R5-AUD-02"
+      ],
+      "nonblocking_findings": [
+        "R5-AUD-03"
+      ],
+      "preservation_package": "results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6": {
+      "candidate_revision": "R6",
+      "independent_audit": "FAIL_NO_GO",
+      "publication": "NOT_PERFORMED",
+      "acceptance": "NOT_ACCEPTED",
+      "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+      "disposition_reason": "Bounded remediation of R5-AUD-01 and R5-AUD-02. Its fresh independent audit returned FAIL / NO-GO on R6-AUD-01 (CRITICAL): the GATE accepted preservation-package and predecessor identities structurally, without a value check, so the individually lawful R5 STOP archive and index digests swapped between their roles, with the canonical checkpoint claims rebound, still passed; and on R6-AUD-02 (MAJOR): the test-suite AST write guard missed unsafe writer patterns and disposable teardown could delete outside its root through a junction. It is REJECTED, not merely superseded, and may never authorise.",
+      "blocking_findings": [
+        "R6-AUD-01",
+        "R6-AUD-02"
+      ],
+      "nonblocking_findings": [
+        "R5-AUD-03"
+      ],
+      "preservation_package": "results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05"
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7": {
+      "candidate_revision": "R7",
+      "independent_audit": "FAIL_NO_GO",
+      "publication": "NOT_PERFORMED",
+      "acceptance": "NOT_ACCEPTED",
+      "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+      "disposition_reason": "Remediation of the R6-AUD-01 and R6-AUD-02 defect classes. Its fresh independent audit returned FAIL / NO-GO on R7-AUD-01 (CRITICAL): the production GATE's historical expected values were still candidate-controlled - pinned in candidate source and covered only by a recomputable implementation identity - so four independently constructed rebinding attacks (two roles swapped, a three-role cycle, a lawful historical digest substituted, the authority-bundle digest placed in a historical role) restored GATE PASS after every candidate-controlled identity was recomputed. R6-AUD-01 was therefore not closed, and the R6-AUD-02 remediation it claimed was never independently verified. It is REJECTED, not merely superseded, and may never authorise.",
+      "blocking_findings": [
+        "R7-AUD-01"
+      ],
+      "preservation_package": "results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06"
+    }
+  },
+  "lifecycle_state": {
+    "r1": "HISTORICAL_PUBLICATION_STOP_NOT_ACCEPTED",
+    "r2": "HISTORICAL_INDEPENDENT_AUDIT_STOP_NOT_ACCEPTED",
+    "r3": "HISTORICAL_INDEPENDENT_AUDIT_STOP_NOT_ACCEPTED",
+    "r4": "HISTORICAL_INDEPENDENT_AUDIT_STOP_NOT_ACCEPTED",
+    "r5": "HISTORICAL_INDEPENDENT_AUDIT_STOP_NOT_ACCEPTED",
+    "r6": "HISTORICAL_INDEPENDENT_AUDIT_STOP_NOT_ACCEPTED",
+    "r7": "HISTORICAL_INDEPENDENT_AUDIT_STOP_NOT_ACCEPTED",
+    "r8": "ACTIVE_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+    "r8_independent_audit": "NOT_YET_PERFORMED",
+    "r8_publication": "NOT_AUTHORIZED",
+    "r8_acceptance": "NOT_ACCEPTED",
+    "production_authority": "NOT_FROZEN",
+    "main_full81_authorization": "NOT_GRANTED",
+    "real_21d": "NOT_RUN",
+    "full81_execution": "NOT_RUN",
+    "a2": "HARD_BLOCKED"
+  },
+  "accepted_lifecycle_record_path": "results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json",
+  "remediation": {
+    "R6-AUD-01": "REPAIR_IMPLEMENTED_NOT_YET_INDEPENDENTLY_VERIFIED_NOT_CLOSED",
+    "R7-AUD-01": "REPAIR_IMPLEMENTED_NOT_YET_INDEPENDENTLY_VERIFIED_NOT_CLOSED"
+  },
+  "carried_findings": {
+    "R5-AUD-01": "OPEN / DEFECT_CLASS_ADDRESSED_BY_R7_NOT_INDEPENDENTLY_VERIFIED",
+    "R5-AUD-02": "OPEN / DEFECT_CLASS_ADDRESSED_BY_R7_NOT_INDEPENDENTLY_VERIFIED",
+    "R5-AUD-03": "NONBLOCKING / CARRIED",
+    "R4-AUD-01": "KNOWN_INSTANCES_REMEDIATED / DEFECT_CLASS_NOT_CLOSED",
+    "N-04": "CLOSED / CORRECTION_VERIFIED",
+    "N-05": "CLOSED / CORRECTION_VERIFIED",
+    "I-04": "TECHNICAL_CORRECTION_CARRIED / ACCEPTED_LIFECYCLE_CLOSURE_NOT_ESTABLISHED",
+    "FULLSTACK-01": {
+      "status": "OPEN_NONBLOCKING_CURRENT_CANDIDATE_BLOCKING_BEFORE_FULL_SUCCESSOR_PREFLIGHT_OR_EXECUTION",
+      "paths": [
+        "data/reference/production_economic_interface_v7_2.json",
+        "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+        "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+        "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv"
+      ],
+      "blocking_before": [
+        "FULL_SUCCESSOR_PREFLIGHT",
+        "MAIN_FULL81_EXECUTION"
+      ],
+      "published_or_modified_by_this_candidate": false,
+      "licensing_or_data_governance_decision_changed": false
+    },
+    "N-R5D-04": {
+      "status": "OPEN",
+      "candidacy": "NONBLOCKING",
+      "blocking_before": "ACCEPTANCE_LIFECYCLE_CONSTRUCTION",
+      "speculative_future_role_paths_created": false
+    },
+    "N-R5D-06": "CURRENT_STATE_MD_STALE_NOT_EDITED_IN_THIS_PASS",
+    "N-R5D-07": "MAIN_FULL81_AUTHORIZATION_R2_PORCELAIN_M_LIVE_EQUALS_HEAD_NOT_REWRITTEN",
+    "R6-AUD-02": "UNRESOLVED / R7_REMEDIATION_CARRIED_UNCHANGED_NOT_INDEPENDENTLY_VERIFIED / OUT_OF_R8_SCOPE",
+    "BINDING_AND_R7_PRESERVATION_GIT_DURABILITY": "NOT_ESTABLISHED / AUTHENTICATED_BY_LOCATOR_AND_SHA256_ONLY / MISSING_BYTES_FAIL_CLOSED / CARRIED_SEPARATELY"
+  },
+  "mutation_counters": {
+    "staged_paths": 0,
+    "commits": 0,
+    "pushes": 0,
+    "tags": 0,
+    "amends": 0,
+    "force_pushes": 0
+  },
+  "execution_counters": {
+    "real_21c_runs": 0,
+    "real_21d_runs": 0,
+    "production_model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "full81_cases": 0,
+    "a2_actions": 0
+  },
+  "repository_head_at_authoring": "c8f3665d5c67e0cae3222073cd71b9a6231279b1",
+  "next_legal_gate": "FRESH_INDEPENDENT_READ_ONLY_AUDIT_OF_MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8"
+}

@@ -44,13 +44,29 @@ def synthetic_accepted_lifecycle() -> dict:
     Deliberately not produced from a repository record. It exercises the positive
     branch of the pure gate guard so the guard is demonstrably not vacuous. It
     confers no acceptance: the live gate never reads it.
+
+    R3-AUD-04. This fixture used to be hard-bound to the U-06 R3 generation
+    (``lc.LINEAGE_ID`` / ``lc.R3_CANDIDATE_ID`` / the U-06 accepted-lifecycle
+    path) and omitted ``generation_id`` entirely. Once the current generation
+    advanced past U-06 R3 the gate guard correctly rejected it on
+    ``generation_id``, and four tests that depend on the guard reaching its
+    positive branch failed or errored. The guard was right; the fixture was a
+    predecessor-generation premise.
+
+    It is now derived from ``lc.CURRENT_GENERATION``, so it describes whatever
+    generation is current and cannot fall behind another advance. Nothing is
+    relaxed: every field the guard checks is still supplied, and the guard
+    still rejects this mapping the moment any one of them is wrong.
     """
 
+    generation = lc.CURRENT_GENERATION
     return {
         "lifecycle_module_version": lc.LIFECYCLE_MODULE_VERSION,
-        "lineage_id": lc.LINEAGE_ID,
-        "target_candidate_id": lc.R3_CANDIDATE_ID,
-        "record_path": lc.ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix(),
+        "generation_id": generation.generation_id,
+        "is_current_generation": True,
+        "lineage_id": generation.lineage_id,
+        "target_candidate_id": generation.candidate_id,
+        "record_path": generation.accepted_lifecycle_record_path,
         "record_present": True,
         "record_committed": True,
         "record_published": True,
@@ -111,31 +127,215 @@ class LiveLifecycleStateTests(unittest.TestCase):
         cls.live = lc.resolve_u06_lifecycle(ROOT)
 
     def test_no_accepted_lifecycle_record_exists_yet(self) -> None:
-        self.assertFalse(
-            (ROOT / lc.ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH).exists()
-        )
+        """The CURRENT generation has no accepted-lifecycle record.
+
+        R3-AUD-04. This asserted that the *U-06 R3* accepted-lifecycle record
+        does not exist. That record was lawfully created, audited, accepted and
+        frozen, so the premise became false and the test failed on a fact that
+        is correct. The live state it is actually about is the current
+        generation's own slot, which is read from the generation rather than
+        from the U-06 constant.
+        """
+
+        generation = lc.CURRENT_GENERATION
+        self.assertFalse((ROOT / generation.accepted_lifecycle_record_path).exists())
         self.assertFalse(self.live["record_present"])
         self.assertFalse(self.live["record_committed"])
         self.assertFalse(self.live["record_published"])
+
+    def test_historical_u06_record_exists_and_is_not_current(self) -> None:
+        """The historical U-06 R3 record is retained, and is not the current one.
+
+        The companion of the test above: the historical accepted record must
+        still be on disk (nothing accepted was deleted), must belong to a
+        HISTORICAL generation, and must not be the current generation's slot.
+        """
+
+        historical = ROOT / lc.ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH
+        self.assertTrue(historical.is_file(), "accepted U-06 R3 record was deleted")
+        self.assertIn(lc.U06_R3_GENERATION, lc.HISTORICAL_GENERATIONS)
+        self.assertNotIn(lc.CURRENT_GENERATION, lc.HISTORICAL_GENERATIONS)
+        self.assertNotEqual(
+            lc.CURRENT_GENERATION.accepted_lifecycle_record_path,
+            lc.ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix(),
+        )
+        # And the live resolver reads the CURRENT slot, never the historical one.
+        self.assertEqual(
+            self.live["record_path"],
+            lc.CURRENT_GENERATION.accepted_lifecycle_record_path,
+        )
 
     def test_live_lifecycle_is_absent_and_not_frozen(self) -> None:
         self.assertEqual(self.live["accepted_lifecycle_overlay"], "ABSENT")
         self.assertEqual(self.live["u06_alignment_status"], "CANDIDATE")
         self.assertEqual(self.live["u06_acceptance_status"], "NOT_ACCEPTED")
+        # R2-AUD-03. This assertion previously required the audit state of the
+        # ACTIVE candidate to be "R1_FAILED_R2_NO_GO_R3_PENDING", which is the
+        # audit history of the HISTORICAL U-06 ALIGNMENT generation. That stale
+        # premise is exactly the defect the independent audit of Candidate R2
+        # reported, so the test encoded the defect rather than catching it. The
+        # active candidate is R3 and its independent audit has not been
+        # performed.
         self.assertEqual(
             self.live["u06_independent_audit_status"],
-            "R1_FAILED_R2_NO_GO_R3_PENDING",
+            "NOT_YET_PERFORMED",
         )
         self.assertEqual(self.live["production_authority_freeze_status"], "NOT_FROZEN")
         self.assertFalse(self.live["authorizes_main_full81"])
         self.assertFalse(lc.is_frozen(self.live))
 
-    def test_lineage_identity_is_r3(self) -> None:
+    def test_historical_u06_audit_cannot_masquerade_as_current_candidate(
+        self,
+    ) -> None:
+        """R2-AUD-03 regression guard.
+
+        The historical U-06 alignment audit history must remain retrievable and
+        must never be presented as the active candidate's audit state.
+        """
+
+        historical = "R1_FAILED_R2_NO_GO_R3_PENDING"
+
+        # 1. The historical string is retained, under an explicitly historical
+        #    name, and still carries the U-06 alignment records.
+        self.assertEqual(lc.HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS, historical)
+        hist = self.live["historical_u06_alignment_audit"]
+        self.assertEqual(hist["audit_status"], historical)
+        self.assertEqual(
+            hist["scope"], "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_GENERATION"
+        )
+        self.assertFalse(hist["is_current_candidate_audit_state"])
+
+        # 2. It is NOT the active candidate's audit state, anywhere it is
+        #    emitted.
+        self.assertNotEqual(self.live["u06_independent_audit_status"], historical)
+        self.assertNotEqual(lc.PRE_ACCEPTANCE_AUDIT_STATUS, historical)
+        summary = lc.lifecycle_summary(self.live)
+        self.assertNotEqual(summary["u06_independent_audit_status"], historical)
+        self.assertFalse(summary["historical_u06_alignment_audit_status_is_current"])
+        self.assertEqual(
+            summary["historical_u06_alignment_audit_status"], historical
+        )
+
+        # 3. The generic field is scoped to the active candidate and agrees with
+        #    that candidate's own register entry.
+        self.assertEqual(
+            summary["u06_independent_audit_status_scope"],
+            "ACTIVE_GENERATION_CURRENT_CANDIDATE_ONLY",
+        )
+        # R3-AUD-04: derived from the current generation rather than pinned to
+        # one candidate revision, so a lawful candidate advance does not make
+        # this regression guard assert a predecessor's identity.
+        active = lc.ACTIVE_CANDIDATE_ID
+        self.assertEqual(active, lc.CURRENT_GENERATION.candidate_id)
+        self.assertTrue(
+            active.startswith("MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_"),
+            active,
+        )
+        self.assertEqual(summary["u06_independent_audit_status_candidate_id"], active)
+        self.assertEqual(
+            self.live["active_candidate_audit"]["independent_audit"],
+            self.live["u06_independent_audit_status"],
+        )
+
+        # 4. The active generation's own candidate history is truthful and
+        #    separate from the U-06 alignment history.
+        history = self.live["preflight_authorization_guard_candidate_audit_history"]
+        r1 = history["MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1"]
+        self.assertEqual(r1["independent_audit"], "PASS_WITH_NONBLOCKING_FINDINGS")
+        self.assertEqual(r1["publication"], "STOP")
+        self.assertEqual(r1["acceptance"], "NOT_ACCEPTED")
+
+        r2 = history["MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2"]
+        self.assertEqual(r2["independent_audit"], "FAIL_NO_GO")
+        self.assertEqual(r2["publication"], "NOT_PERFORMED")
+        self.assertEqual(r2["acceptance"], "NOT_ACCEPTED")
+        self.assertEqual(
+            tuple(r2["blocking_findings"]),
+            ("R2-AUD-01", "R2-AUD-02", "R2-AUD-03"),
+        )
+
+        r3 = history[active]
+        self.assertEqual(r3["independent_audit"], "NOT_YET_PERFORMED")
+        self.assertEqual(r3["publication"], "NOT_YET_AUTHORIZED")
+        self.assertEqual(r3["acceptance"], "NOT_YET_ACCEPTED")
+
+        # 5. No audit PASS is fabricated for the active candidate, and the
+        #    active generation does not self-declare one.
+        self.assertNotEqual(r3["independent_audit"], lc.ACCEPTED_AUDIT_STATUS)
+        self.assertNotEqual(
+            lc.CURRENT_GENERATION.candidate_audit_state, lc.ACCEPTED_AUDIT_STATUS
+        )
+
+    def test_parameter_registry_durable_publication_is_required(self) -> None:
+        """R2-AUD-01 regression guard: the pin target must be publishable."""
+
+        registry = "data/reference/parameter_registry_v7_2.csv"
+        self.assertIn(registry, lc.REQUIRED_DURABLE_PUBLICATION_PATHS)
+        self.assertIn(
+            registry, lc.required_durable_publication_force_add_paths(ROOT)
+        )
+        # The canonical digest is read from the authority bundle pin, never
+        # restated here: this module must contain no 64-hex digest literal.
+        self.assertEqual(
+            lc._required_durable_publication_sha256()[registry],
+            bundle._pin("parameter_registry").sha256,
+        )
+        # The current candidate's checkpoint and manifest are required too: a
+        # future acceptance's role validators read them by path.
+        self.assertIn(
+            lc.CURRENT_GENERATION.candidate_checkpoint_path,
+            lc.REQUIRED_DURABLE_PUBLICATION_PATHS,
+        )
+        self.assertIn(
+            lc.CURRENT_GENERATION.candidate_manifest_path,
+            lc.REQUIRED_DURABLE_PUBLICATION_PATHS,
+        )
+
+        report = self.live["durable_publication"]
+        entry = report["entries"][registry]
+        # Canonical content is unchanged, and the requirement is declared.
+        self.assertTrue(entry["live_content_matches_canonical"])
+        self.assertFalse(report["gitignore_modified"])
+        self.assertFalse(report["canonical_content_modified"])
+        # Truthfully still unpublished in this pass: nothing is staged here.
+        self.assertFalse(entry["present_in_head"])
+        self.assertFalse(entry["published_durably"])
+        self.assertTrue(entry["force_add_required"])
+        self.assertIn(registry, report["missing_required_authority_files"])
+
+    def test_live_lineage_identity_is_the_current_generation(self) -> None:
+        """The live lifecycle reports the CURRENT generation's identity.
+
+        R3-AUD-04. This asserted the live lineage equals ``lc.LINEAGE_ID``, the
+        U-06 R3 lineage. Once the current generation advanced, the live
+        resolver correctly reported the new lineage and the test failed on a
+        predecessor premise. Expected values are now derived from the current
+        generation, so a future lawful advance does not re-break this.
+        """
+
+        generation = lc.CURRENT_GENERATION
+        self.assertEqual(self.live["lineage_id"], generation.lineage_id)
+        self.assertEqual(self.live["target_candidate_id"], generation.candidate_id)
+        self.assertEqual(self.live["generation_id"], generation.generation_id)
+
+    def test_accepted_u06_r3_identity_constants_are_byte_stable(self) -> None:
+        """The accepted U-06 R3 names keep their accepted values, forever.
+
+        Retained as an explicitly HISTORICAL assertion. It is what stops the
+        test above from being a licence to rewrite accepted identity: the U-06
+        constants must not drift just because they are no longer current.
+        """
+
         self.assertEqual(
             lc.LINEAGE_ID, "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_R3"
         )
-        self.assertEqual(self.live["lineage_id"], lc.LINEAGE_ID)
-        self.assertEqual(self.live["target_candidate_id"], lc.R3_CANDIDATE_ID)
+        self.assertEqual(
+            lc.R3_CANDIDATE_ID,
+            "U06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_CANDIDATE_R3",
+        )
+        self.assertEqual(lc.U06_R3_GENERATION.lineage_id, lc.LINEAGE_ID)
+        self.assertEqual(lc.U06_R3_GENERATION.candidate_id, lc.R3_CANDIDATE_ID)
+        self.assertNotEqual(lc.CURRENT_GENERATION.lineage_id, lc.LINEAGE_ID)
 
     def test_every_required_role_is_reported_missing(self) -> None:
         self.assertEqual(
@@ -500,7 +700,7 @@ class ProvenanceIsLifecycleDerivedTests(unittest.TestCase):
         absent = lc.absent_lifecycle()
         self.assertEqual(
             bundle.u06_register_entry(absent),
-            "V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+            bundle.ACTIVE_CANDIDATE_PENDING_AUDIT_REGISTER_ENTRY,
         )
         audited = lc.absent_lifecycle()
         audited["u06_independent_audit_status"] = "PASS"
@@ -521,6 +721,311 @@ class ProvenanceIsLifecycleDerivedTests(unittest.TestCase):
 
     def test_u06_is_not_a_static_register_constant(self) -> None:
         self.assertNotIn("U-06", bundle.STATIC_UNRESOLVED_REGISTER)
+
+    # -- R2-AUD-03 -------------------------------------------------------
+
+    def test_pre_acceptance_register_entry_is_candidate_neutral(self) -> None:
+        """R2-AUD-03: the entry may not name the historical U-06 candidate.
+
+        Candidate R3 corrected most audit fields but left this function
+        returning ``V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT``
+        — the ownership string of the HISTORICAL U-06 *alignment* generation —
+        as the register entry of the active preflight-authorization-guard
+        candidate. The pre-acceptance entry must now name no generation and no
+        candidate at all.
+        """
+
+        entry = bundle.u06_register_entry(lc.absent_lifecycle())
+        self.assertEqual(
+            entry, bundle.ACTIVE_CANDIDATE_PENDING_AUDIT_REGISTER_ENTRY
+        )
+        self.assertNotEqual(
+            entry, bundle.HISTORICAL_U06_ALIGNMENT_REGISTER_ENTRY
+        )
+        for forbidden in ("V7_4_ALIGNMENT", "U06_V7_4", "ALIGNMENT_CANDIDATE"):
+            self.assertNotIn(forbidden, entry)
+        # And it names no candidate revision of any generation.
+        for generation in lc.AUTHORITY_GENERATIONS:
+            self.assertNotIn(generation.candidate_id, entry)
+            self.assertNotIn(generation.generation_id, entry)
+
+    def test_register_state_carries_explicit_current_ownership(self) -> None:
+        """Ownership is explicit fields, not a string a reader must decode."""
+
+        state = bundle.u06_register_state(lc.resolve_u06_lifecycle(ROOT))
+        generation = lc.CURRENT_GENERATION
+        self.assertEqual(state["generation_id"], generation.generation_id)
+        self.assertEqual(state["lineage_id"], generation.lineage_id)
+        self.assertEqual(state["candidate_id"], generation.candidate_id)
+        self.assertEqual(state["candidate_audit_status"], "NOT_YET_PERFORMED")
+        self.assertEqual(
+            state["candidate_audit_status_candidate_id"], generation.candidate_id
+        )
+        self.assertTrue(state["entry_is_candidate_neutral"])
+        self.assertFalse(state["historical_u06_alignment_is_current"])
+        self.assertFalse(
+            state["historical_u06_alignment_register_entry_is_current"]
+        )
+
+    def test_historical_u06_status_cannot_masquerade_as_current(self) -> None:
+        """Substitution control: historical audit state is never the active one."""
+
+        state = bundle.u06_register_state(lc.resolve_u06_lifecycle(ROOT))
+        self.assertEqual(
+            state["historical_u06_alignment_audit_status"],
+            lc.HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS,
+        )
+        self.assertNotEqual(
+            state["candidate_audit_status"],
+            lc.HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS,
+        )
+        # Injecting the historical string as the active audit status must not
+        # make the current candidate read as audited.
+        forged = lc.absent_lifecycle()
+        forged["u06_independent_audit_status"] = (
+            lc.HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS
+        )
+        self.assertEqual(
+            bundle.u06_register_entry(forged),
+            bundle.ACTIVE_CANDIDATE_PENDING_AUDIT_REGISTER_ENTRY,
+        )
+        self.assertFalse(lc.is_frozen(forged))
+        # And the historical records themselves are retained, not erased.
+        summary = lc.lifecycle_summary(lc.resolve_u06_lifecycle(ROOT))
+        self.assertEqual(
+            summary["historical_u06_alignment_audit"]["audit_status"],
+            lc.HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS,
+        )
+        self.assertFalse(
+            summary["historical_u06_alignment_audit"][
+                "is_current_candidate_audit_state"
+            ]
+        )
+        self.assertEqual(
+            summary["candidate_r1_audit"]["independent_audit_verdict"],
+            "FAIL_REMEDIATION_REQUIRED",
+        )
+
+    def test_active_candidate_register_entry_is_candidate_r8(self) -> None:
+        """The active register entry is Candidate R8 of the current generation.
+
+        CURRENT POINTER, advanced R7 -> R8. Candidates R4, R5, R6 and R7 are
+        asserted separately and historically below; nothing about them is
+        relaxed here.
+        """
+
+        summary = lc.lifecycle_summary(lc.resolve_u06_lifecycle(ROOT))
+        self.assertEqual(
+            summary["active_candidate_id"],
+            "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+        )
+        self.assertEqual(
+            summary["active_candidate_id"], lc.CURRENT_GENERATION.candidate_id
+        )
+        active = summary["active_candidate_audit"]
+        self.assertEqual(active["candidate_revision"], "R8")
+        self.assertEqual(active["independent_audit"], "NOT_YET_PERFORMED")
+        self.assertEqual(active["publication"], "NOT_YET_AUTHORIZED")
+        self.assertEqual(active["acceptance"], "NOT_YET_ACCEPTED")
+        self.assertEqual(
+            active["disposition"], "ACTIVE_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT"
+        )
+        self.assertEqual(tuple(active["remediates"]), ("R6-AUD-01", "R7-AUD-01"))
+
+    def test_r7_is_a_truthful_rejected_historical_candidate(self) -> None:
+        """HISTORICAL: Candidate R7 failed its audit and may never authorise."""
+
+        r7_id = "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7"
+        r7 = lc.PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[r7_id]
+        self.assertEqual(r7["candidate_revision"], "R7")
+        self.assertEqual(r7["independent_audit"], "FAIL_NO_GO")
+        self.assertEqual(r7["publication"], "NOT_PERFORMED")
+        self.assertEqual(r7["acceptance"], "NOT_ACCEPTED")
+        self.assertEqual(r7["disposition"], "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE")
+        self.assertEqual(tuple(r7["blocking_findings"]), ("R7-AUD-01",))
+        self.assertEqual(
+            r7["preservation_package"],
+            lc.CANDIDATE_PRESERVATION_PACKAGES[r7_id]["directory"],
+        )
+        self.assertIn(r7_id, lc.CURRENT_GENERATION.superseded_candidate_ids)
+        for path in (
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_CHECKPOINT_PATH,
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_MANIFEST_PATH,
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_CHANGE_LEDGER_PATH,
+        ):
+            self.assertIn(path, lc.CURRENT_GENERATION.candidate_artifact_paths)
+
+    def test_r6_is_a_truthful_rejected_historical_candidate(self) -> None:
+        """HISTORICAL: Candidate R6 failed its audit and may never authorise."""
+
+        r6_id = "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6"
+        r6 = lc.PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[r6_id]
+        self.assertEqual(r6["candidate_revision"], "R6")
+        self.assertEqual(r6["independent_audit"], "FAIL_NO_GO")
+        self.assertEqual(r6["publication"], "NOT_PERFORMED")
+        self.assertEqual(r6["acceptance"], "NOT_ACCEPTED")
+        self.assertEqual(r6["disposition"], "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE")
+        self.assertEqual(tuple(r6["blocking_findings"]), ("R6-AUD-01", "R6-AUD-02"))
+        self.assertEqual(
+            r6["preservation_package"],
+            lc.CANDIDATE_PRESERVATION_PACKAGES[r6_id]["directory"],
+        )
+        self.assertIn(r6_id, lc.CURRENT_GENERATION.superseded_candidate_ids)
+        for path in (
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R6_CHECKPOINT_PATH,
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R6_MANIFEST_PATH,
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R6_CHANGE_LEDGER_PATH,
+        ):
+            self.assertIn(path, lc.CURRENT_GENERATION.candidate_artifact_paths)
+
+    def test_r5_is_a_truthful_rejected_historical_candidate(self) -> None:
+        """HISTORICAL: Candidate R5 failed its audit and may never authorise."""
+
+        r5_id = "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5"
+        r5 = lc.PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[r5_id]
+        self.assertEqual(r5["candidate_revision"], "R5")
+        self.assertEqual(r5["independent_audit"], "FAIL_NO_GO")
+        self.assertEqual(r5["publication"], "NOT_PERFORMED")
+        self.assertEqual(r5["acceptance"], "NOT_ACCEPTED")
+        self.assertEqual(r5["disposition"], "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE")
+        self.assertEqual(tuple(r5["blocking_findings"]), ("R5-AUD-01", "R5-AUD-02"))
+        self.assertEqual(
+            r5["preservation_package"],
+            lc.CANDIDATE_PRESERVATION_PACKAGES[r5_id]["directory"],
+        )
+        self.assertIn(r5_id, lc.CURRENT_GENERATION.superseded_candidate_ids)
+        for path in (
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R5_CHECKPOINT_PATH,
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R5_MANIFEST_PATH,
+        ):
+            self.assertIn(path, lc.CURRENT_GENERATION.candidate_artifact_paths)
+
+    def test_r4_is_a_truthful_rejected_historical_candidate(self) -> None:
+        """HISTORICAL: Candidate R4 failed its audit and may never authorise."""
+
+        history = lc.PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY
+        r4 = history["MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4"]
+        self.assertEqual(r4["candidate_revision"], "R4")
+        self.assertEqual(r4["independent_audit"], "FAIL_NO_GO")
+        self.assertEqual(r4["publication"], "NOT_PERFORMED")
+        self.assertEqual(r4["acceptance"], "NOT_ACCEPTED")
+        self.assertEqual(r4["disposition"], "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE")
+        self.assertEqual(tuple(r4["blocking_findings"]), ("R4-AUD-01",))
+        self.assertEqual(
+            r4["preservation_package"],
+            lc.CANDIDATE_PRESERVATION_PACKAGES[
+                "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4"
+            ]["directory"],
+        )
+        self.assertIn(
+            "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4",
+            lc.CURRENT_GENERATION.superseded_candidate_ids,
+        )
+        for path in (
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R4_CHECKPOINT_PATH,
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R4_MANIFEST_PATH,
+        ):
+            self.assertIn(path, lc.CURRENT_GENERATION.candidate_artifact_paths)
+
+    def test_live_durable_publication_report_never_equates_presence_with_content(
+        self,
+    ) -> None:
+        """R4-AUD-01: ``live_content_matches_canonical`` is a real comparison.
+
+        R4's live report set it to ``True`` for any unpinned path that merely
+        existed, and R4 froze that into its manifest. Every entry must now name
+        its canonical identity source, and the candidate manifest's own entry
+        must be not-applicable rather than ``True``.
+        """
+
+        report = lc.resolve_u06_lifecycle(ROOT)["durable_publication"]
+        generation = lc.CURRENT_GENERATION
+        manifest = json.loads(
+            (ROOT / generation.candidate_manifest_path).read_text(encoding="utf-8")
+        )
+        for relative, entry in report["entries"].items():
+            with self.subTest(path=relative):
+                if relative in lc.REQUIRED_DURABLE_PUBLICATION_PIN_LABELS:
+                    self.assertEqual(
+                        entry["canonical_identity_source"], "AUTHORITY_BUNDLE_PIN"
+                    )
+                    self.assertEqual(
+                        entry["live_content_matches_canonical"],
+                        entry["live_sha256"] == entry["expected_sha256"],
+                    )
+                elif relative == generation.candidate_checkpoint_path:
+                    self.assertEqual(
+                        entry["canonical_identity_source"],
+                        "MANIFEST_CANDIDATE_CHECKPOINT_FIELD",
+                    )
+                    self.assertEqual(
+                        entry["expected_sha256"],
+                        manifest["candidate_checkpoint"]["sha256"],
+                    )
+                    self.assertEqual(
+                        entry["live_content_matches_canonical"],
+                        entry["live_sha256"] == entry["expected_sha256"],
+                    )
+                    self.assertTrue(entry["live_content_matches_canonical"])
+                elif relative == generation.candidate_change_ledger_path:
+                    self.assertEqual(
+                        entry["canonical_identity_source"],
+                        "MANIFEST_CANDIDATE_CHANGE_LEDGER_FIELD",
+                    )
+                    self.assertEqual(
+                        entry["expected_sha256"],
+                        manifest["candidate_change_ledger"]["sha256"],
+                    )
+                    self.assertTrue(entry["live_content_matches_canonical"])
+                else:
+                    self.assertEqual(relative, generation.candidate_manifest_path)
+                    self.assertEqual(
+                        entry["canonical_identity_source"],
+                        "EXTERNAL_LIFECYCLE_ROLE_BINDING",
+                    )
+                    self.assertIsNone(entry["expected_sha256"])
+                    self.assertIsNone(entry["live_content_matches_canonical"])
+                # Presence alone is never reported as content equality.
+                if entry["live_content_matches_canonical"] is True:
+                    self.assertEqual(entry["live_sha256"], entry["expected_sha256"])
+
+    def test_r1_r2_r3_remain_truthful_historical_candidates(self) -> None:
+        """No predecessor candidate's recorded outcome may be rewritten."""
+
+        history = lc.PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY
+        r1 = history["MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1"]
+        self.assertEqual(r1["independent_audit"], "PASS_WITH_NONBLOCKING_FINDINGS")
+        self.assertEqual(r1["publication"], "STOP")
+        self.assertEqual(r1["acceptance"], "NOT_ACCEPTED")
+        self.assertEqual(
+            r1["disposition"], "SUPERSEDED_HISTORICAL_PREDECESSOR_IMMUTABLE"
+        )
+
+        r2 = history["MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2"]
+        self.assertEqual(r2["independent_audit"], "FAIL_NO_GO")
+        self.assertEqual(r2["publication"], "NOT_PERFORMED")
+        self.assertEqual(r2["acceptance"], "NOT_ACCEPTED")
+        self.assertEqual(r2["disposition"], "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE")
+
+        r3 = history["MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3"]
+        self.assertEqual(r3["independent_audit"], "FAIL_NO_GO")
+        self.assertEqual(r3["publication"], "NOT_PERFORMED")
+        self.assertEqual(r3["acceptance"], "NOT_ACCEPTED")
+        self.assertEqual(r3["disposition"], "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE")
+        self.assertEqual(
+            tuple(r3["blocking_findings"]),
+            ("R3-AUD-01", "R3-AUD-02", "R3-AUD-03", "R2-AUD-03", "R3-AUD-04"),
+        )
+
+        # Every predecessor is barred from filling a role of this generation.
+        barred = set(lc.CURRENT_GENERATION.superseded_candidate_ids)
+        for candidate in (
+            "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1",
+            "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2",
+            "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3",
+        ):
+            self.assertIn(candidate, barred)
+        self.assertNotIn(lc.CURRENT_GENERATION.candidate_id, barred)
 
     def test_run_and_case_provenance_track_lifecycle(self) -> None:
         for lifecycle, acceptance, freeze in (
@@ -574,7 +1079,9 @@ class StackIntegrationTests(unittest.TestCase):
 
     def test_stack_payload_carries_the_audited_dependency_report(self) -> None:
         report = self.payload["u06_runtime_dependency_report"]
-        self.assertEqual(report["lineage_id"], lc.LINEAGE_ID)
+        # R3-AUD-04: derived from the current generation, not the U-06 R3
+        # constant this previously compared against.
+        self.assertEqual(report["lineage_id"], lc.CURRENT_GENERATION.lineage_id)
         self.assertEqual(
             report["runtime_production_dependency_count"],
             len(lc.RUNTIME_PRODUCTION_DEPENDENCY_PATHS),

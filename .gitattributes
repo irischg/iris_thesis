@@ -1,0 +1,270 @@
+# Repository end-of-line authority policy
+#
+# Authorized scope: MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4,
+# remediating independent-audit blocker R3-AUD-02 / R2-AUD-02 (MAJOR /
+# BLOCKING): with core.autocrlf=true and no .gitattributes, a clean checkout
+# rewrote acceptance-critical working-tree raw bytes and destroyed the
+# canonical implementation identity.
+#
+# Candidate R3 narrowed that blocker but did not close it. Its coverage was
+# maintained by hand, independently of the real raw-byte consumer set, and so
+# omitted 12 historical accepted-lifecycle artifacts whose raw bytes decide
+# whether a lawfully accepted lifecycle still validates. Under
+# core.autocrlf=true all 12 became CRLF on a fresh checkout, their raw SHA-256
+# changed, and Git still reported the working tree clean.
+#
+# Candidate R4 does not merely append those 12. The covered set is now the
+# COMPLETE raw-byte authority consumer universe, derived mechanically from
+# primary source by
+# ``src.production_authority_lifecycle_u06.authority_raw_byte_consumer_universe``
+# and checked against this file by
+# ``src.production_authority_lifecycle_u06.eol_policy_coverage``. A bounded
+# test fails closed if any future raw-byte consumer is added without a rule
+# here, so coverage and consumers can no longer drift apart. The 12 paths the
+# independent audit named are a strict subset of that derived universe; they
+# are covered because the derivation finds them, not because they were listed
+# by hand.
+#
+# This file is EXPLICIT and MINIMAL by design. It names only authority-critical
+# paths. It deliberately declares no extension-wide or repository-wide rule, so
+# no unrelated or accepted historical artifact is brought under a normalizing
+# filter. In particular the seven MIXED-EOL accepted historical JSON artifacts
+# under results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/ are
+# deliberately NOT listed and remain entirely unfiltered.
+#
+# core.autocrlf and core.eol are NOT changed by this policy, and this policy
+# performs no renormalization of any existing object. It constrains only how
+# the named paths cross the clean/smudge boundary, so a fresh checkout
+# reproduces canonical raw bytes under core.autocrlf=true and =false alike.
+#
+# This policy is bound by the production-authority bundle under the pin label
+# repository_eol_policy. It is governance/authority identity only: it is not an
+# acceptance, not an audit outcome, not a freeze, and not Main Full81
+# authorization.
+#
+# Candidate R5 (MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5, bounded
+# remediation of R4-AUD-01 only) extends this policy by exactly five
+# exact-path rules, because the derived universe gained exactly five raw-byte
+# consumers: the Candidate R5 checkpoint and manifest, and the three files of
+# the independently audited Candidate R4 STOP preservation package. Their bytes
+# are not modified. No rule is added for any future acceptance-lifecycle role
+# record: those paths are not fixed yet (carried as N-R5D-04).
+#
+# Candidate R6 (MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6, bounded
+# remediation of R5-AUD-01 and R5-AUD-02) extends this policy by exactly six
+# exact-path rules, because the derived universe gained exactly six raw-byte
+# consumers: the Candidate R6 checkpoint, manifest and change ledger, and the
+# three files of the Candidate R5 independent-audit STOP preservation package.
+# Their bytes are not modified, and N-R5D-04 is still carried, not solved.
+
+# ---------------------------------------------------------------------------
+# 1. This policy file itself. LF and filter-stable, so the policy cannot be
+#    altered by the very conversion it governs.
+# ---------------------------------------------------------------------------
+.gitattributes text eol=lf
+
+# ---------------------------------------------------------------------------
+# 2. Canonical-CRLF authority artifacts: exact raw bytes, NO conversion in
+#    either direction.
+#
+#    data/reference/parameter_registry_v7_2.csv is pinned at raw SHA-256
+#    c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1, which
+#    is the CRLF form (27 CRLF, 0 bare LF). Normalizing it to LF would yield
+#    db80481dfc9b639a9239eb5d0b58358de5712b5f55429b61a831420e4a5a4fdc and
+#    destroy the pinned identity, so `text eol=lf` is forbidden here. `-text`
+#    preserves the canonical bytes through both the clean and smudge filters.
+#    Its scientific content is NOT modified by this policy.
+#
+#    The Candidate R1 manifest is canonically CRLF and is immutable historical
+#    provenance (raw SHA-256 c69b4f73a1da16318f478753df7d6d97cebfefcf17bca1d766659c69331dda13).
+#    It is preserved, never normalized.
+# ---------------------------------------------------------------------------
+data/reference/parameter_registry_v7_2.csv -text
+results/provenance/main_full81_preflight_authorization_guard_candidate_r1_2026-10-03/preflight_authorization_guard_manifest.json -text
+#
+#    Candidate R8: the Git-frozen pre-R8 historical trust root is a single
+#    line with no line terminator, so it has no line endings to convert.
+#    `-text` states that it is byte-preserved, never normalized.
+docs/checkpoints/main_full81_preflight_pre_r8_historical_trust_root_2026-10-06.json -text
+
+# ---------------------------------------------------------------------------
+# 3. Binary authority artifacts: never line-ending filtered. The seven raw-byte
+#    preservation archives hold the immutable audited Candidate R1, R2, R3, R4,
+#    R5, R6 and R7 bytes and must round-trip bit-exactly.
+# ---------------------------------------------------------------------------
+data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet binary
+results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/candidate_r1_raw_bytes.zip binary
+results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/candidate_r2_raw_bytes.zip binary
+results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/candidate_r3_raw_bytes.zip binary
+results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/candidate_r4_raw_bytes.zip binary
+results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/candidate_r5_raw_bytes.zip binary
+results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/candidate_r6_raw_bytes.zip binary
+results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_bytes.zip binary
+
+# ---------------------------------------------------------------------------
+# 3b. Authority lifecycle and authorization RECORDS, present and future.
+#
+#     These are read as raw bytes and additionally checked by
+#     is_tracked_and_clean(), so a smudged checkout makes a lawfully
+#     accepted record resolve PRESENT_INVALID and production authority
+#     could never be frozen from a clean clone. Every one of these that
+#     exists today is canonically LF; the not-yet-created lawful paths are
+#     listed so a FUTURE record is protected the moment it is authored.
+#     Listing a path here neither creates nor authorizes any record.
+# ---------------------------------------------------------------------------
+results/provenance/main_full81_authorization_mechanism_accepted_lifecycle_r2/accepted_lifecycle_record.json text eol=lf
+results/provenance/main_full81_authorization_r1/main_full81_authorization.json text eol=lf
+results/provenance/main_full81_authorization_r2/main_full81_authorization.json text eol=lf
+results/provenance/main_full81_authorization_r3/main_full81_authorization.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json text eol=lf
+results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json text eol=lf
+
+# ---------------------------------------------------------------------------
+# 4. Canonical-LF authority-critical text. Every path below was mechanically
+#    verified LF in both its HEAD blob and its live working-tree bytes (or is
+#    a candidate or preservation artifact authored LF). `text
+#    eol=lf` pins checkout to LF regardless of core.autocrlf, which is what
+#    makes the implementation digest and every bundle pin reconstructible.
+#
+#    Coverage: the 21 accepted implementation-identity paths, the 34
+#    authority-bundle pin targets, Framework and Registry, the validation
+#    identity surface, and the candidate checkpoint/manifest/provenance
+#    records, including those required for Candidate R5 publication.
+# ---------------------------------------------------------------------------
+docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md text eol=lf
+docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md text eol=lf
+docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md text eol=lf
+docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md text eol=lf
+docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_2026-10-01.md text eol=lf
+docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md text eol=lf
+docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md text eol=lf
+docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md text eol=lf
+docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r1_2026-10-03.md text eol=lf
+docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r2_2026-10-04.md text eol=lf
+docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r3_2026-10-04.md text eol=lf
+docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r4_2026-10-05.md text eol=lf
+docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r5_2026-10-05.md text eol=lf
+docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r6_2026-10-05.md text eol=lf
+docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r7_2026-10-06.md text eol=lf
+docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md text eol=lf
+docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md text eol=lf
+docs/research_framework_v7_3_2026-09-23.md text eol=lf
+docs/research_framework_v7_4_2026-09-26_r2.md text eol=lf
+docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md text eol=lf
+docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md text eol=lf
+docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md text eol=lf
+results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json text eol=lf
+results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json text eol=lf
+results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json text eol=lf
+results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json text eol=lf
+results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/candidate_r1_raw_byte_index.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/publication_stop_record.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r2_2026-10-04/preflight_authorization_guard_manifest.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/candidate_r2_raw_byte_index.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/independent_audit_stop_record.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r3_2026-10-04/preflight_authorization_guard_manifest.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/candidate_r3_raw_byte_index.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/independent_audit_stop_record.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r4_2026-10-05/preflight_authorization_guard_manifest.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/candidate_r4_raw_byte_index.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/independent_audit_stop_record.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r5_2026-10-05/preflight_authorization_guard_manifest.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/candidate_r5_raw_byte_index.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/independent_audit_stop_record.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r6_2026-10-05/candidate_change_ledger.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r6_2026-10-05/preflight_authorization_guard_manifest.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/candidate_r6_raw_byte_index.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/independent_audit_stop_record.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r7_2026-10-06/candidate_change_ledger.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r7_2026-10-06/preflight_authorization_guard_manifest.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/candidate_r7_raw_byte_index.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/independent_audit_stop_record.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/candidate_change_ledger.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/preflight_authorization_guard_manifest.json text eol=lf
+results/provenance/main_full81_preflight_guard_r7_preservation_authority_binding_2026-10-06/r7_preservation_authority_binding.json text eol=lf
+scripts/08_calibrate_kappa.py text eol=lf
+scripts/09_build_valid_outage_start_sets.py text eol=lf
+scripts/15a_benchmark_eob_charge_discharge_formulations.py text eol=lf
+scripts/15b_freeze_production_eob_baseline.py text eol=lf
+scripts/15c_validate_production_eob_rainflow.py text eol=lf
+scripts/15d_run_corrected_eob_v7_2.py text eol=lf
+scripts/16a_preflight_layer_a_representative_binary_cases.py text eol=lf
+scripts/19a_preflight_final_layer_a_81_cases.py text eol=lf
+scripts/19b_run_final_layer_a_81_cases.py text eol=lf
+scripts/21a_preflight_v7_3_production_routing.py text eol=lf
+scripts/21b_preflight_v7_3_eob_successor.py text eol=lf
+scripts/21c_preflight_v7_3_layer_a_successor.py text eol=lf
+scripts/21d_preflight_v7_3_final81_successor.py text eol=lf
+scripts/21e_preflight_v7_4_production_authority_alignment.py text eol=lf
+src/annual_design_model_v7_2.py text eol=lf
+src/main_full81_authorization_v7_4.py text eol=lf
+src/production_authority_bundle_v7_4.py text eol=lf
+src/production_authority_lifecycle_u06.py text eol=lf
+src/production_input_authority_v7_3.py text eol=lf
+src/production_successor_stack_v7_3.py text eol=lf
+src/rainflow_validation_v7_2.py text eol=lf
+tests/test_21a_v7_3_production_routing_preflight.py text eol=lf
+tests/test_21b_21d_v7_3_production_successor_stack.py text eol=lf
+tests/test_21e_v7_4_production_authority_bundle.py text eol=lf
+tests/test_21f_u06_accepted_lifecycle_gate.py text eol=lf
+tests/test_21g_u06_r3_substitution_attacks.py text eol=lf
+tests/test_21h_main_full81_authorization_mechanism.py text eol=lf
+tests/test_21i_main_full81_preflight_authorization_guard.py text eol=lf
+tests/test_21j_authority_raw_byte_eol_coverage.py text eol=lf
+tests/test_21k_external_historical_authority_attacks.py text eol=lf
+
+# ---------------------------------------------------------------------------
+# 5. R3-AUD-02: historical ACCEPTED-LIFECYCLE raw-byte authority.
+#
+#    This is the block Candidate R3 omitted. Each path below is named, by
+#    path and by raw SHA-256, inside a published accepted-lifecycle record of
+#    an accepted production-authority generation. The role validators read
+#    each one by path and hash its raw bytes, so a single CRLF-smudged
+#    checkout makes a lawfully accepted lifecycle resolve PRESENT_INVALID and
+#    no clean clone could ever re-freeze production authority. Every one is
+#    canonically LF today and is pinned LF here.
+#
+#    Listing these changes no accepted semantics: it pins the bytes that the
+#    acceptance already declared, and it renormalizes nothing. The accepted
+#    content is NOT modified, and no historical blob is rewritten.
+#
+#    5a. U-06 V7.4 production-authority alignment R3 chain (accepted, frozen).
+# ---------------------------------------------------------------------------
+docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02.md text eol=lf
+results/provenance/u_06_v7_4_production_authority_alignment_candidate_r3_2026-10-02/alignment_manifest.json text eol=lf
+results/provenance/u_06_v7_4_production_authority_independent_audit_r3/independent_audit_pass_record.json text eol=lf
+results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_closure.json text eol=lf
+results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_manifest.json text eol=lf
+results/provenance/u_06_v7_4_production_authority_re_freeze_r3/production_authority_re_freeze_record.json text eol=lf
+
+# ---------------------------------------------------------------------------
+#    5b. Main Full81 authorization-mechanism R2 chain (accepted, frozen).
+# ---------------------------------------------------------------------------
+docs/checkpoints/main_full81_authorization_mechanism_candidate_r2_2026-10-02.md text eol=lf
+results/provenance/main_full81_authorization_mechanism_candidate_r2_2026-10-02/authorization_mechanism_manifest.json text eol=lf
+results/provenance/main_full81_authorization_mechanism_independent_audit_r2/independent_audit_pass_record.json text eol=lf
+results/provenance/main_full81_authorization_mechanism_acceptance_r2/acceptance_closure.json text eol=lf
+results/provenance/main_full81_authorization_mechanism_acceptance_r2/acceptance_manifest.json text eol=lf
+results/provenance/main_full81_authorization_mechanism_re_freeze_r2/production_authority_re_freeze_record.json text eol=lf
+
+# ---------------------------------------------------------------------------
+#    5c. Barred predecessor candidate artifacts, and rejected historical
+#        authorization paths.
+#
+#        These are not accepted authority. They are raw-byte consumers all the
+#        same: every generation's ``candidate_artifact_paths`` bars them from
+#        filling a lifecycle role, and the Full81 authorization mechanism bars
+#        the two V7.2 runner-authority documents by path. A role validator and
+#        the authorization resolver both read these by path, so a smudged
+#        checkout would silently change which bytes a negative control is
+#        actually asserting about. Pinned LF for exactly that reason.
+# ---------------------------------------------------------------------------
+docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-10.json text eol=lf
+docs/checkpoints/final_81_production_runner_authority_v7_2_2026-09-11.json text eol=lf
+docs/checkpoints/main_full81_authorization_mechanism_candidate_r1_2026-10-02.md text eol=lf
+docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_2026-10-02.md text eol=lf
+docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r2_2026-10-02.md text eol=lf
+results/provenance/main_full81_authorization_mechanism_candidate_r1_2026-10-02/authorization_mechanism_manifest.json text eol=lf
+results/provenance/u_06_v7_4_production_authority_alignment_candidate_2026-10-02/alignment_manifest.json text eol=lf
+results/provenance/u_06_v7_4_production_authority_alignment_candidate_r2_2026-10-02/alignment_manifest.json text eol=lf

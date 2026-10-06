@@ -68,10 +68,13 @@ resolves to ``ABSENT`` / ``NOT_FROZEN`` and the production gate fails closed.
 
 from __future__ import annotations
 
+import fnmatch
 import hashlib
+import io
 import json
 import re
 import subprocess
+import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -79,9 +82,13 @@ from typing import Any, Mapping, Sequence
 from src.production_input_authority_v7_3 import sha256_file
 
 
+#: Candidate R5 (design observation ``N-R5D-05``): this reported label still
+#: named the auth-mechanism candidate R2 although the overlay contract had since
+#: advanced through the preflight-authorization-guard candidates.  It is a
+#: reported label only, never an acceptance criterion.
 LIFECYCLE_MODULE_VERSION = (
-    "v7.4-production-authority-accepted-lifecycle-overlay-2026-10-02-"
-    "full81-auth-mech-candidate-r2"
+    "v7.4-production-authority-accepted-lifecycle-overlay-2026-10-06-"
+    "full81-preflight-auth-guard-candidate-r8"
 )
 
 #: The one stable lineage identity every R3 lifecycle artifact must declare.
@@ -349,6 +356,48 @@ class AuthorityGeneration:
     predecessor_lineage_id: str | None
     predecessor_accepted_lifecycle_record_path: str | None
     disposition: str
+    #: The independent-audit state of THIS generation's OWN current candidate
+    #: (the candidate named by :attr:`candidate_id`).
+    #:
+    #: Candidate R3 remediation of independent-audit blocker ``R2-AUD-03``
+    #: (MAJOR / BLOCKING).  The pre-acceptance audit state used to come from a
+    #: single module-level constant describing the *historical U-06 alignment*
+    #: candidate history, so the active generation's candidate audit state was
+    #: reported as that unrelated history.  Audit state is per-generation data,
+    #: so it is declared per generation here and never shared between them.
+    #:
+    #: It defaults to the only state a new candidate can truthfully have.  A
+    #: generation may never declare ``PASS`` for itself: a real ``PASS`` is
+    #: proved by a published accepted-lifecycle record, which the role
+    #: validators check independently.  The two values below are set only
+    #: because each predecessor's on-disk accepted record already declares
+    #: ``u06_independent_audit_status = PASS``.
+    candidate_audit_state: str = "NOT_YET_PERFORMED"
+    #: The CONTENT contract this generation's implementation-candidate manifest
+    #: must satisfy, beyond the shared role envelope.
+    #:
+    #: Candidate R5 remediation of independent-audit blocker ``R4-AUD-01``
+    #: (MAJOR / BLOCKING): the implementation-candidate role was validated by
+    #: its envelope only, so a manifest could carry stale, self-referential or
+    #: unverified identity assertions and still fill the role.  A generation
+    #: that names a contract here has its candidate manifest validated by
+    #: :func:`validate_candidate_manifest_identity_contract` on the production
+    #: lifecycle path.
+    #:
+    #: ``None`` means "accepted under the envelope-only contract".  It is the
+    #: value every HISTORICAL generation was accepted with, so their accepted
+    #: records keep being judged by the contract they were written under and
+    #: nothing is reinterpreted retroactively.  An import-time guard below
+    #: refuses ``None`` for the CURRENT generation.
+    candidate_manifest_contract: str | None = None
+    #: The candidate's machine-readable change / reproducibility ledger.
+    #:
+    #: Candidate R6 addition.  The ledger is finalized BEFORE the checkpoint
+    #: and the manifest, so the manifest can lawfully bind its raw SHA-256
+    #: (obligation ``C9``) and the contract validates every identity the
+    #: ledger states.  ``None`` for every generation accepted before ledgers
+    #: existed, so none of them is re-judged retroactively.
+    candidate_change_ledger_path: str | None = None
 
     @property
     def role_contracts(self) -> Mapping[str, RoleContract]:
@@ -398,6 +447,9 @@ class AuthorityGeneration:
                 self.predecessor_accepted_lifecycle_record_path
             ),
             "disposition": self.disposition,
+            "candidate_audit_state": self.candidate_audit_state,
+            "candidate_manifest_contract": self.candidate_manifest_contract,
+            "candidate_change_ledger_path": self.candidate_change_ledger_path,
         }
 
 
@@ -421,6 +473,9 @@ U06_R3_GENERATION = AuthorityGeneration(
     predecessor_lineage_id=None,
     predecessor_accepted_lifecycle_record_path=None,
     disposition="IMMUTABLE_HISTORICAL_ACCEPTED_PREDECESSOR_GENERATION",
+    #: Verified against this generation's own published accepted-lifecycle
+    #: record, which declares ``u06_independent_audit_status = PASS``.
+    candidate_audit_state="PASS",
 )
 
 #: Generation 2 - the Main Full81 authorization-mechanism successor.
@@ -492,6 +547,429 @@ FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION = AuthorityGeneration(
         U06_R3_GENERATION.accepted_lifecycle_record_path
     ),
     disposition="CURRENT_GENERATION_CANDIDATE_NOT_ACCEPTED_NOT_FROZEN",
+    #: Verified against this generation's own published accepted-lifecycle
+    #: record, which declares ``u06_independent_audit_status = PASS``.
+    candidate_audit_state="PASS",
+)
+
+#: Generation 3 - the Main Full81 no-solve preflight authorization-guard
+#: successor.  Independent audit finding ``N-04`` (MAJOR) established that
+#: ``scripts/21d_preflight_v7_3_final81_successor.py`` *resolved and reported*
+#: the Main Full81 scope authorization without ever *requiring* it, so the
+#: zero-solve entrypoint was fail-open against its own prerequisite.
+#:
+#: Remediating that changes runner bytes, and the runner is one of the accepted
+#: implementation-identity paths, so the accepted implementation digest changes
+#: with it.  Generation 2's single accepted-lifecycle record slot is already
+#: occupied by a committed record declaring the PREDECESSOR digest; reaching
+#: ``FROZEN`` for the changed bytes inside generation 2 would therefore require
+#: MUTATING an accepted artifact, which is forbidden.
+#:
+#: This generation is consequently additive, exactly as the generalised R2 -> R3
+#: precedent above prescribes: new lineage, new candidate, new schema namespace,
+#: new accepted-lifecycle slot, and every predecessor generation value left
+#: byte-identical.  It is a CANDIDATE: no artifact of this generation exists
+#: beyond its own implementation-candidate manifest, nothing is accepted,
+#: nothing is frozen, and no Main Full81 authorization exists for it.
+#:
+#: Candidate iteration R1 -> R2.  Candidate R1 PASSED its fresh independent
+#: read-only audit (``N-04`` and ``N-05`` both CLOSED / CORRECTION_VERIFIED) but
+#: its candidate-publication pass STOPPED: two of its eight audited artifacts
+#: were CRLF in the working tree while the repository runs ``core.autocrlf=true``
+#: with no ``.gitattributes``, so Git's clean filter would have normalised them
+#: and committed bytes other than the audited bytes.  That is finding ``I-04``
+#: (MAJOR / OPEN / CARRIED) manifesting as a publication blocker - not a defect
+#: in the ``N-04``/``N-05`` guard logic.
+#:
+#: Candidate R2 therefore advances the CANDIDATE within this SAME generation and
+#: lineage, exactly as generation 2 advanced its own candidate R1 -> R2: this
+#: generation's single accepted-lifecycle record slot does not exist on disk, so
+#: nothing accepted or frozen is mutated by the advance, and the additive-new-
+#: generation requirement that applied to generation 2 does not apply here.
+#: Candidate R1 is retained as immutable superseded provenance and barred from
+#: filling any role of this generation.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_ARTIFACT_TYPE_PREFIX = (
+    "FULL81_PREFLIGHT_AUTH_GUARD_R1_"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_SCHEMA_PREFIX = (
+    "iris-thesis-full81-preflight-auth-guard-r1-"
+)
+
+#: Candidate R1 provenance, retained as immutable superseded-candidate evidence
+#: and barred from filling any role of this generation.  Its publication STOPPED
+#: on the ``I-04`` clean-filter incompatibility; it was never accepted and never
+#: committed.  These two paths are NOT rewritten: the exact audited R1 bytes are
+#: additionally preserved verbatim under
+#: ``results/provenance/
+#: main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/``.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_CHECKPOINT_PATH = (
+    "docs/checkpoints/"
+    "main_full81_preflight_authorization_guard_candidate_r1_2026-10-03.md"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r1_2026-10-03/"
+    "preflight_authorization_guard_manifest.json"
+)
+
+#: Candidate R2: the current candidate of this generation.  Publication-
+#: compatible successor of candidate R1; same generation, same lineage, same
+#: accepted-lifecycle slot, new candidate identity and new candidate artifacts.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R2_CHECKPOINT_PATH = (
+    "docs/checkpoints/"
+    "main_full81_preflight_authorization_guard_candidate_r2_2026-10-04.md"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R2_MANIFEST_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r2_2026-10-04/"
+    "preflight_authorization_guard_manifest.json"
+)
+#: Candidate R3.  Candidate R2's fresh independent audit returned FAIL / NO-GO
+#: on ``R2-AUD-01`` / ``R2-AUD-02`` / ``R2-AUD-03``, so candidate R2 is a
+#: REJECTED immutable historical candidate - not merely superseded - and its
+#: namespace may never be reused.  Candidate R3 was the bounded
+#: provenance/governance remediation of exactly those three blockers.
+#:
+#: Candidate R3's own fresh independent audit then returned FAIL / NO-GO on
+#: ``R3-AUD-01`` (stale/cyclic checkpoint-manifest binding), ``R3-AUD-02``
+#: (incomplete EOL authority coverage), ``R3-AUD-03`` (fail-open bundle
+#: verifier), ``R2-AUD-03`` (stale historical ownership in the current register
+#: entry) and ``R3-AUD-04`` (predecessor premises in the validation surface).
+#: Candidate R3 is therefore ALSO a REJECTED immutable historical candidate.
+#: Its exact audited bytes are preserved verbatim under
+#: ``results/provenance/
+#: main_full81_preflight_authorization_guard_candidate_r3_audit_stop_2026-10-05/``
+#: and the two candidate R3 artifact paths below are NOT rewritten.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R3_CHECKPOINT_PATH = (
+    "docs/checkpoints/"
+    "main_full81_preflight_authorization_guard_candidate_r3_2026-10-04.md"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R3_MANIFEST_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r3_2026-10-04/"
+    "preflight_authorization_guard_manifest.json"
+)
+#: Candidate R4: the bounded remediation of the five Candidate R3 blockers
+#: listed above.
+#:
+#: Candidate R4's own fresh independent read-only audit returned FAIL / NO-GO on
+#: ``R4-AUD-01`` (MAJOR / BLOCKING): its manifest froze a snapshot of the LIVE
+#: durable-publication report, so it carried stale ``live_sha256`` values for
+#: the candidate checkpoint and for the manifest's OWN path while asserting
+#: ``live_content_matches_canonical = true`` and
+#: ``placeholder_or_stale_sha_used = false``, and no production validator read
+#: those fields.  Candidate R4 is therefore a REJECTED immutable historical
+#: candidate.  Its exact audited bytes are preserved verbatim under
+#: ``results/provenance/
+#: main_full81_preflight_authorization_guard_candidate_r4_audit_stop_2026-10-05/``
+#: and the two candidate R4 artifact paths below are NOT rewritten.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R4_CHECKPOINT_PATH = (
+    "docs/checkpoints/"
+    "main_full81_preflight_authorization_guard_candidate_r4_2026-10-05.md"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R4_MANIFEST_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r4_2026-10-05/"
+    "preflight_authorization_guard_manifest.json"
+)
+#: Candidate R5: the bounded remediation of ``R4-AUD-01``.
+#:
+#: Candidate R5's own fresh independent read-only audit returned FAIL / NO-GO
+#: on ``R5-AUD-01`` (CRITICAL): the checkpoint identity guard proved only that
+#: each raw digest in the checkpoint occurred SOMEWHERE in the manifest, not
+#: that the role the checkpoint gave it was the role the manifest's owning
+#: obligation gives it, so a lawful implementation digest under a "Manifest
+#: SHA-256" label passed; and on ``R5-AUD-02`` (MAJOR): a test-suite
+#: disposable-write helper did not keep its write target inside the disposable
+#: root.  Candidate R5 is therefore a REJECTED immutable historical candidate.
+#: Its exact audited bytes are preserved verbatim under ``results/provenance/
+#: main_full81_preflight_authorization_guard_candidate_r5_audit_stop_2026-10-05/``
+#: and the two candidate R5 artifact paths below are NOT rewritten.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R5_CHECKPOINT_PATH = (
+    "docs/checkpoints/"
+    "main_full81_preflight_authorization_guard_candidate_r5_2026-10-05.md"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R5_MANIFEST_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r5_2026-10-05/"
+    "preflight_authorization_guard_manifest.json"
+)
+#: Candidate R6: the bounded remediation of ``R5-AUD-01`` and ``R5-AUD-02``.
+#:
+#: Candidate R6's own fresh independent read-only audit returned FAIL / NO-GO
+#: on ``R6-AUD-01`` (CRITICAL): in GATE mode the preservation-package and
+#: predecessor identities were accepted STRUCTURALLY (never value-checked), so
+#: the R5 STOP archive and index digests swapped between their roles - with the
+#: checkpoint claims rebound to the swapped values - still passed; and on
+#: ``R6-AUD-02`` (MAJOR): the test-suite write guard missed unsafe writer
+#: patterns and disposable teardown could delete outside its root through a
+#: junction.  Candidate R6 is therefore a REJECTED immutable historical
+#: candidate.  Its exact audited bytes are preserved verbatim under
+#: ``results/provenance/
+#: main_full81_preflight_authorization_guard_candidate_r6_audit_stop_2026-10-05/``
+#: and the three candidate R6 artifact paths below are NOT rewritten.
+#:
+#: The same-generation advance R5 -> R6 was lawful for the same primary reason
+#: every earlier candidate advance was: this generation's single
+#: accepted-lifecycle record slot
+#: (:data:`FULL81_PREFLIGHT_AUTH_GUARD_R1_ACCEPTED_LIFECYCLE_RECORD_PATH`) does
+#: not exist on disk, so nothing accepted or frozen is mutated by the advance,
+#: and every predecessor candidate artifact stays byte-identical.  That
+#: precondition is not asserted in prose: it is re-derived mechanically by
+#: :func:`same_generation_advance_lawfulness`.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R6_CHECKPOINT_PATH = (
+    "docs/checkpoints/"
+    "main_full81_preflight_authorization_guard_candidate_r6_2026-10-05.md"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R6_MANIFEST_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r6_2026-10-05/"
+    "preflight_authorization_guard_manifest.json"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R6_CHANGE_LEDGER_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r6_2026-10-05/"
+    "candidate_change_ledger.json"
+)
+#: Candidate R7: the remediation of the ``R6-AUD-01`` and ``R6-AUD-02`` defect
+#: CLASSES (not their examples).
+#:
+#: Candidate R7's own fresh independent read-only audit returned FAIL / NO-GO
+#: on ``R7-AUD-01`` (CRITICAL): the production GATE's historical expected
+#: values were still candidate-controlled.  Its pinned historical role table
+#: lived in candidate source and its implementation identity was
+#: recomputable, so four independently constructed rebinding attacks - two
+#: roles swapped, a three-role cycle, one lawful historical digest replaced
+#: by another, the authority-bundle digest placed in a historical role -
+#: restored GATE PASS after every candidate-controlled identity was
+#: recomputed.  Candidate R7 is therefore a REJECTED immutable historical
+#: candidate.  Its exact audited bytes are preserved verbatim under
+#: ``results/provenance/
+#: main_full81_preflight_authorization_guard_candidate_r7_audit_stop_2026-10-06/``,
+#: that preservation is bound by the independently accepted R7 Preservation
+#: Authority Binding, and the three candidate R7 artifact paths below are
+#: NOT rewritten.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_CHECKPOINT_PATH = (
+    "docs/checkpoints/"
+    "main_full81_preflight_authorization_guard_candidate_r7_2026-10-06.md"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_MANIFEST_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r7_2026-10-06/"
+    "preflight_authorization_guard_manifest.json"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_CHANGE_LEDGER_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r7_2026-10-06/"
+    "candidate_change_ledger.json"
+)
+#: Candidate R8: the current candidate of this generation, and the bounded
+#: repair of the ``R6-AUD-01`` defect class as ``R7-AUD-01`` exposed it - the
+#: GATE's historical semantic truth is derived from externally authenticated
+#: evidence (contract V4), never from candidate-controlled material.  Same
+#: generation, same lineage, same accepted-lifecycle slot; the advance is
+#: lawful for the reason re-derived by :func:`same_generation_advance_lawfulness`.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_CHECKPOINT_PATH = (
+    "docs/checkpoints/"
+    "main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_MANIFEST_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/"
+    "preflight_authorization_guard_manifest.json"
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_CHANGE_LEDGER_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/"
+    "candidate_change_ledger.json"
+)
+
+#: ``R4-AUD-01`` remediation as first implemented by Candidate R5.  Retained as
+#: the historical name of the contract the immutable R5 manifest declares; it
+#: is no longer a contract any generation may use (see below).
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V1 = (
+    "FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V1"
+)
+
+#: Candidate R6 contract.  V1 semantics are superseded, not extended: under V1
+#: a checkpoint digest needed only to occur somewhere in the manifest
+#: (``R5-AUD-01``).  Under V2 every checkpoint identity is a canonical claim
+#: naming the exact manifest identity pointer that owns it, the candidate
+#: change ledger is bound (``C9``) and validated, and the predecessor evidence
+#: describes the immediate predecessor, Candidate R5.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V2 = (
+    "FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V2"
+)
+
+#: Candidate R7 contract (``R6-AUD-01``).  V2 semantics are superseded, not
+#: extended: under V2 an identity whose obligation was "not verified in this
+#: mode" was accepted STRUCTURALLY, and a checkpoint claim only had to equal
+#: the manifest's own value at its pointer - so a consistent permutation of
+#: individually lawful digests between roles passed the GATE.  Under V3 there
+#: is no structural acceptance in any mode: every identity pointer is resolved
+#: through the closed-world semantic role schema
+#: (:data:`CANDIDATE_MANIFEST_IDENTITY_OBLIGATIONS` /
+#: :data:`CANDIDATE_CHANGE_LEDGER_IDENTITY_OBLIGATIONS`) to ONE role whose
+#: authoritative value is established independently of the manifest - live
+#: bytes, the live implementation digest, an authority-bundle pin, or a
+#: historical role identity pinned in the bundle - and a checkpoint claim must
+#: equal that independently established value.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V3 = (
+    "FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V3"
+)
+
+#: Candidate R8 contract (``R7-AUD-01``).  V3 semantics are superseded, not
+#: extended: under V3 a historical identity was bound to a value pinned in
+#: candidate source (the bundle's historical role table), which a
+#: recomputing author could rewrite together with every other candidate
+#: artifact.  Under V4 every historical identity - and the predecessor change
+#: set - is bound, in every mode, to the value derived from the EXTERNAL
+#: historical authority: the Git-frozen pre-R8 trust root, the accepted R7
+#: Preservation Authority Binding it pins, and the authenticated R7
+#: preservation package.  The bundle table is a diagnostic assertion of that
+#: derivation, never a source of value, and there is no fallback to it.
+FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4 = (
+    "FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4"
+)
+
+#: Every content contract this module can validate.  A generation naming any
+#: other value is refused at import time rather than silently left unvalidated.
+#: V1, V2 and V3 are deliberately absent: a manifest declaring any of them can
+#: never satisfy the current contract.
+KNOWN_CANDIDATE_MANIFEST_CONTRACTS: tuple[str, ...] = (
+    FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4,
+)
+FULL81_PREFLIGHT_AUTH_GUARD_R1_ACCEPTED_LIFECYCLE_RECORD_PATH = (
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_accepted_lifecycle_r1/"
+    "accepted_lifecycle_record.json"
+)
+
+FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION = AuthorityGeneration(
+    generation_id="MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    lineage_id="MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    candidate_id="MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+    candidate_checkpoint_path=(
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_CHECKPOINT_PATH
+    ),
+    candidate_manifest_path=(
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_MANIFEST_PATH
+    ),
+    accepted_lifecycle_record_path=(
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_ACCEPTED_LIFECYCLE_RECORD_PATH
+    ),
+    artifact_type_prefix=FULL81_PREFLIGHT_AUTH_GUARD_R1_ARTIFACT_TYPE_PREFIX,
+    schema_prefix=FULL81_PREFLIGHT_AUTH_GUARD_R1_SCHEMA_PREFIX,
+    #: Cumulative, exactly as generation 2 was: it listed both its own
+    #: candidate R2 and the failed candidate R1 of its lineage. A successor
+    #: generation inherits the whole prior candidate history rather than
+    #: starting an empty bar list, because a role record of THIS generation may
+    #: never name ANY predecessor candidate - failed or accepted-and-superseded.
+    #: Derived from the predecessor generations so the list cannot drift.
+    #:
+    #: ``MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1`` is this
+    #: generation's OWN superseded candidate, named explicitly for the same
+    #: reason generation 2 named its own failed candidate R1: it is a candidate
+    #: of this very lineage, so no predecessor-generation expression can derive
+    #: it, and a role record of this generation may never name it.
+    superseded_candidate_ids=(
+        *FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION.superseded_candidate_ids,
+        FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION.candidate_id,
+        U06_R3_GENERATION.candidate_id,
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1",
+        #: Candidate R2 of this very lineage. Its fresh independent audit
+        #: returned FAIL / NO-GO, so it is additionally listed in
+        #: ``REJECTED_CANDIDATE_IDS`` in the authorization mechanism. It is
+        #: barred here for the same reason candidate R1 is: no role record of
+        #: this generation may ever name a predecessor candidate.
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2",
+        #: Candidate R3 of this very lineage. Its fresh independent audit also
+        #: returned FAIL / NO-GO (R3-AUD-01, R3-AUD-02, R3-AUD-03, R2-AUD-03,
+        #: R3-AUD-04), so it is additionally listed in
+        #: ``REJECTED_CANDIDATE_IDS`` in the authorization mechanism and barred
+        #: here exactly as R1 and R2 are.
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3",
+        #: Candidate R4 of this very lineage. Its fresh independent audit
+        #: returned FAIL / NO-GO on R4-AUD-01, so it is additionally listed in
+        #: ``REJECTED_CANDIDATE_IDS`` in the authorization mechanism and barred
+        #: here exactly as R1, R2 and R3 are.
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4",
+        #: Candidate R5 of this very lineage. Its fresh independent audit
+        #: returned FAIL / NO-GO on R5-AUD-01 and R5-AUD-02, so it is
+        #: additionally listed in ``REJECTED_CANDIDATE_IDS`` in the
+        #: authorization mechanism and barred here exactly as R1-R4 are.
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5",
+        #: Candidate R6 of this very lineage. Its fresh independent audit
+        #: returned FAIL / NO-GO on R6-AUD-01 and R6-AUD-02, so it is
+        #: additionally listed in ``REJECTED_CANDIDATE_IDS`` in the
+        #: authorization mechanism and barred here exactly as R1-R5 are.
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6",
+        #: Candidate R7 of this very lineage. Its fresh independent audit
+        #: returned FAIL / NO-GO on R7-AUD-01, so it is additionally listed
+        #: in ``REJECTED_CANDIDATE_IDS`` in the authorization mechanism and
+        #: barred here exactly as R1-R6 are.
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7",
+    ),
+    #: Likewise cumulative. A candidate artifact may never fill a role that
+    #: accepts a candidate, so every predecessor candidate checkpoint and
+    #: manifest stays barred from roles 2-5 of this generation. Narrowing this
+    #: to only this generation's own artifacts would silently drop the
+    #: cross-generation self-acceptance negative control.  Candidate R1's own
+    #: checkpoint and manifest stay listed for exactly that reason.
+    candidate_artifact_paths=(
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_CHECKPOINT_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_MANIFEST_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_CHANGE_LEDGER_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_CHECKPOINT_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_MANIFEST_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_CHANGE_LEDGER_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R6_CHECKPOINT_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R6_MANIFEST_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R6_CHANGE_LEDGER_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R5_CHECKPOINT_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R5_MANIFEST_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R4_CHECKPOINT_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R4_MANIFEST_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R3_CHECKPOINT_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R3_MANIFEST_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R2_CHECKPOINT_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R2_MANIFEST_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_CHECKPOINT_PATH,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_PATH,
+        *FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION.candidate_artifact_paths,
+        *U06_R3_GENERATION.candidate_artifact_paths,
+    ),
+    predecessor_generation_id=(
+        FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION.generation_id
+    ),
+    predecessor_lineage_id=(
+        FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION.lineage_id
+    ),
+    predecessor_accepted_lifecycle_record_path=(
+        FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION.accepted_lifecycle_record_path
+    ),
+    disposition="CURRENT_GENERATION_CANDIDATE_NOT_ACCEPTED_NOT_FROZEN",
+    #: Candidate R8 is this generation's current candidate. Its fresh
+    #: independent read-only audit has NOT been performed, so this is the only
+    #: truthful value. It is deliberately NOT the historical U-06 alignment
+    #: audit history (``R1_FAILED_R2_NO_GO_R3_PENDING``), which belongs to the
+    #: U-06 generation and is retained separately under
+    #: :data:`HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS`. Conflating the two was
+    #: independent-audit blocker ``R2-AUD-03``.
+    candidate_audit_state="NOT_YET_PERFORMED",
+    #: ``R4-AUD-01`` / ``R5-AUD-01`` / ``R6-AUD-01`` / ``R7-AUD-01``: this
+    #: generation's implementation-candidate manifest is validated by the
+    #: closed-world semantic identity contract on the production lifecycle
+    #: path, with every historical value derived from the external
+    #: historical authority.  The contract applies to the CURRENT candidate
+    #: (R8); the barred R1-R7 candidates of this lineage can never fill the
+    #: role at all.
+    candidate_manifest_contract=(
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4
+    ),
+    candidate_change_ledger_path=(
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_CHANGE_LEDGER_PATH
+    ),
 )
 
 #: Every generation ever declared, oldest first.  Predecessors are retained so
@@ -499,10 +977,46 @@ FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION = AuthorityGeneration(
 AUTHORITY_GENERATIONS: tuple[AuthorityGeneration, ...] = (
     U06_R3_GENERATION,
     FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION,
+    FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION,
 )
 
-#: The one generation that may freeze live production authority.
-CURRENT_GENERATION = FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION
+#: The one generation that may freeze live production authority.  Advancing this
+#: pointer is the whole mechanism of a generation change: no validator is
+#: rewritten and no predecessor artifact is touched.  Until this candidate is
+#: independently audited, accepted and re-frozen, its accepted-lifecycle slot
+#: does not exist, so the live lifecycle resolves ABSENT / NOT_FROZEN. That is
+#: the correct and intended candidate-era state, not a regression.
+CURRENT_GENERATION = FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION
+
+#: Fail-closed structural guard for ``R4-AUD-01``, run at import time so the
+#: defect cannot be reintroduced silently: the CURRENT generation may never
+#: fall back to envelope-only validation of its candidate manifest, and may
+#: never name a contract this module cannot validate.
+if CURRENT_GENERATION.candidate_manifest_contract is None:
+    raise AssertionError(
+        "R4-AUD-01 regression: the current generation "
+        f"{CURRENT_GENERATION.generation_id} declares no candidate-manifest "
+        "content contract, so its implementation-candidate manifest would be "
+        "validated by the role envelope only."
+    )
+if (
+    CURRENT_GENERATION.candidate_manifest_contract
+    not in KNOWN_CANDIDATE_MANIFEST_CONTRACTS
+):
+    raise AssertionError(
+        "R4-AUD-01 regression: the current generation names an unknown "
+        f"candidate-manifest contract "
+        f"{CURRENT_GENERATION.candidate_manifest_contract!r}."
+    )
+if (
+    CURRENT_GENERATION.candidate_manifest_contract
+    == FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4
+    and not CURRENT_GENERATION.candidate_change_ledger_path
+):
+    raise AssertionError(
+        "Contract V4 requires a candidate change ledger, but the current "
+        f"generation {CURRENT_GENERATION.generation_id} declares none."
+    )
 
 #: Superseded generations: provable, never authoritative.
 HISTORICAL_GENERATIONS: tuple[AuthorityGeneration, ...] = tuple(
@@ -583,6 +1097,13 @@ ACCEPTED_IMPLEMENTATION_PATHS: tuple[str, ...] = tuple(
 
 #: Validation identity, tracked separately.  Tests are **not** runtime
 #: production authority and must never be confused with it.
+#:
+#: Candidate R4 adds the two suites that were missing from this surface. Both
+#: are negative-control suites for the CURRENT generation, so leaving them
+#: undeclared meant a silent swap of either one was undetectable by the same
+#: identity mechanism that protects every other suite - the same defect class
+#: as ``R3-AUD-02``, one layer up. Adding them widens what is protected and
+#: weakens nothing.
 VALIDATION_IDENTITY_PATHS: tuple[str, ...] = (
     "tests/test_21a_v7_3_production_routing_preflight.py",
     "tests/test_21b_21d_v7_3_production_successor_stack.py",
@@ -590,10 +1111,970 @@ VALIDATION_IDENTITY_PATHS: tuple[str, ...] = (
     "tests/test_21f_u06_accepted_lifecycle_gate.py",
     "tests/test_21g_u06_r3_substitution_attacks.py",
     "tests/test_21h_main_full81_authorization_mechanism.py",
+    "tests/test_21i_main_full81_preflight_authorization_guard.py",
+    "tests/test_21j_authority_raw_byte_eol_coverage.py",
+    #: Candidate R8: the recomputing-adversary attack suite for the external
+    #: historical authority (``R7-AUD-01``).  Declared here so that a silent
+    #: swap of it is detectable by the same identity mechanism as every other
+    #: suite.
+    "tests/test_21k_external_historical_authority_attacks.py",
 )
 
 #: Retained for continuity of the R2 name; it is now the full accepted surface.
 IMPLEMENTATION_CANDIDATE_SURFACE = ACCEPTED_IMPLEMENTATION_PATHS
+
+
+# ---------------------------------------------------------------------------
+# R2-AUD-01: durable publication requirements
+# ---------------------------------------------------------------------------
+#
+# Candidate R3 remediation of independent-audit blocker ``R2-AUD-01`` (MAJOR /
+# BLOCKING).  ``data/reference/parameter_registry_v7_2.csv`` is an authority
+# pin of the production bundle, but it is matched by the broad ``data/`` rule in
+# ``.gitignore`` and was absent from ``HEAD``.  A third party cloning the
+# published repository therefore could not verify the authority bundle at all:
+# the file simply was not there, and the only copy was an ignored working-tree
+# file on one machine.  An authority pin whose target is not published is not
+# durable authority.
+#
+# The remedy is publication, not relaxation.  The canonical content is NOT
+# modified, and ``.gitignore`` is NOT modified: a narrowly scoped force-add
+# (``git add -f <exact path>``) is mechanically sufficient, which this
+# repository already proves - ``data/processed/annual_input_v7_3_reconstructed_
+# pv_mainline_candidate_r3_2026-09-23.parquet`` and its manifest are tracked and
+# published in ``HEAD`` under that very same ``data/`` ignore rule.  Because a
+# force-add demonstrably provides durable publication, broadening the ignore
+# policy would be an unjustified change and is deliberately not made.
+#
+# Declaring the requirement here is what makes it enforceable rather than
+# advisory: a future candidate publication that omits one of these paths can be
+# detected mechanically instead of discovered by a later auditor.
+
+#: Authority-critical paths that MUST exist in published Git content for the
+#: production-authority route to be reconstructible from a clean clone.
+#:
+#: Mechanically derived, not guessed.  Of the 34 authority-bundle pin targets,
+#: 32 are already present in ``HEAD`` and exactly two are not: the parameter
+#: registry and the new EOL policy.  All 21 accepted implementation-identity
+#: paths are already published.  The current generation's candidate checkpoint
+#: and manifest are added because a future acceptance's role validators read
+#: them by path, so an unpublished one is the same defect class as ``R2-AUD-01``.
+#:
+#: ``.gitignore`` has TWO broad rules that bear on this, both deliberately left
+#: unchanged: ``data/`` (line 20) and ``results/`` (line 23).  Every required
+#: path under either tree therefore needs a narrowly scoped force-add, which is
+#: how this repository already publishes its other authority artifacts under
+#: those same trees.
+#:
+#: Candidate R6: the current candidate's change ledger joins them.  The
+#: manifest binds the ledger's raw SHA-256 and the GATE-mode contract reads
+#: the ledger, so an unpublished ledger would be the same defect class.
+REQUIRED_DURABLE_PUBLICATION_PATHS: tuple[str, ...] = (
+    "data/reference/parameter_registry_v7_2.csv",
+    ".gitattributes",
+    CURRENT_GENERATION.candidate_checkpoint_path,
+    CURRENT_GENERATION.candidate_manifest_path,
+    *(
+        (CURRENT_GENERATION.candidate_change_ledger_path,)
+        if CURRENT_GENERATION.candidate_change_ledger_path
+        else ()
+    ),
+)
+
+#: Which required paths carry a bundle pin, and therefore a canonical digest to
+#: verify against.  The candidate checkpoint and manifest deliberately have no
+#: pin: the manifest binds the checkpoint by hash, and nothing may bind the
+#: manifest's own hash without creating a cycle.  For those two, durability
+#: means "published, and published bytes equal live bytes" rather than
+#: "published, and matching a pinned constant".
+REQUIRED_DURABLE_PUBLICATION_PIN_LABELS: Mapping[str, str] = {
+    "data/reference/parameter_registry_v7_2.csv": "parameter_registry",
+    ".gitattributes": "repository_eol_policy",
+}
+
+
+def required_durable_publication_force_add_paths(root: Path) -> tuple[str, ...]:
+    """Required paths still matched by an ignore rule, so needing ``git add -f``.
+
+    Derived from live ignore state rather than restated as a constant, so it
+    cannot fall behind a ``.gitignore`` change or a path that becomes tracked.
+    Force-adding names exactly one path and never broadens the ignore policy.
+    """
+
+    return tuple(
+        rel
+        for rel in REQUIRED_DURABLE_PUBLICATION_PATHS
+        if _is_path_ignored(root, rel)
+    )
+
+#: This module deliberately contains **no** 64-hex digest literal, and that
+#: invariant is enforced by a static test.  Canonical digests are therefore read
+#: from the authority bundle, which is the one module whose job is to hold
+#: exact-hash pins.  Restating one here would create a second source of truth
+#: that could silently drift from the pin it duplicates - exactly the class of
+#: provenance defect this overlay exists to prevent.
+#:
+#: Of note: the parameter registry is canonically CRLF (27 CRLF, 0 bare LF).
+#: Normalizing it to LF yields a different digest and destroys its pinned
+#: identity, which is why the EOL policy declares that path ``-text`` rather
+#: than ``text eol=lf``.
+def _required_durable_publication_sha256() -> dict[str, str | None]:
+    """Canonical digests for the required paths, read from the authority bundle.
+
+    Imported lazily: the bundle imports this overlay, so a module-level import
+    here would be circular.  By the time this is called the bundle is loaded.
+    Returns ``None`` for a path whose pin cannot be resolved, so a caller fails
+    closed rather than silently accepting an unverifiable path.
+    """
+
+    try:
+        from src.production_authority_bundle_v7_4 import all_pins
+    except Exception:  # pragma: no cover - fail closed, never fail open
+        return {rel: None for rel in REQUIRED_DURABLE_PUBLICATION_PATHS}
+
+    by_label = {pin.label: pin for pin in all_pins()}
+    out: dict[str, str | None] = {}
+    for relative in REQUIRED_DURABLE_PUBLICATION_PATHS:
+        label = REQUIRED_DURABLE_PUBLICATION_PIN_LABELS.get(relative)
+        pin = by_label.get(label) if label else None
+        # The pin must also agree about the path, or the mapping is stale.
+        out[relative] = (
+            pin.sha256 if pin is not None and pin.relative_path == relative else None
+        )
+    return out
+
+#: Known, deliberately-scoped limitation carried forward from ``I-04``.
+#:
+#: The declarations above cover the *authority-reconstruction* surface: the 34
+#: bundle pin targets, the 21 implementation-identity paths, Framework, Registry,
+#: and the candidate artifacts.  A clean clone that adds the two paths above can
+#: verify every authority identity.
+#:
+#: It does NOT cover *scientific source data*, which the broad ``data/`` ignore
+#: rule also excludes and which the full successor stack loads only when it
+#: actually builds model inputs - for example the 14a normalized tariff at
+#: ``data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv``.  Those files
+#: are not authority pins, are not part of the implementation identity, and are
+#: not reachable on any no-solve authority-verification path.
+#:
+#: This is recorded rather than silently fixed because publishing scientific
+#: source data is a separate decision with its own licensing and data-governance
+#: questions, and nothing in the Candidate R3 scope authorizes it.  It remains an
+#: open durability gap for full-stack reconstruction and is reported as such.
+NON_AUTHORITY_GITIGNORED_RUNTIME_DEPENDENCIES: tuple[str, ...] = (
+    "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+)
+#: Candidate-neutral since Candidate R6: the label used to name a specific
+#: candidate and went stale at every candidate advance.
+NON_AUTHORITY_GITIGNORED_DEPENDENCY_STATUS = (
+    "OPEN_CARRIED_NOT_IN_CURRENT_CANDIDATE_SCOPE_FULL_STACK_RECONSTRUCTION_ONLY"
+)
+
+#: ``FULLSTACK-01``, carried forward explicitly and NOT expanded in this pass.
+#: These are scientific source-data / settlement-interface files that the full
+#: successor stack loads only when it actually builds model inputs.  None is an
+#: authority pin, none is part of the implementation identity, and none is
+#: reachable on any no-solve authority-verification path, so none blocks the
+#: current candidate.  Publishing them is a separate licensing and
+#: data-governance decision that nothing in the current candidate scope
+#: authorizes.
+#:
+#: The sentinel below is what stops this being forgotten: it is carried into
+#: the candidate manifest and checkpoint and states the gate at which it
+#: becomes blocking.
+FULLSTACK_01_PATHS: tuple[str, ...] = (
+    "data/reference/production_economic_interface_v7_2.json",
+    "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+    "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+    "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+)
+FULLSTACK_01_STATUS = (
+    "OPEN_NONBLOCKING_CURRENT_CANDIDATE_BLOCKING_BEFORE_FULL_SUCCESSOR_"
+    "PREFLIGHT_OR_EXECUTION"
+)
+FULLSTACK_01_BLOCKING_BEFORE: tuple[str, ...] = (
+    "FULL_SUCCESSOR_PREFLIGHT",
+    "MAIN_FULL81_EXECUTION",
+)
+
+
+# ---------------------------------------------------------------------------
+# R3-AUD-02: the COMPLETE raw-byte authority consumer universe
+# ---------------------------------------------------------------------------
+#
+# Candidate R3 received ``FAIL / NO-GO`` on ``R3-AUD-02`` (MAJOR / BLOCKING):
+# its ``.gitattributes`` omitted twelve historical accepted-lifecycle artifacts
+# whose raw bytes are authority-critical.  Under ``core.autocrlf=true`` all
+# twelve became CRLF on a fresh checkout, their raw SHA-256 changed, and Git
+# still reported the working tree clean.
+#
+# The defect existed because EOL coverage and the raw-byte consumer set were
+# maintained independently: one was a hand-written list in ``.gitattributes``,
+# the other was wherever a validator happened to read a file.  Appending the
+# twelve would fix today's symptom and leave the drift mechanism intact.
+#
+# The remedy is to make the consumer set derivable.  :func:`
+# authority_raw_byte_consumer_universe` reconstructs it from PRIMARY SOURCE -
+# the bundle's own pin table, this overlay's own identity declarations, every
+# declared generation's own lifecycle paths, the role records that on-disk
+# accepted-lifecycle records actually name, and the authorization mechanism's
+# own path declarations.  :func:`eol_policy_coverage` then checks
+# ``.gitattributes`` against that derived universe and fails closed on any
+# uncovered or wrongly-treated path.  A future raw-byte consumer added without
+# a rule is therefore caught by a test rather than by a later auditor.
+#
+# The twelve paths the independent audit named are a strict subset of what the
+# derivation finds; they are covered because the derivation finds them, not
+# because they were restated here.  This module deliberately contains no
+# hand-written copy of that twelve-path list.
+
+#: Deterministic raw-byte preservation packages for the candidates of this
+#: generation.  Each holds immutable audited candidate bytes, so the archives
+#: must round-trip bit-exactly and the index / STOP records must check out
+#: byte-identically.  Declared here because they are read as raw bytes when a
+#: predecessor candidate's exact state has to be reproduced.
+CANDIDATE_PRESERVATION_PACKAGES: Mapping[str, Mapping[str, str]] = {
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1": {
+        "directory": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r1_"
+            "publication_stop_2026-10-04"
+        ),
+        "archive": "candidate_r1_raw_bytes.zip",
+        "index": "candidate_r1_raw_byte_index.json",
+        "stop_record": "publication_stop_record.json",
+        "stop_class": "PUBLICATION_STOP",
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2": {
+        "directory": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r2_"
+            "audit_stop_2026-10-04"
+        ),
+        "archive": "candidate_r2_raw_bytes.zip",
+        "index": "candidate_r2_raw_byte_index.json",
+        "stop_record": "independent_audit_stop_record.json",
+        "stop_class": "INDEPENDENT_AUDIT_STOP",
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3": {
+        "directory": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r3_"
+            "audit_stop_2026-10-05"
+        ),
+        "archive": "candidate_r3_raw_bytes.zip",
+        "index": "candidate_r3_raw_byte_index.json",
+        "stop_record": "independent_audit_stop_record.json",
+        "stop_class": "INDEPENDENT_AUDIT_STOP",
+    },
+    #: Candidate R5 addition.  The Candidate R4 independent-audit STOP package
+    #: passed its own independent audit with nonblocking findings.  Its bytes
+    #: are immutable; declaring it here only makes its three files raw-byte
+    #: authority consumers, so their checkout form is pinned by the EOL policy.
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4": {
+        "directory": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r4_"
+            "audit_stop_2026-10-05"
+        ),
+        "archive": "candidate_r4_raw_bytes.zip",
+        "index": "candidate_r4_raw_byte_index.json",
+        "stop_record": "independent_audit_stop_record.json",
+        "stop_class": "INDEPENDENT_AUDIT_STOP",
+    },
+    #: Candidate R6 addition.  The Candidate R5 independent-audit STOP package
+    #: (R5-AUD-01 / R5-AUD-02).  Its bytes are immutable; declaring it here
+    #: makes its three files raw-byte authority consumers, and its raw-byte
+    #: index is the verifiable source of every R5-era identity the Candidate R6
+    #: change ledger states.
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5": {
+        "directory": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r5_"
+            "audit_stop_2026-10-05"
+        ),
+        "archive": "candidate_r5_raw_bytes.zip",
+        "index": "candidate_r5_raw_byte_index.json",
+        "stop_record": "independent_audit_stop_record.json",
+        "stop_class": "INDEPENDENT_AUDIT_STOP",
+    },
+    #: Candidate R7 addition.  The Candidate R6 independent-audit STOP package
+    #: (R6-AUD-01 / R6-AUD-02).  Its bytes are immutable; declaring it here
+    #: makes its three files raw-byte authority consumers, and its raw-byte
+    #: index is the verifiable source of every R6-era identity the Candidate R7
+    #: change ledger states.
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6": {
+        "directory": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r6_"
+            "audit_stop_2026-10-05"
+        ),
+        "archive": "candidate_r6_raw_bytes.zip",
+        "index": "candidate_r6_raw_byte_index.json",
+        "stop_record": "independent_audit_stop_record.json",
+        "stop_class": "INDEPENDENT_AUDIT_STOP",
+    },
+    #: Candidate R8 addition.  The Candidate R7 independent-audit STOP package
+    #: (R7-AUD-01).  Its bytes are immutable and its identity is bound by the
+    #: independently accepted R7 Preservation Authority Binding, which the
+    #: Git-frozen pre-R8 trust root pins.  This declaration is shape only:
+    #: contract V4 requires it to equal the package the external evidence
+    #: describes, and never reads an identity from it.
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7": {
+        "directory": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r7_"
+            "audit_stop_2026-10-06"
+        ),
+        "archive": "candidate_r7_raw_bytes.zip",
+        "index": "candidate_r7_raw_byte_index.json",
+        "stop_record": "independent_audit_stop_record.json",
+        "stop_class": "INDEPENDENT_AUDIT_STOP",
+    },
+}
+
+#: Paths whose canonical form is NOT LF and which therefore must be declared
+#: byte-preserving (``-text`` or ``binary``) rather than ``text eol=lf``.
+#: Derived from live bytes by :func:`canonical_eol_class`, never asserted here;
+#: this tuple records only the ones whose non-LF form is itself pinned, so a
+#: silent change of canonical form is a coverage failure rather than a quiet
+#: re-classification.
+CANONICAL_NON_LF_AUTHORITY_PATHS: tuple[str, ...] = (
+    "data/reference/parameter_registry_v7_2.csv",
+    "results/provenance/"
+    "main_full81_preflight_authorization_guard_candidate_r1_2026-10-03/"
+    "preflight_authorization_guard_manifest.json",
+)
+
+#: Accepted historical artifacts that must stay entirely unfiltered.  They are
+#: MIXED-EOL, so any ``text`` rule would rewrite them and any ``-text`` rule
+#: would still add an attribute to an accepted blob.  They are not raw-byte
+#: authority consumers, so the correct treatment is no rule at all, and a
+#: coverage guard that silently "fixed" them would corrupt accepted provenance.
+DELIBERATELY_UNFILTERED_HISTORICAL_PREFIXES: tuple[str, ...] = (
+    "results/provenance/v7_3_to_v7_4_version_transition_candidate_r2/",
+)
+
+EOL_POLICY_RELATIVE_PATH = ".gitattributes"
+
+
+def canonical_eol_class(root: Path, relative: str) -> str:
+    """Classify a path's live canonical bytes: LF / CRLF / MIXED / BINARY.
+
+    ``ABSENT`` for a lawful path not yet authored.  Read-only.
+    """
+
+    path = Path(root) / relative
+    if not path.is_file():
+        return "ABSENT"
+    data = path.read_bytes()
+    if b"\x00" in data:
+        return "BINARY"
+    crlf = data.count(b"\r\n")
+    lf = data.count(b"\n") - crlf
+    if crlf and lf:
+        return "MIXED"
+    if crlf:
+        return "CRLF"
+    if lf:
+        return "LF"
+    return "NONE"
+
+
+def authority_raw_byte_consumer_universe(root: Path) -> dict[str, tuple[str, ...]]:
+    """Every path whose RAW BYTES can change an authority decision.
+
+    Reconstructed from primary source on every call, so it cannot fall behind
+    the declarations it is derived from.  Returns ``{relative_path: reasons}``.
+
+    Read-only: nothing is written, staged, committed, or executed, and no
+    model is constructed.
+    """
+
+    root = Path(root).resolve()
+    universe: dict[str, set[str]] = {}
+
+    def add(relative: Any, reason: str) -> None:
+        normalized = str(relative).replace("\\", "/").strip()
+        if normalized:
+            universe.setdefault(normalized, set()).add(reason)
+
+    # 1. The authority bundle's own pin table: every pin is verified by raw
+    #    SHA-256, so every pin target is a raw-byte consumer by definition.
+    #    Imported lazily because the bundle imports this overlay.
+    try:
+        from src.production_authority_bundle_v7_4 import all_pins
+    except Exception:  # pragma: no cover - fail closed, never fail open
+        add("<BUNDLE_PINS_UNRESOLVABLE>", "BUNDLE_PIN_IMPORT_FAILED")
+    else:
+        for pin in all_pins():
+            add(pin.relative_path, f"AUTHORITY_BUNDLE_PIN[{pin.label}]")
+
+    # 2. This overlay's own identity declarations.
+    for relative in ACCEPTED_IMPLEMENTATION_PATHS:
+        add(relative, "ACCEPTED_IMPLEMENTATION_IDENTITY")
+    for relative in VALIDATION_IDENTITY_PATHS:
+        add(relative, "VALIDATION_IDENTITY")
+    for relative in REQUIRED_DURABLE_PUBLICATION_PATHS:
+        add(relative, "REQUIRED_DURABLE_PUBLICATION")
+    add(EOL_POLICY_RELATIVE_PATH, "REPOSITORY_GOVERNANCE_EOL_POLICY")
+
+    # 3. Every declared generation's own lifecycle surface.  Lawful paths that
+    #    do not exist yet are included on purpose: a FUTURE record must be
+    #    protected the moment it is authored, not after the next audit.
+    for generation in AUTHORITY_GENERATIONS:
+        tag = generation.generation_id
+        add(generation.candidate_checkpoint_path, f"CANDIDATE_CHECKPOINT[{tag}]")
+        add(generation.candidate_manifest_path, f"CANDIDATE_MANIFEST[{tag}]")
+        if generation.candidate_change_ledger_path:
+            add(
+                generation.candidate_change_ledger_path,
+                f"CANDIDATE_CHANGE_LEDGER[{tag}]",
+            )
+        add(
+            generation.accepted_lifecycle_record_path,
+            f"ACCEPTED_LIFECYCLE_RECORD_SLOT[{tag}]",
+        )
+        if generation.predecessor_accepted_lifecycle_record_path:
+            add(
+                generation.predecessor_accepted_lifecycle_record_path,
+                f"PREDECESSOR_ACCEPTED_LIFECYCLE_RECORD[{tag}]",
+            )
+        for relative in generation.candidate_artifact_paths:
+            add(relative, f"BARRED_CANDIDATE_ARTIFACT[{tag}]")
+
+    # 4. The role records that on-disk accepted-lifecycle records actually
+    #    name.  THIS is the step Candidate R3 had no equivalent of, and it is
+    #    what finds the historical accepted-lifecycle chains: the role
+    #    validators read each of these by path and hash its raw bytes, so a
+    #    CRLF-smudged checkout makes a lawful acceptance resolve
+    #    PRESENT_INVALID.
+    seen_records: set[str] = set()
+    for generation in AUTHORITY_GENERATIONS:
+        for slot in (
+            generation.accepted_lifecycle_record_path,
+            generation.predecessor_accepted_lifecycle_record_path,
+        ):
+            if not slot or slot in seen_records:
+                continue
+            seen_records.add(slot)
+            record = root / slot
+            if not record.is_file():
+                continue
+            try:
+                payload = json.loads(record.read_text(encoding="utf-8"))
+            except Exception:  # pragma: no cover - unreadable record
+                add(slot, f"ACCEPTED_LIFECYCLE_RECORD_UNREADABLE[{slot}]")
+                continue
+            if not isinstance(payload, Mapping):
+                continue
+            roles = payload.get("roles")
+            if isinstance(roles, Mapping):
+                for role, entry in roles.items():
+                    if isinstance(entry, Mapping) and entry.get("path"):
+                        add(entry["path"], f"ACCEPTED_LIFECYCLE_ROLE[{slot}::{role}]")
+            for field in ("candidate_checkpoint", "candidate_manifest"):
+                entry = payload.get(field)
+                if isinstance(entry, Mapping) and entry.get("path"):
+                    add(entry["path"], f"ACCEPTED_LIFECYCLE_FIELD[{slot}::{field}]")
+
+    # 5. The Main Full81 authorization mechanism's own path declarations.
+    try:
+        from src.main_full81_authorization_v7_4 import (
+            AUTHORIZATION_RECORD_RELATIVE_PATH,
+            EXPECTED_ANNUAL_INPUT_RELATIVE_PATH,
+            EXPECTED_ANNUAL_MODEL_RELATIVE_PATH,
+            EXPECTED_PARAMETER_REGISTRY_RELATIVE_PATH,
+            EXPECTED_RUNNER_RELATIVE_PATH,
+            REJECTED_AUTHORIZATION_PATHS_THIS_LINEAGE,
+            REJECTED_HISTORICAL_AUTHORIZATION_PATHS,
+            SUPERSEDED_AUTHORIZATION_PATHS_THIS_MECHANISM,
+        )
+    except Exception:  # pragma: no cover - fail closed, never fail open
+        add("<FULL81_AUTHORIZATION_UNRESOLVABLE>", "FULL81_AUTHORIZATION_IMPORT_FAILED")
+    else:
+        add(
+            AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
+            "FULL81_AUTHORIZATION_RECORD_SLOT",
+        )
+        add(EXPECTED_RUNNER_RELATIVE_PATH, "FULL81_AUTHORIZATION_TARGET_RUNNER")
+        add(EXPECTED_ANNUAL_INPUT_RELATIVE_PATH, "FULL81_AUTHORIZATION_ANNUAL_INPUT")
+        add(EXPECTED_ANNUAL_MODEL_RELATIVE_PATH, "FULL81_AUTHORIZATION_ANNUAL_MODEL")
+        add(
+            EXPECTED_PARAMETER_REGISTRY_RELATIVE_PATH,
+            "FULL81_AUTHORIZATION_PARAMETER_REGISTRY",
+        )
+        for relative in REJECTED_HISTORICAL_AUTHORIZATION_PATHS:
+            add(relative, "REJECTED_HISTORICAL_AUTHORIZATION_PATH")
+        for relative in REJECTED_AUTHORIZATION_PATHS_THIS_LINEAGE:
+            add(relative, "REJECTED_AUTHORIZATION_PATH_THIS_LINEAGE")
+        for relative in SUPERSEDED_AUTHORIZATION_PATHS_THIS_MECHANISM:
+            add(relative, "SUPERSEDED_AUTHORIZATION_PATH_THIS_MECHANISM")
+
+    # 6. Candidate raw-byte preservation packages.
+    for candidate, package in CANDIDATE_PRESERVATION_PACKAGES.items():
+        directory = package["directory"]
+        for key in ("archive", "index", "stop_record"):
+            add(f"{directory}/{package[key]}", f"CANDIDATE_PRESERVATION[{candidate}]")
+
+    # 7. Candidate R8 (contract V4): the external historical authority's own
+    #    inputs.  The trust root is authenticated from its Git blob and its
+    #    working-tree copy must equal that blob; the binding is read by its
+    #    exact raw bytes.  Both are therefore raw-byte consumers.  The
+    #    binding locator is read from the trust root's frozen blob, never
+    #    restated here.
+    try:
+        from src.production_authority_bundle_v7_4 import (
+            PRE_R8_HISTORICAL_TRUST_ROOT as frozen,
+        )
+    except Exception:  # pragma: no cover - fail closed, never fail open
+        add("<PRE_R8_TRUST_ROOT_UNRESOLVABLE>", "PRE_R8_TRUST_ROOT_IMPORT_FAILED")
+    else:
+        add(frozen.path, "PRE_R8_HISTORICAL_TRUST_ROOT")
+        try:
+            selection = _trust_root_binding_selection(
+                _git_bytes(root, "cat-file", "blob", frozen.blob) or b""
+            )
+        except U06LifecycleError:
+            add("<R7_BINDING_LOCATOR_UNRESOLVABLE>", "PRE_R8_TRUST_ROOT_UNREADABLE")
+        else:
+            add(selection["locator"], "R7_PRESERVATION_AUTHORITY_BINDING")
+
+    return {relative: tuple(sorted(reasons)) for relative, reasons in universe.items()}
+
+
+def _parse_eol_policy(text: str) -> tuple[tuple[str, tuple[str, ...]], ...]:
+    """Parse ``.gitattributes`` into ordered ``(pattern, attributes)`` rules."""
+
+    rules: list[tuple[str, tuple[str, ...]]] = []
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        fields = stripped.split()
+        rules.append((fields[0], tuple(fields[1:])))
+    return tuple(rules)
+
+
+def _eol_rule_matches(pattern: str, relative: str) -> bool:
+    """Git attribute matching, restricted to the forms this policy uses.
+
+    This policy declares only full repository-relative paths and one bare
+    filename (``.gitattributes``).  A pattern containing ``/`` matches the full
+    path; a pattern without one matches the basename at any depth, which is
+    Git's own rule.  No other glob form is used, and a future rule that needed
+    one would be caught by the coverage guard rather than silently mismatched.
+    """
+
+    if "/" in pattern.strip("/"):
+        return fnmatch.fnmatchcase(relative, pattern)
+    return fnmatch.fnmatchcase(relative.rsplit("/", 1)[-1], pattern)
+
+
+def effective_eol_rule(
+    rules: Sequence[tuple[str, tuple[str, ...]]], relative: str
+) -> tuple[str, tuple[str, ...]] | None:
+    """The rule Git would apply to ``relative``: the LAST matching rule."""
+
+    effective: tuple[str, tuple[str, ...]] | None = None
+    for pattern, attributes in rules:
+        if _eol_rule_matches(pattern, relative):
+            effective = (pattern, attributes)
+    return effective
+
+
+def eol_policy_coverage(root: Path) -> dict[str, Any]:
+    """Check ``.gitattributes`` against the derived raw-byte consumer universe.
+
+    Fails closed: a path with no rule, or with a rule that would not preserve
+    its canonical bytes, is reported as a coverage failure.  Read-only; never
+    raises for a coverage problem, so a caller states the blocker rather than
+    crashing, and never modifies ``.gitattributes``.
+
+    The universe is derived, not restated, so adding a raw-byte consumer
+    anywhere in primary source without a matching rule here turns this report
+    unsatisfied on the next run.
+    """
+
+    root = Path(root).resolve()
+    policy_path = root / EOL_POLICY_RELATIVE_PATH
+    universe = authority_raw_byte_consumer_universe(root)
+
+    if not policy_path.is_file():
+        return {
+            "satisfied": False,
+            "policy_present": False,
+            "policy_path": EOL_POLICY_RELATIVE_PATH,
+            "blocking_reason": (
+                "REPOSITORY_EOL_POLICY_MISSING: .gitattributes does not exist, "
+                "so no authority path has a deterministic checkout rule."
+            ),
+            "universe_path_count": len(universe),
+            "rule_count": 0,
+            "uncovered": sorted(universe),
+            "uncovered_count": len(universe),
+            "wrongly_treated": [],
+            "wrongly_treated_count": len(universe),
+            "unused_rules": [],
+            "entries": {},
+            "deliberately_unfiltered_prefixes": list(
+                DELIBERATELY_UNFILTERED_HISTORICAL_PREFIXES
+            ),
+        }
+
+    rules = _parse_eol_policy(policy_path.read_text(encoding="utf-8"))
+    entries: dict[str, Any] = {}
+    uncovered: list[str] = []
+    wrongly_treated: list[dict[str, Any]] = []
+    used_patterns: set[str] = set()
+
+    for relative in sorted(universe):
+        eol_class = canonical_eol_class(root, relative)
+        rule = effective_eol_rule(rules, relative)
+        if rule is None:
+            uncovered.append(relative)
+            entries[relative] = {
+                "eol_class": eol_class,
+                "rule_pattern": None,
+                "rule_attributes": [],
+                "deterministic": False,
+                "reasons": list(universe[relative]),
+            }
+            continue
+        pattern, attributes = rule
+        used_patterns.add(pattern)
+        attribute_set = set(attributes)
+        byte_preserving = bool(attribute_set & {"-text", "binary"})
+        lf_pinned = "text" in attribute_set and "eol=lf" in attribute_set
+        # A canonically non-LF path must be byte-preserving: `text eol=lf`
+        # would rewrite it and destroy a pinned identity.  A canonically LF
+        # path is deterministic under either treatment.
+        if eol_class in ("CRLF", "MIXED", "BINARY"):
+            deterministic = byte_preserving
+        else:
+            deterministic = lf_pinned or byte_preserving
+        entries[relative] = {
+            "eol_class": eol_class,
+            "rule_pattern": pattern,
+            "rule_attributes": list(attributes),
+            "deterministic": deterministic,
+            "reasons": list(universe[relative]),
+        }
+        if not deterministic:
+            wrongly_treated.append(
+                {
+                    "path": relative,
+                    "eol_class": eol_class,
+                    "rule_pattern": pattern,
+                    "rule_attributes": list(attributes),
+                    "required": (
+                        "byte-preserving (-text or binary)"
+                        if eol_class in ("CRLF", "MIXED", "BINARY")
+                        else "text eol=lf, or byte-preserving"
+                    ),
+                }
+            )
+
+    # A rule matching nothing in the universe is not a failure, but it IS a
+    # drift signal worth reporting: either the universe shrank or the rule is
+    # broader than the policy claims to be.
+    unused_rules = [
+        {"pattern": pattern, "attributes": list(attributes)}
+        for pattern, attributes in rules
+        if pattern not in used_patterns
+    ]
+
+    # No rule may reach the deliberately-unfiltered accepted historical blobs.
+    overreaching: list[dict[str, Any]] = []
+    for pattern, attributes in rules:
+        for prefix in DELIBERATELY_UNFILTERED_HISTORICAL_PREFIXES:
+            if pattern.startswith(prefix) or _eol_rule_matches(pattern, prefix):
+                overreaching.append(
+                    {"pattern": pattern, "attributes": list(attributes), "prefix": prefix}
+                )
+
+    satisfied = not uncovered and not wrongly_treated and not overreaching
+    return {
+        "satisfied": satisfied,
+        "policy_present": True,
+        "policy_path": EOL_POLICY_RELATIVE_PATH,
+        "policy_sha256": sha256_file(policy_path),
+        "derivation": (
+            "Universe derived from primary source by "
+            "authority_raw_byte_consumer_universe(); coverage derived from the "
+            "live .gitattributes. Neither side is a hand-written copy of the "
+            "other, so the two cannot drift apart silently."
+        ),
+        "universe_path_count": len(universe),
+        "rule_count": len(rules),
+        "uncovered": uncovered,
+        "uncovered_count": len(uncovered),
+        "wrongly_treated": wrongly_treated,
+        "wrongly_treated_count": len(wrongly_treated),
+        "overreaching_rules": overreaching,
+        "unused_rules": unused_rules,
+        "entries": entries,
+        "deliberately_unfiltered_prefixes": list(
+            DELIBERATELY_UNFILTERED_HISTORICAL_PREFIXES
+        ),
+        "blocking_reason": None
+        if satisfied
+        else (
+            "REPOSITORY_EOL_POLICY_INCOMPLETE: "
+            f"{len(uncovered)} uncovered, {len(wrongly_treated)} wrongly "
+            f"treated, {len(overreaching)} overreaching."
+        ),
+    }
+
+
+def same_generation_advance_lawfulness(root: Path) -> dict[str, Any]:
+    """Whether the current generation may still advance its candidate.
+
+    A same-generation candidate advance is lawful only while this generation's
+    single accepted-lifecycle record slot does not exist: once it does,
+    advancing the candidate would mean mutating an accepted, frozen artifact.
+    Re-derived from live state rather than asserted in prose.  Read-only.
+    """
+
+    root = Path(root).resolve()
+    generation = CURRENT_GENERATION
+    slot = generation.accepted_lifecycle_record_path
+    slot_exists = (root / slot).is_file()
+    return {
+        "generation_id": generation.generation_id,
+        "lineage_id": generation.lineage_id,
+        "candidate_id": generation.candidate_id,
+        "accepted_lifecycle_record_path": slot,
+        "accepted_lifecycle_record_exists": slot_exists,
+        "same_generation_advance_lawful": not slot_exists,
+        "new_generation_created": False,
+        "reason": (
+            "This generation's single accepted-lifecycle record slot does not "
+            "exist on disk, so a candidate advance mutates nothing accepted or "
+            "frozen and every predecessor candidate artifact stays "
+            "byte-identical."
+            if not slot_exists
+            else "An accepted-lifecycle record exists: a candidate advance "
+            "within this generation would mutate accepted, frozen authority. A "
+            "successor must open a NEW generation."
+        ),
+        "superseded_candidate_ids": list(generation.superseded_candidate_ids),
+    }
+
+
+#: How the canonical identity of each required durable-publication path is
+#: established.  ``R4-AUD-01`` remediation: every live comparison names its
+#: source, so no auditor has to guess what "matches canonical" was compared to.
+DURABLE_IDENTITY_SOURCE_PIN = "AUTHORITY_BUNDLE_PIN"
+DURABLE_IDENTITY_SOURCE_CHECKPOINT_FIELD = "MANIFEST_CANDIDATE_CHECKPOINT_FIELD"
+DURABLE_IDENTITY_SOURCE_LEDGER_FIELD = "MANIFEST_CANDIDATE_CHANGE_LEDGER_FIELD"
+DURABLE_IDENTITY_SOURCE_EXTERNAL = "EXTERNAL_LIFECYCLE_ROLE_BINDING"
+
+
+def _manifest_artifact_binding(
+    root: Path, generation: AuthorityGeneration, field: str, expected_path: str
+) -> str | None:
+    """The SHA-256 the current candidate manifest binds under ``field``, or None.
+
+    The manifest field is the ONE authoritative location of that candidate
+    artifact's identity.  Never raises: an absent, unreadable, duplicate-keyed
+    or mis-targeted manifest yields ``None`` and the caller fails closed.
+    """
+
+    path = Path(root) / generation.candidate_manifest_path
+    if not path.is_file():
+        return None
+    try:
+        payload = _strict_json_object(
+            path.read_bytes(), label=f"candidate manifest {field} binding"
+        )
+    except Exception:
+        return None
+    entry = payload.get(field)
+    if not isinstance(entry, Mapping):
+        return None
+    if entry.get("path") != expected_path:
+        return None
+    digest = entry.get("sha256")
+    if not isinstance(digest, str) or not _SHA256_RE.match(digest):
+        return None
+    return digest
+
+
+def _manifest_checkpoint_binding(
+    root: Path, generation: AuthorityGeneration | None = None
+) -> str | None:
+    """The checkpoint SHA-256 the current candidate manifest binds, or None."""
+
+    generation = generation or CURRENT_GENERATION
+    return _manifest_artifact_binding(
+        root, generation, "candidate_checkpoint", generation.candidate_checkpoint_path
+    )
+
+
+def durable_publication_requirements(root: Path) -> dict[str, Any]:
+    """Report publication durability of every required authority path.
+
+    Read-only.  Never raises: a missing or mismatched path is reported, so a
+    caller states the blocker instead of crashing.  Writes nothing, stages
+    nothing, and commits nothing.
+
+    This is the LIVE report.  Its status fields change as soon as the candidate
+    is published, which is exactly why a candidate artifact must never freeze
+    a copy of it (``R4-AUD-01``); a candidate manifest carries the static
+    ``durable_publication_declaration`` instead.
+
+    ``live_content_matches_canonical`` is a real raw-SHA-256 comparison against
+    the source named in ``canonical_identity_source``.  It is never ``True``
+    merely because a file exists:
+
+    * pinned path - compared with its authority-bundle pin;
+    * candidate checkpoint - compared with the candidate manifest's
+      ``candidate_checkpoint.sha256``, its one authoritative location;
+    * candidate change ledger - compared with the candidate manifest's
+      ``candidate_change_ledger.sha256``, its one authoritative location;
+    * candidate manifest - ``None`` (not applicable): its final identity
+      cannot be embedded in its own bytes and is bound externally by the
+      lifecycle role records, which compare it themselves.
+    """
+
+    root = root.resolve()
+    generation = CURRENT_GENERATION
+    expected_by_path = _required_durable_publication_sha256()
+    checkpoint_binding = _manifest_checkpoint_binding(root, generation)
+    ledger_binding = (
+        _manifest_artifact_binding(
+            root,
+            generation,
+            "candidate_change_ledger",
+            generation.candidate_change_ledger_path,
+        )
+        if generation.candidate_change_ledger_path
+        else None
+    )
+    entries: dict[str, Any] = {}
+    satisfied = True
+    for relative in REQUIRED_DURABLE_PUBLICATION_PATHS:
+        path = root / relative
+        live_sha = sha256_file(path) if path.is_file() else None
+        head_sha = blob_sha256_at(root, "HEAD", relative)
+        ignored = _is_path_ignored(root, relative)
+        pinned = relative in REQUIRED_DURABLE_PUBLICATION_PIN_LABELS
+        content_ok: bool | None
+        if pinned:
+            # A pinned path must match its pin exactly; an unresolvable expected
+            # digest fails closed on both counts.
+            source = DURABLE_IDENTITY_SOURCE_PIN
+            expected = expected_by_path.get(relative)
+            published = (
+                expected is not None
+                and head_sha is not None
+                and head_sha == expected
+            )
+            content_ok = expected is not None and live_sha == expected
+            comparison = "RAW_SHA256_EQUALITY_AGAINST_AUTHORITY_BUNDLE_PIN"
+        elif relative == generation.candidate_checkpoint_path:
+            source = DURABLE_IDENTITY_SOURCE_CHECKPOINT_FIELD
+            expected = checkpoint_binding
+            published = (
+                live_sha is not None
+                and head_sha is not None
+                and head_sha == live_sha
+            )
+            # No readable manifest binding is a failure, not a pass.
+            content_ok = expected is not None and live_sha == expected
+            comparison = (
+                "RAW_SHA256_EQUALITY_AGAINST_MANIFEST_CANDIDATE_CHECKPOINT_FIELD"
+            )
+        elif (
+            generation.candidate_change_ledger_path
+            and relative == generation.candidate_change_ledger_path
+        ):
+            source = DURABLE_IDENTITY_SOURCE_LEDGER_FIELD
+            expected = ledger_binding
+            published = (
+                live_sha is not None
+                and head_sha is not None
+                and head_sha == live_sha
+            )
+            # No readable manifest binding is a failure, not a pass.
+            content_ok = expected is not None and live_sha == expected
+            comparison = (
+                "RAW_SHA256_EQUALITY_AGAINST_MANIFEST_CANDIDATE_CHANGE_LEDGER_FIELD"
+            )
+        elif relative == generation.candidate_manifest_path:
+            source = DURABLE_IDENTITY_SOURCE_EXTERNAL
+            expected = None
+            published = (
+                live_sha is not None
+                and head_sha is not None
+                and head_sha == live_sha
+            )
+            content_ok = None
+            comparison = (
+                "NOT_APPLICABLE_FINAL_IDENTITY_BOUND_EXTERNALLY_BY_LIFECYCLE_ROLES"
+            )
+        else:  # pragma: no cover - every required path is classified above
+            source = "UNCLASSIFIED"
+            expected = None
+            published = False
+            content_ok = False
+            comparison = "UNCLASSIFIED_REQUIRED_PATH_FAILS_CLOSED"
+        if not published or content_ok is False:
+            satisfied = False
+        if ignored:
+            requirement = (
+                "MUST be included in the candidate publication commit at this "
+                "exact canonical path, using a narrowly scoped `git add -f` "
+                "while the path remains ignored. Content must NOT be modified "
+                "and .gitignore must NOT be broadened."
+            )
+        else:
+            requirement = (
+                "MUST be included in the candidate publication commit at this "
+                "exact canonical path. The path is not ignored, so no force-add "
+                "is required. Content must NOT be modified."
+            )
+        entries[relative] = {
+            "pinned": pinned,
+            "pin_label": REQUIRED_DURABLE_PUBLICATION_PIN_LABELS.get(relative),
+            "canonical_identity_source": source,
+            "expected_sha256": expected,
+            "live_present": live_sha is not None,
+            "live_sha256": live_sha,
+            "live_content_matches_canonical": content_ok,
+            "live_content_comparison": comparison,
+            "present_in_head": head_sha is not None,
+            "head_sha256": head_sha,
+            "published_durably": published,
+            "ignored_by_gitignore": ignored,
+            "force_add_required": ignored,
+            "publication_requirement": requirement,
+        }
+    return {
+        "required_paths": list(REQUIRED_DURABLE_PUBLICATION_PATHS),
+        "force_add_paths": list(
+            required_durable_publication_force_add_paths(root)
+        ),
+        "gitignore_rules_deliberately_unchanged": ["data/", "results/"],
+        "entries": entries,
+        "all_requirements_satisfied": satisfied,
+        "missing_required_authority_files": sorted(
+            rel for rel, e in entries.items() if not e["published_durably"]
+        ),
+        "remediates": "R2-AUD-01",
+        "remediation_status": (
+            "DECLARED_AND_ENFORCEABLE_PUBLICATION_NOT_YET_PERFORMED"
+        ),
+        "gitignore_modified": False,
+        "canonical_content_modified": False,
+        "non_authority_gitignored_runtime_dependencies": list(
+            NON_AUTHORITY_GITIGNORED_RUNTIME_DEPENDENCIES
+        ),
+        "non_authority_gitignored_dependency_status": (
+            NON_AUTHORITY_GITIGNORED_DEPENDENCY_STATUS
+        ),
+    }
 
 
 # --- Pre-acceptance constants -------------------------------------------------
@@ -602,7 +2083,27 @@ IMPLEMENTATION_CANDIDATE_SURFACE = ACCEPTED_IMPLEMENTATION_PATHS
 # record-derived values once a valid accepted-lifecycle record exists.
 
 PRE_ACCEPTANCE_ALIGNMENT_STATUS = "CANDIDATE"
-PRE_ACCEPTANCE_AUDIT_STATUS = "R1_FAILED_R2_NO_GO_R3_PENDING"
+
+#: The historical U-06 *alignment* candidate audit history: U-06 alignment
+#: candidate R1 FAILED, candidate R2 returned NO-GO, candidate R3 was pending.
+#:
+#: This is retained verbatim and is NOT deleted -- it is the audit history of
+#: the U-06 alignment generation and remains true of that generation.  It was
+#: previously named ``PRE_ACCEPTANCE_AUDIT_STATUS`` and was emitted as the
+#: ``u06_independent_audit_status`` of whatever generation happened to be
+#: current, which is exactly independent-audit blocker ``R2-AUD-03`` (MAJOR /
+#: BLOCKING): the active preflight-authorization-guard candidate's audit state
+#: was reported as this unrelated historical string.
+#:
+#: It is now reachable only under explicitly historical keys and can never
+#: again stand in for the active candidate's audit state.
+HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS = "R1_FAILED_R2_NO_GO_R3_PENDING"
+
+#: The pre-acceptance audit state of the CURRENT generation's OWN candidate,
+#: derived from that generation rather than shared across generations.  For the
+#: active generation this is candidate R3's state: ``NOT_YET_PERFORMED``.
+PRE_ACCEPTANCE_AUDIT_STATUS = CURRENT_GENERATION.candidate_audit_state
+
 PRE_ACCEPTANCE_ACCEPTANCE_STATUS = "NOT_ACCEPTED"
 PRE_ACCEPTANCE_OVERLAY_STATUS = "ABSENT"
 PRE_ACCEPTANCE_FREEZE_STATUS = "NOT_FROZEN"
@@ -697,6 +2198,263 @@ CANDIDATE_R2_AUDIT_RECORD = {
     "superseded_by": "R3",
 }
 
+#: ---------------------------------------------------------------------------
+#: R2-AUD-03: the ACTIVE candidate generation's own audit history
+#: ---------------------------------------------------------------------------
+#:
+#: The two records above (``CANDIDATE_R1_AUDIT_RECORD`` /
+#: ``CANDIDATE_R2_AUDIT_RECORD``) are the audit history of the **U-06 alignment**
+#: generation.  They are retained unchanged.  They are NOT the audit history of
+#: the active Main Full81 preflight-authorization-guard generation, and the
+#: independent audit of Candidate R2 found that the latter was being reported
+#: using the former.
+#:
+#: This register is therefore explicitly namespaced to the active generation.
+#: Every entry states all three lifecycle facts separately, so a passed audit
+#: can never be read as a publication, and a publication can never be read as an
+#: acceptance.
+PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY: Mapping[str, Mapping[str, Any]] = {
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1": {
+        "candidate_revision": "R1",
+        "independent_audit": "PASS_WITH_NONBLOCKING_FINDINGS",
+        "publication": "STOP",
+        "acceptance": "NOT_ACCEPTED",
+        "disposition": "SUPERSEDED_HISTORICAL_PREDECESSOR_IMMUTABLE",
+        "disposition_reason": (
+            "Its independent logic audit PASSED (N-04 and N-05 both CLOSED / "
+            "CORRECTION_VERIFIED) but its candidate-publication pass STOPPED on "
+            "the I-04 Git clean-filter / EOL raw-byte incompatibility. It is "
+            "superseded, NOT rejected."
+        ),
+        "preservation_package": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r1_"
+            "publication_stop_2026-10-04"
+        ),
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R2": {
+        "candidate_revision": "R2",
+        "independent_audit": "FAIL_NO_GO",
+        "publication": "NOT_PERFORMED",
+        "acceptance": "NOT_ACCEPTED",
+        "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+        "disposition_reason": (
+            "Its fresh independent audit returned FAIL / NO-GO on R2-AUD-01 "
+            "(parameter registry absent from HEAD), R2-AUD-02 (no .gitattributes "
+            "under core.autocrlf=true) and R2-AUD-03 (stale historical U-06 audit "
+            "state reported as the current candidate's audit state). It is "
+            "REJECTED, not merely superseded, and may never authorise."
+        ),
+        "blocking_findings": ("R2-AUD-01", "R2-AUD-02", "R2-AUD-03"),
+        "preservation_package": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r2_"
+            "audit_stop_2026-10-04"
+        ),
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R3": {
+        "candidate_revision": "R3",
+        "independent_audit": "FAIL_NO_GO",
+        "publication": "NOT_PERFORMED",
+        "acceptance": "NOT_ACCEPTED",
+        "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+        "disposition_reason": (
+            "Bounded provenance/governance remediation of R2-AUD-01, R2-AUD-02 "
+            "and R2-AUD-03. R2-AUD-01 was CORRECTION_VERIFIED, but its own "
+            "fresh independent audit returned FAIL / NO-GO on R3-AUD-01 "
+            "(stale/cyclic candidate checkpoint-manifest binding), R3-AUD-02 "
+            "(twelve historical accepted-lifecycle artifacts omitted from the "
+            "EOL policy), R3-AUD-03 (CRITICAL: the production bundle verifier "
+            "never verified the repository-governance pin group it declared, "
+            "and reported verified_pin_count from len(all_pins())), R2-AUD-03 "
+            "(u06_register_entry still reported historical U-06 alignment "
+            "ownership for the current candidate) and R3-AUD-04 (predecessor "
+            "premises retained in the required validation surface). It is "
+            "REJECTED, not merely superseded, and may never authorise."
+        ),
+        "blocking_findings": (
+            "R3-AUD-01",
+            "R3-AUD-02",
+            "R3-AUD-03",
+            "R2-AUD-03",
+            "R3-AUD-04",
+        ),
+        "preservation_package": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r3_"
+            "audit_stop_2026-10-05"
+        ),
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4": {
+        "candidate_revision": "R4",
+        "independent_audit": "FAIL_NO_GO",
+        "publication": "NOT_PERFORMED",
+        "acceptance": "NOT_ACCEPTED",
+        "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+        "disposition_reason": (
+            "Bounded remediation of the five Candidate R3 blockers. Its fresh "
+            "independent audit verified the acyclic primary manifest-to-"
+            "checkpoint binding, the 94-path EOL authority coverage and the "
+            "34 / 34 declared-versus-verified pin parity, but returned FAIL / "
+            "NO-GO on R4-AUD-01 (MAJOR): its manifest froze a snapshot of the "
+            "LIVE durable-publication report, carrying stale live_sha256 values "
+            "for the candidate checkpoint and for the manifest's own path while "
+            "asserting live_content_matches_canonical=true and "
+            "placeholder_or_stale_sha_used=false, and no production validator "
+            "read those fields. It is REJECTED, not merely superseded, and may "
+            "never authorise."
+        ),
+        "blocking_findings": ("R4-AUD-01",),
+        "preservation_package": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r4_"
+            "audit_stop_2026-10-05"
+        ),
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R5": {
+        "candidate_revision": "R5",
+        "independent_audit": "FAIL_NO_GO",
+        "publication": "NOT_PERFORMED",
+        "acceptance": "NOT_ACCEPTED",
+        "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+        "disposition_reason": (
+            "Bounded remediation of R4-AUD-01. Its fresh independent audit "
+            "returned FAIL / NO-GO on R5-AUD-01 (CRITICAL): the checkpoint "
+            "identity guard proved only that each checkpoint digest occurred "
+            "somewhere in the manifest, not that its stated role was the role "
+            "of the manifest obligation owning it, so a lawful implementation "
+            "digest under a 'Manifest SHA-256' label passed the GATE "
+            "validator; and on R5-AUD-02 (MAJOR): a test-suite disposable-write "
+            "helper did not keep its write target inside the disposable root. "
+            "It is REJECTED, not merely superseded, and may never authorise."
+        ),
+        "blocking_findings": ("R5-AUD-01", "R5-AUD-02"),
+        "nonblocking_findings": ("R5-AUD-03",),
+        "preservation_package": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r5_"
+            "audit_stop_2026-10-05"
+        ),
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R6": {
+        "candidate_revision": "R6",
+        "independent_audit": "FAIL_NO_GO",
+        "publication": "NOT_PERFORMED",
+        "acceptance": "NOT_ACCEPTED",
+        "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+        "disposition_reason": (
+            "Bounded remediation of R5-AUD-01 and R5-AUD-02. Its fresh "
+            "independent audit returned FAIL / NO-GO on R6-AUD-01 (CRITICAL): "
+            "the GATE accepted preservation-package and predecessor identities "
+            "structurally, without a value check, so the individually lawful "
+            "R5 STOP archive and index digests swapped between their roles, "
+            "with the canonical checkpoint claims rebound, still passed; and "
+            "on R6-AUD-02 (MAJOR): the test-suite AST write guard missed unsafe "
+            "writer patterns and disposable teardown could delete outside its "
+            "root through a junction. It is REJECTED, not merely superseded, "
+            "and may never authorise."
+        ),
+        "blocking_findings": ("R6-AUD-01", "R6-AUD-02"),
+        "nonblocking_findings": ("R5-AUD-03",),
+        "preservation_package": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r6_"
+            "audit_stop_2026-10-05"
+        ),
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7": {
+        "candidate_revision": "R7",
+        "independent_audit": "FAIL_NO_GO",
+        "publication": "NOT_PERFORMED",
+        "acceptance": "NOT_ACCEPTED",
+        "disposition": "REJECTED_HISTORICAL_CANDIDATE_IMMUTABLE",
+        "disposition_reason": (
+            "Remediation of the R6-AUD-01 and R6-AUD-02 defect classes. Its "
+            "fresh independent audit returned FAIL / NO-GO on R7-AUD-01 "
+            "(CRITICAL): the production GATE's historical expected values were "
+            "still candidate-controlled - pinned in candidate source and "
+            "covered only by a recomputable implementation identity - so four "
+            "independently constructed rebinding attacks (two roles swapped, a "
+            "three-role cycle, a lawful historical digest substituted, the "
+            "authority-bundle digest placed in a historical role) restored "
+            "GATE PASS after every candidate-controlled identity was "
+            "recomputed. R6-AUD-01 was therefore not closed, and the R6-AUD-02 "
+            "remediation it claimed was never independently verified. It is "
+            "REJECTED, not merely superseded, and may never authorise."
+        ),
+        "blocking_findings": ("R7-AUD-01",),
+        "preservation_package": (
+            "results/provenance/"
+            "main_full81_preflight_authorization_guard_candidate_r7_"
+            "audit_stop_2026-10-06"
+        ),
+    },
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8": {
+        "candidate_revision": "R8",
+        "independent_audit": "NOT_YET_PERFORMED",
+        "publication": "NOT_YET_AUTHORIZED",
+        "acceptance": "NOT_YET_ACCEPTED",
+        "disposition": "ACTIVE_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+        "disposition_reason": (
+            "Bounded repair of the R6-AUD-01 defect class as R7-AUD-01 exposed "
+            "it, and nothing else: in every mode the GATE derives every "
+            "historical role value, and the predecessor change set, from "
+            "externally authenticated evidence - the Git-frozen pre-R8 "
+            "historical trust root, the accepted R7 Preservation Authority "
+            "Binding it pins, and the authenticated R7 preservation package - "
+            "and a candidate-local historical table is only a diagnostic "
+            "assertion that must equal that derivation, with no fallback "
+            "(contract V4). R6-AUD-02 is carried unchanged and out of scope. "
+            "The repair is IMPLEMENTED and NOT_YET_INDEPENDENTLY_VERIFIED. The "
+            "next lawful gate is a fresh independent read-only audit."
+        ),
+        "remediates": ("R6-AUD-01", "R7-AUD-01"),
+    },
+}
+
+#: The one candidate of the active generation whose audit state the generic
+#: ``u06_independent_audit_status`` field must resolve to.
+ACTIVE_CANDIDATE_ID = CURRENT_GENERATION.candidate_id
+
+#: Fail-closed structural guards for ``R2-AUD-03``.  These run at import time so
+#: the defect cannot be reintroduced silently by a later edit.
+#:
+#: 1. The active candidate must be declared in its own generation's register.
+#: 2. A generation may never self-declare an audit ``PASS``: a real ``PASS`` is
+#:    proved only by a published accepted-lifecycle record, which the role
+#:    validators verify independently.
+#: 3. The historical U-06 alignment audit string may never be the active
+#:    candidate's audit state.
+if ACTIVE_CANDIDATE_ID not in PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY:
+    raise AssertionError(
+        "R2-AUD-03 regression: the active candidate "
+        f"{ACTIVE_CANDIDATE_ID!r} has no entry in its own generation's "
+        "candidate audit register."
+    )
+if CURRENT_GENERATION.candidate_audit_state == ACCEPTED_AUDIT_STATUS:
+    raise AssertionError(
+        "R2-AUD-03 regression: the current generation self-declares audit "
+        f"{ACCEPTED_AUDIT_STATUS!r}. An audit PASS must be proved by a "
+        "published accepted-lifecycle record, never declared in source."
+    )
+if PRE_ACCEPTANCE_AUDIT_STATUS == HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS:
+    raise AssertionError(
+        "R2-AUD-03 regression: the active candidate's audit state is the "
+        "historical U-06 alignment audit history "
+        f"{HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS!r}."
+    )
+if (
+    PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID][
+        "independent_audit"
+    ]
+    != PRE_ACCEPTANCE_AUDIT_STATUS
+):
+    raise AssertionError(
+        "R2-AUD-03 regression: the emitted pre-acceptance audit state and the "
+        "active candidate's register entry disagree."
+    )
+
+
 #: Statements that must never be collapsed into one another.
 LIFECYCLE_DISTINCTIONS = (
     "ZERO_SOLVE_PREFLIGHT_PASS",
@@ -765,6 +2523,14 @@ def blob_sha256_at(root: Path, commit: str, relative: str) -> str | None:
     stores blobs with LF, and the pinned sources are LF on disk, so the two
     agree today.  If they ever diverge, every check below fails closed rather
     than silently accepting — see the A-05 limitation note.
+
+    That agreement used to be an unenforced assumption, and ``R2-AUD-02``
+    escalated it to a BLOCKING defect: under ``core.autocrlf=true`` with no
+    ``.gitattributes``, a clean checkout smudged LF blobs to CRLF working-tree
+    bytes, so the two diverged and every authority check failed closed on a
+    correct repository.  The Candidate R3 ``.gitattributes`` policy now pins the
+    checkout form of each authority-critical path explicitly, which is what
+    makes this equality hold by construction instead of by luck.
     """
 
     done = _git(root, "cat-file", "-e", f"{commit}:{relative}")
@@ -774,6 +2540,18 @@ def blob_sha256_at(root: Path, commit: str, relative: str) -> str | None:
     if blob.returncode != 0:
         return None
     return hashlib.sha256(blob.stdout).hexdigest()
+
+
+def _is_path_ignored(root: Path, relative: str) -> bool:
+    """True when `relative` is matched by an ignore rule.
+
+    Used only to report whether a required durable-publication path still needs
+    a narrowly scoped force-add (``R2-AUD-01``).  Git reports an already-tracked
+    path as not ignored, which is the desired semantics here: once the path is
+    published, no force-add is required any more.
+    """
+
+    return _git(root, "check-ignore", "-q", "--", relative).returncode == 0
 
 
 def is_tracked_and_clean(root: Path, relative: str) -> tuple[bool, bool]:
@@ -950,6 +2728,54 @@ def _read_json(root: Path, relative: str, *, label: str) -> Mapping[str, Any]:
         isinstance(payload, Mapping),
         "U06_ROLE_ARTIFACT_NOT_JSON",
         f"{label}: {relative} is not a JSON object.",
+    )
+    return payload
+
+
+def _strict_json_object(raw: bytes, *, label: str) -> dict[str, Any]:
+    """Parse ``raw`` as a JSON object, REJECTING duplicate object keys.
+
+    ``R4-AUD-01`` hardening, scoped to the candidate-manifest contract only
+    (design observation ``N-R5D-03``).  ``json.loads`` silently keeps the LAST
+    of two duplicate keys, so a human reading the file and the validator
+    parsing it could see different values for the same field.  The generic
+    :func:`_read_json` is deliberately left unchanged: its historical callers
+    are not re-judged by a stricter parser.
+    """
+
+    def _no_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        out: dict[str, Any] = {}
+        for key, value in pairs:
+            if key in out:
+                raise U06LifecycleError(
+                    "U06_ROLE_SCHEMA_INVALID",
+                    f"{label}: duplicate JSON object key {key!r}. A reader and "
+                    "json.loads would see different values for that field, so "
+                    "the record is not a single unambiguous claim.",
+                )
+            out[key] = value
+        return out
+
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise U06LifecycleError(
+            "U06_ROLE_ARTIFACT_NOT_JSON",
+            f"{label}: not UTF-8 ({exc}).",
+        ) from exc
+    try:
+        payload = json.loads(text, object_pairs_hook=_no_duplicates)
+    except U06LifecycleError:
+        raise
+    except Exception as exc:
+        raise U06LifecycleError(
+            "U06_ROLE_ARTIFACT_NOT_JSON",
+            f"{label}: not machine-readable JSON ({exc}).",
+        ) from exc
+    _require(
+        isinstance(payload, dict),
+        "U06_ROLE_ARTIFACT_NOT_JSON",
+        f"{label}: not a JSON object.",
     )
     return payload
 
@@ -1198,6 +3024,3307 @@ def _validate_bound_roles(
         )
 
 
+# ---------------------------------------------------------------------------
+# R4-AUD-01: the closed-world candidate-manifest identity contract
+# ---------------------------------------------------------------------------
+#
+# Candidate R4 received ``FAIL / NO-GO`` on ``R4-AUD-01`` (MAJOR / BLOCKING).
+# Its primary manifest -> checkpoint binding was correct and acyclic, but the
+# same manifest froze a snapshot of the LIVE durable-publication report taken
+# before the checkpoint and the manifest were final.  It therefore recorded a
+# stale ``live_sha256`` for the checkpoint and - unsatisfiably - for the
+# manifest's OWN path, asserted ``live_content_matches_canonical = true`` for
+# both, and asserted ``placeholder_or_stale_sha_used = false``.  The
+# implementation-candidate role was validated by its envelope only, so none of
+# those fields was ever checked.
+#
+# The remedy has three parts, none of which adds an artifact:
+#
+# 1. The manifest DECLARES (``durable_publication_declaration``) and never
+#    snapshots: which paths must be published and where each path's canonical
+#    identity comes from.  Live status belongs to the live report alone.
+# 2. The manifest's OWN final identity is never embedded in its own bytes.  It
+#    is bound externally by the lifecycle role records that already declare
+#    ``candidate_manifest`` and by the accepted-lifecycle record's
+#    ``roles.implementation_candidate`` entry; the manifest only names those
+#    binding fields.
+# 3. Every embedded raw SHA-256 is CLOSED-WORLD: discovered by semantic JSON
+#    traversal, owned by exactly one declared obligation, and either verified
+#    or (for ignored, unpublished provenance at the gate) explicitly
+#    structural.  Collected == verified UNION structural, or the contract
+#    fails.  Any raw-hash cycle, self-hash or placeholder necessarily leaves a
+#    stale embedded value, so closed-world verification is what makes "no
+#    cycle" a checked fact rather than a self-label.
+#
+# Candidate R5 then received ``FAIL / NO-GO`` on ``R5-AUD-01`` (CRITICAL):
+# the checkpoint side of that closed world checked VALUE MEMBERSHIP only.  A
+# checkpoint digest had merely to occur somewhere in the manifest, so a lawful
+# implementation digest printed under a "Manifest SHA-256" label passed.  The
+# defect class is "an identity claim whose ROLE is not verified", and a label
+# can never be the thing that is verified.  Contract V2 therefore removes
+# labels from the trust path altogether:
+#
+# 4. A checkpoint may state a raw identity ONLY as a canonical claim
+#    ``<RFC 6901 manifest pointer> <digest>`` inside an ``identity-claims``
+#    block.  The pointer names the manifest identity field - and through it
+#    the single obligation - that owns the value, and the claim passes only if
+#    the manifest holds exactly that digest at exactly that pointer.  A digest
+#    anywhere else (prose, tables, headings, other blocks) is unclassified and
+#    fails, whatever label surrounds it.  The same digest may be claimed under
+#    two pointers only where the manifest itself lawfully holds it at both.
+# 5. The candidate change ledger is bound by the manifest (``C9``) and is
+#    itself closed-world: every identity it states is owned by one ledger
+#    obligation and verified, so the traceability record cannot become the
+#    next unvalidated identity surface.
+#
+# Candidate R6 then received ``FAIL / NO-GO`` on ``R6-AUD-01`` (CRITICAL):
+# part 3's "explicitly structural" class was itself the hole.  In GATE mode a
+# structural identity was never value-checked, and part 4 compared a claim with
+# the manifest's own value, so a consistent permutation of individually lawful
+# digests between roles - claims rebound to match - passed.  Contract V3
+# replaces parts 3 and 4 (see "closed-world semantic role binding" below):
+#
+# 3'. Every embedded raw SHA-256 is owned by one obligation of the closed-world
+#     role schema and BOUND, in every mode, to one role whose value is
+#     established independently of the candidate artifacts.  Collected ==
+#     bound, or the contract fails; the structural class no longer exists.
+# 4'. A checkpoint claim must equal the BOUND authority value of the pointer
+#     it names - never merely the manifest's bytes at that pointer.
+
+#: Validation modes.  ``GATE`` is what the production lifecycle path runs:
+#: every identity is bound to its role's independent authority value, and
+#: (contract V4) every historical identity to the value derived from the
+#: EXTERNAL historical authority - the Git-frozen pre-R8 trust root, the
+#: accepted R7 binding it pins and the authenticated R7 preservation package
+#: - which must be present or the GATE fails closed.  ``CANDIDATE_PACKAGE``
+#: runs the same derivation and additionally proves that the R1-R7 files the
+#: historical values describe are live in the candidate working tree; it is
+#: what candidate-era validation and an independent audit run.  Neither mode
+#: ever accepts an identity structurally or takes a historical value from
+#: candidate-controlled material.
+CANDIDATE_MANIFEST_MODE_GATE = "GATE"
+CANDIDATE_MANIFEST_MODE_CANDIDATE_PACKAGE = "CANDIDATE_PACKAGE"
+CANDIDATE_MANIFEST_MODES: tuple[str, ...] = (
+    CANDIDATE_MANIFEST_MODE_GATE,
+    CANDIDATE_MANIFEST_MODE_CANDIDATE_PACKAGE,
+)
+
+#: Top-level field classes.  Every top-level key of the candidate manifest has
+#: exactly one class; an unclassified key fails closed.
+FIELD_CLASS_IDENTITY = "IDENTITY"
+FIELD_CLASS_CONSTANT = "CONSTANT"
+FIELD_CLASS_OBSERVATION = "OBSERVATION_AT_CONSTRUCTION"
+FIELD_CLASS_PROSE = "PROSE"
+
+CANDIDATE_MANIFEST_FIELD_CLASSES: Mapping[str, str] = {
+    "schema_version": FIELD_CLASS_CONSTANT,
+    "artifact_type": FIELD_CLASS_CONSTANT,
+    "role": FIELD_CLASS_CONSTANT,
+    "candidate_manifest_contract": FIELD_CLASS_CONSTANT,
+    "date": FIELD_CLASS_OBSERVATION,
+    "generation_id": FIELD_CLASS_CONSTANT,
+    "lineage_id": FIELD_CLASS_CONSTANT,
+    "candidate_id": FIELD_CLASS_CONSTANT,
+    "target_candidate_id": FIELD_CLASS_CONSTANT,
+    "candidate_revision": FIELD_CLASS_CONSTANT,
+    "scope": FIELD_CLASS_PROSE,
+    "disposition": FIELD_CLASS_CONSTANT,
+    "self_accepted": FIELD_CLASS_CONSTANT,
+    "package_binding": FIELD_CLASS_IDENTITY,
+    "candidate_checkpoint_path": FIELD_CLASS_CONSTANT,
+    "candidate_checkpoint": FIELD_CLASS_IDENTITY,
+    "candidate_manifest_path": FIELD_CLASS_CONSTANT,
+    "implementation_identity_digest": FIELD_CLASS_IDENTITY,
+    "implementation_identity": FIELD_CLASS_IDENTITY,
+    "generation_advance_lawfulness_at_construction": FIELD_CLASS_OBSERVATION,
+    "authority_bundle": FIELD_CLASS_IDENTITY,
+    "repository_eol_policy": FIELD_CLASS_IDENTITY,
+    "parameter_registry_durability": FIELD_CLASS_IDENTITY,
+    "durable_publication_declaration": FIELD_CLASS_IDENTITY,
+    "candidate_preservation_packages": FIELD_CLASS_IDENTITY,
+    "candidate_change_ledger": FIELD_CLASS_IDENTITY,
+    #: Candidate R8 (contract V4): the external historical authority this
+    #: candidate consumes, by frozen Git identity and binding locator only (no
+    #: SHA-256: the binding digest is stated by the trust root alone).  A
+    #: CONSTANT checked against the live authenticated chain, never a source.
+    "external_historical_authority": FIELD_CLASS_CONSTANT,
+    "predecessor_candidates": FIELD_CLASS_OBSERVATION,
+    "lifecycle_state": FIELD_CLASS_OBSERVATION,
+    "accepted_lifecycle_record_path": FIELD_CLASS_CONSTANT,
+    "remediation": FIELD_CLASS_OBSERVATION,
+    "carried_findings": FIELD_CLASS_OBSERVATION,
+    "mutation_counters": FIELD_CLASS_OBSERVATION,
+    "execution_counters": FIELD_CLASS_OBSERVATION,
+    "repository_head_at_authoring": FIELD_CLASS_OBSERVATION,
+    "next_legal_gate": FIELD_CLASS_PROSE,
+}
+
+#: Keys that are forbidden ANYWHERE in a candidate manifest.  They are the
+#: frozen live-report fields and the hand-set identity self-labels of the R4
+#: schema: each one is either time-variant (its truth changes when the
+#: candidate is published) or a boolean claim that only a validator may make.
+#: The validator computes the honest equivalents and reports them instead.
+CANDIDATE_MANIFEST_FORBIDDEN_KEYS: frozenset[str] = frozenset(
+    {
+        "required_durable_publication",
+        "live_sha256",
+        "head_sha256",
+        "live_present",
+        "present_in_head",
+        "published_durably",
+        "ignored_by_gitignore",
+        "force_add_required",
+        "force_add_paths",
+        "all_requirements_satisfied",
+        "live_content_matches_canonical",
+        "missing_required_authority_files",
+        "accepted_lifecycle_record_exists",
+        "placeholder_or_stale_sha_used",
+        "manifest_records_own_sha256",
+        "checkpoint_records_manifest_raw_sha256",
+        "mutual_raw_hash_cycle_present",
+        "manifest_binds_checkpoint_path",
+        "manifest_binds_checkpoint_raw_sha256",
+        "checkpoint_names_manifest_path",
+        "placeholder_digests_used",
+        "fabricated_future_hashes",
+    }
+)
+
+PACKAGE_BINDING_SCHEME = "ACYCLIC_MANIFEST_TO_CHECKPOINT_ONLY"
+PACKAGE_BINDING_DIRECTION = "manifest -> checkpoint"
+PACKAGE_BINDING_KEYS: frozenset[str] = frozenset(
+    {"scheme", "direction", "manifest_self_identity", "rationale", "predecessor_defect"}
+)
+
+DURABLE_DECLARATION_SEMANTICS = "STATIC_DECLARATION_NOT_A_LIVE_SNAPSHOT"
+DURABLE_DECLARATION_LIVE_STATUS_SOURCE = (
+    "src.production_authority_lifecycle_u06.durable_publication_requirements"
+)
+DURABLE_DECLARATION_KEYS: frozenset[str] = frozenset(
+    {"semantics", "live_status_source", "required_paths", "entries"}
+)
+DURABLE_CHECKPOINT_IDENTITY_FIELD = "candidate_checkpoint.sha256"
+DURABLE_LEDGER_IDENTITY_FIELD = "candidate_change_ledger.sha256"
+
+#: The predecessor-defect evidence contract V4 requires: the IMMEDIATE
+#: predecessor, Candidate R7, and its blocking finding.  Recorded as typed
+#: HISTORICAL evidence, never as a binding.  R7's defect lay in validator CODE
+#: (where the GATE took historical values from), not in identity values its
+#: artifacts recorded, so there is no stale-value list to carry.
+PREDECESSOR_DEFECT_EVIDENCE_CLASS = (
+    "HISTORICAL_PREDECESSOR_DEFECT_EVIDENCE_NOT_A_LIVE_BINDING"
+)
+PREDECESSOR_DEFECT_LOCATION_CODE = (
+    "PRODUCTION_VALIDATOR_AND_TEST_CODE_NOT_RECORDED_IDENTITY_VALUES"
+)
+CONTRACT_V4_PREDECESSOR_DEFECT: Mapping[str, Any] = {
+    "findings": ("R7-AUD-01",),
+    "predecessor_candidate_id": (
+        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7"
+    ),
+    "checkpoint_path": FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_CHECKPOINT_PATH,
+    "manifest_path": FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R7_MANIFEST_PATH,
+}
+PREDECESSOR_DEFECT_KEYS: frozenset[str] = frozenset(
+    {
+        "findings",
+        "predecessor_candidate_id",
+        "evidence_class",
+        "predecessor_candidate_checkpoint",
+        "predecessor_candidate_manifest",
+        "defect_location",
+        "recorded_in_stop_record",
+    }
+)
+
+IMPLEMENTATION_IDENTITY_KEYS: frozenset[str] = frozenset(
+    {
+        "path_count",
+        "derivation",
+        "digest_algorithm",
+        "implementation_digest",
+        "paths",
+        "predecessor_digest",
+        "predecessor_digest_carried_forward",
+    }
+)
+AUTHORITY_BUNDLE_KEYS: frozenset[str] = frozenset(
+    {"declared_pin_groups", "declared_pin_count", "pins"}
+)
+REPOSITORY_EOL_POLICY_KEYS: frozenset[str] = frozenset(
+    {
+        "path",
+        "sha256",
+        "bundle_pin_label",
+        "coverage_at_construction",
+        "historical_blobs_normalized",
+        "renormalize_run",
+        "core_autocrlf_changed",
+    }
+)
+PARAMETER_REGISTRY_DURABILITY_KEYS: frozenset[str] = frozenset(
+    {
+        "path",
+        "canonical_sha256",
+        "bundle_pin_label",
+        "eol_rule",
+        "canonical_eol_class",
+        "scientific_content_modified",
+        "r2_aud_01_status",
+    }
+)
+PRESERVATION_ENTRY_KEYS: frozenset[str] = frozenset(
+    {
+        "directory",
+        "stop_class",
+        "archive_path",
+        "archive_sha256",
+        "index_path",
+        "index_sha256",
+        "stop_record_path",
+        "stop_record_sha256",
+    }
+)
+
+
+#: ``R6-AUD-01``: where a role's authoritative value comes from.  Every source is
+#: independent of the candidate artifacts being validated, and every one is
+#: available in EVERY validation mode, so no identity is ever accepted on
+#: structure alone.  ``R7-AUD-01`` / contract V4: historical role values are
+#: no longer pinned in candidate source.  They come from the EXTERNAL historical
+#: authority (:func:`resolve_external_historical_authority`: Git-frozen trust
+#: root -> accepted R7 binding -> authenticated R7 preservation package) in
+#: every mode; ``CANDIDATE_PACKAGE`` mode additionally proves that the R1-R7
+#: files those values describe are live.
+AUTHORITY_LIVE_RAW_BYTES = "LIVE_RAW_BYTES"
+AUTHORITY_LIVE_IMPLEMENTATION = "LIVE_IMPLEMENTATION_IDENTITY"
+AUTHORITY_BUNDLE_PIN = "AUTHORITY_BUNDLE_PIN"
+AUTHORITY_HISTORICAL_ROLE = "EXTERNAL_HISTORICAL_AUTHORITY"
+IDENTITY_AUTHORITY_SOURCES: tuple[str, ...] = (
+    AUTHORITY_LIVE_RAW_BYTES,
+    AUTHORITY_LIVE_IMPLEMENTATION,
+    AUTHORITY_BUNDLE_PIN,
+    AUTHORITY_HISTORICAL_ROLE,
+)
+
+
+@dataclass(frozen=True)
+class IdentityObligation:
+    """One semantic role class of embedded raw-SHA-256 identity pointers.
+
+    ``pattern`` is a JSON-pointer pattern in which ``"*"`` matches exactly one
+    key or list index.  ``authority`` names the independent source of the
+    role's expected value.  Contract V2 carried a ``scope`` here - the weakest
+    mode in which the obligation was verified, with STRUCTURAL acceptance in a
+    weaker one.  That was ``R6-AUD-01``; contract V3 has no such field.
+    """
+
+    obligation_class: str
+    kind: str
+    pattern: tuple[str, ...]
+    authority: str
+    description: str
+
+
+#: THE single declaration of what may carry an embedded raw SHA-256 in a
+#: candidate manifest - the closed-world semantic role schema.  ``C8`` (the
+#: manifest's own identity) has no pattern: it is forbidden, and enforced
+#: structurally before any obligation runs.
+CANDIDATE_MANIFEST_IDENTITY_OBLIGATIONS: tuple[IdentityObligation, ...] = (
+    IdentityObligation(
+        "C1", "candidate_checkpoint", ("candidate_checkpoint", "sha256"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Candidate checkpoint raw SHA-256: the one embedded checkpoint identity.",
+    ),
+    IdentityObligation(
+        "C2", "implementation_digest", ("implementation_identity_digest",),
+        AUTHORITY_LIVE_IMPLEMENTATION,
+        "Live accepted implementation identity digest.",
+    ),
+    IdentityObligation(
+        "C2", "implementation_digest",
+        ("implementation_identity", "implementation_digest"),
+        AUTHORITY_LIVE_IMPLEMENTATION,
+        "The same digest, which must also reproduce from the paths map.",
+    ),
+    IdentityObligation(
+        "C3", "implementation_paths", ("implementation_identity", "paths", "*"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Raw SHA-256 of every accepted implementation path.",
+    ),
+    IdentityObligation(
+        "C4", "bundle_pins", ("authority_bundle", "pins", "*", "sha256"),
+        AUTHORITY_BUNDLE_PIN,
+        "Every authority-bundle pin, equal to the bundle's own constant.",
+    ),
+    IdentityObligation(
+        "C4", "bundle_pins", ("repository_eol_policy", "sha256"),
+        AUTHORITY_BUNDLE_PIN,
+        "The repository_eol_policy pin, restated.",
+    ),
+    IdentityObligation(
+        "C4", "bundle_pins", ("parameter_registry_durability", "canonical_sha256"),
+        AUTHORITY_BUNDLE_PIN,
+        "The parameter_registry pin, restated.",
+    ),
+    IdentityObligation(
+        "C5", "durable_pinned",
+        ("durable_publication_declaration", "entries", "*", "expected_raw_sha256"),
+        AUTHORITY_BUNDLE_PIN,
+        "Static durable-publication declaration: pinned paths only.",
+    ),
+    IdentityObligation(
+        "C6", "preservation",
+        ("candidate_preservation_packages", "*", "archive_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor preservation archive, per its external historical role.",
+    ),
+    IdentityObligation(
+        "C6", "preservation",
+        ("candidate_preservation_packages", "*", "index_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor preservation raw-byte index, per its external historical role.",
+    ),
+    IdentityObligation(
+        "C6", "preservation",
+        ("candidate_preservation_packages", "*", "stop_record_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor preservation STOP record, per its external historical role.",
+    ),
+    IdentityObligation(
+        "C7", "predecessor_evidence", ("implementation_identity", "predecessor_digest"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Historical predecessor implementation digest.",
+    ),
+    IdentityObligation(
+        "C7", "predecessor_evidence",
+        ("package_binding", "predecessor_defect",
+         "predecessor_candidate_checkpoint", "raw_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Historical predecessor checkpoint raw SHA-256.",
+    ),
+    IdentityObligation(
+        "C7", "predecessor_evidence",
+        ("package_binding", "predecessor_defect",
+         "predecessor_candidate_manifest", "raw_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Historical predecessor manifest raw SHA-256.",
+    ),
+    IdentityObligation(
+        "C9", "candidate_change_ledger", ("candidate_change_ledger", "sha256"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Candidate change ledger raw SHA-256; the ledger is then validated.",
+    ),
+)
+
+#: The forbidden identity class, enforced before any obligation runs.
+CANDIDATE_MANIFEST_FORBIDDEN_IDENTITY_CLASS = "C8"
+
+_HEX_RUN_RE = re.compile(r"[0-9a-fA-F]{64,}")
+_SHA256_VALUE_RE = re.compile(r"^[0-9a-f]{64}$")
+
+
+def candidate_manifest_external_binding_fields(
+    generation: AuthorityGeneration | None = None,
+) -> tuple[str, ...]:
+    """Where the candidate manifest's final identity is bound, outside itself.
+
+    Derived from the generation's own role contracts, so it cannot drift from
+    what the lifecycle validator actually requires.
+    """
+
+    generation = generation or CURRENT_GENERATION
+    fields = [
+        f"{role}.candidate_manifest.sha256"
+        for role, contract in generation.role_contracts.items()
+        if contract.declares_candidate_manifest
+    ]
+    fields.append("accepted_lifecycle_record.roles.implementation_candidate.sha256")
+    return tuple(fields)
+
+
+def _required_durable_paths_for(generation: AuthorityGeneration) -> tuple[str, ...]:
+    return (
+        *REQUIRED_DURABLE_PUBLICATION_PIN_LABELS,
+        generation.candidate_checkpoint_path,
+        generation.candidate_manifest_path,
+        *(
+            (generation.candidate_change_ledger_path,)
+            if generation.candidate_change_ledger_path
+            else ()
+        ),
+    )
+
+
+def rfc6901_pointer(pointer: Sequence[Any]) -> str:
+    """Canonical RFC 6901 encoding of a JSON pointer tuple.
+
+    ``~`` is written ``~0`` and ``/`` is written ``~1``; list indices are
+    decimal.  This is the ONLY spelling a checkpoint identity claim may use, so
+    one manifest identity field has exactly one claimable name.
+    """
+
+    return "".join(
+        "/" + (str(s) if isinstance(s, int) else s.replace("~", "~0").replace("/", "~1"))
+        for s in pointer
+    )
+
+
+def collect_identity_pointers(
+    payload: Any,
+) -> tuple[list[tuple[tuple[Any, ...], str]], list[tuple[Any, ...]]]:
+    """Semantically collect every embedded raw-SHA-256 identity in ``payload``.
+
+    Returns ``(identity_pointers, hidden_pointers)``.  An identity pointer is a
+    string value that is exactly a lowercase 64-hex digest.  A hidden pointer
+    is any key or string carrying a run of 64+ hex characters that is NOT
+    exactly such a value - a digest buried in prose, an uppercase digest, or a
+    key - which can never be owned by an obligation.
+    """
+
+    identities: list[tuple[tuple[Any, ...], str]] = []
+    hidden: list[tuple[Any, ...]] = []
+
+    def walk(node: Any, pointer: tuple[Any, ...]) -> None:
+        if isinstance(node, Mapping):
+            for key, value in node.items():
+                if isinstance(key, str) and _HEX_RUN_RE.search(key):
+                    hidden.append(pointer + (key,))
+                walk(value, pointer + (key,))
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                walk(value, pointer + (index,))
+        elif isinstance(node, str):
+            if _SHA256_VALUE_RE.match(node):
+                identities.append((pointer, node))
+            elif _HEX_RUN_RE.search(node):
+                hidden.append(pointer)
+
+    walk(payload, ())
+    return identities, hidden
+
+
+def _pointer_matches(pattern: Sequence[Any], pointer: Sequence[Any]) -> bool:
+    return len(pattern) == len(pointer) and all(
+        p == "*" or p == q for p, q in zip(pattern, pointer)
+    )
+
+
+def _resolve_pointer(payload: Any, pointer: Sequence[Any]) -> Any:
+    node = payload
+    for segment in pointer:
+        if isinstance(node, Mapping) and segment in node:
+            node = node[segment]
+        elif (
+            isinstance(node, list)
+            and isinstance(segment, int)
+            and not isinstance(segment, bool)
+            and 0 <= segment < len(node)
+        ):
+            node = node[segment]
+        else:
+            raise KeyError(tuple(pointer))
+    return node
+
+
+def _associated_paths(payload: Mapping[str, Any], pointer: Sequence[Any]) -> set[str]:
+    """Every repository path an identity pointer is semantically tied to.
+
+    The pointer's own key segments plus the direct string values of every
+    enclosing object below the root.  The root is excluded on purpose: it
+    names the manifest's own path as plain metadata, which ties no digest.
+    """
+
+    associated = {segment for segment in pointer if isinstance(segment, str)}
+    node: Any = payload
+    for segment in pointer[:-1]:
+        node = node[segment]
+        if isinstance(node, Mapping):
+            associated.update(v for v in node.values() if isinstance(v, str))
+    return associated
+
+
+def _identity_target_path(payload: Mapping[str, Any], pointer: Sequence[Any]) -> str | None:
+    """The live artifact path an identity pointer claims the digest OF."""
+
+    leaf = pointer[-1]
+    parent = _resolve_pointer(payload, pointer[:-1])
+    if tuple(pointer[:2]) in (
+        ("implementation_identity", "paths"),
+        ("durable_publication_declaration", "entries"),
+    ):
+        return str(pointer[2])
+    if pointer[0] == "candidate_preservation_packages" and isinstance(leaf, str):
+        value = parent.get(leaf[: -len("_sha256")] + "_path")
+        return value if isinstance(value, str) else None
+    if leaf == "recorded_value":
+        # A stale value the predecessor recorded.  It intentionally differs from
+        # the actual digest, so it is not an identity OF any live path.
+        return None
+    if leaf == "actual_raw_sha256_of_described_path":
+        value = parent.get("describes_path")
+        return value if isinstance(value, str) else None
+    if isinstance(parent, Mapping) and isinstance(parent.get("path"), str):
+        return parent["path"]
+    return None
+
+
+# ---------------------------------------------------------------------------
+# R6-AUD-01: closed-world semantic role binding
+# ---------------------------------------------------------------------------
+#
+# Candidate R6 received ``FAIL / NO-GO`` on ``R6-AUD-01`` (CRITICAL).  Contract
+# V2 let an obligation be "not verified in this mode": in GATE mode the
+# preservation-package and predecessor identities were accepted on STRUCTURE
+# alone, and a checkpoint claim only had to equal the manifest's own value at
+# its pointer.  So a package in which every digest was individually lawful and
+# every referenced object existed - but two digests had swapped roles, with the
+# claims rebound to match - reached PASS.
+#
+# The defect class is "an identity accepted without an independently
+# established value for its exact role".  Contract V3 removes it, not its
+# example:
+#
+# * every identity pointer is owned by ONE obligation of the closed-world role
+#   schema, which names ONE role and ONE independent authority for it;
+# * :class:`_RoleBinding` is the only way a verifier may accept a pointer: it
+#   records the role and the authority's value, and refuses a value that is not
+#   that value;
+# * pointer parity requires EVERY collected identity to be bound - there is no
+#   structural class left, in any mode;
+# * a checkpoint claim is checked against the BOUND authority value of the
+#   pointer it names, never against the manifest's own bytes.
+#
+# Historical identities (predecessor STOP packages, predecessor evidence) live
+# in ignored, unpublished files.  Contract V3 therefore pinned their values as
+# HISTORICAL ROLE IDENTITIES in the authority bundle and, in GATE mode, trusted
+# the pins without proof.  Candidate R7's fresh independent audit returned
+# FAIL / NO-GO on ``R7-AUD-01`` (CRITICAL): the pins are candidate-controlled
+# source, so a recomputing author could exchange lawful historical digests
+# between roles in the pin table, the manifest, the ledger and the checkpoint
+# alike, recompute the implementation digest, and restore GATE PASS.  The
+# ``R6-AUD-01`` defect class had survived one layer up.
+#
+# Contract V4 (Candidate R8) removes candidate-controlled material as the
+# source of historical semantic truth.  In EVERY mode, the expected value of
+# every historical role is derived from externally authenticated evidence:
+#
+#   Git-frozen pre-R8 trust root (annotated tag -> commit -> blob, published)
+#   -> the accepted R7 Preservation Authority Binding it pins (locator + SHA)
+#   -> the authenticated R7 preservation package (archive, index, STOP record)
+#   -> role-specific historical evidence inside that package
+#
+# A role's MEANING comes from that evidence's own structure - which candidate,
+# which package file, which predecessor artifact - never from a path, a role
+# name or a table in candidate source.  The trust root is read from the Git
+# blob, never from a working-tree copy, and its binding locator and SHA come
+# from that blob, never from candidate code.  The bundle's
+# ``HISTORICAL_ROLE_IDENTITIES`` survives only as a DIAGNOSTIC ASSERTION: it
+# must equal the external derivation exactly, it is never consulted for a
+# value, and there is no fallback to it when the external evidence is
+# unavailable - missing evidence fails closed.
+
+#: The three files of every preservation package, as historical role fields.
+HISTORICAL_ROLE_PRESERVATION_FIELDS: tuple[str, ...] = ("archive", "index", "stop_record")
+PREDECESSOR_ROLE_IMPLEMENTATION_DIGEST = "predecessor:implementation_digest"
+PREDECESSOR_ROLE_CHECKPOINT = "predecessor:checkpoint"
+PREDECESSOR_ROLE_MANIFEST = "predecessor:manifest"
+PREDECESSOR_ROLE_EOL_POLICY = "predecessor:repository_eol_policy"
+PREDECESSOR_MODIFIED_FILE_ROLE_PREFIX = "predecessor:modified_file:"
+HISTORICAL_ROLE_PREFIXES: tuple[str, ...] = ("preservation:", "predecessor:")
+
+#: Fail-closed statuses of the external historical authority (``R7-AUD-01``).
+#: They are distinct from every other status so that a rejection always names
+#: WHICH layer refused: the frozen Git authority, the presence of the external
+#: evidence, the internal consistency of that evidence, or the agreement of a
+#: candidate's claims with it.
+TRUST_ROOT_GIT_AUTHORITY_INVALID = "U06_TRUST_ROOT_GIT_AUTHORITY_INVALID"
+EXTERNAL_HISTORICAL_AUTHORITY_UNAVAILABLE = "U06_EXTERNAL_HISTORICAL_AUTHORITY_UNAVAILABLE"
+EXTERNAL_HISTORICAL_EVIDENCE_INVALID = "U06_EXTERNAL_HISTORICAL_EVIDENCE_INVALID"
+EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH = "U06_EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH"
+
+#: What the externally frozen artifacts must BE, so that another lawful
+#: provenance record can never stand in for one of them.
+PRE_R8_TRUST_ROOT_ARTIFACT_TYPE = "MAIN_FULL81_PREFLIGHT_PRE_R8_HISTORICAL_TRUST_ROOT"
+PRE_R8_TRUST_ROOT_SCHEMA_VERSION = (
+    "iris-thesis-main-full81-preflight-pre-r8-historical-trust-root-v1"
+)
+R7_BINDING_ARTIFACT_TYPE = "R7_PRESERVATION_AUTHORITY_BINDING"
+R7_BINDING_SCHEMA_VERSION = "iris-thesis-r7-preservation-authority-binding-v1"
+R7_CANDIDATE_ID = "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R7"
+R7_FAILED_LIFECYCLE = "FAILED / NO-GO / NOT_ACCEPTED"
+R7_INDEX_ARTIFACT_TYPE = (
+    FULL81_PREFLIGHT_AUTH_GUARD_R1_ARTIFACT_TYPE_PREFIX
+    + "CANDIDATE_R7_AUDIT_STOP_RAW_BYTE_INDEX"
+)
+R7_STOP_RECORD_ARTIFACT_TYPE = (
+    FULL81_PREFLIGHT_AUTH_GUARD_R1_ARTIFACT_TYPE_PREFIX
+    + "CANDIDATE_R7_INDEPENDENT_AUDIT_STOP"
+)
+#: R1-R6 are authenticated through the R7 raw-byte index; R7 through the binding.
+INDEX_AUTHENTICATED_PREDECESSORS: tuple[str, ...] = tuple(
+    f"MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R{n}" for n in range(1, 7)
+)
+#: The sections of the R7 raw-byte index that together state the R7 bytes of
+#: every path of R7's preserved candidate surface.
+R7_SURFACE_SECTIONS: tuple[tuple[str, str], ...] = (
+    ("members", "original_repository_path"),
+    ("referenced_not_duplicated", "path"),
+    ("head_identical_dependencies", "path"),
+)
+
+
+def preservation_role(candidate_id: str, field: str) -> str:
+    """Closed-world name of one preservation-package file's historical role."""
+
+    return f"preservation:{candidate_id}:{field}"
+
+
+def predecessor_modified_file_role(relative: str) -> str:
+    """Closed-world name of a modified file's predecessor-era identity role."""
+
+    return PREDECESSOR_MODIFIED_FILE_ROLE_PREFIX + relative
+
+
+def is_historical_role(role: str) -> bool:
+    """A role whose value only the external historical authority establishes."""
+
+    return isinstance(role, str) and role.startswith(HISTORICAL_ROLE_PREFIXES)
+
+
+def required_historical_roles() -> dict[str, str | None]:
+    """The historical role SCHEMA this source declares -> the path each is OF.
+
+    Derived from the declared preservation packages and the V4 predecessor.
+    This is a declaration of shape only: :func:`resolve_external_historical_
+    authority` derives the roles independently from external evidence, and the
+    two must agree exactly or the contract fails closed.  ``None`` marks a
+    digest that is not a file's.
+    """
+
+    roles: dict[str, str | None] = {}
+    for candidate, declared in CANDIDATE_PRESERVATION_PACKAGES.items():
+        for field in HISTORICAL_ROLE_PRESERVATION_FIELDS:
+            roles[preservation_role(candidate, field)] = (
+                f"{declared['directory']}/{declared[field]}"
+            )
+    roles[PREDECESSOR_ROLE_IMPLEMENTATION_DIGEST] = None
+    roles[PREDECESSOR_ROLE_CHECKPOINT] = CONTRACT_V4_PREDECESSOR_DEFECT["checkpoint_path"]
+    roles[PREDECESSOR_ROLE_MANIFEST] = CONTRACT_V4_PREDECESSOR_DEFECT["manifest_path"]
+    roles[PREDECESSOR_ROLE_EOL_POLICY] = EOL_POLICY_RELATIVE_PATH
+    return roles
+
+
+# -- the external historical authority (contract V4) ---------------------------
+
+
+def _git_bytes(root: Path, *args: str) -> bytes | None:
+    done = _git(root, *args)
+    return done.stdout if done.returncode == 0 else None
+
+
+def _external_evidence_object(raw: bytes, *, label: str) -> dict[str, Any]:
+    """Strictly parse external evidence; any defect is EVIDENCE_INVALID."""
+
+    try:
+        return _strict_json_object(raw, label=label)
+    except U06LifecycleError as exc:
+        raise U06LifecycleError(EXTERNAL_HISTORICAL_EVIDENCE_INVALID, str(exc)) from exc
+
+
+def _evidence_digest(value: Any, *, what: str) -> str:
+    _require(
+        isinstance(value, str) and bool(_SHA256_RE.match(value)),
+        EXTERNAL_HISTORICAL_EVIDENCE_INVALID,
+        f"external historical evidence: {what} is not a lowercase SHA-256: {value!r}",
+    )
+    return value
+
+
+def _evidence_relative_path(value: Any, *, what: str) -> str:
+    """A canonical repository-relative POSIX path named BY external evidence.
+
+    Absolute, rooted, drive, UNC, backslash and traversal forms are refused, so
+    no evidence (and no caller) can redirect a read outside the repository.
+    """
+
+    _require(
+        isinstance(value, str)
+        and bool(value)
+        and not value.startswith("/")
+        and "\\" not in value
+        and ":" not in value
+        and all(part not in ("", ".", "..") for part in value.split("/")),
+        EXTERNAL_HISTORICAL_EVIDENCE_INVALID,
+        f"external historical evidence: {what} is not a canonical "
+        f"repository-relative path: {value!r}",
+    )
+    return value
+
+
+def _external_file_bytes(root: Path, relative: str, *, what: str) -> bytes:
+    """The bytes at ONE canonical locator, or fail closed.  No alternate path."""
+
+    path = root / relative
+    _require(
+        path.is_file()
+        and not path.is_symlink()
+        and path.resolve().is_relative_to(root),
+        EXTERNAL_HISTORICAL_AUTHORITY_UNAVAILABLE,
+        f"{what} is not present at its canonical locator {relative}. Historical "
+        "authority fails closed; no alternate path, copy or candidate-local "
+        "value is substituted.",
+    )
+    return path.read_bytes()
+
+
+def authenticate_pre_r8_trust_root(root: Path) -> dict[str, Any]:
+    """Authenticate the pre-R8 historical trust root through frozen Git objects.
+
+    The frozen identity (tag ref, tag object, peeled commit, path, blob and its
+    raw SHA-256) was established by the independently audited Git freeze gate
+    before Candidate R8 existed; the bundle records it, and this function
+    consumes it.  It never selects or redefines it: the ref must resolve to an
+    annotated tag object naming exactly that commit and tag, the commit must
+    contain exactly that blob at exactly that path, the blob must be the frozen
+    bytes, HEAD must still carry that blob there, the frozen commit must be in
+    the ancestry of both HEAD and the published upstream, and the working-tree
+    copy must be unaltered.  The returned ``bytes`` are the Git blob, never a
+    working-tree read.  Takes no path, ref or override: the locator is fixed.
+    """
+
+    # Lazy: the bundle imports this overlay.
+    from src.production_authority_bundle_v7_4 import (
+        PRE_R8_HISTORICAL_TRUST_ROOT as frozen,
+    )
+
+    root = Path(root).resolve()
+    bad = TRUST_ROOT_GIT_AUTHORITY_INVALID
+    label = f"pre-R8 historical trust root ({frozen.tag_ref})"
+    tag_object = _git_text(root, "rev-parse", "--verify", "--quiet", frozen.tag_ref)
+    _require(
+        tag_object == frozen.tag_object,
+        bad,
+        f"{label}: the ref resolves to {tag_object!r}, not the frozen annotated tag "
+        f"object {frozen.tag_object}.",
+    )
+    _require(
+        _git_text(root, "cat-file", "-t", frozen.tag_object) == "tag",
+        bad,
+        f"{label}: {frozen.tag_object} is not an annotated tag object.",
+    )
+    header: dict[str, str] = {}
+    for line in (_git_bytes(root, "cat-file", "tag", frozen.tag_object) or b"").split(b"\n"):
+        if not line:
+            break
+        key, _, value = line.decode("utf-8", "replace").partition(" ")
+        header.setdefault(key, value)
+    _require(
+        header.get("object") == frozen.commit
+        and header.get("type") == "commit"
+        and header.get("tag") == frozen.tag_ref.removeprefix("refs/tags/"),
+        bad,
+        f"{label}: the tag object names object={header.get('object')!r}, "
+        f"type={header.get('type')!r}, tag={header.get('tag')!r}; the frozen "
+        f"authority is commit {frozen.commit}.",
+    )
+    _require(
+        _git_text(root, "rev-parse", "--verify", "--quiet", f"{frozen.commit}^{{commit}}")
+        == frozen.commit,
+        bad,
+        f"{label}: the frozen commit {frozen.commit} is not present.",
+    )
+    _require(
+        _git_text(root, "rev-parse", "--verify", "--quiet", f"{frozen.commit}:{frozen.path}")
+        == frozen.blob,
+        bad,
+        f"{label}: commit {frozen.commit} does not carry the frozen blob "
+        f"{frozen.blob} at {frozen.path}.",
+    )
+    blob = _git_bytes(root, "cat-file", "blob", frozen.blob)
+    _require(
+        blob is not None
+        and len(blob) == frozen.byte_count
+        and hashlib.sha256(blob).hexdigest() == frozen.raw_sha256,
+        bad,
+        f"{label}: blob {frozen.blob} is not the frozen trust-root bytes.",
+    )
+    _require(
+        _git_text(root, "rev-parse", "--verify", "--quiet", f"HEAD:{frozen.path}")
+        == frozen.blob,
+        bad,
+        f"{label}: HEAD does not carry the frozen trust-root blob at "
+        f"{frozen.path}; the trust root was altered or removed after its freeze.",
+    )
+    for ref in ("HEAD", EXPECTED_UPSTREAM):
+        _require(
+            is_ancestor(root, frozen.commit, ref),
+            bad,
+            f"{label}: the frozen commit {frozen.commit} is not in the ancestry of "
+            f"{ref}, so it is not the published pre-R8 authority.",
+        )
+    live = root / frozen.path
+    _require(
+        live.is_file() and live.read_bytes() == blob,
+        bad,
+        f"{label}: the working-tree copy of {frozen.path} differs from the frozen "
+        "blob.",
+    )
+    return {
+        "tag_ref": frozen.tag_ref,
+        "tag_object": frozen.tag_object,
+        "commit": frozen.commit,
+        "path": frozen.path,
+        "blob": frozen.blob,
+        "raw_sha256": frozen.raw_sha256,
+        "byte_count": frozen.byte_count,
+        "bytes": blob,
+    }
+
+
+def _trust_root_binding_selection(blob: bytes) -> dict[str, Any]:
+    """The ONE binding the frozen trust root selects, read from its Git blob."""
+
+    from src.production_authority_bundle_v7_4 import (
+        PRE_R8_HISTORICAL_TRUST_ROOT as frozen,
+    )
+
+    bad = EXTERNAL_HISTORICAL_EVIDENCE_INVALID
+    label = "pre-R8 historical trust root"
+    record = _external_evidence_object(blob, label=label)
+    selection = record.get("canonical_r7_binding")
+    generation = record.get("r7_generation")
+    policy = record.get("override_policy")
+    excluded = record.get("excluded_predecessor")
+    termination = record.get("git_termination")
+    _require(
+        record.get("artifact_type") == PRE_R8_TRUST_ROOT_ARTIFACT_TYPE
+        and record.get("schema_version") == PRE_R8_TRUST_ROOT_SCHEMA_VERSION
+        and isinstance(selection, Mapping)
+        and isinstance(generation, Mapping)
+        and isinstance(policy, Mapping)
+        and isinstance(excluded, Mapping)
+        and isinstance(termination, Mapping),
+        bad,
+        f"{label}: not a pre-R8 historical trust-root record.",
+    )
+    _require(
+        selection.get("selection_cardinality") == "EXACTLY_ONE"
+        and selection.get("artifact_type") == R7_BINDING_ARTIFACT_TYPE
+        and selection.get("schema_version") == R7_BINDING_SCHEMA_VERSION
+        and isinstance(selection.get("byte_count"), int)
+        and not isinstance(selection.get("byte_count"), bool),
+        bad,
+        f"{label}: it does not select exactly one R7 Preservation Authority Binding.",
+    )
+    _require(
+        generation.get("candidate_id") == R7_CANDIDATE_ID
+        and generation.get("lifecycle") == R7_FAILED_LIFECYCLE
+        and excluded.get("trust_dependency") is False
+        and termination.get("canonical_tracked_path") == frozen.path,
+        bad,
+        f"{label}: its R7 generation, failed-selector exclusion or canonical "
+        "tracked path is not the frozen pre-R8 authority.",
+    )
+    overrides = {k: v for k, v in policy.items() if k.endswith("_allowed")}
+    _require(
+        bool(overrides) and all(v is False for v in overrides.values()),
+        bad,
+        f"{label}: its override policy permits a redirection: {overrides}",
+    )
+    return {
+        "locator": _evidence_relative_path(
+            selection.get("locator"), what="trust-root binding locator"
+        ),
+        "sha256": _evidence_digest(selection.get("sha256"), what="trust-root binding SHA-256"),
+        "byte_count": selection["byte_count"],
+    }
+
+
+def resolve_external_historical_authority(root: Path) -> dict[str, Any]:
+    """Derive every historical role from externally authenticated evidence.
+
+    Fail-closed and read-only.  The chain is fixed: the Git-frozen trust root
+    selects one binding; the binding's bytes must be exactly the pinned bytes;
+    the binding names one R7 preservation package whose archive, index and STOP
+    record must be exactly the bound bytes and must agree with one another
+    (archive members == index records; index and STOP record restate the
+    binding).  Only then are role identities read from that evidence:
+
+    * ``preservation:<R1..R6>:*`` from the index's own per-candidate record of
+      the predecessor packages it verified;
+    * ``preservation:<R7>:*`` from the binding's canonical package;
+    * ``predecessor:*`` (the R7 implementation digest, checkpoint and manifest)
+      from the binding, cross-checked against the index and the STOP record;
+    * ``predecessor:repository_eol_policy`` from the archived R7 EOL policy;
+    * the R7 bytes of every path of R7's preserved surface, for change sets.
+
+    There is no parameter through which a caller could name another path, ref
+    or binding, and no fallback when any of it is missing.
+    """
+
+    root = Path(root).resolve()
+    bad = EXTERNAL_HISTORICAL_EVIDENCE_INVALID
+    trust = authenticate_pre_r8_trust_root(root)
+    selection = _trust_root_binding_selection(trust["bytes"])
+
+    locator = selection["locator"]
+    raw = _external_file_bytes(
+        root, locator, what="The accepted R7 Preservation Authority Binding"
+    )
+    _require(
+        len(raw) == selection["byte_count"]
+        and hashlib.sha256(raw).hexdigest() == selection["sha256"],
+        bad,
+        f"R7 binding at {locator}: its raw bytes are not the bytes the frozen trust "
+        f"root pins ({selection['sha256']}).",
+    )
+    binding = _external_evidence_object(raw, label="R7 Preservation Authority Binding")
+    _require(
+        binding.get("artifact_type") == R7_BINDING_ARTIFACT_TYPE
+        and binding.get("schema_version") == R7_BINDING_SCHEMA_VERSION
+        and binding.get("predecessor_generation") == "R7"
+        and binding.get("predecessor_candidate_id") == R7_CANDIDATE_ID
+        and binding.get("predecessor_lifecycle") == R7_FAILED_LIFECYCLE
+        and isinstance(binding.get("canonical_package"), Mapping)
+        and isinstance(binding.get("predecessor_identities"), Mapping),
+        bad,
+        "R7 binding: it is not the failed-R7 preservation authority binding.",
+    )
+
+    # The R7 preservation package, exactly as bound.
+    package = binding["canonical_package"]
+    directory = _evidence_relative_path(package.get("directory"), what="R7 package directory")
+    bound: dict[str, tuple[str, str]] = {}
+    blobs: dict[str, bytes] = {}
+    for field in HISTORICAL_ROLE_PRESERVATION_FIELDS:
+        entry = package.get(field)
+        _require(isinstance(entry, Mapping), bad, f"R7 binding: no canonical {field}.")
+        relative = _evidence_relative_path(entry.get("path"), what=f"R7 package {field}")
+        digest = _evidence_digest(entry.get("sha256"), what=f"R7 package {field}")
+        _require(
+            relative.rsplit("/", 1)[0] == directory,
+            bad,
+            f"R7 binding: the {field} {relative} is outside the package directory.",
+        )
+        data = _external_file_bytes(root, relative, what=f"The R7 preservation {field}")
+        _require(
+            hashlib.sha256(data).hexdigest() == digest,
+            bad,
+            f"R7 preservation {field} at {relative}: live bytes are not the bound "
+            f"bytes {digest}.",
+        )
+        bound[field] = (relative, digest)
+        blobs[field] = data
+
+    identities = binding["predecessor_identities"]
+    implementation = identities.get("implementation")
+    _require(
+        isinstance(implementation, Mapping)
+        and implementation.get("path_count") == len(ACCEPTED_IMPLEMENTATION_PATHS),
+        bad,
+        "R7 binding: the predecessor implementation identity is malformed.",
+    )
+    r7_digest = _evidence_digest(
+        implementation.get("digest"), what="R7 implementation digest"
+    )
+    artifacts: dict[str, tuple[str, str]] = {}
+    for field in ("checkpoint", "manifest", "change_ledger"):
+        entry = identities.get(field)
+        _require(isinstance(entry, Mapping), bad, f"R7 binding: no predecessor {field}.")
+        artifacts[field] = (
+            _evidence_relative_path(entry.get("path"), what=f"R7 {field}"),
+            _evidence_digest(entry.get("sha256"), what=f"R7 {field}"),
+        )
+
+    index = _external_evidence_object(blobs["index"], label="R7 raw-byte index")
+    _require(
+        index.get("artifact_type") == R7_INDEX_ARTIFACT_TYPE
+        and index.get("preserved_candidate_id") == R7_CANDIDATE_ID
+        and index.get("preserved_implementation_digest") == r7_digest
+        and isinstance(index.get("archive"), Mapping)
+        and index["archive"].get("path") == bound["archive"][0]
+        and index["archive"].get("sha256") == bound["archive"][1],
+        bad,
+        "R7 raw-byte index: it does not describe the bound R7 archive and "
+        "implementation identity.",
+    )
+    for field in ("checkpoint", "manifest", "change_ledger"):
+        entry = index.get(f"candidate_{field}")
+        _require(
+            isinstance(entry, Mapping)
+            and (entry.get("path"), entry.get("raw_sha256")) == artifacts[field],
+            bad,
+            f"R7 raw-byte index: its candidate {field} disagrees with the binding.",
+        )
+    members = index.get("members")
+    _require(
+        isinstance(members, list) and members,
+        bad,
+        "R7 raw-byte index: no archive members.",
+    )
+    try:
+        archive = zipfile.ZipFile(io.BytesIO(blobs["archive"]))
+        names = archive.namelist()
+        archived = {name: hashlib.sha256(archive.read(name)).hexdigest() for name in names}
+    except Exception as exc:  # pragma: no cover - any archive defect fails closed
+        raise U06LifecycleError(bad, f"R7 archive: unreadable ({exc}).") from exc
+    recorded = {}
+    for entry in members:
+        _require(
+            isinstance(entry, Mapping)
+            and isinstance(entry.get("archive_member_path"), str)
+            and entry.get("archive_member_path") == entry.get("original_repository_path"),
+            bad,
+            "R7 raw-byte index: a member record is malformed.",
+        )
+        recorded[entry["archive_member_path"]] = _evidence_digest(
+            entry.get("raw_sha256"), what=f"R7 member {entry['archive_member_path']}"
+        )
+    _require(
+        len(names) == len(set(names)) and archived == recorded,
+        bad,
+        "R7 archive: its members are not exactly the bytes its raw-byte index "
+        "records.",
+    )
+
+    stop = _external_evidence_object(blobs["stop_record"], label="R7 STOP record")
+    preserved = stop.get("preservation_package")
+    _require(
+        stop.get("artifact_type") == R7_STOP_RECORD_ARTIFACT_TYPE
+        and stop.get("candidate_id") == R7_CANDIDATE_ID
+        and stop.get("lifecycle_status") == R7_FAILED_LIFECYCLE
+        and stop.get("candidate_implementation_digest") == r7_digest
+        and isinstance(preserved, Mapping)
+        and (preserved.get("archive_path"), preserved.get("archive_sha256"))
+        == bound["archive"]
+        and (preserved.get("byte_index_path"), preserved.get("byte_index_sha256"))
+        == bound["index"],
+        bad,
+        "R7 STOP record: it does not record the failed R7 candidate and the bound "
+        "archive and index.",
+    )
+    for field in ("checkpoint", "manifest", "change_ledger"):
+        entry = stop.get(f"candidate_{field}")
+        _require(
+            isinstance(entry, Mapping)
+            and (entry.get("path"), entry.get("sha256")) == artifacts[field],
+            bad,
+            f"R7 STOP record: its candidate {field} disagrees with the binding.",
+        )
+
+    # Role derivation: semantics from the evidence's own structure only.
+    roles: dict[str, tuple[str | None, str]] = {}
+    packages: dict[str, dict[str, str]] = {}
+
+    def record_package(candidate: str, files: Mapping[str, tuple[str, str]]) -> None:
+        directories = {relative.rsplit("/", 1)[0] for relative, _ in files.values()}
+        _require(
+            candidate not in packages and len(directories) == 1,
+            bad,
+            f"external historical evidence: the {candidate} package is duplicated "
+            "or not one directory.",
+        )
+        packages[candidate] = {"directory": directories.pop()}
+        for field, (relative, digest) in files.items():
+            packages[candidate][field] = relative.rsplit("/", 1)[1]
+            roles[preservation_role(candidate, field)] = (relative, digest)
+
+    verified = index.get("predecessor_preservation_packages_verified")
+    _require(
+        isinstance(verified, list)
+        and [e.get("candidate_id") if isinstance(e, Mapping) else None for e in verified]
+        == list(INDEX_AUTHENTICATED_PREDECESSORS),
+        bad,
+        "R7 raw-byte index: it does not record exactly the R1-R6 preservation "
+        "packages it verified.",
+    )
+    for entry in verified:
+        record_package(
+            entry["candidate_id"],
+            {
+                field: (
+                    _evidence_relative_path(
+                        entry.get(f"{field}_path"),
+                        what=f"{entry['candidate_id']} {field}",
+                    ),
+                    _evidence_digest(
+                        entry.get(f"{field}_sha256"),
+                        what=f"{entry['candidate_id']} {field}",
+                    ),
+                )
+                for field in HISTORICAL_ROLE_PRESERVATION_FIELDS
+            },
+        )
+    record_package(R7_CANDIDATE_ID, bound)
+    roles[PREDECESSOR_ROLE_IMPLEMENTATION_DIGEST] = (None, r7_digest)
+    roles[PREDECESSOR_ROLE_CHECKPOINT] = artifacts["checkpoint"]
+    roles[PREDECESSOR_ROLE_MANIFEST] = artifacts["manifest"]
+
+    surface: dict[str, str] = {}
+    for section, key in R7_SURFACE_SECTIONS:
+        entries = index.get(section)
+        _require(isinstance(entries, list), bad, f"R7 raw-byte index: no {section}.")
+        for entry in entries:
+            relative = _evidence_relative_path(
+                entry.get(key) if isinstance(entry, Mapping) else None,
+                what=f"R7 {section} path",
+            )
+            digest = _evidence_digest(entry.get("raw_sha256"), what=f"R7 {relative}")
+            _require(
+                surface.setdefault(relative, digest) == digest,
+                bad,
+                f"R7 raw-byte index: {relative} carries two different R7 identities.",
+            )
+    eol = [
+        m for m in members
+        if m.get("original_repository_path") == EOL_POLICY_RELATIVE_PATH
+        and m.get("role") == "REPOSITORY_EOL_POLICY"
+    ]
+    _require(
+        len(eol) == 1,
+        bad,
+        "R7 raw-byte index: it does not archive exactly one R7 EOL policy.",
+    )
+    roles[PREDECESSOR_ROLE_EOL_POLICY] = (EOL_POLICY_RELATIVE_PATH, eol[0]["raw_sha256"])
+
+    return {
+        "trust_root": {k: v for k, v in trust.items() if k != "bytes"},
+        "binding": {
+            "path": locator,
+            "sha256": selection["sha256"],
+            "byte_count": selection["byte_count"],
+        },
+        "predecessor_candidate_id": R7_CANDIDATE_ID,
+        "roles": roles,
+        "preservation_packages": packages,
+        "predecessor_surface": surface,
+    }
+
+
+def external_predecessor_change_set(
+    root: Path, authority: Mapping[str, Any]
+) -> dict[str, str]:
+    """Every R7-surface path whose live bytes are not R7's -> R7's raw SHA-256.
+
+    The predecessor change set, derived in every mode from the authenticated R7
+    surface and live bytes - never from a candidate's own list.  An absent path
+    counts as changed, so missing historical bytes fail closed downstream.
+    """
+
+    root = Path(root).resolve()
+    changed: dict[str, str] = {}
+    for relative, recorded in authority["predecessor_surface"].items():
+        path = root / relative
+        if not path.is_file() or sha256_file(path) != recorded:
+            changed[relative] = recorded
+    return changed
+
+
+def historical_role_identities(*, label: str) -> dict[str, tuple[str | None, str]]:
+    """The bundle's candidate-local DIAGNOSTIC historical table, shape-checked.
+
+    Never an authority: :class:`_RoleBinding` requires it to equal the external
+    derivation exactly and never reads a value from it.  Fails closed on a
+    duplicate role, a malformed role name, path or digest.  Read-only.
+    """
+
+    # Lazy: the bundle imports this overlay.
+    from src.production_authority_bundle_v7_4 import HISTORICAL_ROLE_IDENTITIES
+
+    out: dict[str, tuple[str | None, str]] = {}
+    for entry in HISTORICAL_ROLE_IDENTITIES:
+        role = entry.role
+        _require(
+            role not in out,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: historical role {role!r} is listed twice.",
+        )
+        _require(
+            is_historical_role(role)
+            and (entry.relative_path is None or isinstance(entry.relative_path, str))
+            and isinstance(entry.sha256, str)
+            and bool(_SHA256_VALUE_RE.match(entry.sha256)),
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: historical role {role!r} is malformed.",
+        )
+        out[role] = (entry.relative_path, entry.sha256)
+    return out
+
+
+def _require_declared_schema_agrees(
+    authority: Mapping[str, Any], *, label: str
+) -> None:
+    """This source's declared package/predecessor schema equals the evidence."""
+
+    declared = required_historical_roles()
+    derived = {role: entry[0] for role, entry in authority["roles"].items()}
+    _require(
+        declared == derived,
+        EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH,
+        f"{label}: the declared historical role schema disagrees with the "
+        "externally authenticated evidence: "
+        f"undeclared={sorted(set(derived) - set(declared))}, "
+        f"unevidenced={sorted(set(declared) - set(derived))}, "
+        f"other_path={sorted(r for r in set(declared) & set(derived) if declared[r] != derived[r])}",
+    )
+    for candidate, layout in authority["preservation_packages"].items():
+        declared_layout = CANDIDATE_PRESERVATION_PACKAGES.get(candidate, {})
+        _require(
+            all(declared_layout.get(k) == v for k, v in layout.items()),
+            EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH,
+            f"{label}: the declared {candidate} package layout disagrees with the "
+            "externally authenticated evidence.",
+        )
+
+
+def _require_local_table_agrees(
+    derived: Mapping[str, tuple[str | None, str]], *, label: str
+) -> None:
+    """The candidate-local diagnostic table equals the external derivation."""
+
+    local = historical_role_identities(label=label)
+    differing = sorted(
+        role
+        for role in set(local) | set(derived)
+        if local.get(role) != derived.get(role)
+    )
+    _require(
+        not differing,
+        EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH,
+        f"{label}: the candidate-local historical table disagrees with the "
+        f"externally authenticated historical derivation for roles {differing}. "
+        "Candidate-local values are diagnostic only and never authoritative.",
+    )
+
+
+class _RoleBinding:
+    """The ONE way an identity is accepted: bound to a role and an authority.
+
+    Shared by the candidate-manifest and change-ledger validations.  A verifier
+    calls :meth:`bind` for every pointer it accepts; :func:`_verify_owned_
+    identities` then requires every collected identity to be bound.  Nothing
+    is ever accepted on structure alone, in any mode, and no historical value
+    is ever taken from candidate-controlled material (contract V4).
+    """
+
+    def __init__(self, root: Path, mode: str, label: str) -> None:
+        self.root = root
+        self.mode = mode
+        self.label = label
+        #: pointer -> the independently established value for its role.
+        self.authority: dict[tuple[Any, ...], str] = {}
+        #: pointer -> the role it was bound to.
+        self.roles: dict[tuple[Any, ...], str] = {}
+        self._external: Mapping[str, Any] | None = None
+        self._historical: dict[str, tuple[str | None, str]] | None = None
+        self._proved: set[str] = set()
+
+    # -- authorities ---------------------------------------------------------
+
+    @property
+    def proves_preserved_bytes(self) -> bool:
+        """``CANDIDATE_PACKAGE`` additionally proves the R1-R7 files are live."""
+
+        return self.mode == CANDIDATE_MANIFEST_MODE_CANDIDATE_PACKAGE
+
+    def live_sha(self, relative: str, *, field: str) -> str:
+        path = self.root / relative
+        _require(
+            path.is_file(),
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{self.label}: {field} names a file that does not exist: {relative}",
+        )
+        return sha256_file(path)
+
+    def external(self) -> Mapping[str, Any]:
+        """The externally authenticated historical authority, resolved once."""
+
+        if self._external is None:
+            authority = resolve_external_historical_authority(self.root)
+            _require_declared_schema_agrees(authority, label=self.label)
+            self._external = authority
+        return self._external
+
+    def predecessor_change_set(self) -> dict[str, str]:
+        return external_predecessor_change_set(self.root, self.external())
+
+    def historical_roles(self) -> dict[str, tuple[str | None, str]]:
+        """Every historical role -> its EXTERNALLY established (path, digest).
+
+        The preservation and predecessor roles come from the authenticated
+        evidence; the modified-file roles are the externally derived change set.
+        The candidate-local table must equal this exactly; it is never read for
+        a value, and nothing here falls back to it.
+        """
+
+        if self._historical is None:
+            derived = dict(self.external()["roles"])
+            for relative, digest in self.predecessor_change_set().items():
+                derived[predecessor_modified_file_role(relative)] = (relative, digest)
+            _require_local_table_agrees(derived, label=self.label)
+            self._historical = derived
+        return self._historical
+
+    def historical(self, role: str) -> str:
+        """The externally established value of a historical role."""
+
+        entry = self.historical_roles().get(role)
+        _require(
+            entry is not None,
+            EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH,
+            f"{self.label}: {role!r} is not a role of the externally authenticated "
+            "historical evidence.",
+        )
+        path, digest = entry
+        if self.proves_preserved_bytes and role not in self._proved:
+            self._prove_historical(role, path, digest)
+            self._proved.add(role)
+        return digest
+
+    def _prove_historical(self, role: str, path: str | None, digest: str) -> None:
+        """``CANDIDATE_PACKAGE``: the described historical files are live too."""
+
+        if role.startswith("preservation:") or role in (
+            PREDECESSOR_ROLE_CHECKPOINT,
+            PREDECESSOR_ROLE_MANIFEST,
+        ):
+            _require_live_match(
+                self.root, str(path), digest, label=self.label, field=f"historical role {role}"
+            )
+        elif role == PREDECESSOR_ROLE_IMPLEMENTATION_DIGEST:
+            manifest = _strict_json_object(
+                (self.root / CONTRACT_V4_PREDECESSOR_DEFECT["manifest_path"]).read_bytes(),
+                label="predecessor candidate manifest",
+            )
+            _require(
+                manifest.get("implementation_identity_digest") == digest,
+                EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH,
+                f"{self.label}: the externally established predecessor "
+                "implementation digest is not the predecessor manifest's own.",
+            )
+
+    # -- binding -------------------------------------------------------------
+
+    def bind(self, pointer: tuple[Any, ...], value: str, expected: Any, role: str) -> None:
+        """Accept ``value`` at ``pointer`` only as ``role``'s authority value."""
+
+        dotted = ".".join(map(str, pointer))
+        _require(
+            isinstance(expected, str) and bool(_SHA256_VALUE_RE.match(expected)),
+            "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+            f"{self.label}: {dotted} has no independently established value for "
+            f"its role {role!r}.",
+        )
+        _require(
+            pointer not in self.authority,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{self.label}: {dotted} is bound to two roles "
+            f"({self.roles.get(pointer)!r}, {role!r}).",
+        )
+        historical = is_historical_role(role)
+        _require(
+            value == expected,
+            EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH
+            if historical
+            else "U06_ROLE_TARGET_MISMATCH",
+            f"{self.label}: {dotted} holds {value}, but its role {role!r} is "
+            + (
+                "established by the externally authenticated historical authority "
+                if historical
+                else "independently established "
+            )
+            + f"as {expected}. A digest lawful for one role is never accepted in "
+            "another.",
+        )
+        self.authority[pointer] = expected
+        self.roles[pointer] = role
+
+
+class _ContractContext(_RoleBinding):
+    """Shared, lazily computed live identities for one contract validation."""
+
+    def __init__(
+        self,
+        root: Path,
+        payload: Mapping[str, Any],
+        generation: AuthorityGeneration,
+        mode: str,
+        label: str,
+    ) -> None:
+        super().__init__(root, mode, label)
+        self.payload = payload
+        self.generation = generation
+        self._identity: dict[str, str] | None = None
+        #: Filled by the ``C9`` verifier: the validated ledger's report.
+        self.ledger_report: dict[str, Any] | None = None
+
+    def live_identity(self) -> dict[str, str]:
+        if self._identity is None:
+            self._identity = implementation_identity(self.root)
+        return self._identity
+
+    def live_digest(self) -> str:
+        return canonical_identity_digest(self.live_identity())
+
+
+_Item = tuple[tuple[Any, ...], str, IdentityObligation]
+
+
+def _verify_candidate_checkpoint(ctx: _ContractContext, items: list[_Item]):
+    _require(
+        [item[0] for item in items] == [("candidate_checkpoint", "sha256")],
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: exactly one candidate checkpoint identity is required; "
+        f"observed {[item[0] for item in items]}",
+    )
+    pointer, value, _ = items[0]
+    relative = ctx.generation.candidate_checkpoint_path
+    ctx.bind(
+        pointer,
+        value,
+        ctx.live_sha(relative, field="candidate_checkpoint"),
+        f"candidate_checkpoint:{relative}",
+    )
+
+
+def _verify_implementation_digest(ctx: _ContractContext, items: list[_Item]):
+    expected = {
+        ("implementation_identity_digest",),
+        ("implementation_identity", "implementation_digest"),
+    }
+    observed = [item[0] for item in items]
+    _require(
+        len(observed) == 2 and set(observed) == expected,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: both implementation-digest identities are required; "
+        f"observed {observed}",
+    )
+    live = ctx.live_digest()
+    for pointer, value, _ in items:
+        _require(
+            value == live,
+            "U06_IMPLEMENTATION_IDENTITY_DRIFT",
+            f"{ctx.label}: {'.'.join(map(str, pointer))} declares {value} but the "
+            f"live accepted implementation digest is {live}.",
+        )
+        ctx.bind(pointer, value, live, "live_implementation_digest")
+    paths = ctx.payload["implementation_identity"]["paths"]
+    reproduced = canonical_identity_digest(paths) if isinstance(paths, Mapping) else None
+    _require(
+        reproduced == live,
+        "U06_IMPLEMENTATION_IDENTITY_DRIFT",
+        f"{ctx.label}: the declared implementation paths map does not reproduce "
+        f"the declared digest (reproduced={reproduced}, live={live}).",
+    )
+
+
+def _verify_implementation_paths(ctx: _ContractContext, items: list[_Item]):
+    declared = {str(item[0][2]): item[1] for item in items}
+    _require(
+        set(declared) == set(ACCEPTED_IMPLEMENTATION_PATHS)
+        and len(items) == len(ACCEPTED_IMPLEMENTATION_PATHS),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: implementation_identity.paths must declare exactly the "
+        f"{len(ACCEPTED_IMPLEMENTATION_PATHS)} accepted implementation paths; "
+        f"missing={sorted(set(ACCEPTED_IMPLEMENTATION_PATHS) - set(declared))}, "
+        f"extra={sorted(set(declared) - set(ACCEPTED_IMPLEMENTATION_PATHS))}",
+    )
+    live = ctx.live_identity()
+    for pointer, value, _ in items:
+        relative = str(pointer[2])
+        _require(
+            value == live[relative],
+            "U06_IMPLEMENTATION_IDENTITY_DRIFT",
+            f"{ctx.label}: implementation_identity.paths[{relative}] declares "
+            f"{value} but live bytes hash to {live[relative]}.",
+        )
+        ctx.bind(pointer, value, live[relative], f"implementation_path:{relative}")
+
+
+def _verify_bundle_pins(ctx: _ContractContext, items: list[_Item]):
+    # Lazy: the bundle imports this overlay.
+    from src.production_authority_bundle_v7_4 import all_pins
+
+    by_label = {pin.label: pin for pin in all_pins()}
+    pin_items = [i for i in items if i[0][:2] == ("authority_bundle", "pins")]
+    labels = [str(i[0][2]) for i in pin_items]
+    _require(
+        sorted(labels) == sorted(by_label),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: authority_bundle.pins must restate exactly the "
+        f"{len(by_label)} declared bundle pins; "
+        f"missing={sorted(set(by_label) - set(labels))}, "
+        f"extra={sorted(set(labels) - set(by_label))}",
+    )
+    restated = {
+        ("repository_eol_policy", "sha256"): "repository_eol_policy",
+        ("parameter_registry_durability", "canonical_sha256"): "parameter_registry",
+    }
+    other = [i[0] for i in items if i[0][:2] != ("authority_bundle", "pins")]
+    _require(
+        sorted(other) == sorted(restated),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: restated pins must be exactly {sorted(restated)}; "
+        f"observed {sorted(other)}",
+    )
+    for pointer, value, _ in items:
+        label = str(pointer[2]) if pointer[:2] == ("authority_bundle", "pins") else restated[pointer]
+        pin = by_label[label]
+        holder = _resolve_pointer(ctx.payload, pointer[:-1])
+        _require(
+            holder.get("path") == pin.relative_path,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{ctx.label}: pin {label!r} is restated for path "
+            f"{holder.get('path')!r} but the bundle pins {pin.relative_path}.",
+        )
+        ctx.bind(pointer, value, pin.sha256, f"bundle_pin:{label}")
+
+
+def _verify_durable_pinned(ctx: _ContractContext, items: list[_Item]):
+    expected = _required_durable_publication_sha256()
+    declared = {str(item[0][2]): item[1] for item in items}
+    _require(
+        set(declared) == set(REQUIRED_DURABLE_PUBLICATION_PIN_LABELS)
+        and len(items) == len(REQUIRED_DURABLE_PUBLICATION_PIN_LABELS),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: expected_raw_sha256 is required for exactly the pinned "
+        f"durable paths {sorted(REQUIRED_DURABLE_PUBLICATION_PIN_LABELS)} and "
+        f"forbidden elsewhere; observed {sorted(declared)}",
+    )
+    for pointer, value, _ in items:
+        relative = str(pointer[2])
+        canonical = expected.get(relative)
+        _require(
+            canonical is not None,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{ctx.label}: durable declaration for {relative} has no resolvable "
+            "authority pin.",
+        )
+        ctx.bind(
+            pointer,
+            value,
+            canonical,
+            f"bundle_pin:{REQUIRED_DURABLE_PUBLICATION_PIN_LABELS[relative]}",
+        )
+
+
+def _verify_preservation(ctx: _ContractContext, items: list[_Item]):
+    """``C6``: each preservation file identity is ITS external historical role."""
+
+    packages = ctx.payload.get("candidate_preservation_packages")
+    _require(
+        isinstance(packages, Mapping)
+        and set(packages) == set(CANDIDATE_PRESERVATION_PACKAGES),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: candidate_preservation_packages must name exactly "
+        f"{sorted(CANDIDATE_PRESERVATION_PACKAGES)}",
+    )
+    expected_pointers: set[tuple[Any, ...]] = set()
+    for candidate, declared in CANDIDATE_PRESERVATION_PACKAGES.items():
+        entry = packages[candidate]
+        _require(
+            isinstance(entry, Mapping) and set(entry) == PRESERVATION_ENTRY_KEYS,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{ctx.label}: preservation entry {candidate} must have exactly "
+            f"{sorted(PRESERVATION_ENTRY_KEYS)}",
+        )
+        directory = declared["directory"]
+        for field, want in (
+            ("directory", directory),
+            ("stop_class", declared["stop_class"]),
+            ("archive_path", f"{directory}/{declared['archive']}"),
+            ("index_path", f"{directory}/{declared['index']}"),
+            ("stop_record_path", f"{directory}/{declared['stop_record']}"),
+        ):
+            _require(
+                entry.get(field) == want,
+                "U06_ROLE_TARGET_MISMATCH",
+                f"{ctx.label}: preservation {candidate}.{field} must be "
+                f"{want!r}; observed {entry.get(field)!r}",
+            )
+        for key in ("archive_sha256", "index_sha256", "stop_record_sha256"):
+            expected_pointers.add(("candidate_preservation_packages", candidate, key))
+    _require(
+        {item[0] for item in items} == expected_pointers
+        and len(items) == len(expected_pointers),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: every preservation package needs exactly its three "
+        "raw SHA-256 identities.",
+    )
+    for pointer, value, _ in items:
+        candidate, key = str(pointer[1]), str(pointer[2])
+        role = preservation_role(candidate, key[: -len("_sha256")])
+        ctx.bind(pointer, value, ctx.historical(role), role)
+
+
+def _verify_predecessor_evidence(ctx: _ContractContext, items: list[_Item]):
+    """``C7`` (contract V3): typed evidence of the IMMEDIATE predecessor, R6."""
+
+    base = ("package_binding", "predecessor_defect")
+    roles = {
+        ("implementation_identity", "predecessor_digest"): (
+            PREDECESSOR_ROLE_IMPLEMENTATION_DIGEST
+        ),
+        base + ("predecessor_candidate_checkpoint", "raw_sha256"): (
+            PREDECESSOR_ROLE_CHECKPOINT
+        ),
+        base + ("predecessor_candidate_manifest", "raw_sha256"): PREDECESSOR_ROLE_MANIFEST,
+    }
+    _require(
+        {item[0] for item in items} == set(roles) and len(items) == len(roles),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: predecessor-defect evidence identities are incomplete or "
+        "extra.",
+    )
+    _require(
+        ctx.payload["implementation_identity"]["predecessor_digest"]
+        != ctx.payload["implementation_identity"]["implementation_digest"],
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: the predecessor implementation digest equals the current "
+        "one, so it would be a carried-forward identity, not history.",
+    )
+    for pointer, value, _ in items:
+        ctx.bind(pointer, value, ctx.historical(roles[pointer]), roles[pointer])
+
+
+def _verify_candidate_change_ledger(ctx: _ContractContext, items: list[_Item]):
+    """``C9``: the bound ledger is exactly the live ledger, and it is valid."""
+
+    _require(
+        [item[0] for item in items] == [("candidate_change_ledger", "sha256")],
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: exactly one candidate change ledger identity is required; "
+        f"observed {[item[0] for item in items]}",
+    )
+    pointer, value, _ = items[0]
+    relative = ctx.payload["candidate_change_ledger"]["path"]
+    ctx.bind(
+        pointer,
+        value,
+        ctx.live_sha(relative, field="candidate_change_ledger"),
+        f"candidate_change_ledger:{relative}",
+    )
+    ctx.ledger_report = validate_candidate_change_ledger(
+        ctx.root,
+        (ctx.root / relative).read_bytes(),
+        ctx.payload,
+        ctx.generation,
+        mode=ctx.mode,
+        live_identity=ctx.live_identity(),
+    )
+
+
+def _own_identity_pointers(
+    identities: Sequence[tuple[tuple[Any, ...], str]],
+    obligations: Sequence[IdentityObligation],
+    label: str,
+) -> dict[str, list[_Item]]:
+    """Give every identity pointer to exactly one declared obligation."""
+
+    owned: dict[str, list[_Item]] = {o.kind: [] for o in obligations}
+    for pointer, value in identities:
+        owners = [o for o in obligations if _pointer_matches(o.pattern, pointer)]
+        _require(
+            bool(owners),
+            "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+            f"{label}: {'.'.join(map(str, pointer))} carries a raw SHA-256 that "
+            "no declared identity obligation owns.",
+        )
+        _require(
+            len(owners) == 1,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: {'.'.join(map(str, pointer))} is claimed by "
+            f"{len(owners)} obligations; ownership must be exclusive.",
+        )
+        owned.setdefault(owners[0].kind, []).append((pointer, value, owners[0]))
+    return owned
+
+
+def _verify_owned_identities(
+    owned: Mapping[str, list[_Item]],
+    identities: Sequence[tuple[tuple[Any, ...], str]],
+    verifiers: Mapping[str, Any],
+    context: _RoleBinding,
+    label: str,
+) -> tuple[set[tuple[Any, ...]], set[tuple[Any, ...]]]:
+    """Run every obligation's verifier, then prove role-binding parity.
+
+    ``R6-AUD-01``: there is no structural class.  Every collected identity must
+    have been bound by its verifier to one role whose value was established
+    independently, and must still equal that value.  Returns ``(bound,
+    set())``; the empty second element keeps the historical report shape.
+    """
+
+    for kind in sorted(owned):
+        verifier = verifiers.get(kind)
+        _require(
+            verifier is not None,
+            "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+            f"{label}: obligation kind {kind!r} has no verifier.",
+        )
+        verifier(context, owned[kind])
+    collected = dict(identities)
+    bound = context.authority
+    unbound = set(collected) - set(bound)
+    _require(
+        not unbound and set(bound) <= set(collected) and len(collected) == len(identities),
+        "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+        f"{label}: role-binding parity failed: collected={len(collected)}, "
+        f"bound={len(bound)}; every identity must be bound to one role with an "
+        "independently established value, and none may be accepted on "
+        f"structure alone. unbound={sorted('.'.join(map(str, p)) for p in unbound)}",
+    )
+    mismatched = sorted(
+        ".".join(map(str, p)) for p, value in collected.items() if bound[p] != value
+    )
+    _require(
+        not mismatched,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: identities differ from their role's authority value: {mismatched}",
+    )
+    return set(bound), set()
+
+
+def _strict_equal(a: Any, b: Any) -> bool:
+    """Type-strict structural equality (``False`` is never ``0``)."""
+
+    return json.dumps(a, sort_keys=True) == json.dumps(b, sort_keys=True)
+
+
+# ---------------------------------------------------------------------------
+# Candidate R6: the closed-world candidate change / reproducibility ledger
+# ---------------------------------------------------------------------------
+#
+# The ledger is an INDEX of what a candidate changed and why; the raw-byte
+# difference stays the authoritative modification evidence.  It still states
+# raw SHA-256 identities, and an identity no validator checks is exactly the
+# ``R4-AUD-01`` defect class.  So the ledger is bound by the manifest (``C9``)
+# and every identity it states is owned by one ledger obligation and verified.
+#
+# Candidate R7 (``R6-AUD-01``): under contract V2 the predecessor,
+# modified-file-predecessor and executed-suite identities were STRUCTURAL in
+# GATE mode, so a swap applied consistently to the ledger and the manifest was
+# undetectable there.  Under V3 every ledger identity is bound, in every mode,
+# to one role whose value is established independently: live bytes, the live
+# implementation identity, a bundle pin, or a pinned historical role identity.
+# CANDIDATE_PACKAGE mode additionally proves those historical pins against the
+# immutable predecessor bytes and its raw-byte index, and proves the
+# modified-file list COMPLETE over the predecessor's preserved surface.
+#
+# Candidate R8 (``R7-AUD-01``, contract V4): the historical values, and the
+# modified-file change set itself, are derived in EVERY mode from the
+# externally authenticated R7 evidence (see ``_RoleBinding``); no ledger
+# identity takes its expected value from candidate-controlled material.
+
+CANDIDATE_CHANGE_LEDGER_SCHEMA_SUFFIX = "candidate-change-ledger-v1"
+CANDIDATE_CHANGE_LEDGER_ARTIFACT_TYPE_SUFFIX = "CANDIDATE_CHANGE_LEDGER"
+CANDIDATE_CHANGE_LEDGER_SEMANTICS = (
+    "INDEX_OF_CANDIDATE_CHANGES_RAW_BYTE_DIFFERENCE_IS_AUTHORITATIVE"
+)
+CANDIDATE_CHANGE_LEDGER_KEYS: frozenset[str] = frozenset(
+    {
+        "schema_version",
+        "artifact_type",
+        "ledger_semantics",
+        "generation_id",
+        "lineage_id",
+        "candidate_id",
+        "candidate_artifact_paths",
+        "predecessor",
+        "modified_files",
+        "implementation_identity",
+        "authority_route",
+        "scientific_authority",
+        "tests_executed",
+        "execution_status",
+        "lifecycle_status",
+    }
+)
+LEDGER_MODIFICATION_CLASSES: frozenset[str] = frozenset(
+    {
+        "LIFECYCLE_VALIDATOR_CORRECTION",
+        "CANDIDATE_POINTER_ADVANCE",
+        "AUTHORITY_PIN_VALUE_UPDATE",
+        #: Candidate R7: bundle pin values plus the new pinned historical role
+        #: identities (``R6-AUD-01``).
+        "AUTHORITY_PIN_VALUE_UPDATE_AND_HISTORICAL_ROLE_IDENTITIES",
+        #: Candidate R8: bundle pin values, the consumed Git-frozen trust-root
+        #: identity, and the historical table demoted to a diagnostic assertion
+        #: of the external derivation (``R7-AUD-01``).
+        "AUTHORITY_PIN_VALUE_UPDATE_AND_EXTERNAL_TRUST_ROOT_IDENTITY",
+        #: Candidate R8: negative controls realigned to the external historical
+        #: authority, with the current-candidate pointer advanced.
+        "TEST_NEGATIVE_CONTROL_ALIGNMENT_TO_EXTERNAL_HISTORICAL_AUTHORITY",
+        "EOL_POLICY_EXACT_PATH_EXTENSION",
+        "TEST_SAFETY_CORRECTION_AND_NEGATIVE_CONTROLS",
+        "TEST_CURRENT_CANDIDATE_POINTER_UPDATE",
+    }
+)
+LEDGER_TEST_RESULTS: frozenset[str] = frozenset({"OK", "FAILED", "NOT_RUN"})
+#: The one implementation-digest algorithm, stated identically everywhere.
+IMPLEMENTATION_DIGEST_ALGORITHM = (
+    "sha256 over json.dumps({path: sha256}, sort_keys=True, "
+    "separators=(',',':')) encoded utf-8"
+)
+LEDGER_SCIENTIFIC_PIN_LABELS: tuple[str, ...] = (
+    "framework_v7_4",
+    "registry_v7_4",
+    "canonical_planning_input",
+)
+LEDGER_EXECUTION_STATUS: Mapping[str, Any] = {
+    "production_solve": False,
+    "main_full81_execution": False,
+    "real_21c": False,
+    "real_21d": False,
+    "production_model_constructions": 0,
+    "optimize_calls": 0,
+    "milp_solves": 0,
+    "full81_cases": 0,
+    "a2_actions": 0,
+}
+
+CANDIDATE_CHANGE_LEDGER_IDENTITY_OBLIGATIONS: tuple[IdentityObligation, ...] = (
+    IdentityObligation(
+        "L1", "ledger_predecessor",
+        ("predecessor", "preserved_identity", "implementation_digest"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor implementation digest.",
+    ),
+    IdentityObligation(
+        "L1", "ledger_predecessor",
+        ("predecessor", "preserved_identity", "checkpoint", "raw_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor checkpoint raw SHA-256.",
+    ),
+    IdentityObligation(
+        "L1", "ledger_predecessor",
+        ("predecessor", "preserved_identity", "manifest", "raw_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor manifest raw SHA-256.",
+    ),
+    IdentityObligation(
+        "L1", "ledger_predecessor",
+        ("predecessor", "preserved_identity", "repository_eol_policy", "raw_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor-era EOL policy raw SHA-256.",
+    ),
+    IdentityObligation(
+        "L1", "ledger_predecessor",
+        ("predecessor", "preserved_identity", "stop_package", "archive_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor STOP-package archive raw SHA-256.",
+    ),
+    IdentityObligation(
+        "L1", "ledger_predecessor",
+        ("predecessor", "preserved_identity", "stop_package", "index_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor STOP-package raw-byte index raw SHA-256.",
+    ),
+    IdentityObligation(
+        "L1", "ledger_predecessor",
+        ("predecessor", "preserved_identity", "stop_package", "stop_record_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "Predecessor STOP record raw SHA-256.",
+    ),
+    IdentityObligation(
+        "L2", "ledger_modified_files",
+        ("modified_files", "*", "predecessor_raw_sha256"),
+        AUTHORITY_HISTORICAL_ROLE,
+        "A modified file's predecessor-era raw SHA-256.",
+    ),
+    IdentityObligation(
+        "L2", "ledger_modified_files",
+        ("modified_files", "*", "candidate_raw_sha256"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "A modified file's candidate raw SHA-256.",
+    ),
+    IdentityObligation(
+        "L3", "ledger_implementation", ("implementation_identity", "digest"),
+        AUTHORITY_LIVE_IMPLEMENTATION,
+        "Candidate implementation digest.",
+    ),
+    IdentityObligation(
+        "L3", "ledger_implementation", ("implementation_identity", "paths", "*"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Candidate implementation path inventory.",
+    ),
+    IdentityObligation(
+        "L4", "ledger_scientific_authority",
+        ("scientific_authority", "*", "raw_sha256"),
+        AUTHORITY_BUNDLE_PIN,
+        "Framework, Registry and canonical planning input pins.",
+    ),
+    IdentityObligation(
+        "L5", "ledger_tests", ("tests_executed", "*", "raw_sha256"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Raw SHA-256 of each executed validation suite.",
+    ),
+)
+
+
+class _LedgerContext(_RoleBinding):
+    """Everything one ledger validation needs, computed once."""
+
+    def __init__(
+        self,
+        root: Path,
+        ledger: Mapping[str, Any],
+        manifest: Mapping[str, Any],
+        generation: AuthorityGeneration,
+        mode: str,
+        label: str,
+        live_identity: Mapping[str, str],
+    ) -> None:
+        super().__init__(root, mode, label)
+        self.ledger = ledger
+        self.manifest = manifest
+        self.generation = generation
+        self.live_identity = dict(live_identity)
+
+
+def _ledger_predecessor_constant(generation: AuthorityGeneration) -> dict[str, Any]:
+    predecessor_id = CONTRACT_V4_PREDECESSOR_DEFECT["predecessor_candidate_id"]
+    history = PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[predecessor_id]
+    return {
+        "candidate_id": predecessor_id,
+        "independent_audit": history["independent_audit"],
+        "blocking_findings": list(history["blocking_findings"]),
+        "nonblocking_findings": list(history.get("nonblocking_findings", ())),
+    }
+
+
+def _ledger_lifecycle_constant(generation: AuthorityGeneration) -> dict[str, Any]:
+    history = PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[generation.candidate_id]
+    return {
+        "candidate_disposition": history["disposition"],
+        "independent_audit": history["independent_audit"],
+        "publication": history["publication"],
+        "acceptance": history["acceptance"],
+        "production_authority": PRE_ACCEPTANCE_FREEZE_STATUS,
+        "main_full81_authorization": "NOT_GRANTED",
+        "a2": "HARD_BLOCKED",
+    }
+
+
+def _verify_ledger_predecessor(ctx: _LedgerContext, items: list[_Item]):
+    """``L1``: every predecessor identity is ITS external historical role."""
+
+    predecessor = CONTRACT_V4_PREDECESSOR_DEFECT["predecessor_candidate_id"]
+    base = ("predecessor", "preserved_identity")
+    roles = {
+        base + ("implementation_digest",): PREDECESSOR_ROLE_IMPLEMENTATION_DIGEST,
+        base + ("checkpoint", "raw_sha256"): PREDECESSOR_ROLE_CHECKPOINT,
+        base + ("manifest", "raw_sha256"): PREDECESSOR_ROLE_MANIFEST,
+        base + ("repository_eol_policy", "raw_sha256"): PREDECESSOR_ROLE_EOL_POLICY,
+        base + ("stop_package", "archive_sha256"): preservation_role(predecessor, "archive"),
+        base + ("stop_package", "index_sha256"): preservation_role(predecessor, "index"),
+        base + ("stop_package", "stop_record_sha256"): preservation_role(
+            predecessor, "stop_record"
+        ),
+    }
+    _require(
+        {i[0] for i in items} == set(roles) and len(items) == len(roles),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: predecessor preserved-identity fields are incomplete or extra.",
+    )
+    for pointer, value, _ in items:
+        ctx.bind(pointer, value, ctx.historical(roles[pointer]), roles[pointer])
+    # Cross-consistency with the manifest, in every mode: one predecessor.  Both
+    # sides are already bound to the same pinned roles; this states it directly.
+    preserved = ctx.ledger["predecessor"]["preserved_identity"]
+    defect = ctx.manifest["package_binding"]["predecessor_defect"]
+    package = ctx.manifest["candidate_preservation_packages"][predecessor]
+    for ledger_value, manifest_value, what in (
+        (
+            preserved["implementation_digest"],
+            ctx.manifest["implementation_identity"]["predecessor_digest"],
+            "implementation digest",
+        ),
+        (
+            preserved["checkpoint"]["raw_sha256"],
+            defect["predecessor_candidate_checkpoint"]["raw_sha256"],
+            "checkpoint",
+        ),
+        (
+            preserved["manifest"]["raw_sha256"],
+            defect["predecessor_candidate_manifest"]["raw_sha256"],
+            "manifest",
+        ),
+        (preserved["stop_package"]["archive_sha256"], package["archive_sha256"], "archive"),
+        (preserved["stop_package"]["index_sha256"], package["index_sha256"], "index"),
+        (
+            preserved["stop_package"]["stop_record_sha256"],
+            package["stop_record_sha256"],
+            "STOP record",
+        ),
+    ):
+        _require(
+            ledger_value == manifest_value,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{ctx.label}: the ledger's predecessor {what} {ledger_value} disagrees "
+            f"with the manifest's {manifest_value}.",
+        )
+
+
+def _verify_ledger_modified_files(ctx: _LedgerContext, items: list[_Item]):
+    """``L2``: predecessor side is the external role; candidate side is live bytes."""
+
+    entries = ctx.ledger["modified_files"]
+    expected = set()
+    for index_, _ in enumerate(entries):
+        expected.add(("modified_files", index_, "predecessor_raw_sha256"))
+        expected.add(("modified_files", index_, "candidate_raw_sha256"))
+    _require(
+        {i[0] for i in items} == expected and len(items) == len(expected),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: every modified file needs exactly its two raw SHA-256 "
+        "identities.",
+    )
+    # Closed world, in EVERY mode (contract V4): the listed change set is
+    # exactly the change set derived from the externally authenticated R7
+    # surface and live bytes - never a candidate-declared or table-pinned set.
+    changed = sorted(ctx.predecessor_change_set())
+    listed = sorted(entry["path"] for entry in entries)
+    _require(
+        listed == changed,
+        EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH,
+        f"{ctx.label}: the modified-file list is not the exact change set over the "
+        "externally authenticated predecessor surface: "
+        f"unlisted={sorted(set(changed) - set(listed))}, "
+        f"not_changed={sorted(set(listed) - set(changed))}",
+    )
+    # Cross-consistency, in every mode: a modified file that is also an
+    # implementation path or a pin target has ONE identity, not two.
+    from src.production_authority_bundle_v7_4 import all_pins
+
+    bundle_pinned = {pin.relative_path: pin.sha256 for pin in all_pins()}
+    for entry in entries:
+        relative = entry["path"]
+        for authoritative, what in (
+            (ctx.live_identity.get(relative), "implementation identity"),
+            (bundle_pinned.get(relative), "authority-bundle pin"),
+        ):
+            if authoritative is not None:
+                _require(
+                    entry["candidate_raw_sha256"] == authoritative,
+                    "U06_ROLE_TARGET_MISMATCH",
+                    f"{ctx.label}: the ledger states {entry['candidate_raw_sha256']} "
+                    f"for {relative} but its {what} is {authoritative}.",
+                )
+    for index_, entry in enumerate(entries):
+        relative = entry["path"]
+        role = predecessor_modified_file_role(relative)
+        ctx.bind(
+            ("modified_files", index_, "predecessor_raw_sha256"),
+            entry["predecessor_raw_sha256"],
+            ctx.historical(role),
+            role,
+        )
+        ctx.bind(
+            ("modified_files", index_, "candidate_raw_sha256"),
+            entry["candidate_raw_sha256"],
+            ctx.live_sha(relative, field="modified_files.candidate_raw_sha256"),
+            f"candidate_file:{relative}",
+        )
+
+
+def _verify_ledger_implementation(ctx: _LedgerContext, items: list[_Item]):
+    identity = ctx.ledger["implementation_identity"]
+    declared = identity["paths"]
+    expected = {("implementation_identity", "digest")} | {
+        ("implementation_identity", "paths", relative) for relative in declared
+    }
+    _require(
+        {i[0] for i in items} == expected and len(items) == len(expected),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: implementation inventory identities are incomplete or extra.",
+    )
+    _require(
+        set(declared) == set(ACCEPTED_IMPLEMENTATION_PATHS),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: the ledger's implementation inventory is not the accepted "
+        "implementation path set.",
+    )
+    for relative, value in declared.items():
+        _require(
+            value == ctx.live_identity[relative],
+            "U06_IMPLEMENTATION_IDENTITY_DRIFT",
+            f"{ctx.label}: ledger implementation path {relative} states {value} but "
+            f"live bytes hash to {ctx.live_identity[relative]}.",
+        )
+        ctx.bind(
+            ("implementation_identity", "paths", relative),
+            value,
+            ctx.live_identity[relative],
+            f"implementation_path:{relative}",
+        )
+    live_digest = canonical_identity_digest(ctx.live_identity)
+    _require(
+        identity["digest"] == live_digest
+        and identity["digest"] == ctx.manifest["implementation_identity_digest"],
+        "U06_IMPLEMENTATION_IDENTITY_DRIFT",
+        f"{ctx.label}: the ledger's implementation digest {identity['digest']} is not "
+        f"the live digest {live_digest} the manifest binds.",
+    )
+    ctx.bind(
+        ("implementation_identity", "digest"),
+        identity["digest"],
+        live_digest,
+        "live_implementation_digest",
+    )
+
+
+def _verify_ledger_scientific_authority(ctx: _LedgerContext, items: list[_Item]):
+    from src.production_authority_bundle_v7_4 import all_pins
+
+    by_label = {pin.label: pin for pin in all_pins()}
+    authority = ctx.ledger["scientific_authority"]
+    _require(
+        sorted(i[0][1] for i in items) == sorted(LEDGER_SCIENTIFIC_PIN_LABELS)
+        and len(items) == len(LEDGER_SCIENTIFIC_PIN_LABELS),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: scientific authority must state exactly "
+        f"{list(LEDGER_SCIENTIFIC_PIN_LABELS)}.",
+    )
+    for pointer, value, _ in items:
+        pin = by_label[pointer[1]]
+        _require(
+            authority[pointer[1]]["path"] == pin.relative_path,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{ctx.label}: scientific authority {pointer[1]} disagrees with its "
+            f"authority-bundle pin {pin.relative_path} / {pin.sha256}.",
+        )
+        ctx.bind(pointer, value, pin.sha256, f"bundle_pin:{pin.label}")
+
+
+def _verify_ledger_tests(ctx: _LedgerContext, items: list[_Item]):
+    """``L5``: each executed suite's identity is that suite's live bytes."""
+
+    suites = ctx.ledger["tests_executed"]
+    expected = {("tests_executed", index_, "raw_sha256") for index_ in range(len(suites))}
+    _require(
+        {i[0] for i in items} == expected and len(items) == len(expected),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: every executed suite needs exactly its raw SHA-256.",
+    )
+    for index_, entry in enumerate(suites):
+        ctx.bind(
+            ("tests_executed", index_, "raw_sha256"),
+            entry["raw_sha256"],
+            ctx.live_sha(entry["suite"], field="tests_executed.raw_sha256"),
+            f"validation_suite:{entry['suite']}",
+        )
+
+
+#: One verifier per ledger obligation kind.
+CANDIDATE_CHANGE_LEDGER_OBLIGATION_VERIFIERS: dict[str, Any] = {
+    "ledger_predecessor": _verify_ledger_predecessor,
+    "ledger_modified_files": _verify_ledger_modified_files,
+    "ledger_implementation": _verify_ledger_implementation,
+    "ledger_scientific_authority": _verify_ledger_scientific_authority,
+    "ledger_tests": _verify_ledger_tests,
+}
+
+
+def _check_ledger_structure(
+    ledger: Mapping[str, Any], generation: AuthorityGeneration, label: str
+) -> None:
+    def keyed(value: Any, keys: set[str], what: str) -> Mapping[str, Any]:
+        _require(
+            isinstance(value, Mapping) and set(value) == keys,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: {what} must have exactly {sorted(keys)}; observed "
+            f"{sorted(value) if isinstance(value, Mapping) else value!r}",
+        )
+        return value
+
+    keyed(ledger, set(CANDIDATE_CHANGE_LEDGER_KEYS), "the ledger")
+    _require(
+        ledger["artifact_type"]
+        == generation.artifact_type_prefix + CANDIDATE_CHANGE_LEDGER_ARTIFACT_TYPE_SUFFIX,
+        "U06_ROLE_ARTIFACT_TYPE_MISMATCH",
+        f"{label}: artifact_type {ledger['artifact_type']!r} is not this "
+        "generation's candidate change ledger type.",
+    )
+    _require(
+        ledger["schema_version"]
+        == generation.schema_prefix + CANDIDATE_CHANGE_LEDGER_SCHEMA_SUFFIX,
+        "U06_ROLE_SCHEMA_MISMATCH",
+        f"{label}: schema_version {ledger['schema_version']!r} is not this "
+        "generation's ledger schema.",
+    )
+    _require(
+        ledger["ledger_semantics"] == CANDIDATE_CHANGE_LEDGER_SEMANTICS,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: ledger_semantics must be {CANDIDATE_CHANGE_LEDGER_SEMANTICS!r}.",
+    )
+    for field, want in (
+        ("generation_id", generation.generation_id),
+        ("lineage_id", generation.lineage_id),
+    ):
+        _require(
+            ledger[field] == want,
+            "U06_LINEAGE_MISMATCH",
+            f"{label}: {field} must be {want!r}; observed {ledger[field]!r}",
+        )
+    _require(
+        ledger["candidate_id"] not in generation.superseded_candidate_ids,
+        "U06_SUPERSEDED_CANDIDATE_REJECTED",
+        f"{label}: candidate_id {ledger['candidate_id']!r} names a superseded "
+        "candidate.",
+    )
+    _require(
+        ledger["candidate_id"] == generation.candidate_id,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: candidate_id must be {generation.candidate_id!r}.",
+    )
+    _require(
+        _strict_equal(
+            ledger["candidate_artifact_paths"],
+            {
+                "checkpoint": generation.candidate_checkpoint_path,
+                "manifest": generation.candidate_manifest_path,
+                "change_ledger": generation.candidate_change_ledger_path,
+            },
+        ),
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: candidate_artifact_paths must name this candidate's checkpoint, "
+        "manifest and change ledger.",
+    )
+
+    predecessor = keyed(
+        ledger["predecessor"],
+        {
+            "candidate_id",
+            "independent_audit",
+            "blocking_findings",
+            "nonblocking_findings",
+            "preserved_identity",
+        },
+        "predecessor",
+    )
+    _require(
+        _strict_equal(
+            {k: v for k, v in predecessor.items() if k != "preserved_identity"},
+            _ledger_predecessor_constant(generation),
+        ),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: the predecessor's identity, audit outcome and findings must "
+        "equal the candidate register's.",
+    )
+    preserved = keyed(
+        predecessor["preserved_identity"],
+        {"implementation_digest", "checkpoint", "manifest", "repository_eol_policy", "stop_package"},
+        "predecessor.preserved_identity",
+    )
+    package = CANDIDATE_PRESERVATION_PACKAGES[
+        CONTRACT_V4_PREDECESSOR_DEFECT["predecessor_candidate_id"]
+    ]
+    directory = package["directory"]
+    for field, path in (
+        ("checkpoint", CONTRACT_V4_PREDECESSOR_DEFECT["checkpoint_path"]),
+        ("manifest", CONTRACT_V4_PREDECESSOR_DEFECT["manifest_path"]),
+        ("repository_eol_policy", EOL_POLICY_RELATIVE_PATH),
+    ):
+        entry = keyed(preserved[field], {"path", "raw_sha256"}, f"preserved_identity.{field}")
+        _require(
+            entry["path"] == path,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{label}: preserved_identity.{field}.path must be {path}.",
+        )
+    stop = keyed(
+        preserved["stop_package"],
+        {
+            "directory",
+            "archive_path",
+            "archive_sha256",
+            "index_path",
+            "index_sha256",
+            "stop_record_path",
+            "stop_record_sha256",
+        },
+        "preserved_identity.stop_package",
+    )
+    for field, want in (
+        ("directory", directory),
+        ("archive_path", f"{directory}/{package['archive']}"),
+        ("index_path", f"{directory}/{package['index']}"),
+        ("stop_record_path", f"{directory}/{package['stop_record']}"),
+    ):
+        _require(
+            stop[field] == want,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{label}: preserved_identity.stop_package.{field} must be {want}.",
+        )
+
+    entries = ledger["modified_files"]
+    _require(
+        isinstance(entries, list) and entries,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: modified_files must be a non-empty list.",
+    )
+    for entry in entries:
+        keyed(
+            entry,
+            {"path", "predecessor_raw_sha256", "candidate_raw_sha256", "classification", "summary"},
+            "a modified_files entry",
+        )
+        _require(
+            entry["classification"] in LEDGER_MODIFICATION_CLASSES
+            and isinstance(entry["summary"], str)
+            and entry["summary"].strip()
+            and entry["predecessor_raw_sha256"] != entry["candidate_raw_sha256"],
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: modified file {entry.get('path')!r} needs a known "
+            "classification, a summary, and two DIFFERENT identities.",
+        )
+    paths = [entry["path"] for entry in entries]
+    _require(
+        paths == sorted(set(paths)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: modified_files must be unique and sorted by path; observed {paths}",
+    )
+
+    identity = keyed(
+        ledger["implementation_identity"],
+        {"path_count", "digest_algorithm", "digest", "paths"},
+        "implementation_identity",
+    )
+    _require(
+        identity["path_count"] == len(ACCEPTED_IMPLEMENTATION_PATHS)
+        and identity["digest_algorithm"] == IMPLEMENTATION_DIGEST_ALGORITHM
+        and isinstance(identity["paths"], Mapping),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: implementation_identity metadata is inconsistent.",
+    )
+    _require(
+        _strict_equal(
+            ledger["authority_route"],
+            {
+                "runtime_production_dependency_paths": list(
+                    RUNTIME_PRODUCTION_DEPENDENCY_PATHS
+                ),
+                "gate_protected_dependency_paths": list(GATE_PROTECTED_DEPENDENCY_PATHS),
+                "validation_identity_paths": list(VALIDATION_IDENTITY_PATHS),
+            },
+        ),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: authority_route must be exactly the declared runtime, "
+        "gate-protected and validation path sets.",
+    )
+    authority = ledger["scientific_authority"]
+    _require(
+        isinstance(authority, Mapping)
+        and sorted(authority) == sorted(LEDGER_SCIENTIFIC_PIN_LABELS)
+        and all(
+            isinstance(v, Mapping) and set(v) == {"path", "raw_sha256"}
+            for v in authority.values()
+        ),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: scientific_authority must state exactly "
+        f"{list(LEDGER_SCIENTIFIC_PIN_LABELS)} as path + raw_sha256.",
+    )
+    suites = ledger["tests_executed"]
+    _require(
+        isinstance(suites, list) and suites,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: tests_executed must be a non-empty list.",
+    )
+    for entry in suites:
+        keyed(
+            entry,
+            {"suite", "raw_sha256", "ran", "failures", "errors", "skipped", "result"},
+            "a tests_executed entry",
+        )
+        counts = [entry[k] for k in ("ran", "failures", "errors", "skipped")]
+        _require(
+            entry["suite"] in VALIDATION_IDENTITY_PATHS
+            and all(isinstance(c, int) and not isinstance(c, bool) and c >= 0 for c in counts)
+            and entry["result"] in LEDGER_TEST_RESULTS
+            and (entry["result"] == "OK")
+            == (entry["ran"] > 0 and entry["failures"] == 0 and entry["errors"] == 0)
+            and (entry["result"] == "NOT_RUN") == (entry["ran"] == 0)
+            and (entry["result"] != "NOT_RUN" or not any(counts)),
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: executed suite {entry.get('suite')!r} is not a validation "
+            "suite or states inconsistent counts and result.",
+        )
+    names = [entry["suite"] for entry in suites]
+    _require(
+        len(names) == len(set(names)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: an executed suite is listed twice.",
+    )
+    _require(
+        _strict_equal(ledger["execution_status"], dict(LEDGER_EXECUTION_STATUS)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: execution_status must record no production solve, no Full81, "
+        "no real 21c / 21d, and zero model constructions, optimizer calls, MILP "
+        "solves, Full81 cases and A2 actions.",
+    )
+    _require(
+        _strict_equal(ledger["lifecycle_status"], _ledger_lifecycle_constant(generation)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: lifecycle_status must equal the candidate register's state.",
+    )
+
+
+def validate_candidate_change_ledger(
+    root: Path,
+    ledger_bytes: bytes,
+    manifest: Mapping[str, Any],
+    generation: AuthorityGeneration | None = None,
+    *,
+    mode: str,
+    live_identity: Mapping[str, str] | None = None,
+) -> dict[str, Any]:
+    """Validate a candidate change ledger: structure, then closed-world identity.
+
+    Fail-closed.  ``manifest`` is the already strictly-parsed candidate manifest
+    that binds this ledger; the ledger may never disagree with it.  Read-only.
+    """
+
+    root = Path(root).resolve()
+    generation = generation or CURRENT_GENERATION
+    _require(
+        mode in CANDIDATE_MANIFEST_MODES,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"candidate change ledger: unknown validation mode {mode!r}.",
+    )
+    _require(
+        bool(generation.candidate_change_ledger_path),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"generation {generation.generation_id} declares no candidate change ledger.",
+    )
+    label = f"candidate change ledger ({generation.candidate_change_ledger_path})"
+    ledger = _strict_json_object(ledger_bytes, label=label)
+    _check_ledger_structure(ledger, generation, label)
+
+    identities, hidden = collect_identity_pointers(ledger)
+    _require(
+        not hidden,
+        "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+        f"{label}: raw identities hidden in prose, keys or malformed values: "
+        f"{['.'.join(map(str, p)) for p in hidden]}",
+    )
+    # No identity in the ledger may be tied to the candidate artifacts that are
+    # finalized at or after it: any such value would be stale or self-referential.
+    later = {
+        generation.candidate_change_ledger_path,
+        generation.candidate_checkpoint_path,
+        generation.candidate_manifest_path,
+    }
+    for pointer, _ in identities:
+        tied = later & _associated_paths(ledger, pointer)
+        _require(
+            not tied,
+            "U06_CANDIDATE_MANIFEST_SELF_IDENTITY_REJECTED",
+            f"{label}: {'.'.join(map(str, pointer))} asserts an identity of "
+            f"{sorted(tied)}, which is finalized at or after the ledger.",
+        )
+    owned = _own_identity_pointers(
+        identities, CANDIDATE_CHANGE_LEDGER_IDENTITY_OBLIGATIONS, label
+    )
+    context = _LedgerContext(
+        root,
+        ledger,
+        manifest,
+        generation,
+        mode,
+        label,
+        live_identity if live_identity is not None else implementation_identity(root),
+    )
+    verified, structural = _verify_owned_identities(
+        owned, identities, CANDIDATE_CHANGE_LEDGER_OBLIGATION_VERIFIERS, context, label
+    )
+    return {
+        "ledger_path": generation.candidate_change_ledger_path,
+        "mode": mode,
+        "collected_identity_count": len(identities),
+        "verified_identity_count": len(verified),
+        "structural_identity_count": len(structural),
+        "role_bound_identity_count": len(context.authority),
+        "unaccounted_identity_count": 0,
+        "historical_pins_proved_against_preserved_bytes": context.proves_preserved_bytes,
+        "obligation_classes": sorted(
+            {o.obligation_class for o in CANDIDATE_CHANGE_LEDGER_IDENTITY_OBLIGATIONS}
+        ),
+        "modified_file_count": len(ledger["modified_files"]),
+        "executed_suite_count": len(ledger["tests_executed"]),
+    }
+
+
+#: One verifier per obligation kind.  A kind with no verifier, or a verifier
+#: that does not account for every pointer it is handed, fails parity.
+CANDIDATE_MANIFEST_OBLIGATION_VERIFIERS: dict[str, Any] = {
+    "candidate_checkpoint": _verify_candidate_checkpoint,
+    "implementation_digest": _verify_implementation_digest,
+    "implementation_paths": _verify_implementation_paths,
+    "bundle_pins": _verify_bundle_pins,
+    "durable_pinned": _verify_durable_pinned,
+    "preservation": _verify_preservation,
+    "predecessor_evidence": _verify_predecessor_evidence,
+    "candidate_change_ledger": _verify_candidate_change_ledger,
+}
+
+
+def _check_candidate_manifest_self_identity(
+    payload: Mapping[str, Any], generation: AuthorityGeneration, label: str
+) -> None:
+    """``C8``: the manifest's own identity is never asserted internally."""
+
+    own = generation.candidate_manifest_path
+    identities, hidden = collect_identity_pointers(payload)
+    for pointer in [p for p, _ in identities] + hidden:
+        _require(
+            own not in _associated_paths(payload, pointer),
+            "U06_CANDIDATE_MANIFEST_SELF_IDENTITY_REJECTED",
+            f"{label}: {'.'.join(map(str, pointer))} asserts a raw SHA-256 tied "
+            f"to the manifest's own path {own}. The final identity of a file can "
+            "never be embedded in its own bytes; it is bound externally by "
+            f"{list(candidate_manifest_external_binding_fields(generation))}.",
+        )
+    declaration = payload.get("durable_publication_declaration")
+    entries = declaration.get("entries") if isinstance(declaration, Mapping) else None
+    if isinstance(entries, Mapping) and own in entries:
+        entry = entries[own]
+        _require(
+            isinstance(entry, Mapping)
+            and set(entry) == {"identity_source", "external_binding_fields"}
+            and entry.get("identity_source") == DURABLE_IDENTITY_SOURCE_EXTERNAL,
+            "U06_CANDIDATE_MANIFEST_SELF_IDENTITY_REJECTED",
+            f"{label}: the manifest's own durable entry must state only "
+            f"identity_source={DURABLE_IDENTITY_SOURCE_EXTERNAL!r} and its "
+            "external_binding_fields; any other claim about its own identity "
+            f"is rejected. Observed keys: "
+            f"{sorted(entry) if isinstance(entry, Mapping) else entry!r}",
+        )
+
+
+def _check_candidate_manifest_constants(
+    payload: Mapping[str, Any],
+    generation: AuthorityGeneration,
+    relative: str,
+    label: str,
+) -> None:
+    contract = generation.role_contracts["implementation_candidate"]
+    _require(
+        payload.get("artifact_type") == contract.artifact_type
+        and payload.get("role") == "implementation_candidate",
+        "U06_ROLE_ARTIFACT_TYPE_MISMATCH",
+        f"{label}: artifact_type/role must be {contract.artifact_type!r} / "
+        f"'implementation_candidate'; observed {payload.get('artifact_type')!r} / "
+        f"{payload.get('role')!r}",
+    )
+    _require(
+        payload.get("schema_version") == contract.schema_version,
+        "U06_ROLE_SCHEMA_MISMATCH",
+        f"{label}: schema_version must be {contract.schema_version!r}.",
+    )
+    for field, want in (
+        ("generation_id", generation.generation_id),
+        ("lineage_id", generation.lineage_id),
+    ):
+        _require(
+            payload.get(field) == want,
+            "U06_LINEAGE_MISMATCH",
+            f"{label}: {field} must be {want!r}; observed {payload.get(field)!r}",
+        )
+    for field in ("candidate_id", "target_candidate_id"):
+        value = payload.get(field)
+        _require(
+            value not in generation.superseded_candidate_ids,
+            "U06_SUPERSEDED_CANDIDATE_REJECTED",
+            f"{label}: {field} {value!r} names a superseded candidate. A failed "
+            "candidate may never be revived.",
+        )
+        _require(
+            value == generation.candidate_id,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{label}: {field} must be {generation.candidate_id!r}; observed {value!r}",
+        )
+    for field, want in (
+        ("candidate_revision", generation.candidate_id.rsplit("_", 1)[-1]),
+        ("candidate_checkpoint_path", generation.candidate_checkpoint_path),
+        ("candidate_manifest_path", generation.candidate_manifest_path),
+        ("accepted_lifecycle_record_path", generation.accepted_lifecycle_record_path),
+    ):
+        _require(
+            payload.get(field) == want,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{label}: {field} must be {want!r}; observed {payload.get(field)!r}",
+        )
+    _require(
+        relative == generation.candidate_manifest_path,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: validated at {relative}, not at "
+        f"{generation.candidate_manifest_path}.",
+    )
+    _require(
+        payload.get("self_accepted") is False,
+        "U06_SELF_ACCEPTANCE_REJECTED",
+        f"{label}: self_accepted must be literally false.",
+    )
+    history = PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY.get(generation.candidate_id)
+    _require(
+        history is not None
+        and payload.get("disposition") == history.get("disposition"),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: disposition must equal the candidate register's "
+        f"{(history or {}).get('disposition')!r}.",
+    )
+
+
+def _check_candidate_manifest_structure(
+    payload: Mapping[str, Any], generation: AuthorityGeneration, label: str
+) -> None:
+    def section(name: str, keys: frozenset[str]) -> Mapping[str, Any]:
+        value = payload.get(name)
+        _require(
+            isinstance(value, Mapping) and set(value) == keys,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: {name} must have exactly {sorted(keys)}; observed "
+            f"{sorted(value) if isinstance(value, Mapping) else value!r}",
+        )
+        return value
+
+    # package_binding and its typed predecessor evidence.
+    binding = section("package_binding", PACKAGE_BINDING_KEYS)
+    for field, want in (
+        ("scheme", PACKAGE_BINDING_SCHEME),
+        ("direction", PACKAGE_BINDING_DIRECTION),
+        ("manifest_self_identity", DURABLE_IDENTITY_SOURCE_EXTERNAL),
+    ):
+        _require(
+            binding.get(field) == want,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: package_binding.{field} must be {want!r}.",
+        )
+    defect = binding.get("predecessor_defect")
+    _require(
+        isinstance(defect, Mapping) and set(defect) == PREDECESSOR_DEFECT_KEYS,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: package_binding.predecessor_defect must have exactly "
+        f"{sorted(PREDECESSOR_DEFECT_KEYS)}",
+    )
+    want = CONTRACT_V4_PREDECESSOR_DEFECT
+    _require(
+        defect.get("findings") == list(want["findings"])
+        and defect.get("predecessor_candidate_id") == want["predecessor_candidate_id"]
+        and defect.get("evidence_class") == PREDECESSOR_DEFECT_EVIDENCE_CLASS
+        and defect.get("defect_location") == PREDECESSOR_DEFECT_LOCATION_CODE,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: predecessor_defect must be typed {list(want['findings'])} "
+        f"evidence of {want['predecessor_candidate_id']}.",
+    )
+    _require(
+        want["predecessor_candidate_id"] in generation.superseded_candidate_ids,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: the evidenced predecessor must be a superseded candidate.",
+    )
+    current = {
+        generation.candidate_checkpoint_path,
+        generation.candidate_manifest_path,
+        generation.candidate_change_ledger_path,
+    }
+    for field, path in (
+        ("predecessor_candidate_checkpoint", want["checkpoint_path"]),
+        ("predecessor_candidate_manifest", want["manifest_path"]),
+    ):
+        entry = defect.get(field)
+        _require(
+            isinstance(entry, Mapping)
+            and set(entry) == {"path", "raw_sha256"}
+            and entry.get("path") == path
+            and path in generation.candidate_artifact_paths
+            and path not in current,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: predecessor_defect.{field} must name the barred "
+            f"predecessor artifact {path}.",
+        )
+    package = CANDIDATE_PRESERVATION_PACKAGES.get(want["predecessor_candidate_id"])
+    _require(
+        package is not None
+        and defect.get("recorded_in_stop_record")
+        == {"path": f"{package['directory']}/{package['stop_record']}"},
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: recorded_in_stop_record must name the predecessor's "
+        "preserved STOP record.",
+    )
+
+    # candidate_checkpoint: the one embedded checkpoint identity.
+    checkpoint = section("candidate_checkpoint", frozenset({"path", "sha256"}))
+    _require(
+        checkpoint.get("path") == generation.candidate_checkpoint_path,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: candidate_checkpoint.path must be "
+        f"{generation.candidate_checkpoint_path}.",
+    )
+    # candidate_change_ledger: the one embedded ledger identity (C9).
+    ledger = section("candidate_change_ledger", frozenset({"path", "sha256"}))
+    _require(
+        ledger.get("path") == generation.candidate_change_ledger_path,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: candidate_change_ledger.path must be "
+        f"{generation.candidate_change_ledger_path}.",
+    )
+
+    # Static durable-publication declaration.
+    declaration = section("durable_publication_declaration", DURABLE_DECLARATION_KEYS)
+    _require(
+        declaration.get("semantics") == DURABLE_DECLARATION_SEMANTICS
+        and declaration.get("live_status_source")
+        == DURABLE_DECLARATION_LIVE_STATUS_SOURCE,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: the durable-publication declaration must be a static "
+        "declaration whose live status comes from the live report only.",
+    )
+    required = _required_durable_paths_for(generation)
+    declared_paths = declaration.get("required_paths")
+    _require(
+        isinstance(declared_paths, list)
+        and len(declared_paths) == len(set(map(str, declared_paths))),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: duplicate durable declaration path in {declared_paths!r}",
+    )
+    _require(
+        declared_paths == list(required),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: required_paths must be exactly {list(required)}; missing="
+        f"{sorted(set(required) - set(declared_paths))}, extra="
+        f"{sorted(set(declared_paths) - set(required))}",
+    )
+    entries = declaration.get("entries")
+    _require(
+        isinstance(entries, Mapping) and set(entries) == set(required),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: durable entries must cover exactly the required paths.",
+    )
+    for relative, entry in entries.items():
+        if relative in REQUIRED_DURABLE_PUBLICATION_PIN_LABELS:
+            _require(
+                isinstance(entry, Mapping)
+                and set(entry)
+                == {"identity_source", "pin_label", "expected_raw_sha256"}
+                and entry.get("identity_source") == DURABLE_IDENTITY_SOURCE_PIN
+                and entry.get("pin_label")
+                == REQUIRED_DURABLE_PUBLICATION_PIN_LABELS[relative],
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: pinned durable entry {relative} must state exactly its "
+                "identity source, pin label and expected raw SHA-256.",
+            )
+        elif relative == generation.candidate_checkpoint_path:
+            _require(
+                entry
+                == {
+                    "identity_source": DURABLE_IDENTITY_SOURCE_CHECKPOINT_FIELD,
+                    "identity_field": DURABLE_CHECKPOINT_IDENTITY_FIELD,
+                },
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: the checkpoint durable entry must refer to "
+                f"{DURABLE_CHECKPOINT_IDENTITY_FIELD} and carry no duplicate "
+                "digest: one identity fact has one authoritative location.",
+            )
+        elif relative == generation.candidate_change_ledger_path:
+            _require(
+                entry
+                == {
+                    "identity_source": DURABLE_IDENTITY_SOURCE_LEDGER_FIELD,
+                    "identity_field": DURABLE_LEDGER_IDENTITY_FIELD,
+                },
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: the change-ledger durable entry must refer to "
+                f"{DURABLE_LEDGER_IDENTITY_FIELD} and carry no duplicate digest.",
+            )
+        else:
+            _require(
+                entry.get("external_binding_fields")
+                == list(candidate_manifest_external_binding_fields(generation)),
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: the manifest's own durable entry must declare exactly "
+                f"the external binding fields "
+                f"{list(candidate_manifest_external_binding_fields(generation))}.",
+            )
+
+    # Remaining identity sections: exact shape and constant metadata.
+    identity = section("implementation_identity", IMPLEMENTATION_IDENTITY_KEYS)
+    _require(
+        identity.get("path_count") == len(ACCEPTED_IMPLEMENTATION_PATHS)
+        and isinstance(identity.get("paths"), Mapping)
+        and identity.get("predecessor_digest_carried_forward")
+        is (identity.get("predecessor_digest") == identity.get("implementation_digest")),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: implementation_identity metadata is inconsistent (path_count, "
+        "paths map, or a predecessor_digest_carried_forward self-label that "
+        "does not match the declared digests).",
+    )
+    from src.production_authority_bundle_v7_4 import PIN_GROUPS, all_pins
+
+    bundle = section("authority_bundle", AUTHORITY_BUNDLE_KEYS)
+    pins = bundle.get("pins")
+    _require(
+        bundle.get("declared_pin_groups") == len(PIN_GROUPS)
+        and bundle.get("declared_pin_count") == len(all_pins())
+        and isinstance(pins, Mapping)
+        and all(
+            isinstance(v, Mapping) and set(v) == {"path", "sha256"}
+            for v in pins.values()
+        ),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: authority_bundle counts or pin entries are malformed.",
+    )
+    eol = section("repository_eol_policy", REPOSITORY_EOL_POLICY_KEYS)
+    _require(
+        eol.get("path") == EOL_POLICY_RELATIVE_PATH
+        and eol.get("bundle_pin_label") == "repository_eol_policy",
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: repository_eol_policy must restate the .gitattributes pin.",
+    )
+    registry = section(
+        "parameter_registry_durability", PARAMETER_REGISTRY_DURABILITY_KEYS
+    )
+    _require(
+        registry.get("path") == "data/reference/parameter_registry_v7_2.csv"
+        and registry.get("bundle_pin_label") == "parameter_registry",
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: parameter_registry_durability must restate the "
+        "parameter_registry pin.",
+    )
+
+
+def _check_identity_path_conflicts(
+    payload: Mapping[str, Any],
+    identities: Sequence[tuple[tuple[Any, ...], str]],
+    label: str,
+) -> None:
+    by_path: dict[str, set[str]] = {}
+    for pointer, value in identities:
+        target = _identity_target_path(payload, pointer)
+        if target is not None:
+            by_path.setdefault(target, set()).add(value)
+    conflicts = {path: sorted(v) for path, v in by_path.items() if len(v) > 1}
+    _require(
+        not conflicts,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: the same path carries conflicting identities: {conflicts}",
+    )
+
+
+def checkpoint_identity_tokens(text: str) -> list[str]:
+    """Every run of 64+ hex characters in a checkpoint, as written."""
+
+    return _HEX_RUN_RE.findall(text)
+
+
+#: ``R5-AUD-01`` remediation: the ONE place a checkpoint may state a raw
+#: identity.  A fenced block opened by exactly this line and closed by exactly
+#: ``CHECKPOINT_CLAIM_FENCE_CLOSE``; every non-blank line inside it is a claim
+#: ``<RFC 6901 manifest pointer> <lowercase 64-hex digest>`` and nothing else.
+#: No label, heading, table cell or comment ever confers a role on a digest.
+CHECKPOINT_CLAIM_FENCE_OPEN = "```identity-claims"
+CHECKPOINT_CLAIM_FENCE_CLOSE = "```"
+_CHECKPOINT_CLAIM_LINE_RE = re.compile(r"^(/\S*) ([0-9a-f]{64})$")
+#: The checkpoint is finalized BEFORE the manifest records its digest, so it
+#: can never truthfully claim that digest: such a claim is self-referential.
+CHECKPOINT_SELF_IDENTITY_POINTER = "/candidate_checkpoint/sha256"
+
+
+def parse_checkpoint_identity_claims(text: str) -> dict[str, Any]:
+    """Split a checkpoint into canonical identity claims and everything else.
+
+    Pure and read-only.  Returns the claims ``(line, pointer, digest)``, any
+    malformed claim-block lines, every run of 64+ hex characters OUTSIDE a
+    claim block (each one an unclassified identity), the number of claim
+    blocks, and whether a claim block was left unterminated.
+    """
+
+    claims: list[tuple[int, str, str]] = []
+    malformed: list[tuple[int, str]] = []
+    outside: list[tuple[int, str]] = []
+    blocks = 0
+    open_line: int | None = None
+    for number, line in enumerate(text.split("\n"), start=1):
+        if open_line is None:
+            if line == CHECKPOINT_CLAIM_FENCE_OPEN:
+                open_line = number
+                blocks += 1
+                continue
+            outside.extend((number, token) for token in _HEX_RUN_RE.findall(line))
+            continue
+        if line == CHECKPOINT_CLAIM_FENCE_CLOSE:
+            open_line = None
+            continue
+        if not line.strip():
+            continue
+        match = _CHECKPOINT_CLAIM_LINE_RE.match(line)
+        if match:
+            claims.append((number, match.group(1), match.group(2)))
+        else:
+            malformed.append((number, line))
+    return {
+        "claims": claims,
+        "malformed": malformed,
+        "outside_identities": outside,
+        "block_count": blocks,
+        "unterminated_block_line": open_line,
+    }
+
+
+_RFC6901_TOKEN_RE = re.compile(r"^(?:[^~/]|~[01])*$")
+
+
+def parse_rfc6901_pointer(text: str) -> tuple[str, ...] | None:
+    """Strictly decode an RFC 6901 JSON pointer, or ``None`` if malformed.
+
+    ``R6-AUD-01`` closed-world claim grammar.  The pointer must be non-empty
+    (the document root is a container, never an identity), start with ``/``,
+    and use ``~`` only as ``~0`` / ``~1``.  A pointer that decodes is then
+    looked up by its exact canonical spelling, so an equivalent-but-different
+    spelling of one target can never name a second role.
+    """
+
+    if not isinstance(text, str) or not text.startswith("/"):
+        return None
+    tokens = text[1:].split("/")
+    if not all(_RFC6901_TOKEN_RE.match(token) for token in tokens):
+        return None
+    decoded = tuple(t.replace("~1", "/").replace("~0", "~") for t in tokens)
+    if rfc6901_pointer(decoded) != text:
+        return None
+    return decoded
+
+
+def _check_checkpoint_identity_claims(
+    root: Path,
+    generation: AuthorityGeneration,
+    binding: _RoleBinding,
+    label: str,
+) -> dict[str, int]:
+    """Every checkpoint identity is a claim of one BOUND role, valued by it.
+
+    ``R5-AUD-01`` / ``R6-AUD-01`` remediation.  Under contract V1 a checkpoint
+    digest needed only to occur somewhere in the manifest; under V2 it needed
+    only to equal the manifest's own value at its pointer, so rebinding claims
+    to a consistently permuted manifest passed.  Under V3 a digest is accepted
+    only as a canonical claim of one identity pointer that the obligation
+    verifiers BOUND to a role, and only if it equals that role's independently
+    established value (``binding.authority``) - never the manifest's bytes.
+    Any digest outside a claim, any malformed or unknown pointer (including a
+    container, a non-canonical spelling or a non-identity field), any duplicate
+    or conflicting claim and any claim of the checkpoint's own identity fails
+    closed.  Labels are never consulted.
+    """
+
+    text = (root / generation.candidate_checkpoint_path).read_text(encoding="utf-8")
+    parsed = parse_checkpoint_identity_claims(text)
+    _require(
+        parsed["unterminated_block_line"] is None,
+        "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+        f"{label}: the identity-claims block opened at checkpoint line "
+        f"{parsed['unterminated_block_line']} is never closed.",
+    )
+    _require(
+        not parsed["outside_identities"],
+        "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+        f"{label}: the candidate checkpoint states raw identities outside a "
+        "canonical identity claim, so their role is unclassified: "
+        f"{[f'line {n}: {t}' for n, t in parsed['outside_identities']]}. A "
+        "digest is only ever stated as a claim of the manifest identity pointer "
+        "that owns it; no label confers a role.",
+    )
+    _require(
+        not parsed["malformed"],
+        "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+        f"{label}: malformed identity-claim lines "
+        f"{[f'line {n}: {t!r}' for n, t in parsed['malformed']]}.",
+    )
+    claimable = {
+        rfc6901_pointer(pointer): (binding.roles[pointer], value)
+        for pointer, value in binding.authority.items()
+    }
+    first_line: dict[str, int] = {}
+    for number, pointer, digest in parsed["claims"]:
+        _require(
+            parse_rfc6901_pointer(pointer) is not None,
+            "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+            f"{label}: line {number} claims {pointer!r}, which is not a "
+            "well-formed RFC 6901 pointer.",
+        )
+        _require(
+            pointer not in first_line,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: {pointer} is claimed at checkpoint lines "
+            f"{first_line.get(pointer)} and {number}; one identity field has "
+            "exactly one claim.",
+        )
+        first_line[pointer] = number
+        _require(
+            pointer != CHECKPOINT_SELF_IDENTITY_POINTER,
+            "U06_CANDIDATE_MANIFEST_SELF_IDENTITY_REJECTED",
+            f"{label}: line {number} claims the checkpoint's own identity. The "
+            "checkpoint is finalized before the manifest records that digest, "
+            "so any such claim is self-referential.",
+        )
+        _require(
+            pointer in claimable,
+            "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+            f"{label}: line {number} claims {pointer}, which is not a role-bound "
+            "identity field of the candidate manifest.",
+        )
+        role, authority = claimable[pointer]
+        _require(
+            authority == digest,
+            EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH
+            if is_historical_role(role)
+            else "U06_ROLE_TARGET_MISMATCH",
+            f"{label}: line {number} presents {digest} as {pointer}, but that "
+            f"pointer's role {role!r} is "
+            + (
+                "established by the externally authenticated historical authority "
+                if is_historical_role(role)
+                else "independently established "
+            )
+            + f"as {authority}. A digest lawful for one role is never accepted "
+            "in another.",
+        )
+    return {
+        "checkpoint_identity_claim_count": len(parsed["claims"]),
+        "checkpoint_identity_claim_block_count": parsed["block_count"],
+        "checkpoint_identity_token_count": len({d for _, _, d in parsed["claims"]}),
+        "checkpoint_unclassified_identity_count": 0,
+    }
+
+
+def external_historical_authority_declaration(
+    authority: Mapping[str, Any],
+) -> dict[str, Any]:
+    """What a V4 candidate manifest must declare it consumes, from the chain.
+
+    Derived from an authenticated :func:`resolve_external_historical_authority`
+    result.  Git identities and the binding LOCATOR only: the binding's SHA-256
+    is stated by the frozen trust root alone, so restating it here would create
+    a second, candidate-controlled statement of it.
+    """
+
+    trust = authority["trust_root"]
+    return {
+        "semantics": (
+            "CONSUMED_EXTERNALLY_FROZEN_HISTORICAL_AUTHORITY_NOT_SELECTED_OR_"
+            "REDEFINED_BY_THIS_CANDIDATE"
+        ),
+        "trust_root": {
+            "tag_ref": trust["tag_ref"],
+            "tag_object": trust["tag_object"],
+            "commit": trust["commit"],
+            "path": trust["path"],
+            "blob": trust["blob"],
+        },
+        "binding_locator_source": "PRE_R8_TRUST_ROOT_GIT_BLOB",
+        "binding_path": authority["binding"]["path"],
+        "predecessor_candidate_id": authority["predecessor_candidate_id"],
+        "predecessor_package_directory": authority["preservation_packages"][
+            authority["predecessor_candidate_id"]
+        ]["directory"],
+        "historical_role_value_source": AUTHORITY_HISTORICAL_ROLE,
+        "candidate_local_historical_table": "DIAGNOSTIC_ASSERTION_ONLY_NO_FALLBACK",
+    }
+
+
+def _check_external_authority_declaration(
+    payload: Mapping[str, Any], context: "_ContractContext", label: str
+) -> dict[str, Any]:
+    """Contract V4: authenticate the external chain and match the declaration."""
+
+    authority = context.external()
+    expected = external_historical_authority_declaration(authority)
+    _require(
+        _strict_equal(payload.get("external_historical_authority"), expected),
+        EXTERNAL_HISTORICAL_AUTHORITY_MISMATCH,
+        f"{label}: external_historical_authority does not declare exactly the "
+        "authenticated pre-R8 trust root and the R7 binding it selects.",
+    )
+    return {
+        "authenticated": True,
+        "trust_root_tag_ref": authority["trust_root"]["tag_ref"],
+        "trust_root_tag_object": authority["trust_root"]["tag_object"],
+        "trust_root_commit": authority["trust_root"]["commit"],
+        "trust_root_blob": authority["trust_root"]["blob"],
+        "binding_path": authority["binding"]["path"],
+        "historical_role_count": len(authority["roles"]),
+        "predecessor_surface_path_count": len(authority["predecessor_surface"]),
+    }
+
+
+def validate_candidate_manifest_identity_contract(
+    root: Path,
+    relative: str | None = None,
+    payload: Mapping[str, Any] | None = None,
+    generation: AuthorityGeneration | None = None,
+    *,
+    mode: str,
+    manifest_bytes: bytes | None = None,
+) -> dict[str, Any]:
+    """Validate a candidate manifest against its generation's content contract.
+
+    Fail-closed and ordered so the raised status names the real defect:
+    duplicate keys, contract marker, own identity (``C8``), forbidden snapshot
+    and self-label keys, envelope constants, field classification, section
+    structure, closed-world identity ownership, same-path conflicts, obligation
+    verification (including the bound change ledger, ``C9``), pointer parity,
+    and finally the checkpoint's semantic identity claims.
+
+    ``manifest_bytes`` validates those exact bytes instead of reading
+    ``relative`` from ``root``; the strictly parsed bytes are always what is
+    validated, and a supplied ``payload`` must equal them.
+
+    Read-only.  Returns a report whose ``computed_binding_facts`` are the
+    honest, validator-derived replacements for the R4 self-labels.
+    """
+
+    root = Path(root).resolve()
+    generation = generation or CURRENT_GENERATION
+    relative = (relative or generation.candidate_manifest_path).replace("\\", "/").strip()
+    label = f"candidate manifest ({relative})"
+    _require(
+        mode in CANDIDATE_MANIFEST_MODES,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: unknown validation mode {mode!r}.",
+    )
+    contract = generation.candidate_manifest_contract
+    _require(
+        contract in KNOWN_CANDIDATE_MANIFEST_CONTRACTS,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: generation {generation.generation_id} names no known "
+        f"candidate-manifest contract ({contract!r}).",
+    )
+    if manifest_bytes is None:
+        path = root / relative
+        _require(
+            path.is_file(),
+            "U06_ROLE_ARTIFACT_MISSING",
+            f"{label}: candidate manifest is missing.",
+        )
+        manifest_bytes = path.read_bytes()
+    strict = _strict_json_object(manifest_bytes, label=label)
+    _require(
+        payload is None or dict(payload) == strict,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: the payload under validation is not exactly the strictly "
+        "parsed manifest bytes.",
+    )
+    payload = strict
+
+    _require(
+        payload.get("candidate_manifest_contract") == contract,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: candidate_manifest_contract must be {contract!r}; observed "
+        f"{payload.get('candidate_manifest_contract')!r}. A manifest written "
+        "under no contract, or under a superseded one, cannot fill this role.",
+    )
+    _check_candidate_manifest_self_identity(payload, generation, label)
+
+    forbidden: list[str] = []
+
+    def find_forbidden(node: Any, pointer: tuple[Any, ...]) -> None:
+        if isinstance(node, Mapping):
+            for key, value in node.items():
+                if key in CANDIDATE_MANIFEST_FORBIDDEN_KEYS:
+                    forbidden.append(".".join(map(str, pointer + (key,))))
+                find_forbidden(value, pointer + (key,))
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                find_forbidden(value, pointer + (index,))
+
+    find_forbidden(payload, ())
+    _require(
+        not forbidden,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: frozen live-report or self-label fields are forbidden in a "
+        f"candidate manifest: {sorted(forbidden)}. Live status belongs to the "
+        "live report; identity truthfulness is computed by the validator.",
+    )
+    _check_candidate_manifest_constants(payload, generation, relative, label)
+
+    keys = set(payload)
+    classified = set(CANDIDATE_MANIFEST_FIELD_CLASSES)
+    _require(
+        keys == classified,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: top-level fields must be exactly the classified set; "
+        f"unclassified={sorted(keys - classified)}, "
+        f"missing={sorted(classified - keys)}",
+    )
+    _check_candidate_manifest_structure(payload, generation, label)
+
+    identities, hidden = collect_identity_pointers(payload)
+    _require(
+        not hidden,
+        "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+        f"{label}: raw identities hidden in prose, keys or malformed values: "
+        f"{['.'.join(map(str, p)) for p in hidden]}",
+    )
+    obligations = CANDIDATE_MANIFEST_IDENTITY_OBLIGATIONS
+    owned = _own_identity_pointers(identities, obligations, label)
+    _check_identity_path_conflicts(payload, identities, label)
+
+    context = _ContractContext(root, payload, generation, mode, label)
+    # Contract V4: authenticate the external historical authority FIRST, in
+    # every mode, before any identity is bound; the manifest's declaration of
+    # what it consumes must be exactly the authenticated chain.
+    external_report = _check_external_authority_declaration(payload, context, label)
+    verified, structural = _verify_owned_identities(
+        owned, identities, CANDIDATE_MANIFEST_OBLIGATION_VERIFIERS, context, label
+    )
+    checkpoint_report = _check_checkpoint_identity_claims(
+        root, generation, context, label
+    )
+
+    return {
+        "contract": contract,
+        "mode": mode,
+        "manifest_path": relative,
+        "collected_identity_count": len(identities),
+        "verified_identity_count": len(verified),
+        "structural_identity_count": len(structural),
+        "role_bound_identity_count": len(context.authority),
+        "historical_pins_proved_against_preserved_bytes": context.proves_preserved_bytes,
+        "unaccounted_identity_count": 0,
+        "conflict_count": 0,
+        "obligation_classes": sorted({o.obligation_class for o in obligations}),
+        "obligation_kinds": sorted(owned),
+        "forbidden_identity_class": CANDIDATE_MANIFEST_FORBIDDEN_IDENTITY_CLASS,
+        "verified_pointers": sorted(".".join(map(str, p)) for p in verified),
+        "identity_roles": dict(
+            sorted((".".join(map(str, p)), role) for p, role in context.roles.items())
+        ),
+        "structural_pointers": sorted(".".join(map(str, p)) for p in structural),
+        "external_binding_fields": list(
+            candidate_manifest_external_binding_fields(generation)
+        ),
+        **checkpoint_report,
+        "external_historical_authority": external_report,
+        "change_ledger": context.ledger_report,
+        "computed_binding_facts": {
+            "manifest_binds_checkpoint_path": True,
+            "manifest_binds_checkpoint_raw_sha256": True,
+            "manifest_binds_change_ledger_raw_sha256": True,
+            "manifest_records_own_sha256": False,
+            "checkpoint_records_unaccounted_raw_sha256": False,
+            "checkpoint_identity_roles_verified": True,
+            "structural_only_identities_accepted": False,
+            "mutual_raw_hash_cycle_present": False,
+            "placeholder_or_stale_sha_used": False,
+            "derivation": (
+                "Computed by validate_candidate_manifest_identity_contract from "
+                "the manifest, change-ledger and checkpoint bytes; never read "
+                "from a self-label."
+            ),
+        },
+    }
+
+
 def validate_role_specifics(
     root: Path,
     role: str,
@@ -1211,7 +6338,22 @@ def validate_role_specifics(
     generation = generation or CURRENT_GENERATION
     label = f"role {role!r} ({relative})"
 
-    if role == "independent_audit_pass":
+    if role == "implementation_candidate":
+        # R4-AUD-01: the implementation-candidate role is no longer validated by
+        # its envelope alone.  GATE mode checks every identity available in a
+        # clean published checkout.  A historical generation accepted under the
+        # envelope-only contract declares no content contract and is not
+        # re-judged retroactively.
+        if generation.candidate_manifest_contract is not None:
+            validate_candidate_manifest_identity_contract(
+                root,
+                relative,
+                payload,
+                generation,
+                mode=CANDIDATE_MANIFEST_MODE_GATE,
+            )
+
+    elif role == "independent_audit_pass":
         _require(
             str(payload.get("verdict")).upper() == "PASS",
             "U06_AUDIT_VERDICT_NOT_PASS",
@@ -1563,8 +6705,32 @@ def validate_accepted_lifecycle_payload(
         "missing_roles": [],
         "required_lifecycle_sequence": list(REQUIRED_LIFECYCLE_SEQUENCE),
         "lifecycle_distinctions": list(LIFECYCLE_DISTINCTIONS),
+        # Historical U-06 ALIGNMENT generation audit history. Explicitly
+        # namespaced by R2-AUD-03 remediation so it can never be mistaken for
+        # the active candidate's audit state. Retained, never deleted.
         "candidate_r1_audit": dict(CANDIDATE_R1_AUDIT_RECORD),
         "candidate_r2_audit": dict(CANDIDATE_R2_AUDIT_RECORD),
+        "historical_u06_alignment_audit": {
+            "scope": "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_GENERATION",
+            "audit_status": HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS,
+            "candidate_r1_audit": dict(CANDIDATE_R1_AUDIT_RECORD),
+            "candidate_r2_audit": dict(CANDIDATE_R2_AUDIT_RECORD),
+            "is_current_candidate_audit_state": False,
+            "note": (
+                "Audit history of the U-06 alignment generation only. It is NOT "
+                "the audit state of the active preflight-authorization-guard "
+                "candidate. Reporting it as such was blocker R2-AUD-03."
+            ),
+        },
+        # The ACTIVE generation's own candidate audit history, separately.
+        "preflight_authorization_guard_candidate_audit_history": {
+            k: dict(v)
+            for k, v in PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY.items()
+        },
+        "active_candidate_id": ACTIVE_CANDIDATE_ID,
+        "active_candidate_audit": dict(
+            PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]
+        ),
         "placeholder_digests_used": False,
         "fabricated_future_hashes": False,
     }
@@ -1615,8 +6781,32 @@ def absent_lifecycle(
         "missing_roles": list(REQUIRED_ACCEPTED_ROLES),
         "required_lifecycle_sequence": list(REQUIRED_LIFECYCLE_SEQUENCE),
         "lifecycle_distinctions": list(LIFECYCLE_DISTINCTIONS),
+        # Historical U-06 ALIGNMENT generation audit history. Explicitly
+        # namespaced by R2-AUD-03 remediation so it can never be mistaken for
+        # the active candidate's audit state. Retained, never deleted.
         "candidate_r1_audit": dict(CANDIDATE_R1_AUDIT_RECORD),
         "candidate_r2_audit": dict(CANDIDATE_R2_AUDIT_RECORD),
+        "historical_u06_alignment_audit": {
+            "scope": "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_GENERATION",
+            "audit_status": HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS,
+            "candidate_r1_audit": dict(CANDIDATE_R1_AUDIT_RECORD),
+            "candidate_r2_audit": dict(CANDIDATE_R2_AUDIT_RECORD),
+            "is_current_candidate_audit_state": False,
+            "note": (
+                "Audit history of the U-06 alignment generation only. It is NOT "
+                "the audit state of the active preflight-authorization-guard "
+                "candidate. Reporting it as such was blocker R2-AUD-03."
+            ),
+        },
+        # The ACTIVE generation's own candidate audit history, separately.
+        "preflight_authorization_guard_candidate_audit_history": {
+            k: dict(v)
+            for k, v in PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY.items()
+        },
+        "active_candidate_id": ACTIVE_CANDIDATE_ID,
+        "active_candidate_audit": dict(
+            PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]
+        ),
         "placeholder_digests_used": False,
         "fabricated_future_hashes": False,
     }
@@ -1627,7 +6817,22 @@ def resolve_u06_lifecycle(root: Path) -> dict[str, Any]:
 
     Never raises: anything invalid resolves to a NOT_FROZEN state carrying the
     reason, so callers report the blocker instead of crashing. Writes nothing.
+
+    Every returned state additionally carries ``durable_publication``, the
+    ``R2-AUD-01`` report on whether each required authority file is actually
+    reachable from published Git content.  It is attached to *every* branch,
+    including the fail-closed ones, so publication durability can never be
+    silently absent from a resolved state.
     """
+
+    root = root.resolve()
+    state = _resolve_u06_lifecycle_inner(root)
+    state["durable_publication"] = durable_publication_requirements(root)
+    return state
+
+
+def _resolve_u06_lifecycle_inner(root: Path) -> dict[str, Any]:
+    """Lifecycle resolution proper; see :func:`resolve_u06_lifecycle`."""
 
     root = root.resolve()
     generation = CURRENT_GENERATION
@@ -1839,7 +7044,21 @@ def lifecycle_summary(lifecycle: Mapping[str, Any] | None) -> dict[str, Any]:
         "lineage_id": resolved.get("lineage_id"),
         "target_candidate_id": resolved.get("target_candidate_id"),
         "u06_alignment_status": resolved.get("u06_alignment_status"),
+        # R2-AUD-03: this generic field is the audit state of the ACTIVE
+        # generation's current candidate and of nothing else. The two fields
+        # beneath it say so explicitly, so a consumer can never have to guess
+        # whose audit state it is reading.
         "u06_independent_audit_status": resolved.get("u06_independent_audit_status"),
+        "u06_independent_audit_status_scope": (
+            "ACTIVE_GENERATION_CURRENT_CANDIDATE_ONLY"
+        ),
+        "u06_independent_audit_status_candidate_id": resolved.get(
+            "target_candidate_id"
+        ),
+        "historical_u06_alignment_audit_status": (
+            HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS
+        ),
+        "historical_u06_alignment_audit_status_is_current": False,
         "u06_acceptance_status": resolved.get("u06_acceptance_status"),
         "accepted_lifecycle_overlay": resolved.get("accepted_lifecycle_overlay"),
         "production_authority_freeze_status": resolved.get(
@@ -1854,12 +7073,44 @@ def lifecycle_summary(lifecycle: Mapping[str, Any] | None) -> dict[str, Any]:
         "record_present": resolved.get("record_present"),
         "record_committed": resolved.get("record_committed"),
         "record_published": resolved.get("record_published"),
+        # R2-AUD-01: publication durability of every required authority file.
+        "durable_publication": resolved.get("durable_publication"),
+        "missing_required_authority_files": list(
+            (resolved.get("durable_publication") or {}).get(
+                "missing_required_authority_files"
+            )
+            or []
+        ),
         "missing_roles": list(resolved.get("missing_roles") or []),
         "satisfied_roles": sorted(resolved.get("satisfied_roles") or {}),
         "required_lifecycle_sequence": list(REQUIRED_LIFECYCLE_SEQUENCE),
         "lifecycle_distinctions": list(LIFECYCLE_DISTINCTIONS),
+        # Historical U-06 ALIGNMENT generation audit history. Explicitly
+        # namespaced by R2-AUD-03 remediation so it can never be mistaken for
+        # the active candidate's audit state. Retained, never deleted.
         "candidate_r1_audit": dict(CANDIDATE_R1_AUDIT_RECORD),
         "candidate_r2_audit": dict(CANDIDATE_R2_AUDIT_RECORD),
+        "historical_u06_alignment_audit": {
+            "scope": "U_06_V7_4_PRODUCTION_AUTHORITY_ALIGNMENT_GENERATION",
+            "audit_status": HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS,
+            "candidate_r1_audit": dict(CANDIDATE_R1_AUDIT_RECORD),
+            "candidate_r2_audit": dict(CANDIDATE_R2_AUDIT_RECORD),
+            "is_current_candidate_audit_state": False,
+            "note": (
+                "Audit history of the U-06 alignment generation only. It is NOT "
+                "the audit state of the active preflight-authorization-guard "
+                "candidate. Reporting it as such was blocker R2-AUD-03."
+            ),
+        },
+        # The ACTIVE generation's own candidate audit history, separately.
+        "preflight_authorization_guard_candidate_audit_history": {
+            k: dict(v)
+            for k, v in PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY.items()
+        },
+        "active_candidate_id": ACTIVE_CANDIDATE_ID,
+        "active_candidate_audit": dict(
+            PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]
+        ),
     }
 
 
