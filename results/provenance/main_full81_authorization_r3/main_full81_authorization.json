@@ -1,0 +1,108 @@
+{
+  "a2_excluded": true,
+  "accepted_annual_model": {
+    "path": "src/annual_design_model_v7_2.py",
+    "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+  },
+  "alpha_universe": [
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95,
+    1.0
+  ],
+  "artifact_type": "MAIN_FULL81_SCOPE_AUTHORIZATION",
+  "authorization_scope": "MAIN_FULL81",
+  "authorization_semantic_boundary": "SCOPE_AUTHORIZED_FOR_21D_NO_SOLVE_PREFLIGHT",
+  "authorization_status": "GRANTED",
+  "authorizes": [
+    "MAIN_FULL81_NO_SOLVE_PRODUCTION_PREFLIGHT"
+  ],
+  "authorizes_full81_execution": false,
+  "authorizes_optimize_calls": false,
+  "beta_universe_h": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+  "canonical_annual_input": {
+    "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+    "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428"
+  },
+  "case_count": 81,
+  "case_order": "alpha_major_then_beta_minor_as_declared_by_current_full81_authorization_contract",
+  "excluded_scopes": [
+    "A2",
+    "A2_VARIABLE_FLOOR_TREATMENT_EFFECT",
+    "PERFECT_INFORMATION",
+    "DG_EXTENSIONS",
+    "NEW_SENSITIVITIES",
+    "ALTERNATE_ANNUAL_INPUTS",
+    "ALTERED_ALPHA_BETA_GRIDS",
+    "NEW_SOLVER_SETTINGS",
+    "METHODOLOGY_CHANGES"
+  ],
+  "fullstack_01": {
+    "blocking_before_execution_authorization": true,
+    "blocking_for_21d_no_solve_preflight": false,
+    "blocking_for_scope_authorization": false,
+    "closed_by_this_authorization": false,
+    "dispositions": [
+      "NONBLOCKING_FOR_SCOPE_AUTHORIZATION",
+      "NONBLOCKING_FOR_21D_NO_SOLVE_PREFLIGHT",
+      "BLOCKING_BEFORE_EXECUTION_AUTHORIZATION"
+    ],
+    "status": "OPEN"
+  },
+  "implementation_identity_digest": "dcbd0fbe24e09e15141d403d47f97109457b1757350244ce3da66d096e3f78ba",
+  "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "parameter_registry": {
+    "path": "data/reference/parameter_registry_v7_2.csv",
+    "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1"
+  },
+  "production_authority_accepted_lifecycle_record": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json",
+    "sha256": "07bf0d97d02c28351826ffcf7d81431087e235392846e27c842fed36c6a7fe7c"
+  },
+  "production_authority_freeze_status": "FROZEN",
+  "production_authority_generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "production_authority_lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "production_authority_publication_commit": "0291171424d2654cfe9ac3c8ffaa773e163c75be",
+  "requires_no_solve_preflight_before_execution": true,
+  "restart_policy": "FRESH_RUN_ONLY",
+  "role": "main_full81_scope_authorization",
+  "schema_version": "iris-thesis-full81-authorization-v2",
+  "solver_parameter_fingerprint": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+  "supersedes_authorization": {
+    "candidate_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
+    "lineage_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+    "path": "results/provenance/main_full81_authorization_r2/main_full81_authorization.json",
+    "publication_commit": "b560816e59f61aad2efe0ed5797c516a214df563",
+    "sha256": "ef534fdf6ae10b5c37811c95dc5c900b0c022bff14f7e445eb546e940886b15f",
+    "supersession_status": "SUPERSEDED_FOR_ACCEPTED_R8_ROUTE_IMMUTABLE_HISTORICAL_PROVENANCE"
+  },
+  "target_runner": {
+    "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+    "sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+    "version": "v7.4-main-full81-no-solve-preflight-runner-2026-10-03-candidate-r3"
+  },
+  "u_01_blocks_main_full81": false,
+  "u_01_must_be_frozen_before": [
+    "A2_EXECUTION",
+    "A2_RESULT_EXPOSURE",
+    "A2_INTERPRETATION",
+    "A2_CONDITIONAL_EXTENSION_AUTHORIZATION"
+  ],
+  "u_01_status": "OPEN_HOLD"
+}
