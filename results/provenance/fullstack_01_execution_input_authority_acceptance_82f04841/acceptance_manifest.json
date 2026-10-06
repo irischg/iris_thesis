@@ -1,0 +1,120 @@
+{
+  "schema_version": "iris-thesis-fullstack-01-execution-input-authority-acceptance-manifest-v1",
+  "artifact_type": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY_ACCEPTANCE_MANIFEST",
+  "generation_id": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY",
+  "lineage_id": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY",
+  "target_candidate_id": "82f04841ef0861c079eca57d9688e6cad3caadc6",
+  "candidate_commit": "82f04841ef0861c079eca57d9688e6cad3caadc6",
+  "candidate_paths": [
+    "src/main_full81_authorization_v7_4.py",
+    "tests/test_fullstack_01_execution_input_authority.py"
+  ],
+  "role": "acceptance_manifest",
+  "phase": "PHASE_B_ACCEPTANCE",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_state": "FULLSTACK-01 SUCCESSOR — CLOSED / ACCEPTED",
+  "independent_audit_pass": {
+    "path": "results/provenance/fullstack_01_execution_input_authority_independent_audit_82f04841/independent_audit_pass_record.json",
+    "sha256": "625539a42b7578dd199fea992c9188c104a9fc27bd84d72664e8cb13ea62b544"
+  },
+  "acceptance_closure": {
+    "path": "results/provenance/fullstack_01_execution_input_authority_acceptance_82f04841/acceptance_closure.json",
+    "sha256": "add4b2abd6f6d75826b7cd3792ab7971c2534652f8a2f33ba1ec62fff6c6af13"
+  },
+  "audit_publication_commit": "a308b1afd41742f210cd73d3e722a413e2b478dd",
+  "audit_verdict": "PASS",
+  "audit_verdict_qualifier": "READY_FOR_AUTHORITY_CLOSURE",
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "candidate_author_is_not_self_accepting": true,
+  "role_agreement": {
+    "agrees_with_roles": [
+      "implementation_candidate",
+      "independent_audit_pass",
+      "acceptance_closure"
+    ],
+    "agreement_fields": [
+      "lineage_id",
+      "target_candidate_id",
+      "candidate_commit",
+      "candidate_paths",
+      "audit_publication_commit",
+      "audit_verdict",
+      "audit_verdict_qualifier",
+      "blocking_critical",
+      "blocking_major",
+      "acceptance_status",
+      "acceptance_state"
+    ],
+    "disagreements": []
+  },
+  "phase_a_containment": {
+    "phase_a_commit": "a308b1afd41742f210cd73d3e722a413e2b478dd",
+    "phase_a_contained_artifacts": [
+      "results/provenance/fullstack_01_execution_input_authority_independent_audit_82f04841/independent_audit_pass_record.json"
+    ],
+    "candidate_commit_is_ancestor_of_phase_a_commit": true,
+    "arbitrary_ancestor_accepted_as_publication_proof": false
+  },
+  "phase_b_publication_set": [
+    "results/provenance/fullstack_01_execution_input_authority_acceptance_82f04841/acceptance_closure.json",
+    "results/provenance/fullstack_01_execution_input_authority_acceptance_82f04841/acceptance_manifest.json"
+  ],
+  "phase_b_publication_set_count": 2,
+  "phase_b_commit_self_reference": null,
+  "phase_b_commit_self_reference_note": "This manifest does not self-declare the hash of its containing Phase-B publication commit. Any separately authorized later lifecycle step must bind and prove that exact publication commit.",
+  "remediation_disposition": {
+    "finding_id": "FULLSTACK-01",
+    "prior_r8_record_status": "OPEN / CARRIED",
+    "successor_status": "CLOSED_ACCEPTED",
+    "disposition": "FULLSTACK-01 technical remediation is independently verified and accepted.",
+    "historical_r8_record_rewritten": false
+  },
+  "historical_r8_evidence": {
+    "disposition": "CARRIED_FORWARD_UNCHANGED",
+    "rewritten_by_this_acceptance": false,
+    "acceptance_closure": {
+      "path": "results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_closure.json",
+      "sha256": "02f789deded1cfb836f5e14e5fef848ef0c7dc3761d76a916c74896ecbdcb588"
+    },
+    "acceptance_manifest": {
+      "path": "results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_manifest.json",
+      "sha256": "7426a7cd58fe6b141f7439a35f9b0f8f0b6f61fe1ee3fe136d52ab10455b6bc6"
+    }
+  },
+  "explicit_non_claims": [
+    "Production authority is NOT re-frozen by this acceptance manifest.",
+    "This acceptance manifest does NOT recreate Main Full81 scope authorization.",
+    "Real 21d is NOT run or reauthorized.",
+    "Execution authorization is NOT created.",
+    "Optimization and solve are NOT authorized or run.",
+    "Full81 is NOT authorized or run.",
+    "Existing R8 historical evidence is carried forward unchanged and is not recreated or rewritten."
+  ],
+  "production_authority_freeze_status_asserted": "NOT_RE_FROZEN_BY_THIS_ACCEPTANCE",
+  "main_full81_scope_authorization_status_asserted": "UNCHANGED",
+  "real_21d_status_asserted": "NOT_RUN_NOT_REAUTHORIZED",
+  "execution_status_asserted": "NOT_AUTHORIZED",
+  "solve_status_asserted": "NOT_RUN",
+  "authorizes_main_full81": false,
+  "authorizes_full81_preflight": false,
+  "authorizes_21d": false,
+  "authorizes_execution": false,
+  "authorizes_optimize_calls": false,
+  "authorizes_solve": false,
+  "is_acceptance_closure": false,
+  "is_production_authority_re_freeze": false,
+  "is_execution_authorization": false,
+  "zero_actions": {
+    "production_re_freeze": 0,
+    "scope_authorization_recreated": 0,
+    "real_21d_runs": 0,
+    "execution_authorizations_created": 0,
+    "optimize_calls": 0,
+    "solves": 0,
+    "full81_runs": 0
+  },
+  "placeholder_digests_used": false,
+  "fabricated_future_hashes": false,
+  "notes": "Canonical Phase-B acceptance manifest for the FULLSTACK-01 execution-input-authority remediation successor. It cross-binds the exact candidate commit, the published independent-audit PASS record, and the acceptance closure. It establishes acceptance only and creates no production or execution authority."
+}
