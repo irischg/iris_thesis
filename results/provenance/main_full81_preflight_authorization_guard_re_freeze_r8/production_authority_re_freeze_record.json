@@ -1,0 +1,200 @@
+{
+  "artifact_type": "FULL81_PREFLIGHT_AUTH_GUARD_R1_PRODUCTION_AUTHORITY_RE_FREEZE",
+  "schema_version": "iris-thesis-full81-preflight-auth-guard-r1-production-authority-re-freeze-v1",
+  "generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "predecessor_generation_id": "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
+  "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "target_candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+  "candidate_revision": "R8",
+  "role": "production_authority_re_freeze",
+  "phase": "PHASE_C_RE_FREEZE",
+  "production_authority_status_intended": "FROZEN",
+  "authorizes_main_full81": false,
+  "acceptance_publication_commit": "843561b6e5a9480a02aed5b6b3236a0cea7d3e2f",
+  "audit_publication_commit": "7c70760cc3cd64ac9a116dfe8836dfda75562da3",
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+    "sha256": "1f3195cb31a9c5e6b43f8d2ca8d514faddcdea52a9faaacb6aa8ae68b08d1c18"
+  },
+  "candidate_manifest": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/preflight_authorization_guard_manifest.json",
+    "sha256": "bddf704ca7497280444d871b9988455fa421f4b38c8373cd4d0af977b0cd6491"
+  },
+  "candidate_change_ledger": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06/candidate_change_ledger.json",
+    "sha256": "8f0adccf9016134094388e12c28dc47352cf1a69804ad63c691b31c2a5caec6f"
+  },
+  "independent_audit_pass": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_independent_audit_r8/independent_audit_pass_record.json",
+    "sha256": "76377435ea34e15ca18971992516bf17854f88292c076833cccf45c351a982cb"
+  },
+  "acceptance_closure": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_closure.json",
+    "sha256": "02f789deded1cfb836f5e14e5fef848ef0c7dc3761d76a916c74896ecbdcb588"
+  },
+  "acceptance_manifest": {
+    "path": "results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_manifest.json",
+    "sha256": "7426a7cd58fe6b141f7439a35f9b0f8f0b6f61fe1ee3fe136d52ab10455b6bc6"
+  },
+  "implementation_identity_digest": "dcbd0fbe24e09e15141d403d47f97109457b1757350244ce3da66d096e3f78ba",
+  "implementation_identity_path_count": 21,
+  "production_route_bundle": {
+    "route_status": "R8_ACCEPTED_PRODUCTION_AUTHORITY_RE_FROZEN",
+    "authority_bundle_declared_pin_count": 34,
+    "authority_bundle_declared_group_count": 7,
+    "authority_bundle_pin_parity_required": true,
+    "implementation_identity": {
+      "digest": "dcbd0fbe24e09e15141d403d47f97109457b1757350244ce3da66d096e3f78ba",
+      "path_count": 21
+    },
+    "runner_and_helpers": {
+      "full81_runner": {
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+        "sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1"
+      },
+      "production_successor_stack": {
+        "path": "src/production_successor_stack_v7_3.py",
+        "sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda"
+      },
+      "authority_lifecycle_overlay": {
+        "path": "src/production_authority_lifecycle_u06.py",
+        "sha256": "aebd2c5924027eba15fb0114cf155dadaee3505929c2f45e2ffbfadb748a37f3"
+      },
+      "main_full81_authorization_mechanism": {
+        "path": "src/main_full81_authorization_v7_4.py",
+        "sha256": "075194395bee713f74a7a12d26afb0f1ea46245dd1f847ec4979389f8260d51b"
+      },
+      "authority_alignment_verifier": {
+        "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+        "sha256": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803"
+      }
+    },
+    "scientific_and_input_authority": {
+      "framework": {
+        "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+        "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273"
+      },
+      "registry": {
+        "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+        "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433"
+      },
+      "canonical_planning_input": {
+        "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+        "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "rows": 8760,
+        "columns": 51,
+        "role": "reconstructed_pv_mainline"
+      },
+      "parameter_registry": {
+        "path": "data/reference/parameter_registry_v7_2.csv",
+        "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1"
+      },
+      "accepted_annual_model": {
+        "path": "src/annual_design_model_v7_2.py",
+        "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+      },
+      "repository_eol_policy": {
+        "path": ".gitattributes",
+        "sha256": "64e39b0787eda885b19566d7cf46aa225823387f7070b437fb261a39e66925fc"
+      }
+    },
+    "solver_and_case_contract": {
+      "solver_parameter_fingerprint": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+      "restart_policy": "FRESH_RUN_ONLY",
+      "alpha_universe": [0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0],
+      "beta_universe_h": [4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "case_count": 81,
+      "case_order": "alpha_major_then_beta_minor_as_declared_by_current_full81_authorization_contract"
+    },
+    "repository_boundary": {
+      "branch": "thesis-v7",
+      "expected_upstream": "origin/thesis-v7",
+      "phase_a_publication_commit": "7c70760cc3cd64ac9a116dfe8836dfda75562da3",
+      "phase_b_publication_commit": "843561b6e5a9480a02aed5b6b3236a0cea7d3e2f",
+      "phase_c_commit_self_reference": null,
+      "phase_c_commit_identity_source": "LIVE_GIT_POST_PUBLICATION",
+      "accepted_lifecycle_record": {
+        "path": "results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json",
+        "identity_source": "BOUND_BY_PHASE_C_GIT_PUBLICATION_WITHOUT_HASH_CYCLE"
+      }
+    },
+    "pre_r8_historical_trust_root": {
+      "tag_ref": "refs/tags/v7.4-main-full81-pre-r8-historical-trust-root-accepted-2026-10-06",
+      "tag_object": "6b31fef7c84bd0646a7171cf8168564ee969b10f",
+      "peeled_commit": "c8f3665d5c67e0cae3222073cd71b9a6231279b1",
+      "path": "docs/checkpoints/main_full81_preflight_pre_r8_historical_trust_root_2026-10-06.json",
+      "blob": "d10707b922004f3084ae6045fe3f1b1caf6eaea4",
+      "sha256": "889964f9574ce4d90e6919b29c2425fe60ccf30b5b20bbcfb553fb3f9d8d2fb5",
+      "preserved_unchanged": true
+    }
+  },
+  "accepted_role_chain_agreement": {
+    "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    "target_candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+    "candidate_checkpoint_sha256": "1f3195cb31a9c5e6b43f8d2ca8d514faddcdea52a9faaacb6aa8ae68b08d1c18",
+    "candidate_manifest_sha256": "bddf704ca7497280444d871b9988455fa421f4b38c8373cd4d0af977b0cd6491",
+    "candidate_change_ledger_sha256": "8f0adccf9016134094388e12c28dc47352cf1a69804ad63c691b31c2a5caec6f",
+    "implementation_identity_digest": "dcbd0fbe24e09e15141d403d47f97109457b1757350244ce3da66d096e3f78ba",
+    "implementation_identity_path_count": 21,
+    "all_roles_agree": true,
+    "agreement_proof_method": "Every bound SHA-256 was recomputed from current accepted bytes; the implementation identity digest was re-derived over the live 21-path accepted implementation surface."
+  },
+  "publication_containment": {
+    "phase_a_commit": "7c70760cc3cd64ac9a116dfe8836dfda75562da3",
+    "phase_a_contained": [
+      "docs/checkpoints/main_full81_preflight_authorization_guard_candidate_r8_2026-10-06.md",
+      "results/provenance/main_full81_preflight_authorization_guard_independent_audit_r8/independent_audit_pass_record.json"
+    ],
+    "phase_b_commit": "843561b6e5a9480a02aed5b6b3236a0cea7d3e2f",
+    "phase_b_contained": [
+      "results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_closure.json",
+      "results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_manifest.json"
+    ],
+    "arbitrary_ancestor_accepted_as_publication_proof": false,
+    "phase_c_commit_self_reference": null,
+    "phase_c_commit_self_reference_note": "Phase C does not self-hard-code its containing commit. The live gate proves this record and the accepted-lifecycle record from HEAD and origin/thesis-v7 after publication."
+  },
+  "carried_findings": {
+    "R6-AUD-02": {
+      "status": "OPEN / NONBLOCKING",
+      "closed_by_this_re_freeze": false
+    },
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY": {
+      "status": "OPEN / NONBLOCKING",
+      "closed_by_this_re_freeze": false
+    },
+    "FULLSTACK-01": {
+      "status": "OPEN",
+      "closed_by_this_re_freeze": false
+    }
+  },
+  "main_full81_separation": {
+    "production_authority_frozen_implies_full81_authorized": false,
+    "main_full81_scope_authorization_created": false,
+    "main_full81_scope_authorization_status": "NOT_AUTHORIZED_BY_THIS_PHASE",
+    "full81_preflight_authorization_status": "NOT_AUTHORIZED_BY_THIS_PHASE",
+    "full81_execution_authorization_status": "NOT_AUTHORIZED",
+    "full81_executed": false
+  },
+  "explicit_non_claims": [
+    "This Phase C does not create a new Main Full81 scope authorization.",
+    "This Phase C does not authorize or run real 21d.",
+    "This Phase C does not authorize execution, optimization, or solve.",
+    "This Phase C does not claim Full81 results or numerical-result acceptance.",
+    "This Phase C does not close R6-AUD-02, R7 binding/preservation Git durability, or FULLSTACK-01."
+  ],
+  "is_main_full81_authorization": false,
+  "is_accepted_lifecycle_record": false,
+  "is_acceptance_closure": false,
+  "is_acceptance_manifest": false,
+  "machine_readable_role_artifact": true,
+  "placeholder_digests_used": false,
+  "fabricated_future_hashes": false,
+  "zero_execution": {
+    "optimize_calls": 0,
+    "solves": 0,
+    "full81_cases": 0,
+    "real_21d_runs": 0
+  },
+  "notes": "Canonical Phase-C production-authority re-freeze role for accepted Candidate R8. It binds the complete accepted R8 chain and the corrected R8 route while withholding every later Full81 authorization and execution state."
+}
