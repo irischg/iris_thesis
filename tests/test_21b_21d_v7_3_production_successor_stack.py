@@ -40,15 +40,26 @@ def accepted_lifecycle_fixture() -> dict:
     supply one. This mapping is handed to a pure validator; it is never written
     to disk and the live gate never reads it, so it confers no real acceptance.
     Full F-01 evidence lives in tests/test_21f_u06_accepted_lifecycle_gate.py.
+
+    R3-AUD-04 (Candidate R4). This fixture was hard-bound to the U-06 R3
+    generation and omitted ``generation_id`` entirely, so once the current
+    generation advanced past U-06 R3 the freeze guard correctly rejected it on
+    ``generation_id`` and the deployment-gate test errored. The guard was
+    right; the fixture was a predecessor-generation premise. It is now derived
+    from ``u06.CURRENT_GENERATION`` and cannot fall behind another advance.
+    Nothing is relaxed: every field the guard checks is still supplied.
     """
 
+    generation = u06.CURRENT_GENERATION
     return {
         "lifecycle_module_version": u06.LIFECYCLE_MODULE_VERSION,
-        "lineage_id": u06.LINEAGE_ID,
-        "target_candidate_id": u06.R3_CANDIDATE_ID,
+        "generation_id": generation.generation_id,
+        "is_current_generation": True,
+        "lineage_id": generation.lineage_id,
+        "target_candidate_id": generation.candidate_id,
         "authorizes_main_full81": False,
         "implementation_identity_digest": u06.implementation_identity_digest(ROOT),
-        "record_path": u06.ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix(),
+        "record_path": generation.accepted_lifecycle_record_path,
         "record_present": True,
         "record_committed": True,
         "record_published": True,
@@ -649,7 +660,15 @@ class ProductionSuccessorStackV73Tests(unittest.TestCase):
             ("untracked_authority", {"authority_untracked_paths": ("scripts/untracked.py",)}, True, "core-three", "Untracked authority-surface"),
             # Audit finding F-01: an otherwise perfect repository must not freeze
             # production authority while the U-06 lifecycle is unaccepted.
-            ("u06_lifecycle_absent", {"u06_accepted_lifecycle": None}, True, "core-three", "U-06 accepted lifecycle"),
+            # R3-AUD-04 (Candidate R4): the expected substring was prose that
+            # the guard has not emitted since the generation mechanism landed.
+            # The guard's message is byte-identical to the preserved Candidate
+            # R3 bytes, so this expectation was already stale; it was masked
+            # because this test errored earlier on its own fixture. Matched
+            # against text the guard actually emits, and the stable status code
+            # is additionally asserted below so prose drift cannot hide a real
+            # regression again.
+            ("u06_lifecycle_absent", {"u06_accepted_lifecycle": None}, True, "core-three", "without an accepted lifecycle record"),
             ("u06_lifecycle_not_frozen", {"u06_accepted_lifecycle": dict(accepted_lifecycle_fixture(), production_authority_freeze_status="NOT_FROZEN")}, True, "core-three", "does not authorize a production-authority freeze"),
             ("u06_acceptance_absent", {"u06_accepted_lifecycle": dict(accepted_lifecycle_fixture(), u06_acceptance_status="NOT_ACCEPTED")}, True, "core-three", "does not authorize a production-authority freeze"),
             ("u06_audit_not_pass", {"u06_accepted_lifecycle": dict(accepted_lifecycle_fixture(), u06_independent_audit_status="PENDING")}, True, "core-three", "does not authorize a production-authority freeze"),
@@ -1360,16 +1379,72 @@ class ProductionExecutionInterlockTests(unittest.TestCase):
         return ["--case-set", "core-three"] if name.startswith(("21c", "21d")) else []
 
     def test_a_default_cli_is_zero_solve(self) -> None:
+        """A lawfully scoped default CLI invocation is PASS and zero-solve.
+
+        R3-AUD-04 (Candidate R4). This passed no ``--case-set``, which the
+        N-04 remediation made a hard refusal for 21c and 21d: those entrypoints
+        no longer default to any case scope. Both therefore exited 2 with
+        ``CASE_SCOPE_REQUIRED`` and the test failed on a guard behaving exactly
+        as designed. The suite already had a ``case_set_argv`` helper for this
+        and three sibling tests already used it; this one did not. It does now,
+        and the refusal itself is asserted as its own negative control below so
+        the correction cannot be mistaken for relaxing N-04.
+        """
+
         for name, module in self.modules.items():
             with self.subTest(cli=name):
+                argv = [*self.case_set_argv(name), "--compact"]
                 with patch.object(stack, "NativeProductionBackend") as native_backend:
-                    payload, code = run_cli_in_process(module, ["--compact"])
+                    payload, code = run_cli_in_process(module, argv)
                 self.assertEqual(code, 0)
                 self.assertEqual(payload["status"], "PASS")
                 counters = payload["execution_counters"]
                 self.assertEqual(counters["model_constructions"], 0)
                 self.assertEqual(counters["optimization_calls"], 0)
                 self.assertEqual(counters["economic_evaluations"], 0)
+                native_backend.assert_not_called()
+
+    def test_a2_unscoped_layer_a_and_full81_clis_refuse(self) -> None:
+        """N-04 negative control: no implicit case scope for 21c or 21d.
+
+        Added with the correction above. Without an explicit ``--case-set``
+        these entrypoints must refuse, construct nothing and solve nothing.
+        """
+
+        # 21c refuses on case scope. 21d refuses EARLIER, on Full81
+        # authorization, because N-04 requires authorization to be checked
+        # before any plan is constructed. Both refusals are correct and both
+        # are asserted; collapsing them into one expected status would hide
+        # which guard actually fired.
+        expected = {
+            "21c_preflight_v7_3_layer_a_successor.py": (
+                "CASE_SCOPE_REQUIRED",
+                "explicit fixed production case scope",
+            ),
+            "21d_preflight_v7_3_final81_successor.py": (
+                "NOT_AUTHORIZED",
+                "",
+            ),
+        }
+        for name, module in self.modules.items():
+            if name not in expected:
+                continue
+            status, fragment = expected[name]
+            with self.subTest(cli=name):
+                with patch.object(stack, "NativeProductionBackend") as native_backend:
+                    payload, code = run_cli_in_process(module, ["--compact"])
+                self.assertNotEqual(code, 0)
+                self.assertEqual(payload["status"], status)
+                if fragment:
+                    self.assertIn(fragment, payload["error"])
+                counters = payload.get("execution_counters") or {}
+                for counter in (
+                    "model_constructions",
+                    "optimization_calls",
+                    "economic_evaluations",
+                ):
+                    if counter in counters:
+                        self.assertEqual(counters[counter], 0)
                 native_backend.assert_not_called()
 
     def test_b_execute_production_alone_requires_confirmation(self) -> None:

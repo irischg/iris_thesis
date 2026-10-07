@@ -40,7 +40,29 @@ from src import production_input_authority_v7_3 as authority  # noqa: E402
 from src import production_successor_stack_v7_3 as stack  # noqa: E402
 
 
-RECORD_REL = lc.ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix()
+#: R3-AUD-04. This suite was written when U-06 R3 was the CURRENT generation,
+#: so it drove the validator with a U-06 R3 payload and compared against the
+#: U-06 R3 record slot. U-06 R3 has since been lawfully audited, accepted,
+#: frozen, published and superseded. Replaying the A-01 attack against it can
+#: no longer reach the role-authenticity layer the attack exists to test: the
+#: accepted U-06 R3 candidate manifest declares the implementation digest it
+#: was accepted with, the live implementation surface has lawfully advanced,
+#: and the chain now stops at ``U06_IMPLEMENTATION_IDENTITY_DRIFT`` first. The
+#: attack was still rejected — but on a different, earlier ground, so the
+#: assertions no longer proved what they claim to prove.
+#:
+#: The remedy is to aim the attack at the generation it is about. A-01 is a
+#: property of the CURRENT lifecycle, so the attack payload is now built from
+#: ``lc.CURRENT_GENERATION``, whose candidate manifest declares the live
+#: implementation digest and therefore lets the chain reach the role checks.
+#: The U-06 R3 variants are retained below as explicitly HISTORICAL controls
+#: proving a superseded generation can never authorise. No negative control
+#: was deleted, no guard was weakened, and no validator is mocked.
+GEN = lc.CURRENT_GENERATION
+HISTORICAL_GEN = lc.U06_R3_GENERATION
+
+RECORD_REL = GEN.accepted_lifecycle_record_path
+HISTORICAL_RECORD_REL = lc.ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH.as_posix()
 
 #: Real, tracked, clean, published governance artifacts that have nothing to do
 #: with the U-06 R3 lifecycle. Deliberately chosen to *look* like the roles they
@@ -134,14 +156,19 @@ def role_entry(rel: str) -> dict:
     return {"path": rel, "sha256": sha(rel)}
 
 
-def lifecycle_payload(roles: dict) -> dict:
-    """An otherwise maximally cooperative accepted-lifecycle record."""
+def lifecycle_payload(roles: dict, generation=GEN) -> dict:
+    """An otherwise maximally cooperative accepted-lifecycle record.
+
+    Every envelope field is derived from ``generation``, so the payload is a
+    *credible* acceptance of that generation and the attack is forced through
+    to the role-authenticity layer rather than bouncing off the envelope.
+    """
 
     return {
-        "artifact_type": lc.ACCEPTED_LIFECYCLE_ARTIFACT_TYPE,
-        "schema_version": lc.LIFECYCLE_RECORD_SCHEMA_VERSION,
-        "lineage_id": lc.LINEAGE_ID,
-        "target_candidate_id": lc.R3_CANDIDATE_ID,
+        "artifact_type": generation.lifecycle_record_artifact_type,
+        "schema_version": generation.lifecycle_record_schema_version,
+        "lineage_id": generation.lineage_id,
+        "target_candidate_id": generation.candidate_id,
         "u06_alignment_status": "ACCEPTED",
         "u06_independent_audit_status": "PASS",
         "u06_acceptance_status": "CLOSED_ACCEPTED",
@@ -152,10 +179,14 @@ def lifecycle_payload(roles: dict) -> dict:
     }
 
 
-def reject(testcase, payload) -> str:
+def reject(testcase, payload, *, generation=GEN, record_relative=None) -> str:
     with testcase.assertRaises(lc.U06LifecycleError) as caught:
         lc.validate_accepted_lifecycle_payload(
-            ROOT, payload, record_relative=RECORD_REL
+            ROOT,
+            payload,
+            record_relative=record_relative
+            or generation.accepted_lifecycle_record_path,
+            generation=generation,
         )
     return caught.exception.status
 
@@ -199,7 +230,7 @@ class FiveArtifactAttackTests(unittest.TestCase):
         """Even granting the real R3 candidate, unrelated later roles fail."""
 
         roles = {
-            "implementation_candidate": role_entry(lc.R3_CANDIDATE_MANIFEST_PATH),
+            "implementation_candidate": role_entry(GEN.candidate_manifest_path),
             "independent_audit_pass": role_entry(UNRELATED_HISTORICAL["audit"]),
             "acceptance_closure": role_entry(UNRELATED_HISTORICAL["closure"]),
             "acceptance_manifest": role_entry(UNRELATED_HISTORICAL["manifest"]),
@@ -214,7 +245,7 @@ class FiveArtifactAttackTests(unittest.TestCase):
         """Using only real JSON manifests removes the not-JSON escape hatch."""
 
         roles = {
-            "implementation_candidate": role_entry(lc.R3_CANDIDATE_MANIFEST_PATH),
+            "implementation_candidate": role_entry(GEN.candidate_manifest_path),
             "independent_audit_pass": role_entry(UNRELATED_HISTORICAL["manifest"]),
             "acceptance_closure": role_entry(
                 UNRELATED_HISTORICAL["other_manifest"]
@@ -236,7 +267,7 @@ class PerRoleSubstitutionTests(unittest.TestCase):
 
     def base_roles(self) -> dict:
         return {
-            "implementation_candidate": role_entry(lc.R3_CANDIDATE_MANIFEST_PATH),
+            "implementation_candidate": role_entry(GEN.candidate_manifest_path),
             "independent_audit_pass": role_entry(UNRELATED_HISTORICAL["audit"]),
             "acceptance_closure": role_entry(UNRELATED_HISTORICAL["closure"]),
             "acceptance_manifest": role_entry(UNRELATED_HISTORICAL["manifest"]),
@@ -273,8 +304,11 @@ class PerRoleSubstitutionTests(unittest.TestCase):
                 )
 
     def test_candidate_artifacts_cannot_fill_later_roles(self) -> None:
+        # R3-AUD-04: the barred set is the CURRENT generation's own cumulative
+        # list, which already contains every U-06 R3 candidate artifact this
+        # previously used plus every later candidate's. Strictly more coverage.
         for role in lc.NON_SELF_ACCEPTABLE_ROLES:
-            for rel in lc.CANDIDATE_ARTIFACT_PATHS:
+            for rel in GEN.candidate_artifact_paths:
                 if not (ROOT / rel).is_file():
                     continue
                 with self.subTest(role=role, path=rel):
@@ -340,7 +374,7 @@ class LifecycleEnvelopeAttackTests(unittest.TestCase):
 
     def roles(self) -> dict:
         return {
-            "implementation_candidate": role_entry(lc.R3_CANDIDATE_MANIFEST_PATH),
+            "implementation_candidate": role_entry(GEN.candidate_manifest_path),
             "independent_audit_pass": role_entry(UNRELATED_HISTORICAL["audit"]),
             "acceptance_closure": role_entry(UNRELATED_HISTORICAL["closure"]),
             "acceptance_manifest": role_entry(UNRELATED_HISTORICAL["manifest"]),
@@ -406,18 +440,28 @@ class PublicationProofAttackTests(unittest.TestCase):
     """A-03: an arbitrary ancestor is not proof of publication."""
 
     def test_arbitrary_ancestor_is_not_proof_for_a_file_absent_there(self) -> None:
-        """The R3 candidate did not exist in any published commit."""
+        """The current candidate does not exist in any published commit.
+
+        R3-AUD-04. This used the U-06 R3 candidate checkpoint, which was
+        untracked when the suite was written and has since been lawfully
+        published, so the premise became false and the attack stopped being an
+        attack. The live untracked candidate is the CURRENT generation's, read
+        from the generation rather than from the U-06 constant.
+        """
 
         head = lc._git_text(ROOT, "rev-parse", "HEAD")
         self.assertIsNotNone(head)
-        # HEAD is a genuine ancestor of HEAD, yet the R3 candidate is untracked
+        candidate = GEN.candidate_checkpoint_path
+        # Premise: it really is absent from HEAD right now.
+        self.assertIsNone(lc.blob_sha256_at(ROOT, "HEAD", candidate))
+        # HEAD is a genuine ancestor of HEAD, yet the candidate is untracked
         # and therefore absent from that commit: containment must fail.
         with self.assertRaises(lc.U06LifecycleError) as caught:
             lc.require_published_in_commit(
                 ROOT,
                 head,
-                lc.R3_CANDIDATE_CHECKPOINT_PATH,
-                sha(lc.R3_CANDIDATE_CHECKPOINT_PATH),
+                candidate,
+                sha(candidate),
                 label="attack",
             )
         self.assertEqual(caught.exception.status, "U06_PUBLICATION_PROOF_INVALID")
@@ -457,9 +501,14 @@ class PublicationProofAttackTests(unittest.TestCase):
             ROOT, introduced, target, sha(target), label="premise"
         )
 
-    def test_untracked_r3_artifacts_are_not_published_in_head(self) -> None:
+    def test_untracked_candidate_artifacts_are_not_published_in_head(self) -> None:
+        # R3-AUD-04: the U-06 R3 checkpoint is now lawfully published, so it is
+        # no longer an example of an unpublished artifact. The current
+        # generation's candidate checkpoint and manifest are, and so is the
+        # live-modified overlay. Three controls where there were two.
         for rel in (
-            lc.R3_CANDIDATE_CHECKPOINT_PATH,
+            GEN.candidate_checkpoint_path,
+            GEN.candidate_manifest_path,
             "src/production_authority_lifecycle_u06.py",
         ):
             with self.subTest(path=rel):
@@ -494,9 +543,21 @@ class NoFabricatedFutureIdentityTests(unittest.TestCase):
         self.assertEqual(re.findall(r"\b[0-9a-f]{64}\b", source), [])
 
     def test_no_lifecycle_artifact_exists_yet(self) -> None:
-        self.assertFalse(
-            (ROOT / lc.ACCEPTED_LIFECYCLE_RECORD_RELATIVE_PATH).exists()
+        """No accepted-lifecycle record exists for the CURRENT generation.
+
+        R3-AUD-04. This asserted the *U-06 R3* record does not exist. That
+        record was lawfully created, audited, accepted and frozen, so the
+        premise became false. What must be absent is the current generation's
+        own slot. The companion assertion below keeps the historical record
+        provably present, so this correction cannot be used to erase it.
+        """
+
+        self.assertFalse((ROOT / GEN.accepted_lifecycle_record_path).exists())
+        self.assertTrue(
+            (ROOT / HISTORICAL_RECORD_REL).is_file(),
+            "the accepted historical U-06 R3 record must not be deleted",
         )
+        self.assertNotEqual(GEN.accepted_lifecycle_record_path, HISTORICAL_RECORD_REL)
         requirements = lc.future_acceptance_requirements()
         self.assertFalse(requirements["record_exists_today"])
         self.assertFalse(requirements["future_hashes_fabricated_now"])

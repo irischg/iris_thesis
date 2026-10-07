@@ -321,9 +321,29 @@ class GovernanceSemanticsTests(unittest.TestCase):
         for item in ("U-02", "U-03", "U-04", "U-05"):
             self.assertEqual(register[item], "UNRESOLVED")
         self.assertEqual(register["U-07"], "UNRESOLVED_CLASSIFICATION")
+        # R2-AUD-03 / R3-AUD-04. This asserted the pre-acceptance U-06 entry
+        # was "V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT" — the
+        # ownership string of the HISTORICAL U-06 *alignment* generation. The
+        # independent audit of Candidate R3 found that string being reported as
+        # the ownership of the active preflight-authorization-guard candidate,
+        # so this assertion was requiring the defect rather than catching it.
+        # The entry is now candidate-neutral, and the historical string must
+        # never be emitted as the active one.
         self.assertEqual(
             register["U-06"],
-            "V7_4_ALIGNMENT_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+            bundle.ACTIVE_CANDIDATE_PENDING_AUDIT_REGISTER_ENTRY,
+        )
+        self.assertNotEqual(
+            register["U-06"], bundle.HISTORICAL_U06_ALIGNMENT_REGISTER_ENTRY
+        )
+        # Ownership is carried in explicit fields, not inside the entry string.
+        ownership = self.state["u06_register_state"]
+        self.assertEqual(ownership["entry"], register["U-06"])
+        self.assertTrue(ownership["entry_is_candidate_neutral"])
+        self.assertEqual(ownership["candidate_audit_status"], "NOT_YET_PERFORMED")
+        self.assertFalse(ownership["historical_u06_alignment_is_current"])
+        self.assertFalse(
+            ownership["historical_u06_alignment_register_entry_is_current"]
         )
         u_07 = self.state["u_07"]
         self.assertEqual(u_07["status"], "UNRESOLVED_CLASSIFICATION")
