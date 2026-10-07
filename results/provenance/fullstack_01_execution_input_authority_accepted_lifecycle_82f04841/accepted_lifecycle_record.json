@@ -1,0 +1,170 @@
+{
+  "artifact_type": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY_ACCEPTED_LIFECYCLE",
+  "schema_version": "iris-thesis-fullstack-01-execution-input-authority-accepted-lifecycle-v1",
+  "generation_id": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY",
+  "predecessor_generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "lineage_id": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY",
+  "target_candidate_id": "82f04841ef0861c079eca57d9688e6cad3caadc6",
+  "candidate_commit": "82f04841ef0861c079eca57d9688e6cad3caadc6",
+  "phase": "PHASE_C_ACCEPTED_LIFECYCLE",
+  "u06_alignment_status": "ACCEPTED",
+  "u06_independent_audit_status": "PASS",
+  "u06_acceptance_status": "CLOSED_ACCEPTED",
+  "successor_implementation_status": "CLOSED_ACCEPTED",
+  "independent_audit_status": "PASS",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "production_authority_freeze_status": "FROZEN",
+  "resulting_lifecycle_state": "FULLSTACK-01 SUCCESSOR — PRODUCTION AUTHORITY RE-FROZEN / ACCEPTED LIFECYCLE VALID",
+  "full81_execution_status": "NOT_YET_AUTHORIZED",
+  "authorizes_main_full81": false,
+  "legacy_status_field_names_retained": "The u06_* lifecycle status fields retain the cross-generation names required by the existing Phase-C contract. Their values describe the preserved accepted R8 authority baseline together with the accepted FULLSTACK-01 successor bound by this record.",
+  "implementation_identity_digest": "67254a6ccd886a6a40d8cb0f3b3a637dc20aef21de69f7642b18374a6d5489f1",
+  "implementation_identity_path_count": 21,
+  "authorizes_full81_preflight": false,
+  "authorizes_21d": false,
+  "authorizes_execution": false,
+  "authorizes_optimize_calls": false,
+  "authorizes_solve": false,
+  "roles": {
+    "accepted_implementation": {
+      "commit": "82f04841ef0861c079eca57d9688e6cad3caadc6",
+      "candidate_paths": [
+        {
+          "path": "src/main_full81_authorization_v7_4.py",
+          "git_blob": "40f516551526f7d0532d9342b1446cd142e64c10",
+          "sha256": "9ab8f125cba1cfbf1f4459013ea655b81a84dcb44c97ae9355de7bb700a3a500"
+        },
+        {
+          "path": "tests/test_fullstack_01_execution_input_authority.py",
+          "git_blob": "6ea55e009835fed90d6b1935648e865c765e89e7",
+          "sha256": "16e83c4d98b6d946d874e8c11fbf4d6a57c2530b94f594c738a8c7d878e07725"
+        }
+      ]
+    },
+    "independent_audit_pass": {
+      "path": "results/provenance/fullstack_01_execution_input_authority_independent_audit_82f04841/independent_audit_pass_record.json",
+      "sha256": "625539a42b7578dd199fea992c9188c104a9fc27bd84d72664e8cb13ea62b544"
+    },
+    "acceptance_closure": {
+      "path": "results/provenance/fullstack_01_execution_input_authority_acceptance_82f04841/acceptance_closure.json",
+      "sha256": "add4b2abd6f6d75826b7cd3792ab7971c2534652f8a2f33ba1ec62fff6c6af13"
+    },
+    "acceptance_manifest": {
+      "path": "results/provenance/fullstack_01_execution_input_authority_acceptance_82f04841/acceptance_manifest.json",
+      "sha256": "4c58ddaca70b069d13e7c183b027c660c9dd0968b1c08c5d0d687389c69b4747"
+    },
+    "production_authority_re_freeze": {
+      "path": "results/provenance/fullstack_01_execution_input_authority_re_freeze_82f04841/production_authority_re_freeze_record.json",
+      "sha256": "412d824e93583ed3e82e943ccdda1fb08965428b3f98a5db65289b97e7b318ed"
+    }
+  },
+  "role_binding_provenance": "The accepted implementation is bound by exact Git commit, Git blob, path, and SHA-256 identities. The four machine-readable lifecycle roles are bound by exact path and SHA-256. The accepted-lifecycle record embeds neither its own hash nor its future containing commit.",
+  "publication_chain": {
+    "phase_a_audit_publication_commit": "a308b1afd41742f210cd73d3e722a413e2b478dd",
+    "phase_b_acceptance_publication_commit": "7b0536c4765c39b0c6ed2ea364f74526af629b29",
+    "phase_c_commit_self_reference": null,
+    "phase_c_commit_identity_source": "LIVE_GIT_POST_PUBLICATION",
+    "arbitrary_ancestor_accepted_as_publication_proof": false,
+    "containment_proof_method": "Exact Phase-A and Phase-B commit containment, followed by exact Phase-C HEAD/origin equality and publication containment after push."
+  },
+  "historical_r8_authority": {
+    "disposition": "PRESERVED_UNCHANGED_BY_REFERENCE",
+    "rebuilt_or_replayed": false,
+    "production_authority_re_freeze": {
+      "path": "results/provenance/main_full81_preflight_authorization_guard_re_freeze_r8/production_authority_re_freeze_record.json",
+      "sha256": "da7806c0310807f7f1ffb1b3f977428995e9c9fbcd0193c35f947a4b69765a8a"
+    },
+    "accepted_lifecycle": {
+      "path": "results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json",
+      "sha256": "07bf0d97d02c28351826ffcf7d81431087e235392846e27c842fed36c6a7fe7c"
+    },
+    "acceptance_closure": {
+      "path": "results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_closure.json",
+      "sha256": "02f789deded1cfb836f5e14e5fef848ef0c7dc3761d76a916c74896ecbdcb588"
+    },
+    "acceptance_manifest": {
+      "path": "results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_manifest.json",
+      "sha256": "7426a7cd58fe6b141f7439a35f9b0f8f0b6f61fe1ee3fe136d52ab10455b6bc6"
+    }
+  },
+  "accepted_successor_identity": {
+    "implementation_commit": "82f04841ef0861c079eca57d9688e6cad3caadc6",
+    "independent_audit_pass": "625539a42b7578dd199fea992c9188c104a9fc27bd84d72664e8cb13ea62b544",
+    "acceptance_closure": "add4b2abd6f6d75826b7cd3792ab7971c2534652f8a2f33ba1ec62fff6c6af13",
+    "acceptance_manifest": "4c58ddaca70b069d13e7c183b027c660c9dd0968b1c08c5d0d687389c69b4747",
+    "production_authority_re_freeze": "412d824e93583ed3e82e943ccdda1fb08965428b3f98a5db65289b97e7b318ed",
+    "implementation_identity_digest": "67254a6ccd886a6a40d8cb0f3b3a637dc20aef21de69f7642b18374a6d5489f1",
+    "implementation_identity_path_count": 21
+  },
+  "state_distinction_preserved": {
+    "fullstack_01_successor_exists": true,
+    "fullstack_01_successor_status": "CLOSED_ACCEPTED",
+    "independent_audit_pass_published": true,
+    "acceptance_closure_published": true,
+    "production_authority_re_frozen_by_phase_c": true,
+    "accepted_lifecycle_status": "PRESENT_VALID_ONLY_AFTER_PHASE_C_PUBLICATION_CHECKS_SUCCEED",
+    "production_authority_status": "FROZEN_ONLY_AFTER_PHASE_C_PUBLICATION_CHECKS_SUCCEED",
+    "main_full81_scope_authorization_status": "NOT_AUTHORIZED_BY_THIS_PHASE",
+    "full81_preflight_authorization_status": "NOT_AUTHORIZED_BY_THIS_PHASE",
+    "full81_execution_authorization_status": "NOT_AUTHORIZED",
+    "full81_execution_status": "NOT_EXECUTED",
+    "numerical_results_acceptance_status": "NOT_CLAIMED"
+  },
+  "current_lifecycle_sequence": [
+    "ACCEPTED_SUCCESSOR_IMPLEMENTATION",
+    "FRESH_INDEPENDENT_AUDIT_PASS",
+    "PHASE_A_AUDIT_PUBLICATION_COMMIT",
+    "ACCEPTANCE_CLOSURE_AND_ACCEPTANCE_MANIFEST",
+    "PHASE_B_ACCEPTANCE_PUBLICATION_COMMIT",
+    "PRODUCTION_AUTHORITY_RE_FREEZE_AND_ACCEPTED_LIFECYCLE_RECORD",
+    "PHASE_C_LIFECYCLE_PUBLICATION_VERIFIED_FROM_LIVE_GIT",
+    "SEPARATE_MAIN_FULL81_SCOPE_AUTHORIZATION",
+    "SEPARATE_FULL81_EXECUTION_AUTHORIZATION_AND_ARMING",
+    "MAIN_FULL81_EXECUTION"
+  ],
+  "remediation_disposition": {
+    "finding_id": "FULLSTACK-01",
+    "prior_r8_record_status": "OPEN / CARRIED",
+    "successor_status": "CLOSED_ACCEPTED_AND_PRODUCTION_AUTHORITY_RE_FROZEN",
+    "historical_r8_record_rewritten": false
+  },
+  "carried_findings": {
+    "R6-AUD-02": {
+      "status": "OPEN / NONBLOCKING",
+      "closed_by_this_lifecycle_record": false
+    },
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY": {
+      "status": "OPEN / NONBLOCKING",
+      "closed_by_this_lifecycle_record": false
+    }
+  },
+  "main_full81_separation": {
+    "main_full81_scope_authorization_artifact_created": false,
+    "main_full81_scope_authorization_status": "NOT_AUTHORIZED_BY_THIS_PHASE",
+    "real_21d_authorized": false,
+    "real_21d_run": false,
+    "full81_execution_authorized": false,
+    "full81_executed": false,
+    "numerical_results_accepted": false
+  },
+  "negative_controls_this_pass": {
+    "main_full81_scope_authorization_recreated": false,
+    "real_21d_run": false,
+    "execution_authorization_created": false,
+    "optimize_calls": 0,
+    "solves": 0,
+    "full81_runs": 0,
+    "historical_r8_evidence_modified": false,
+    "implementation_code_modified": false,
+    "tests_modified": false,
+    "validator_modified": false
+  },
+  "placeholder_digests_used": false,
+  "fabricated_future_hashes": false,
+  "machine_readable_role_artifact": true,
+  "is_production_authority_re_freeze": false,
+  "is_accepted_lifecycle_record": true,
+  "is_main_full81_authorization": false,
+  "is_execution_authorization": false,
+  "notes": "Canonical accepted-lifecycle aggregator for the CLOSED / ACCEPTED FULLSTACK-01 successor. It establishes production authority only after successful Phase-C publication verification, preserves unchanged R8 evidence by reference, and creates no Main Full81 scope or execution authorization."
+}
