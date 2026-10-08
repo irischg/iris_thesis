@@ -1,0 +1,148 @@
+{
+  "a2_excluded": true,
+  "accepted_annual_model": {
+    "path": "src/annual_design_model_v7_2.py",
+    "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+  },
+  "alpha_universe": [
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95,
+    1.0
+  ],
+  "artifact_type": "MAIN_FULL81_SCOPE_AUTHORIZATION",
+  "authored_utc": "2026-10-08T15:09:39Z",
+  "authoring_operator": "Claude Code session 77dbbeb1-6c04-4e25-ab2c-1bbdc668fdce, under explicit owner approval; not self-authorizing",
+  "authorization_scope": "MAIN_FULL81",
+  "authorization_semantic_boundary": "SCOPE_AUTHORIZED_FOR_21D_NO_SOLVE_PREFLIGHT",
+  "authorization_status": "GRANTED",
+  "authorizes": [
+    "MAIN_FULL81_NO_SOLVE_PRODUCTION_PREFLIGHT"
+  ],
+  "authorizes_full81_execution": false,
+  "authorizes_optimize_calls": false,
+  "beta_universe_h": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+  "canonical_annual_input": {
+    "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+    "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428"
+  },
+  "carried_findings_not_closed": {
+    "G1-N1": {
+      "closed_by_this_authorization": false,
+      "status": "OPEN / CARRIED / NONBLOCKING"
+    },
+    "G1-N2": {
+      "closed_by_this_authorization": false,
+      "status": "OPEN / CARRIED / NONBLOCKING"
+    },
+    "G1-N3": {
+      "closed_by_this_authorization": false,
+      "status": "DISCLOSED / CARRIED"
+    },
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY": {
+      "closed_by_this_authorization": false,
+      "status": "OPEN / CARRIED / NONBLOCKING"
+    }
+  },
+  "case_count": 81,
+  "excluded_scopes": [
+    "A2",
+    "A2_VARIABLE_FLOOR_TREATMENT_EFFECT",
+    "PERFECT_INFORMATION",
+    "DG_EXTENSIONS",
+    "NEW_SENSITIVITIES",
+    "ALTERNATE_ANNUAL_INPUTS",
+    "ALTERED_ALPHA_BETA_GRIDS",
+    "NEW_SOLVER_SETTINGS",
+    "METHODOLOGY_CHANGES"
+  ],
+  "grid_boundary": {
+    "beta_24h_boundary_case_included": false,
+    "beta_24h_note": "Framework v7.4 section 3.4 boundary/extrapolation case; outside this scope.",
+    "grid": "9x9 alpha_universe x beta_universe_h as declared above"
+  },
+  "implementation_identity_digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+  "lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "owner_approval": {
+    "approval_scope": "GATE_1_MAIN_FULL81_SCOPE_AUTHORIZATION_ONLY",
+    "approved_by": "repository owner (Iris)",
+    "date": "2026-10-08",
+    "each_listed_act_requires_separate_owner_approval": true,
+    "not_authorized_by_this_record": [
+      "REAL_21D_NO_SOLVE_PREFLIGHT_RUN",
+      "NO_SOLVE_PREFLIGHT_EVIDENCE_CAPTURE_OR_PUBLICATION",
+      "FULL81_EXECUTION_AUTHORIZATION",
+      "FULL81_EXECUTION",
+      "ANY_SOLVER_CALL",
+      "A2_VARIABLE_FLOOR_ROBUSTNESS",
+      "METHODOLOGY_CHANGE",
+      "HOST_CLEANUP"
+    ]
+  },
+  "parameter_registry": {
+    "path": "data/reference/parameter_registry_v7_2.csv",
+    "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1"
+  },
+  "production_authority_accepted_lifecycle_record": {
+    "path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json",
+    "sha256": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0"
+  },
+  "production_authority_freeze_status": "FROZEN",
+  "production_authority_generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "production_authority_lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "production_authority_publication_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+  "readiness_review_observations_not_closed": {
+    "SAR-N1": "FULLSTACK_01_REMEDIATION_STATUS runtime label is stale relative to the accepted FULLSTACK-01 lifecycle; descriptive only; not edited (runtime identity).",
+    "SAR-N2": "Handoff documents (CURRENT_STATE, PROJECT_HANDOFF, CLAUDE.md read-first list) predate the G1 generation.",
+    "SAR-N3": "Untracked docs/checkpoints candidate records outside the gate-protected prefixes.",
+    "SAR-N4": "READ_ONLY_FROZEN_AUTHORITY_VERIFICATION has no durable role record."
+  },
+  "requires_no_solve_preflight_before_execution": true,
+  "reserve_floor_methodology_boundary": {
+    "basis": "Framework v7.4 section 0.1 closed decision A2: annual normal operation uses the constant worst-case reserve floor; outage replay is a separate stage.",
+    "excluded_extension": "A2_VARIABLE_FLOOR_TREATMENT_EFFECT_ROBUSTNESS (perfect-information variable floor; Task 3 targeted check)",
+    "excluded_extension_status": "HARD_BLOCKED_UNTIL_U_01_RESOLVED_AUDITED_ACCEPTED_AND_FROZEN",
+    "main_full81_reserve_floor": "CONSTANT_WORST_CASE_RESERVE_FLOOR"
+  },
+  "restart_policy": "FRESH_RUN_ONLY",
+  "role": "main_full81_scope_authorization",
+  "schema_version": "iris-thesis-full81-authorization-v2",
+  "solver_parameter_fingerprint": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+  "supersedes_authorization": {
+    "candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+    "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    "path": "results/provenance/main_full81_authorization_r3/main_full81_authorization.json",
+    "publication_commit": "3b6e24d7bbdc14d7cce25356001226a47ec63cf0",
+    "sha256": "9f4ff54db7db8e09b83b6cb3f1aeebe2c8df07aeee78486bf0d9245416d824a9",
+    "supersession_status": "SUPERSEDED_BY_G1_IMMUTABLE_HISTORICAL_PROVENANCE"
+  },
+  "target_runner": {
+    "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+    "sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+    "version": "v7.4-main-full81-no-solve-preflight-runner-2026-10-03-candidate-r3"
+  },
+  "u_01_blocks_main_full81": false,
+  "u_01_must_be_frozen_before": [
+    "A2_EXECUTION",
+    "A2_RESULT_EXPOSURE",
+    "A2_INTERPRETATION",
+    "A2_CONDITIONAL_EXTENSION_AUTHORIZATION"
+  ],
+  "u_01_status": "OPEN_HOLD"
+}
