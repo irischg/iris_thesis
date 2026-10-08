@@ -1,0 +1,175 @@
+{
+  "artifact_type": "FULL81_PRODUCTION_G1_PRODUCTION_AUTHORITY_RE_FREEZE",
+  "schema_version": "iris-thesis-full81-production-g1-production-authority-re-freeze-v1",
+  "generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "predecessor_generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+  "lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "target_candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+  "candidate_revision": "R1",
+  "role": "production_authority_re_freeze",
+  "phase": "PHASE_C_RE_FREEZE",
+  "date": "2026-10-08",
+  "authored_utc": "2026-10-08T13:11:50Z",
+  "production_authority_status_intended": "FROZEN",
+  "authorizes_main_full81": false,
+  "acceptance_publication_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+  "audit_publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+    "sha256": "dccbbffccc37dbea2179bcbc6210f1afa76351d9883fc73485f3be83278ce9a9"
+  },
+  "candidate_manifest": {
+    "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+    "sha256": "bd3621cf9de16a6b7ed0c84444272cd17ce28326b2f4081317c926cd3aa1071a"
+  },
+  "candidate_change_ledger": {
+    "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json",
+    "sha256": "e1b2ecc8fcb44327b4d8e0a38f1fd7ba200bd9fa44b363ceaf89220aadbde080"
+  },
+  "independent_audit_pass": {
+    "path": "results/provenance/current_full81_production_generation_g1_independent_audit_r1/independent_audit_pass_record.json",
+    "sha256": "e7c3dcd60ed613ffaea14afe5e6fd91fe711ae0f385b8bfc7cdc6c7d1c09500c"
+  },
+  "acceptance_closure": {
+    "path": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+    "sha256": "d0122f990a14d202fa2e07f1805ce6e8cba17952e37ff1badc37613a517a5879"
+  },
+  "acceptance_manifest": {
+    "path": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_manifest.json",
+    "sha256": "bb4aa458d94bfd73db51ae1d87a1661f5272c3a57eaa260be5df3e89abac0926"
+  },
+  "implementation_identity_digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+  "implementation_identity_path_count": 21,
+  "g1_identity_axes": {
+    "runtime": {
+      "digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+      "path_count": 21
+    },
+    "validation": {
+      "digest": "1bd49904e8d774c27b5e8a0390240eb836e92fa6cf857948f7b9d3486914111b",
+      "path_count": 9
+    },
+    "governance_authority": {
+      "digest": "360c81b133440e1b0444e01f2fd120eb1f49d0db3501283773a2952c032dbeb4",
+      "path_count": 26
+    },
+    "pairwise_disjoint": true,
+    "digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8"
+  },
+  "accepted_role_chain_agreement": {
+    "lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+    "target_candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+    "candidate_checkpoint_sha256": "dccbbffccc37dbea2179bcbc6210f1afa76351d9883fc73485f3be83278ce9a9",
+    "candidate_manifest_sha256": "bd3621cf9de16a6b7ed0c84444272cd17ce28326b2f4081317c926cd3aa1071a",
+    "candidate_change_ledger_sha256": "e1b2ecc8fcb44327b4d8e0a38f1fd7ba200bd9fa44b363ceaf89220aadbde080",
+    "implementation_identity_digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+    "implementation_identity_path_count": 21,
+    "all_roles_agree": true,
+    "agreement_proof_method": "Every bound SHA-256 was recomputed from raw bytes and proved by require_published_in_commit in the exact Phase A / Phase B commit; the runtime, validation and governance digests were re-derived from live bytes by g1_identity_axes."
+  },
+  "publication_containment": {
+    "phase_a_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+    "phase_a_contained": [
+      "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+      "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+      "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json",
+      "results/provenance/current_full81_production_generation_g1_independent_audit_r1/independent_audit_pass_record.json"
+    ],
+    "phase_b_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+    "phase_b_contained": [
+      "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+      "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_manifest.json"
+    ],
+    "containment_proof_method": "require_published_in_commit over the exact commit and exact raw SHA-256",
+    "arbitrary_ancestor_accepted_as_publication_proof": false,
+    "phase_c_commit_self_reference": null,
+    "phase_c_commit_self_reference_note": "Phase C does not self-hard-code its containing commit. The live gate proves this record and the accepted-lifecycle record from HEAD and origin/thesis-v7 after publication.",
+    "accepted_lifecycle_record": {
+      "path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json",
+      "identity_source": "BOUND_BY_PHASE_C_GIT_PUBLICATION_WITHOUT_HASH_CYCLE"
+    }
+  },
+  "phase_c_operator": {
+    "operator": "Claude Code session 69b54c54-954e-4684-a8cf-13c7c503ed37 (Phase B acceptance publication operator and Phase C operator)",
+    "decision_authority": "The thesis owner's explicit, conditional instruction to advance G1 from its published Phase B state to Phase C, conditioned on every contract-required check passing.",
+    "operator_is_candidate_author": false,
+    "operator_is_independent_auditor": false,
+    "operator_is_acceptance_closure_author": false,
+    "human_signature_claimed": false
+  },
+  "carried_findings": {
+    "G1-N1": {
+      "status": "OPEN / CARRIED / NONBLOCKING",
+      "closed_by_this_re_freeze": false
+    },
+    "G1-N2": {
+      "status": "OPEN / CARRIED / NONBLOCKING",
+      "closed_by_this_re_freeze": false
+    },
+    "G1-N3": {
+      "status": "DISCLOSED / CARRIED",
+      "closed_by_this_re_freeze": false
+    },
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY": {
+      "status": "OPEN / CARRIED / NONBLOCKING",
+      "closed_by_this_re_freeze": false
+    }
+  },
+  "disclosed_limitations": {
+    "AUDITOR_INDEPENDENCE_BOUNDARY": {
+      "blocks_re_freeze": false,
+      "recorded_in": "acceptance_closure"
+    },
+    "AUDIT_PRIMARY_EVIDENCE_NOT_GIT_DURABLE": {
+      "blocks_re_freeze": false,
+      "recorded_in": "acceptance_closure"
+    },
+    "HISTORICAL_21I_CONTENT": {
+      "blocks_re_freeze": false,
+      "recorded_in": "acceptance_closure"
+    },
+    "FIXTURE_CONTROL_53_OF_54": {
+      "blocks_re_freeze": false,
+      "recorded_in": "acceptance_closure"
+    }
+  },
+  "main_full81_separation": {
+    "production_authority_frozen_implies_full81_authorized": false,
+    "main_full81_scope_authorization_created": false,
+    "main_full81_scope_authorization_status": "NOT_AUTHORIZED_BY_THIS_PHASE",
+    "full81_no_solve_preflight_status": "NOT_EXECUTED_NOT_AUTHORIZED_BY_THIS_PHASE",
+    "full81_execution_authorization_status": "NOT_AUTHORIZED",
+    "full81_executed": false,
+    "remaining_g1_governance_stages": [
+      "SCOPE_AUTHORIZATION_RECORD_PRESENT",
+      "NO_SOLVE_PREFLIGHT_EVIDENCE_PRESENT",
+      "EXECUTION_AUTHORIZATION_RECORD_PRESENT"
+    ]
+  },
+  "explicit_non_claims": [
+    "This Phase C does not create a Main Full81 scope authorization.",
+    "This Phase C does not authorize or run real 21d.",
+    "This Phase C does not authorize execution, optimization, or solve.",
+    "This Phase C does not claim Full81 results or numerical-result acceptance.",
+    "This Phase C does not close G1-N1, G1-N2, G1-N3 or R7 binding/preservation Git durability."
+  ],
+  "is_main_full81_authorization": false,
+  "is_accepted_lifecycle_record": false,
+  "is_acceptance_closure": false,
+  "is_acceptance_manifest": false,
+  "authorizes_full81_preflight": false,
+  "authorizes_21d": false,
+  "authorizes_execution": false,
+  "authorizes_optimize_calls": false,
+  "authorizes_solve": false,
+  "machine_readable_role_artifact": true,
+  "placeholder_digests_used": false,
+  "fabricated_future_hashes": false,
+  "zero_execution": {
+    "optimize_calls": 0,
+    "solves": 0,
+    "full81_cases": 0,
+    "real_21d_runs": 0
+  },
+  "notes": "Canonical Phase-C production-authority re-freeze role for accepted G1 Candidate R1. It binds the complete accepted G1 chain and the Phase A / Phase B publication commits while withholding every later Full81 authorization and execution state."
+}
