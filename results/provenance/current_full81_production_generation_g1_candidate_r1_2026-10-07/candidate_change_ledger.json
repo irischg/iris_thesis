@@ -1,0 +1,712 @@
+{
+  "artifact_type": "FULL81_PRODUCTION_G1_CANDIDATE_CHANGE_LEDGER",
+  "candidate_artifact_paths": {
+    "change_ledger": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json",
+    "checkpoint": "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+    "manifest": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json"
+  },
+  "candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+  "execution_status": {
+    "current_generation_21d_runs": 0,
+    "execution_authorizations_created": 0,
+    "full81_runs": 0,
+    "model_solves": 0,
+    "optimize_calls": 0,
+    "production_runs": 0,
+    "scope_authorizations_created": 0,
+    "sensitivity_solves": 0
+  },
+  "generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "identity_digests": {
+    "governance_authority": "360c81b133440e1b0444e01f2fd120eb1f49d0db3501283773a2952c032dbeb4",
+    "runtime": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+    "validation": "1bd49904e8d774c27b5e8a0390240eb836e92fa6cf857948f7b9d3486914111b"
+  },
+  "ledger_semantics": "INDEX_OF_CANDIDATE_CHANGES_RAW_BYTE_DIFFERENCE_IS_AUTHORITATIVE",
+  "lifecycle_status": {
+    "acceptance": "NOT_YET_PERFORMED",
+    "accepted_lifecycle_record": "NOT_YET_CREATED",
+    "current_generation_21d_no_solve_preflight": "NOT_YET_EXECUTED",
+    "execution_authorization": "NOT_AUTHORIZED",
+    "full81": "NOT_EXECUTED_NOT_AUTHORIZED",
+    "g1": "CANDIDATE",
+    "independent_audit": "NOT_YET_PERFORMED",
+    "production_authority_re_freeze": "NOT_YET_PERFORMED",
+    "scope_authorization": "NOT_YET_CREATED_NOT_YET_AUTHORIZED",
+    "statement_scope": "CANDIDATE_CONSTRUCTION_TIME_DECLARATION_LIVE_STATE_IS_RESOLVED_NOT_DECLARED"
+  },
+  "lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "live_roles": [
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "MODIFIED_IN_G1_CANDIDATE",
+      "path": ".gitattributes",
+      "raw_sha256": "0dc5e0700c4375ad2a3ad8da1d149c5e7806722c983c85904ce1d7e944685ddc",
+      "role": "repository_eol_policy"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "raw_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "role": "canonical_planning_input"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "data/reference/parameter_registry_v7_2.csv",
+      "raw_sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+      "role": "parameter_registry"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "data/reference/production_economic_interface_v7_2.json",
+      "raw_sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+      "role": "execution_input:economic_interface_14a"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+      "raw_sha256": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+      "role": "execution_input:settlement_matrix_14b"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+      "raw_sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+      "role": "execution_input:normalized_tariff_14a"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+      "raw_sha256": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+      "role": "execution_input:settlement_interface_14b"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md",
+      "raw_sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f",
+      "role": "framework_v7_4_acceptance_closure"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md",
+      "raw_sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4",
+      "role": "task_3_preregistration_candidate_r2"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md",
+      "raw_sha256": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02",
+      "role": "task_3_preregistration_acceptance_closure"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md",
+      "raw_sha256": "f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82",
+      "role": "governance_sequencing_successor_original_candidate"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_2026-10-01.md",
+      "raw_sha256": "db20ea059c48b99bb5c57801dff5654b4b8e1b94ce51ce4ded6e82eec4ac922e",
+      "role": "governance_sequencing_successor_candidate_r2"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md",
+      "raw_sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851",
+      "role": "governance_sequencing_successor_acceptance_closure"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md",
+      "raw_sha256": "4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977",
+      "role": "registry_v7_4_acceptance_closure"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md",
+      "raw_sha256": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce",
+      "role": "registry_v7_4_independent_audit"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "raw_sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "role": "provenance_protocol"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/research_framework_v7_3_2026-09-23.md",
+      "raw_sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "role": "v7_3_methodology"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "raw_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "role": "framework_v7_4"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+      "raw_sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "role": "v7_3_evidence"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "raw_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "role": "registry_v7_4"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+      "raw_sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "role": "v7_3_lifecycle"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+      "raw_sha256": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33",
+      "role": "framework_v7_4_acceptance_manifest"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json",
+      "raw_sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f",
+      "role": "task_3_preregistration_machine_record"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json",
+      "raw_sha256": "08a1e5b5929b5791e14b2ae887c4b9592dccbd803c7e0981c581f41561aa268d",
+      "role": "task_3_preregistration_acceptance_manifest"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json",
+      "raw_sha256": "4bbd58b8e8bd92c292d44b7b3d8b6a2035c3d41dc894581697f52583a55b6476",
+      "role": "governance_sequencing_successor_acceptance_manifest"
+    },
+    {
+      "authority_justification": "Member of G1_GOVERNANCE_AUTHORITY_IDENTITY: its exact bytes are pinned by the production-authority bundle or the FULLSTACK-01 execution-input authority.",
+      "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+      "raw_sha256": "53074cfe44c0276d6f319497cbe6f5aaf07b255ac0c335f9481174dd968063fe",
+      "role": "registry_v7_4_acceptance_manifest"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/08_calibrate_kappa.py",
+      "raw_sha256": "6014a24bee5028d0be1e3ab480ee67587e91c35bc4d57e4b0c324eb6b94141dc",
+      "role": "G1_RUNTIME_IDENTITY:scripts/08_calibrate_kappa.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/09_build_valid_outage_start_sets.py",
+      "raw_sha256": "3c67e91848c7093e974bf3d3b8440a4c3054ffe25a4fc99b68fd951883ae43d4",
+      "role": "G1_RUNTIME_IDENTITY:scripts/09_build_valid_outage_start_sets.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/15a_benchmark_eob_charge_discharge_formulations.py",
+      "raw_sha256": "504f31b37f2bbaca96792b088cd1adea087206539a3c3553298555f64fc6cff9",
+      "role": "G1_RUNTIME_IDENTITY:scripts/15a_benchmark_eob_charge_discharge_formulations.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/15b_freeze_production_eob_baseline.py",
+      "raw_sha256": "9a5f61d19bc279920f51f67294ef96ddcd7623ffe240482ff66b88e029eafc60",
+      "role": "G1_RUNTIME_IDENTITY:scripts/15b_freeze_production_eob_baseline.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/15c_validate_production_eob_rainflow.py",
+      "raw_sha256": "14fd9f3363979dd6af6f50723a75477e1525b9330265a0a820d11eec1774f408",
+      "role": "G1_RUNTIME_IDENTITY:scripts/15c_validate_production_eob_rainflow.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/15d_run_corrected_eob_v7_2.py",
+      "raw_sha256": "90d19baac8c0b96e08de00b4769b7ae68dff745f71923b850433ffc2935091a8",
+      "role": "G1_RUNTIME_IDENTITY:scripts/15d_run_corrected_eob_v7_2.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/16a_preflight_layer_a_representative_binary_cases.py",
+      "raw_sha256": "5813119e258e83a45a245ec715ade4536bf9dbf880687f6d3f1e978cce8b06a0",
+      "role": "G1_RUNTIME_IDENTITY:scripts/16a_preflight_layer_a_representative_binary_cases.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/19a_preflight_final_layer_a_81_cases.py",
+      "raw_sha256": "a139f1cd1a76e0a6f0657adf025c521b8b966b2fcdd6f74e5f3936a70bab72d3",
+      "role": "G1_RUNTIME_IDENTITY:scripts/19a_preflight_final_layer_a_81_cases.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/19b_run_final_layer_a_81_cases.py",
+      "raw_sha256": "4abbda9dc2529f9d7531aff64a77fdf23c3b8b59173a6f3287fda0538def2bbe",
+      "role": "G1_RUNTIME_IDENTITY:scripts/19b_run_final_layer_a_81_cases.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/21a_preflight_v7_3_production_routing.py",
+      "raw_sha256": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95",
+      "role": "step2e1_routing_preflight"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/21b_preflight_v7_3_eob_successor.py",
+      "raw_sha256": "d12f39acfa33651e49f8f6762c159e5cff217958e34736fca1b15077bda45aa3",
+      "role": "G1_RUNTIME_IDENTITY:scripts/21b_preflight_v7_3_eob_successor.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/21c_preflight_v7_3_layer_a_successor.py",
+      "raw_sha256": "63d9e8b9b3ca968b3df6d76c457ee5329697cfc9a648f2a35978ce23a4eaf0ed",
+      "role": "G1_RUNTIME_IDENTITY:scripts/21c_preflight_v7_3_layer_a_successor.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+      "raw_sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+      "role": "full81_runner"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+      "raw_sha256": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803",
+      "role": "v7_4_alignment_verifier"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "src/annual_design_model_v7_2.py",
+      "raw_sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+      "role": "model_core"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "MODIFIED_IN_G1_CANDIDATE",
+      "path": "src/main_full81_authorization_v7_4.py",
+      "raw_sha256": "0b4899412bc5cd6d6a4b64a45a243ae8b98d2488ea9ac165f595d2cd7eec7880",
+      "role": "main_full81_authorization_mechanism"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "MODIFIED_IN_G1_CANDIDATE",
+      "path": "src/production_authority_bundle_v7_4.py",
+      "raw_sha256": "09eeb928b381f693c662bae82075017d5a79e0a10629577f95050b6e788a8f42",
+      "role": "G1_RUNTIME_IDENTITY:src/production_authority_bundle_v7_4.py"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "MODIFIED_IN_G1_CANDIDATE",
+      "path": "src/production_authority_lifecycle_u06.py",
+      "raw_sha256": "c65aaedc6ea4f357b4ac463ebe0428d717ed953c5e12dc2f547cc98334bd7c45",
+      "role": "u06_lifecycle_overlay"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "src/production_input_authority_v7_3.py",
+      "raw_sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+      "role": "production_input_authority_v7_3"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "src/production_successor_stack_v7_3.py",
+      "raw_sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+      "role": "production_successor_stack"
+    },
+    {
+      "authority_justification": "Member of G1_RUNTIME_IDENTITY: imported, loaded, executed or gate-protected on the Full81 production path.",
+      "identity_class": "G1_RUNTIME_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "src/rainflow_validation_v7_2.py",
+      "raw_sha256": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2",
+      "role": "G1_RUNTIME_IDENTITY:src/rainflow_validation_v7_2.py"
+    },
+    {
+      "authority_justification": "Member of G1_VALIDATION_IDENTITY: an acceptance-critical validation suite of the G1 validation generation.",
+      "identity_class": "G1_VALIDATION_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "tests/test_21a_v7_3_production_routing_preflight.py",
+      "raw_sha256": "a039ae6620be859dfc7279e35b0b6bf0630e553f1e130fd27a330f9d337f22a6",
+      "role": "G1_VALIDATION_IDENTITY:tests/test_21a_v7_3_production_routing_preflight.py"
+    },
+    {
+      "authority_justification": "Member of G1_VALIDATION_IDENTITY: an acceptance-critical validation suite of the G1 validation generation.",
+      "identity_class": "G1_VALIDATION_IDENTITY",
+      "lifecycle_status": "MODIFIED_IN_G1_CANDIDATE",
+      "path": "tests/test_21b_21d_v7_3_production_successor_stack.py",
+      "raw_sha256": "88d0756d833d77ff55a36f14d8110556fb1665acf007b72a64d821fd92563fb1",
+      "role": "G1_VALIDATION_IDENTITY:tests/test_21b_21d_v7_3_production_successor_stack.py"
+    },
+    {
+      "authority_justification": "Member of G1_VALIDATION_IDENTITY: an acceptance-critical validation suite of the G1 validation generation.",
+      "identity_class": "G1_VALIDATION_IDENTITY",
+      "lifecycle_status": "MODIFIED_IN_G1_CANDIDATE",
+      "path": "tests/test_21e_v7_4_production_authority_bundle.py",
+      "raw_sha256": "0ba258c1a63df33c88f7499bbac7b353eb926aa1b7fb79cfd10fb9e4181bb7a6",
+      "role": "v7_4_alignment_test"
+    },
+    {
+      "authority_justification": "Member of G1_VALIDATION_IDENTITY: an acceptance-critical validation suite of the G1 validation generation.",
+      "identity_class": "G1_VALIDATION_IDENTITY",
+      "lifecycle_status": "MODIFIED_IN_G1_CANDIDATE",
+      "path": "tests/test_21f_u06_accepted_lifecycle_gate.py",
+      "raw_sha256": "e21b734db9da2a816e7181c93c5246d452ef58a2b9212d568b5d93c17ddf6c31",
+      "role": "u06_lifecycle_test"
+    },
+    {
+      "authority_justification": "Member of G1_VALIDATION_IDENTITY: an acceptance-critical validation suite of the G1 validation generation.",
+      "identity_class": "G1_VALIDATION_IDENTITY",
+      "lifecycle_status": "MODIFIED_IN_G1_CANDIDATE",
+      "path": "tests/test_21g_u06_r3_substitution_attacks.py",
+      "raw_sha256": "ffb4c5ead017f29e5822ae5f2045f72e9dffcf8e2e5be7080dc174ee898c569b",
+      "role": "u06_r3_substitution_attack_test"
+    },
+    {
+      "authority_justification": "Member of G1_VALIDATION_IDENTITY: an acceptance-critical validation suite of the G1 validation generation.",
+      "identity_class": "G1_VALIDATION_IDENTITY",
+      "lifecycle_status": "MODIFIED_IN_G1_CANDIDATE",
+      "path": "tests/test_21h_main_full81_authorization_mechanism.py",
+      "raw_sha256": "5b0be95a279ad092eafe6118556590d0c765ad269df15e2454795f9109744b9a",
+      "role": "main_full81_authorization_test"
+    },
+    {
+      "authority_justification": "Member of G1_VALIDATION_IDENTITY: an acceptance-critical validation suite of the G1 validation generation.",
+      "identity_class": "G1_VALIDATION_IDENTITY",
+      "lifecycle_status": "CREATED_IN_G1_CANDIDATE",
+      "path": "tests/test_21i_main_full81_preflight_authorization_guard.py",
+      "raw_sha256": "68e127512b9c553ee51e13ea32dbc6b3476b6c3be916e0a5594859ae424163b9",
+      "role": "G1_VALIDATION_IDENTITY:tests/test_21i_main_full81_preflight_authorization_guard.py"
+    },
+    {
+      "authority_justification": "Member of G1_VALIDATION_IDENTITY: an acceptance-critical validation suite of the G1 validation generation.",
+      "identity_class": "G1_VALIDATION_IDENTITY",
+      "lifecycle_status": "CREATED_IN_G1_CANDIDATE",
+      "path": "tests/test_21l_full81_production_generation_g1.py",
+      "raw_sha256": "6ad331689a4ac7895f776f712911ac22b52fba1beb3b13c0ec7e957fcd44c9b6",
+      "role": "G1_VALIDATION_IDENTITY:tests/test_21l_full81_production_generation_g1.py"
+    },
+    {
+      "authority_justification": "Member of G1_VALIDATION_IDENTITY: an acceptance-critical validation suite of the G1 validation generation.",
+      "identity_class": "G1_VALIDATION_IDENTITY",
+      "lifecycle_status": "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+      "path": "tests/test_fullstack_01_execution_input_authority.py",
+      "raw_sha256": "16e83c4d98b6d946d874e8c11fbf4d6a57c2530b94f594c738a8c7d878e07725",
+      "role": "G1_VALIDATION_IDENTITY:tests/test_fullstack_01_execution_input_authority.py"
+    }
+  ],
+  "modified_files": [
+    {
+      "candidate_raw_sha256": "0dc5e0700c4375ad2a3ad8da1d149c5e7806722c983c85904ce1d7e944685ddc",
+      "change_class": "MODIFY",
+      "path": ".gitattributes",
+      "predecessor_raw_sha256": "663d015bd6e6b7b6674a991b74394755c65f13613c33b349fa13fff6dbc58fcf",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "Appended exactly 17 exact-path rules for the G1-derived raw-byte consumers (124 -> 141): the G1 candidate checkpoint, manifest and change ledger; the five predeclared G1 governance role records; the G1 scope-authorization, execution-authorization and no-solve-evidence slots (evidence slot byte-preserving, the rest LF-pinned); the four role records the accepted R8 lifecycle record names; the 21l and FULLSTACK-01 suites. No rule removed or broadened, no wildcard, core.autocrlf unchanged."
+    },
+    {
+      "candidate_raw_sha256": "0b4899412bc5cd6d6a4b64a45a243ae8b98d2488ea9ac165f595d2cd7eec7880",
+      "change_class": "MODIFY",
+      "path": "src/main_full81_authorization_v7_4.py",
+      "predecessor_raw_sha256": "9ab8f125cba1cfbf1f4459013ea655b81a84dcb44c97ae9355de7bb700a3a500",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "Advanced the authorization lineage and candidate to G1; superseded the R8 candidate and the r3 authorization slot; added the G1 Main Full81 scope-authorization slot and a separate, fail-closed Full81 execution-authorization MECHANISM (resolver, validator, guard) that requires a frozen G1 lifecycle, a published G1 scope authorization and captured 21d no-solve evidence, published in that order. Mechanism only: no scope or execution authorization artifact exists or is created."
+    },
+    {
+      "candidate_raw_sha256": "09eeb928b381f693c662bae82075017d5a79e0a10629577f95050b6e788a8f42",
+      "change_class": "MODIFY",
+      "path": "src/production_authority_bundle_v7_4.py",
+      "predecessor_raw_sha256": "c4946af57ce1fe4c60baf3d8c7a89f8ab13526a22acce769f7fbc2cb6c82efba",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "Re-pinned the seven pins whose targets carry G1 bytes (lifecycle overlay, authorization mechanism, .gitattributes, suites 21e/21f/21g/21h) and set their origin tag to the G1 candidate; added G1 re-pin notes; marked the R8 trust root and diagnostic historical-role table as R8-only provenance, kept byte-identical. 34 pins, 0 stale; no role names a future artifact."
+    },
+    {
+      "candidate_raw_sha256": "c65aaedc6ea4f357b4ac463ebe0428d717ed953c5e12dc2f547cc98334bd7c45",
+      "change_class": "MODIFY",
+      "path": "src/production_authority_lifecycle_u06.py",
+      "predecessor_raw_sha256": "aebd2c5924027eba15fb0114cf155dadaee3505929c2f45e2ffbfadb748a37f3",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "Added the additive AuthorityGeneration G1 and advanced CURRENT_GENERATION to it (R8 retained byte-stable as historical); added the G1 closed-world candidate-manifest contract and change ledger, predeclared G1 governance role paths, the deterministic phase function, the three G1 identity axes with the intentional runtime-validation coupling declaration, and the matching raw-byte consumer universe extension. The validation-identity note on the 21i suite states that G1 creates it (phase-aware N-04 control) and that the raw SHA-256 recorded by the published R8 ledger remains historical evidence of the R8 run only."
+    },
+    {
+      "candidate_raw_sha256": "88d0756d833d77ff55a36f14d8110556fb1665acf007b72a64d821fd92563fb1",
+      "change_class": "MODIFY",
+      "path": "tests/test_21b_21d_v7_3_production_successor_stack.py",
+      "predecessor_raw_sha256": "25a6256f71ceba64d1295217c98c65ee2fbe3e5ae24fb3fcd4fee0b10abcb61e",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "Split the combined no-implicit-scope control into separate contracts: 21c has no implicit case scope (CASE_SCOPE_REQUIRED); the 21d no-solve preflight defaults to Full81 only behind the scope-authorization guard (live phase NOT_AUTHORIZED; scope-authorized disposable repository PASS with zero model constructions, optimizations and native-solver hits); 21d execution without an explicit case set is CASE_SCOPE_REQUIRED even when scope-authorized. The C0 real-repository execution-authorization premise is phase-aware from the source contract (current_generation_phase over G1_GOVERNANCE_STAGES): absent and refused before the lawful execution phase, a valid execution authorization over a frozen G1 lifecycle and a valid G1 scope authorization once reached, and failing closed on out-of-order presence. The A3 live-phase check is phase-aware too: once the G1 scope authorization is published, the guard grants the default only for a valid G1 scope authorization resolved against the frozen G1 lifecycle, and the same record resolved against no lifecycle grants nothing."
+    },
+    {
+      "candidate_raw_sha256": "0ba258c1a63df33c88f7499bbac7b353eb926aa1b7fb79cfd10fb9e4181bb7a6",
+      "change_class": "MODIFY",
+      "path": "tests/test_21e_v7_4_production_authority_bundle.py",
+      "predecessor_raw_sha256": "274e44b7862054737b52628c0a308b327b7fe161915de95f0b6aea9a2612a4e9",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "Made live-state assertions phase-aware: lifecycle, register, ownership and Full81 states are read from primary state (absent slot -> most restrictive state; present slot -> a valid accepted record is required). No assertion removed or relaxed."
+    },
+    {
+      "candidate_raw_sha256": "e21b734db9da2a816e7181c93c5246d452ef58a2b9212d568b5d93c17ddf6c31",
+      "change_class": "MODIFY",
+      "path": "tests/test_21f_u06_accepted_lifecycle_gate.py",
+      "predecessor_raw_sha256": "08e1d5cd440028b442f6b9e7defac71b01392131f595bd72b02f93b52700c827",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "Advanced current-generation assertions R8 -> G1, phase-aware; R8 asserted as the accepted, superseded historical predecessor; the durable-publication report check covers both the pre-package and the packaged phase."
+    },
+    {
+      "candidate_raw_sha256": "ffb4c5ead017f29e5822ae5f2045f72e9dffcf8e2e5be7080dc174ee898c569b",
+      "change_class": "MODIFY",
+      "path": "tests/test_21g_u06_r3_substitution_attacks.py",
+      "predecessor_raw_sha256": "d89b6216f0b3bc09e6d1f6f6804df39df828f46730fc12fdc1df0b90fb4e1cb6",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "Retargeted the substitution attacks to G1: structural attacks against the predeclared G1 role paths in the real repository, authenticity attacks in a disposable G1 repository. Every attack case retained. The no-premature-governance-artifact check is phase-aware from the source contract (current_generation_phase over G1_GOVERNANCE_STAGES): the lawful audit and acceptance intermediate phases pass, out-of-order presence fails closed, and a present lifecycle record must be a valid acceptance; a disposable-fixture phase matrix proves four lawful phases pass and eight out-of-order states fail closed. The live deployment-gate check is phase-aware: before a lawful G1 execution authorization the gate refuses Full81 (scope guard, then execution guard); once one is published it admits Full81 only for a valid G1 lifecycle, scope and execution chain, with no native solver entry; A2 stays hard-blocked in every phase."
+    },
+    {
+      "candidate_raw_sha256": "5b0be95a279ad092eafe6118556590d0c765ad269df15e2454795f9109744b9a",
+      "change_class": "MODIFY",
+      "path": "tests/test_21h_main_full81_authorization_mechanism.py",
+      "predecessor_raw_sha256": "9f0ab66279952286ddb8d01e9cce057eede283297a720586d922ba94eec263fd",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "The promotion fixture synthesizes a G1 candidate package with role records at the predeclared G1 paths; contract V4 retained as a historical control on R8; real-repository unauthorized checks made phase-aware. No negative control deleted or relaxed. The positive-control execution-interlock checks decide on the fixture repository, which holds no execution authorization in any phase; the real deployment-gate check refuses Full81 before a lawful G1 execution authorization and, once one is published, admits Full81 only for a valid G1 chain, with no native solver entry."
+    },
+    {
+      "candidate_raw_sha256": "68e127512b9c553ee51e13ea32dbc6b3476b6c3be916e0a5594859ae424163b9",
+      "change_class": "CREATE",
+      "path": "tests/test_21i_main_full81_preflight_authorization_guard.py",
+      "predecessor_raw_sha256": "ABSENT_AT_PREDECESSOR_COMMIT",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "Created in G1: absent from the predecessor commit. The R8-era bytes, whose raw SHA-256 the published R8 candidate change ledger recorded, are not published by G1, and that R8 record remains historical evidence of the R8 run only. The N-04 control T5 is phase-aware from the source contract: a disposable repository with a frozen G1 lifecycle and no scope authorization proves N-04 in every phase; the real entrypoint fails closed until the G1 scope authorization is published, then passes only for a valid authorization and never reaches the execution callee."
+    },
+    {
+      "candidate_raw_sha256": "6ad331689a4ac7895f776f712911ac22b52fba1beb3b13c0ec7e957fcd44c9b6",
+      "change_class": "CREATE",
+      "path": "tests/test_21l_full81_production_generation_g1.py",
+      "predecessor_raw_sha256": "ABSENT_AT_PREDECESSOR_COMMIT",
+      "publication_source": "NOT_APPLICABLE",
+      "summary": "New G1 suite: generation contract, candidate phase, G1 content contract and change ledger, validation-generation separation, lifecycle promotion, scope-slot isolation, execution guard, raw-byte/EOL coverage, identity axes, acyclic binding and no-solve surface. Its real-repository premises (promotion isolation, the candidate-only lifecycle control and the no-future-identity check) are phase-aware from the source contract (current_generation_phase over G1_GOVERNANCE_STAGES): absent before their lawful phase, valid by the live resolvers once reached, and failing closed on out-of-order presence. Its change-set reproduction derives the 21i class from published evidence (CREATE: the bytes differ from the R8-recorded raw SHA-256), and the publication-source attacks run on a synthetic PUBLISH_UNCHANGED entry that the production validator first accepts."
+    }
+  ],
+  "predecessor": {
+    "candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+    "fullstack_01_reference": {
+      "acceptance_publication_commit": "7b0536c4765c39b0c6ed2ea364f74526af629b29",
+      "accepted_lifecycle_record_path": "results/provenance/fullstack_01_execution_input_authority_accepted_lifecycle_82f04841/accepted_lifecycle_record.json",
+      "execution_input_paths": [
+        "data/reference/production_economic_interface_v7_2.json",
+        "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+        "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+        "data/reference/taipower_transition_period_settlement_interface_v7_2.json"
+      ],
+      "frozen_candidate_commit": "82f04841ef0861c079eca57d9688e6cad3caadc6",
+      "independent_audit_publication_commit": "a308b1afd41742f210cd73d3e722a413e2b478dd",
+      "inputs_changed_by_g1": false,
+      "lineage_id": "FULLSTACK_01_EXECUTION_INPUT_AUTHORITY",
+      "re_freeze_publication_commit": "8acb5ce9217c36eca0fc89989be8329c5453f3cc",
+      "relationship": "Accepted predecessor authority for the four canonical Full81 execution inputs. G1 carries those four input pins unchanged in G1_GOVERNANCE_AUTHORITY_IDENTITY and in the runtime authorization mechanism; it binds no FULLSTACK-01 frozen digest as a live G1 identity."
+    },
+    "generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    "historical_evidence": [
+      {
+        "evidence_class": "HISTORICAL_PREDECESSOR_EVIDENCE_NOT_A_LIVE_BINDING",
+        "path": "results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json",
+        "publication_commit": "0291171424d2654cfe9ac3c8ffaa773e163c75be",
+        "raw_sha256": "07bf0d97d02c28351826ffcf7d81431087e235392846e27c842fed36c6a7fe7c",
+        "role": "R8_ACCEPTED_LIFECYCLE_RECORD"
+      },
+      {
+        "evidence_class": "HISTORICAL_PREDECESSOR_EVIDENCE_NOT_A_LIVE_BINDING",
+        "path": "results/provenance/main_full81_authorization_r3/main_full81_authorization.json",
+        "publication_commit": "3b6e24d7bbdc14d7cce25356001226a47ec63cf0",
+        "raw_sha256": "9f4ff54db7db8e09b83b6cb3f1aeebe2c8df07aeee78486bf0d9245416d824a9",
+        "role": "R8_MAIN_FULL81_SCOPE_AUTHORIZATION"
+      }
+    ],
+    "known_historical_inconsistency": "Two historical observations, carried for the independent auditor and NOT resolved by this candidate. (1) Predecessor freeze coverage: the accepted R8 lifecycle (published 0291171424d2654cfe9ac3c8ffaa773e163c75be) froze an implementation identity whose 21c and 21d entries name runner bytes first published at 222685f0ea8a1a9f281e30962e223a339d5ec938, not the bytes of the R8 publication commits; the accepted FULLSTACK-01 lifecycle (published 8acb5ce9217c36eca0fc89989be8329c5453f3cc) froze exactly the runtime bytes of 82f04841ef0861c079eca57d9688e6cad3caadc6; commit 222685f then changed 21c and 21d after that re-freeze. At the G1 predecessor commit the published runtime bytes therefore equal neither predecessor's frozen implementation identity. G1 binds neither frozen identity as a live binding: its runtime identity is computed from live bytes and R8 material appears only as typed historical evidence. (2) Stack origin label: src/production_successor_stack_v7_3.py is pinned in the authority bundle with the historical origin tag U_06_ALIGNMENT_CANDIDATE_R3, although Git shows the stack's bytes last changed at 02b998b (Main Full81 authorization mechanism R2), after U-06 R3. The tag is carried-forward predecessor metadata, unchanged and unread by any guard; G1 neither modifies the stack nor re-tags the pin. Left for the auditor to judge.",
+    "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    "relationship": "SUPERSEDED_HISTORICAL_PREDECESSOR_NOT_A_LIVE_BINDING",
+    "repository_head_commit": "222685f0ea8a1a9f281e30962e223a339d5ec938"
+  },
+  "schema_version": "iris-thesis-full81-production-g1-candidate-change-ledger-v1",
+  "tests_executed": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest -v tests.test_21a_v7_3_production_routing_preflight",
+      "errors": 0,
+      "failures": 0,
+      "ran": 19,
+      "raw_sha256": "a039ae6620be859dfc7279e35b0b6bf0630e553f1e130fd27a330f9d337f22a6",
+      "result": "OK",
+      "skipped": 0,
+      "suite": "tests/test_21a_v7_3_production_routing_preflight.py"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest -v tests.test_21b_21d_v7_3_production_successor_stack",
+      "errors": 0,
+      "failures": 0,
+      "ran": 71,
+      "raw_sha256": "88d0756d833d77ff55a36f14d8110556fb1665acf007b72a64d821fd92563fb1",
+      "result": "OK",
+      "skipped": 0,
+      "suite": "tests/test_21b_21d_v7_3_production_successor_stack.py"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest -v tests.test_21e_v7_4_production_authority_bundle",
+      "errors": 0,
+      "failures": 0,
+      "ran": 34,
+      "raw_sha256": "0ba258c1a63df33c88f7499bbac7b353eb926aa1b7fb79cfd10fb9e4181bb7a6",
+      "result": "OK",
+      "skipped": 0,
+      "suite": "tests/test_21e_v7_4_production_authority_bundle.py"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest -v tests.test_21f_u06_accepted_lifecycle_gate",
+      "errors": 0,
+      "failures": 0,
+      "ran": 55,
+      "raw_sha256": "e21b734db9da2a816e7181c93c5246d452ef58a2b9212d568b5d93c17ddf6c31",
+      "result": "OK",
+      "skipped": 0,
+      "suite": "tests/test_21f_u06_accepted_lifecycle_gate.py"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest -v tests.test_21g_u06_r3_substitution_attacks",
+      "errors": 0,
+      "failures": 0,
+      "ran": 37,
+      "raw_sha256": "ffb4c5ead017f29e5822ae5f2045f72e9dffcf8e2e5be7080dc174ee898c569b",
+      "result": "OK",
+      "skipped": 0,
+      "suite": "tests/test_21g_u06_r3_substitution_attacks.py"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest -v tests.test_21h_main_full81_authorization_mechanism",
+      "errors": 0,
+      "failures": 0,
+      "ran": 73,
+      "raw_sha256": "5b0be95a279ad092eafe6118556590d0c765ad269df15e2454795f9109744b9a",
+      "result": "OK",
+      "skipped": 0,
+      "suite": "tests/test_21h_main_full81_authorization_mechanism.py"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest -v tests.test_21i_main_full81_preflight_authorization_guard",
+      "errors": 0,
+      "failures": 0,
+      "ran": 50,
+      "raw_sha256": "68e127512b9c553ee51e13ea32dbc6b3476b6c3be916e0a5594859ae424163b9",
+      "result": "OK",
+      "skipped": 0,
+      "suite": "tests/test_21i_main_full81_preflight_authorization_guard.py"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest -v tests.test_21l_full81_production_generation_g1",
+      "errors": 0,
+      "failures": 0,
+      "ran": 61,
+      "raw_sha256": "6ad331689a4ac7895f776f712911ac22b52fba1beb3b13c0ec7e957fcd44c9b6",
+      "result": "OK",
+      "skipped": 0,
+      "suite": "tests/test_21l_full81_production_generation_g1.py"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest -v tests.test_fullstack_01_execution_input_authority",
+      "errors": 0,
+      "failures": 0,
+      "ran": 9,
+      "raw_sha256": "16e83c4d98b6d946d874e8c11fbf4d6a57c2530b94f594c738a8c7d878e07725",
+      "result": "OK",
+      "skipped": 0,
+      "suite": "tests/test_fullstack_01_execution_input_authority.py"
+    }
+  ]
+}

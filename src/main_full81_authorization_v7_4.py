@@ -66,8 +66,8 @@ A valid authorization artifact resolves to
 :data:`AUTHORIZED_FOR_NO_SOLVE_PREFLIGHT` and nothing further.  It is explicitly
 **not** permission to call ``optimize()``: the execution interlock after the
 preflight is retained separately (see
-:func:`require_full81_execution_authorization`, which always rejects in this
-candidate).
+:func:`require_full81_execution_authorization`, which refuses unless a
+separate, published G1 execution authorization validates; none exists).
 
 Nothing authorized exists
 -------------------------
@@ -82,6 +82,26 @@ This module is a CANDIDATE.  It is not accepted, not frozen, authorizes no Main
 Full81, authorizes no Full81 preflight, and authorizes no Full81 execution.  It
 contains no optimization formulation, no model construction, no economic
 evaluation, and no solver call.
+
+Current Full81 Production Generation G1
+---------------------------------------
+G1 changes three things here and nothing scientific:
+
+* the Main Full81 scope-authorization slot moves to a G1 slot, because the
+  ``r3`` slot holds the lawfully published authorization of the superseded R8
+  generation, which may never be overwritten;
+* the authorization lineage / candidate advance to G1, and the R8 identities
+  join the superseded lists;
+* the retained execution interlock becomes a DATA-DRIVEN, fail-closed G1
+  execution-authorization guard (:func:`require_full81_execution_authorization`
+  / :func:`resolve_full81_execution_authorization`).  That is the execution-
+  authorization MECHANISM, not an authorization: it knows the future lawful
+  path, schema and validation rules, and nothing else.  It contains no future
+  digest, commit, PASS artifact or token, and it refuses everything until a
+  separately created, published G1 execution authorization binds an accepted
+  and FROZEN G1 lifecycle, the published G1 scope authorization, the published
+  no-solve 21d preflight evidence, the live runtime digest, the exact runner
+  and the exact 81-case universe.  No such artifact exists.
 """
 
 from __future__ import annotations
@@ -99,10 +119,12 @@ from src.production_authority_lifecycle_u06 import (
     HISTORICAL_GENERATIONS as HISTORICAL_PRODUCTION_AUTHORITY_GENERATIONS,
     U06LifecycleError,
     implementation_identity_digest,
+    is_ancestor,
     is_tracked_and_clean,
     require_frozen_lifecycle_against_live_implementation,
     require_published_in_commit,
     require_published_in_head,
+    resolve_u06_lifecycle,
     upstream_synchronized,
 )
 from src.production_input_authority_v7_3 import (
@@ -119,8 +141,13 @@ from src.production_input_authority_v7_3 import (
 #: attribute the current contract to a rejected candidate - the same
 #: misattribution class as ``R2-AUD-03``.  This string is reported, never used
 #: as an acceptance criterion.
+#:
+#: Advanced to the G1 candidate because this module's contract changed in G1:
+#: new lineage / candidate, new scope-authorization slot, and the execution-
+#: authorization guard.  Reported, never an acceptance criterion.
 AUTHORIZATION_MODULE_VERSION = (
-    "v7.4-main-full81-authorization-mechanism-2026-10-06-candidate-r8"
+    "v7.4-main-full81-authorization-mechanism-2026-10-07-"
+    "current-full81-production-generation-g1-candidate-r1"
 )
 
 #: The successor lineage this mechanism belongs to.  Deliberately **not** a
@@ -194,14 +221,26 @@ AUTHORIZATION_MODULE_VERSION = (
 #: GATE) inside the SAME production-authority generation.  Only the
 #: CANDIDATE identity advances, and the advance is required for the same
 #: reason: candidate R7 is now rejected.
-LINEAGE_ID = "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1"
-CANDIDATE_ID = "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8"
+#: Current Full81 Production Generation G1.  The production-authority
+#: generation advanced to G1, so - exactly as at the N-04 advance - the
+#: mechanism's pinned contract changed with it (new lawful record path, G1
+#: lineage / candidate).  Keeping the R8 identity would let the lawfully
+#: published, R8-bound ``r3`` authorization satisfy the lineage and candidate
+#: checks against G1.  As in R8, the authorization lineage equals the
+#: production-authority generation lineage it belongs to.
+LINEAGE_ID = "CURRENT_FULL81_PRODUCTION_GENERATION_G1"
+CANDIDATE_ID = "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1"
 
 #: The predecessor mechanism identity, retained as historical evidence.  It was
 #: accepted, frozen and lawfully used to publish the R2 authorization; it is not
 #: rejected, it is superseded, and it may never authorise this generation.
+#:
+#: G1 addition: the R8 (preflight-authorization-guard) lineage.  It was
+#: accepted, re-frozen and lawfully used to publish the ``r3`` authorization;
+#: it is superseded, not rejected.
 SUPERSEDED_LINEAGE_IDS_THIS_MECHANISM: tuple[str, ...] = (
     "MAIN_FULL81_AUTHORIZATION_MECHANISM_R1",
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
 )
 #: ``MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1`` is this lineage's
 #: own superseded candidate.  It PASSED its fresh independent read-only audit;
@@ -211,9 +250,13 @@ SUPERSEDED_LINEAGE_IDS_THIS_MECHANISM: tuple[str, ...] = (
 #: it was ever created.  It is listed here so that what is being refused stays
 #: explicit and auditable, alongside the hard ``candidate_id == CANDIDATE_ID``
 #: equality check that already bars it.
+#:
+#: G1 addition: candidate R8, accepted and re-frozen under the R8 generation and
+#: named by the published ``r3`` authorization.  Superseded, not rejected.
 SUPERSEDED_CANDIDATE_IDS_THIS_MECHANISM: tuple[str, ...] = (
     "MAIN_FULL81_AUTHORIZATION_MECHANISM_CANDIDATE_R2",
     "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1",
+    "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
 )
 
 #: Candidate ids in this lineage that FAILED and may never authorise.
@@ -316,14 +359,28 @@ SUPERSEDED_AUTHORIZATION_SCHEMA_VERSIONS: tuple[str, ...] = (
 #: successor authorization there would OVERWRITE published history, which is
 #: forbidden.  A new slot is therefore mandatory, and it is deliberately empty:
 #: no authorization artifact for this generation exists.
+#:
+#: Advanced to a ``g1`` slot for Current Full81 Production Generation G1.  The
+#: ``r3`` slot holds the lawfully published R8-bound authorization (it binds the
+#: R8-claimed implementation digest and the R8 lineage / candidate), and
+#: creating the G1 authorization there would OVERWRITE published history.  The
+#: new slot is deliberately empty: no G1 scope authorization exists.
 AUTHORIZATION_RECORD_RELATIVE_PATH = Path(
-    "results/provenance/main_full81_authorization_r3/main_full81_authorization.json"
+    "results/provenance/main_full81_authorization_g1/main_full81_authorization.json"
 )
 
 #: Candidate R1 authorization path, never created and now barred.
 REJECTED_AUTHORIZATION_PATHS_THIS_LINEAGE: tuple[str, ...] = (
     "results/provenance/main_full81_authorization_r1/"
     "main_full81_authorization.json",
+)
+
+#: The R8-bound ``r3`` authorization: lawfully created, validated and published
+#: for the R8 generation, and now SUPERSEDED historical evidence.  Named once so
+#: the G1 change ledger can cite it as typed predecessor evidence.
+SUPERSEDED_R8_AUTHORIZATION_RELATIVE_PATH = (
+    "results/provenance/main_full81_authorization_r3/"
+    "main_full81_authorization.json"
 )
 
 #: The ``r2`` authorization path.  Unlike the rejected ``r1`` path this artifact
@@ -333,9 +390,13 @@ REJECTED_AUTHORIZATION_PATHS_THIS_LINEAGE: tuple[str, ...] = (
 #: and may never authorise this successor generation: its declared runner
 #: SHA-256, runner version, implementation identity digest, lineage and candidate
 #: all name the predecessor.
+#:
+#: G1 addition: the R8-bound ``r3`` authorization, preserved untouched on the
+#: same footing.
 SUPERSEDED_AUTHORIZATION_PATHS_THIS_MECHANISM: tuple[str, ...] = (
     "results/provenance/main_full81_authorization_r2/"
     "main_full81_authorization.json",
+    SUPERSEDED_R8_AUTHORIZATION_RELATIVE_PATH,
 )
 
 #: The only scope this role may ever authorize.
@@ -350,6 +411,85 @@ ABSENT = "ABSENT"
 
 #: The single act a valid authorization permits progression to.
 AUTHORIZED_NEXT_ACT = "MAIN_FULL81_NO_SOLVE_PRODUCTION_PREFLIGHT"
+
+# ---------------------------------------------------------------------------
+# Current Full81 Production Generation G1: execution-authorization MECHANISM
+# ---------------------------------------------------------------------------
+#
+# Fixed in code: the role, the type, the schema, the two lawful paths and the
+# validation rules.  NOT in code: any digest, commit, PASS artifact or token of
+# a future execution authorization or of its no-solve preflight evidence.  The
+# mechanism is therefore usable without another production-code change, and
+# refuses everything until that separately authorized data exists.  Neither
+# path exists today.
+
+EXECUTION_AUTHORIZATION_ROLE = "main_full81_execution_authorization"
+EXECUTION_AUTHORIZATION_ARTIFACT_TYPE = "MAIN_FULL81_EXECUTION_AUTHORIZATION"
+EXECUTION_AUTHORIZATION_SCHEMA_VERSION = (
+    "iris-thesis-full81-execution-authorization-g1-v1"
+)
+#: Where a FUTURE G1 execution authorization must live.  Absent today.
+EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH = Path(
+    "results/provenance/main_full81_execution_authorization_g1/"
+    "main_full81_execution_authorization.json"
+)
+#: Where the FUTURE captured no-solve 21d preflight payload must live: the
+#: exact JSON object 21d prints on its PASS path, captured as UTF-8.  Absent.
+NO_SOLVE_PREFLIGHT_EVIDENCE_RELATIVE_PATH = Path(
+    "results/provenance/main_full81_no_solve_preflight_g1/"
+    "main_full81_21d_no_solve_preflight_evidence.json"
+)
+EXECUTION_REQUIRED_DECLARED_STATUS = "GRANTED"
+AUTHORIZED_FOR_FULL81_EXECUTION = "AUTHORIZED_FOR_FULL81_EXECUTION"
+EXECUTION_AUTHORIZED_ACT = "MAIN_FULL81_EXECUTION"
+EXPECTED_EXECUTION_CASE_SET = "full81"
+#: The two explicit flags 21d / the stack still require on the execute path;
+#: an execution authorization adds a gate and removes none of them.
+REQUIRED_EXECUTION_INTERLOCK_FLAGS: tuple[str, ...] = (
+    "--execute-production",
+    "--confirm-native-solve",
+)
+#: What the captured 21d no-solve PASS payload must say about itself.
+NO_SOLVE_PREFLIGHT_EVIDENCE_STATUS = "PASS"
+NO_SOLVE_PREFLIGHT_EVIDENCE_VERDICT = "V7.3 FINAL81 SUCCESSOR ZERO-SOLVE PREFLIGHT PASS"
+NO_SOLVE_PREFLIGHT_ZERO_COUNTERS: tuple[str, ...] = (
+    "model_constructions",
+    "optimization_calls",
+    "economic_evaluations",
+)
+
+#: Required fields of a G1 execution authorization, in validation order.
+EXECUTION_AUTHORIZATION_REQUIRED_FIELDS: tuple[str, ...] = (
+    "artifact_type",
+    "schema_version",
+    "lineage_id",
+    "candidate_id",
+    "execution_authorization_status",
+    "authorization_scope",
+    "authorizes",
+    "case_set",
+    "authorizes_a2",
+    "authorizes_sensitivity_solves",
+    "restart_policy",
+    "required_execution_interlock_flags",
+    "production_authority_generation_id",
+    "production_authority_lineage_id",
+    "production_authority_accepted_lifecycle_record",
+    "production_authority_publication_commit",
+    "implementation_identity_digest",
+    "scope_authorization",
+    "scope_authorization_publication_commit",
+    "no_solve_preflight_evidence",
+    "no_solve_preflight_publication_commit",
+    "target_runner",
+    "alpha_universe",
+    "beta_universe_h",
+    "case_count",
+    "solver_parameter_fingerprint",
+    "execution_input_authority",
+    "excluded_scopes",
+    "a2_excluded",
+)
 
 #: Exact current Main Full81 universe.  ``tests/test_21h`` asserts these equal
 #: the live ``production_successor_stack_v7_3`` grid, which the bundle pins by
@@ -1592,36 +1732,739 @@ def authenticate_full81_execution_inputs() -> dict[str, Any]:
     }
 
 
+def _strict_json_payload(raw: bytes, *, status: str, label: str) -> dict[str, Any]:
+    """Parse ``raw`` as ONE unambiguous UTF-8 JSON object (no duplicate keys)."""
+
+    def _no_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        out: dict[str, Any] = {}
+        for key, value in pairs:
+            _require(
+                key not in out,
+                status,
+                f"{label}: duplicate JSON object key {key!r}; the record is not "
+                "a single unambiguous claim.",
+            )
+            out[key] = value
+        return out
+
+    try:
+        payload = json.loads(raw.decode("utf-8"), object_pairs_hook=_no_duplicates)
+    except Full81AuthorizationError:
+        raise
+    except Exception as exc:
+        raise Full81AuthorizationError(
+            status, f"{label}: not a UTF-8 machine-readable JSON object ({exc})."
+        ) from exc
+    _require(isinstance(payload, dict), status, f"{label}: not a JSON object.")
+    return payload
+
+
+def _require_published_in_named_commit(
+    root: Path, commit: Any, relative: str, digest: str, *, label: str
+) -> str:
+    """The exact blob is in exactly ``commit``, an ancestor of HEAD.  A-03."""
+
+    _require(
+        isinstance(commit, str) and bool(_COMMIT_RE.match(commit)),
+        "FULL81_EXECUTION_AUTHORIZATION_PUBLICATION_PROOF_INVALID",
+        f"{label}: publication commit is not a full SHA-1: {commit!r}",
+    )
+    try:
+        require_published_in_commit(root, commit, relative, digest, label=label)
+    except U06LifecycleError as exc:
+        raise Full81AuthorizationError(
+            "FULL81_EXECUTION_AUTHORIZATION_PUBLICATION_PROOF_INVALID",
+            f"{label}: {exc.status}: {exc}",
+        ) from exc
+    return commit
+
+
+def _validate_no_solve_preflight_evidence(
+    root: Path, evidence: Mapping[str, Any], *, live_digest: str
+) -> None:
+    """The captured 21d payload must be a G1, FROZEN, authorized, zero-solve PASS."""
+
+    status = "FULL81_EXECUTION_AUTHORIZATION_PREFLIGHT_EVIDENCE_INVALID"
+    label = "no-solve preflight evidence"
+    checks: tuple[tuple[bool, str], ...] = (
+        (evidence.get("status") == NO_SOLVE_PREFLIGHT_EVIDENCE_STATUS, "status is not PASS"),
+        (
+            evidence.get("verdict") == NO_SOLVE_PREFLIGHT_EVIDENCE_VERDICT,
+            "verdict is not the 21d zero-solve PASS verdict",
+        ),
+        (evidence.get("case_set") == EXPECTED_EXECUTION_CASE_SET, "case_set is not full81"),
+        (
+            evidence.get("selected_case_count") == EXPECTED_CASE_COUNT
+            and isinstance(evidence.get("selected_case_plan"), list)
+            and len(evidence["selected_case_plan"]) == EXPECTED_CASE_COUNT,
+            "the selected case plan is not exactly 81 cases",
+        ),
+        (
+            evidence.get("main_full81_no_solve_preflight_authorized") is True,
+            "the preflight does not record that it passed the scope guard",
+        ),
+        (
+            evidence.get("runner_version") == EXPECTED_RUNNER_VERSION,
+            "runner_version is not the authorized runner version",
+        ),
+        (
+            evidence.get("production_authority_generation_id")
+            == CURRENT_PRODUCTION_AUTHORITY_GENERATION_ID,
+            "it was not produced under the current production-authority generation",
+        ),
+    )
+    for passed, reason in checks:
+        _require(passed, status, f"{label}: {reason}.")
+    lifecycle = evidence.get("u06_accepted_lifecycle")
+    _require(
+        isinstance(lifecycle, Mapping)
+        and lifecycle.get("generation_id") == CURRENT_PRODUCTION_AUTHORITY_GENERATION_ID
+        and lifecycle.get("accepted_lifecycle_overlay") == "PRESENT_VALID"
+        and lifecycle.get("production_authority_freeze_status") == "FROZEN"
+        and lifecycle.get("implementation_identity_digest") == live_digest,
+        status,
+        f"{label}: it was not produced under an accepted, FROZEN lifecycle of the "
+        "current generation for the live implementation digest.",
+    )
+    scope = evidence.get("main_full81_authorization")
+    _require(
+        isinstance(scope, Mapping)
+        and scope.get("main_full81_authorization") == AUTHORIZED_FOR_NO_SOLVE_PREFLIGHT
+        and scope.get("record_path") == AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()
+        and scope.get("lineage_id") == LINEAGE_ID
+        and scope.get("candidate_id") == CANDIDATE_ID
+        and scope.get("implementation_identity_digest") == live_digest,
+        status,
+        f"{label}: it was not produced under the published G1 scope authorization "
+        "for the live implementation digest.",
+    )
+    counters = evidence.get("execution_counters")
+    _require(
+        isinstance(counters, Mapping)
+        and all(
+            isinstance(counters.get(name), int)
+            and not isinstance(counters.get(name), bool)
+            and counters.get(name) == 0
+            for name in NO_SOLVE_PREFLIGHT_ZERO_COUNTERS
+        ),
+        status,
+        f"{label}: execution counters {sorted(NO_SOLVE_PREFLIGHT_ZERO_COUNTERS)} "
+        "are not all zero, so it is not a no-solve preflight.",
+    )
+
+
+def validate_execution_authorization_payload(
+    root: Path,
+    payload: Mapping[str, Any],
+    *,
+    record_relative: str,
+    lifecycle: Mapping[str, Any] | None,
+    scope_authorization: Mapping[str, Any] | None,
+) -> dict[str, Any]:
+    """Validate a G1 Main Full81 execution authorization.  Fail-closed throughout.
+
+    Ordered so the raised status names the real problem: envelope, path, stale
+    historical authority, generation, scope of what is authorized, the frozen
+    lifecycle, the runtime digest, the scope authorization, the no-solve
+    preflight evidence, runner, universe, execution inputs, publication.
+    Read-only; constructs no model and calls no solver.
+    """
+
+    root = Path(root).resolve()
+    normalized = str(record_relative).replace("\\", "/").strip()
+    _require(
+        isinstance(payload, Mapping),
+        "FULL81_EXECUTION_AUTHORIZATION_RECORD_INVALID",
+        f"{normalized}: not a JSON object.",
+    )
+    _require(
+        payload.get("artifact_type") == EXECUTION_AUTHORIZATION_ARTIFACT_TYPE,
+        "FULL81_EXECUTION_AUTHORIZATION_ARTIFACT_TYPE_MISMATCH",
+        f"artifact_type must be {EXECUTION_AUTHORIZATION_ARTIFACT_TYPE!r}; observed "
+        f"{payload.get('artifact_type')!r}. A scope authorization, a lifecycle "
+        "record or any other artifact cannot fill the execution role.",
+    )
+    _require(
+        payload.get("schema_version") == EXECUTION_AUTHORIZATION_SCHEMA_VERSION,
+        "FULL81_EXECUTION_AUTHORIZATION_SCHEMA_MISMATCH",
+        f"schema_version must be {EXECUTION_AUTHORIZATION_SCHEMA_VERSION!r}; "
+        f"observed {payload.get('schema_version')!r}",
+    )
+    missing = [f for f in EXECUTION_AUTHORIZATION_REQUIRED_FIELDS if f not in payload]
+    _require(
+        not missing,
+        "FULL81_EXECUTION_AUTHORIZATION_SCHEMA_INVALID",
+        f"{normalized}: missing required fields {missing}",
+    )
+
+    # --- lawful path, and no historical authority as a placeholder ----------
+    historical_paths = (
+        *REJECTED_AUTHORIZATION_PATHS_THIS_LINEAGE,
+        *SUPERSEDED_AUTHORIZATION_PATHS_THIS_MECHANISM,
+        *REJECTED_HISTORICAL_AUTHORIZATION_PATHS,
+        AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
+    )
+    _require(
+        normalized not in historical_paths,
+        "FULL81_EXECUTION_AUTHORIZATION_STALE_HISTORICAL_AUTHORITY_REJECTED",
+        f"{normalized} is a scope-authorization or historical authorization "
+        "path; it can never be an execution authorization.",
+    )
+    _require(
+        normalized == EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()
+        and not normalized.startswith(NON_AUTHORIZATION_PREFIXES),
+        "FULL81_EXECUTION_AUTHORIZATION_ROLE_PATH_INVALID",
+        "A Main Full81 execution authorization is only lawful at "
+        f"{EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()}; observed "
+        f"{normalized}.",
+    )
+    lineage = payload.get("lineage_id")
+    candidate = payload.get("candidate_id")
+    _require(
+        lineage not in REJECTED_LINEAGE_IDS
+        and lineage not in SUPERSEDED_LINEAGE_IDS_THIS_MECHANISM
+        and candidate not in REJECTED_CANDIDATE_IDS
+        and candidate not in SUPERSEDED_CANDIDATE_IDS_THIS_MECHANISM,
+        "FULL81_EXECUTION_AUTHORIZATION_STALE_HISTORICAL_AUTHORITY_REJECTED",
+        f"lineage {lineage!r} / candidate {candidate!r} names a superseded or "
+        "rejected authority (including the R8 generation). Historical authority "
+        "is never a placeholder for the current generation.",
+    )
+    _require(
+        lineage == LINEAGE_ID and candidate == CANDIDATE_ID,
+        "FULL81_EXECUTION_AUTHORIZATION_GENERATION_MISMATCH",
+        f"lineage_id / candidate_id must be {LINEAGE_ID!r} / {CANDIDATE_ID!r}; "
+        f"observed {lineage!r} / {candidate!r}",
+    )
+
+    # --- what is authorized: Main Full81 execution, nothing else ------------
+    _require(
+        payload.get("execution_authorization_status") == EXECUTION_REQUIRED_DECLARED_STATUS,
+        "FULL81_EXECUTION_AUTHORIZATION_STATUS_NOT_GRANTED",
+        "execution_authorization_status must be "
+        f"{EXECUTION_REQUIRED_DECLARED_STATUS!r}; observed "
+        f"{payload.get('execution_authorization_status')!r}",
+    )
+    exclusions = payload.get("excluded_scopes")
+    _require(
+        payload.get("authorization_scope") == AUTHORIZATION_SCOPE
+        and payload.get("authorizes") == [EXECUTION_AUTHORIZED_ACT]
+        and payload.get("case_set") == EXPECTED_EXECUTION_CASE_SET
+        and payload.get("authorizes_a2") is False
+        and payload.get("authorizes_sensitivity_solves") is False
+        and payload.get("a2_excluded") is True
+        and payload.get("restart_policy") == REQUIRED_RESTART_POLICY
+        and payload.get("required_execution_interlock_flags")
+        == list(REQUIRED_EXECUTION_INTERLOCK_FLAGS)
+        and isinstance(exclusions, list)
+        and set(REQUIRED_DECLARED_EXCLUSIONS)
+        <= {str(item).upper() for item in exclusions},
+        "FULL81_EXECUTION_AUTHORIZATION_SCOPE_INVALID",
+        "The execution authorization must authorize exactly "
+        f"[{EXECUTION_AUTHORIZED_ACT!r}] for scope {AUTHORIZATION_SCOPE!r} and "
+        f"case set {EXPECTED_EXECUTION_CASE_SET!r}, exclude A2, sensitivities and "
+        f"every required exclusion, keep {REQUIRED_RESTART_POLICY}, and keep both "
+        f"explicit interlock flags {list(REQUIRED_EXECUTION_INTERLOCK_FLAGS)}.",
+    )
+    for field in ("authorization_scope", "authorizes", "case_set"):
+        try:
+            _reject_forbidden_tokens(payload.get(field), field=field)
+        except Full81AuthorizationError as exc:
+            raise Full81AuthorizationError(
+                "FULL81_EXECUTION_AUTHORIZATION_SCOPE_INVALID", str(exc)
+            ) from exc
+
+    # --- an accepted, FROZEN current-generation lifecycle -------------------
+    try:
+        resolved = require_frozen_lifecycle_against_live_implementation(root, lifecycle)
+    except U06LifecycleError as exc:
+        raise Full81AuthorizationError(
+            "FULL81_EXECUTION_AUTHORIZATION_LIFECYCLE_NOT_FROZEN",
+            "Full81 execution cannot be authorized while the current production-"
+            "authority generation is not accepted and frozen for the live "
+            f"implementation (a candidate-only G1 is not): {exc.status}: {exc}",
+        ) from exc
+    _require(
+        resolved.get("is_current_generation") is True
+        and resolved.get("generation_id") == CURRENT_PRODUCTION_AUTHORITY_GENERATION_ID,
+        "FULL81_EXECUTION_AUTHORIZATION_LIFECYCLE_NOT_FROZEN",
+        f"The frozen lifecycle is generation {resolved.get('generation_id')!r}, "
+        f"not the current {CURRENT_PRODUCTION_AUTHORITY_GENERATION_ID!r}.",
+    )
+    _require(
+        payload.get("production_authority_generation_id") == resolved["generation_id"]
+        and payload.get("production_authority_lineage_id") == resolved.get("lineage_id"),
+        "FULL81_EXECUTION_AUTHORIZATION_GENERATION_MISMATCH",
+        "production_authority_generation_id / lineage_id must equal the RESOLVED "
+        f"current generation {resolved['generation_id']!r}.",
+    )
+
+    # --- the runtime digest -------------------------------------------------
+    live_digest = implementation_identity_digest(root)
+    declared_digest = payload.get("implementation_identity_digest")
+    _require(
+        declared_digest == live_digest
+        and declared_digest == resolved.get("implementation_identity_digest"),
+        "FULL81_EXECUTION_AUTHORIZATION_RUNTIME_DIGEST_DRIFT",
+        f"implementation_identity_digest {declared_digest!r} must equal the live "
+        f"runtime digest {live_digest} and the frozen lifecycle's digest.",
+    )
+
+    # --- the accepted lifecycle record, published ---------------------------
+    try:
+        lifecycle_rel, lifecycle_sha = _declared_identity(
+            payload, "production_authority_accepted_lifecycle_record"
+        )
+    except Full81AuthorizationError as exc:
+        raise Full81AuthorizationError(
+            "FULL81_EXECUTION_AUTHORIZATION_LIFECYCLE_BINDING_INVALID", str(exc)
+        ) from exc
+    _require(
+        lifecycle_rel == resolved.get("record_path")
+        and (root / lifecycle_rel).is_file()
+        and sha256_file(root / lifecycle_rel) == lifecycle_sha,
+        "FULL81_EXECUTION_AUTHORIZATION_LIFECYCLE_BINDING_INVALID",
+        "production_authority_accepted_lifecycle_record must name the resolved "
+        f"current lifecycle record {resolved.get('record_path')!r} with its live "
+        "SHA-256.",
+    )
+    lifecycle_commit = _require_published_in_named_commit(
+        root,
+        payload.get("production_authority_publication_commit"),
+        lifecycle_rel,
+        lifecycle_sha,
+        label="execution authorization production_authority_publication_commit",
+    )
+
+    # --- the G1 scope authorization: lawful, live, published ----------------
+    try:
+        scope_rel, scope_sha = _declared_identity(payload, "scope_authorization")
+    except Full81AuthorizationError as exc:
+        raise Full81AuthorizationError(
+            "FULL81_EXECUTION_AUTHORIZATION_SCOPE_AUTHORIZATION_INVALID", str(exc)
+        ) from exc
+    _require(
+        scope_rel not in historical_paths[:-1],
+        "FULL81_EXECUTION_AUTHORIZATION_STALE_HISTORICAL_AUTHORITY_REJECTED",
+        f"scope_authorization names the historical authorization {scope_rel}; a "
+        "superseded (for example the R8 r3) authorization never authorizes G1.",
+    )
+    _require(
+        scope_rel == AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
+        "FULL81_EXECUTION_AUTHORIZATION_SCOPE_AUTHORIZATION_INVALID",
+        "scope_authorization must name the G1 scope authorization at "
+        f"{AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()}; observed {scope_rel}.",
+    )
+    live_scope = resolve_full81_authorization(root, lifecycle)
+    scope_states: list[tuple[str, Mapping[str, Any] | None]] = [
+        ("the live re-resolved", live_scope)
+    ]
+    if scope_authorization is not None:
+        # A caller-supplied scope state is never trusted on its own: it must
+        # grant the preflight too, and name the same G1 record.
+        scope_states.append(("the supplied", scope_authorization))
+    for label, candidate_state in scope_states:
+        try:
+            require_full81_preflight_authorization(root, candidate_state)
+        except (Full81AuthorizationError, U06LifecycleError) as exc:
+            raise Full81AuthorizationError(
+                "FULL81_EXECUTION_AUTHORIZATION_SCOPE_AUTHORIZATION_INVALID",
+                f"{label} Main Full81 scope authorization does not lawfully "
+                f"grant the no-solve preflight: {exc.status}: {exc}",
+            ) from exc
+        _require(
+            candidate_state.get("record_path") == scope_rel,
+            "FULL81_EXECUTION_AUTHORIZATION_SCOPE_AUTHORIZATION_INVALID",
+            f"{label} scope authorization resolves at "
+            f"{candidate_state.get('record_path')!r}, not at {scope_rel}.",
+        )
+    _require(
+        sha256_file(root / scope_rel) == scope_sha,
+        "FULL81_EXECUTION_AUTHORIZATION_SCOPE_AUTHORIZATION_INVALID",
+        f"scope_authorization declares SHA-256 {scope_sha} but live {scope_rel} "
+        "differs.",
+    )
+    scope_commit = _require_published_in_named_commit(
+        root,
+        payload.get("scope_authorization_publication_commit"),
+        scope_rel,
+        scope_sha,
+        label="execution authorization scope_authorization_publication_commit",
+    )
+
+    # --- the no-solve 21d preflight evidence: published, and a real PASS ----
+    try:
+        evidence_rel, evidence_sha = _declared_identity(
+            payload, "no_solve_preflight_evidence"
+        )
+    except Full81AuthorizationError as exc:
+        raise Full81AuthorizationError(
+            "FULL81_EXECUTION_AUTHORIZATION_PREFLIGHT_EVIDENCE_INVALID", str(exc)
+        ) from exc
+    evidence_path = root / evidence_rel
+    _require(
+        evidence_rel == NO_SOLVE_PREFLIGHT_EVIDENCE_RELATIVE_PATH.as_posix()
+        and evidence_path.is_file()
+        and sha256_file(evidence_path) == evidence_sha,
+        "FULL81_EXECUTION_AUTHORIZATION_PREFLIGHT_EVIDENCE_INVALID",
+        "no_solve_preflight_evidence must name the captured 21d payload at "
+        f"{NO_SOLVE_PREFLIGHT_EVIDENCE_RELATIVE_PATH.as_posix()} with its live "
+        "SHA-256.",
+    )
+    evidence_commit = _require_published_in_named_commit(
+        root,
+        payload.get("no_solve_preflight_publication_commit"),
+        evidence_rel,
+        evidence_sha,
+        label="execution authorization no_solve_preflight_publication_commit",
+    )
+    _require(
+        is_ancestor(root, lifecycle_commit, scope_commit)
+        and is_ancestor(root, scope_commit, evidence_commit),
+        "FULL81_EXECUTION_AUTHORIZATION_PUBLICATION_PROOF_INVALID",
+        "The lifecycle, scope-authorization and preflight-evidence publications "
+        "must be ordered lifecycle -> scope authorization -> preflight evidence.",
+    )
+    _validate_no_solve_preflight_evidence(
+        root,
+        _strict_json_payload(
+            evidence_path.read_bytes(),
+            status="FULL81_EXECUTION_AUTHORIZATION_PREFLIGHT_EVIDENCE_INVALID",
+            label="no-solve preflight evidence",
+        ),
+        live_digest=live_digest,
+    )
+
+    # --- runner, universe, solver fingerprint -------------------------------
+    runner = payload.get("target_runner")
+    try:
+        runner_rel, runner_sha = _declared_identity(payload, "target_runner")
+    except Full81AuthorizationError as exc:
+        raise Full81AuthorizationError(
+            "FULL81_EXECUTION_AUTHORIZATION_RUNNER_MISMATCH", str(exc)
+        ) from exc
+    runner_path = root / runner_rel
+    _require(
+        isinstance(runner, Mapping)
+        and runner_rel == EXPECTED_RUNNER_RELATIVE_PATH
+        and runner_path.is_file()
+        and sha256_file(runner_path) == runner_sha
+        and runner.get("version") == EXPECTED_RUNNER_VERSION
+        and declared_module_constant(
+            runner_path.read_text(encoding="utf-8"), "RUNNER_VERSION"
+        )
+        == EXPECTED_RUNNER_VERSION,
+        "FULL81_EXECUTION_AUTHORIZATION_RUNNER_MISMATCH",
+        f"target_runner must be {EXPECTED_RUNNER_RELATIVE_PATH} at version "
+        f"{EXPECTED_RUNNER_VERSION!r} with its live SHA-256, and the live runner "
+        "must declare that version.",
+    )
+    alphas = payload.get("alpha_universe")
+    betas = payload.get("beta_universe_h")
+    case_count = payload.get("case_count")
+    _require(
+        isinstance(alphas, list)
+        and len(alphas) == len(EXPECTED_ALPHA_UNIVERSE)
+        and all(
+            isinstance(v, (int, float))
+            and not isinstance(v, bool)
+            and abs(float(v) - e) < 1e-12
+            for v, e in zip(alphas, EXPECTED_ALPHA_UNIVERSE)
+        )
+        and isinstance(betas, list)
+        and len(betas) == len(EXPECTED_BETA_UNIVERSE_H)
+        and all(
+            isinstance(v, int) and not isinstance(v, bool) and v == e
+            for v, e in zip(betas, EXPECTED_BETA_UNIVERSE_H)
+        )
+        and isinstance(case_count, int)
+        and not isinstance(case_count, bool)
+        and case_count == EXPECTED_CASE_COUNT,
+        "FULL81_EXECUTION_AUTHORIZATION_CASE_UNIVERSE_MISMATCH",
+        "The execution authorization must name exactly the 9 x 9 alpha / beta "
+        f"universe and case_count = {EXPECTED_CASE_COUNT}.",
+    )
+    _require(
+        str(payload.get("solver_parameter_fingerprint", "")).lower()
+        == solver_parameter_fingerprint(),
+        "FULL81_EXECUTION_AUTHORIZATION_SOLVER_FINGERPRINT_MISMATCH",
+        "solver_parameter_fingerprint must be the accepted Layer-A fingerprint.",
+    )
+
+    # --- the four canonical execution inputs --------------------------------
+    expected_inputs = {
+        pin.relative_path: pin.sha256 for pin in FULL81_EXECUTION_INPUT_AUTHORITY_PINS
+    }
+    declared_inputs = payload.get("execution_input_authority")
+    _require(
+        isinstance(declared_inputs, Mapping)
+        and dict(declared_inputs) == expected_inputs
+        and all(
+            (root / relative).is_file() and sha256_file(root / relative) == digest
+            for relative, digest in expected_inputs.items()
+        ),
+        "FULL81_EXECUTION_AUTHORIZATION_EXECUTION_INPUT_MISMATCH",
+        "execution_input_authority must be exactly the four FULLSTACK-01 "
+        "execution-input pins, matching live bytes.",
+    )
+
+    # --- publication of the execution authorization itself ------------------
+    synced, reason = upstream_synchronized(root)
+    _require(synced, "FULL81_EXECUTION_AUTHORIZATION_NOT_PUBLISHED", reason)
+    try:
+        require_published_in_head(
+            root,
+            normalized,
+            sha256_file(root / normalized),
+            label="full81 execution authorization",
+        )
+    except U06LifecycleError as exc:
+        raise Full81AuthorizationError(
+            "FULL81_EXECUTION_AUTHORIZATION_NOT_PUBLISHED",
+            "The execution authorization itself is not lawfully published: "
+            f"{exc.status}: {exc}",
+        ) from exc
+    _require(
+        is_ancestor(root, evidence_commit, "HEAD"),
+        "FULL81_EXECUTION_AUTHORIZATION_PUBLICATION_PROOF_INVALID",
+        "The preflight evidence publication is not in HEAD's ancestry.",
+    )
+
+    return {
+        "authorization_module_version": AUTHORIZATION_MODULE_VERSION,
+        "role": EXECUTION_AUTHORIZATION_ROLE,
+        "lineage_id": LINEAGE_ID,
+        "candidate_id": CANDIDATE_ID,
+        "record_path": normalized,
+        "record_present": True,
+        "record_committed": True,
+        "record_published": True,
+        "self_authorized": False,
+        "execution_authorization_status": AUTHORIZED_FOR_FULL81_EXECUTION,
+        "execution_authorization_overlay": "PRESENT_VALID",
+        "authorizes": [EXECUTION_AUTHORIZED_ACT],
+        "case_set": EXPECTED_EXECUTION_CASE_SET,
+        "case_count": EXPECTED_CASE_COUNT,
+        "production_authority_generation_id": resolved["generation_id"],
+        "production_authority_freeze_status": "FROZEN",
+        "implementation_identity_digest": live_digest,
+        "scope_authorization_record_path": scope_rel,
+        "no_solve_preflight_evidence_path": evidence_rel,
+        "required_execution_interlock_flags": list(REQUIRED_EXECUTION_INTERLOCK_FLAGS),
+        "execution_blocked_reason": None,
+        "placeholder_digests_used": False,
+        "fabricated_future_hashes": False,
+    }
+
+
+def absent_execution_authorization(
+    *, reason: str | None = None, record_path: str | None = None
+) -> dict[str, Any]:
+    """The most restrictive execution state: Main Full81 execution NOT AUTHORIZED."""
+
+    return {
+        "authorization_module_version": AUTHORIZATION_MODULE_VERSION,
+        "role": EXECUTION_AUTHORIZATION_ROLE,
+        "lineage_id": LINEAGE_ID,
+        "candidate_id": CANDIDATE_ID,
+        "record_path": record_path
+        or EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
+        "record_present": False,
+        "record_committed": False,
+        "record_published": False,
+        "self_authorized": False,
+        "execution_authorization_status": NOT_GRANTED,
+        "execution_authorization_overlay": ABSENT,
+        "authorizes": [],
+        "case_set": None,
+        "case_count": None,
+        "production_authority_generation_id": None,
+        "production_authority_freeze_status": None,
+        "implementation_identity_digest": None,
+        "scope_authorization_record_path": None,
+        "no_solve_preflight_evidence_path": None,
+        "required_execution_interlock_flags": list(REQUIRED_EXECUTION_INTERLOCK_FLAGS),
+        "execution_blocked_reason": reason
+        or (
+            "No G1 Main Full81 execution authorization exists at "
+            f"{EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()}. Execution "
+            "cannot be authorized by a scope authorization, a no-solve preflight "
+            "PASS, a frozen lifecycle, a historical authorization or a code "
+            "constant."
+        ),
+        "placeholder_digests_used": False,
+        "fabricated_future_hashes": False,
+    }
+
+
+def resolve_full81_execution_authorization(
+    root: Path,
+    lifecycle: Mapping[str, Any] | None = None,
+    scope_authorization: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Resolve the G1 execution authorization from live bytes and Git.
+
+    Never raises: absence resolves ``ABSENT`` / ``NOT_GRANTED``, anything else
+    invalid resolves ``PRESENT_INVALID`` with the rejecting status.  Read-only;
+    constructs no model and calls no solver.  The live lifecycle and scope
+    authorization are resolved here when not supplied, and a supplied scope
+    authorization must ALSO grant the preflight.
+    """
+
+    root = Path(root).resolve()
+    record_relative = EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()
+    path = root / record_relative
+    if not path.is_file():
+        return absent_execution_authorization(record_path=record_relative)
+
+    tracked, clean = is_tracked_and_clean(root, record_relative)
+    if not tracked or not clean:
+        state = absent_execution_authorization(
+            record_path=record_relative,
+            reason=(
+                "A Main Full81 execution authorization exists in the working tree "
+                f"but is {'untracked' if not tracked else 'modified relative to HEAD'}. "
+                "A local, unpublished or dirty authorization authorizes nothing."
+            ),
+        )
+        state["record_present"] = True
+        state["execution_authorization_overlay"] = PRESENT_INVALID
+        state["rejected_status"] = "FULL81_EXECUTION_AUTHORIZATION_NOT_PUBLISHED"
+        return state
+
+    try:
+        payload = _strict_json_payload(
+            path.read_bytes(),
+            status="FULL81_EXECUTION_AUTHORIZATION_RECORD_INVALID",
+            label=record_relative,
+        )
+        resolved_lifecycle = (
+            lifecycle if lifecycle is not None else resolve_u06_lifecycle(root)
+        )
+        return validate_execution_authorization_payload(
+            root,
+            payload,
+            record_relative=record_relative,
+            lifecycle=resolved_lifecycle,
+            scope_authorization=scope_authorization,
+        )
+    except (Full81AuthorizationError, U06LifecycleError) as exc:
+        state = absent_execution_authorization(
+            record_path=record_relative, reason=f"{exc.status}: {exc}"
+        )
+        state["record_present"] = True
+        state["record_committed"] = True
+        state["execution_authorization_overlay"] = PRESENT_INVALID
+        state["rejected_status"] = exc.status
+        return state
+
+
+#: Invariants a resolved execution authorization must satisfy before the
+#: execution gate may pass.
+_EXECUTION_AUTHORIZED_INVARIANTS: Mapping[str, Any] = {
+    "execution_authorization_overlay": "PRESENT_VALID",
+    "execution_authorization_status": AUTHORIZED_FOR_FULL81_EXECUTION,
+    "role": EXECUTION_AUTHORIZATION_ROLE,
+    "lineage_id": LINEAGE_ID,
+    "candidate_id": CANDIDATE_ID,
+    "production_authority_generation_id": CURRENT_PRODUCTION_AUTHORITY_GENERATION_ID,
+    "production_authority_freeze_status": "FROZEN",
+    "record_present": True,
+    "record_committed": True,
+    "record_published": True,
+    "self_authorized": False,
+    "authorizes": [EXECUTION_AUTHORIZED_ACT],
+    "case_set": EXPECTED_EXECUTION_CASE_SET,
+    "case_count": EXPECTED_CASE_COUNT,
+    "scope_authorization_record_path": AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
+    "no_solve_preflight_evidence_path": NO_SOLVE_PREFLIGHT_EVIDENCE_RELATIVE_PATH.as_posix(),
+}
+
+
 def require_full81_execution_authorization(
     authorization: Mapping[str, Any] | None,
-) -> None:
-    """The retained execution interlock after the preflight.
+) -> dict[str, Any]:
+    """The execution interlock after the preflight: the G1 execution guard.
 
     A valid scope authorization permits the no-solve preflight only.  Full81
-    *execution* additionally requires a separate execution authorization, the
-    V7.2-precedent explicit execute flag, ``FRESH_RUN_ONLY``, one armed model,
-    exactly one ``optimize()`` per case, and per-case authority rechecks.  None
-    of that is granted by this candidate, so this guard always rejects.
+    *execution* additionally requires a separate, published G1 execution
+    authorization (see :func:`validate_execution_authorization_payload`), and
+    the stack still requires the explicit execute flags, ``FRESH_RUN_ONLY``,
+    one armed model, exactly one ``optimize()`` per case and per-case authority
+    rechecks.  Returns the resolved execution authorization only when it is
+    lawful; raises ``FULL81_EXECUTION_NOT_AUTHORIZED`` otherwise.  No such
+    authorization exists, so in the real repository this always refuses.
     """
 
     # FULLSTACK-01: exact canonical input authority is a prerequisite of the
-    # execution-authorization boundary itself.  It runs before the retained
-    # refusal below and therefore before any future execution authorization can
-    # be honoured, before model construction, and before optimize().
+    # execution-authorization boundary itself.  It runs before any execution
+    # authorization is consulted, before model construction, and before
+    # optimize().
     input_authority = authenticate_full81_execution_inputs()
-    status = (
+    root = REPOSITORY_ROOT
+    scope_status = (
         (authorization or {}).get("full81_authorization_status") or NOT_GRANTED
     )
-    raise Full81AuthorizationError(
-        "FULL81_EXECUTION_NOT_AUTHORIZED",
-        "Main Full81 execution is NOT AUTHORIZED. The resolved scope "
-        f"authorization status is {status!r}, which authorizes only "
-        f"{AUTHORIZED_NEXT_ACT}. Execution requires a separately authorized "
-        "Full81 execution authorization and arming interlock that this "
-        "mechanism does not grant. The four-file execution-input authority "
-        f"gate reported {input_authority['status']}. No model was constructed "
-        "and no optimization ran.",
+    state = resolve_full81_execution_authorization(
+        root, scope_authorization=authorization
     )
+    blocking: list[str] = []
+    if authorization is None:
+        blocking.append("no resolved scope authorization was supplied")
+    for field, expected in _EXECUTION_AUTHORIZED_INVARIANTS.items():
+        if state.get(field) != expected:
+            blocking.append(f"{field}={state.get(field)!r} (expected {expected!r})")
+    if not blocking:
+        live = implementation_identity_digest(root)
+        if state.get("implementation_identity_digest") != live:
+            blocking.append("implementation_identity_digest differs from the live digest")
+    if blocking:
+        raise Full81AuthorizationError(
+            "FULL81_EXECUTION_NOT_AUTHORIZED",
+            "Main Full81 execution is NOT AUTHORIZED. The resolved scope "
+            f"authorization status is {scope_status!r}, which authorizes only "
+            f"{AUTHORIZED_NEXT_ACT}. The G1 execution authorization is "
+            f"{state.get('execution_authorization_overlay')} "
+            f"({state.get('rejected_status') or state.get('execution_authorization_status')}): "
+            f"{state.get('execution_blocked_reason')} Blocking: {blocking[:3]}. "
+            "The four-file execution-input authority gate reported "
+            f"{input_authority['status']}. No model was constructed and no "
+            "optimization ran.",
+        )
+    return dict(state)
+
+
+def future_execution_authorization_requirements() -> dict[str, Any]:
+    """What a future execution-authorization pass must create.  No digest invented."""
+
+    return {
+        "role": EXECUTION_AUTHORIZATION_ROLE,
+        "artifact_type": EXECUTION_AUTHORIZATION_ARTIFACT_TYPE,
+        "schema_version": EXECUTION_AUTHORIZATION_SCHEMA_VERSION,
+        "record_path": EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
+        "no_solve_preflight_evidence_path": (
+            NO_SOLVE_PREFLIGHT_EVIDENCE_RELATIVE_PATH.as_posix()
+        ),
+        "required_fields": list(EXECUTION_AUTHORIZATION_REQUIRED_FIELDS),
+        "lineage_id": LINEAGE_ID,
+        "candidate_id": CANDIDATE_ID,
+        "authorizes": [EXECUTION_AUTHORIZED_ACT],
+        "case_set": EXPECTED_EXECUTION_CASE_SET,
+        "required_execution_interlock_flags": list(REQUIRED_EXECUTION_INTERLOCK_FLAGS),
+        "required_prior_publications_in_order": [
+            "ACCEPTED_FROZEN_CURRENT_GENERATION_LIFECYCLE_RECORD",
+            "MAIN_FULL81_SCOPE_AUTHORIZATION_AT_THE_G1_SLOT",
+            "CAPTURED_21D_NO_SOLVE_PREFLIGHT_PASS_PAYLOAD",
+        ],
+        "historical_authority_accepted_as_placeholder": False,
+        "future_hashes_fabricated_now": False,
+        "record_exists_in_this_candidate": False,
+        "note": (
+            "Mechanism only. No execution authorization or preflight evidence "
+            "exists; the guard refuses Main Full81 execution until a separately "
+            "authorized, published record validates."
+        ),
+    }
 
 
 def is_authorized_for_preflight(
@@ -1686,7 +2529,12 @@ def authorization_summary(
         "u_01_blocks_main_full81": resolved.get("u_01_blocks_main_full81"),
         "authorization_distinctions": list(AUTHORIZATION_DISTINCTIONS),
         "required_authorization_sequence": list(REQUIRED_AUTHORIZATION_SEQUENCE),
-        "execution_authorization": "NOT_GRANTED_BY_THIS_MECHANISM",
+        # G1: a scope authorization never grants execution; execution is the
+        # separate G1 execution-authorization record, resolved on its own.
+        "execution_authorization": "NOT_GRANTED_BY_SCOPE_AUTHORIZATION",
+        "execution_authorization_record_path": (
+            EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()
+        ),
     }
 
 
@@ -1791,6 +2639,9 @@ def future_authorization_requirements() -> dict[str, Any]:
         "placeholder_digests_present": False,
         "mutable_python_constant_can_authorize": False,
         "authorization_implies_execution": False,
+        "execution_authorization_requirements": (
+            future_execution_authorization_requirements()
+        ),
         "note": (
             "No authorization artifact exists. The resolver reports NOT_GRANTED "
             "and the Full81 scope guard fails closed. Creating or removing a "

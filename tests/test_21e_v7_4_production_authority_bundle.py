@@ -36,9 +36,36 @@ ALIGNMENT_SOURCES = (
 
 
 def live_lifecycle():
-    """The live U-06 lifecycle state: currently ABSENT / NOT_FROZEN."""
+    """The live lifecycle state of the CURRENT generation (phase-aware)."""
 
     return lifecycle_mod.resolve_u06_lifecycle(ROOT)
+
+
+#: Current Full81 Production Generation G1: live-state assertions are
+#: PHASE-AWARE.  R8's suites hard-coded the pre-acceptance state and its
+#: validation surface failed on a correct repository after acceptance.  Here the
+#: phase is read from primary state: absent slot -> most restrictive state;
+#: present slot -> a VALID frozen acceptance is required.
+def current_record_present() -> bool:
+    return (
+        ROOT / lifecycle_mod.CURRENT_GENERATION.accepted_lifecycle_record_path
+    ).is_file()
+
+
+def current_scope_authorization_present() -> bool:
+    return (ROOT / bundle.MAIN_FULL81_AUTHORIZATION_LAWFUL_PATH).is_file()
+
+
+def expected_freeze_status() -> str:
+    return "FROZEN" if current_record_present() else "NOT_FROZEN"
+
+
+def expected_full81_status() -> str:
+    return (
+        "AUTHORIZED_FOR_NO_SOLVE_PREFLIGHT"
+        if current_scope_authorization_present()
+        else "NOT_AUTHORIZED"
+    )
 
 
 def worktree_status() -> str:
@@ -75,7 +102,7 @@ class BundleIdentityTests(unittest.TestCase):
         )
         self.assertEqual(
             self.payload["u06_lifecycle"]["production_authority_freeze_status"],
-            "NOT_FROZEN",
+            expected_freeze_status(),
         )
 
     def test_every_pinned_hash_reproduces_from_live_bytes(self) -> None:
@@ -329,9 +356,14 @@ class GovernanceSemanticsTests(unittest.TestCase):
         # so this assertion was requiring the defect rather than catching it.
         # The entry is now candidate-neutral, and the historical string must
         # never be emitted as the active one.
+        # G1: phase-aware.  Before acceptance the entry is the candidate-
+        # neutral pending entry; after a valid acceptance it is accepted/frozen.
+        accepted = current_record_present()
         self.assertEqual(
             register["U-06"],
-            bundle.ACTIVE_CANDIDATE_PENDING_AUDIT_REGISTER_ENTRY,
+            "CLOSED_ACCEPTED_PRODUCTION_AUTHORITY_FROZEN"
+            if accepted
+            else bundle.ACTIVE_CANDIDATE_PENDING_AUDIT_REGISTER_ENTRY,
         )
         self.assertNotEqual(
             register["U-06"], bundle.HISTORICAL_U06_ALIGNMENT_REGISTER_ENTRY
@@ -340,7 +372,13 @@ class GovernanceSemanticsTests(unittest.TestCase):
         ownership = self.state["u06_register_state"]
         self.assertEqual(ownership["entry"], register["U-06"])
         self.assertTrue(ownership["entry_is_candidate_neutral"])
-        self.assertEqual(ownership["candidate_audit_status"], "NOT_YET_PERFORMED")
+        self.assertEqual(
+            ownership["candidate_id"], lifecycle_mod.CURRENT_GENERATION.candidate_id
+        )
+        self.assertEqual(
+            ownership["candidate_audit_status"],
+            "PASS" if accepted else "NOT_YET_PERFORMED",
+        )
         self.assertFalse(ownership["historical_u06_alignment_is_current"])
         self.assertFalse(
             ownership["historical_u06_alignment_register_entry_is_current"]
@@ -454,7 +492,12 @@ class FailClosedGuardTests(unittest.TestCase):
             stack.validate_deployment_snapshot(
                 clean, execute_production=True, selected_scope="full81"
             )
-        self.assertEqual(caught.exception.status, "FULL81_AUTHORIZATION_NOT_GRANTED")
+        # G1: without a lawful scope authorization the scope guard refuses;
+        # once one exists, the separate execution guard does.
+        full81_refusals = {"FULL81_AUTHORIZATION_NOT_GRANTED"}
+        if current_scope_authorization_present():
+            full81_refusals.add("FULL81_EXECUTION_NOT_AUTHORIZED")
+        self.assertIn(caught.exception.status, full81_refusals)
 
         with self.assertRaises(stack.ProductionAuthorityError) as caught:
             stack.validate_deployment_snapshot(
@@ -465,12 +508,14 @@ class FailClosedGuardTests(unittest.TestCase):
         # Audit finding F-01: even the accepted core-three scope must NOT reach
         # PRODUCTION_AUTHORITY_FROZEN on a clean, committed, pushed repository
         # while no accepted U-06 lifecycle exists. Detailed F-01 evidence lives
-        # in tests/test_21f_u06_accepted_lifecycle_gate.py.
-        with self.assertRaises(stack.ProductionAuthorityError) as caught:
-            stack.validate_deployment_snapshot(
-                clean, execute_production=True, selected_scope="core-three"
-            )
-        self.assertEqual(caught.exception.status, "U06_ACCEPTED_LIFECYCLE_ABSENT")
+        # in tests/test_21f_u06_accepted_lifecycle_gate.py.  G1: asserted for
+        # as long as the current generation has no accepted record.
+        if not current_record_present():
+            with self.assertRaises(stack.ProductionAuthorityError) as caught:
+                stack.validate_deployment_snapshot(
+                    clean, execute_production=True, selected_scope="core-three"
+                )
+            self.assertEqual(caught.exception.status, "U06_ACCEPTED_LIFECYCLE_ABSENT")
 
 
 class StackAndRunnerBindingTests(unittest.TestCase):
@@ -489,17 +534,17 @@ class StackAndRunnerBindingTests(unittest.TestCase):
         self.assertEqual(alignment["alignment_status"], "CANDIDATE_ALIGNED")
         self.assertEqual(
             self.payload["u06_accepted_lifecycle"]["accepted_lifecycle_overlay"],
-            "ABSENT",
+            "PRESENT_VALID" if current_record_present() else "ABSENT",
         )
         self.assertEqual(
             self.payload["u06_accepted_lifecycle"][
                 "production_authority_freeze_status"
             ],
-            "NOT_FROZEN",
+            expected_freeze_status(),
         )
         self.assertEqual(
             alignment["full81_authorization"]["main_full81_authorization"],
-            "NOT_AUTHORIZED",
+            expected_full81_status(),
         )
 
     def test_grid_solver_settings_and_namespace_are_unchanged(self) -> None:
@@ -547,9 +592,13 @@ class StackAndRunnerBindingTests(unittest.TestCase):
                 record = case["v7_4_authority"]
                 self.assertEqual(record["bundle_version"], bundle.BUNDLE_VERSION)
                 self.assertEqual(record["alignment_status"], "CANDIDATE_ALIGNED")
-                self.assertEqual(record["u06_acceptance_status"], "NOT_ACCEPTED")
                 self.assertEqual(
-                    record["production_authority_freeze_status"], "NOT_FROZEN"
+                    record["u06_acceptance_status"],
+                    "CLOSED_ACCEPTED" if current_record_present() else "NOT_ACCEPTED",
+                )
+                self.assertEqual(
+                    record["production_authority_freeze_status"],
+                    expected_freeze_status(),
                 )
                 self.assertEqual(
                     record["framework"]["sha256"],

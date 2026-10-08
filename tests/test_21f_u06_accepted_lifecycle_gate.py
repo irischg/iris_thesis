@@ -1,4 +1,8 @@
-"""U-06 R3 lifecycle-gate tests: fail-closed states, code drift, separation.
+"""U-06 lifecycle-gate tests: fail-closed states, code drift, separation.
+
+Current Full81 Production Generation G1: the current generation is G1, the R8
+preflight-authorization-guard generation is historical, and every assertion
+about the LIVE lifecycle is phase-aware (see :func:`current_record_present`).
 
 Companion to ``tests/test_21g_u06_r3_substitution_attacks.py``, which carries the
 ``A-01`` arbitrary-artifact attack suite. This module covers the lifecycle state
@@ -32,10 +36,26 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from src import main_full81_authorization_v7_4 as auth  # noqa: E402
 from src import production_authority_bundle_v7_4 as bundle  # noqa: E402
 from src import production_authority_lifecycle_u06 as lc  # noqa: E402
 from src import production_input_authority_v7_3 as authority  # noqa: E402
 from src import production_successor_stack_v7_3 as stack  # noqa: E402
+
+
+#: Current Full81 Production Generation G1: the live assertions below are
+#: PHASE-AWARE.  R8 was accepted after its suites hard-coded the pre-acceptance
+#: state, and its own validation surface then failed on a correct repository.
+#: Each live assertion here therefore reads the phase from primary state: while
+#: the current generation's accepted-lifecycle slot is absent it requires the
+#: most restrictive state; once the slot exists it requires a VALID, frozen
+#: acceptance of the current generation - presence alone is never accepted.
+def current_record_present() -> bool:
+    return (ROOT / lc.CURRENT_GENERATION.accepted_lifecycle_record_path).is_file()
+
+
+def current_scope_authorization_present() -> bool:
+    return (ROOT / auth.AUTHORIZATION_RECORD_RELATIVE_PATH).is_file()
 
 
 def synthetic_accepted_lifecycle() -> dict:
@@ -137,11 +157,12 @@ class LiveLifecycleStateTests(unittest.TestCase):
         from the U-06 constant.
         """
 
-        generation = lc.CURRENT_GENERATION
-        self.assertFalse((ROOT / generation.accepted_lifecycle_record_path).exists())
-        self.assertFalse(self.live["record_present"])
-        self.assertFalse(self.live["record_committed"])
-        self.assertFalse(self.live["record_published"])
+        # G1: phase-aware.  Absent slot -> nothing recorded; present slot ->
+        # recorded, committed and published.
+        present = current_record_present()
+        self.assertEqual(self.live["record_present"], present)
+        self.assertEqual(self.live["record_committed"], present)
+        self.assertEqual(self.live["record_published"], present)
 
     def test_historical_u06_record_exists_and_is_not_current(self) -> None:
         """The historical U-06 R3 record is retained, and is not the current one.
@@ -166,6 +187,12 @@ class LiveLifecycleStateTests(unittest.TestCase):
         )
 
     def test_live_lifecycle_is_absent_and_not_frozen(self) -> None:
+        if current_record_present():
+            # Accepted phase: the record must be a valid acceptance.
+            self.assertEqual(self.live["accepted_lifecycle_overlay"], "PRESENT_VALID")
+            self.assertTrue(lc.is_frozen(self.live))
+            self.assertFalse(self.live["authorizes_main_full81"])
+            return
         self.assertEqual(self.live["accepted_lifecycle_overlay"], "ABSENT")
         self.assertEqual(self.live["u06_alignment_status"], "CANDIDATE")
         self.assertEqual(self.live["u06_acceptance_status"], "NOT_ACCEPTED")
@@ -225,19 +252,21 @@ class LiveLifecycleStateTests(unittest.TestCase):
         # R3-AUD-04: derived from the current generation rather than pinned to
         # one candidate revision, so a lawful candidate advance does not make
         # this regression guard assert a predecessor's identity.
+        # G1: the active candidate belongs to the CURRENT generation and is
+        # read from that generation's own register, never from the R8
+        # (preflight-authorization-guard) register, which is now historical.
         active = lc.ACTIVE_CANDIDATE_ID
         self.assertEqual(active, lc.CURRENT_GENERATION.candidate_id)
-        self.assertTrue(
-            active.startswith("MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_"),
-            active,
-        )
+        self.assertIn(active, lc.CURRENT_CANDIDATE_AUDIT_HISTORY)
+        self.assertNotIn(active, lc.PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY)
         self.assertEqual(summary["u06_independent_audit_status_candidate_id"], active)
-        self.assertEqual(
-            self.live["active_candidate_audit"]["independent_audit"],
-            self.live["u06_independent_audit_status"],
-        )
+        if not current_record_present():
+            self.assertEqual(
+                self.live["active_candidate_audit"]["independent_audit"],
+                self.live["u06_independent_audit_status"],
+            )
 
-        # 4. The active generation's own candidate history is truthful and
+        # 4. The R8 generation's candidate history is retained, truthful and
         #    separate from the U-06 alignment history.
         history = self.live["preflight_authorization_guard_candidate_audit_history"]
         r1 = history["MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R1"]
@@ -254,7 +283,8 @@ class LiveLifecycleStateTests(unittest.TestCase):
             ("R2-AUD-01", "R2-AUD-02", "R2-AUD-03"),
         )
 
-        r3 = history[active]
+        r3 = self.live["current_generation_candidate_audit_history"][active]
+        self.assertEqual(r3, dict(lc.CURRENT_CANDIDATE_AUDIT_HISTORY[active]))
         self.assertEqual(r3["independent_audit"], "NOT_YET_PERFORMED")
         self.assertEqual(r3["publication"], "NOT_YET_AUTHORIZED")
         self.assertEqual(r3["acceptance"], "NOT_YET_ACCEPTED")
@@ -271,9 +301,12 @@ class LiveLifecycleStateTests(unittest.TestCase):
 
         registry = "data/reference/parameter_registry_v7_2.csv"
         self.assertIn(registry, lc.REQUIRED_DURABLE_PUBLICATION_PATHS)
-        self.assertIn(
-            registry, lc.required_durable_publication_force_add_paths(ROOT)
-        )
+        # Stale premise corrected: the registry WAS force-added and published
+        # (R2-AUD-01), so it is tracked and no longer needs a force-add.  The
+        # guard is that it stays published with exactly its pinned bytes.
+        tracked, clean = lc.is_tracked_and_clean(ROOT, registry)
+        self.assertTrue(tracked and clean)
+        self.assertNotIn(registry, lc.required_durable_publication_force_add_paths(ROOT))
         # The canonical digest is read from the authority bundle pin, never
         # restated here: this module must contain no 64-hex digest literal.
         self.assertEqual(
@@ -297,11 +330,20 @@ class LiveLifecycleStateTests(unittest.TestCase):
         self.assertTrue(entry["live_content_matches_canonical"])
         self.assertFalse(report["gitignore_modified"])
         self.assertFalse(report["canonical_content_modified"])
-        # Truthfully still unpublished in this pass: nothing is staged here.
-        self.assertFalse(entry["present_in_head"])
-        self.assertFalse(entry["published_durably"])
-        self.assertTrue(entry["force_add_required"])
-        self.assertIn(registry, report["missing_required_authority_files"])
+        # Published durably: present in HEAD with exactly the pinned bytes.
+        self.assertTrue(entry["present_in_head"])
+        self.assertTrue(entry["published_durably"])
+        self.assertEqual(entry["head_sha256"], bundle._pin("parameter_registry").sha256)
+        self.assertFalse(entry["force_add_required"])
+        self.assertNotIn(registry, report["missing_required_authority_files"])
+        # The current candidate package is phase-aware: until it is published
+        # it is truthfully reported missing, never assumed present.
+        for relative in (
+            lc.CURRENT_GENERATION.candidate_checkpoint_path,
+            lc.CURRENT_GENERATION.candidate_manifest_path,
+        ):
+            published = lc.blob_sha256_at(ROOT, "HEAD", relative) is not None
+            self.assertEqual(relative in report["missing_required_authority_files"], not published)
 
     def test_live_lineage_identity_is_the_current_generation(self) -> None:
         """The live lifecycle reports the CURRENT generation's identity.
@@ -338,6 +380,12 @@ class LiveLifecycleStateTests(unittest.TestCase):
         self.assertNotEqual(lc.CURRENT_GENERATION.lineage_id, lc.LINEAGE_ID)
 
     def test_every_required_role_is_reported_missing(self) -> None:
+        if current_record_present():
+            self.assertEqual(self.live["missing_roles"], [])
+            self.assertEqual(
+                sorted(self.live["satisfied_roles"]), sorted(lc.REQUIRED_ACCEPTED_ROLES)
+            )
+            return
         self.assertEqual(
             sorted(self.live["missing_roles"]),
             sorted(lc.REQUIRED_ACCEPTED_ROLES),
@@ -378,6 +426,11 @@ class FailClosedFreezeGateTests(unittest.TestCase):
         self.assertEqual(snapshot.head, snapshot.origin_head)
         self.assertTrue(snapshot.authority_hashes_valid)
         self.assertEqual(snapshot.authority_untracked_paths, ())
+        if current_record_present():
+            # Accepted phase: the freeze comes from the accepted lifecycle,
+            # which this snapshot carries, not from the clean repository.
+            self.assertTrue(lc.is_frozen(live))
+            return
         with self.assertRaises(stack.ProductionAuthorityError) as caught:
             gate(snapshot)
         self.assertEqual(caught.exception.status, "U06_ACCEPTED_LIFECYCLE_ABSENT")
@@ -431,7 +484,8 @@ class FailClosedFreezeGateTests(unittest.TestCase):
         self.assertEqual(base["status"], "PASS")
         self.assertEqual(base["alignment_status"], "CANDIDATE_ALIGNED")
         self.assertFalse(base["lifecycle_authority_held_by_this_bundle"])
-        self.assertFalse(lc.is_frozen(live))
+        # The bundle PASS never decides the freeze; only the record does.
+        self.assertEqual(lc.is_frozen(live), current_record_present())
 
     def test_omitted_or_partial_lifecycle_never_freezes(self) -> None:
         self.assertFalse(lc.is_frozen(None))
@@ -451,7 +505,9 @@ class FailClosedFreezeGateTests(unittest.TestCase):
         passed = gate(clean_snapshot(complete))
         self.assertEqual(passed["status"], "PRODUCTION_AUTHORITY_FROZEN")
         self.assertEqual(passed["production_authority_freeze_status"], "FROZEN")
-        self.assertFalse(lc.is_frozen(lc.resolve_u06_lifecycle(ROOT)))
+        self.assertEqual(
+            lc.is_frozen(lc.resolve_u06_lifecycle(ROOT)), current_record_present()
+        )
 
 
 class RuntimeDependencyIdentityTests(unittest.TestCase):
@@ -623,9 +679,12 @@ class Full81AndA2SeparationTests(unittest.TestCase):
             with self.subTest(lifecycle=label):
                 with self.assertRaises(stack.ProductionAuthorityError) as caught:
                     gate(clean_snapshot(lifecycle), scope="full81")
-                self.assertEqual(
-                    caught.exception.status, "FULL81_AUTHORIZATION_NOT_GRANTED"
-                )
+                # G1: without a lawful scope authorization the scope guard
+                # refuses; once one exists, the separate execution guard does.
+                expected = {"FULL81_AUTHORIZATION_NOT_GRANTED"}
+                if current_scope_authorization_present():
+                    expected.add("FULL81_EXECUTION_NOT_AUTHORIZED")
+                self.assertIn(caught.exception.status, expected)
         self.assertIsNone(bundle.MAIN_FULL81_AUTHORIZATION_ARTIFACT)
         record = bundle.alignment_is_not_full81_authorization(
             synthetic_accepted_lifecycle()
@@ -757,7 +816,10 @@ class ProvenanceIsLifecycleDerivedTests(unittest.TestCase):
         self.assertEqual(state["generation_id"], generation.generation_id)
         self.assertEqual(state["lineage_id"], generation.lineage_id)
         self.assertEqual(state["candidate_id"], generation.candidate_id)
-        self.assertEqual(state["candidate_audit_status"], "NOT_YET_PERFORMED")
+        self.assertEqual(
+            state["candidate_audit_status"],
+            "PASS" if current_record_present() else "NOT_YET_PERFORMED",
+        )
         self.assertEqual(
             state["candidate_audit_status_candidate_id"], generation.candidate_id
         )
@@ -806,31 +868,50 @@ class ProvenanceIsLifecycleDerivedTests(unittest.TestCase):
             "FAIL_REMEDIATION_REQUIRED",
         )
 
-    def test_active_candidate_register_entry_is_candidate_r8(self) -> None:
-        """The active register entry is Candidate R8 of the current generation.
+    def test_active_candidate_register_entry_is_g1_candidate_r1(self) -> None:
+        """The active register entry is G1 Candidate R1 of the current generation.
 
-        CURRENT POINTER, advanced R7 -> R8. Candidates R4, R5, R6 and R7 are
-        asserted separately and historically below; nothing about them is
-        relaxed here.
+        CURRENT POINTER, advanced from the R8 generation to G1.  The R8 entry
+        is asserted separately and historically below; nothing is relaxed.
         """
 
         summary = lc.lifecycle_summary(lc.resolve_u06_lifecycle(ROOT))
         self.assertEqual(
             summary["active_candidate_id"],
-            "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+            "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
         )
         self.assertEqual(
             summary["active_candidate_id"], lc.CURRENT_GENERATION.candidate_id
         )
         active = summary["active_candidate_audit"]
-        self.assertEqual(active["candidate_revision"], "R8")
+        self.assertEqual(active["candidate_revision"], "R1")
         self.assertEqual(active["independent_audit"], "NOT_YET_PERFORMED")
         self.assertEqual(active["publication"], "NOT_YET_AUTHORIZED")
         self.assertEqual(active["acceptance"], "NOT_YET_ACCEPTED")
         self.assertEqual(
             active["disposition"], "ACTIVE_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT"
         )
-        self.assertEqual(tuple(active["remediates"]), ("R6-AUD-01", "R7-AUD-01"))
+
+    def test_r8_register_entry_is_retained_as_historical_candidate_time_state(
+        self,
+    ) -> None:
+        """HISTORICAL: R8's register entry is byte-stable; R8 is superseded.
+
+        The entry records R8's CANDIDATE-time state (the V4 contract replays
+        R8's artifacts against it); R8's later acceptance is proved by its
+        published accepted-lifecycle record, and R8 can never authorise G1.
+        """
+
+        r8_id = "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8"
+        r8 = lc.PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[r8_id]
+        self.assertEqual(r8["candidate_revision"], "R8")
+        self.assertEqual(r8["independent_audit"], "NOT_YET_PERFORMED")
+        self.assertEqual(tuple(r8["remediates"]), ("R6-AUD-01", "R7-AUD-01"))
+        self.assertIn(r8_id, lc.CURRENT_GENERATION.superseded_candidate_ids)
+        self.assertNotEqual(lc.ACTIVE_CANDIDATE_ID, r8_id)
+        r8_generation = lc.GENERATIONS_BY_ID["MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1"]
+        self.assertIn(r8_generation, lc.HISTORICAL_GENERATIONS)
+        self.assertTrue((ROOT / r8_generation.accepted_lifecycle_record_path).is_file())
 
     def test_r7_is_a_truthful_rejected_historical_candidate(self) -> None:
         """HISTORICAL: Candidate R7 failed its audit and may never authorise."""
@@ -940,9 +1021,23 @@ class ProvenanceIsLifecycleDerivedTests(unittest.TestCase):
 
         report = lc.resolve_u06_lifecycle(ROOT)["durable_publication"]
         generation = lc.CURRENT_GENERATION
-        manifest = json.loads(
-            (ROOT / generation.candidate_manifest_path).read_text(encoding="utf-8")
-        )
+        manifest_path = ROOT / generation.candidate_manifest_path
+        if not manifest_path.is_file():
+            # G1 candidate phase before packaging: with no manifest there is no
+            # binding, and the report must say so rather than equate presence
+            # (or absence) with content.
+            for relative in (
+                generation.candidate_checkpoint_path,
+                generation.candidate_change_ledger_path,
+            ):
+                entry = report["entries"][relative]
+                self.assertIsNone(entry["expected_sha256"])
+                self.assertFalse(entry["live_content_matches_canonical"])
+            own = report["entries"][generation.candidate_manifest_path]
+            self.assertIsNone(own["live_content_matches_canonical"])
+            self.assertFalse(own["live_present"])
+            return
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         for relative, entry in report["entries"].items():
             with self.subTest(path=relative):
                 if relative in lc.REQUIRED_DURABLE_PUBLICATION_PIN_LABELS:
@@ -1062,15 +1157,21 @@ class StackIntegrationTests(unittest.TestCase):
 
     def test_stack_payload_reports_r3_lineage_and_absent_lifecycle(self) -> None:
         self.assertEqual(self.payload["u06_lineage_id"], lc.LINEAGE_ID)
+        # G1: phase-aware; the stack reports the current generation's state.
+        self.assertEqual(
+            self.payload["production_authority_generation_id"],
+            lc.CURRENT_GENERATION.generation_id,
+        )
+        accepted = current_record_present()
         self.assertEqual(
             self.payload["u06_accepted_lifecycle"]["accepted_lifecycle_overlay"],
-            "ABSENT",
+            "PRESENT_VALID" if accepted else "ABSENT",
         )
         self.assertEqual(
             self.payload["u06_accepted_lifecycle"][
                 "production_authority_freeze_status"
             ],
-            "NOT_FROZEN",
+            "FROZEN" if accepted else "NOT_FROZEN",
         )
         self.assertEqual(
             self.payload["v7_4_authority_alignment"]["alignment_status"],

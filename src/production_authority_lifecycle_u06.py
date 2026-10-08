@@ -86,9 +86,13 @@ from src.production_input_authority_v7_3 import sha256_file
 #: named the auth-mechanism candidate R2 although the overlay contract had since
 #: advanced through the preflight-authorization-guard candidates.  It is a
 #: reported label only, never an acceptance criterion.
+#:
+#: Current Full81 Production Generation G1 candidate R1: the overlay gained one
+#: additive generation, its own content contract and its predeclared governance
+#: paths, so the label names that candidate.
 LIFECYCLE_MODULE_VERSION = (
-    "v7.4-production-authority-accepted-lifecycle-overlay-2026-10-06-"
-    "full81-preflight-auth-guard-candidate-r8"
+    "v7.4-production-authority-accepted-lifecycle-overlay-2026-10-07-"
+    "current-full81-production-generation-g1-candidate-r1"
 )
 
 #: The one stable lineage identity every R3 lifecycle artifact must declare.
@@ -398,6 +402,25 @@ class AuthorityGeneration:
     #: ledger states.  ``None`` for every generation accepted before ledgers
     #: existed, so none of them is re-judged retroactively.
     candidate_change_ledger_path: str | None = None
+    #: The exact paths roles 2-5 of this generation must be published at,
+    #: declared BEFORE the candidate is frozen, as ``(role, path)`` pairs.
+    #:
+    #: Current Full81 Production Generation G1 addition.  The R8 acceptance
+    #: authored its four role records at paths no source declared, so they
+    #: entered the raw-byte consumer universe only after acceptance and had no
+    #: exact-path EOL rule.  A generation that predeclares its role paths has
+    #: every future governance record protected the moment it is authored, and
+    #: its lifecycle validator refuses a role filled at any other path.
+    #: ``None`` for every historical generation, so none is re-judged.
+    predeclared_role_record_paths: tuple[tuple[str, str], ...] | None = None
+
+    @property
+    def role_record_path_map(self) -> dict[str, str] | None:
+        """Predeclared role -> path for roles 2-5, or ``None`` if undeclared."""
+
+        if self.predeclared_role_record_paths is None:
+            return None
+        return dict(self.predeclared_role_record_paths)
 
     @property
     def role_contracts(self) -> Mapping[str, RoleContract]:
@@ -450,6 +473,7 @@ class AuthorityGeneration:
             "candidate_audit_state": self.candidate_audit_state,
             "candidate_manifest_contract": self.candidate_manifest_contract,
             "candidate_change_ledger_path": self.candidate_change_ledger_path,
+            "predeclared_role_record_paths": self.role_record_path_map,
         }
 
 
@@ -832,12 +856,29 @@ FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4 = (
     "FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4"
 )
 
+#: Current Full81 Production Generation G1 contract.  V4 is NOT reused: it
+#: hard-wires the predecessor to Candidate R7 and derives every historical
+#: value from the R7 preservation chain, which is false for G1, whose
+#: predecessor is the accepted R8 generation.  The G1 contract keeps every
+#: generic closed-world live-identity obligation of V4 (checkpoint, runtime
+#: implementation identity, bundle pins, durable declaration, change ledger,
+#: forbidden own identity), drops the two R7-only historical obligations, and
+#: adds separately classed validation and governance-authority identities
+#: bound to live raw bytes.  See :func:`validate_g1_candidate_manifest_contract`.
+G1_CANDIDATE_MANIFEST_CONTRACT = (
+    "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_MANIFEST_CONTRACT_V1"
+)
+
 #: Every content contract this module can validate.  A generation naming any
 #: other value is refused at import time rather than silently left unvalidated.
 #: V1, V2 and V3 are deliberately absent: a manifest declaring any of them can
-#: never satisfy the current contract.
+#: never satisfy the current contract.  Each known contract has its own
+#: validator; :func:`validate_candidate_manifest_content_contract` dispatches by
+#: the generation's declared contract and never lets one contract's validator
+#: judge another contract's manifest.
 KNOWN_CANDIDATE_MANIFEST_CONTRACTS: tuple[str, ...] = (
     FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4,
+    G1_CANDIDATE_MANIFEST_CONTRACT,
 )
 FULL81_PREFLIGHT_AUTH_GUARD_R1_ACCEPTED_LIFECYCLE_RECORD_PATH = (
     "results/provenance/"
@@ -972,12 +1013,124 @@ FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION = AuthorityGeneration(
     ),
 )
 
+#: Generation 4 - Current Full81 Production Generation G1.
+#:
+#: Why a new generation, and why now.  Generation 3 (candidate R8) was
+#: independently audited, accepted and re-frozen, so its single accepted-
+#: lifecycle slot is occupied by a published record that binds the R8-claimed
+#: implementation digest.  The live repository has since lawfully changed bytes
+#: on that surface (the accepted FULLSTACK-01 authorization source and the
+#: committed 21c / 21d route), so that record can never again resolve
+#: PRESENT_VALID for the live implementation, and reaching ``FROZEN`` inside
+#: generation 3 would require mutating an accepted artifact.  The repository's
+#: own generalised precedent therefore applies: one additive generation, a
+#: pointer advance, and every predecessor generation value left byte-identical.
+#:
+#: G1 is a governance / runtime CONSOLIDATION, not a methodology change: it
+#: binds the current runtime, validation and governance-authority identities
+#: into one generation with one content contract.  Generation 3's values above
+#: are unchanged; its ``disposition`` string is the value it was declared with,
+#: and its historical status follows from its position in
+#: :data:`HISTORICAL_GENERATIONS`, never from that string.
+#:
+#: This generation is a CANDIDATE.  Its accepted-lifecycle slot and its four
+#: predeclared role-record paths do not exist, so the live lifecycle resolves
+#: ABSENT / NOT_FROZEN, and nothing here is accepted, frozen or authorized.
+G1_GENERATION_ID = "CURRENT_FULL81_PRODUCTION_GENERATION_G1"
+G1_ARTIFACT_TYPE_PREFIX = "FULL81_PRODUCTION_G1_"
+G1_SCHEMA_PREFIX = "iris-thesis-full81-production-g1-"
+G1_CANDIDATE_R1_CHECKPOINT_PATH = (
+    "docs/checkpoints/"
+    "current_full81_production_generation_g1_candidate_r1_2026-10-07.md"
+)
+G1_CANDIDATE_R1_MANIFEST_PATH = (
+    "results/provenance/"
+    "current_full81_production_generation_g1_candidate_r1_2026-10-07/"
+    "g1_candidate_manifest.json"
+)
+G1_CANDIDATE_R1_CHANGE_LEDGER_PATH = (
+    "results/provenance/"
+    "current_full81_production_generation_g1_candidate_r1_2026-10-07/"
+    "candidate_change_ledger.json"
+)
+G1_ACCEPTED_LIFECYCLE_RECORD_PATH = (
+    "results/provenance/"
+    "current_full81_production_generation_g1_accepted_lifecycle/"
+    "accepted_lifecycle_record.json"
+)
+#: Future role-record paths, predeclared so that their exact-path EOL rules
+#: exist before any of them is authored.  None of these files exists.
+G1_PREDECLARED_ROLE_RECORD_PATHS: tuple[tuple[str, str], ...] = (
+    (
+        "independent_audit_pass",
+        "results/provenance/"
+        "current_full81_production_generation_g1_independent_audit_r1/"
+        "independent_audit_pass_record.json",
+    ),
+    (
+        "acceptance_closure",
+        "results/provenance/"
+        "current_full81_production_generation_g1_acceptance_r1/"
+        "acceptance_closure.json",
+    ),
+    (
+        "acceptance_manifest",
+        "results/provenance/"
+        "current_full81_production_generation_g1_acceptance_r1/"
+        "acceptance_manifest.json",
+    ),
+    (
+        "production_authority_re_freeze",
+        "results/provenance/"
+        "current_full81_production_generation_g1_re_freeze_r1/"
+        "production_authority_re_freeze_record.json",
+    ),
+)
+
+G1_GENERATION = AuthorityGeneration(
+    generation_id=G1_GENERATION_ID,
+    lineage_id=G1_GENERATION_ID,
+    candidate_id="CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+    candidate_checkpoint_path=G1_CANDIDATE_R1_CHECKPOINT_PATH,
+    candidate_manifest_path=G1_CANDIDATE_R1_MANIFEST_PATH,
+    accepted_lifecycle_record_path=G1_ACCEPTED_LIFECYCLE_RECORD_PATH,
+    artifact_type_prefix=G1_ARTIFACT_TYPE_PREFIX,
+    schema_prefix=G1_SCHEMA_PREFIX,
+    #: Cumulative: every candidate of every predecessor generation, including
+    #: the accepted-and-superseded R8 candidate, is barred.  Derived from the
+    #: predecessor so the list cannot drift.
+    superseded_candidate_ids=(
+        *FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION.superseded_candidate_ids,
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION.candidate_id,
+    ),
+    #: Likewise cumulative, so no predecessor candidate artifact can ever fill
+    #: roles 2-5 of G1.  G1's own candidate artifacts are listed first.
+    candidate_artifact_paths=(
+        G1_CANDIDATE_R1_CHECKPOINT_PATH,
+        G1_CANDIDATE_R1_MANIFEST_PATH,
+        G1_CANDIDATE_R1_CHANGE_LEDGER_PATH,
+        *FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION.candidate_artifact_paths,
+    ),
+    predecessor_generation_id=FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION.generation_id,
+    predecessor_lineage_id=FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION.lineage_id,
+    predecessor_accepted_lifecycle_record_path=(
+        FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION.accepted_lifecycle_record_path
+    ),
+    disposition="CURRENT_GENERATION_CANDIDATE_NOT_ACCEPTED_NOT_FROZEN",
+    #: G1 candidate R1 has not been independently audited.
+    candidate_audit_state="NOT_YET_PERFORMED",
+    candidate_manifest_contract=G1_CANDIDATE_MANIFEST_CONTRACT,
+    candidate_change_ledger_path=G1_CANDIDATE_R1_CHANGE_LEDGER_PATH,
+    predeclared_role_record_paths=G1_PREDECLARED_ROLE_RECORD_PATHS,
+)
+
 #: Every generation ever declared, oldest first.  Predecessors are retained so
 #: that what they were stays provable, never so that they can authorise.
 AUTHORITY_GENERATIONS: tuple[AuthorityGeneration, ...] = (
     U06_R3_GENERATION,
     FULL81_AUTHORIZATION_MECHANISM_R2_GENERATION,
     FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION,
+    G1_GENERATION,
 )
 
 #: The one generation that may freeze live production authority.  Advancing this
@@ -986,7 +1139,11 @@ AUTHORITY_GENERATIONS: tuple[AuthorityGeneration, ...] = (
 #: independently audited, accepted and re-frozen, its accepted-lifecycle slot
 #: does not exist, so the live lifecycle resolves ABSENT / NOT_FROZEN. That is
 #: the correct and intended candidate-era state, not a regression.
-CURRENT_GENERATION = FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION
+#:
+#: Advanced to G1.  Generation 3 (candidate R8) is now historical: its accepted,
+#: published record stays byte-identical and provable, and it can never freeze
+#: live production authority again.
+CURRENT_GENERATION = G1_GENERATION
 
 #: Fail-closed structural guard for ``R4-AUD-01``, run at import time so the
 #: defect cannot be reintroduced silently: the CURRENT generation may never
@@ -1016,6 +1173,29 @@ if (
     raise AssertionError(
         "Contract V4 requires a candidate change ledger, but the current "
         f"generation {CURRENT_GENERATION.generation_id} declares none."
+    )
+#: G1 additions to the same fail-closed import guard.  The G1 contract binds
+#: a change ledger, and a G1-contract generation must predeclare the exact path
+#: of every future role record so that none can be authored without an EOL rule
+#: or filled from an unexpected location.
+if (
+    CURRENT_GENERATION.candidate_manifest_contract == G1_CANDIDATE_MANIFEST_CONTRACT
+    and not CURRENT_GENERATION.candidate_change_ledger_path
+):
+    raise AssertionError(
+        "The G1 contract requires a candidate change ledger, but the current "
+        f"generation {CURRENT_GENERATION.generation_id} declares none."
+    )
+if CURRENT_GENERATION.candidate_manifest_contract == G1_CANDIDATE_MANIFEST_CONTRACT and (
+    CURRENT_GENERATION.role_record_path_map is None
+    or set(CURRENT_GENERATION.role_record_path_map)
+    != {role for role in ROLE_CONTRACT_TEMPLATES if role != "implementation_candidate"}
+    or len(set(CURRENT_GENERATION.role_record_path_map.values()))
+    != len(CURRENT_GENERATION.role_record_path_map)
+):
+    raise AssertionError(
+        "The G1 contract requires exactly one distinct predeclared path for "
+        "each of the four non-candidate lifecycle roles."
     )
 
 #: Superseded generations: provable, never authoritative.
@@ -1104,6 +1284,30 @@ ACCEPTED_IMPLEMENTATION_PATHS: tuple[str, ...] = tuple(
 #: identity mechanism that protects every other suite - the same defect class
 #: as ``R3-AUD-02``, one layer up. Adding them widens what is protected and
 #: weakens nothing.
+#:
+#: Current Full81 Production Generation G1: this is now ``G1_VALIDATION_IDENTITY``,
+#: the validation generation of G1, versioned separately from the runtime
+#: generation.  Membership changes, each justified:
+#:
+#: * ``tests/test_fullstack_01_execution_input_authority.py`` joins.  It is the
+#:   accepted FULLSTACK-01 validation of the execution-input authority that the
+#:   G1 execution guard consumes, and it was never declared here.
+#: * ``tests/test_21l_full81_production_generation_g1.py`` joins: the G1
+#:   contract, phase, execution-guard and raw-byte invariant suite.
+#: * ``tests/test_21j_authority_raw_byte_eol_coverage.py`` and
+#:   ``tests/test_21k_external_historical_authority_attacks.py`` move to
+#:   :data:`HISTORICAL_VALIDATION_IDENTITY_PATHS`.  Both assert generation 3
+#:   (candidate R8) as current and bind contract-V4 positive controls to live
+#:   R8-era bytes, so neither can describe G1.  They are retained
+#:   byte-identical as R8 regression evidence, and the generation-independent
+#:   invariants they carried are restated for G1 in the 21l suite.
+#:
+#: ``tests/test_21i_main_full81_preflight_authorization_guard.py`` stays: it was
+#: declared here by R8 and recorded as an executed suite by the published R8
+#: ledger, but never committed.  G1 does not publish those R8-recorded bytes: its
+#: N-04 control is phase-aware in G1, so G1 creates the suite, and the raw
+#: SHA-256 the published R8 ledger recorded remains historical evidence of the
+#: R8 run only.
 VALIDATION_IDENTITY_PATHS: tuple[str, ...] = (
     "tests/test_21a_v7_3_production_routing_preflight.py",
     "tests/test_21b_21d_v7_3_production_successor_stack.py",
@@ -1112,12 +1316,30 @@ VALIDATION_IDENTITY_PATHS: tuple[str, ...] = (
     "tests/test_21g_u06_r3_substitution_attacks.py",
     "tests/test_21h_main_full81_authorization_mechanism.py",
     "tests/test_21i_main_full81_preflight_authorization_guard.py",
+    "tests/test_21l_full81_production_generation_g1.py",
+    "tests/test_fullstack_01_execution_input_authority.py",
+)
+
+#: Validation suites of a SUPERSEDED generation, retained byte-identical as
+#: historical regression evidence.  They are not part of
+#: ``G1_VALIDATION_IDENTITY`` and are not executed as G1 validation, but their
+#: raw bytes stay protected by the EOL policy so the historical evidence remains
+#: reproducible from a clean clone.
+HISTORICAL_VALIDATION_IDENTITY_PATHS: tuple[str, ...] = (
     "tests/test_21j_authority_raw_byte_eol_coverage.py",
-    #: Candidate R8: the recomputing-adversary attack suite for the external
-    #: historical authority (``R7-AUD-01``).  Declared here so that a silent
-    #: swap of it is detectable by the same identity mechanism as every other
-    #: suite.
     "tests/test_21k_external_historical_authority_attacks.py",
+)
+
+#: Validation suites whose exact bytes are pinned by RUNTIME code, so that
+#: changing one changes the runtime implementation digest.  This coupling is
+#: deliberate and pre-dates G1: the production-authority bundle pins the 21e,
+#: 21f, 21g and 21h suites (derived live from its pin table, see
+#: :func:`g1_intentional_runtime_validation_coupling`), and the successor stack
+#: pins the 21a suite through ``ADDITIONAL_AUTHORITY_FILES``.  The stack is not
+#: imported here (it would load the production backend), so its one pinned
+#: suite is declared and the 21l suite proves the declaration equals the stack.
+G1_STACK_PINNED_VALIDATION_PATHS: tuple[str, ...] = (
+    "tests/test_21a_v7_3_production_routing_preflight.py",
 )
 
 #: Retained for continuity of the R2 name; it is now the full accepted surface.
@@ -1515,6 +1737,8 @@ def authority_raw_byte_consumer_universe(root: Path) -> dict[str, tuple[str, ...
         add(relative, "ACCEPTED_IMPLEMENTATION_IDENTITY")
     for relative in VALIDATION_IDENTITY_PATHS:
         add(relative, "VALIDATION_IDENTITY")
+    for relative in HISTORICAL_VALIDATION_IDENTITY_PATHS:
+        add(relative, "HISTORICAL_VALIDATION_IDENTITY")
     for relative in REQUIRED_DURABLE_PUBLICATION_PATHS:
         add(relative, "REQUIRED_DURABLE_PUBLICATION")
     add(EOL_POLICY_RELATIVE_PATH, "REPOSITORY_GOVERNANCE_EOL_POLICY")
@@ -1542,6 +1766,8 @@ def authority_raw_byte_consumer_universe(root: Path) -> dict[str, tuple[str, ...
             )
         for relative in generation.candidate_artifact_paths:
             add(relative, f"BARRED_CANDIDATE_ARTIFACT[{tag}]")
+        for role, relative in (generation.role_record_path_map or {}).items():
+            add(relative, f"PREDECLARED_ROLE_RECORD_SLOT[{tag}::{role}]")
 
     # 4. The role records that on-disk accepted-lifecycle records actually
     #    name.  THIS is the step Candidate R3 had no equivalent of, and it is
@@ -1582,10 +1808,13 @@ def authority_raw_byte_consumer_universe(root: Path) -> dict[str, tuple[str, ...
     try:
         from src.main_full81_authorization_v7_4 import (
             AUTHORIZATION_RECORD_RELATIVE_PATH,
+            EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH,
             EXPECTED_ANNUAL_INPUT_RELATIVE_PATH,
             EXPECTED_ANNUAL_MODEL_RELATIVE_PATH,
             EXPECTED_PARAMETER_REGISTRY_RELATIVE_PATH,
             EXPECTED_RUNNER_RELATIVE_PATH,
+            FULL81_EXECUTION_INPUT_AUTHORITY_PINS,
+            NO_SOLVE_PREFLIGHT_EVIDENCE_RELATIVE_PATH,
             REJECTED_AUTHORIZATION_PATHS_THIS_LINEAGE,
             REJECTED_HISTORICAL_AUTHORIZATION_PATHS,
             SUPERSEDED_AUTHORIZATION_PATHS_THIS_MECHANISM,
@@ -1597,6 +1826,20 @@ def authority_raw_byte_consumer_universe(root: Path) -> dict[str, tuple[str, ...
             AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
             "FULL81_AUTHORIZATION_RECORD_SLOT",
         )
+        # G1: the execution-authorization guard reads both of these by raw
+        # bytes once they exist, so their checkout form is fixed now.
+        add(
+            EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
+            "FULL81_EXECUTION_AUTHORIZATION_RECORD_SLOT",
+        )
+        add(
+            NO_SOLVE_PREFLIGHT_EVIDENCE_RELATIVE_PATH.as_posix(),
+            "FULL81_NO_SOLVE_PREFLIGHT_EVIDENCE_SLOT",
+        )
+        # FULLSTACK-01: the execution-input authority hashes these raw bytes at
+        # the execution boundary, so a smudged checkout would refuse execution.
+        for pin in FULL81_EXECUTION_INPUT_AUTHORITY_PINS:
+            add(pin.relative_path, f"FULL81_EXECUTION_INPUT_AUTHORITY_PIN[{pin.label}]")
         add(EXPECTED_RUNNER_RELATIVE_PATH, "FULL81_AUTHORIZATION_TARGET_RUNNER")
         add(EXPECTED_ANNUAL_INPUT_RELATIVE_PATH, "FULL81_AUTHORIZATION_ANNUAL_INPUT")
         add(EXPECTED_ANNUAL_MODEL_RELATIVE_PATH, "FULL81_AUTHORIZATION_ANNUAL_MODEL")
@@ -2411,6 +2654,51 @@ PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY: Mapping[str, Mapping[str, Any]] = 
         "remediates": ("R6-AUD-01", "R7-AUD-01"),
     },
 }
+#: The register above is the generation-3 (preflight-authorization-guard)
+#: register exactly as candidate R8 declared it.  It is retained unchanged
+#: because the contract-V4 validator replays the R8 manifest and ledger
+#: against it, so its R8 entry records the CANDIDATE-TIME state that R8's own
+#: artifacts state.  R8's later independent audit PASS, acceptance and re-freeze
+#: are proved by its published accepted-lifecycle record, not by this register,
+#: and generation 3 is now historical.
+
+#: Current Full81 Production Generation G1: its own candidate audit register,
+#: namespaced to G1 exactly as ``R2-AUD-03`` requires.  Every entry states the
+#: audit, publication and acceptance facts separately.
+G1_CANDIDATE_AUDIT_HISTORY: Mapping[str, Mapping[str, Any]] = {
+    "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1": {
+        "candidate_revision": "R1",
+        "independent_audit": "NOT_YET_PERFORMED",
+        "publication": "NOT_YET_AUTHORIZED",
+        "acceptance": "NOT_YET_ACCEPTED",
+        "disposition": "ACTIVE_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+        "disposition_reason": (
+            "Consolidation of the current Full81 production runtime, validation "
+            "and governance-authority identities into one additive generation "
+            "with its own content contract, predeclared governance paths, a "
+            "relocated Main Full81 scope-authorization slot and a fail-closed "
+            "execution-authorization guard. It is IMPLEMENTED and "
+            "NOT_YET_INDEPENDENTLY_VERIFIED. The next lawful gate is a fresh "
+            "independent read-only audit."
+        ),
+    },
+}
+
+#: Candidate audit registers, one per generation that has one.  Generations 1
+#: and 2 pre-date per-generation registers and declare their audit state on the
+#: generation itself.
+CANDIDATE_AUDIT_REGISTERS: Mapping[str, Mapping[str, Mapping[str, Any]]] = {
+    FULL81_PREFLIGHT_AUTH_GUARD_R1_GENERATION.generation_id: (
+        PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY
+    ),
+    G1_GENERATION.generation_id: G1_CANDIDATE_AUDIT_HISTORY,
+}
+
+#: The CURRENT generation's own register.  Every emitted "active candidate"
+#: field is read from this and from nothing else.
+CURRENT_CANDIDATE_AUDIT_HISTORY: Mapping[str, Mapping[str, Any]] = (
+    CANDIDATE_AUDIT_REGISTERS.get(CURRENT_GENERATION.generation_id, {})
+)
 
 #: The one candidate of the active generation whose audit state the generic
 #: ``u06_independent_audit_status`` field must resolve to.
@@ -2425,7 +2713,7 @@ ACTIVE_CANDIDATE_ID = CURRENT_GENERATION.candidate_id
 #:    validators verify independently.
 #: 3. The historical U-06 alignment audit string may never be the active
 #:    candidate's audit state.
-if ACTIVE_CANDIDATE_ID not in PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY:
+if ACTIVE_CANDIDATE_ID not in CURRENT_CANDIDATE_AUDIT_HISTORY:
     raise AssertionError(
         "R2-AUD-03 regression: the active candidate "
         f"{ACTIVE_CANDIDATE_ID!r} has no entry in its own generation's "
@@ -2444,9 +2732,7 @@ if PRE_ACCEPTANCE_AUDIT_STATUS == HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS:
         f"{HISTORICAL_U06_ALIGNMENT_AUDIT_STATUS!r}."
     )
 if (
-    PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID][
-        "independent_audit"
-    ]
+    CURRENT_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]["independent_audit"]
     != PRE_ACCEPTANCE_AUDIT_STATUS
 ):
     raise AssertionError(
@@ -2818,6 +3104,18 @@ def _validate_role_path(
         f"Role {role!r} may not be filled by candidate code or a test fixture: "
         f"{normalized}",
     )
+    # G1: a generation that predeclared its role-record paths accepts each role
+    # ONLY at its predeclared path, so no role can be filled by a file that has
+    # no exact-path EOL rule or that sits outside the declared namespace.
+    predeclared = generation.role_record_path_map
+    if predeclared is not None:
+        _require(
+            normalized == predeclared.get(role),
+            "U06_ROLE_TARGET_MISMATCH",
+            f"Role {role!r} of generation {generation.generation_id} must be "
+            f"published at its predeclared path {predeclared.get(role)}; "
+            f"observed {normalized}.",
+        )
 
 
 def _declared_identity(
@@ -6199,6 +6497,17 @@ def validate_candidate_manifest_identity_contract(
         f"{label}: generation {generation.generation_id} names no known "
         f"candidate-manifest contract ({contract!r}).",
     )
+    # G1: this validator implements contract V4 and nothing else.  Another
+    # known contract has its own validator (see
+    # validate_candidate_manifest_content_contract); judging it here would
+    # apply V4's R7-predecessor obligations to a generation they are false for.
+    _require(
+        contract == FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: generation {generation.generation_id} declares contract "
+        f"{contract!r}; this validator implements only "
+        f"{FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4!r}.",
+    )
     if manifest_bytes is None:
         path = root / relative
         _require(
@@ -6325,6 +6634,2025 @@ def validate_candidate_manifest_identity_contract(
     }
 
 
+# ---------------------------------------------------------------------------
+# Current Full81 Production Generation G1: three separately versioned identities
+# ---------------------------------------------------------------------------
+#
+# G1 keeps four version axes apart: methodology (Framework v7.4, unchanged),
+# the production RUNTIME generation, the VALIDATION generation, and the
+# GOVERNANCE / AUTHORITY generation.  The last three are each one identity:
+#
+# ``G1_RUNTIME_IDENTITY``
+#     The 21 :data:`ACCEPTED_IMPLEMENTATION_PATHS`; its digest is THE
+#     implementation digest every lifecycle role and authorization binds.
+# ``G1_VALIDATION_IDENTITY``
+#     The :data:`VALIDATION_IDENTITY_PATHS` suites.
+# ``G1_GOVERNANCE_AUTHORITY_IDENTITY``
+#     Every other path whose exact bytes runtime code pins: the authority-
+#     bundle pin targets and the FULLSTACK-01 execution-input pins, minus the
+#     runtime and validation members.  It is DERIVED from those pin tables, so
+#     it cannot drift from what the runtime actually enforces.
+#
+# The three member sets are disjoint.  Where a validation file is also pinned
+# by runtime code, changing it changes the runtime digest; that coupling is
+# declared explicitly (:func:`g1_intentional_runtime_validation_coupling`)
+# rather than hidden.  Every digest uses :data:`IMPLEMENTATION_DIGEST_ALGORITHM`.
+
+G1_IDENTITY_CLASS_RUNTIME = "G1_RUNTIME_IDENTITY"
+G1_IDENTITY_CLASS_VALIDATION = "G1_VALIDATION_IDENTITY"
+G1_IDENTITY_CLASS_GOVERNANCE = "G1_GOVERNANCE_AUTHORITY_IDENTITY"
+G1_IDENTITY_CLASSES: tuple[str, ...] = (
+    G1_IDENTITY_CLASS_RUNTIME,
+    G1_IDENTITY_CLASS_VALIDATION,
+    G1_IDENTITY_CLASS_GOVERNANCE,
+)
+INTENTIONAL_RUNTIME_VALIDATION_COUPLING = "INTENTIONAL_RUNTIME_VALIDATION_COUPLING"
+
+
+def validation_identity_strict(root: Path) -> dict[str, str]:
+    """Live SHA-256 of every validation member.  A missing member raises.
+
+    :func:`validation_identity` reports a missing suite as ``""`` for display;
+    an identity that is BOUND must never contain a hole, so this one refuses.
+    """
+
+    root = Path(root).resolve()
+    out: dict[str, str] = {}
+    for relative in VALIDATION_IDENTITY_PATHS:
+        path = root / relative
+        _require(
+            path.is_file(),
+            "U06_VALIDATION_IDENTITY_INCOMPLETE",
+            f"Validation identity member is missing: {relative}",
+        )
+        out[relative] = sha256_file(path)
+    return out
+
+
+def validation_identity_digest(root: Path) -> str:
+    return canonical_identity_digest(validation_identity_strict(root))
+
+
+def governance_authority_identity_paths() -> tuple[str, ...]:
+    """``G1_GOVERNANCE_AUTHORITY_IDENTITY`` members, derived from the pin tables."""
+
+    # Lazy: the bundle and the authorization mechanism both import this overlay.
+    from src.main_full81_authorization_v7_4 import FULL81_EXECUTION_INPUT_AUTHORITY_PINS
+    from src.production_authority_bundle_v7_4 import all_pins
+
+    pinned = {pin.relative_path for pin in all_pins()} | {
+        pin.relative_path for pin in FULL81_EXECUTION_INPUT_AUTHORITY_PINS
+    }
+    excluded = set(ACCEPTED_IMPLEMENTATION_PATHS) | set(VALIDATION_IDENTITY_PATHS)
+    return tuple(sorted(pinned - excluded))
+
+
+def governance_authority_identity(root: Path) -> dict[str, str]:
+    """Live SHA-256 of every governance-authority member.  Missing => raise."""
+
+    root = Path(root).resolve()
+    out: dict[str, str] = {}
+    for relative in governance_authority_identity_paths():
+        path = root / relative
+        _require(
+            path.is_file(),
+            "U06_GOVERNANCE_IDENTITY_INCOMPLETE",
+            f"Governance-authority identity member is missing: {relative}",
+        )
+        out[relative] = sha256_file(path)
+    return out
+
+
+def governance_authority_identity_digest(root: Path) -> str:
+    return canonical_identity_digest(governance_authority_identity(root))
+
+
+#: What a runtime pin of a validation file means, stated once.
+G1_COUPLING_EFFECT = "RUNTIME_IMPLEMENTATION_DIGEST_CHANGES_WHEN_THIS_VALIDATION_FILE_CHANGES"
+G1_BUNDLE_COUPLING_RATIONALE = (
+    "The production-authority bundle pins this alignment-surface suite so that "
+    "the gate fails closed if the suite proving its fail-closed behaviour is "
+    "silently replaced; the bundle is a runtime member, so the suite's bytes "
+    "are part of the runtime digest by design."
+)
+G1_STACK_COUPLING_RATIONALE = (
+    "The successor stack pins this routing-preflight suite in its accepted "
+    "ADDITIONAL_AUTHORITY_FILES table, unchanged since Step 2E-1; the stack is "
+    "a runtime member, so the suite's bytes are part of the runtime digest."
+)
+
+
+def g1_intentional_runtime_validation_coupling() -> list[dict[str, str]]:
+    """Every validation member whose exact bytes runtime code pins, declared."""
+
+    from src.production_authority_bundle_v7_4 import all_pins
+
+    entries: list[dict[str, str]] = []
+    for pin in all_pins():
+        if pin.relative_path in VALIDATION_IDENTITY_PATHS:
+            entries.append(
+                {
+                    "path": pin.relative_path,
+                    "coupling": INTENTIONAL_RUNTIME_VALIDATION_COUPLING,
+                    "runtime_pin_holder": "src/production_authority_bundle_v7_4.py",
+                    "pin_label": pin.label,
+                    "effect": G1_COUPLING_EFFECT,
+                    "rationale": G1_BUNDLE_COUPLING_RATIONALE,
+                }
+            )
+    for relative in G1_STACK_PINNED_VALIDATION_PATHS:
+        entries.append(
+            {
+                "path": relative,
+                "coupling": INTENTIONAL_RUNTIME_VALIDATION_COUPLING,
+                "runtime_pin_holder": "src/production_successor_stack_v7_3.py",
+                "pin_label": "ADDITIONAL_AUTHORITY_FILES[step2e1_test]",
+                "effect": G1_COUPLING_EFFECT,
+                "rationale": G1_STACK_COUPLING_RATIONALE,
+            }
+        )
+    return sorted(entries, key=lambda entry: entry["path"])
+
+
+def g1_identity_axes(root: Path) -> dict[str, Any]:
+    """Read-only report of the three G1 identities, their digests and overlaps."""
+
+    root = Path(root).resolve()
+    runtime = implementation_identity(root)
+    validation = validation_identity_strict(root)
+    governance = governance_authority_identity(root)
+    sets = {
+        G1_IDENTITY_CLASS_RUNTIME: set(runtime),
+        G1_IDENTITY_CLASS_VALIDATION: set(validation),
+        G1_IDENTITY_CLASS_GOVERNANCE: set(governance),
+    }
+    overlaps = {
+        f"{a}&{b}": sorted(sets[a] & sets[b])
+        for index, a in enumerate(G1_IDENTITY_CLASSES)
+        for b in G1_IDENTITY_CLASSES[index + 1 :]
+    }
+    return {
+        "digest_algorithm": IMPLEMENTATION_DIGEST_ALGORITHM,
+        G1_IDENTITY_CLASS_RUNTIME: {
+            "member_count": len(runtime),
+            "digest": canonical_identity_digest(runtime),
+            "paths": dict(sorted(runtime.items())),
+        },
+        G1_IDENTITY_CLASS_VALIDATION: {
+            "member_count": len(validation),
+            "digest": canonical_identity_digest(validation),
+            "paths": dict(sorted(validation.items())),
+        },
+        G1_IDENTITY_CLASS_GOVERNANCE: {
+            "member_count": len(governance),
+            "digest": canonical_identity_digest(governance),
+            "paths": dict(sorted(governance.items())),
+        },
+        "member_set_overlaps": overlaps,
+        "member_sets_disjoint": not any(overlaps.values()),
+        "intentional_runtime_validation_coupling": (
+            g1_intentional_runtime_validation_coupling()
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Current Full81 Production Generation G1: predeclared governance paths, phase
+# ---------------------------------------------------------------------------
+
+
+def g1_predeclared_governance_paths(
+    generation: AuthorityGeneration | None = None,
+) -> dict[str, str]:
+    """Every G1 governance path, including the ones no lifecycle gate has reached.
+
+    Paths only.  No future digest, commit or PASS is known, stated or reserved
+    here.  The scope-authorization, no-solve-evidence and execution-
+    authorization slots are owned by the authorization mechanism and are read
+    from it, so there is one declaration of each.
+    """
+
+    from src.main_full81_authorization_v7_4 import (
+        AUTHORIZATION_RECORD_RELATIVE_PATH,
+        EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH,
+        NO_SOLVE_PREFLIGHT_EVIDENCE_RELATIVE_PATH,
+    )
+
+    generation = generation or CURRENT_GENERATION
+    roles = generation.role_record_path_map or {}
+    return {
+        "candidate_change_ledger": generation.candidate_change_ledger_path or "",
+        "candidate_checkpoint": generation.candidate_checkpoint_path,
+        "candidate_manifest": generation.candidate_manifest_path,
+        **{role: roles[role] for role in roles},
+        "accepted_lifecycle_record": generation.accepted_lifecycle_record_path,
+        "main_full81_scope_authorization": AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
+        "main_full81_no_solve_preflight_evidence": (
+            NO_SOLVE_PREFLIGHT_EVIDENCE_RELATIVE_PATH.as_posix()
+        ),
+        "main_full81_execution_authorization": (
+            EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()
+        ),
+    }
+
+
+#: The lawful order of the G1 governance artifacts, as (phase, keys) stages.
+G1_GOVERNANCE_STAGES: tuple[tuple[str, tuple[str, ...]], ...] = (
+    (
+        "CANDIDATE_PACKAGED",
+        ("candidate_change_ledger", "candidate_checkpoint", "candidate_manifest"),
+    ),
+    ("INDEPENDENT_AUDIT_RECORD_PRESENT", ("independent_audit_pass",)),
+    ("ACCEPTANCE_RECORDS_PRESENT", ("acceptance_closure", "acceptance_manifest")),
+    (
+        "RE_FREEZE_AND_LIFECYCLE_RECORDS_PRESENT",
+        ("production_authority_re_freeze", "accepted_lifecycle_record"),
+    ),
+    ("SCOPE_AUTHORIZATION_RECORD_PRESENT", ("main_full81_scope_authorization",)),
+    (
+        "NO_SOLVE_PREFLIGHT_EVIDENCE_PRESENT",
+        ("main_full81_no_solve_preflight_evidence",),
+    ),
+    ("EXECUTION_AUTHORIZATION_RECORD_PRESENT", ("main_full81_execution_authorization",)),
+)
+G1_PHASE_NOT_YET_PACKAGED = "IMPLEMENTATION_CANDIDATE_NOT_YET_PACKAGED"
+G1_PHASE_OUT_OF_ORDER = "OUT_OF_ORDER_GOVERNANCE_ARTIFACTS_FAIL_CLOSED"
+
+
+def current_generation_phase(root: Path) -> dict[str, Any]:
+    """Deterministic, read-only PRESENCE phase of the current generation.
+
+    Presence is never validity and this function authorizes nothing: live
+    acceptance, scope authorization and execution authorization are decided
+    only by their resolvers.  It makes the candidate phase explicit - every
+    future artifact is named and reported ABSENT - and it fails closed on any
+    artifact present before an earlier stage is complete.
+    """
+
+    root = Path(root).resolve()
+    generation = CURRENT_GENERATION
+    paths = g1_predeclared_governance_paths(generation)
+    presence = {key: (root / path).is_file() for key, path in paths.items()}
+    reached = G1_PHASE_NOT_YET_PACKAGED
+    complete_so_far = True
+    out_of_order: list[str] = []
+    for phase, keys in G1_GOVERNANCE_STAGES:
+        present = [presence[key] for key in keys]
+        if complete_so_far and all(present):
+            reached = phase
+            continue
+        if not complete_so_far:
+            out_of_order.extend(key for key in keys if presence[key])
+        elif any(present):
+            # Partially present stage: the present members are early.
+            out_of_order.extend(key for key in keys if presence[key])
+        complete_so_far = False
+    return {
+        "generation_id": generation.generation_id,
+        "candidate_id": generation.candidate_id,
+        "phase": G1_PHASE_OUT_OF_ORDER if out_of_order else reached,
+        "presence_phase_without_order_check": reached,
+        "out_of_order_present": sorted(out_of_order),
+        "presence": presence,
+        "paths": paths,
+        "absent_future_artifacts": sorted(k for k, v in presence.items() if not v),
+        "presence_is_not_validity": True,
+        "authorizes_anything": False,
+        "live_lifecycle_authority": "resolve_u06_lifecycle",
+        "live_scope_authorization_authority": (
+            "src.main_full81_authorization_v7_4.resolve_full81_authorization"
+        ),
+        "live_execution_authorization_authority": (
+            "src.main_full81_authorization_v7_4.resolve_full81_execution_authorization"
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Current Full81 Production Generation G1: the candidate content contract
+# ---------------------------------------------------------------------------
+#
+# The G1 implementation-candidate manifest is validated closed-world, exactly
+# as contract V4 does for R8, using the same generic machinery: strict JSON,
+# no own identity (C8), forbidden snapshot / self-label keys, exact field
+# classification, every embedded raw SHA-256 owned by ONE obligation and BOUND
+# to ONE role whose value is established independently of the candidate
+# artifacts, role-binding parity, same-path conflict detection, and checkpoint
+# identity claims checked against the bound authority value.
+#
+# Every runtime and governance authority value is live: raw bytes, the live
+# runtime / governance digests, or an authority-bundle pin (itself required to
+# equal live bytes).  The validation generation is versioned separately: it is
+# bound to live bytes in CANDIDATE_PACKAGE mode and, in GATE mode, to the blobs
+# published together with the candidate manifest, so a later validation-only
+# change can never silently move production authority (runtime-pinned suites
+# still move the runtime digest).  The only historical identities G1 states
+# live in its change ledger and are TYPED predecessor evidence verified by Git
+# blob containment in a declared published commit; none of them feeds the live
+# freeze.  The GATE path adds Git publication through the lifecycle validator.
+
+G1_CANDIDATE_MANIFEST_FIELD_CLASSES: Mapping[str, str] = {
+    "schema_version": FIELD_CLASS_CONSTANT,
+    "artifact_type": FIELD_CLASS_CONSTANT,
+    "role": FIELD_CLASS_CONSTANT,
+    "candidate_manifest_contract": FIELD_CLASS_CONSTANT,
+    "date": FIELD_CLASS_OBSERVATION,
+    "generation_id": FIELD_CLASS_CONSTANT,
+    "lineage_id": FIELD_CLASS_CONSTANT,
+    "candidate_id": FIELD_CLASS_CONSTANT,
+    "target_candidate_id": FIELD_CLASS_CONSTANT,
+    "candidate_revision": FIELD_CLASS_CONSTANT,
+    "scope": FIELD_CLASS_PROSE,
+    "disposition": FIELD_CLASS_CONSTANT,
+    "self_accepted": FIELD_CLASS_CONSTANT,
+    "package_binding": FIELD_CLASS_CONSTANT,
+    "candidate_checkpoint_path": FIELD_CLASS_CONSTANT,
+    "candidate_checkpoint": FIELD_CLASS_IDENTITY,
+    "candidate_manifest_path": FIELD_CLASS_CONSTANT,
+    "candidate_change_ledger": FIELD_CLASS_IDENTITY,
+    "accepted_lifecycle_record_path": FIELD_CLASS_CONSTANT,
+    "predecessor_generation": FIELD_CLASS_CONSTANT,
+    #: Required by the shared role envelope of EVERY lifecycle role
+    #: (``validate_role_envelope``); bound to the same live runtime digest as
+    #: ``runtime_identity.digest``.
+    "implementation_identity_digest": FIELD_CLASS_IDENTITY,
+    "runtime_identity": FIELD_CLASS_IDENTITY,
+    "validation_identity": FIELD_CLASS_IDENTITY,
+    "governance_authority_identity": FIELD_CLASS_IDENTITY,
+    "intentional_runtime_validation_coupling": FIELD_CLASS_CONSTANT,
+    "authority_bundle": FIELD_CLASS_IDENTITY,
+    "durable_publication_declaration": FIELD_CLASS_IDENTITY,
+    "predeclared_governance_paths": FIELD_CLASS_CONSTANT,
+    "lifecycle_state": FIELD_CLASS_CONSTANT,
+    "execution_counters": FIELD_CLASS_CONSTANT,
+    "repository_head_at_authoring": FIELD_CLASS_OBSERVATION,
+    "carried_findings": FIELD_CLASS_OBSERVATION,
+    "next_legal_gate": FIELD_CLASS_PROSE,
+}
+G1_PACKAGE_BINDING_KEYS: frozenset[str] = frozenset(
+    {"scheme", "direction", "manifest_self_identity", "rationale"}
+)
+G1_IDENTITY_SECTION_KEYS: frozenset[str] = frozenset(
+    {"identity_class", "path_count", "digest_algorithm", "digest", "paths"}
+)
+#: The three identity sections of a G1 manifest -> their identity class.
+G1_IDENTITY_SECTIONS: Mapping[str, str] = {
+    "runtime_identity": G1_IDENTITY_CLASS_RUNTIME,
+    "validation_identity": G1_IDENTITY_CLASS_VALIDATION,
+    "governance_authority_identity": G1_IDENTITY_CLASS_GOVERNANCE,
+}
+#: Every no-execution counter a G1 candidate record states; all must be zero.
+G1_EXECUTION_COUNTERS: Mapping[str, int] = {
+    "optimize_calls": 0,
+    "model_solves": 0,
+    "production_runs": 0,
+    "sensitivity_solves": 0,
+    "full81_runs": 0,
+    "current_generation_21d_runs": 0,
+    "scope_authorizations_created": 0,
+    "execution_authorizations_created": 0,
+}
+#: The only lifecycle state a G1 candidate record may declare.  It is a
+#: construction-time declaration; live state is resolved, never declared.
+G1_CANDIDATE_LIFECYCLE_STATE: Mapping[str, str] = {
+    "g1": "CANDIDATE",
+    "independent_audit": "NOT_YET_PERFORMED",
+    "acceptance": "NOT_YET_PERFORMED",
+    "production_authority_re_freeze": "NOT_YET_PERFORMED",
+    "accepted_lifecycle_record": "NOT_YET_CREATED",
+    "scope_authorization": "NOT_YET_CREATED_NOT_YET_AUTHORIZED",
+    "current_generation_21d_no_solve_preflight": "NOT_YET_EXECUTED",
+    "execution_authorization": "NOT_AUTHORIZED",
+    "full81": "NOT_EXECUTED_NOT_AUTHORIZED",
+    "statement_scope": (
+        "CANDIDATE_CONSTRUCTION_TIME_DECLARATION_LIVE_STATE_IS_RESOLVED_NOT_DECLARED"
+    ),
+}
+G1_PREDECESSOR_RELATIONSHIP = "SUPERSEDED_HISTORICAL_PREDECESSOR_NOT_A_LIVE_BINDING"
+
+#: G1 authority sources beyond the generic ones.  The validation generation is
+#: established from live bytes in CANDIDATE_PACKAGE mode and from the blobs
+#: published with the candidate manifest in GATE mode
+#: (:meth:`_G1ContractContext.validation_authority`).
+AUTHORITY_LIVE_VALIDATION = "VALIDATION_GENERATION_IDENTITY"
+AUTHORITY_LIVE_GOVERNANCE = "LIVE_GOVERNANCE_AUTHORITY_IDENTITY"
+AUTHORITY_PUBLISHED_GIT_BLOB = "PUBLISHED_GIT_BLOB_AT_DECLARED_ANCESTOR_COMMIT"
+G1_IDENTITY_AUTHORITY_SOURCES: tuple[str, ...] = (
+    AUTHORITY_LIVE_RAW_BYTES,
+    AUTHORITY_LIVE_IMPLEMENTATION,
+    AUTHORITY_LIVE_VALIDATION,
+    AUTHORITY_LIVE_GOVERNANCE,
+    AUTHORITY_BUNDLE_PIN,
+    AUTHORITY_PUBLISHED_GIT_BLOB,
+)
+
+#: THE closed-world identity schema of a G1 candidate manifest.  The manifest's
+#: own identity (``C8``) has no obligation: it is forbidden.  Obligation kinds
+#: are numbered because verifiers run in sorted kind order: each identity is
+#: judged by its own obligation first, and the change ledger - which restates
+#: manifest identities - is verified last, so a rejection names the real role.
+G1_CANDIDATE_MANIFEST_IDENTITY_OBLIGATIONS: tuple[IdentityObligation, ...] = (
+    IdentityObligation(
+        "G1-C1", "g1_1_candidate_checkpoint", ("candidate_checkpoint", "sha256"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Candidate checkpoint raw SHA-256.",
+    ),
+    IdentityObligation(
+        "G1-R1", "g1_2_runtime_digest", ("runtime_identity", "digest"),
+        AUTHORITY_LIVE_IMPLEMENTATION,
+        "G1_RUNTIME_IDENTITY digest: the live implementation digest.",
+    ),
+    IdentityObligation(
+        "G1-R1", "g1_2_runtime_digest", ("implementation_identity_digest",),
+        AUTHORITY_LIVE_IMPLEMENTATION,
+        "The same digest, as the shared role envelope requires it.",
+    ),
+    IdentityObligation(
+        "G1-R2", "g1_3_runtime_paths", ("runtime_identity", "paths", "*"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Raw SHA-256 of every runtime member.",
+    ),
+    IdentityObligation(
+        "G1-V1", "g1_4_validation_digest", ("validation_identity", "digest"),
+        AUTHORITY_LIVE_VALIDATION,
+        "G1_VALIDATION_IDENTITY digest.",
+    ),
+    IdentityObligation(
+        "G1-V2", "g1_5_validation_paths", ("validation_identity", "paths", "*"),
+        AUTHORITY_LIVE_VALIDATION,
+        "Raw SHA-256 of every validation member of the G1 validation generation.",
+    ),
+    IdentityObligation(
+        "G1-G1", "g1_6_governance_digest", ("governance_authority_identity", "digest"),
+        AUTHORITY_LIVE_GOVERNANCE,
+        "G1_GOVERNANCE_AUTHORITY_IDENTITY digest.",
+    ),
+    IdentityObligation(
+        "G1-G2", "g1_7_governance_paths",
+        ("governance_authority_identity", "paths", "*"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Raw SHA-256 of every governance-authority member.",
+    ),
+    IdentityObligation(
+        "G1-B1", "g1_8_bundle_pins", ("authority_bundle", "pins", "*", "sha256"),
+        AUTHORITY_BUNDLE_PIN,
+        "Every authority-bundle pin, equal to the bundle constant and live bytes.",
+    ),
+    IdentityObligation(
+        "G1-B2", "durable_pinned",
+        ("durable_publication_declaration", "entries", "*", "expected_raw_sha256"),
+        AUTHORITY_BUNDLE_PIN,
+        "Static durable-publication declaration: pinned paths only.",
+    ),
+    IdentityObligation(
+        "G1-L1", "g1_9_candidate_change_ledger", ("candidate_change_ledger", "sha256"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Candidate change ledger raw SHA-256; the ledger is then validated.",
+    ),
+)
+
+
+class _G1ContractContext(_RoleBinding):
+    """Lazily computed live identities for one G1 contract validation."""
+
+    def __init__(
+        self,
+        root: Path,
+        payload: Mapping[str, Any],
+        generation: AuthorityGeneration,
+        mode: str,
+        label: str,
+    ) -> None:
+        super().__init__(root, mode, label)
+        self.payload = payload
+        self.generation = generation
+        self._runtime: dict[str, str] | None = None
+        self._validation: dict[str, str] | None = None
+        self._governance: dict[str, str] | None = None
+        #: Filled by the ``G1-L1`` verifier: the validated ledger's report.
+        self.ledger_report: dict[str, Any] | None = None
+
+        #: GATE mode: the commit that published the candidate manifest, whose
+        #: blobs establish the validation identity (see validation_authority).
+        self.validation_reference_commit: str | None = None
+
+    def live_runtime(self) -> dict[str, str]:
+        if self._runtime is None:
+            self._runtime = implementation_identity(self.root)
+        return self._runtime
+
+    def validation_authority(self) -> dict[str, str]:
+        """The independently established value of every validation member.
+
+        ``CANDIDATE_PACKAGE`` mode (the candidate as authored and audited):
+        live raw bytes.  ``GATE`` mode (the production lifecycle path): the
+        blobs PUBLISHED TOGETHER WITH the candidate manifest, read from the
+        commit that last modified the manifest in HEAD's history.  The
+        validation generation is versioned separately from the runtime
+        generation, so a later validation-only change neither rewrites G1's
+        recorded validation identity nor moves production authority; a
+        recomputing author cannot change a published blob.  Validation members
+        that runtime code pins (``INTENTIONAL_RUNTIME_VALIDATION_COUPLING``)
+        still move the runtime digest through their runtime pin.
+        """
+
+        if self._validation is None:
+            if self.mode == CANDIDATE_MANIFEST_MODE_GATE:
+                self._validation = self._published_validation()
+            else:
+                self._validation = validation_identity_strict(self.root)
+        return self._validation
+
+    def _published_validation(self) -> dict[str, str]:
+        manifest = self.generation.candidate_manifest_path
+        commit = last_modifying_commit(self.root, manifest)
+        _require(
+            isinstance(commit, str) and bool(_COMMIT_RE.match(commit)),
+            "U06_LIFECYCLE_NOT_PUBLISHED",
+            f"{self.label}: the candidate manifest has no publishing commit in "
+            "HEAD's history, so its validation generation cannot be "
+            "established from published bytes.",
+        )
+        _require(
+            blob_sha256_at(self.root, commit, manifest)
+            == self.live_sha(manifest, field="candidate_manifest"),
+            "U06_LIFECYCLE_NOT_PUBLISHED",
+            f"{self.label}: the live candidate manifest differs from the bytes "
+            f"commit {commit} published.",
+        )
+        blobs = _blob_sha256_map(self.root, commit, VALIDATION_IDENTITY_PATHS, label=self.label)
+        missing = sorted(relative for relative, digest in blobs.items() if digest is None)
+        _require(
+            not missing,
+            "U06_VALIDATION_IDENTITY_INCOMPLETE",
+            f"{self.label}: validation members {missing} were not published with "
+            f"the candidate manifest in {commit}.",
+        )
+        self.validation_reference_commit = commit
+        return {relative: str(digest) for relative, digest in blobs.items()}
+
+    def live_governance(self) -> dict[str, str]:
+        if self._governance is None:
+            self._governance = governance_authority_identity(self.root)
+        return self._governance
+
+    def live_axis(self, section: str) -> dict[str, str]:
+        """The authority map of one identity section (validation: see above)."""
+
+        return {
+            "runtime_identity": self.live_runtime,
+            "validation_identity": self.validation_authority,
+            "governance_authority_identity": self.live_governance,
+        }[section]()
+
+    def candidate_sha(self, relative: str, *, field: str) -> str:
+        """The established candidate value of one G1 identity-surface path."""
+
+        if relative in VALIDATION_IDENTITY_PATHS:
+            return self.validation_authority()[relative]
+        return self.live_sha(relative, field=field)
+
+
+def _g1_verify_checkpoint(ctx: _G1ContractContext, items: list[_Item]):
+    _require(
+        [item[0] for item in items] == [("candidate_checkpoint", "sha256")],
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: exactly one candidate checkpoint identity is required; "
+        f"observed {[item[0] for item in items]}",
+    )
+    pointer, value, _ = items[0]
+    relative = ctx.generation.candidate_checkpoint_path
+    ctx.bind(
+        pointer,
+        value,
+        ctx.live_sha(relative, field="candidate_checkpoint"),
+        f"candidate_checkpoint:{relative}",
+    )
+
+
+def _g1_axis_digest_verifier(
+    section: str,
+    role: str,
+    drift_status: str,
+    extra_pointers: tuple[tuple[Any, ...], ...] = (),
+):
+    expected = {(section, "digest"), *extra_pointers}
+
+    def verify(ctx: _G1ContractContext, items: list[_Item]) -> None:
+        observed = [item[0] for item in items]
+        _require(
+            len(observed) == len(expected) and set(observed) == expected,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{ctx.label}: the {section} digest identities must be exactly "
+            f"{sorted(expected)}; observed {observed}",
+        )
+        live = canonical_identity_digest(ctx.live_axis(section))
+        for pointer, value, _ in items:
+            _require(
+                value == live,
+                drift_status,
+                f"{ctx.label}: {'.'.join(map(str, pointer))} declares {value} but "
+                f"the established {G1_IDENTITY_SECTIONS[section]} digest is {live}.",
+            )
+        paths = ctx.payload[section]["paths"]
+        reproduced = canonical_identity_digest(paths) if isinstance(paths, Mapping) else None
+        _require(
+            reproduced == live,
+            drift_status,
+            f"{ctx.label}: {section}.paths does not reproduce its declared digest "
+            f"(reproduced={reproduced}, live={live}).",
+        )
+        for pointer, value, _ in items:
+            ctx.bind(pointer, value, live, role)
+
+    return verify
+
+
+def _g1_axis_paths_verifier(section: str, role_prefix: str, drift_status: str):
+    def verify(ctx: _G1ContractContext, items: list[_Item]) -> None:
+        live = ctx.live_axis(section)
+        declared = {str(item[0][2]): item[1] for item in items}
+        _require(
+            set(declared) == set(live) and len(items) == len(live),
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{ctx.label}: {section}.paths must declare exactly the "
+            f"{len(live)} {G1_IDENTITY_SECTIONS[section]} members; "
+            f"missing={sorted(set(live) - set(declared))}, "
+            f"extra={sorted(set(declared) - set(live))}",
+        )
+        for pointer, value, _ in items:
+            relative = str(pointer[2])
+            _require(
+                value == live[relative],
+                drift_status,
+                f"{ctx.label}: {section}.paths[{relative}] declares {value} but "
+                f"its established bytes hash to {live[relative]}.",
+            )
+            ctx.bind(pointer, value, live[relative], f"{role_prefix}:{relative}")
+
+    return verify
+
+
+def _g1_verify_bundle_pins(ctx: _G1ContractContext, items: list[_Item]):
+    from src.production_authority_bundle_v7_4 import all_pins
+
+    by_label = {pin.label: pin for pin in all_pins()}
+    labels = [str(item[0][2]) for item in items]
+    _require(
+        sorted(labels) == sorted(by_label) and len(labels) == len(set(labels)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: authority_bundle.pins must restate exactly the "
+        f"{len(by_label)} declared bundle pins; "
+        f"missing={sorted(set(by_label) - set(labels))}, "
+        f"extra={sorted(set(labels) - set(by_label))}",
+    )
+    for pointer, value, _ in items:
+        pin = by_label[str(pointer[2])]
+        holder = _resolve_pointer(ctx.payload, pointer[:-1])
+        _require(
+            holder.get("path") == pin.relative_path,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{ctx.label}: pin {pin.label!r} is restated for path "
+            f"{holder.get('path')!r} but the bundle pins {pin.relative_path}.",
+        )
+        live = ctx.live_sha(pin.relative_path, field=f"bundle pin {pin.label}")
+        _require(
+            pin.sha256 == live,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{ctx.label}: bundle pin {pin.label!r} states {pin.sha256} but live "
+            f"{pin.relative_path} hashes to {live}; a stale pin binds nothing.",
+        )
+        ctx.bind(pointer, value, pin.sha256, f"bundle_pin:{pin.label}")
+
+
+def _g1_verify_candidate_change_ledger(ctx: _G1ContractContext, items: list[_Item]):
+    _require(
+        [item[0] for item in items] == [("candidate_change_ledger", "sha256")],
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: exactly one candidate change ledger identity is required; "
+        f"observed {[item[0] for item in items]}",
+    )
+    pointer, value, _ = items[0]
+    relative = ctx.generation.candidate_change_ledger_path or ""
+    ctx.bind(
+        pointer,
+        value,
+        ctx.live_sha(relative, field="candidate_change_ledger"),
+        f"candidate_change_ledger:{relative}",
+    )
+    ctx.ledger_report = validate_g1_candidate_change_ledger(
+        ctx.root,
+        (ctx.root / relative).read_bytes(),
+        ctx.payload,
+        ctx.generation,
+        mode=ctx.mode,
+        context=ctx,
+    )
+
+
+G1_CANDIDATE_MANIFEST_OBLIGATION_VERIFIERS: dict[str, Any] = {
+    "g1_1_candidate_checkpoint": _g1_verify_checkpoint,
+    "g1_2_runtime_digest": _g1_axis_digest_verifier(
+        "runtime_identity",
+        "live_runtime_digest",
+        "U06_IMPLEMENTATION_IDENTITY_DRIFT",
+        extra_pointers=(("implementation_identity_digest",),),
+    ),
+    "g1_3_runtime_paths": _g1_axis_paths_verifier(
+        "runtime_identity", "runtime_path", "U06_IMPLEMENTATION_IDENTITY_DRIFT"
+    ),
+    "g1_4_validation_digest": _g1_axis_digest_verifier(
+        "validation_identity", "live_validation_digest", "U06_VALIDATION_IDENTITY_DRIFT"
+    ),
+    "g1_5_validation_paths": _g1_axis_paths_verifier(
+        "validation_identity", "validation_path", "U06_VALIDATION_IDENTITY_DRIFT"
+    ),
+    "g1_6_governance_digest": _g1_axis_digest_verifier(
+        "governance_authority_identity",
+        "live_governance_digest",
+        "U06_GOVERNANCE_IDENTITY_DRIFT",
+    ),
+    "g1_7_governance_paths": _g1_axis_paths_verifier(
+        "governance_authority_identity",
+        "governance_path",
+        "U06_GOVERNANCE_IDENTITY_DRIFT",
+    ),
+    "g1_8_bundle_pins": _g1_verify_bundle_pins,
+    "durable_pinned": _verify_durable_pinned,
+    "g1_9_candidate_change_ledger": _g1_verify_candidate_change_ledger,
+}
+
+
+def _g1_predecessor_generation(generation: AuthorityGeneration) -> AuthorityGeneration:
+    predecessor = GENERATIONS_BY_ID.get(str(generation.predecessor_generation_id))
+    _require(
+        predecessor is not None,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"generation {generation.generation_id} names no declared predecessor.",
+    )
+    return predecessor
+
+
+def _g1_predecessor_constant(generation: AuthorityGeneration) -> dict[str, str]:
+    predecessor = _g1_predecessor_generation(generation)
+    return {
+        "generation_id": predecessor.generation_id,
+        "lineage_id": predecessor.lineage_id,
+        "candidate_id": predecessor.candidate_id,
+        "accepted_lifecycle_record_path": predecessor.accepted_lifecycle_record_path,
+        "relationship": G1_PREDECESSOR_RELATIONSHIP,
+    }
+
+
+def _g1_register_entry(generation: AuthorityGeneration) -> Mapping[str, Any] | None:
+    return CANDIDATE_AUDIT_REGISTERS.get(generation.generation_id, {}).get(
+        generation.candidate_id
+    )
+
+
+def _g1_check_manifest_constants(
+    payload: Mapping[str, Any],
+    generation: AuthorityGeneration,
+    relative: str,
+    label: str,
+) -> None:
+    contract = generation.role_contracts["implementation_candidate"]
+    _require(
+        payload.get("artifact_type") == contract.artifact_type
+        and payload.get("role") == "implementation_candidate",
+        "U06_ROLE_ARTIFACT_TYPE_MISMATCH",
+        f"{label}: artifact_type/role must be {contract.artifact_type!r} / "
+        f"'implementation_candidate'; observed {payload.get('artifact_type')!r} / "
+        f"{payload.get('role')!r}",
+    )
+    _require(
+        payload.get("schema_version") == contract.schema_version,
+        "U06_ROLE_SCHEMA_MISMATCH",
+        f"{label}: schema_version must be {contract.schema_version!r}.",
+    )
+    for field, want in (
+        ("generation_id", generation.generation_id),
+        ("lineage_id", generation.lineage_id),
+    ):
+        _require(
+            payload.get(field) == want,
+            "U06_LINEAGE_MISMATCH",
+            f"{label}: {field} must be {want!r}; observed {payload.get(field)!r}",
+        )
+    for field in ("candidate_id", "target_candidate_id"):
+        value = payload.get(field)
+        _require(
+            value not in generation.superseded_candidate_ids,
+            "U06_SUPERSEDED_CANDIDATE_REJECTED",
+            f"{label}: {field} {value!r} names a superseded candidate.",
+        )
+        _require(
+            value == generation.candidate_id,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{label}: {field} must be {generation.candidate_id!r}; observed {value!r}",
+        )
+    for field, want in (
+        ("candidate_revision", generation.candidate_id.rsplit("_", 1)[-1]),
+        ("candidate_checkpoint_path", generation.candidate_checkpoint_path),
+        ("candidate_manifest_path", generation.candidate_manifest_path),
+        ("accepted_lifecycle_record_path", generation.accepted_lifecycle_record_path),
+    ):
+        _require(
+            payload.get(field) == want,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{label}: {field} must be {want!r}; observed {payload.get(field)!r}",
+        )
+    _require(
+        relative == generation.candidate_manifest_path,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: validated at {relative}, not at "
+        f"{generation.candidate_manifest_path}.",
+    )
+    _require(
+        payload.get("self_accepted") is False,
+        "U06_SELF_ACCEPTANCE_REJECTED",
+        f"{label}: self_accepted must be literally false.",
+    )
+    history = _g1_register_entry(generation)
+    _require(
+        history is not None and payload.get("disposition") == history.get("disposition"),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: disposition must equal the candidate register's "
+        f"{(history or {}).get('disposition')!r}.",
+    )
+
+
+def _g1_check_durable_declaration(
+    payload: Mapping[str, Any], generation: AuthorityGeneration, label: str
+) -> None:
+    declaration = payload.get("durable_publication_declaration")
+    _require(
+        isinstance(declaration, Mapping) and set(declaration) == DURABLE_DECLARATION_KEYS,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: durable_publication_declaration must have exactly "
+        f"{sorted(DURABLE_DECLARATION_KEYS)}.",
+    )
+    _require(
+        declaration.get("semantics") == DURABLE_DECLARATION_SEMANTICS
+        and declaration.get("live_status_source")
+        == DURABLE_DECLARATION_LIVE_STATUS_SOURCE,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: the durable-publication declaration must be a static "
+        "declaration whose live status comes from the live report only.",
+    )
+    required = list(_required_durable_paths_for(generation))
+    _require(
+        declaration.get("required_paths") == required,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: required_paths must be exactly {required}.",
+    )
+    entries = declaration.get("entries")
+    _require(
+        isinstance(entries, Mapping) and set(entries) == set(required),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: durable entries must cover exactly the required paths.",
+    )
+    for relative, entry in entries.items():
+        if relative in REQUIRED_DURABLE_PUBLICATION_PIN_LABELS:
+            _require(
+                isinstance(entry, Mapping)
+                and set(entry) == {"identity_source", "pin_label", "expected_raw_sha256"}
+                and entry.get("identity_source") == DURABLE_IDENTITY_SOURCE_PIN
+                and entry.get("pin_label")
+                == REQUIRED_DURABLE_PUBLICATION_PIN_LABELS[relative],
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: pinned durable entry {relative} must state exactly its "
+                "identity source, pin label and expected raw SHA-256.",
+            )
+        elif relative == generation.candidate_checkpoint_path:
+            _require(
+                entry
+                == {
+                    "identity_source": DURABLE_IDENTITY_SOURCE_CHECKPOINT_FIELD,
+                    "identity_field": DURABLE_CHECKPOINT_IDENTITY_FIELD,
+                },
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: the checkpoint durable entry must refer to "
+                f"{DURABLE_CHECKPOINT_IDENTITY_FIELD} and carry no digest.",
+            )
+        elif relative == generation.candidate_change_ledger_path:
+            _require(
+                entry
+                == {
+                    "identity_source": DURABLE_IDENTITY_SOURCE_LEDGER_FIELD,
+                    "identity_field": DURABLE_LEDGER_IDENTITY_FIELD,
+                },
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: the change-ledger durable entry must refer to "
+                f"{DURABLE_LEDGER_IDENTITY_FIELD} and carry no digest.",
+            )
+        else:
+            _require(
+                entry
+                == {
+                    "identity_source": DURABLE_IDENTITY_SOURCE_EXTERNAL,
+                    "external_binding_fields": list(
+                        candidate_manifest_external_binding_fields(generation)
+                    ),
+                },
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: the manifest's own durable entry must declare exactly "
+                "its external binding fields and no identity.",
+            )
+
+
+def _g1_check_manifest_structure(
+    payload: Mapping[str, Any], generation: AuthorityGeneration, label: str
+) -> None:
+    from src.production_authority_bundle_v7_4 import PIN_GROUPS, all_pins
+
+    binding = payload.get("package_binding")
+    _require(
+        isinstance(binding, Mapping)
+        and set(binding) == G1_PACKAGE_BINDING_KEYS
+        and binding.get("scheme") == PACKAGE_BINDING_SCHEME
+        and binding.get("direction") == PACKAGE_BINDING_DIRECTION
+        and binding.get("manifest_self_identity") == DURABLE_IDENTITY_SOURCE_EXTERNAL
+        and isinstance(binding.get("rationale"), str)
+        and binding["rationale"].strip(),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: package_binding must declare the acyclic manifest -> "
+        "checkpoint scheme with the manifest's identity bound externally.",
+    )
+    for field, path in (
+        ("candidate_checkpoint", generation.candidate_checkpoint_path),
+        ("candidate_change_ledger", generation.candidate_change_ledger_path),
+    ):
+        entry = payload.get(field)
+        _require(
+            isinstance(entry, Mapping)
+            and set(entry) == {"path", "sha256"}
+            and entry.get("path") == path,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{label}: {field} must be exactly {{path: {path}, sha256}}.",
+        )
+    _require(
+        _strict_equal(payload.get("predecessor_generation"), _g1_predecessor_constant(generation)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: predecessor_generation must name the declared predecessor "
+        "generation as superseded historical evidence, not a live binding.",
+    )
+    expected_counts = {
+        "runtime_identity": len(ACCEPTED_IMPLEMENTATION_PATHS),
+        "validation_identity": len(VALIDATION_IDENTITY_PATHS),
+        "governance_authority_identity": len(governance_authority_identity_paths()),
+    }
+    for section, identity_class in G1_IDENTITY_SECTIONS.items():
+        value = payload.get(section)
+        _require(
+            isinstance(value, Mapping)
+            and set(value) == G1_IDENTITY_SECTION_KEYS
+            and value.get("identity_class") == identity_class
+            and value.get("path_count") == expected_counts[section]
+            and value.get("digest_algorithm") == IMPLEMENTATION_DIGEST_ALGORITHM
+            and isinstance(value.get("paths"), Mapping)
+            and len(value["paths"]) == expected_counts[section],
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: {section} must be a {identity_class} section with "
+            f"{expected_counts[section]} paths and the declared digest algorithm.",
+        )
+    _require(
+        _strict_equal(
+            payload.get("intentional_runtime_validation_coupling"),
+            g1_intentional_runtime_validation_coupling(),
+        ),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: intentional_runtime_validation_coupling must declare exactly "
+        "the validation members runtime code pins.",
+    )
+    bundle = payload.get("authority_bundle")
+    _require(
+        isinstance(bundle, Mapping)
+        and set(bundle) == AUTHORITY_BUNDLE_KEYS
+        and bundle.get("declared_pin_groups") == len(PIN_GROUPS)
+        and bundle.get("declared_pin_count") == len(all_pins())
+        and isinstance(bundle.get("pins"), Mapping)
+        and all(
+            isinstance(v, Mapping) and set(v) == {"path", "sha256"}
+            for v in bundle["pins"].values()
+        ),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: authority_bundle counts or pin entries are malformed.",
+    )
+    _g1_check_durable_declaration(payload, generation, label)
+    _require(
+        _strict_equal(
+            payload.get("predeclared_governance_paths"),
+            g1_predeclared_governance_paths(generation),
+        ),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: predeclared_governance_paths must equal the generation's and "
+        "the authorization mechanism's own declarations.",
+    )
+    _require(
+        _strict_equal(payload.get("lifecycle_state"), dict(G1_CANDIDATE_LIFECYCLE_STATE)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: lifecycle_state must be the candidate-time declaration: "
+        "nothing audited, accepted, frozen or authorized.",
+    )
+    _require(
+        _strict_equal(payload.get("execution_counters"), dict(G1_EXECUTION_COUNTERS)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: execution_counters must all be zero.",
+    )
+    head = payload.get("repository_head_at_authoring")
+    _require(
+        isinstance(head, str) and bool(_COMMIT_RE.match(head)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: repository_head_at_authoring must be a full commit id.",
+    )
+    for field in ("scope", "next_legal_gate", "date"):
+        value = payload.get(field)
+        _require(
+            isinstance(value, str) and value.strip(),
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: {field} must be a non-empty string.",
+        )
+    _require(
+        isinstance(payload.get("carried_findings"), list),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: carried_findings must be a list.",
+    )
+
+
+def _g1_identity_target_path(payload: Mapping[str, Any], pointer: Sequence[Any]) -> str | None:
+    """The live artifact path a G1 identity pointer claims the digest OF."""
+
+    if tuple(pointer[:2]) in (
+        ("runtime_identity", "paths"),
+        ("validation_identity", "paths"),
+        ("governance_authority_identity", "paths"),
+        ("durable_publication_declaration", "entries"),
+    ):
+        return str(pointer[2])
+    parent = _resolve_pointer(payload, pointer[:-1])
+    if isinstance(parent, Mapping) and isinstance(parent.get("path"), str):
+        return parent["path"]
+    return None
+
+
+def _g1_check_identity_path_conflicts(
+    payload: Mapping[str, Any],
+    identities: Sequence[tuple[tuple[Any, ...], str]],
+    label: str,
+) -> None:
+    by_path: dict[str, set[str]] = {}
+    for pointer, value in identities:
+        target = _g1_identity_target_path(payload, pointer)
+        if target is not None:
+            by_path.setdefault(target, set()).add(value)
+    conflicts = {path: sorted(v) for path, v in by_path.items() if len(v) > 1}
+    _require(
+        not conflicts,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: the same path carries conflicting identities: {conflicts}",
+    )
+
+
+def validate_g1_candidate_manifest_contract(
+    root: Path,
+    relative: str | None = None,
+    payload: Mapping[str, Any] | None = None,
+    generation: AuthorityGeneration | None = None,
+    *,
+    mode: str,
+    manifest_bytes: bytes | None = None,
+) -> dict[str, Any]:
+    """Validate a G1 candidate manifest against the G1 content contract.
+
+    Fail-closed and ordered so the raised status names the real defect.
+    Read-only: writes nothing, stages nothing, constructs no model.
+    """
+
+    root = Path(root).resolve()
+    generation = generation or CURRENT_GENERATION
+    relative = (relative or generation.candidate_manifest_path).replace("\\", "/").strip()
+    label = f"G1 candidate manifest ({relative})"
+    _require(
+        mode in CANDIDATE_MANIFEST_MODES,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: unknown validation mode {mode!r}.",
+    )
+    _require(
+        generation.candidate_manifest_contract == G1_CANDIDATE_MANIFEST_CONTRACT,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: generation {generation.generation_id} declares contract "
+        f"{generation.candidate_manifest_contract!r}; this validator implements "
+        f"only {G1_CANDIDATE_MANIFEST_CONTRACT!r}.",
+    )
+    if manifest_bytes is None:
+        path = root / relative
+        _require(
+            path.is_file(),
+            "U06_ROLE_ARTIFACT_MISSING",
+            f"{label}: candidate manifest is missing.",
+        )
+        manifest_bytes = path.read_bytes()
+    strict = _strict_json_object(manifest_bytes, label=label)
+    _require(
+        payload is None or dict(payload) == strict,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: the payload under validation is not exactly the strictly "
+        "parsed manifest bytes.",
+    )
+    payload = strict
+    _require(
+        payload.get("candidate_manifest_contract") == G1_CANDIDATE_MANIFEST_CONTRACT,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: candidate_manifest_contract must be "
+        f"{G1_CANDIDATE_MANIFEST_CONTRACT!r}; observed "
+        f"{payload.get('candidate_manifest_contract')!r}.",
+    )
+    _check_candidate_manifest_self_identity(payload, generation, label)
+
+    forbidden: list[str] = []
+
+    def find_forbidden(node: Any, pointer: tuple[Any, ...]) -> None:
+        if isinstance(node, Mapping):
+            for key, value in node.items():
+                if key in CANDIDATE_MANIFEST_FORBIDDEN_KEYS:
+                    forbidden.append(".".join(map(str, pointer + (key,))))
+                find_forbidden(value, pointer + (key,))
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                find_forbidden(value, pointer + (index,))
+
+    find_forbidden(payload, ())
+    _require(
+        not forbidden,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: frozen live-report or self-label fields are forbidden in a "
+        f"candidate manifest: {sorted(forbidden)}.",
+    )
+    _g1_check_manifest_constants(payload, generation, relative, label)
+    keys = set(payload)
+    classified = set(G1_CANDIDATE_MANIFEST_FIELD_CLASSES)
+    _require(
+        keys == classified,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: top-level fields must be exactly the classified set; "
+        f"unclassified={sorted(keys - classified)}, "
+        f"missing={sorted(classified - keys)}",
+    )
+    _g1_check_manifest_structure(payload, generation, label)
+
+    identities, hidden = collect_identity_pointers(payload)
+    _require(
+        not hidden,
+        "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+        f"{label}: raw identities hidden in prose, keys or malformed values: "
+        f"{['.'.join(map(str, p)) for p in hidden]}",
+    )
+    obligations = G1_CANDIDATE_MANIFEST_IDENTITY_OBLIGATIONS
+    owned = _own_identity_pointers(identities, obligations, label)
+    _g1_check_identity_path_conflicts(payload, identities, label)
+    context = _G1ContractContext(root, payload, generation, mode, label)
+    verified, structural = _verify_owned_identities(
+        owned, identities, G1_CANDIDATE_MANIFEST_OBLIGATION_VERIFIERS, context, label
+    )
+    checkpoint_report = _check_checkpoint_identity_claims(root, generation, context, label)
+    return {
+        "contract": G1_CANDIDATE_MANIFEST_CONTRACT,
+        "mode": mode,
+        "manifest_path": relative,
+        "collected_identity_count": len(identities),
+        "verified_identity_count": len(verified),
+        "structural_identity_count": len(structural),
+        "role_bound_identity_count": len(context.authority),
+        "unaccounted_identity_count": 0,
+        "conflict_count": 0,
+        "obligation_classes": sorted({o.obligation_class for o in obligations}),
+        "obligation_kinds": sorted(owned),
+        "forbidden_identity_class": CANDIDATE_MANIFEST_FORBIDDEN_IDENTITY_CLASS,
+        "identity_roles": dict(
+            sorted((".".join(map(str, p)), role) for p, role in context.roles.items())
+        ),
+        "external_binding_fields": list(
+            candidate_manifest_external_binding_fields(generation)
+        ),
+        **checkpoint_report,
+        "identity_digests": {
+            G1_IDENTITY_CLASS_RUNTIME: canonical_identity_digest(context.live_runtime()),
+            G1_IDENTITY_CLASS_VALIDATION: canonical_identity_digest(
+                context.validation_authority()
+            ),
+            G1_IDENTITY_CLASS_GOVERNANCE: canonical_identity_digest(
+                context.live_governance()
+            ),
+        },
+        "change_ledger": context.ledger_report,
+        "validation_identity_authority": (
+            "PUBLISHED_WITH_CANDIDATE_MANIFEST"
+            if mode == CANDIDATE_MANIFEST_MODE_GATE
+            else "LIVE_RAW_BYTES"
+        ),
+        "validation_reference_commit": context.validation_reference_commit,
+        "computed_binding_facts": {
+            "manifest_binds_checkpoint_raw_sha256": True,
+            "manifest_binds_change_ledger_raw_sha256": True,
+            "manifest_records_own_sha256": False,
+            "checkpoint_records_unaccounted_raw_sha256": False,
+            "structural_only_identities_accepted": False,
+            "historical_identity_used_as_live_binding": False,
+            "placeholder_or_stale_sha_used": False,
+            "derivation": (
+                "Computed by validate_g1_candidate_manifest_contract from the "
+                "manifest, change-ledger and checkpoint bytes; never read from a "
+                "self-label."
+            ),
+        },
+    }
+
+
+# --- the G1 candidate change ledger -----------------------------------------
+
+G1_CANDIDATE_CHANGE_LEDGER_KEYS: frozenset[str] = frozenset(
+    {
+        "schema_version",
+        "artifact_type",
+        "ledger_semantics",
+        "generation_id",
+        "lineage_id",
+        "candidate_id",
+        "candidate_artifact_paths",
+        "predecessor",
+        "modified_files",
+        "identity_digests",
+        "live_roles",
+        "tests_executed",
+        "execution_status",
+        "lifecycle_status",
+    }
+)
+G1_LEDGER_PREDECESSOR_KEYS: frozenset[str] = frozenset(
+    {
+        "generation_id",
+        "lineage_id",
+        "candidate_id",
+        "relationship",
+        "repository_head_commit",
+        "historical_evidence",
+        "fullstack_01_reference",
+        "known_historical_inconsistency",
+    }
+)
+G1_LEDGER_EVIDENCE_KEYS: frozenset[str] = frozenset(
+    {"role", "path", "publication_commit", "raw_sha256", "evidence_class"}
+)
+G1_HISTORICAL_EVIDENCE_CLASS = "HISTORICAL_PREDECESSOR_EVIDENCE_NOT_A_LIVE_BINDING"
+G1_LEDGER_CHANGE_CLASSES: frozenset[str] = frozenset(
+    {"MODIFY", "CREATE", "PUBLISH_UNCHANGED"}
+)
+G1_LEDGER_ABSENT_SENTINEL = "ABSENT_AT_PREDECESSOR_COMMIT"
+G1_LEDGER_NOT_APPLICABLE = "NOT_APPLICABLE"
+G1_LEDGER_MODIFIED_FILE_KEYS: frozenset[str] = frozenset(
+    {
+        "path",
+        "change_class",
+        "predecessor_raw_sha256",
+        "candidate_raw_sha256",
+        "publication_source",
+        "summary",
+    }
+)
+G1_LEDGER_PUBLICATION_SOURCE_KEYS: frozenset[str] = frozenset(
+    {"evidence_path", "evidence_commit", "evidence_pointer"}
+)
+G1_LIVE_ROLE_KEYS: frozenset[str] = frozenset(
+    {
+        "role",
+        "path",
+        "raw_sha256",
+        "identity_class",
+        "lifecycle_status",
+        "authority_justification",
+    }
+)
+#: Live-role lifecycle status, by the role path's change class.
+G1_LIVE_ROLE_STATUS_BY_CHANGE: Mapping[str | None, str] = {
+    "MODIFY": "MODIFIED_IN_G1_CANDIDATE",
+    "CREATE": "CREATED_IN_G1_CANDIDATE",
+    "PUBLISH_UNCHANGED": "PUBLISHED_UNCHANGED_IN_G1_CANDIDATE",
+    None: "CARRIED_FORWARD_UNCHANGED_FROM_PREDECESSOR_COMMIT",
+}
+G1_LEDGER_TEST_KEYS: frozenset[str] = frozenset(
+    {"suite", "command", "raw_sha256", "ran", "failures", "errors", "skipped", "result"}
+)
+G1_LEDGER_DIGEST_KEYS: Mapping[str, str] = {
+    "runtime": "runtime_identity",
+    "validation": "validation_identity",
+    "governance_authority": "governance_authority_identity",
+}
+
+G1_CANDIDATE_CHANGE_LEDGER_IDENTITY_OBLIGATIONS: tuple[IdentityObligation, ...] = (
+    IdentityObligation(
+        "G1L-P1", "g1_ledger_historical_evidence",
+        ("predecessor", "historical_evidence", "*", "raw_sha256"),
+        AUTHORITY_PUBLISHED_GIT_BLOB,
+        "Typed predecessor evidence, proved by its blob in a published commit.",
+    ),
+    IdentityObligation(
+        "G1L-M1", "g1_ledger_modified_files",
+        ("modified_files", "*", "predecessor_raw_sha256"),
+        AUTHORITY_PUBLISHED_GIT_BLOB,
+        "A modified file's bytes at the declared predecessor commit.",
+    ),
+    IdentityObligation(
+        "G1L-M2", "g1_ledger_modified_files",
+        ("modified_files", "*", "candidate_raw_sha256"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "A modified file's candidate raw SHA-256.",
+    ),
+    IdentityObligation(
+        "G1L-D1", "g1_ledger_identity_digests", ("identity_digests", "*"),
+        AUTHORITY_LIVE_IMPLEMENTATION,
+        "The three live G1 identity digests.",
+    ),
+    IdentityObligation(
+        "G1L-R1", "g1_ledger_live_roles", ("live_roles", "*", "raw_sha256"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "The raw SHA-256 of every live G1 role.",
+    ),
+    IdentityObligation(
+        "G1L-T1", "g1_ledger_tests", ("tests_executed", "*", "raw_sha256"),
+        AUTHORITY_LIVE_RAW_BYTES,
+        "Raw SHA-256 of each executed validation suite.",
+    ),
+)
+
+
+def g1_historical_evidence_roles(
+    generation: AuthorityGeneration | None = None,
+) -> dict[str, str]:
+    """The closed set of typed predecessor evidence roles a G1 ledger states."""
+
+    from src.main_full81_authorization_v7_4 import (
+        SUPERSEDED_R8_AUTHORIZATION_RELATIVE_PATH,
+    )
+
+    predecessor = _g1_predecessor_generation(generation or CURRENT_GENERATION)
+    return {
+        "R8_ACCEPTED_LIFECYCLE_RECORD": predecessor.accepted_lifecycle_record_path,
+        "R8_MAIN_FULL81_SCOPE_AUTHORIZATION": SUPERSEDED_R8_AUTHORIZATION_RELATIVE_PATH,
+    }
+
+
+def _resolve_json_pointer_text(payload: Any, text: str) -> Any:
+    tokens = parse_rfc6901_pointer(text)
+    _require(
+        tokens is not None,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"evidence pointer {text!r} is not a well-formed RFC 6901 pointer.",
+    )
+    node = payload
+    for token in tokens or ():
+        if isinstance(node, list):
+            _require(
+                token.isdigit(),
+                "U06_ROLE_TARGET_MISMATCH",
+                f"evidence pointer {text!r} indexes a list with {token!r}.",
+            )
+            index = int(token)
+            _require(
+                0 <= index < len(node),
+                "U06_ROLE_TARGET_MISMATCH",
+                f"evidence pointer {text!r} is out of range.",
+            )
+            node = node[index]
+        elif isinstance(node, Mapping) and token in node:
+            node = node[token]
+        else:
+            raise U06LifecycleError(
+                "U06_ROLE_TARGET_MISMATCH",
+                f"evidence pointer {text!r} does not resolve.",
+            )
+    return node
+
+
+def _g1_published_blob_sha(
+    root: Path, commit: Any, relative: str, *, label: str, what: str
+) -> str | None:
+    """SHA-256 of ``relative`` in a full, published ancestor commit of HEAD."""
+
+    _require(
+        isinstance(commit, str) and bool(_COMMIT_RE.match(commit)),
+        "U06_PUBLICATION_PROOF_INVALID",
+        f"{label}: {what} commit is not a full SHA-1: {commit!r}",
+    )
+    _require(
+        is_ancestor(root, commit, "HEAD"),
+        "U06_PUBLICATION_PROOF_INVALID",
+        f"{label}: {what} commit {commit} is not an ancestor of HEAD.",
+    )
+    return blob_sha256_at(root, commit, relative)
+
+
+class _G1LedgerContext(_RoleBinding):
+    def __init__(
+        self,
+        root: Path,
+        ledger: Mapping[str, Any],
+        manifest: Mapping[str, Any],
+        generation: AuthorityGeneration,
+        mode: str,
+        label: str,
+        manifest_context: _G1ContractContext,
+    ) -> None:
+        super().__init__(root, mode, label)
+        self.ledger = ledger
+        self.manifest = manifest
+        self.generation = generation
+        self.axes = manifest_context
+
+
+def _g1_verify_ledger_historical_evidence(ctx: _G1LedgerContext, items: list[_Item]):
+    entries = ctx.ledger["predecessor"]["historical_evidence"]
+    expected = {("predecessor", "historical_evidence", i, "raw_sha256") for i in range(len(entries))}
+    _require(
+        {item[0] for item in items} == expected and len(items) == len(expected),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: every historical evidence entry needs exactly its raw SHA-256.",
+    )
+    for index, entry in enumerate(entries):
+        actual = _g1_published_blob_sha(
+            ctx.root,
+            entry["publication_commit"],
+            entry["path"],
+            label=ctx.label,
+            what=f"historical evidence {entry['role']}",
+        )
+        _require(
+            actual is not None,
+            "U06_PUBLICATION_PROOF_INVALID",
+            f"{ctx.label}: {entry['path']} does not exist in commit "
+            f"{entry['publication_commit']}.",
+        )
+        ctx.bind(
+            ("predecessor", "historical_evidence", index, "raw_sha256"),
+            entry["raw_sha256"],
+            actual,
+            f"g1_historical_git_blob:{entry['role']}",
+        )
+
+
+def _g1_change_surface() -> tuple[str, ...]:
+    return tuple(
+        sorted(
+            set(ACCEPTED_IMPLEMENTATION_PATHS)
+            | set(VALIDATION_IDENTITY_PATHS)
+            | set(governance_authority_identity_paths())
+        )
+    )
+
+
+def _blob_sha256_map(
+    root: Path, commit: str, paths: Sequence[str], *, label: str
+) -> dict[str, str | None]:
+    """SHA-256 of each path's blob in ``commit`` (``None`` if absent), one Git call."""
+
+    request = b"".join(f"{commit}:{relative}\n".encode("utf-8") for relative in paths)
+    done = subprocess.run(
+        ["git", "cat-file", "--batch"],
+        cwd=root,
+        input=request,
+        capture_output=True,
+        check=False,
+    )
+    _require(
+        done.returncode == 0,
+        "U06_PUBLICATION_PROOF_INVALID",
+        f"{label}: git cat-file --batch failed for {commit}: "
+        f"{done.stderr.decode('utf-8', 'replace').strip()}",
+    )
+    data = done.stdout
+    offset = 0
+    out: dict[str, str | None] = {}
+    for relative in paths:
+        newline = data.index(b"\n", offset)
+        header = data[offset:newline].decode("utf-8", "replace")
+        offset = newline + 1
+        if header.endswith(" missing") or header.endswith(" ambiguous"):
+            out[relative] = None
+            continue
+        _, kind, size = header.split(" ")
+        content = data[offset : offset + int(size)]
+        offset += int(size) + 1
+        out[relative] = hashlib.sha256(content).hexdigest() if kind == "blob" else None
+    return out
+
+
+def _g1_verify_ledger_modified_files(ctx: _G1LedgerContext, items: list[_Item]):
+    entries = ctx.ledger["modified_files"]
+    base = ctx.ledger["predecessor"]["repository_head_commit"]
+    expected: set[tuple[Any, ...]] = set()
+    for index, entry in enumerate(entries):
+        expected.add(("modified_files", index, "candidate_raw_sha256"))
+        if entry["predecessor_raw_sha256"] != G1_LEDGER_ABSENT_SENTINEL:
+            expected.add(("modified_files", index, "predecessor_raw_sha256"))
+    _require(
+        {item[0] for item in items} == expected and len(items) == len(expected),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: modified-file identities are incomplete or extra.",
+    )
+    # Closed world: the listed set is EXACTLY the set of G1 identity-surface
+    # paths whose live bytes differ from the declared predecessor commit.
+    surface = _g1_change_surface()
+    _g1_published_blob_sha(
+        ctx.root, base, surface[0], label=ctx.label, what="predecessor repository head"
+    )
+    predecessor = _blob_sha256_map(ctx.root, base, surface, label=ctx.label)
+    live = {
+        relative: ctx.axes.candidate_sha(relative, field="G1 identity surface")
+        for relative in surface
+    }
+    changed = sorted(r for r in predecessor if predecessor[r] != live[r])
+    listed = [entry["path"] for entry in entries]
+    _require(
+        listed == changed,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{ctx.label}: modified_files is not the exact change set over the G1 "
+        f"identity surface against {base}: unlisted={sorted(set(changed) - set(listed))}, "
+        f"not_changed={sorted(set(listed) - set(changed))}",
+    )
+    for index, entry in enumerate(entries):
+        relative = entry["path"]
+        absent = predecessor[relative] is None
+        _require(
+            absent == (entry["predecessor_raw_sha256"] == G1_LEDGER_ABSENT_SENTINEL)
+            and absent == (entry["change_class"] in ("CREATE", "PUBLISH_UNCHANGED")),
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{ctx.label}: {relative} is classified {entry['change_class']} but is "
+            f"{'absent from' if absent else 'present in'} the predecessor commit.",
+        )
+        if entry["change_class"] == "PUBLISH_UNCHANGED":
+            source = entry["publication_source"]
+            blob = _git_bytes(
+                ctx.root,
+                "cat-file",
+                "blob",
+                f"{source['evidence_commit']}:{source['evidence_path']}",
+            )
+            _g1_published_blob_sha(
+                ctx.root,
+                source["evidence_commit"],
+                source["evidence_path"],
+                label=ctx.label,
+                what=f"publication source of {relative}",
+            )
+            _require(
+                blob is not None,
+                "U06_PUBLICATION_PROOF_INVALID",
+                f"{ctx.label}: publication source of {relative} is not in Git.",
+            )
+            recorded = _resolve_json_pointer_text(
+                _strict_json_object(blob or b"", label=f"{ctx.label} publication source"),
+                source["evidence_pointer"],
+            )
+            _require(
+                recorded == entry["candidate_raw_sha256"],
+                "U06_ROLE_TARGET_MISMATCH",
+                f"{ctx.label}: {relative} is published unchanged, but its published "
+                f"evidence records {recorded!r}, not {entry['candidate_raw_sha256']}.",
+            )
+        else:
+            _require(
+                entry.get("publication_source") == G1_LEDGER_NOT_APPLICABLE,
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{ctx.label}: only a PUBLISH_UNCHANGED entry carries a "
+                "publication source.",
+            )
+        if not absent:
+            ctx.bind(
+                ("modified_files", index, "predecessor_raw_sha256"),
+                entry["predecessor_raw_sha256"],
+                predecessor[relative],
+                f"g1_predecessor_blob:{relative}",
+            )
+        ctx.bind(
+            ("modified_files", index, "candidate_raw_sha256"),
+            entry["candidate_raw_sha256"],
+            live[relative],
+            f"g1_candidate_file:{relative}",
+        )
+
+
+def _g1_verify_ledger_identity_digests(ctx: _G1LedgerContext, items: list[_Item]):
+    expected = {("identity_digests", key) for key in G1_LEDGER_DIGEST_KEYS}
+    _require(
+        {item[0] for item in items} == expected and len(items) == len(expected),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: identity_digests must state exactly "
+        f"{sorted(G1_LEDGER_DIGEST_KEYS)}.",
+    )
+    for pointer, value, _ in items:
+        section = G1_LEDGER_DIGEST_KEYS[str(pointer[1])]
+        live = canonical_identity_digest(ctx.axes.live_axis(section))
+        _require(
+            ctx.manifest[section]["digest"] == live,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{ctx.label}: the ledger and manifest disagree on the {section} digest.",
+        )
+        ctx.bind(pointer, value, live, f"live_{section}_digest")
+
+
+def _g1_verify_ledger_live_roles(ctx: _G1LedgerContext, items: list[_Item]):
+    rows = ctx.ledger["live_roles"]
+    expected = {("live_roles", i, "raw_sha256") for i in range(len(rows))}
+    _require(
+        {item[0] for item in items} == expected and len(items) == len(expected),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: every live role needs exactly its raw SHA-256.",
+    )
+    for index, row in enumerate(rows):
+        ctx.bind(
+            ("live_roles", index, "raw_sha256"),
+            row["raw_sha256"],
+            ctx.axes.candidate_sha(row["path"], field="live_roles.raw_sha256"),
+            f"g1_live_role:{row['path']}",
+        )
+
+
+def _g1_verify_ledger_tests(ctx: _G1LedgerContext, items: list[_Item]):
+    suites = ctx.ledger["tests_executed"]
+    expected = {("tests_executed", i, "raw_sha256") for i in range(len(suites))}
+    _require(
+        {item[0] for item in items} == expected and len(items) == len(expected),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{ctx.label}: every executed suite needs exactly its raw SHA-256.",
+    )
+    for index, entry in enumerate(suites):
+        ctx.bind(
+            ("tests_executed", index, "raw_sha256"),
+            entry["raw_sha256"],
+            ctx.axes.candidate_sha(entry["suite"], field="tests_executed.raw_sha256"),
+            f"validation_suite:{entry['suite']}",
+        )
+
+
+G1_CANDIDATE_CHANGE_LEDGER_OBLIGATION_VERIFIERS: dict[str, Any] = {
+    "g1_ledger_historical_evidence": _g1_verify_ledger_historical_evidence,
+    "g1_ledger_modified_files": _g1_verify_ledger_modified_files,
+    "g1_ledger_identity_digests": _g1_verify_ledger_identity_digests,
+    "g1_ledger_live_roles": _g1_verify_ledger_live_roles,
+    "g1_ledger_tests": _g1_verify_ledger_tests,
+}
+
+
+def _g1_check_ledger_structure(
+    ledger: Mapping[str, Any],
+    manifest: Mapping[str, Any],
+    generation: AuthorityGeneration,
+    label: str,
+) -> None:
+    def keyed(value: Any, keys: frozenset[str] | set[str], what: str) -> Mapping[str, Any]:
+        _require(
+            isinstance(value, Mapping) and set(value) == set(keys),
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: {what} must have exactly {sorted(keys)}; observed "
+            f"{sorted(value) if isinstance(value, Mapping) else value!r}",
+        )
+        return value
+
+    def nonempty_text(value: Any) -> bool:
+        return isinstance(value, str) and bool(value.strip())
+
+    keyed(ledger, G1_CANDIDATE_CHANGE_LEDGER_KEYS, "the ledger")
+    _require(
+        ledger["artifact_type"]
+        == generation.artifact_type_prefix + CANDIDATE_CHANGE_LEDGER_ARTIFACT_TYPE_SUFFIX,
+        "U06_ROLE_ARTIFACT_TYPE_MISMATCH",
+        f"{label}: artifact_type {ledger['artifact_type']!r} is not this "
+        "generation's candidate change ledger type.",
+    )
+    _require(
+        ledger["schema_version"]
+        == generation.schema_prefix + CANDIDATE_CHANGE_LEDGER_SCHEMA_SUFFIX,
+        "U06_ROLE_SCHEMA_MISMATCH",
+        f"{label}: schema_version {ledger['schema_version']!r} is not this "
+        "generation's ledger schema.",
+    )
+    _require(
+        ledger["ledger_semantics"] == CANDIDATE_CHANGE_LEDGER_SEMANTICS,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: ledger_semantics must be {CANDIDATE_CHANGE_LEDGER_SEMANTICS!r}.",
+    )
+    for field, want in (
+        ("generation_id", generation.generation_id),
+        ("lineage_id", generation.lineage_id),
+    ):
+        _require(
+            ledger[field] == want,
+            "U06_LINEAGE_MISMATCH",
+            f"{label}: {field} must be {want!r}; observed {ledger[field]!r}",
+        )
+    _require(
+        ledger["candidate_id"] not in generation.superseded_candidate_ids
+        and ledger["candidate_id"] == generation.candidate_id,
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: candidate_id must be {generation.candidate_id!r}.",
+    )
+    _require(
+        _strict_equal(
+            ledger["candidate_artifact_paths"],
+            {
+                "checkpoint": generation.candidate_checkpoint_path,
+                "manifest": generation.candidate_manifest_path,
+                "change_ledger": generation.candidate_change_ledger_path,
+            },
+        ),
+        "U06_ROLE_TARGET_MISMATCH",
+        f"{label}: candidate_artifact_paths must name this candidate's checkpoint, "
+        "manifest and change ledger.",
+    )
+
+    predecessor = keyed(ledger["predecessor"], G1_LEDGER_PREDECESSOR_KEYS, "predecessor")
+    want = _g1_predecessor_constant(generation)
+    _require(
+        predecessor["generation_id"] == want["generation_id"]
+        and predecessor["lineage_id"] == want["lineage_id"]
+        and predecessor["candidate_id"] == want["candidate_id"]
+        and predecessor["relationship"] == G1_PREDECESSOR_RELATIONSHIP,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: predecessor must name the declared predecessor generation as "
+        "superseded historical evidence.",
+    )
+    _require(
+        isinstance(predecessor["repository_head_commit"], str)
+        and bool(_COMMIT_RE.match(predecessor["repository_head_commit"]))
+        and predecessor["repository_head_commit"]
+        == manifest.get("repository_head_at_authoring"),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: predecessor.repository_head_commit must be a full commit id "
+        "equal to the manifest's repository_head_at_authoring.",
+    )
+    roles = g1_historical_evidence_roles(generation)
+    evidence = predecessor["historical_evidence"]
+    _require(
+        isinstance(evidence, list)
+        and [entry.get("role") for entry in evidence if isinstance(entry, Mapping)]
+        == sorted(roles),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: historical_evidence must state exactly the roles "
+        f"{sorted(roles)}, sorted.",
+    )
+    for entry in evidence:
+        keyed(entry, G1_LEDGER_EVIDENCE_KEYS, "a historical_evidence entry")
+        _require(
+            entry["path"] == roles[entry["role"]]
+            and entry["evidence_class"] == G1_HISTORICAL_EVIDENCE_CLASS,
+            "U06_ROLE_TARGET_MISMATCH",
+            f"{label}: historical evidence {entry['role']} must name "
+            f"{roles[entry['role']]} as {G1_HISTORICAL_EVIDENCE_CLASS}.",
+        )
+    _require(
+        isinstance(predecessor["fullstack_01_reference"], Mapping)
+        and nonempty_text(predecessor["known_historical_inconsistency"]),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: fullstack_01_reference must be an object and the known "
+        "historical inconsistency must be stated.",
+    )
+
+    entries = ledger["modified_files"]
+    _require(
+        isinstance(entries, list) and entries,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: modified_files must be a non-empty list.",
+    )
+    for entry in entries:
+        keyed(entry, G1_LEDGER_MODIFIED_FILE_KEYS, "a modified_files entry")
+        change = entry["change_class"]
+        _require(
+            change in G1_LEDGER_CHANGE_CLASSES and nonempty_text(entry["summary"]),
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: modified file {entry.get('path')!r} needs a known change "
+            "class and a summary.",
+        )
+        if change == "MODIFY":
+            _require(
+                entry["predecessor_raw_sha256"] != entry["candidate_raw_sha256"],
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: modified file {entry['path']} states two equal identities.",
+            )
+        if change == "PUBLISH_UNCHANGED":
+            source = keyed(
+                entry["publication_source"],
+                G1_LEDGER_PUBLICATION_SOURCE_KEYS,
+                "a publication_source",
+            )
+            _require(
+                all(nonempty_text(source[k]) for k in G1_LEDGER_PUBLICATION_SOURCE_KEYS),
+                "U06_ROLE_SCHEMA_INVALID",
+                f"{label}: publication_source of {entry['path']} is incomplete.",
+            )
+    paths = [entry["path"] for entry in entries]
+    _require(
+        paths == sorted(set(paths)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: modified_files must be unique and sorted by path.",
+    )
+
+    keyed(ledger["identity_digests"], set(G1_LEDGER_DIGEST_KEYS), "identity_digests")
+
+    rows = ledger["live_roles"]
+    _require(
+        isinstance(rows, list) and rows,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: live_roles must be a non-empty list.",
+    )
+    membership: dict[str, str] = {}
+    for relative in ACCEPTED_IMPLEMENTATION_PATHS:
+        membership[relative] = G1_IDENTITY_CLASS_RUNTIME
+    for relative in VALIDATION_IDENTITY_PATHS:
+        membership[relative] = G1_IDENTITY_CLASS_VALIDATION
+    for relative in governance_authority_identity_paths():
+        membership[relative] = G1_IDENTITY_CLASS_GOVERNANCE
+    change_by_path = {entry["path"]: entry["change_class"] for entry in entries}
+    role_names: list[str] = []
+    for row in rows:
+        keyed(row, G1_LIVE_ROLE_KEYS, "a live_roles entry")
+        relative = row["path"]
+        _require(
+            membership.get(relative) == row["identity_class"]
+            and row["lifecycle_status"]
+            == G1_LIVE_ROLE_STATUS_BY_CHANGE[change_by_path.get(relative)]
+            and nonempty_text(row["role"])
+            and nonempty_text(row["authority_justification"]),
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: live role {relative!r} has the wrong identity class, a "
+            "lifecycle status inconsistent with modified_files, or no role / "
+            "authority justification.",
+        )
+        role_names.append(row["role"])
+    row_paths = [row["path"] for row in rows]
+    _require(
+        row_paths == sorted(set(row_paths))
+        and set(row_paths) == set(membership)
+        and len(role_names) == len(set(role_names)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: live_roles must name every G1 identity member exactly once, "
+        f"sorted by path, with unique role names; missing="
+        f"{sorted(set(membership) - set(row_paths))}, extra="
+        f"{sorted(set(row_paths) - set(membership))}",
+    )
+
+    suites = ledger["tests_executed"]
+    _require(
+        isinstance(suites, list) and suites,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: tests_executed must be a non-empty list.",
+    )
+    for entry in suites:
+        keyed(entry, G1_LEDGER_TEST_KEYS, "a tests_executed entry")
+        counts = [entry[k] for k in ("ran", "failures", "errors", "skipped")]
+        _require(
+            all(isinstance(c, int) and not isinstance(c, bool) and c >= 0 for c in counts)
+            and nonempty_text(entry["command"])
+            and entry["result"] == "OK"
+            and entry["ran"] > 0
+            and entry["failures"] == 0
+            and entry["errors"] == 0,
+            "U06_ROLE_SCHEMA_INVALID",
+            f"{label}: executed suite {entry.get('suite')!r} must have run, with "
+            "zero failures and errors, result OK and a recorded command.",
+        )
+    names = sorted(entry["suite"] for entry in suites)
+    _require(
+        names == sorted(VALIDATION_IDENTITY_PATHS),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: tests_executed must record every G1 validation suite exactly "
+        f"once; missing={sorted(set(VALIDATION_IDENTITY_PATHS) - set(names))}, "
+        f"extra={sorted(set(names) - set(VALIDATION_IDENTITY_PATHS))}",
+    )
+    _require(
+        _strict_equal(ledger["execution_status"], dict(G1_EXECUTION_COUNTERS)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: execution_status must record zero for every no-execution counter.",
+    )
+    _require(
+        _strict_equal(ledger["lifecycle_status"], dict(G1_CANDIDATE_LIFECYCLE_STATE)),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"{label}: lifecycle_status must be the candidate-time declaration.",
+    )
+
+
+def validate_g1_candidate_change_ledger(
+    root: Path,
+    ledger_bytes: bytes,
+    manifest: Mapping[str, Any],
+    generation: AuthorityGeneration | None = None,
+    *,
+    mode: str,
+    context: _G1ContractContext | None = None,
+) -> dict[str, Any]:
+    """Validate a G1 candidate change ledger: structure, then closed world."""
+
+    root = Path(root).resolve()
+    generation = generation or CURRENT_GENERATION
+    _require(
+        mode in CANDIDATE_MANIFEST_MODES,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"G1 candidate change ledger: unknown validation mode {mode!r}.",
+    )
+    _require(
+        bool(generation.candidate_change_ledger_path),
+        "U06_ROLE_SCHEMA_INVALID",
+        f"generation {generation.generation_id} declares no candidate change ledger.",
+    )
+    label = f"G1 candidate change ledger ({generation.candidate_change_ledger_path})"
+    ledger = _strict_json_object(ledger_bytes, label=label)
+    _g1_check_ledger_structure(ledger, manifest, generation, label)
+    identities, hidden = collect_identity_pointers(ledger)
+    _require(
+        not hidden,
+        "U06_CANDIDATE_MANIFEST_IDENTITY_UNACCOUNTED",
+        f"{label}: raw identities hidden in prose, keys or malformed values: "
+        f"{['.'.join(map(str, p)) for p in hidden]}",
+    )
+    later = {
+        generation.candidate_change_ledger_path,
+        generation.candidate_checkpoint_path,
+        generation.candidate_manifest_path,
+    }
+    for pointer, _ in identities:
+        tied = later & _associated_paths(ledger, pointer)
+        _require(
+            not tied,
+            "U06_CANDIDATE_MANIFEST_SELF_IDENTITY_REJECTED",
+            f"{label}: {'.'.join(map(str, pointer))} asserts an identity of "
+            f"{sorted(tied)}, which is finalized at or after the ledger.",
+        )
+    owned = _own_identity_pointers(
+        identities, G1_CANDIDATE_CHANGE_LEDGER_IDENTITY_OBLIGATIONS, label
+    )
+    manifest_context = context or _G1ContractContext(root, manifest, generation, mode, label)
+    ledger_context = _G1LedgerContext(
+        root, ledger, manifest, generation, mode, label, manifest_context
+    )
+    verified, structural = _verify_owned_identities(
+        owned,
+        identities,
+        G1_CANDIDATE_CHANGE_LEDGER_OBLIGATION_VERIFIERS,
+        ledger_context,
+        label,
+    )
+    return {
+        "ledger_path": generation.candidate_change_ledger_path,
+        "mode": mode,
+        "collected_identity_count": len(identities),
+        "verified_identity_count": len(verified),
+        "structural_identity_count": len(structural),
+        "role_bound_identity_count": len(ledger_context.authority),
+        "unaccounted_identity_count": 0,
+        "obligation_classes": sorted(
+            {o.obligation_class for o in G1_CANDIDATE_CHANGE_LEDGER_IDENTITY_OBLIGATIONS}
+        ),
+        "modified_file_count": len(ledger["modified_files"]),
+        "live_role_count": len(ledger["live_roles"]),
+        "executed_suite_count": len(ledger["tests_executed"]),
+        "historical_evidence_count": len(ledger["predecessor"]["historical_evidence"]),
+    }
+
+
+#: One validator per known content contract; a contract never judges another's.
+CANDIDATE_MANIFEST_CONTRACT_VALIDATORS: Mapping[str, Any] = {
+    FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4: (
+        validate_candidate_manifest_identity_contract
+    ),
+    G1_CANDIDATE_MANIFEST_CONTRACT: validate_g1_candidate_manifest_contract,
+}
+
+
+def validate_candidate_manifest_content_contract(
+    root: Path,
+    relative: str | None = None,
+    payload: Mapping[str, Any] | None = None,
+    generation: AuthorityGeneration | None = None,
+    *,
+    mode: str,
+    manifest_bytes: bytes | None = None,
+) -> dict[str, Any]:
+    """Validate a candidate manifest with ITS generation's own contract."""
+
+    generation = generation or CURRENT_GENERATION
+    validator = CANDIDATE_MANIFEST_CONTRACT_VALIDATORS.get(
+        generation.candidate_manifest_contract
+    )
+    _require(
+        validator is not None,
+        "U06_ROLE_SCHEMA_INVALID",
+        f"generation {generation.generation_id} names no validatable "
+        f"candidate-manifest contract ({generation.candidate_manifest_contract!r}).",
+    )
+    return validator(
+        root, relative, payload, generation, mode=mode, manifest_bytes=manifest_bytes
+    )
+
+
 def validate_role_specifics(
     root: Path,
     role: str,
@@ -6345,7 +8673,7 @@ def validate_role_specifics(
         # envelope-only contract declares no content contract and is not
         # re-judged retroactively.
         if generation.candidate_manifest_contract is not None:
-            validate_candidate_manifest_identity_contract(
+            validate_candidate_manifest_content_contract(
                 root,
                 relative,
                 payload,
@@ -6722,14 +9050,19 @@ def validate_accepted_lifecycle_payload(
                 "candidate. Reporting it as such was blocker R2-AUD-03."
             ),
         },
-        # The ACTIVE generation's own candidate audit history, separately.
+        # The generation-3 (preflight-authorization-guard) register, retained
+        # under its historical key; since G1 it is a PREDECESSOR register.
         "preflight_authorization_guard_candidate_audit_history": {
             k: dict(v)
             for k, v in PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY.items()
         },
+        # The ACTIVE generation's own candidate audit history, separately.
+        "current_generation_candidate_audit_history": {
+            k: dict(v) for k, v in CURRENT_CANDIDATE_AUDIT_HISTORY.items()
+        },
         "active_candidate_id": ACTIVE_CANDIDATE_ID,
         "active_candidate_audit": dict(
-            PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]
+            CURRENT_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]
         ),
         "placeholder_digests_used": False,
         "fabricated_future_hashes": False,
@@ -6798,14 +9131,19 @@ def absent_lifecycle(
                 "candidate. Reporting it as such was blocker R2-AUD-03."
             ),
         },
-        # The ACTIVE generation's own candidate audit history, separately.
+        # The generation-3 (preflight-authorization-guard) register, retained
+        # under its historical key; since G1 it is a PREDECESSOR register.
         "preflight_authorization_guard_candidate_audit_history": {
             k: dict(v)
             for k, v in PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY.items()
         },
+        # The ACTIVE generation's own candidate audit history, separately.
+        "current_generation_candidate_audit_history": {
+            k: dict(v) for k, v in CURRENT_CANDIDATE_AUDIT_HISTORY.items()
+        },
         "active_candidate_id": ACTIVE_CANDIDATE_ID,
         "active_candidate_audit": dict(
-            PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]
+            CURRENT_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]
         ),
         "placeholder_digests_used": False,
         "fabricated_future_hashes": False,
@@ -7102,14 +9440,19 @@ def lifecycle_summary(lifecycle: Mapping[str, Any] | None) -> dict[str, Any]:
                 "candidate. Reporting it as such was blocker R2-AUD-03."
             ),
         },
-        # The ACTIVE generation's own candidate audit history, separately.
+        # The generation-3 (preflight-authorization-guard) register, retained
+        # under its historical key; since G1 it is a PREDECESSOR register.
         "preflight_authorization_guard_candidate_audit_history": {
             k: dict(v)
             for k, v in PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY.items()
         },
+        # The ACTIVE generation's own candidate audit history, separately.
+        "current_generation_candidate_audit_history": {
+            k: dict(v) for k, v in CURRENT_CANDIDATE_AUDIT_HISTORY.items()
+        },
         "active_candidate_id": ACTIVE_CANDIDATE_ID,
         "active_candidate_audit": dict(
-            PREFLIGHT_AUTH_GUARD_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]
+            CURRENT_CANDIDATE_AUDIT_HISTORY[ACTIVE_CANDIDATE_ID]
         ),
     }
 

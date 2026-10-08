@@ -547,12 +547,21 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
     # the EXTERNAL historical authority (Git-frozen pre-R8 trust root ->
     # accepted R7 binding -> authenticated R7 package) in every mode; the
     # bundle table is a diagnostic assertion only. Not a freeze; not Full81.
+    #
+    # Current Full81 Production Generation G1 re-pin. The overlay gained one
+    # additive AuthorityGeneration (G1) and advanced CURRENT_GENERATION to it;
+    # the accepted R8 generation and its contract V4 are retained byte-stable
+    # as historical. G1 adds its own closed-world candidate-manifest contract
+    # and change ledger, predeclared governance role paths, phase-aware
+    # validation, and the three G1 identity axes. The ``lifecycle`` tag now
+    # names the G1 candidate, where these exact bytes originate; it named R8
+    # only while the pinned bytes were R8's. Not a freeze; not Full81.
     AuthorityPin(
         "u06_lifecycle_overlay",
         "src/production_authority_lifecycle_u06.py",
-        "aebd2c5924027eba15fb0114cf155dadaee3505929c2f45e2ffbfadb748a37f3",
+        "c65aaedc6ea4f357b4ac463ebe0428d717ed953c5e12dc2f547cc98334bd7c45",
         "U_06_ACCEPTED_LIFECYCLE_OVERLAY_NO_SCIENTIFIC_CONTENT",
-        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+        "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
     ),
     # Candidate R3 re-pin. One assertion in this suite required the ACTIVE
     # candidate's audit state to be the HISTORICAL U-06 alignment audit history
@@ -579,12 +588,16 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
     #
     # Candidate R8 re-pin. Active-candidate pointer R7 -> R8 and an explicit
     # historical R7 rejection assertion. No assertion removed or relaxed.
+    #
+    # G1 re-pin. Current-generation assertions advanced R8 -> G1 and are
+    # phase-aware (read from primary state, never hard-coded pre-acceptance);
+    # R8 is asserted as the accepted, superseded historical predecessor.
     AuthorityPin(
         "u06_lifecycle_test",
         "tests/test_21f_u06_accepted_lifecycle_gate.py",
-        "08e1d5cd440028b442f6b9e7defac71b01392131f595bd72b02f93b52700c827",
+        "e21b734db9da2a816e7181c93c5246d452ef58a2b9212d568b5d93c17ddf6c31",
         "U_06_LIFECYCLE_GATE_STATIC_TEST_F_01_REGRESSION",
-        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+        "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
     ),
     # Candidate R4 re-pin (R3-AUD-04). This A-01 suite was written when U-06 R3
     # was the CURRENT generation and still drove the validator with a U-06 R3
@@ -596,17 +609,22 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
     # candidate manifest declares the live implementation digest, and the U-06
     # R3 cases are retained as explicitly historical controls. No negative
     # control was deleted and no guard was weakened.
+    #
+    # G1 re-pin. The attacks are aimed at the G1 generation: structural
+    # substitution attacks run against the predeclared G1 role paths, and
+    # authenticity attacks run in a disposable G1 repository. Every attack
+    # case is retained; no negative control was deleted or relaxed.
     AuthorityPin(
         "u06_r3_substitution_attack_test",
         "tests/test_21g_u06_r3_substitution_attacks.py",
-        "d89b6216f0b3bc09e6d1f6f6804df39df828f46730fc12fdc1df0b90fb4e1cb6",
+        "ffb4c5ead017f29e5822ae5f2045f72e9dffcf8e2e5be7080dc174ee898c569b",
         "U_06_R3_ARBITRARY_ARTIFACT_SUBSTITUTION_ATTACK_SUITE",
-        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4",
+        "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
     ),
     AuthorityPin(
         "v7_4_alignment_test",
         "tests/test_21e_v7_4_production_authority_bundle.py",
-        "274e44b7862054737b52628c0a308b327b7fe161915de95f0b6aea9a2612a4e9",
+        "0ba258c1a63df33c88f7499bbac7b353eb926aa1b7fb79cfd10fb9e4181bb7a6",
         "V7_4_AUTHORITY_ALIGNMENT_STATIC_TEST",
         # Candidate R4 re-pin (R2-AUD-03 / R3-AUD-04). One assertion here
         # required the pre-acceptance U-06 register entry to be
@@ -616,7 +634,12 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
         # It now requires the candidate-neutral entry, asserts the historical
         # string is never emitted as the active one, and additionally checks
         # the explicit ownership fields. No assertion was removed or relaxed.
-        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R4",
+        #
+        # G1 re-pin. Live-state assertions are phase-aware: the lifecycle,
+        # register, ownership and Full81 states are read from primary state
+        # (absent slot -> most restrictive state; present slot -> a valid
+        # accepted record is required). No assertion was removed or relaxed.
+        "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
     ),
     AuthorityPin(
         "main_full81_authorization_mechanism",
@@ -664,9 +687,16 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
         #
         # Candidate R8 re-pin. CANDIDATE_ID R7 -> R8 and R7 added to
         # REJECTED_CANDIDATE_IDS; nothing else changed.
-        "075194395bee713f74a7a12d26afb0f1ea46245dd1f847ec4979389f8260d51b",
+        #
+        # G1 re-pin. Lineage and candidate advanced to G1, with the accepted R8
+        # candidate and the r3 authorization slot superseded; a G1 scope-
+        # authorization slot and a separate, fail-closed execution-
+        # authorization MECHANISM were added. No authorization artifact exists
+        # or is created by this change: scope and execution both resolve
+        # NOT_GRANTED, and a mechanism is not an authorization.
+        "0b4899412bc5cd6d6a4b64a45a243ae8b98d2488ea9ac165f595d2cd7eec7880",
         "MAIN_FULL81_AUTHORIZATION_MECHANISM_NO_SCIENTIFIC_CONTENT",
-        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+        "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
     ),
     # Candidate R3 re-pin. Pin 34 (`repository_eol_policy`) made `.gitattributes`
     # a required authority file, and this suite's isolated promotion fixture is a
@@ -679,7 +709,7 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
     AuthorityPin(
         "main_full81_authorization_test",
         "tests/test_21h_main_full81_authorization_mechanism.py",
-        "9f0ab66279952286ddb8d01e9cce057eede283297a720586d922ba94eec263fd",
+        "5b0be95a279ad092eafe6118556590d0c765ad269df15e2454795f9109744b9a",
         "MAIN_FULL81_AUTHORIZATION_MECHANISM_FAIL_CLOSED_SUITE",
         # Candidate R4 re-pin (R3-AUD-04). Three assertions encoded
         # predecessor-generation premises: two reached a specific HISTORICAL
@@ -710,7 +740,12 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
         # Candidate R8 re-pin. Current-generation assertion R7 -> R8 (contract
         # V4, V3 asserted superseded) and R7 asserted on every rejection list.
         # No assertion removed or relaxed.
-        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+        #
+        # G1 re-pin. The promotion fixture synthesizes a G1 candidate package
+        # with its role records at the predeclared G1 paths; contract V4 is
+        # retained as a historical control on R8. No negative control was
+        # deleted or relaxed.
+        "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
     ),
 )
 
@@ -765,13 +800,20 @@ ALIGNMENT_SURFACE_V7_4: tuple[AuthorityPin, ...] = (
 #: binding it selects, which contract V4 reads by raw bytes; the R8 attack
 #: suite) and exactly nine matching exact-path rules.  No rule was removed or
 #: broadened.
+#: G1 re-pin: exactly seventeen more consumers (124 -> 141) and exactly
+#: seventeen matching exact-path rules: the G1 candidate checkpoint, manifest
+#: and change ledger; the five predeclared G1 governance role records; the G1
+#: scope-authorization, execution-authorization and no-solve-evidence slots
+#: (the evidence slot byte-preserving, the others LF-pinned); the four role
+#: records the accepted R8 lifecycle record names; and the G1 and FULLSTACK-01
+#: suites.  No rule was removed or broadened.
 REPOSITORY_GOVERNANCE_AUTHORITY_V7_4: tuple[AuthorityPin, ...] = (
     AuthorityPin(
         "repository_eol_policy",
         ".gitattributes",
-        "64e39b0787eda885b19566d7cf46aa225823387f7070b437fb261a39e66925fc",
+        "0dc5e0700c4375ad2a3ad8da1d149c5e7806722c983c85904ce1d7e944685ddc",
         "REPOSITORY_EOL_CHECKOUT_POLICY_REPRODUCIBILITY_PRECONDITION",
-        "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+        "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
     ),
 )
 
@@ -930,6 +972,14 @@ def declared_pin_inventory() -> dict[str, Any]:
 #       - the immediate predecessor, Candidate R7;
 #   predecessor:modified_file:<path> - the R7 bytes of every path of R7's
 #       preserved surface that Candidate R8 changes.
+#
+# Current Full81 Production Generation G1: the trust root and table below are
+# HISTORICAL R8 provenance, read only when the accepted R8 candidate is
+# re-validated under contract V4.  The G1 candidate-manifest contract and
+# change ledger never consult them; G1 binds its predecessor through published
+# Git evidence (the predecessor commit, the accepted R8 lifecycle record and
+# the superseded R8 scope authorization), so nothing here is a live G1 role and
+# nothing here may be edited for G1.
 
 
 @dataclass(frozen=True)

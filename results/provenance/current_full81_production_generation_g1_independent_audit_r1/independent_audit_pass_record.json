@@ -1,0 +1,268 @@
+{
+  "artifact_type": "FULL81_PRODUCTION_G1_INDEPENDENT_AUDIT_PASS",
+  "schema_version": "iris-thesis-full81-production-g1-independent-audit-pass-v1",
+  "generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "target_candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+  "candidate_revision": "R1",
+  "role": "independent_audit_pass",
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+    "sha256": "dccbbffccc37dbea2179bcbc6210f1afa76351d9883fc73485f3be83278ce9a9"
+  },
+  "candidate_manifest": {
+    "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+    "sha256": "bd3621cf9de16a6b7ed0c84444272cd17ce28326b2f4081317c926cd3aa1071a"
+  },
+  "candidate_change_ledger": {
+    "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json",
+    "sha256": "e1b2ecc8fcb44327b4d8e0a38f1fd7ba200bd9fa44b363ceaf89220aadbde080"
+  },
+  "implementation_identity_digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+  "implementation_identity_path_count": 21,
+  "g1_identity_axes": {
+    "runtime": {
+      "digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+      "path_count": 21
+    },
+    "validation": {
+      "digest": "1bd49904e8d774c27b5e8a0390240eb836e92fa6cf857948f7b9d3486914111b",
+      "path_count": 9
+    },
+    "governance_authority": {
+      "digest": "360c81b133440e1b0444e01f2fd120eb1f49d0db3501283773a2952c032dbeb4",
+      "path_count": 26
+    },
+    "pairwise_disjoint": true,
+    "unique_member_count": 56,
+    "digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8"
+  },
+  "predecessor_repository_head": "222685f0ea8a1a9f281e30962e223a339d5ec938",
+  "change_classification": {
+    "MODIFY": 9,
+    "CREATE": 2,
+    "PUBLISH_UNCHANGED": 0,
+    "DELETE": 0
+  },
+  "verdict": "PASS",
+  "verdict_qualifier": "INDEPENDENT DELTA AUDIT PASS WITH CARRIED NONBLOCKING FINDINGS",
+  "disposition": "G1 CANDIDATE R1 INDEPENDENT AUDIT PASS; PHASE A AUDIT PUBLICATION; LATER ACCEPTANCE LIFECYCLE IS A SEPARATE ACT",
+  "blocking_critical": 0,
+  "blocking_major": 0,
+  "blocking_findings": [],
+  "independent_audit": true,
+  "candidate_author_is_not_self_accepting": true,
+  "candidate_author_is_not_self_accepting_meaning": "This record publishes an independently completed PASS and performs no acceptance. Phase B acceptance is a separate future act.",
+  "candidate_implementation_bytes_authored_by_this_pass": false,
+  "verdict_originated_in_this_pass": false,
+  "audit_disposition_provenance": {
+    "independent_audit": {
+      "kind": "FRESH_INDEPENDENT_READ_ONLY_DELTA_AUDIT",
+      "agent_session": "5a2e0245-83c6-4891-a55b-e2a1dc8bf823",
+      "started_utc": "2026-10-08T07:06:22Z",
+      "completed_utc": "2026-10-08T08:29:25Z",
+      "verdict": "PASS",
+      "acceptance_critical_blockers": [],
+      "repairs_made": 0
+    },
+    "publication_readiness_adjudication": {
+      "agent_session": "a9e3bcbf-fcdc-42ab-bd10-c91e4d3cf6f9",
+      "date": "2026-10-08",
+      "verdict": "READY FOR AUDIT PUBLICATION",
+      "acceptance_critical_blockers": [],
+      "scope": "53/54 fixture-control exception and publication-time identity / Git-state stability only"
+    },
+    "this_publication_pass": "Phase A operator only. Authored this role record from the audit's primary machine-readable evidence; originated no verdict and repaired nothing.",
+    "evidence_location_note": "The audit's primary logs and JSON evidence live in a local session scratchpad and are identified below by SHA-256. They are not published by this record and are not Git-durable."
+  },
+  "test_result": {
+    "current_state_regression": {
+      "tests_run": 409,
+      "passed": 409,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "PASS",
+      "per_suite": {
+        "tests/test_21a_v7_3_production_routing_preflight.py": 19,
+        "tests/test_21b_21d_v7_3_production_successor_stack.py": 71,
+        "tests/test_21e_v7_4_production_authority_bundle.py": 34,
+        "tests/test_21f_u06_accepted_lifecycle_gate.py": 55,
+        "tests/test_21g_u06_r3_substitution_attacks.py": 37,
+        "tests/test_21h_main_full81_authorization_mechanism.py": 73,
+        "tests/test_21i_main_full81_preflight_authorization_guard.py": 50,
+        "tests/test_21l_full81_production_generation_g1.py": 61,
+        "tests/test_fullstack_01_execution_input_authority.py": 9
+      },
+      "executed_by_session": "5a2e0245-83c6-4891-a55b-e2a1dc8bf823",
+      "basis": "primary unittest logs, re-parsed (one log per suite)"
+    },
+    "lawful_future_campaign": {
+      "states": [
+        "LAW-1",
+        "LAW-2",
+        "LAW-3",
+        "LAW-4",
+        "LAW-5",
+        "LAW-6",
+        "LAW-7"
+      ],
+      "tests_run": 2863,
+      "passed": 2863,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "per_state": 409,
+      "result": "PASS",
+      "environment": "committed full-tree simulations under %TEMP% publishing the real audited package bytes; the real repository was not used",
+      "execution_provenance": "Executed by session 5a2e0245; its primary per-suite logs were independently re-parsed and its LAW-1..LAW-7 phase behavior separately probed (gate probes). This record does not claim that the final auditor personally reran the entire campaign.",
+      "phase_probe": {
+        "LAW-1": "CANDIDATE_PACKAGED",
+        "LAW-2": "INDEPENDENT_AUDIT_RECORD_PRESENT",
+        "LAW-3": "ACCEPTANCE_RECORDS_PRESENT",
+        "LAW-4": "RE_FREEZE_AND_LIFECYCLE_RECORDS_PRESENT",
+        "LAW-5": "SCOPE_AUTHORIZATION_RECORD_PRESENT",
+        "LAW-6": "NO_SOLVE_PREFLIGHT_EVIDENCE_PRESENT",
+        "LAW-7": "EXECUTION_AUTHORIZATION_RECORD_PRESENT"
+      },
+      "void_first_run_disclosed": "A first campaign run was void (simulation left empty slot directories a Git-built tree never has) and was discarded; the counted run is the clean rerun."
+    },
+    "native_solver_tripwire_hits": 0
+  },
+  "negative_controls": {
+    "ledger_and_manifest_attacks": {
+      "passed": 31,
+      "total": 31,
+      "result": "ALL_FAIL_CLOSED"
+    },
+    "committed_fixture_controls": {
+      "passed": 53,
+      "total": 54,
+      "exception": {
+        "case": "F2 unknown extra key",
+        "attack": "extra top-level key extra_claim added to a lawful G1 accepted-lifecycle record in a disposable committed fixture",
+        "expected_by_control": "PRESENT_INVALID / not frozen",
+        "observed": "PRESENT_VALID / frozen, identical to the lawful positive control F2.0",
+        "classification": "NONBLOCKING / INVALID_TEST_EXPECTATION",
+        "basis": [
+          "validate_accepted_lifecycle_payload enforces equality on enumerated top-level fields only; only the roles object is closed-world (src/production_authority_lifecycle_u06.py)",
+          "the resolved lifecycle state is constructed from module constants, the generation, the live digest and validated role data; no payload value passes through",
+          "Full81 scope and execution authorization bind the lifecycle record only by path, raw SHA-256 and named-commit containment",
+          "validator logic identical to predecessor HEAD 222685f (inherited accepted contract, not introduced by G1)",
+          "accepted published lifecycle records (U-06 R3, mechanism R2, R8) carry 10, 23 and 24 top-level keys the validator never reads",
+          "follow-up probe: self_accepted, authorizes_full81_execution, main_full81_authorization and record_published extra keys granted nothing"
+        ],
+        "is_fail_open_vulnerability": false
+      },
+      "not_claimed": "54/54"
+    }
+  },
+  "option_a_classification": {
+    "path": "tests/test_21i_main_full81_preflight_authorization_guard.py",
+    "change_class": "CREATE",
+    "lawful": true,
+    "former_class": "PUBLISH_UNCHANGED",
+    "former_class_status": "UNLAWFUL: fails the published-evidence equality (published-hash) requirement because the 21i bytes changed"
+  },
+  "execution_counters": {
+    "native_solver_calls": 0,
+    "optimize_calls": 0,
+    "model_constructions": 0,
+    "real_21d_preflights": 0,
+    "full81_runs": 0,
+    "production_runs": 0
+  },
+  "independent_audit_repository_mutation_count": 0,
+  "repository_unchanged_evidence": {
+    "independent_audit_snapshots_identical": true,
+    "snapshot_sha256": "71d5d67a20d3ba4f4bf0988886e9d5493d9a199b9681bfd5bc1a87321b2eb7a3",
+    "snapshot_scope": "every working-tree file (sha256) excluding .venv/.git/__pycache__/.pytest_cache, .git non-object files (sha256), .git objects (name+size), git status",
+    "readiness_adjudication_recheck": "live repository byte-identical to that snapshot at start and end of the readiness adjudication"
+  },
+  "historical_21i_content": {
+    "classification": "RETAINED_AND_VERIFIABLE / NONBLOCKING_HISTORICAL_CONTENT_LIMITATION",
+    "historical_sha256": "5954738053d32a5e541a2bf9db8d8e4fd360e2fa70945734f9de2fe6fdadebd8",
+    "byte_count": 45751,
+    "retained_in": [
+      {
+        "archive": "results/provenance/main_full81_preflight_authorization_guard_candidate_r1_publication_stop_2026-10-04/candidate_r1_raw_bytes.zip",
+        "archive_sha256": "45ff1028fab900f13e0eede29abae56d9c06834e9605bda51b2bfd11f2827f6f"
+      },
+      {
+        "archive": "results/provenance/main_full81_preflight_authorization_guard_candidate_r2_audit_stop_2026-10-04/candidate_r2_raw_bytes.zip",
+        "archive_sha256": "308646c16731a3695e340c48c53d5ce51f1af078e2729cdc43a0692eec3d3743"
+      }
+    ],
+    "archive_binding": "bound by SHA-256 in the published R8 manifest candidate_preservation_packages",
+    "git_durability": "NOT_GIT_DURABLE: the archives are gitignored and untracked; the historical blob is reachable only from local refs/codex/turn-diffs/* refs, not from origin",
+    "note": "Local recoverability is not remote Git durability. This record publishes no historical ZIP payload.",
+    "related_carried_finding": "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY (OPEN / CARRIED / NONBLOCKING)"
+  },
+  "carried_findings": {
+    "G1-N1": {
+      "recorded_in_manifest": {
+        "class": "HISTORICAL_ORIGIN_LABEL_AMBIGUITY",
+        "id": "G1-N1",
+        "status": "OPEN_FOR_INDEPENDENT_AUDIT",
+        "summary": "Bundle pin production_successor_stack keeps origin tag U_06_ALIGNMENT_CANDIDATE_R3 while Git shows later stack byte history (02b998b). Descriptive metadata only; no guard reads it. Not edited in G1."
+      },
+      "independent_audit_disposition": "UNCHANGED / NONBLOCKING",
+      "closed_by_this_record": false
+    },
+    "G1-N2": {
+      "recorded_in_manifest": {
+        "class": "PREDECESSOR_FREEZE_COVERAGE_GAP",
+        "id": "G1-N2",
+        "status": "OPEN_FOR_INDEPENDENT_AUDIT",
+        "summary": "At predecessor commit 222685f the published runtime bytes equal neither the R8 nor the FULLSTACK-01 frozen implementation identity (see the change ledger's known_historical_inconsistency). G1 binds neither as a live identity."
+      },
+      "independent_audit_disposition": "UNCHANGED / NONBLOCKING",
+      "closed_by_this_record": false
+    },
+    "G1-N3": {
+      "recorded_in_manifest": {
+        "class": "VALIDATION_EVIDENCE_PHASE",
+        "id": "G1-N3",
+        "status": "DISCLOSED",
+        "summary": "tests_executed records, for each of the nine suites, a run on exactly these validation bytes and these runtime bytes, taken before this package existed (the ledger is finalized first). Package-phase regression is reported outside the package and is not self-recorded."
+      },
+      "independent_audit_disposition": "package-phase evidence supplied by the independent audit on the final bytes",
+      "closed_by_this_record": false
+    },
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY": {
+      "status": "OPEN / CARRIED / NONBLOCKING",
+      "closed_by_this_record": false
+    }
+  },
+  "nonblocking_observations": [
+    "results/provenance/main_full81_authorization_r2/main_full81_authorization.json shows a stat-only index entry; raw bytes and blob equal HEAD; not part of G1 and not changed",
+    "future slot parent directories must not be pre-created (21h asserts an absent slot's parent directory is absent)",
+    "the pre-Option-A lifecycle module bytes survive nowhere; the current bytes were verified instead"
+  ],
+  "evidence_identifiers": {
+    "audit_session_transcript_sha256": "0c3f77e596844059c3dcc7cfde8c13f47b20c0f4da9c9b254357e685ccc98c05",
+    "neg_fixture_json_sha256": "ff5e47941d25382f3e68aec920235273d42428501e79ff2c040f6040271d8fcf",
+    "neg_ledger_json_sha256": "2fd40aab0b9dc13c392199cedcd2d6c2fff7163b01dc6100bd524deb207d862f",
+    "regression_logs": "reg_current/*.log (9 suites) and reg_law/law1..law7__*.log (63 logs) in the audit session scratchpad"
+  },
+  "phase": "PHASE_A_AUDIT_PUBLICATION",
+  "machine_readable_role_artifact": true,
+  "is_human_readable_audit_report": false,
+  "is_acceptance": false,
+  "is_acceptance_manifest": false,
+  "is_re_freeze": false,
+  "is_accepted_lifecycle_record": false,
+  "is_main_full81_authorization": false,
+  "production_authority_status_asserted": "NOT_YET_FROZEN",
+  "main_full81_status_asserted": "NOT_AUTHORIZED",
+  "real_21d_status_asserted": "NOT_AUTHORIZED",
+  "execution_status_asserted": "NOT_AUTHORIZED",
+  "solve_status_asserted": "NOT_AUTHORIZED",
+  "authorizes_main_full81": false,
+  "authorizes_full81_preflight": false,
+  "authorizes_21d": false,
+  "authorizes_execution": false,
+  "authorizes_solve": false,
+  "authored_utc": "2026-10-08T10:16:31Z",
+  "notes": "Phase A publishes the exact independently audited G1 Candidate R1 bytes and this one independent-audit-PASS role record. It does not accept or close G1, create acceptance records, re-freeze production authority, author an accepted-lifecycle record, or authorize any Main Full81 scope, 21d preflight, execution or solve."
+}

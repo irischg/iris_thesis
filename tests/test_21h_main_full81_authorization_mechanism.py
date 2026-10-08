@@ -1,5 +1,11 @@
 """Main Full81 authorization-mechanism Candidate R2: fail-closed suite.
 
+Current Full81 Production Generation G1: the current generation is G1, whose
+candidate package the promotion fixture SYNTHESIZES for its own live bytes and
+whose role records it publishes at the G1 predeclared paths.  The R8 generation
+and its contract V4 are asserted only as explicitly HISTORICAL controls, and
+every assertion about the REAL repository is phase-aware.
+
 What Candidate R1 got wrong, and what this suite now proves
 -----------------------------------------------------------
 Candidate R1 FAILED its read-only audit on two findings:
@@ -60,6 +66,10 @@ from src import main_full81_authorization_v7_4 as auth  # noqa: E402
 from src import production_authority_bundle_v7_4 as bundle  # noqa: E402
 from src import production_authority_lifecycle_u06 as lc  # noqa: E402
 from src import production_successor_stack_v7_3 as stack  # noqa: E402
+from tests.test_21l_full81_production_generation_g1 import (  # noqa: E402
+    g1_predecessor_commit,
+    write_g1_candidate_package,
+)
 
 
 MECHANISM_SOURCE = ROOT / "src/main_full81_authorization_v7_4.py"
@@ -82,6 +92,10 @@ PRED = lc.U06_R3_GENERATION
 #: cannot drift.
 AUTH_MECHANISM_R2_GEN = lc.GENERATIONS_BY_ID["MAIN_FULL81_AUTHORIZATION_MECHANISM_R2"]
 U06_R3_GEN = lc.GENERATIONS_BY_ID["U06_V7_4_PRODUCTION_AUTHORITY_R3"]
+#: Current Full81 Production Generation G1: the R8 preflight-authorization-
+#: guard generation is historical, and is selected by id wherever a historical
+#: R8 property is asserted.
+R8_GEN = lc.GENERATIONS_BY_ID["MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1"]
 
 
 def _git(root: Path, *args: str) -> subprocess.CompletedProcess[bytes]:
@@ -116,22 +130,7 @@ def _rmtree(path: Path) -> None:
         shutil.rmtree(path, ignore_errors=True)
 
 
-def _external_evidence_paths() -> tuple[str, ...]:
-    """What contract V4's GATE reads beyond a published checkout (R7-AUD-01).
-
-    Derived from the external historical authority itself, never listed: the
-    Git-frozen trust root, the R7 binding it selects, every R1-R7 file the
-    historical roles describe, and R7's preserved surface.
-    """
-
-    authority = lc.resolve_external_historical_authority(ROOT)
-    paths = {authority["trust_root"]["path"], authority["binding"]["path"]}
-    paths.update(path for path, _ in authority["roles"].values() if path is not None)
-    paths.update(authority["predecessor_surface"])
-    return tuple(sorted(paths))
-
-
-def _fixture_paths(*, external_evidence: bool = True) -> tuple[str, ...]:
+def _fixture_paths() -> tuple[str, ...]:
     return tuple(
         dict.fromkeys(
             list(lc.ACCEPTED_IMPLEMENTATION_PATHS)
@@ -147,25 +146,27 @@ def _fixture_paths(*, external_evidence: bool = True) -> tuple[str, ...]:
             # defect - a required authority file absent from a reconstruction -
             # and a derived list cannot silently fall behind a new pin.
             + list(lc.REQUIRED_DURABLE_PUBLICATION_PATHS)
+            # G1: the governance-authority identity the G1 contract binds is
+            # derived, so a reconstruction carries exactly those members.
+            + list(lc.governance_authority_identity_paths())
             + [
                 auth.EXPECTED_ANNUAL_INPUT_RELATIVE_PATH,
                 auth.EXPECTED_ANNUAL_MODEL_RELATIVE_PATH,
                 auth.EXPECTED_PARAMETER_REGISTRY_RELATIVE_PATH,
-                GEN.candidate_checkpoint_path,
-                GEN.candidate_manifest_path,
                 PRED.accepted_lifecycle_record_path,
                 PRED.candidate_manifest_path,
                 PRED.candidate_checkpoint_path,
+                # Historical controls: the R8 accepted record and candidate.
+                R8_GEN.accepted_lifecycle_record_path,
+                R8_GEN.candidate_manifest_path,
+                R8_GEN.candidate_checkpoint_path,
             ]
-            # Candidate R8 (contract V4): the Git-frozen trust root is tracked
-            # and published, so every published checkout carries it; the GATE's
-            # IGNORED external historical evidence is added unless a control
-            # deliberately withholds it.  A reconstruction without that evidence
-            # now - correctly - fails closed, exactly as R3's reconstruction
-            # without a newly pinned authority file did; the guard fired and the
-            # fixture is completed.
+            # Contract V4 (historical): the Git-frozen trust root is tracked
+            # and published, so every published checkout carries it.  The
+            # IGNORED R1-R7 evidence V4 additionally reads is deliberately NOT
+            # copied: the G1 contract does not consume it, and the historical
+            # control below proves V4 still fails closed without it.
             + [bundle.PRE_R8_HISTORICAL_TRUST_ROOT.path]
-            + (list(_external_evidence_paths()) if external_evidence else [])
         )
     )
 
@@ -193,14 +194,20 @@ class _Fixture:
         *,
         promote: bool = True,
         publish_authorization: bool = True,
-        external_evidence: bool = True,
     ) -> None:
         self.root = Path(tempfile.mkdtemp(prefix="full81_r2_fixture_")).resolve()
+        try:
+            self._build(promote=promote, publish_authorization=publish_authorization)
+        except BaseException:
+            # A fixture that fails to build never leaks its temp directory.
+            self.dispose()
+            raise
+
+    def _build(self, *, promote: bool, publish_authorization: bool) -> None:
         self.auth_relative = auth.AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix()
         self.record_relative = GEN.accepted_lifecycle_record_path
-        self.role_dir = "results/provenance/full81_auth_mech_r2_lifecycle"
 
-        for relative in _fixture_paths(external_evidence=external_evidence):
+        for relative in _fixture_paths():
             source = ROOT / relative
             if not source.is_file():
                 continue
@@ -229,14 +236,20 @@ class _Fixture:
         _git_ok(self.root, "symbolic-ref", "HEAD", "refs/heads/thesis-v7")
         frozen = bundle.PRE_R8_HISTORICAL_TRUST_ROOT
         _git_ok(self.root, "update-ref", frozen.tag_ref, _git_text(ROOT, "rev-parse", frozen.tag_ref))
-        self._commit("fixture: accepted surface + R2 candidate")
+        # G1: the current candidate package is SYNTHESIZED for this fixture's
+        # own live bytes (ledger -> checkpoint -> manifest, the lawful order),
+        # never copied from the real repository, so the promotion control is
+        # meaningful in every phase - including before the real package exists.
+        package = write_g1_candidate_package(
+            self.root, base_commit=g1_predecessor_commit()
+        )
+        self._commit("fixture: accepted surface + G1 candidate")
         self.commit_base = self.head()
 
         self.live_digest = lc.implementation_identity_digest(self.root)
-        self.ckpt_sha = lc.sha256_file(self.root / GEN.candidate_checkpoint_path)
-        self.manifest_sha = lc.sha256_file(
-            self.root / GEN.candidate_manifest_path
-        )
+        self.ckpt_sha = package["checkpoint"]
+        self.manifest_sha = package["manifest"]
+        self.package = package
 
         self.roles: dict[str, dict] = {}
         self.commit_phase_a = None
@@ -333,7 +346,7 @@ class _Fixture:
                 "findings_closed": ["H-01", "H-02"],
             }
         )
-        rel = f"{self.role_dir}/independent_audit_pass_record.json"
+        rel = GEN.role_record_path_map["independent_audit_pass"]
         self.roles["independent_audit_pass"] = {
             "path": rel,
             "sha256": self.write(rel, audit),
@@ -351,7 +364,7 @@ class _Fixture:
                 "audit_publication_commit": self.commit_phase_a,
             }
         )
-        rel = f"{self.role_dir}/acceptance_closure.json"
+        rel = GEN.role_record_path_map["acceptance_closure"]
         self.roles["acceptance_closure"] = {
             "path": rel,
             "sha256": self.write(rel, closure),
@@ -362,7 +375,7 @@ class _Fixture:
             ("independent_audit_pass", "acceptance_closure"),
         )
         manifest["acceptance_status"] = lc.ACCEPTED_ACCEPTANCE_STATUS
-        rel = f"{self.role_dir}/acceptance_manifest.json"
+        rel = GEN.role_record_path_map["acceptance_manifest"]
         self.roles["acceptance_manifest"] = {
             "path": rel,
             "sha256": self.write(rel, manifest),
@@ -383,7 +396,7 @@ class _Fixture:
                 "predecessor_lineage_id": GEN.predecessor_lineage_id,
             }
         )
-        rel = f"{self.role_dir}/production_authority_re_freeze_record.json"
+        rel = GEN.role_record_path_map["production_authority_re_freeze"]
         self.roles["production_authority_re_freeze"] = {
             "path": rel,
             "sha256": self.write(rel, refreeze),
@@ -537,46 +550,50 @@ class GenerationContractTests(unittest.TestCase):
         self.assertIn(gen, lc.HISTORICAL_GENERATIONS)
         self.assertIsNot(gen, lc.CURRENT_GENERATION)
 
-    def test_current_generation_is_the_preflight_guard_candidate_r8(self) -> None:
+    def test_current_generation_is_g1_candidate_r1(self) -> None:
         """CURRENT: the active generation, derived from primary contracts.
 
-        CURRENT POINTER, advanced R7 -> R8 within the same generation. The
-        candidate-manifest content contract (now V4) and the candidate change
-        ledger belong to the current generation only; every historical
-        generation keeps the envelope-only contract it was accepted under.
+        CURRENT POINTER, advanced from the R8 preflight-authorization-guard
+        generation to Current Full81 Production Generation G1.  The G1 content
+        contract, change ledger and predeclared role paths belong to G1; R8
+        keeps exactly the V4 contract and ledger it was accepted under, and
+        the earlier generations keep the envelope-only contract.
         """
 
         self.assertIs(GEN, lc.CURRENT_GENERATION)
+        self.assertEqual(GEN.generation_id, "CURRENT_FULL81_PRODUCTION_GENERATION_G1")
+        self.assertEqual(GEN.lineage_id, "CURRENT_FULL81_PRODUCTION_GENERATION_G1")
         self.assertEqual(
-            GEN.generation_id, "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1"
-        )
-        self.assertEqual(
-            GEN.lineage_id, "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1"
-        )
-        self.assertEqual(
-            GEN.candidate_id,
-            "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+            GEN.candidate_id, "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1"
         )
         self.assertEqual(GEN.candidate_audit_state, "NOT_YET_PERFORMED")
-        self.assertEqual(
-            GEN.candidate_manifest_contract,
-            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4,
-        )
+        self.assertEqual(GEN.candidate_manifest_contract, lc.G1_CANDIDATE_MANIFEST_CONTRACT)
         for superseded_contract in (
             lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V1,
             lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V2,
             lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V3,
         ):
             self.assertNotIn(superseded_contract, lc.KNOWN_CANDIDATE_MANIFEST_CONTRACTS)
+        self.assertTrue(GEN.candidate_change_ledger_path)
+        self.assertEqual(set(GEN.role_record_path_map), set(lc.NON_SELF_ACCEPTABLE_ROLES))
+        # HISTORICAL, selected by id: R8 keeps its accepted contract and ledger.
+        self.assertIn(R8_GEN, lc.HISTORICAL_GENERATIONS)
         self.assertEqual(
-            GEN.candidate_change_ledger_path,
+            R8_GEN.candidate_manifest_contract,
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_MANIFEST_CONTRACT_V4,
+        )
+        self.assertEqual(
+            R8_GEN.candidate_change_ledger_path,
             lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_CHANGE_LEDGER_PATH,
         )
-        for historical in lc.HISTORICAL_GENERATIONS:
+        for historical in (AUTH_MECHANISM_R2_GEN, U06_R3_GEN):
             with self.subTest(generation=historical.generation_id):
                 self.assertIsNone(historical.candidate_manifest_contract)
                 self.assertIsNone(historical.candidate_change_ledger_path)
+        for historical in lc.HISTORICAL_GENERATIONS:
+            self.assertIsNone(historical.predeclared_role_record_paths)
         self.assertEqual(auth.CANDIDATE_ID, GEN.candidate_id)
+        self.assertEqual(auth.LINEAGE_ID, GEN.lineage_id)
         self.assertNotIn(GEN, lc.HISTORICAL_GENERATIONS)
         # Exactly one generation is current.
         self.assertEqual(
@@ -584,14 +601,33 @@ class GenerationContractTests(unittest.TestCase):
         )
         # Its predecessor chain is read from the generation itself.
         predecessor = lc.GENERATIONS_BY_ID[GEN.predecessor_generation_id]
-        self.assertIs(predecessor, AUTH_MECHANISM_R2_GEN)
+        self.assertIs(predecessor, R8_GEN)
         self.assertEqual(GEN.predecessor_lineage_id, predecessor.lineage_id)
         self.assertEqual(
             GEN.predecessor_accepted_lifecycle_record_path,
             predecessor.accepted_lifecycle_record_path,
         )
-        # Its own accepted-lifecycle slot does not exist: it is a candidate.
-        self.assertFalse((ROOT / GEN.accepted_lifecycle_record_path).exists())
+        # Phase-aware: until G1 is accepted its own slot does not exist; the
+        # R8 slot it supersedes stays published.
+        if not (ROOT / GEN.accepted_lifecycle_record_path).exists():
+            self.assertFalse(lc.is_frozen(lc.resolve_u06_lifecycle(ROOT)))
+        self.assertTrue((ROOT / R8_GEN.accepted_lifecycle_record_path).is_file())
+
+    def test_r8_candidate_is_superseded_not_rejected(self) -> None:
+        """HISTORICAL: R8 was accepted and re-frozen; it is superseded by G1."""
+
+        r8 = R8_GEN.candidate_id
+        self.assertIn(r8, GEN.superseded_candidate_ids)
+        self.assertIn(r8, auth.SUPERSEDED_CANDIDATE_IDS_THIS_MECHANISM)
+        self.assertNotIn(r8, auth.REJECTED_CANDIDATE_IDS)
+        self.assertIn(R8_GEN.lineage_id, auth.SUPERSEDED_LINEAGE_IDS_THIS_MECHANISM)
+        for path in (
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_CHECKPOINT_PATH,
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_MANIFEST_PATH,
+            lc.FULL81_PREFLIGHT_AUTH_GUARD_R1_CANDIDATE_R8_CHANGE_LEDGER_PATH,
+        ):
+            self.assertIn(path, GEN.candidate_artifact_paths)
+            self.assertNotEqual(path, GEN.candidate_manifest_path)
 
     def test_u06_r3_is_an_immutable_historical_predecessor(self) -> None:
         """HISTORICAL: U-06 R3 keeps its accepted identity and stays historical.
@@ -626,6 +662,7 @@ class GenerationContractTests(unittest.TestCase):
         self.assertEqual(
             [g.generation_id for g in chain],
             [
+                "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
                 "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
                 "MAIN_FULL81_AUTHORIZATION_MECHANISM_R2",
                 "U06_V7_4_PRODUCTION_AUTHORITY_R3",
@@ -1016,6 +1053,9 @@ class CrossGenerationNegativeControlTests(unittest.TestCase):
         )
 
     def test_cross_generation_role_mixing_is_rejected(self) -> None:
+        # G1, structural layer: a predecessor generation's artifact offered at
+        # its own path is refused because G1 roles are lawful only at their
+        # predeclared paths.
         record = self.fixture.lawful_lifecycle_record()
         record["roles"]["independent_audit_pass"] = {
             "path": PRED.accepted_lifecycle_record_path,
@@ -1030,14 +1070,36 @@ class CrossGenerationNegativeControlTests(unittest.TestCase):
                 record_relative=self.fixture.record_relative,
                 generation=GEN,
             )
-        self.assertIn(
-            caught.exception.status,
-            {
-                "U06_ROLE_ARTIFACT_TYPE_MISMATCH",
-                "U06_CROSS_GENERATION_ROLE_REJECTED",
-                "U06_ROLE_SCHEMA_MISMATCH",
-            },
-        )
+        self.assertEqual(caught.exception.status, "U06_ROLE_TARGET_MISMATCH")
+
+        # Content layer: the SAME predecessor bytes placed AT the predeclared
+        # path still never fill a G1 role - the cross-generation guard refuses
+        # them on type / schema, which is what this control has always proved.
+        target = self.fixture.root / self.fixture.roles["independent_audit_pass"]["path"]
+        original = target.read_bytes()
+        try:
+            target.write_bytes(
+                (self.fixture.root / PRED.accepted_lifecycle_record_path).read_bytes()
+            )
+            record = self.fixture.lawful_lifecycle_record()
+            record["roles"]["independent_audit_pass"]["sha256"] = lc.sha256_file(target)
+            with self.assertRaises(lc.U06LifecycleError) as caught:
+                lc.validate_accepted_lifecycle_payload(
+                    self.fixture.root,
+                    record,
+                    record_relative=self.fixture.record_relative,
+                    generation=GEN,
+                )
+            self.assertIn(
+                caught.exception.status,
+                {
+                    "U06_ROLE_ARTIFACT_TYPE_MISMATCH",
+                    "U06_CROSS_GENERATION_ROLE_REJECTED",
+                    "U06_ROLE_SCHEMA_MISMATCH",
+                },
+            )
+        finally:
+            target.write_bytes(original)
 
     def test_predecessor_digest_in_an_r2_role_is_rejected(self) -> None:
         payload = self._role_record("independent_audit_pass")
@@ -1157,62 +1219,67 @@ class CandidateManifestExternalBindingTests(unittest.TestCase):
         same checkout WITHOUT that evidence fails closed (next control).
         """
 
-        report = lc.validate_candidate_manifest_identity_contract(
+        # G1: the current generation's own content contract, dispatched by the
+        # generation (never V4), binds every identity in GATE mode.
+        report = lc.validate_candidate_manifest_content_contract(
             self.fixture.root,
             GEN.candidate_manifest_path,
             generation=GEN,
             mode=lc.CANDIDATE_MANIFEST_MODE_GATE,
         )
+        self.assertEqual(report["contract"], lc.G1_CANDIDATE_MANIFEST_CONTRACT)
         self.assertEqual(report["unaccounted_identity_count"], 0)
         self.assertEqual(report["structural_identity_count"], 0)
-        self.assertEqual(report["structural_pointers"], [])
         self.assertEqual(
             report["collected_identity_count"], report["verified_identity_count"]
         )
         self.assertEqual(
             report["collected_identity_count"], report["role_bound_identity_count"]
         )
-        self.assertFalse(report["historical_pins_proved_against_preserved_bytes"])
         self.assertEqual(report["change_ledger"]["structural_identity_count"], 0)
         self.assertFalse(
             report["computed_binding_facts"]["manifest_records_own_sha256"]
         )
-        self.assertTrue(report["external_historical_authority"]["authenticated"])
+        self.assertFalse(
+            report["computed_binding_facts"]["historical_identity_used_as_live_binding"]
+        )
+        self.assertEqual(
+            report["validation_identity_authority"], "PUBLISHED_WITH_CANDIDATE_MANIFEST"
+        )
 
     def test_nc10_neither_mode_skips_absent_historical_provenance(
         self,
     ) -> None:
-        """Without the external historical evidence BOTH modes fail closed.
+        """HISTORICAL control: without its external evidence, V4 fails closed.
 
         R7-AUD-01: under V3 only CANDIDATE_PACKAGE failed here; GATE passed on
         the candidate's own table.  Under V4 there is no candidate-local
-        fallback in either mode.
+        fallback in either mode.  G1: V4 is R8's contract, so it is driven
+        against the R8 generation explicitly, in a reconstruction that carries
+        no ignored R1-R7 evidence; and the G1 lifecycle, which does not
+        consume that evidence, resolves valid in the very same checkout.
         """
 
-        fixture = _Fixture(external_evidence=False)
-        try:
-            for package in lc.CANDIDATE_PRESERVATION_PACKAGES.values():
-                self.assertFalse((fixture.root / package["directory"]).exists())
-            for mode in lc.CANDIDATE_MANIFEST_MODES:
-                with self.subTest(mode=mode):
-                    with self.assertRaises(lc.U06LifecycleError) as caught:
-                        lc.validate_candidate_manifest_identity_contract(
-                            fixture.root,
-                            GEN.candidate_manifest_path,
-                            generation=GEN,
-                            mode=mode,
-                        )
-                    self.assertEqual(
-                        caught.exception.status,
-                        lc.EXTERNAL_HISTORICAL_AUTHORITY_UNAVAILABLE,
+        fixture = self.fixture
+        for package in lc.CANDIDATE_PRESERVATION_PACKAGES.values():
+            self.assertFalse((fixture.root / package["directory"]).exists())
+        for mode in lc.CANDIDATE_MANIFEST_MODES:
+            with self.subTest(mode=mode):
+                with self.assertRaises(lc.U06LifecycleError) as caught:
+                    lc.validate_candidate_manifest_identity_contract(
+                        fixture.root,
+                        R8_GEN.candidate_manifest_path,
+                        generation=R8_GEN,
+                        mode=mode,
                     )
-            # ... and so the accepted lifecycle cannot resolve valid there.
-            self.assertNotEqual(
-                lc.resolve_u06_lifecycle(fixture.root)["accepted_lifecycle_overlay"],
-                "PRESENT_VALID",
-            )
-        finally:
-            fixture.dispose()
+                self.assertEqual(
+                    caught.exception.status,
+                    lc.EXTERNAL_HISTORICAL_AUTHORITY_UNAVAILABLE,
+                )
+        self.assertEqual(
+            lc.resolve_u06_lifecycle(fixture.root)["accepted_lifecycle_overlay"],
+            "PRESENT_VALID",
+        )
 
     def test_nc07_every_later_role_must_carry_the_external_manifest_binding(
         self,
@@ -1308,6 +1375,8 @@ class CandidateManifestExternalBindingTests(unittest.TestCase):
             )
         self.assertEqual(caught.exception.status, "U06_ROLE_TARGET_MISMATCH")
         r4 = json.loads((ROOT / R4_MANIFEST_PATH).read_text(encoding="utf-8"))
+        # G1: an R4 (or R8) manifest belongs to ANOTHER generation, so it is
+        # refused as the wrong artifact TYPE before its candidate id is read.
         with self.assertRaises(lc.U06LifecycleError) as caught:
             lc.validate_role_envelope(
                 self.fixture.root,
@@ -1317,9 +1386,31 @@ class CandidateManifestExternalBindingTests(unittest.TestCase):
                 live_digest=self.fixture.live_digest,
                 generation=GEN,
             )
-        self.assertEqual(
-            caught.exception.status, "U06_SUPERSEDED_CANDIDATE_REJECTED"
-        )
+        self.assertEqual(caught.exception.status, "U06_ROLE_ARTIFACT_TYPE_MISMATCH")
+        # And re-typed into the G1 namespace, a superseded candidate id is
+        # still never revived.
+        contract = GEN.role_contracts["implementation_candidate"]
+        for superseded in (r4["candidate_id"], R8_GEN.candidate_id):
+            with self.subTest(target=superseded):
+                retyped = dict(
+                    r4,
+                    artifact_type=contract.artifact_type,
+                    schema_version=contract.schema_version,
+                    lineage_id=GEN.lineage_id,
+                    target_candidate_id=superseded,
+                )
+                with self.assertRaises(lc.U06LifecycleError) as caught:
+                    lc.validate_role_envelope(
+                        self.fixture.root,
+                        "implementation_candidate",
+                        GEN.candidate_manifest_path,
+                        retyped,
+                        live_digest=self.fixture.live_digest,
+                        generation=GEN,
+                    )
+                self.assertEqual(
+                    caught.exception.status, "U06_SUPERSEDED_CANDIDATE_REJECTED"
+                )
 
 
 class CandidateManifestPostBindingMutationTests(unittest.TestCase):
@@ -1348,27 +1439,35 @@ class CandidateManifestPostBindingMutationTests(unittest.TestCase):
         fixture = _Fixture()
         try:
             path = fixture.root / GEN.candidate_manifest_path
-            path.write_bytes((ROOT / R4_MANIFEST_PATH).read_bytes())
-            resolved = fixture.resolve_lifecycle()
-            self.assertEqual(resolved["accepted_lifecycle_overlay"], "PRESENT_INVALID")
-            self.assertEqual(resolved["rejected_status"], "U06_ROLE_TARGET_MISMATCH")
-            self.assertFalse(lc.is_frozen(resolved))
-            # Even a lifecycle record re-declared to those exact bytes cannot
-            # accept them: the R4 identity is a superseded candidate.
-            record = fixture.lawful_lifecycle_record()
-            record["roles"]["implementation_candidate"]["sha256"] = lc.sha256_file(
-                path
-            )
-            with self.assertRaises(lc.U06LifecycleError) as caught:
-                lc.validate_accepted_lifecycle_payload(
-                    fixture.root,
-                    record,
-                    record_relative=fixture.record_relative,
-                    generation=GEN,
-                )
-            self.assertEqual(
-                caught.exception.status, "U06_SUPERSEDED_CANDIDATE_REJECTED"
-            )
+            # G1: the R4 bytes AND the accepted-and-superseded R8 bytes.
+            for label, source in (
+                ("r4", R4_MANIFEST_PATH),
+                ("r8", R8_GEN.candidate_manifest_path),
+            ):
+                with self.subTest(predecessor=label):
+                    path.write_bytes((ROOT / source).read_bytes())
+                    resolved = fixture.resolve_lifecycle()
+                    self.assertEqual(resolved["accepted_lifecycle_overlay"], "PRESENT_INVALID")
+                    self.assertEqual(resolved["rejected_status"], "U06_ROLE_TARGET_MISMATCH")
+                    self.assertFalse(lc.is_frozen(resolved))
+                    # Even a lifecycle record re-declared to those exact bytes
+                    # cannot accept them: they are another generation's
+                    # artifact, refused on TYPE before their superseded
+                    # candidate id is reached (see nc09 above).
+                    record = fixture.lawful_lifecycle_record()
+                    record["roles"]["implementation_candidate"]["sha256"] = (
+                        lc.sha256_file(path)
+                    )
+                    with self.assertRaises(lc.U06LifecycleError) as caught:
+                        lc.validate_accepted_lifecycle_payload(
+                            fixture.root,
+                            record,
+                            record_relative=fixture.record_relative,
+                            generation=GEN,
+                        )
+                    self.assertEqual(
+                        caught.exception.status, "U06_ROLE_ARTIFACT_TYPE_MISMATCH"
+                    )
         finally:
             fixture.dispose()
 
@@ -1981,8 +2080,21 @@ class PositiveControlTests(unittest.TestCase):
             )
             self.assertTrue(auth.is_authorized_for_preflight(f.root, resolved))
 
-            with self.assertRaises(auth.Full81AuthorizationError) as caught:
-                auth.require_full81_execution_authorization(resolved)
+            # G1: the execution guard decides on the repository whose scope
+            # authorization this is.  The fixture holds no execution
+            # authorization in any phase of the real repository (checked, not
+            # assumed), so the lawful scope authorization reaches no further.
+            from unittest.mock import patch
+
+            self.assertEqual(
+                auth.resolve_full81_execution_authorization(f.root)[
+                    "execution_authorization_overlay"
+                ],
+                auth.ABSENT,
+            )
+            with patch.object(auth, "REPOSITORY_ROOT", f.root):
+                with self.assertRaises(auth.Full81AuthorizationError) as caught:
+                    auth.require_full81_execution_authorization(resolved)
             self.assertEqual(
                 caught.exception.status, "FULL81_EXECUTION_NOT_AUTHORIZED"
             )
@@ -1990,15 +2102,26 @@ class PositiveControlTests(unittest.TestCase):
             f.dispose()
 
     def test_execution_interlock_rejects_under_every_state(self) -> None:
+        from unittest.mock import patch
+
         f = _Fixture()
         try:
+            # G1: decided on the fixture's own state, which holds no execution
+            # authorization in any phase of the real repository.
+            self.assertEqual(
+                auth.resolve_full81_execution_authorization(f.root)[
+                    "execution_authorization_overlay"
+                ],
+                auth.ABSENT,
+            )
             for label, candidate in (
                 ("absent", None),
                 ("lawfully_authorized", f.resolve_authorization()),
             ):
                 with self.subTest(authorization=label):
-                    with self.assertRaises(auth.Full81AuthorizationError) as caught:
-                        auth.require_full81_execution_authorization(candidate)
+                    with patch.object(auth, "REPOSITORY_ROOT", f.root):
+                        with self.assertRaises(auth.Full81AuthorizationError) as caught:
+                            auth.require_full81_execution_authorization(candidate)
                     self.assertEqual(
                         caught.exception.status, "FULL81_EXECUTION_NOT_AUTHORIZED"
                     )
@@ -2011,22 +2134,76 @@ class PositiveControlTests(unittest.TestCase):
 # ---------------------------------------------------------------------------
 
 
+def _no_native_solver_entry():
+    """Refuse and record every native solver entry and native-backend creation.
+
+    A deployment-gate decision is validation only: even an AUTHORIZED decision
+    must construct no model, call no solver and create no production backend.
+    """
+
+    import contextlib
+    from unittest.mock import patch
+
+    @contextlib.contextmanager
+    def guard():
+        hits: list[str] = []
+
+        def refuse(name: str):
+            def _refuse(*args, **kwargs):
+                hits.append(name)
+                raise AssertionError(f"a gate decision reached {name}")
+
+            return _refuse
+
+        with contextlib.ExitStack() as guards:
+            guards.enter_context(
+                patch.object(
+                    stack, "NativeProductionBackend",
+                    side_effect=refuse("NativeProductionBackend"),
+                )
+            )
+            try:
+                import gurobipy as gp
+            except Exception:  # pragma: no cover - gurobipy absent is already safe
+                gp = None
+            if gp is not None:
+                for attribute in ("__init__", "optimize", "optimizeAsync", "optimizeBatch", "tune"):
+                    if hasattr(gp.Model, attribute):
+                        guards.enter_context(
+                            patch.object(gp.Model, attribute, refuse(f"gurobipy.Model.{attribute}"))
+                        )
+            yield hits
+
+    return guard()
+
+
 class RealRepositoryRemainsUnauthorizedTests(unittest.TestCase):
     """Nothing a temporary fixture simulates may move the real gate."""
 
     def test_no_real_lifecycle_or_authorization_artifact_exists(self) -> None:
-        for relative in (
-            GEN.accepted_lifecycle_record_path,
-            auth.AUTHORIZATION_RECORD_RELATIVE_PATH.as_posix(),
+        # G1: phase-aware.  Every governance artifact beyond the reached phase
+        # is absent (with its directory), and nothing is present out of order.
+        phase = lc.current_generation_phase(ROOT)
+        self.assertEqual(phase["out_of_order_present"], [])
+        for key in (
+            "accepted_lifecycle_record",
+            "main_full81_scope_authorization",
+            "main_full81_execution_authorization",
         ):
+            relative = phase["paths"][key]
             with self.subTest(path=relative):
-                self.assertFalse((ROOT / relative).exists())
-                self.assertFalse((ROOT / relative).parent.exists())
+                if not phase["presence"][key]:
+                    self.assertFalse((ROOT / relative).exists())
+                    self.assertFalse((ROOT / relative).parent.exists())
 
     def test_real_lifecycle_is_absent_and_not_frozen(self) -> None:
         live = lc.resolve_u06_lifecycle(ROOT)
         self.assertEqual(live["generation_id"], GEN.generation_id)
         self.assertTrue(live["is_current_generation"])
+        if (ROOT / GEN.accepted_lifecycle_record_path).exists():
+            self.assertEqual(live["accepted_lifecycle_overlay"], "PRESENT_VALID")
+            self.assertTrue(lc.is_frozen(live))
+            return
         self.assertEqual(live["accepted_lifecycle_overlay"], "ABSENT")
         self.assertEqual(
             live["production_authority_freeze_status"], "NOT_FROZEN"
@@ -2036,22 +2213,40 @@ class RealRepositoryRemainsUnauthorizedTests(unittest.TestCase):
     def test_real_full81_is_not_authorized(self) -> None:
         live = lc.resolve_u06_lifecycle(ROOT)
         resolved = auth.resolve_full81_authorization(ROOT, live)
-        self.assertEqual(resolved["full81_authorization_status"], "NOT_GRANTED")
-        self.assertFalse(auth.is_authorized_for_preflight(ROOT, resolved))
-        with self.assertRaises(bundle.Full81AuthorizationNotGranted) as caught:
-            bundle.require_full81_scope_authorization(
-                "full81", root=ROOT, lifecycle=live
+        if (ROOT / auth.AUTHORIZATION_RECORD_RELATIVE_PATH).exists():
+            self.assertEqual(
+                resolved["full81_authorization_status"],
+                "AUTHORIZED_FOR_NO_SOLVE_PREFLIGHT",
             )
-        self.assertEqual(
-            caught.exception.status, "FULL81_AUTHORIZATION_NOT_GRANTED"
-        )
+        else:
+            self.assertEqual(resolved["full81_authorization_status"], "NOT_GRANTED")
+            self.assertFalse(auth.is_authorized_for_preflight(ROOT, resolved))
+            with self.assertRaises(bundle.Full81AuthorizationNotGranted) as caught:
+                bundle.require_full81_scope_authorization(
+                    "full81", root=ROOT, lifecycle=live
+                )
+            self.assertEqual(
+                caught.exception.status, "FULL81_AUTHORIZATION_NOT_GRANTED"
+            )
+        # Execution is a separate act in every phase but the last.
+        if not (ROOT / auth.EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH).exists():
+            with self.assertRaises(auth.Full81AuthorizationError) as caught:
+                auth.require_full81_execution_authorization(resolved)
+            self.assertEqual(caught.exception.status, "FULL81_EXECUTION_NOT_AUTHORIZED")
 
     def test_real_gate_rejects_full81_and_a2(self) -> None:
         snapshot = stack.inspect_deployment_snapshot(ROOT)
-        for scope, expected in (
-            ("full81", "FULL81_AUTHORIZATION_NOT_GRANTED"),
-            ("a2_variable_floor", "A2_HARD_BLOCKED"),
-        ):
+        # G1: phase-aware, from the source contract (current_generation_phase
+        # over G1_GOVERNANCE_STAGES); nothing may be present out of order.
+        phase = lc.current_generation_phase(ROOT)
+        self.assertEqual(phase["out_of_order_present"], [], phase["phase"])
+        cases = [("a2_variable_floor", {"A2_HARD_BLOCKED"})]
+        if not phase["presence"]["main_full81_execution_authorization"]:
+            full81 = {"FULL81_AUTHORIZATION_NOT_GRANTED"}
+            if phase["presence"]["main_full81_scope_authorization"]:
+                full81.add("FULL81_EXECUTION_NOT_AUTHORIZED")
+            cases.append(("full81", full81))
+        for scope, expected in cases:
             with self.subTest(scope=scope):
                 with self.assertRaises(stack.ProductionAuthorityError) as caught:
                     stack.validate_deployment_snapshot(
@@ -2060,7 +2255,34 @@ class RealRepositoryRemainsUnauthorizedTests(unittest.TestCase):
                         selected_scope=scope,
                         root=ROOT,
                     )
-                self.assertEqual(caught.exception.status, expected)
+                self.assertIn(caught.exception.status, expected)
+        if not phase["presence"]["main_full81_execution_authorization"]:
+            return
+        # Execution-authorized phase: the gate admits Full81 only because the
+        # real G1 chain is VALID end to end (frozen lifecycle, valid scope
+        # authorization, valid execution authorization), and the decision makes
+        # no native solver entry.  Admission is not execution.
+        lifecycle = snapshot.u06_accepted_lifecycle
+        self.assertTrue(lc.is_frozen(lifecycle))
+        scope = auth.resolve_full81_authorization(ROOT, lifecycle)
+        execution = auth.resolve_full81_execution_authorization(ROOT, lifecycle, scope)
+        self.assertEqual(scope["full81_authorization_status"], "AUTHORIZED_FOR_NO_SOLVE_PREFLIGHT")
+        self.assertEqual(
+            execution["execution_authorization_overlay"], "PRESENT_VALID",
+            execution.get("rejected_status"),
+        )
+        self.assertEqual(
+            execution["execution_authorization_status"], auth.AUTHORIZED_FOR_FULL81_EXECUTION
+        )
+        with _no_native_solver_entry() as native_hits:
+            decision = stack.validate_deployment_snapshot(
+                snapshot,
+                execute_production=True,
+                selected_scope="full81",
+                root=ROOT,
+            )
+        self.assertEqual(native_hits, [])
+        self.assertEqual(decision["status"], "PRODUCTION_AUTHORITY_FROZEN")
 
     def test_candidate_r1_provenance_is_unmodified(self) -> None:
         for relative, expected in (

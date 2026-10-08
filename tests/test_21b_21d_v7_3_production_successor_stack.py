@@ -13,7 +13,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from contextlib import redirect_stdout
+from contextlib import ExitStack, contextmanager, redirect_stdout
 from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
@@ -27,6 +27,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from src import main_full81_authorization_v7_4 as auth  # noqa: E402
+from src import production_authority_bundle_v7_4 as bundle  # noqa: E402
 from src import production_authority_lifecycle_u06 as u06  # noqa: E402
 from src import production_input_authority_v7_3 as authority  # noqa: E402
 from src import production_successor_stack_v7_3 as stack  # noqa: E402
@@ -1404,48 +1406,84 @@ class ProductionExecutionInterlockTests(unittest.TestCase):
                 self.assertEqual(counters["economic_evaluations"], 0)
                 native_backend.assert_not_called()
 
-    def test_a2_unscoped_layer_a_and_full81_clis_refuse(self) -> None:
-        """N-04 negative control: no implicit case scope for 21c or 21d.
+    def assert_zero_solve(self, payload: dict) -> None:
+        counters = payload.get("execution_counters") or {}
+        for counter in ("model_constructions", "optimization_calls", "economic_evaluations"):
+            if counter in counters:
+                self.assertEqual(counters[counter], 0)
 
-        Added with the correction above. Without an explicit ``--case-set``
-        these entrypoints must refuse, construct nothing and solve nothing.
+    # Current Full81 Production Generation G1 correction.  The former combined
+    # control asserted "no implicit case scope for 21c or 21d".  That was
+    # over-broad for 21d: its NO-SOLVE preflight intentionally defaults to the
+    # Full81 scope (``args.case_set or "full81"``, documented in its CLI help and
+    # asserted by tests/test_21i T1), and that default is protected by the
+    # Full81 scope-authorization guard.  The old expectation (NOT_AUTHORIZED)
+    # held only while no scope authorization existed.  The contracts are now
+    # separate and each is asserted on its own:
+    #   A. 21c: no implicit case scope at all            (test_a2 below)
+    #   B. 21d no-solve default, live phase: guarded     (test_a3 below)
+    #   C. 21d no-solve default, scope-authorized: full81 PASS, no execution
+    #   D. 21d execution: never a default case scope     (C and D: the
+    #      Full81DefaultPreflightScopeContractTests class, plus test_j)
+
+    def test_a2_unscoped_layer_a_cli_refuses_on_case_scope(self) -> None:
+        """A. N-04 / N-05 negative control: 21c has no implicit case scope.
+
+        Without an explicit ``--case-set`` the Layer-A entrypoint must refuse on
+        case scope, construct nothing and solve nothing.
         """
 
-        # 21c refuses on case scope. 21d refuses EARLIER, on Full81
-        # authorization, because N-04 requires authorization to be checked
-        # before any plan is constructed. Both refusals are correct and both
-        # are asserted; collapsing them into one expected status would hide
-        # which guard actually fired.
-        expected = {
-            "21c_preflight_v7_3_layer_a_successor.py": (
-                "CASE_SCOPE_REQUIRED",
-                "explicit fixed production case scope",
-            ),
-            "21d_preflight_v7_3_final81_successor.py": (
-                "NOT_AUTHORIZED",
-                "",
-            ),
-        }
-        for name, module in self.modules.items():
-            if name not in expected:
-                continue
-            status, fragment = expected[name]
-            with self.subTest(cli=name):
-                with patch.object(stack, "NativeProductionBackend") as native_backend:
-                    payload, code = run_cli_in_process(module, ["--compact"])
-                self.assertNotEqual(code, 0)
-                self.assertEqual(payload["status"], status)
-                if fragment:
-                    self.assertIn(fragment, payload["error"])
-                counters = payload.get("execution_counters") or {}
-                for counter in (
-                    "model_constructions",
-                    "optimization_calls",
-                    "economic_evaluations",
-                ):
-                    if counter in counters:
-                        self.assertEqual(counters[counter], 0)
-                native_backend.assert_not_called()
+        module = self.modules["21c_preflight_v7_3_layer_a_successor.py"]
+        with patch.object(stack, "NativeProductionBackend") as native_backend:
+            payload, code = run_cli_in_process(module, ["--compact"])
+        self.assertNotEqual(code, 0)
+        self.assertEqual(payload["status"], "CASE_SCOPE_REQUIRED")
+        self.assertIn("explicit fixed production case scope", payload["error"])
+        self.assert_zero_solve(payload)
+        native_backend.assert_not_called()
+
+    def test_a3_full81_default_preflight_scope_is_guarded_in_the_live_phase(self) -> None:
+        """B. 21d's no-solve default scope is Full81, and it is GUARDED.
+
+        The default is chosen by the runner, not by its parser, and in the live
+        repository it can only proceed through the Full81 scope-authorization
+        guard.  While no lawful scope authorization exists the runner refuses
+        EARLY, on authorization, before any plan is built (N-04).  Once one
+        exists the guard grants the no-solve preflight only; that phase is
+        proved in a disposable repository (Full81DefaultPreflightScopeContract
+        Tests), never by running a real preflight from a unit test.
+        """
+
+        module = self.modules["21d_preflight_v7_3_final81_successor.py"]
+        self.assertIsNone(module.parse_args([]).case_set)
+        # G1: phase-aware, from the source contract (current_generation_phase
+        # over G1_GOVERNANCE_STAGES); nothing may be present out of order.
+        phase = u06.current_generation_phase(ROOT)
+        self.assertEqual(phase["out_of_order_present"], [], phase["phase"])
+        if phase["presence"]["main_full81_scope_authorization"]:
+            # Scope-authorized phase: the guard grants exactly the default, and
+            # only for a VALID G1 scope authorization over the frozen G1
+            # lifecycle it is resolved against - presence alone is never enough.
+            lifecycle = u06.resolve_u06_lifecycle(ROOT)
+            self.assertTrue(u06.is_frozen(lifecycle))
+            scope = auth.resolve_full81_authorization(ROOT, lifecycle)
+            self.assertEqual(scope["authorization_overlay"], "PRESENT_VALID", scope.get("rejected_status"))
+            self.assertEqual(
+                scope["full81_authorization_status"], auth.AUTHORIZED_FOR_NO_SOLVE_PREFLIGHT
+            )
+            bundle.require_full81_scope_authorization("full81", root=ROOT, lifecycle=lifecycle)
+            # The same record resolved against no lifecycle grants nothing.
+            with self.assertRaises(bundle.Full81AuthorizationNotGranted):
+                bundle.require_full81_scope_authorization("full81", root=ROOT)
+            return
+        with patch.object(stack, "NativeProductionBackend") as native_backend:
+            payload, code = run_cli_in_process(module, ["--compact"])
+        self.assertNotEqual(code, 0)
+        self.assertEqual(payload["status"], "NOT_AUTHORIZED")
+        self.assertFalse(payload["main_full81_no_solve_preflight_authorized"])
+        self.assertFalse(payload["production_execution_attempted"])
+        self.assert_zero_solve(payload)
+        native_backend.assert_not_called()
 
     def test_b_execute_production_alone_requires_confirmation(self) -> None:
         for name, module in self.modules.items():
@@ -1571,6 +1609,186 @@ class ProductionExecutionInterlockTests(unittest.TestCase):
                     {"CASE_SCOPE_REQUIRED", "CASE_SCOPE_REJECTED"},
                 )
                 native_backend.assert_not_called()
+
+
+class Full81DefaultPreflightScopeContractTests(unittest.TestCase):
+    """C / D: the Full81 default is a NO-SOLVE preflight convenience only.
+
+    Runs the REAL 21d ``main()`` against a DISPOSABLE repository
+    (``tests/test_21l``) that carries a lawfully accepted, frozen G1 lifecycle
+    and a valid G1 Main Full81 scope authorization, and NO execution
+    authorization.  The runner's ``ROOT`` is pointed at that repository, so the
+    real lifecycle and authorization resolvers and the real scope guard decide
+    on its state.  Nothing is written to the real repository, the module-level
+    native-solver tripwire stays active, and the production backend is mocked.
+
+    The zero-solve plan builder is case-set independent and needs the real
+    v7.3 freeze tags and data, so C builds it from the real repository exactly
+    as ``test_i`` does.  That builder only reports authorization state; it
+    never grants or requires any, so the guard decision stays the fixture's.
+    """
+
+    RUNNER = ROOT / "scripts" / "21d_preflight_v7_3_final81_successor.py"
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        from tests.test_21l_full81_production_generation_g1 import G1Fixture
+
+        cls.fixture = G1Fixture(stage="scope")
+        cls.lifecycle = u06.resolve_u06_lifecycle(cls.fixture.root)
+        cls.scope = auth.resolve_full81_authorization(cls.fixture.root, cls.lifecycle)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.fixture.dispose()
+
+    def runner(self):
+        return load_script(self.RUNNER, "full81_default_scope_cli")
+
+    @staticmethod
+    @contextmanager
+    def recorded_native_solver_entries(hits: list):
+        """Count native solver entries explicitly, on top of the module tripwire.
+
+        The runner's broad ``except`` would turn a tripwire into a FAIL payload,
+        so each entry is also recorded here and the count is asserted directly.
+        """
+
+        try:
+            import gurobipy as gp
+        except Exception:  # pragma: no cover - gurobipy absent is already safe
+            yield
+            return
+
+        def _record(name):
+            def _hit(*args, **kwargs):
+                hits.append(name)
+                raise NativeSolverTripwire(f"Test reached native solver entry point: {name}")
+
+            return _hit
+
+        with ExitStack() as entries:
+            for attribute in ("__init__", "optimize", "optimizeAsync", "optimizeBatch", "tune"):
+                if hasattr(gp.Model, attribute):
+                    entries.enter_context(
+                        patch.object(gp.Model, attribute, _record(f"gurobipy.Model.{attribute}"))
+                    )
+            yield
+
+    def test_c0_the_synthetic_state_is_scope_authorized_and_not_execution_authorized(
+        self,
+    ) -> None:
+        self.assertTrue(u06.is_frozen(self.lifecycle))
+        self.assertEqual(
+            self.scope["full81_authorization_status"], auth.AUTHORIZED_FOR_NO_SOLVE_PREFLIGHT
+        )
+        execution = auth.resolve_full81_execution_authorization(
+            self.fixture.root, self.lifecycle, self.scope
+        )
+        self.assertEqual(execution["execution_authorization_status"], auth.NOT_GRANTED)
+        # The synthetic state is the fixture's alone: its scope commit is never
+        # part of the real repository.
+        self.assertNotEqual(
+            subprocess.run(
+                ["git", "cat-file", "-e", self.fixture.commits["scope"] + "^{commit}"],
+                cwd=ROOT,
+                capture_output=True,
+            ).returncode,
+            0,
+        )
+        # G1: phase-aware, from the source contract.  The real execution
+        # authorization is decided by the real lawful phase and the real
+        # resolvers, never by this fixture: before the real execution slot is
+        # lawfully reached it is absent and the real guard refuses; once
+        # reached it must be a VALID authorization over a frozen G1 lifecycle
+        # and a valid G1 scope authorization - presence alone is never enough.
+        phase = u06.current_generation_phase(ROOT)
+        self.assertEqual(phase["out_of_order_present"], [], phase["phase"])
+        self.assertNotEqual(phase["phase"], u06.G1_PHASE_OUT_OF_ORDER)
+        real_lifecycle = u06.resolve_u06_lifecycle(ROOT)
+        real_scope = auth.resolve_full81_authorization(ROOT, real_lifecycle)
+        real = auth.resolve_full81_execution_authorization(ROOT, real_lifecycle, real_scope)
+        if not phase["presence"]["main_full81_execution_authorization"]:
+            self.assertFalse((ROOT / auth.EXECUTION_AUTHORIZATION_RECORD_RELATIVE_PATH).exists())
+            self.assertEqual(real["execution_authorization_overlay"], auth.ABSENT)
+            self.assertEqual(real["execution_authorization_status"], auth.NOT_GRANTED)
+            with self.assertRaises(auth.Full81AuthorizationError) as caught:
+                auth.require_full81_execution_authorization(real_scope)
+            self.assertEqual(caught.exception.status, "FULL81_EXECUTION_NOT_AUTHORIZED")
+        else:
+            self.assertTrue(u06.is_frozen(real_lifecycle))
+            self.assertEqual(
+                real_scope["full81_authorization_status"], auth.AUTHORIZED_FOR_NO_SOLVE_PREFLIGHT
+            )
+            self.assertEqual(
+                real["execution_authorization_overlay"], "PRESENT_VALID", real.get("rejected_status")
+            )
+            self.assertEqual(
+                real["execution_authorization_status"], auth.AUTHORIZED_FOR_FULL81_EXECUTION
+            )
+
+    def test_c_scope_authorized_no_solve_preflight_defaults_to_full81(self) -> None:
+        """C. No ``--case-set``: the guarded default is Full81, and it PASSES."""
+
+        module = self.runner()
+        plan_roots: list = []
+        native_hits: list = []
+
+        def zero_solve_plan(root, **kwargs):
+            plan_roots.append(Path(root))
+            return stack.run_successor_stack(ROOT, **kwargs)
+
+        def execution_tripwire(*args, **kwargs):
+            raise AssertionError("a no-solve preflight reached the execution entry")
+
+        with self.recorded_native_solver_entries(native_hits), patch.object(
+            module, "ROOT", self.fixture.root
+        ), patch.object(module, "run_successor_stack", zero_solve_plan), patch.object(
+            module, "run_layer_a_production", execution_tripwire
+        ), patch.object(stack, "NativeProductionBackend") as native_backend:
+            payload, code = run_cli_in_process(module, ["--compact"])
+        self.assertEqual(native_hits, [])
+        self.assertEqual(code, 0, payload)
+        self.assertEqual(payload["status"], "PASS")
+        self.assertEqual(payload["case_set"], "full81")
+        self.assertEqual(payload["selected_case_count"], 81)
+        self.assertTrue(payload["main_full81_no_solve_preflight_authorized"])
+        counters = payload["execution_counters"]
+        self.assertEqual(counters["model_constructions"], 0)
+        self.assertEqual(counters["optimization_calls"], 0)
+        self.assertEqual(counters["economic_evaluations"], 0)
+        self.assertEqual(plan_roots, [self.fixture.root])
+        native_backend.assert_not_called()
+        # A no-solve preflight PASS under a scope authorization is NOT execution
+        # authority: the execution guard still refuses in that very state.
+        with patch.object(auth, "REPOSITORY_ROOT", self.fixture.root):
+            with self.assertRaises(auth.Full81AuthorizationError) as caught:
+                auth.require_full81_execution_authorization(self.scope)
+        self.assertEqual(caught.exception.status, "FULL81_EXECUTION_NOT_AUTHORIZED")
+
+    def test_d_execution_never_has_a_default_case_scope(self) -> None:
+        """D. Execution without ``--case-set`` is refused, even scope-authorized.
+
+        The default scope belongs to the no-solve preflight only.  The execute
+        path reaches the deployment gate, which refuses on case scope before
+        any model is constructed or any optimization runs.
+        """
+
+        module = self.runner()
+        native_hits: list = []
+        with self.recorded_native_solver_entries(native_hits), patch.object(
+            module, "ROOT", self.fixture.root
+        ), patch.object(stack, "NativeProductionBackend") as native_backend:
+            payload, code = run_cli_in_process(
+                module, ["--execute-production", "--confirm-native-solve", "--compact"]
+            )
+        self.assertEqual(native_hits, [])
+        self.assertEqual(code, 2)
+        self.assertEqual(payload["status"], "CASE_SCOPE_REQUIRED")
+        self.assertFalse(payload["production_execution_attempted"])
+        self.assertEqual(payload["execution_counters"]["model_constructions"], 0)
+        self.assertEqual(payload["execution_counters"]["optimization_calls"], 0)
+        native_backend.assert_not_called()
 
 
 class TestSuiteExecutionSafetyAuditTests(unittest.TestCase):

@@ -275,3 +275,47 @@ docs/checkpoints/u_06_v7_4_production_authority_alignment_candidate_r2_2026-10-0
 results/provenance/main_full81_authorization_mechanism_candidate_r1_2026-10-02/authorization_mechanism_manifest.json text eol=lf
 results/provenance/u_06_v7_4_production_authority_alignment_candidate_2026-10-02/alignment_manifest.json text eol=lf
 results/provenance/u_06_v7_4_production_authority_alignment_candidate_r2_2026-10-02/alignment_manifest.json text eol=lf
+
+# ---------------------------------------------------------------------------
+# 6. Current Full81 Production Generation G1.
+#
+#    Exactly the seventeen raw-byte consumers the derived universe reported
+#    without a rule at the G1 candidate; no rule was removed, broadened or
+#    renormalized, and core.autocrlf is unchanged.
+#
+#    6a. Every G1 governance path, PREDECLARED before the candidate freezes:
+#        the candidate package, the four future role records, the accepted-
+#        lifecycle slot, and the Main Full81 scope- and execution-
+#        authorization slots.  None of the eight future records exists; each
+#        is protected the moment it is authored, so acceptance can never again
+#        create a raw-byte consumer without a rule (the R8 gap closed in 6b).
+# ---------------------------------------------------------------------------
+docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md text eol=lf
+results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json text eol=lf
+results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json text eol=lf
+results/provenance/current_full81_production_generation_g1_independent_audit_r1/independent_audit_pass_record.json text eol=lf
+results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json text eol=lf
+results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_manifest.json text eol=lf
+results/provenance/current_full81_production_generation_g1_re_freeze_r1/production_authority_re_freeze_record.json text eol=lf
+results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json text eol=lf
+results/provenance/main_full81_authorization_g1/main_full81_authorization.json text eol=lf
+results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json text eol=lf
+#        The captured 21d no-solve payload is whatever the console wrote, LF
+#        or CRLF; `-text` preserves its exact raw bytes in either form.
+results/provenance/main_full81_no_solve_preflight_g1/main_full81_21d_no_solve_preflight_evidence.json -text
+# ---------------------------------------------------------------------------
+#    6b. The four R8 role records named by the published R8 accepted-lifecycle
+#        record.  They were authored after R8's policy froze and never received
+#        a rule; they are historical now and are read by path whenever the R8
+#        lifecycle is validated, so their checkout form is fixed here.
+# ---------------------------------------------------------------------------
+results/provenance/main_full81_preflight_authorization_guard_independent_audit_r8/independent_audit_pass_record.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_closure.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_acceptance_r8/acceptance_manifest.json text eol=lf
+results/provenance/main_full81_preflight_authorization_guard_re_freeze_r8/production_authority_re_freeze_record.json text eol=lf
+# ---------------------------------------------------------------------------
+#    6c. The two G1 validation suites without a rule: the G1 suite itself and
+#        the accepted FULLSTACK-01 execution-input authority suite.
+# ---------------------------------------------------------------------------
+tests/test_21l_full81_production_generation_g1.py text eol=lf
+tests/test_fullstack_01_execution_input_authority.py text eol=lf

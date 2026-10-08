@@ -1,0 +1,402 @@
+{
+  "accepted_lifecycle_record_path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json",
+  "artifact_type": "FULL81_PRODUCTION_G1_IMPLEMENTATION_CANDIDATE",
+  "authority_bundle": {
+    "declared_pin_count": 34,
+    "declared_pin_groups": 7,
+    "pins": {
+      "canonical_planning_input": {
+        "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+        "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428"
+      },
+      "framework_v7_4": {
+        "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+        "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273"
+      },
+      "framework_v7_4_acceptance_closure": {
+        "path": "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md",
+        "sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f"
+      },
+      "framework_v7_4_acceptance_manifest": {
+        "path": "results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+        "sha256": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33"
+      },
+      "full81_runner": {
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+        "sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1"
+      },
+      "governance_sequencing_successor_acceptance_closure": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md",
+        "sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851"
+      },
+      "governance_sequencing_successor_acceptance_manifest": {
+        "path": "results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json",
+        "sha256": "4bbd58b8e8bd92c292d44b7b3d8b6a2035c3d41dc894581697f52583a55b6476"
+      },
+      "governance_sequencing_successor_candidate_r2": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_2026-10-01.md",
+        "sha256": "db20ea059c48b99bb5c57801dff5654b4b8e1b94ce51ce4ded6e82eec4ac922e"
+      },
+      "governance_sequencing_successor_original_candidate": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md",
+        "sha256": "f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82"
+      },
+      "main_full81_authorization_mechanism": {
+        "path": "src/main_full81_authorization_v7_4.py",
+        "sha256": "0b4899412bc5cd6d6a4b64a45a243ae8b98d2488ea9ac165f595d2cd7eec7880"
+      },
+      "main_full81_authorization_test": {
+        "path": "tests/test_21h_main_full81_authorization_mechanism.py",
+        "sha256": "5b0be95a279ad092eafe6118556590d0c765ad269df15e2454795f9109744b9a"
+      },
+      "model_core": {
+        "path": "src/annual_design_model_v7_2.py",
+        "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8"
+      },
+      "parameter_registry": {
+        "path": "data/reference/parameter_registry_v7_2.csv",
+        "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1"
+      },
+      "production_input_authority_v7_3": {
+        "path": "src/production_input_authority_v7_3.py",
+        "sha256": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1"
+      },
+      "production_successor_stack": {
+        "path": "src/production_successor_stack_v7_3.py",
+        "sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda"
+      },
+      "provenance_protocol": {
+        "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+        "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696"
+      },
+      "registry_v7_4": {
+        "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+        "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433"
+      },
+      "registry_v7_4_acceptance_closure": {
+        "path": "docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md",
+        "sha256": "4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977"
+      },
+      "registry_v7_4_acceptance_manifest": {
+        "path": "results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+        "sha256": "53074cfe44c0276d6f319497cbe6f5aaf07b255ac0c335f9481174dd968063fe"
+      },
+      "registry_v7_4_independent_audit": {
+        "path": "docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md",
+        "sha256": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce"
+      },
+      "repository_eol_policy": {
+        "path": ".gitattributes",
+        "sha256": "0dc5e0700c4375ad2a3ad8da1d149c5e7806722c983c85904ce1d7e944685ddc"
+      },
+      "step2e1_routing_preflight": {
+        "path": "scripts/21a_preflight_v7_3_production_routing.py",
+        "sha256": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95"
+      },
+      "task_3_preregistration_acceptance_closure": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md",
+        "sha256": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02"
+      },
+      "task_3_preregistration_acceptance_manifest": {
+        "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json",
+        "sha256": "08a1e5b5929b5791e14b2ae887c4b9592dccbd803c7e0981c581f41561aa268d"
+      },
+      "task_3_preregistration_candidate_r2": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md",
+        "sha256": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4"
+      },
+      "task_3_preregistration_machine_record": {
+        "path": "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json",
+        "sha256": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f"
+      },
+      "u06_lifecycle_overlay": {
+        "path": "src/production_authority_lifecycle_u06.py",
+        "sha256": "c65aaedc6ea4f357b4ac463ebe0428d717ed953c5e12dc2f547cc98334bd7c45"
+      },
+      "u06_lifecycle_test": {
+        "path": "tests/test_21f_u06_accepted_lifecycle_gate.py",
+        "sha256": "e21b734db9da2a816e7181c93c5246d452ef58a2b9212d568b5d93c17ddf6c31"
+      },
+      "u06_r3_substitution_attack_test": {
+        "path": "tests/test_21g_u06_r3_substitution_attacks.py",
+        "sha256": "ffb4c5ead017f29e5822ae5f2045f72e9dffcf8e2e5be7080dc174ee898c569b"
+      },
+      "v7_3_evidence": {
+        "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+        "sha256": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d"
+      },
+      "v7_3_lifecycle": {
+        "path": "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md",
+        "sha256": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d"
+      },
+      "v7_3_methodology": {
+        "path": "docs/research_framework_v7_3_2026-09-23.md",
+        "sha256": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a"
+      },
+      "v7_4_alignment_test": {
+        "path": "tests/test_21e_v7_4_production_authority_bundle.py",
+        "sha256": "0ba258c1a63df33c88f7499bbac7b353eb926aa1b7fb79cfd10fb9e4181bb7a6"
+      },
+      "v7_4_alignment_verifier": {
+        "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+        "sha256": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803"
+      }
+    }
+  },
+  "candidate_change_ledger": {
+    "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json",
+    "sha256": "e1b2ecc8fcb44327b4d8e0a38f1fd7ba200bd9fa44b363ceaf89220aadbde080"
+  },
+  "candidate_checkpoint": {
+    "path": "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+    "sha256": "dccbbffccc37dbea2179bcbc6210f1afa76351d9883fc73485f3be83278ce9a9"
+  },
+  "candidate_checkpoint_path": "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+  "candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+  "candidate_manifest_contract": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_MANIFEST_CONTRACT_V1",
+  "candidate_manifest_path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+  "candidate_revision": "R1",
+  "carried_findings": [
+    {
+      "class": "HISTORICAL_ORIGIN_LABEL_AMBIGUITY",
+      "id": "G1-N1",
+      "status": "OPEN_FOR_INDEPENDENT_AUDIT",
+      "summary": "Bundle pin production_successor_stack keeps origin tag U_06_ALIGNMENT_CANDIDATE_R3 while Git shows later stack byte history (02b998b). Descriptive metadata only; no guard reads it. Not edited in G1."
+    },
+    {
+      "class": "PREDECESSOR_FREEZE_COVERAGE_GAP",
+      "id": "G1-N2",
+      "status": "OPEN_FOR_INDEPENDENT_AUDIT",
+      "summary": "At predecessor commit 222685f the published runtime bytes equal neither the R8 nor the FULLSTACK-01 frozen implementation identity (see the change ledger's known_historical_inconsistency). G1 binds neither as a live identity."
+    },
+    {
+      "class": "VALIDATION_EVIDENCE_PHASE",
+      "id": "G1-N3",
+      "status": "DISCLOSED",
+      "summary": "tests_executed records, for each of the nine suites, a run on exactly these validation bytes and these runtime bytes, taken before this package existed (the ledger is finalized first). Package-phase regression is reported outside the package and is not self-recorded."
+    }
+  ],
+  "date": "2026-10-07",
+  "disposition": "ACTIVE_CANDIDATE_PENDING_FRESH_INDEPENDENT_AUDIT",
+  "durable_publication_declaration": {
+    "entries": {
+      ".gitattributes": {
+        "expected_raw_sha256": "0dc5e0700c4375ad2a3ad8da1d149c5e7806722c983c85904ce1d7e944685ddc",
+        "identity_source": "AUTHORITY_BUNDLE_PIN",
+        "pin_label": "repository_eol_policy"
+      },
+      "data/reference/parameter_registry_v7_2.csv": {
+        "expected_raw_sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+        "identity_source": "AUTHORITY_BUNDLE_PIN",
+        "pin_label": "parameter_registry"
+      },
+      "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md": {
+        "identity_field": "candidate_checkpoint.sha256",
+        "identity_source": "MANIFEST_CANDIDATE_CHECKPOINT_FIELD"
+      },
+      "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json": {
+        "identity_field": "candidate_change_ledger.sha256",
+        "identity_source": "MANIFEST_CANDIDATE_CHANGE_LEDGER_FIELD"
+      },
+      "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json": {
+        "external_binding_fields": [
+          "independent_audit_pass.candidate_manifest.sha256",
+          "acceptance_closure.candidate_manifest.sha256",
+          "acceptance_manifest.candidate_manifest.sha256",
+          "production_authority_re_freeze.candidate_manifest.sha256",
+          "accepted_lifecycle_record.roles.implementation_candidate.sha256"
+        ],
+        "identity_source": "EXTERNAL_LIFECYCLE_ROLE_BINDING"
+      }
+    },
+    "live_status_source": "src.production_authority_lifecycle_u06.durable_publication_requirements",
+    "required_paths": [
+      "data/reference/parameter_registry_v7_2.csv",
+      ".gitattributes",
+      "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+      "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+      "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json"
+    ],
+    "semantics": "STATIC_DECLARATION_NOT_A_LIVE_SNAPSHOT"
+  },
+  "execution_counters": {
+    "current_generation_21d_runs": 0,
+    "execution_authorizations_created": 0,
+    "full81_runs": 0,
+    "model_solves": 0,
+    "optimize_calls": 0,
+    "production_runs": 0,
+    "scope_authorizations_created": 0,
+    "sensitivity_solves": 0
+  },
+  "generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "governance_authority_identity": {
+    "digest": "360c81b133440e1b0444e01f2fd120eb1f49d0db3501283773a2952c032dbeb4",
+    "digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8",
+    "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+    "path_count": 26,
+    "paths": {
+      ".gitattributes": "0dc5e0700c4375ad2a3ad8da1d149c5e7806722c983c85904ce1d7e944685ddc",
+      "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "data/reference/parameter_registry_v7_2.csv": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+      "data/reference/production_economic_interface_v7_2.json": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+      "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+      "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+      "data/reference/taipower_transition_period_settlement_interface_v7_2.json": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+      "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f",
+      "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_2026-09-27.md": "7957fbaf2566da612db1770fbbc8a08be18a6c7aaec4f4564b20fb4e5bad4ab4",
+      "docs/checkpoints/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27.md": "d26ad46a08087d41831a8168d789294dcc635008ffb0f3aceb443121b5379b02",
+      "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md": "f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82",
+      "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_2026-10-01.md": "db20ea059c48b99bb5c57801dff5654b4b8e1b94ce51ce4ded6e82eec4ac922e",
+      "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851",
+      "docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md": "4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977",
+      "docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce",
+      "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "docs/research_framework_v7_3_2026-09-23.md": "44e313e71ea2a01e213454b4d838a86ec674fcda4f95a3b194ed68a92115ef2a",
+      "docs/research_framework_v7_4_2026-09-26_r2.md": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md": "e81efc8ac6ec76846838adc33bd8015e65108bba0ffd6c06052409fdcfd1009d",
+      "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md": "23ff149dd892d08d6aa2cc71848906821eb30f7369024585537a186b2813df6d",
+      "results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33",
+      "results/provenance/layer_a_robustness_preregistration_candidate_r2/preregistration_record.json": "14c2f0a2a1bd0cbc5ac022f14abcd24af8325976694ef4a6b3a133ade46d0b6f",
+      "results/provenance/layer_a_robustness_preregistration_candidate_r2_acceptance_closure_2026-09-27/acceptance_manifest.json": "08a1e5b5929b5791e14b2ae887c4b9592dccbd803c7e0981c581f41561aa268d",
+      "results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json": "4bbd58b8e8bd92c292d44b7b3d8b6a2035c3d41dc894581697f52583a55b6476",
+      "results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json": "53074cfe44c0276d6f319497cbe6f5aaf07b255ac0c335f9481174dd968063fe"
+    }
+  },
+  "implementation_identity_digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+  "intentional_runtime_validation_coupling": [
+    {
+      "coupling": "INTENTIONAL_RUNTIME_VALIDATION_COUPLING",
+      "effect": "RUNTIME_IMPLEMENTATION_DIGEST_CHANGES_WHEN_THIS_VALIDATION_FILE_CHANGES",
+      "path": "tests/test_21a_v7_3_production_routing_preflight.py",
+      "pin_label": "ADDITIONAL_AUTHORITY_FILES[step2e1_test]",
+      "rationale": "The successor stack pins this routing-preflight suite in its accepted ADDITIONAL_AUTHORITY_FILES table, unchanged since Step 2E-1; the stack is a runtime member, so the suite's bytes are part of the runtime digest.",
+      "runtime_pin_holder": "src/production_successor_stack_v7_3.py"
+    },
+    {
+      "coupling": "INTENTIONAL_RUNTIME_VALIDATION_COUPLING",
+      "effect": "RUNTIME_IMPLEMENTATION_DIGEST_CHANGES_WHEN_THIS_VALIDATION_FILE_CHANGES",
+      "path": "tests/test_21e_v7_4_production_authority_bundle.py",
+      "pin_label": "v7_4_alignment_test",
+      "rationale": "The production-authority bundle pins this alignment-surface suite so that the gate fails closed if the suite proving its fail-closed behaviour is silently replaced; the bundle is a runtime member, so the suite's bytes are part of the runtime digest by design.",
+      "runtime_pin_holder": "src/production_authority_bundle_v7_4.py"
+    },
+    {
+      "coupling": "INTENTIONAL_RUNTIME_VALIDATION_COUPLING",
+      "effect": "RUNTIME_IMPLEMENTATION_DIGEST_CHANGES_WHEN_THIS_VALIDATION_FILE_CHANGES",
+      "path": "tests/test_21f_u06_accepted_lifecycle_gate.py",
+      "pin_label": "u06_lifecycle_test",
+      "rationale": "The production-authority bundle pins this alignment-surface suite so that the gate fails closed if the suite proving its fail-closed behaviour is silently replaced; the bundle is a runtime member, so the suite's bytes are part of the runtime digest by design.",
+      "runtime_pin_holder": "src/production_authority_bundle_v7_4.py"
+    },
+    {
+      "coupling": "INTENTIONAL_RUNTIME_VALIDATION_COUPLING",
+      "effect": "RUNTIME_IMPLEMENTATION_DIGEST_CHANGES_WHEN_THIS_VALIDATION_FILE_CHANGES",
+      "path": "tests/test_21g_u06_r3_substitution_attacks.py",
+      "pin_label": "u06_r3_substitution_attack_test",
+      "rationale": "The production-authority bundle pins this alignment-surface suite so that the gate fails closed if the suite proving its fail-closed behaviour is silently replaced; the bundle is a runtime member, so the suite's bytes are part of the runtime digest by design.",
+      "runtime_pin_holder": "src/production_authority_bundle_v7_4.py"
+    },
+    {
+      "coupling": "INTENTIONAL_RUNTIME_VALIDATION_COUPLING",
+      "effect": "RUNTIME_IMPLEMENTATION_DIGEST_CHANGES_WHEN_THIS_VALIDATION_FILE_CHANGES",
+      "path": "tests/test_21h_main_full81_authorization_mechanism.py",
+      "pin_label": "main_full81_authorization_test",
+      "rationale": "The production-authority bundle pins this alignment-surface suite so that the gate fails closed if the suite proving its fail-closed behaviour is silently replaced; the bundle is a runtime member, so the suite's bytes are part of the runtime digest by design.",
+      "runtime_pin_holder": "src/production_authority_bundle_v7_4.py"
+    }
+  ],
+  "lifecycle_state": {
+    "acceptance": "NOT_YET_PERFORMED",
+    "accepted_lifecycle_record": "NOT_YET_CREATED",
+    "current_generation_21d_no_solve_preflight": "NOT_YET_EXECUTED",
+    "execution_authorization": "NOT_AUTHORIZED",
+    "full81": "NOT_EXECUTED_NOT_AUTHORIZED",
+    "g1": "CANDIDATE",
+    "independent_audit": "NOT_YET_PERFORMED",
+    "production_authority_re_freeze": "NOT_YET_PERFORMED",
+    "scope_authorization": "NOT_YET_CREATED_NOT_YET_AUTHORIZED",
+    "statement_scope": "CANDIDATE_CONSTRUCTION_TIME_DECLARATION_LIVE_STATE_IS_RESOLVED_NOT_DECLARED"
+  },
+  "lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "next_legal_gate": "FRESH_INDEPENDENT_READ_ONLY_AUDIT",
+  "package_binding": {
+    "direction": "manifest -> checkpoint",
+    "manifest_self_identity": "EXTERNAL_LIFECYCLE_ROLE_BINDING",
+    "rationale": "The ledger is finalized first, then the checkpoint, then this manifest, which binds both; its own identity is bound only by later lifecycle role records.",
+    "scheme": "ACYCLIC_MANIFEST_TO_CHECKPOINT_ONLY"
+  },
+  "predecessor_generation": {
+    "accepted_lifecycle_record_path": "results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json",
+    "candidate_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_CANDIDATE_R8",
+    "generation_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    "lineage_id": "MAIN_FULL81_PREFLIGHT_AUTHORIZATION_GUARD_R1",
+    "relationship": "SUPERSEDED_HISTORICAL_PREDECESSOR_NOT_A_LIVE_BINDING"
+  },
+  "predeclared_governance_paths": {
+    "acceptance_closure": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+    "acceptance_manifest": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_manifest.json",
+    "accepted_lifecycle_record": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json",
+    "candidate_change_ledger": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json",
+    "candidate_checkpoint": "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+    "candidate_manifest": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+    "independent_audit_pass": "results/provenance/current_full81_production_generation_g1_independent_audit_r1/independent_audit_pass_record.json",
+    "main_full81_execution_authorization": "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json",
+    "main_full81_no_solve_preflight_evidence": "results/provenance/main_full81_no_solve_preflight_g1/main_full81_21d_no_solve_preflight_evidence.json",
+    "main_full81_scope_authorization": "results/provenance/main_full81_authorization_g1/main_full81_authorization.json",
+    "production_authority_re_freeze": "results/provenance/current_full81_production_generation_g1_re_freeze_r1/production_authority_re_freeze_record.json"
+  },
+  "repository_head_at_authoring": "222685f0ea8a1a9f281e30962e223a339d5ec938",
+  "role": "implementation_candidate",
+  "runtime_identity": {
+    "digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+    "digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8",
+    "identity_class": "G1_RUNTIME_IDENTITY",
+    "path_count": 21,
+    "paths": {
+      "scripts/08_calibrate_kappa.py": "6014a24bee5028d0be1e3ab480ee67587e91c35bc4d57e4b0c324eb6b94141dc",
+      "scripts/09_build_valid_outage_start_sets.py": "3c67e91848c7093e974bf3d3b8440a4c3054ffe25a4fc99b68fd951883ae43d4",
+      "scripts/15a_benchmark_eob_charge_discharge_formulations.py": "504f31b37f2bbaca96792b088cd1adea087206539a3c3553298555f64fc6cff9",
+      "scripts/15b_freeze_production_eob_baseline.py": "9a5f61d19bc279920f51f67294ef96ddcd7623ffe240482ff66b88e029eafc60",
+      "scripts/15c_validate_production_eob_rainflow.py": "14fd9f3363979dd6af6f50723a75477e1525b9330265a0a820d11eec1774f408",
+      "scripts/15d_run_corrected_eob_v7_2.py": "90d19baac8c0b96e08de00b4769b7ae68dff745f71923b850433ffc2935091a8",
+      "scripts/16a_preflight_layer_a_representative_binary_cases.py": "5813119e258e83a45a245ec715ade4536bf9dbf880687f6d3f1e978cce8b06a0",
+      "scripts/19a_preflight_final_layer_a_81_cases.py": "a139f1cd1a76e0a6f0657adf025c521b8b966b2fcdd6f74e5f3936a70bab72d3",
+      "scripts/19b_run_final_layer_a_81_cases.py": "4abbda9dc2529f9d7531aff64a77fdf23c3b8b59173a6f3287fda0538def2bbe",
+      "scripts/21a_preflight_v7_3_production_routing.py": "3d99a4200dce93cd00db94727f72489d9be497eb52c74270a1c49b17fc8a7e95",
+      "scripts/21b_preflight_v7_3_eob_successor.py": "d12f39acfa33651e49f8f6762c159e5cff217958e34736fca1b15077bda45aa3",
+      "scripts/21c_preflight_v7_3_layer_a_successor.py": "63d9e8b9b3ca968b3df6d76c457ee5329697cfc9a648f2a35978ce23a4eaf0ed",
+      "scripts/21d_preflight_v7_3_final81_successor.py": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+      "scripts/21e_preflight_v7_4_production_authority_alignment.py": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803",
+      "src/annual_design_model_v7_2.py": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+      "src/main_full81_authorization_v7_4.py": "0b4899412bc5cd6d6a4b64a45a243ae8b98d2488ea9ac165f595d2cd7eec7880",
+      "src/production_authority_bundle_v7_4.py": "09eeb928b381f693c662bae82075017d5a79e0a10629577f95050b6e788a8f42",
+      "src/production_authority_lifecycle_u06.py": "c65aaedc6ea4f357b4ac463ebe0428d717ed953c5e12dc2f547cc98334bd7c45",
+      "src/production_input_authority_v7_3.py": "f6d5093f94b767882c23544e2d0390aea2f939e5755f8950fc3c53d9878a8ed1",
+      "src/production_successor_stack_v7_3.py": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+      "src/rainflow_validation_v7_2.py": "4ae83643dca4e7266ad0e4ebe54c0302a1cf38918935c8789e493798ea6c09d2"
+    }
+  },
+  "schema_version": "iris-thesis-full81-production-g1-implementation-candidate-v1",
+  "scope": "Current Full81 Production Generation G1, Candidate R1: producer-side implementation candidate package (checkpoint, change ledger, manifest). Not an audit, acceptance, freeze, scope authorization or execution authorization.",
+  "self_accepted": false,
+  "target_candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+  "validation_identity": {
+    "digest": "1bd49904e8d774c27b5e8a0390240eb836e92fa6cf857948f7b9d3486914111b",
+    "digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8",
+    "identity_class": "G1_VALIDATION_IDENTITY",
+    "path_count": 9,
+    "paths": {
+      "tests/test_21a_v7_3_production_routing_preflight.py": "a039ae6620be859dfc7279e35b0b6bf0630e553f1e130fd27a330f9d337f22a6",
+      "tests/test_21b_21d_v7_3_production_successor_stack.py": "88d0756d833d77ff55a36f14d8110556fb1665acf007b72a64d821fd92563fb1",
+      "tests/test_21e_v7_4_production_authority_bundle.py": "0ba258c1a63df33c88f7499bbac7b353eb926aa1b7fb79cfd10fb9e4181bb7a6",
+      "tests/test_21f_u06_accepted_lifecycle_gate.py": "e21b734db9da2a816e7181c93c5246d452ef58a2b9212d568b5d93c17ddf6c31",
+      "tests/test_21g_u06_r3_substitution_attacks.py": "ffb4c5ead017f29e5822ae5f2045f72e9dffcf8e2e5be7080dc174ee898c569b",
+      "tests/test_21h_main_full81_authorization_mechanism.py": "5b0be95a279ad092eafe6118556590d0c765ad269df15e2454795f9109744b9a",
+      "tests/test_21i_main_full81_preflight_authorization_guard.py": "68e127512b9c553ee51e13ea32dbc6b3476b6c3be916e0a5594859ae424163b9",
+      "tests/test_21l_full81_production_generation_g1.py": "6ad331689a4ac7895f776f712911ac22b52fba1beb3b13c0ec7e957fcd44c9b6",
+      "tests/test_fullstack_01_execution_input_authority.py": "16e83c4d98b6d946d874e8c11fbf4d6a57c2530b94f594c738a8c7d878e07725"
+    }
+  }
+}
