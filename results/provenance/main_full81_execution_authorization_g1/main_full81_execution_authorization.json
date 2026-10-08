@@ -1,0 +1,131 @@
+{
+  "a2_excluded": true,
+  "alpha_universe": [
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95,
+    1.0
+  ],
+  "artifact_type": "MAIN_FULL81_EXECUTION_AUTHORIZATION",
+  "authored_utc": "2026-10-08T16:56:59Z",
+  "authoring_operator": "Claude Code session 77dbbeb1-6c04-4e25-ab2c-1bbdc668fdce, under explicit owner approval; not self-authorizing",
+  "authorization_scope": "MAIN_FULL81",
+  "authorization_semantic_boundary": "EXECUTION_AUTHORIZED_NOT_LAUNCHED",
+  "authorizes": [
+    "MAIN_FULL81_EXECUTION"
+  ],
+  "authorizes_a2": false,
+  "authorizes_sensitivity_solves": false,
+  "beta_universe_h": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+  "carried_findings_not_closed": {
+    "G1-N1": {
+      "closed_by_this_authorization": false,
+      "status": "OPEN / CARRIED / NONBLOCKING"
+    },
+    "G1-N2": {
+      "closed_by_this_authorization": false,
+      "status": "OPEN / CARRIED / NONBLOCKING"
+    },
+    "G1-N3": {
+      "closed_by_this_authorization": false,
+      "status": "DISCLOSED / CARRIED"
+    },
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY": {
+      "closed_by_this_authorization": false,
+      "status": "OPEN / CARRIED / NONBLOCKING"
+    }
+  },
+  "case_count": 81,
+  "case_set": "full81",
+  "excluded_scopes": [
+    "A2",
+    "A2_VARIABLE_FLOOR_TREATMENT_EFFECT",
+    "PERFECT_INFORMATION",
+    "DG_EXTENSIONS",
+    "NEW_SENSITIVITIES",
+    "ALTERNATE_ANNUAL_INPUTS",
+    "ALTERED_ALPHA_BETA_GRIDS",
+    "NEW_SOLVER_SETTINGS",
+    "METHODOLOGY_CHANGES"
+  ],
+  "execution_authorization_status": "GRANTED",
+  "execution_input_authority": {
+    "data/reference/production_economic_interface_v7_2.json": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+    "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+    "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+    "data/reference/taipower_transition_period_settlement_interface_v7_2.json": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88"
+  },
+  "implementation_identity_digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+  "lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "no_solve_preflight_evidence": {
+    "path": "results/provenance/main_full81_no_solve_preflight_g1/main_full81_21d_no_solve_preflight_evidence.json",
+    "sha256": "95047e2fa9c0d524d5c43c0fdcafe40a93662c4282fd1aaaf0558be681f4da76"
+  },
+  "no_solve_preflight_publication_commit": "21ff5f48a606f88b2dcd5429ddb10799341f3aeb",
+  "operational_disclosures": {
+    "per_case_authority_recheck": "run_layer_a_production re-runs the full production gate before and after every case; any commit, push, tracked edit or new untracked file under src/, scripts/, tests/, data/ or results/ during the run aborts it.",
+    "restart_consequence": "FRESH_RUN_ONLY: an interrupted run restarts from the first case.",
+    "runtime_evidence": "Accepted current-route core-three cases took 3038 / 5600 / 3114 s (Gurobi runtime); historical v7.2 timings for the same cases were 187 / 251 / 226 s. Projected Full81 duration on the current route is approximately 68-126 hours."
+  },
+  "owner_approval": {
+    "approval_scope": "GATE_3_EXECUTION_AUTHORIZATION_PUBLICATION_ONLY",
+    "approved_by": "repository owner (Iris)",
+    "date": "2026-10-09",
+    "full81_launch_requires": "A separate explicit owner decision after operational readiness checks (runtime, memory, session concurrency, Windows restarts, standalone PowerShell execution).",
+    "not_authorized_by_this_record": [
+      "FULL81_LAUNCH",
+      "ANY_SOLVER_CALL_BY_THE_AUTHORING_PASS",
+      "A2_VARIABLE_FLOOR_ROBUSTNESS",
+      "SENSITIVITY_SOLVES",
+      "METHODOLOGY_CHANGE",
+      "HOST_CLEANUP"
+    ]
+  },
+  "production_authority_accepted_lifecycle_record": {
+    "path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json",
+    "sha256": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0"
+  },
+  "production_authority_generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "production_authority_lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+  "production_authority_publication_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+  "readiness_review_observations_not_closed": {
+    "SAR-N1": "FULLSTACK_01_REMEDIATION_STATUS runtime label is stale relative to the accepted FULLSTACK-01 lifecycle; it is reported at the execution-input boundary; descriptive only; not edited (runtime identity).",
+    "SAR-N2": "Handoff documents (CURRENT_STATE, PROJECT_HANDOFF, CLAUDE.md read-first list) predate the G1 generation.",
+    "SAR-N3": "Untracked docs/checkpoints candidate records outside the gate-protected prefixes.",
+    "SAR-N4": "READ_ONLY_FROZEN_AUTHORITY_VERIFICATION has no durable role record."
+  },
+  "required_execution_interlock_flags": [
+    "--execute-production",
+    "--confirm-native-solve"
+  ],
+  "restart_policy": "FRESH_RUN_ONLY",
+  "role": "main_full81_execution_authorization",
+  "schema_version": "iris-thesis-full81-execution-authorization-g1-v1",
+  "scope_authorization": {
+    "path": "results/provenance/main_full81_authorization_g1/main_full81_authorization.json",
+    "sha256": "0dc75214904682476def42f36e73688a1f1d254523f20bfd319e6561c4a81338"
+  },
+  "scope_authorization_publication_commit": "ab5c7bea4fdcd28e0ca967daadc80d86f25c7588",
+  "solver_parameter_fingerprint": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+  "target_runner": {
+    "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+    "sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+    "version": "v7.4-main-full81-no-solve-preflight-runner-2026-10-03-candidate-r3"
+  }
+}
