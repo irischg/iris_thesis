@@ -1,0 +1,1342 @@
+{
+  "artifact_type": "FULL81_G1_POSTSOLVE_RESULTS_ACCEPTANCE_CLOSURE",
+  "schema_version": "iris-thesis-full81-g1-postsolve-results-acceptance-closure-v1",
+  "package_id": "FULL81_G1_POSTSOLVE_RESULTS_ACCEPTANCE_R1",
+  "package_revision": "R1",
+  "role": "full81_postsolve_results_acceptance_closure",
+  "phase": "PHASE_B_FORMAL_RESULTS_ACCEPTANCE",
+  "workflow_step": "Step 3 of the owner's post-Full81 workflow (formal results acceptance / governance closure)",
+  "date": "2026-10-12",
+  "authored_utc": "2026-10-12T09:49:28Z",
+  "serialization": "UTF-8, LF line endings, json.dumps(indent=2, ensure_ascii=False), insertion-ordered keys, one trailing newline",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_subject": "FULL81_NUMERICAL_RESULTS",
+  "acceptance_state": "Main Full81 numerical results of run 20261008T183934456307Z_a6826f4828 — CLOSED / ACCEPTED for the current Layer A mainline",
+  "acceptance_meaning": "The 81 stored constant-floor Layer A case results of the target run are accepted as the valid numerical outputs of the accepted Framework v7.4 method, executed by the accepted and frozen G1 implementation generation on the accepted canonical planning input. Acceptance is a governance status. It is not a scientific interpretation of the results, not a response-surface analysis, not a current-mainline pointer and not a thesis-text promotion.",
+  "record_distinctions": {
+    "is_full81_numerical_results_acceptance": true,
+    "is_acceptance_closure": true,
+    "is_acceptance_manifest": false,
+    "is_g1_lifecycle_role_record": false,
+    "is_g1_implementation_generation_acceptance": false,
+    "is_solver_execution_manifest": false,
+    "is_independent_audit_or_audit_pass_record": false,
+    "is_audit_evidence_publication": false,
+    "is_production_authority_re_freeze": false,
+    "is_accepted_lifecycle_record": false,
+    "is_scope_or_execution_authorization": false,
+    "is_current_mainline_pointer": false,
+    "is_exposure_log_or_exposure_event": false,
+    "is_pipeline_notebook_or_results_analysis": false,
+    "distinguished_from": {
+      "g1_implementation_generation_acceptance": {
+        "path": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+        "sha256": "d0122f990a14d202fa2e07f1805ce6e8cba17952e37ff1badc37613a517a5879",
+        "artifact_type": "FULL81_PRODUCTION_G1_ACCEPTANCE_CLOSURE",
+        "difference": "That record accepted G1 Candidate R1, an implementation generation, before any Full81 solve existed. This record accepts numerical results. The two share a file basename only; this record uses neither the G1 artifact-type prefix FULL81_PRODUCTION_G1_ nor the G1 schema prefix, sits at no predeclared G1 role path and fills no G1 role."
+      },
+      "solver_execution_manifests": {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/completion_manifest.json",
+        "sha256": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24",
+        "difference": "Execution-time manifests written by the production publisher. Unchanged; their stored status is historical."
+      },
+      "independent_audit_pass": {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+        "sha256": "c6a07064451fa98f84fd714d09d59ed93eabc3e1b8d3e0461dd664e47937d394",
+        "difference": "The audit reported PASS and expressly created no acceptance artifact. This record is the acceptance decision that relies on it."
+      },
+      "phase_a_evidence_publication": {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+        "sha256": "a02f05e52862a3f99abb0d56e5f8b44d1a6ee851ad2f6fdbc012b1bd608ac3fa",
+        "difference": "Phase A published evidence and recorded RESULT_ACCEPTANCE_PENDING. It accepted nothing."
+      },
+      "future_current_mainline_pointer": {
+        "path": "NOT_YET_CREATED",
+        "difference": "No pointer is created or designed here; it needs a separate authorization."
+      }
+    }
+  },
+  "lifecycle_status": {
+    "results_governance_status_before": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT_EVIDENCE — PUBLISHED / RESULT_ACCEPTANCE_PENDING",
+    "results_governance_status_decided": "CLOSED_ACCEPTED",
+    "publication_status": "DETERMINED_FROM_LIVE_GIT_NOT_SELF_ASSERTED",
+    "publication_status_rule": "The acceptance is published, and the Step 3 governance closure complete, only if this closure, the acceptance manifest and the checkpoint are contained, byte-identical, in one commit reachable from origin/thesis-v7. A local-only copy of these files is not a completed closure. This record embeds no containing commit id.",
+    "containing_commit": "NOT_EMBEDDED_BY_DESIGN",
+    "maximum_state_after_verified_publication": "FULL81_NUMERICAL_RESULTS — CLOSED / ACCEPTED / PUBLISHED for the current Layer A mainline; CURRENT_MAINLINE_POINTER_NOT_CREATED",
+    "run_completion_manifest_status_unchanged": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+    "two_status_layers": "The execution-time completion manifests keep their stored status strings; those bytes are historical and are not rewritten. The current governance status of the results is carried by this additive record. The same two-layer treatment already applies to the accepted EOB and core-three runs."
+  },
+  "target_run": {
+    "run_id": "20261008T183934456307Z_a6826f4828",
+    "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828",
+    "case_set": "full81",
+    "root_artifacts": [
+      {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "bytes": 110125,
+        "sha256": "ecef360b340de92b2f1f612b7028efebfa1b26986fa9fe22efad66a46b3442bb"
+      },
+      {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/case_schedule.json",
+        "bytes": 570473,
+        "sha256": "08b05f654dbf997fb91ed4d835594d3f796567e47882e478b9fa05e5ba240df4"
+      },
+      {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/completion_manifest.json",
+        "bytes": 103575,
+        "sha256": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24"
+      }
+    ],
+    "root_completion_manifest_sha256_equals_owner_stated_value": true,
+    "file_count": 651,
+    "total_bytes": 156562246,
+    "json_file_count": 408,
+    "csv_file_count": 243,
+    "symlinks_found": 0,
+    "root_registered_artifacts": 650,
+    "root_registry_missing": 0,
+    "root_registry_hash_or_byte_mismatches": 0,
+    "files_not_registered_in_root_manifest": [
+      "completion_manifest.json"
+    ],
+    "case_registry_entries": 567,
+    "case_registry_hash_or_byte_mismatches": 0,
+    "run_file_aggregate_sha256_at_authoring": "7d0e2d0c066d956080445f66236bc91ed97ad5cd8d8256f6617a4f2b07b12c41",
+    "run_file_aggregate_algorithm": "sha256 over the UTF-8 concatenation of '<relative posix path>\\t<sha256>\\t<bytes>\\n' for every file under the run root, sorted by relative path (code-point order)",
+    "run_file_aggregate_note": "Computed by the acceptance operator over all 651 files before any write of this pass. The algorithm differs from the unspecified one behind the aggregate quoted in the audit report, so the two values are not comparable.",
+    "files_tracked_by_git": 0,
+    "files_gitignored": 651,
+    "result_bytes_published_by_this_package": 0,
+    "original_result_files_modified_by_this_acceptance": 0
+  },
+  "execution_identity": {
+    "execution_head": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "execution_branch": "thesis-v7",
+    "execution_head_source": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json (head, origin_head, branch)",
+    "execution_head_is_not_a_publication_commit_of_this_package": true,
+    "production_generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+    "candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+    "run_authority_status": "PRODUCTION_AUTHORITY_FROZEN",
+    "run_authority_freeze_status": "FROZEN",
+    "selected_scope": "full81",
+    "core_version": "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10",
+    "stack_version": "v7.3-macro-gate-2e-a-zero-solve-successor-stack-2026-09-24-r1",
+    "run_start_utc_from_run_id": "2026-10-08T18:39:34.456307Z",
+    "namespace_note": "The final_81_v7_3 path segment and the v7.2 core label are accepted implementation-lineage names, not stale scientific authority."
+  },
+  "methodology_evidence_authority": {
+    "framework": {
+      "formal_name": "Framework v7.4",
+      "role": "CURRENT_METHODOLOGY_AUTHORITY",
+      "lifecycle": "CLOSED_ACCEPTED",
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "bytes": 216186,
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "live_bytes_equal_run_authority_binding": true,
+      "execution_head_blob_equals_live_bytes": true
+    },
+    "registry": {
+      "formal_name": "Registry v7.4",
+      "role": "CURRENT_EVIDENCE_AUTHORITY",
+      "lifecycle": "CLOSED_ACCEPTED",
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "bytes": 245125,
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "live_bytes_equal_run_authority_binding": true,
+      "execution_head_blob_equals_live_bytes": true
+    },
+    "grid_authority": "Framework v7.4 section 0.1 (dense 9x9 = 81 alpha/beta grid) and section 3.4 (alpha 0.60 to 1.00 in 0.05 steps; beta 4 to 12 h)",
+    "closed_decisions_reopened_by_this_acceptance": 0,
+    "methodology_change_by_this_acceptance": false,
+    "authoring_time_status_text_note": "Framework v7.4 and Registry v7.4 contain authoring-time status sentences recording Full81 as NOT_YET_EXECUTED / NOT AUTHORIZED. Those bytes are immutable and correct for their moment; they are not rewritten, and this acceptance is not a methodology or evidence-content change."
+  },
+  "g1_authority_chain": {
+    "records": [
+      {
+        "stage": "G1_CANDIDATE",
+        "role": "g1_candidate_checkpoint",
+        "path": "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+        "bytes": 9404,
+        "sha256": "dccbbffccc37dbea2179bcbc6210f1afa76351d9883fc73485f3be83278ce9a9",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00"
+      },
+      {
+        "stage": "G1_CANDIDATE",
+        "role": "g1_candidate_manifest",
+        "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+        "bytes": 28291,
+        "sha256": "bd3621cf9de16a6b7ed0c84444272cd17ce28326b2f4081317c926cd3aa1071a",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00"
+      },
+      {
+        "stage": "G1_CANDIDATE",
+        "role": "g1_candidate_change_ledger",
+        "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json",
+        "bytes": 49686,
+        "sha256": "e1b2ecc8fcb44327b4d8e0a38f1fd7ba200bd9fa44b363ceaf89220aadbde080",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00"
+      },
+      {
+        "stage": "G1_INDEPENDENT_AUDIT_PASS_PHASE_A",
+        "role": "g1_independent_audit_pass",
+        "path": "results/provenance/current_full81_production_generation_g1_independent_audit_r1/independent_audit_pass_record.json",
+        "bytes": 14045,
+        "sha256": "e7c3dcd60ed613ffaea14afe5e6fd91fe711ae0f385b8bfc7cdc6c7d1c09500c",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00"
+      },
+      {
+        "stage": "G1_ACCEPTANCE_PHASE_B",
+        "role": "g1_acceptance_closure",
+        "path": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+        "bytes": 9895,
+        "sha256": "d0122f990a14d202fa2e07f1805ce6e8cba17952e37ff1badc37613a517a5879",
+        "publication_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "publication_commit_time": "2026-10-08T20:46:20+08:00"
+      },
+      {
+        "stage": "G1_ACCEPTANCE_PHASE_B",
+        "role": "g1_acceptance_manifest",
+        "path": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_manifest.json",
+        "bytes": 7925,
+        "sha256": "bb4aa458d94bfd73db51ae1d87a1661f5272c3a57eaa260be5df3e89abac0926",
+        "publication_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "publication_commit_time": "2026-10-08T20:46:20+08:00"
+      },
+      {
+        "stage": "G1_RE_FREEZE_PHASE_C",
+        "role": "g1_production_authority_re_freeze",
+        "path": "results/provenance/current_full81_production_generation_g1_re_freeze_r1/production_authority_re_freeze_record.json",
+        "bytes": 8866,
+        "sha256": "41ec7d2a185993d55f745eaf512df2ab08e82c98e66bf611a95dc967a32c0982",
+        "publication_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+        "publication_commit_time": "2026-10-08T21:27:43+08:00"
+      },
+      {
+        "stage": "G1_ACCEPTED_LIFECYCLE_PHASE_C",
+        "role": "g1_accepted_lifecycle",
+        "path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json",
+        "bytes": 8351,
+        "sha256": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0",
+        "publication_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+        "publication_commit_time": "2026-10-08T21:27:43+08:00"
+      },
+      {
+        "stage": "MAIN_FULL81_SCOPE_AUTHORIZATION",
+        "role": "main_full81_scope_authorization",
+        "path": "results/provenance/main_full81_authorization_g1/main_full81_authorization.json",
+        "bytes": 6060,
+        "sha256": "0dc75214904682476def42f36e73688a1f1d254523f20bfd319e6561c4a81338",
+        "publication_commit": "ab5c7bea4fdcd28e0ca967daadc80d86f25c7588",
+        "publication_commit_time": "2026-10-08T23:29:44+08:00"
+      },
+      {
+        "stage": "MAIN_FULL81_NO_SOLVE_PREFLIGHT_EVIDENCE",
+        "role": "main_full81_no_solve_preflight_evidence",
+        "path": "results/provenance/main_full81_no_solve_preflight_g1/main_full81_21d_no_solve_preflight_evidence.json",
+        "bytes": 1341441,
+        "sha256": "95047e2fa9c0d524d5c43c0fdcafe40a93662c4282fd1aaaf0558be681f4da76",
+        "publication_commit": "21ff5f48a606f88b2dcd5429ddb10799341f3aeb",
+        "publication_commit_time": "2026-10-09T00:10:33+08:00"
+      },
+      {
+        "stage": "MAIN_FULL81_EXECUTION_AUTHORIZATION",
+        "role": "main_full81_execution_authorization",
+        "path": "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json",
+        "bytes": 5969,
+        "sha256": "87ec6643deef262bc3710b2e1d7e76d582bcfd1eebd41ffdc6c6c71eb2f12c6e",
+        "publication_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "publication_commit_time": "2026-10-09T01:12:13+08:00"
+      }
+    ],
+    "checks_by_acceptance_operator": {
+      "each_record_touched_by_exactly_one_commit_equal_to_its_publication_commit": true,
+      "each_publication_commit_is_an_ancestor_of_or_equal_to_the_execution_head": true,
+      "publication_commit_times_non_decreasing_in_lifecycle_order": true,
+      "live_bytes_and_execution_head_blobs_equal_recorded_sha256_for_all_11_records": true,
+      "execution_authorization_status_granted": true,
+      "execution_authorization_binds_accepted_lifecycle_sha256": true,
+      "execution_authorization_binds_scope_authorization_sha256": true,
+      "execution_authorization_binds_no_solve_preflight_sha256": true,
+      "scope_authorization_binds_accepted_lifecycle_sha256": true,
+      "execution_authorization_binds_runtime_identity_digest": true,
+      "run_start_after_execution_authorization_commit": true,
+      "run_authority_head_equals_execution_head": true,
+      "execution_gate_requires_separate_execution_authorization_read_from_source": "src/production_successor_stack_v7_3.py:948-949 calls require_full81_execution_authorization (src/main_full81_authorization_v7_4.py:2384) for scope full81"
+    },
+    "execution_authorization_semantic_boundary": "EXECUTION_AUTHORIZED_NOT_LAUNCHED",
+    "owner_launch_decision_history": "NOT_RECONSTRUCTIBLE_FROM_SAVED_ARTIFACTS (the execution authorization required a separate explicit owner launch decision; no durable record of it exists; carried as reported by the audit)",
+    "excluded_scopes": [
+      "A2",
+      "A2_VARIABLE_FLOOR_TREATMENT_EFFECT",
+      "PERFECT_INFORMATION",
+      "DG_EXTENSIONS",
+      "NEW_SENSITIVITIES",
+      "ALTERNATE_ANNUAL_INPUTS",
+      "ALTERED_ALPHA_BETA_GRIDS",
+      "NEW_SOLVER_SETTINGS",
+      "METHODOLOGY_CHANGES"
+    ],
+    "governing_sequencing_authority": {
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md",
+      "sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851",
+      "role_in_run_authority": "governing_authority = TASK_3_GOVERNANCE_SEQUENCING_SUCCESSOR_CANDIDATE_R2_ACCEPTANCE_CLOSURE; member of the 26-path G1 governance identity",
+      "published_commit": "fbdd5f0c056f6df8e97c5ef27a8d0c5e6942e0f0",
+      "relevance": "Source of the exposure-log, reduced-blinding and no-calibration rules carried in ACC-N1 and binding_carry_forward_conditions."
+    }
+  },
+  "implementation_identities": {
+    "runtime": {
+      "digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+      "path_count": 21
+    },
+    "validation": {
+      "digest": "1bd49904e8d774c27b5e8a0390240eb836e92fa6cf857948f7b9d3486914111b",
+      "path_count": 9
+    },
+    "governance_authority": {
+      "digest": "360c81b133440e1b0444e01f2fd120eb1f49d0db3501283773a2952c032dbeb4",
+      "path_count": 26
+    },
+    "digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8",
+    "path_list_source": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json (runtime_identity, validation_identity, governance_authority_identity)",
+    "all_three_digests_recomputed_by_acceptance_operator_from_live_bytes": true,
+    "all_three_digests_recomputed_by_acceptance_operator_from_execution_head_blobs": true,
+    "live_paths_differing_from_recorded": [],
+    "runtime_path_list_equals_preflight_accepted_implementation_identity": true,
+    "solver_parameter_fingerprint": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+    "solver_parameter_fingerprint_recomputed_by_acceptance_operator": false,
+    "canonical_annual_input": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "bytes": 554037,
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "row_count_as_stored": 8760,
+      "timestamp_fingerprint_as_stored": "1aa2f364f08b54d0ba5a6c37e7855c652ce19ce6703d693d557265313c62bcb0"
+    },
+    "bound_files_verified": [
+      {
+        "name": "canonical_annual_input",
+        "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+        "bytes": 554037,
+        "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "production_runner",
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+        "bytes": 11679,
+        "sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "model_core",
+        "path": "src/annual_design_model_v7_2.py",
+        "bytes": 124399,
+        "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "production_successor_stack",
+        "path": "src/production_successor_stack_v7_3.py",
+        "bytes": 81197,
+        "sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "parameter_registry",
+        "path": "data/reference/parameter_registry_v7_2.csv",
+        "bytes": 7951,
+        "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "main_full81_authorization_module",
+        "path": "src/main_full81_authorization_v7_4.py",
+        "bytes": 122976,
+        "sha256": "0b4899412bc5cd6d6a4b64a45a243ae8b98d2488ea9ac165f595d2cd7eec7880",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "accepted_lifecycle_overlay_module",
+        "path": "src/production_authority_lifecycle_u06.py",
+        "bytes": 418661,
+        "sha256": "c65aaedc6ea4f357b4ac463ebe0428d717ed953c5e12dc2f547cc98334bd7c45",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "v7_4_alignment_verifier",
+        "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+        "bytes": 10464,
+        "sha256": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "execution_input:production_economic_interface_v7_2.json",
+        "path": "data/reference/production_economic_interface_v7_2.json",
+        "bytes": 8118,
+        "sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "execution_input:taipower_seasonal_settlement_matrix_v7_2.csv",
+        "path": "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+        "bytes": 16427,
+        "sha256": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "execution_input:taipower_tariff_optimization_ntd2023_v7_2.csv",
+        "path": "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+        "bytes": 19752,
+        "sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      },
+      {
+        "name": "execution_input:taipower_transition_period_settlement_interface_v7_2.json",
+        "path": "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+        "bytes": 4579,
+        "sha256": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+        "live_bytes_match": true,
+        "execution_head_blob_matches": true
+      }
+    ]
+  },
+  "phase_a_publication_verification": {
+    "publication_commit": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+    "publication_commit_parents": [
+      "c8f555094d6ab711ce6426302419fff958ed19fa"
+    ],
+    "publication_commit_tree": "ac124af9a8f179cf7449a7a7b2a27b636d052b63",
+    "publication_commit_is_single_parent_child_of_execution_head": true,
+    "commits_between_execution_head_and_publication_commit": 1,
+    "files": [
+      {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+        "role": "independent_audit_report_verbatim_source_copy",
+        "git_blob_id": "bf20b233a749a3297b5f7ff77b5262534fed889a",
+        "bytes": 21479,
+        "sha256": "c6a07064451fa98f84fd714d09d59ed93eabc3e1b8d3e0461dd664e47937d394",
+        "cr_bytes_in_blob": 0,
+        "working_tree_equals_blob": true
+      },
+      {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+        "role": "machine_readable_audit_evidence_record",
+        "git_blob_id": "a8570eb30dae2d403c20b3ee624bf6fe03f82e54",
+        "bytes": 88562,
+        "sha256": "a02f05e52862a3f99abb0d56e5f8b44d1a6ee851ad2f6fdbc012b1bd608ac3fa",
+        "cr_bytes_in_blob": 0,
+        "working_tree_equals_blob": true
+      },
+      {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/publication_manifest.json",
+        "role": "publication_manifest",
+        "git_blob_id": "603564f9d93daf37880a5f8a1eda1b565c279337",
+        "bytes": 4617,
+        "sha256": "9f90449b31175f17d78d74cccf68764cf2e587f507a4bd13719b957d3d539337",
+        "cr_bytes_in_blob": 0,
+        "working_tree_equals_blob": true
+      },
+      {
+        "path": "docs/checkpoints/full81_g1_postsolve_audit_evidence_publication_r1_2026-10-12.md",
+        "role": "human_readable_checkpoint",
+        "git_blob_id": "c625654b45cf2ed017407e8f592ee9410e4f4523",
+        "bytes": 17624,
+        "sha256": "6d7c49dd68e44d42915e2d4584a4be148032650475645b8b4a1bd9c1a2dc5f84",
+        "cr_bytes_in_blob": 0,
+        "working_tree_equals_blob": true
+      }
+    ],
+    "hash_basis": "SHA-256 and byte counts computed over Git blob bytes (git cat-file blob <commit>:<path>)",
+    "checks": {
+      "commit_added_exactly_the_four_declared_files": true,
+      "all_four_changes_are_additions": true,
+      "none_of_the_four_paths_existed_in_the_parent": true,
+      "execution_head_tree_paths": 301,
+      "execution_head_tree_paths_changed_or_removed": 0,
+      "manifest_registrations_checked_against_blobs": 3,
+      "manifest_registration_mismatches": 0,
+      "manifest_allowlist_equals_commit_path_set": true,
+      "publication_manifest_self_hash_registered_anywhere": false,
+      "record_and_manifest_json_reserialize_byte_identically": true,
+      "report_binds_run_generation_framework_input_execution_authorization_and_root_manifest": true,
+      "phase_a_records_result_acceptance_pending_not_accepted": true,
+      "tags_pointing_at_publication_commit": 0
+    },
+    "remote_confirmation": {
+      "git_ls_remote_head_equals_publication_commit": true,
+      "github_rest_api_commit_object_and_tree_id_equal_local": true,
+      "github_rest_api_branch_head_equals_publication_commit": true,
+      "repository_visibility_observed": "PUBLIC",
+      "method": "git ls-remote --heads origin thesis-v7; unauthenticated GitHub REST API (git/commits, branches) read in this session"
+    },
+    "nature": "Acceptance-prerequisite verification of the published evidence package by an operator separate from its publisher. It is not a new independent audit of the 81 dispatches."
+  },
+  "independent_audit_attribution": {
+    "auditor": "A separate Codex session (independent, read-only post-solve audit), as recorded by the Phase A publication",
+    "auditor_session_metadata_as_recorded_in_phase_a": {
+      "session_id": "01a12f22-6d74-7c32-bb7d-84a93188e17a",
+      "session_start_timestamp": "2026-10-12T08:02:28.154Z",
+      "originator": "codex_vscode",
+      "cli_version": "0.162.0-alpha.2",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "verification": "AS_RECORDED_IN_ROLLOUT; not independently verified by the publication operator"
+    },
+    "auditor_session_metadata_verified_by_acceptance_operator": false,
+    "verdict_line_verbatim": "**FULL81 POST-SOLVE INDEPENDENT ACCEPTANCE — PASS**",
+    "verdict_as_reported": "PASS",
+    "report_path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+    "report_sha256": "c6a07064451fa98f84fd714d09d59ed93eabc3e1b8d3e0461dd664e47937d394",
+    "report_bytes": 21479,
+    "audit_statement_that_it_accepted_nothing_verbatim": "本次獨立稽核支持這組 Full81 結果進入後續接受程序。**本報告沒有建立正式 acceptance artifact、變更 current pointer，或將結果提升為 thesis-authoritative result set。**",
+    "verdict_originated_in_this_acceptance_session": false,
+    "numerical_results_recomputed_by_acceptance_operator": false
+  },
+  "evidence_classifications": {
+    "independent_numerical_acceptance": "CODEX_REPORTED_PASS (subject to the publication-evidence checks recorded here; not recomputed in this acceptance session)",
+    "historical_optimization_call_count": "SUPPORTED (not directly confirmed from per-invocation telemetry)",
+    "complete_transient_solver_execution_environment": "PARTIALLY_RECONSTRUCTIBLE",
+    "result_files_651": "LOCALLY_RETAINED_AND_VERIFIED_BY_PRIOR_AUDIT / NOT_GIT_DURABLE (re-hashed by the acceptance operator against the root and case registries: 0 mismatches)"
+  },
+  "full81_contract_coverage": {
+    "expected_case_count": 81,
+    "alpha_grid": [
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "beta_grid_h": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "case_id_rule": "a{alpha:.2f}_b{beta_h:02d} over the Cartesian product",
+    "case_directories_equal_expected_set": true,
+    "root_manifest_case_ids_equal_expected_in_order": true,
+    "case_schedule_ids_equal_expected_set": true,
+    "solve_slots_are_1_to_81": true,
+    "missing_case_ids": [],
+    "unexpected_case_ids": [],
+    "duplicate_case_ids": 0,
+    "failed_final_cases": [],
+    "per_case_completion_status_counts": {
+      "COMPLETE_PASS": 81
+    },
+    "stored_status_counts": {
+      "OPTIMAL": 81
+    },
+    "stored_status_code_counts": {
+      "2": 81
+    },
+    "stored_has_solution_true": 81,
+    "stored_objective_finite": 81,
+    "stored_mip_gap_max": 9.916563814474196e-07,
+    "stored_mip_gap_max_case": "a0.90_b12",
+    "stored_cases_with_mip_gap_outside_0_to_1e-6": [],
+    "stored_solver_audit_accepted_status_counts": {
+      "COMPLETE_SOLVER_PASS": 81
+    },
+    "stored_mandatory_audit_pass_counts": {
+      "solver": 81,
+      "physical": 81,
+      "resilience": 81,
+      "billing": 81,
+      "transition": 81,
+      "cost": 81,
+      "degradation": 81,
+      "rainflow": 81
+    },
+    "stored_solver_settings_distinct": 1,
+    "stored_solver_settings_all_cases": {
+      "MIPFocus": 0,
+      "MIPGap": 1e-06,
+      "NumericFocus": 1,
+      "OutputFlag": 0,
+      "Threads": 0,
+      "TimeLimit": null,
+      "mode": "binary"
+    },
+    "run_authority_solver_settings_contract_layer_a": {
+      "MIPFocus": 0,
+      "MIPGap": 1e-06,
+      "NumericFocus": 1,
+      "OutputFlag": 0,
+      "Threads": 0,
+      "TimeLimit": "INFINITY_UNSET",
+      "mode": "binary",
+      "source": "scripts/19a_preflight_final_layer_a_81_cases.py"
+    },
+    "surplus_pv_recharge_values": [
+      "False"
+    ],
+    "circular_wrap_values": [
+      "False"
+    ],
+    "root_and_case_optimization_call_counters": [
+      81,
+      81
+    ],
+    "solver_acceptance_contract_source": "scripts/19b_run_final_layer_a_81_cases.py:446-456 solver_acceptance() (file SHA-256 4abbda9dc2529f9d7531aff64a77fdf23c3b8b59173a6f3287fda0538def2bbe; a member of the 21-path runtime identity)",
+    "mandatory_audit_families_source": "src/production_successor_stack_v7_3.py:1885-1895 (solver, physical, resilience, billing, transition, cost, degradation, rainflow; _require_pass_audits)",
+    "independent_reconstruction_of_the_eight_families": "CODEX_REPORTED_PASS for 81/81 (report section G); read here from the published transcript, not repeated",
+    "audit_non_mutation_evidence": "AS_REPORTED by the audit (identical before/after snapshots, zero repository writes); consistent with the Git state observed in this session",
+    "values_read_by": "ACCEPTANCE_OPERATOR_FROM_STORED_RESULT_BYTES (parsing and hashing only; no solver import, no model)"
+  },
+  "acceptance_operator_corroboration": {
+    "nature": "Checks made by the acceptance operator against local bytes and Git objects. They corroborate the published audit transcript; they are not an independent numerical audit and do not replace it.",
+    "report_claims_re_derived_from_stored_bytes_and_agreeing": [
+      "81 case directories and completion manifests; 81 unique case ids; solve slots 1-81",
+      "stored status OPTIMAL for 81/81; maximum stored MIPGap and its case",
+      "Gurobi runtime sum, shortest and longest case, maximum wall minus Gurobi runtime and its case",
+      "stored objective range and solution-count range (values as already published in the audit report; not restated here)",
+      "708,993 valid outage starts and 5,671,404 outage hours (case definitions; equal to the stored resilience audit counts)",
+      "3,888 billing rows and 648 transition settlement rows (stored structure counts and CSV line counts)",
+      "651 physical files; 650 root registrations; 567 case registrations; 408 JSON and 243 CSV files; 0 hash or byte mismatches; 0 symlinks",
+      "root and case optimization-call counters 81 / 81",
+      "SHA-256 of authority.json, case_schedule.json and completion_manifest.json",
+      "Framework v7.4, Registry v7.4, canonical input, core, stack, runner, parameter registry and four execution-input hashes",
+      "G1 runtime (21), validation (9) and governance (26) identity digests",
+      "canonical timeline 2024-11-01 00:00 to 2025-10-31 23:00 without gaps or duplicates",
+      "worst-case AC-balance residual of the physical family (a0.60_b06), reproduced from dispatch bytes"
+    ],
+    "all_re_derived_claims_agree": true,
+    "representative_primary_evidence_spot_check": {
+      "cases": [
+        "a0.60_b04",
+        "a0.60_b06",
+        "a0.80_b06",
+        "a0.80_b08",
+        "a0.90_b12",
+        "a1.00_b12"
+      ],
+      "selection": "accepted core-three coordinates (a0.60_b04, a0.80_b08, a1.00_b12) and three cases named as worst-case rows in the audit report (a0.60_b06, a0.80_b06, a0.90_b12)",
+      "dispatch_rows_all_8760": true,
+      "dispatch_timestamps_equal_canonical_input_all": true,
+      "canonical_timeline": "2024-11-01 00:00:00 to 2025-10-31 23:00:00, strictly hourly, 0 duplicates, 8760 rows",
+      "max_abs_load_difference_vs_canonical_kw": 0.0,
+      "max_abs_pv_difference_vs_canonical_kw": 5.684341886080802e-14,
+      "max_abs_ac_balance_residual_kw": 8.815072760626208e-07,
+      "max_abs_ac_balance_residual_case": "a0.60_b06",
+      "max_abs_energy_state_identity_residual_kwh": 1.0913936421275139e-11,
+      "min_stored_energy_minus_annual_reserve_floor_kwh": -3.8204234442673624e-07,
+      "max_abs_energy_cost_recomputed_minus_stored_ntd": 1.1175870895385742e-07,
+      "all_81_max_abs_stored_cost_component_sum_minus_stored_objective_ntd": 7.152557373046875e-07,
+      "nature": "Elementary identities read from stored dispatch bytes for six cases. A representative primary-evidence inspection, not a re-performance of the independent audit; the all-start resilience replay, billing, transition, degradation and rainflow reconstructions were not repeated."
+    },
+    "not_reproduced_by_acceptance_operator": [
+      "The all-start resilience replay, billing, transition, cost, degradation and rainflow reconstructions and their residuals (report section G), beyond the six-case elementary identities above.",
+      "The 12 in-memory negative controls and the solver positive control.",
+      "The two aggregate hashes in report section I (algorithm not specified) and the 1,062 ignored-inventory count (scope not specified).",
+      "The solver parameter fingerprint (carried as bound in the scope and execution authorizations).",
+      "The Codex rollout, its byte count and SHA-256, and the session metadata (not read in this session)."
+    ]
+  },
+  "acceptance_criteria": [
+    {
+      "n": 1,
+      "criterion": "The source publication exists in the correct remote commit.",
+      "result": "PASS",
+      "evidence_grade": "CONFIRMED"
+    },
+    {
+      "n": 2,
+      "criterion": "Its exact evidence identities and registrations verify.",
+      "result": "PASS",
+      "evidence_grade": "CONFIRMED"
+    },
+    {
+      "n": 3,
+      "criterion": "The independent post-solve numerical PASS is adequately evidenced.",
+      "result": "PASS",
+      "evidence_grade": "CODEX_REPORTED_PASS; SUPPORTED by the corroboration recorded here; not recomputed"
+    },
+    {
+      "n": 4,
+      "criterion": "The complete Full81 result set and required acceptance conditions are supported.",
+      "result": "PASS",
+      "evidence_grade": "CONFIRMED for completeness, stored solver predicates and registry integrity; CODEX_REPORTED for the eight-family numerical reconstruction"
+    },
+    {
+      "n": 5,
+      "criterion": "No unresolved acceptance-blocking finding exists.",
+      "result": "PASS",
+      "evidence_grade": "Every carried finding is NONBLOCKING for results acceptance; ACC-N1 is OPEN and NONBLOCKING for results acceptance by the terms of its governing clause and by the owner's in-session decision"
+    },
+    {
+      "n": 6,
+      "criterion": "The methodology/evidence/implementation authority chain remains coherent.",
+      "result": "PASS",
+      "evidence_grade": "CONFIRMED, with the label qualifications of AUD-N3 / ACC-OBS-4 and the undischarged obligation of ACC-N1"
+    },
+    {
+      "n": 7,
+      "criterion": "All provenance and reconstructibility limitations are retained.",
+      "result": "PASS",
+      "evidence_grade": "CONFIRMED (carried in this record; none closed)"
+    },
+    {
+      "n": 8,
+      "criterion": "The acceptance decision is made by an operator separate from the prior audit and evidence-publication operators.",
+      "result": "PASS",
+      "evidence_grade": "CONFIRMED at session level, with the boundary of ACC-OBS-3"
+    },
+    {
+      "n": 9,
+      "criterion": "The owner's conditional authorization legitimately covers this acceptance decision.",
+      "result": "PASS",
+      "evidence_grade": "CONFIRMED by the Step 3 authorization and an in-session owner decision; no signature claimed"
+    },
+    {
+      "n": 10,
+      "criterion": "The live Git state permits a narrowly scoped additive publication.",
+      "result": "PASS",
+      "evidence_grade": "CONFIRMED"
+    }
+  ],
+  "acceptance_decision": {
+    "decision": "FULL81 NUMERICAL RESULTS ACCEPTED FOR THE CURRENT LAYER A MAINLINE",
+    "decision_authority": "The thesis owner's conditional Step 3 authorization for Formal G1 Full81 Results Acceptance / Governance Closure, received as the task instruction of this operator session and conditioned on every acceptance-critical check passing; followed by an in-session owner decision taken before any write.",
+    "owner_in_session_decision": {
+      "date": "2026-10-12",
+      "occasion": "Before any file was written, the operator reported that all prerequisite checks passed and disclosed finding ACC-N1, offering (a) accept and publish while carrying ACC-N1 as OPEN, or (b) STOP for separate adjudication. The operator recommended (a).",
+      "owner_selection": "Accept and publish; carry ACC-N1 as OPEN.",
+      "covers": [
+        "the acceptance decision",
+        "creation of the three files of this package",
+        "one commit and one non-forced push to origin/thesis-v7"
+      ]
+    },
+    "authorization_instrument_published": false,
+    "authorization_instrument_hash": "NOT_RECORDED (the operator received rendered instruction text, not a byte-exact file)",
+    "owner_identity_verification": "NOT_PERFORMED (the session user is taken to be the thesis owner)",
+    "human_signature_claimed": false,
+    "operator": "Claude Code session 1f3d8c9a-aeb0-4a9f-a5c7-fc8e5e79204b (Step 3 results-acceptance operator)",
+    "operator_model_id_as_reported_by_runtime": "claude-opus-5-5",
+    "operator_reasoning_effort": "NOT_VERIFIABLE_BY_THE_OPERATOR (the Step 3 instruction names 'Claude Code — Opus — Extra High'; the operator cannot observe its own effort setting and does not assert it)",
+    "operator_is_independent_numerical_auditor": false,
+    "operator_is_audit_evidence_publication_operator": false,
+    "operator_originated_audit_verdict": false,
+    "operator_is_g1_candidate_author_or_g1_acceptance_operator": false,
+    "operator_launched_or_executed_the_full81_run": false,
+    "contract_basis": [
+      "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md (SHA-256 c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696): section 3 (independent read-only audit PASS before CLOSED / ACCEPTED; no self-promotion), section 5 (additive only), section 9 (post-solve result acceptance is distinct from pre-execution authority), section 11 (cross-agent independence), sections 16-17 (exact Git state and non-mutation proof), section 18 (multi-axis reconstructibility), section 20 (manifest rules), section 22 (a separate additive acceptance artifact after independent acceptance), section 25 (commit freeze sequence).",
+      "Governance Constitution 2026-10-03 (local copy outside the repository, SHA-256 4f5eaf050d96f84d96e06ebebd53e095f209ad50bb0a0f94a180f2dd0efc9c38): section 3 (five-layer separation), section 8 (severity and blocking are separate), section 10 (results validated, then results accepted, as distinct events), section 19 (acceptance evidence separate from the author), section 22 (publication checks).",
+      "Framework v7.4 sections 0.1 and 3.4 (the 81-case grid); no CLOSED decision is touched.",
+      "scripts/19b_run_final_layer_a_81_cases.py:446-456 (solver acceptance predicates) and src/production_successor_stack_v7_3.py:1885-1895 and :1927 (eight mandatory audit families; the publisher itself labels a completed run COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE).",
+      "Repository precedent: the accepted EOB and core-three results carry an execution-time manifest status and a separate current governance status."
+    ],
+    "no_mandatory_result_acceptance_schema_exists": "The G1 role contract has no result-acceptance role: G1_GOVERNANCE_STAGES (src/production_authority_lifecycle_u06.py:6860-6877) ends at EXECUTION_AUTHORIZATION_RECORD_PRESENT, REQUIRED_LIFECYCLE_SEQUENCE (:2758-2768) contains no result-acceptance stage, and the accepted G1 lifecycle record states numerical_results_acceptance_status = NOT_CLAIMED. A search of src/, scripts/ and tests/ found no result-acceptance schema or validator for the current route. This package therefore follows the Phase A package conventions and adds no lifecycle role.",
+    "justification": "Every one of the ten Step 3 criteria is satisfied. The published audit transcript reports an independent PASS over all eight mandatory families for 81/81 cases; its identity, registrations and Git containment verify from blob bytes; every report claim re-derived here from stored bytes agrees; the 651 result files match their registries; the methodology, evidence, input, implementation and authorization identities under which the run executed are unchanged; and no carried finding blocks acceptance."
+  },
+  "governance_adjudications": {
+    "audit_model_identity_variance": {
+      "requested_by_the_audit_instruction": "GPT-5.6 Sol / Extra High (as stated by the owner's Step 3 instruction and by the audit report's own closing statement)",
+      "recorded_in_the_codex_rollout": "gpt-6.1-sol / xhigh (as recorded by the Phase A publication operator; not re-verified here)",
+      "audit_claimed_to_have_used_gpt_5_6_sol": false,
+      "this_record_claims_the_audit_used_gpt_5_6_sol": false,
+      "report_statement_verbatim": "計算均在記憶體內完成；沒有建立稽核報告檔。亦未宣稱已將此會話切換成附件指定的 GPT-5.6 Sol／Extra High 設定。",
+      "determination": "TOOL_SELECTION_RECOMMENDATION / NOT_A_MANDATORY_ACCEPTANCE_CONDITION",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition": "DISCLOSED / CARRIED",
+      "governing_basis": [
+        "Governance Constitution 2026-10-03 section 14.C names 'Codex — GPT-5.6 Sol — Extra High' as the default recommended model (預設推薦模型) for independent audits and allows a different intensity with a stated reason; section 15 requires generated agent instructions to state a suggested (建議) tool, model and intensity. Neither makes a model version a condition of an audit's validity.",
+        "The mandatory independence conditions are a fresh session and separation from the implementation agent (Constitution section 19; Provenance Protocol section 11, whose preferred pattern is 'Claude Code implements -> Codex audits'). The audit was a fresh Codex session, separate from every Claude Code session in the G1 chain.",
+        "Repository precedent: the accepted G1 acceptance closure records that its role contract 'does not require a different model family' (AUDITOR_INDEPENDENCE_BOUNDARY).",
+        "The recorded reasoning effort (xhigh) corresponds to the requested Extra High."
+      ],
+      "limitation": "The original audit instruction is outside the repository and was not read in this session; the determination rests on the governing documents above. Had that instruction made the model identity an explicit stop condition, it would need separate owner adjudication."
+    },
+    "audit_report_source_custody": {
+      "source_class": "OPERATOR_EXTRACTED_TRANSCRIPT",
+      "is_owner_supplied_report_file": false,
+      "custody_as_published_in_phase_a": "The owner did not hand over a separate report file. With explicit owner authorization given in this publication session, the publication operator read the local Codex session rollout log read-only and extracted the final assistant message verbatim.",
+      "rollout_file_name": "rollout-2026-10-12T16-02-28-01a12f22-6d74-7c32-bb7d-84a93188e17a.jsonl",
+      "rollout_sha256_at_extraction_as_recorded": "dd4be32bfc772c7da40027b2909a5948f485fc9023e409c7984e4c69f33e0a82",
+      "rollout_is_git_durable": false,
+      "rollout_read_or_re_verified_by_acceptance_operator": false,
+      "signature": "NONE_EXISTS",
+      "audit_working_evidence": "NOT_PUBLISHED (per the report, computations were in memory and no log file was created)",
+      "effect_on_acceptance": "NONBLOCKING. The transcript's identity is fixed by its published SHA-256; that it is the auditor's final message rests on the publication operator's recorded extraction, which cannot be re-proven from Git. Its content is corroborated here against local bytes wherever re-derived.",
+      "lifecycle_disposition": "DISCLOSED / CARRIED"
+    },
+    "publication_observations": [
+      {
+        "id": "PUB-OBS-1",
+        "class": "EOL_PORTABILITY",
+        "text_as_published": "The four published files have no .gitattributes rule (text/eol unspecified) and core.autocrlf=true on this workstation. .gitattributes is a pinned authority file and was deliberately not modified. Registered SHA-256 values are over the LF bytes written here, which equal the Git blob bytes. A checkout that smudges to CRLF yields different working-tree raw hashes; verify against blob bytes (git cat-file blob).",
+        "acceptance_operator_evaluation": "CONFIRMED and NONBLOCKING. All four Phase A blobs contain zero CR bytes and equal the registered SHA-256 and byte counts; on this workstation the working-tree copies are still LF and byte-identical to the blobs. A checkout that smudges to CRLF changes working-tree hashes only, never blob content. The same limitation applies to the three files of this package (text and eol attributes unspecified; core.autocrlf=true here). .gitattributes was not modified.",
+        "severity_assigned_by_acceptance_operator": "MINOR",
+        "blocking_for_full81_numerical_results_acceptance": false,
+        "lifecycle_disposition_after_this_acceptance": "OPEN / CARRIED",
+        "closed": false
+      },
+      {
+        "id": "PUB-OBS-2",
+        "class": "PRE_EXISTING_WORKING_TREE_STATE",
+        "text_as_published": "results/provenance/main_full81_authorization_r2/main_full81_authorization.json shows a pre-existing stat-only ' M' porcelain entry; its working bytes equal the HEAD blob (SHA-256 ef534fdf6ae10b5c37811c95dc5c900b0c022bff14f7e445eb546e940886b15f). Left untouched.",
+        "acceptance_operator_evaluation": "CONFIRMED and NONBLOCKING. The entry is still present; working bytes equal the HEAD blob (2924 bytes, SHA-256 ef534fdf6ae10b5c37811c95dc5c900b0c022bff14f7e445eb546e940886b15f, zero CR in both); the content diff against a scratch copy of the index is empty. Not touched.",
+        "severity_assigned_by_acceptance_operator": "INFORMATIONAL",
+        "blocking_for_full81_numerical_results_acceptance": false,
+        "lifecycle_disposition_after_this_acceptance": "OPEN / CARRIED",
+        "closed": false
+      },
+      {
+        "id": "PUB-OBS-3",
+        "class": "REMOTE_HEAD_CONFIRMATION",
+        "text_as_published": "The report confirmed the remote branch through a GitHub connector after its local git ls-remote failed. In this session git ls-remote --heads origin thesis-v7 succeeded and returned c8f555094d6ab711ce6426302419fff958ed19fa.",
+        "acceptance_operator_evaluation": "NONBLOCKING. In this session git ls-remote --heads origin thesis-v7 returned the Phase A commit, and the unauthenticated GitHub REST API returned the same commit object, tree id and branch head.",
+        "severity_assigned_by_acceptance_operator": "INFORMATIONAL",
+        "blocking_for_full81_numerical_results_acceptance": false,
+        "lifecycle_disposition_after_this_acceptance": "CARRIED",
+        "closed": false
+      },
+      {
+        "id": "PUB-OBS-4",
+        "class": "READ_FIRST_COVERAGE",
+        "text_as_published": "Framework v7.4 and Registry v7.4 were verified by SHA-256 against their accepted bindings; the operator read Framework sections 0 and 3.4 and the Registry Full81 status statements, not both documents in full. The provenance protocol v1 and the governance Constitution (local copy outside the repository, SHA-256 4f5eaf050d96f84d96e06ebebd53e095f209ad50bb0a0f94a180f2dd0efc9c38) were read in full.",
+        "acceptance_operator_evaluation": "NONBLOCKING; the same boundary applies to this session (see this_acceptance_session.read_first_coverage).",
+        "severity_assigned_by_acceptance_operator": "INFORMATIONAL",
+        "blocking_for_full81_numerical_results_acceptance": false,
+        "lifecycle_disposition_after_this_acceptance": "CARRIED",
+        "closed": false
+      },
+      {
+        "id": "PUB-OBS-5",
+        "class": "VALIDATION_NOT_RUN",
+        "text_as_published": "No test suite, validator, preflight or production-authority gate was executed in this session. No implementation, validator, test, data or authority byte was changed, and the authorized scope is four additive governance files.",
+        "acceptance_operator_evaluation": "NONBLOCKING for numerical-results acceptance. The Phase A commit changed no path of the execution-HEAD tree (301 paths identical, four added), and the runtime (21), validation (9) and governance (26) identity digests recomputed here from live bytes and from execution-HEAD blobs all equal the accepted G1 values, so no implementation, validator, test, data or authority byte differs from the audited and executed state. The validation suites certify the implementation and its gates, not the post-solve results. This acceptance session likewise executed no test suite, validator, preflight or production gate. Residual: the suites have not been run on the post-execution tree, and at least one test encodes a pre-execution premise (ACC-OBS-1); the live production gate has not been re-determined at any HEAD after the execution HEAD.",
+        "severity_assigned_by_acceptance_operator": "MINOR",
+        "blocking_for_full81_numerical_results_acceptance": false,
+        "lifecycle_disposition_after_this_acceptance": "OPEN / CARRIED",
+        "closed": false
+      }
+    ]
+  },
+  "new_findings_and_observations": [
+    {
+      "id": "ACC-N1",
+      "class": "MANDATORY_EXPOSURE_LOG_NOT_ESTABLISHED",
+      "origin": "This acceptance session. Not listed in the Step 3 instruction, the audit report or the Phase A package.",
+      "category": "Governance",
+      "severity": "MAJOR",
+      "severity_assigned_by": "acceptance operator",
+      "lifecycle_disposition": "OPEN",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "blocking_for_first_scientific_inspection_of_full81_results": true,
+      "blocking_for_supervisor_discussion_of_full81_results": true,
+      "governing_source": {
+        "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md",
+        "sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851",
+        "sections": "13 (mandatory exposure-log requirement), with 11 (reduced-blinding claim boundary) and 12 (prohibited Full81-to-U-01 calibration)",
+        "lifecycle": "CLOSED / ACCEPTED / PUBLISHED at fbdd5f0c056f6df8e97c5ef27a8d0c5e6942e0f0; bound as governing_authority in the run's authority.json",
+        "machine_readable_form": "results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json (exposure_log_requirement: mandatory = true, optional = false)"
+      },
+      "requirement_verbatim": [
+        "After every lifecycle gate in §9 has completed in order, a dedicated prospective exposure log **must** be established in the authorized Full81 provenance namespace **before** the first scientific inspection. The exact path and serialization must be fixed by the later Main Full81 authorization/preflight; this closure creates no competing production namespace.",
+        "The first scientific inspection of current V7.4 Full81 results must create an exposure event at the time of inspection. Every later supervisor discussion must create its own exposure event.",
+        "Exposure logging is **not optional**. An omitted first-inspection event, an omitted supervisor-discussion event, or a retrospective/fabricated exposure record is a governance failure."
+      ],
+      "observed": [
+        "No exposure log exists. Outside .git and .venv, no file in the working tree (gitignored directories included) is named as one, and the only files containing exposure-log wording are the governing sequencing documents and manifest, the historical U-06 alignment candidate checkpoints and manifests (which record zero entries created) and CURRENT_STATE.md.",
+        "The path and serialization were not fixed by the Main Full81 authorization/preflight: the G1 scope authorization, the no-solve preflight evidence and the execution authorization name no exposure-log path. Their only exposure references are the A2 result-exposure firewall labels.",
+        "The audit report and the Phase A package do not mention the requirement."
+      ],
+      "evidence_grade": "CONFIRMED (absence established by search of the live tree and of the three G1 authorization-stage records)",
+      "basis_for_nonblocking_on_results_acceptance": "The clause attaches the obligation to the first scientific inspection and to each supervisor discussion, and assigns the path and serialization to the authorization/preflight stage. It sets no condition on numerical-results acceptance and has no bearing on the numerical validity, completeness or identity of the 81 results.",
+      "owner_adjudication": "Disclosed to the owner in this session before any write; the owner decided to accept and publish with this finding carried as OPEN.",
+      "not_decided_here": [
+        "Whether the post-solve audit, its publication or this acceptance session count as a scientific inspection or an exposure event under the clause.",
+        "The exposure-log path and serialization.",
+        "How result exposure that has already occurred is to be recorded without producing a retrospective or fabricated exposure record."
+      ],
+      "result_information_already_visible": {
+        "independent_audit_report_and_phase_a_record": "Published at the Phase A commit in a public repository: solver status distribution, MIPGap range, runtime range and sum, the objective range over the 81 cases, solution-count range and integrity residuals with their worst-case case ids. No per-case sizing, ranking, surface geometry, knee or transition analysis.",
+        "this_acceptance_session": "The operator read stored status, gap, objective and runtime for all 81 cases and dispatch-level values for six cases. Session tool output displayed E_N_kwh, P_B_kw_ac and CC_regular_kw for those six cases (a0.60_b04, a0.60_b06, a0.80_b06, a0.80_b08, a0.90_b12, a1.00_b12) and the stored result and audit values of a0.80_b08. None of these are published in this package. Whether any person viewed that tool output is NOT_DETERMINABLE_BY_THE_OPERATOR. No response-surface, ranking, knee or transition analysis was performed.",
+        "a2_variable_floor_results": "None exist; none were exposed. The ZERO-A2-RESULT-EXPOSURE firewall is untouched."
+      },
+      "exposure_log_entries_created_by_this_pass": 0,
+      "this_record_is_an_exposure_log": false,
+      "remediated_by_this_acceptance": false,
+      "closed": false
+    },
+    {
+      "id": "ACC-OBS-1",
+      "class": "STALE_PRE_EXECUTION_TEST_PREMISE",
+      "severity": "MINOR",
+      "lifecycle_disposition": "OPEN",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "text": "tests/test_21f_u06_accepted_lifecycle_gate.py:1280-1284 (test_no_production_run_directory_was_created) asserts that results/layer_a/final_81_v7_3/runs contains only the core-three run. The directory now also holds the authorized Full81 run and one incomplete staging directory, so the assertion is expected to fail if the suite is run on the live tree. Established by reading the test and listing the directory; the test was not executed. This is a stale-premise diagnostic effect of an authorized execution, not a behavioral regression. The file is one of the nine validation-identity paths and was not edited.",
+      "closed": false
+    },
+    {
+      "id": "ACC-OBS-2",
+      "class": "EARLIER_INCOMPLETE_STAGING_ATTEMPT",
+      "severity": "INFORMATIONAL",
+      "lifecycle_disposition": "OPEN / CARRIED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "text": "The sibling directory results/layer_a/final_81_v7_3/runs/.pending_layer_a_20261008T182936610185Z_802a64df5c holds authority.json and case_schedule.json, byte-identical to those of the accepted run, and an empty cases directory. It was created 9 min 58 s before the accepted run started and contains no case artifact. It is not part of the accepted run, whose FRESH_RUN_ONLY policy restarts from the first case. Whether that earlier attempt issued any solver call is NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE; the SUPPORTED count of 81 optimization calls refers to the accepted run only. Not touched.",
+      "closed": false
+    },
+    {
+      "id": "ACC-OBS-3",
+      "class": "ACCEPTANCE_OPERATOR_INDEPENDENCE_BOUNDARY",
+      "severity": "INFORMATIONAL",
+      "lifecycle_disposition": "DISCLOSED / CARRIED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "text": "The acceptance operator is a separate session from the Codex auditor and from the Phase A publication operator (session 1bdd945a-8817-4cc8-9803-2e7118ee956f), and is cross-model with respect to the auditor as recorded. It reports the same model id as the publication operator (claude-opus-5-5), so its verification of the Phase A package is session-independent, not cross-model. It also shares the project's persistent agent-notes directory with earlier Claude Code sessions; notes on report custody, line endings and the local test environment were read for orientation and were not used as evidence.",
+      "closed": false
+    },
+    {
+      "id": "ACC-OBS-4",
+      "class": "STATIC_AUTHORITY_LABELS_IN_STORED_OUTPUTS",
+      "severity": "MINOR",
+      "lifecycle_disposition": "OPEN / CARRIED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "related_finding": "AUD-N3",
+      "text": "Same class as AUD-N3, observed additionally in stored outputs: all 81 case_definition.json files carry v7_4_authority.main_full81_authorization = NOT_AUTHORIZED, main_full81_execution_authorized = false and alignment_status = CANDIDATE_ALIGNED, next to production_authority_freeze_status = FROZEN; the root authority.json carries main_full81_execution_authorized = false and execution_authorization = NOT_GRANTED_BY_SCOPE_AUTHORIZATION. These are static base-bundle and scope-level labels. The effective execution authority is the separately published GRANTED execution authorization, which the execution gate resolves. The stored bytes are historical and are not rewritten; a reader must not take these labels as the run's execution-authority status.",
+      "closed": false
+    },
+    {
+      "id": "ACC-OBS-5",
+      "class": "PHASE_A_NEXT_GATE_WORDING",
+      "severity": "INFORMATIONAL",
+      "lifecycle_disposition": "DISCLOSED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "text": "The Phase A record names its next gate as a fresh independent read-only publication audit of that package and commit, then a separately authorized result-acceptance decision. The owner's Step 3 authorization assigns both to this session: the publication verification was completed, read-only, before any write, and the acceptance decision is authorized separately from Phase A. The governing documents require the acceptance decision to be separate from the author, the auditor and the publisher, which holds; they do not require the publication verification and the acceptance decision to sit in different sessions. The G1 Phase B acceptance operator likewise verified Phase A containment within its own acceptance pass.",
+      "closed": false
+    },
+    {
+      "id": "ACC-OBS-6",
+      "class": "STALE_HANDOFF_DOCUMENTS",
+      "severity": "MINOR",
+      "lifecycle_disposition": "OPEN / CARRIED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "related_finding": "SAR-N2",
+      "text": "Observed again: the CLAUDE.md read-first list names the v7.3 Framework and Registry as current authority, and docs/ai_handoff/CURRENT_STATE.md (last updated 2026-10-02) still records no accepted U-06 lifecycle and Full81 as NOT_YET_EXECUTED. Both contradict the live accepted artifacts, which govern. Neither file was edited here; synchronizing them is a separate, separately authorized act.",
+      "closed": false
+    }
+  ],
+  "findings_carried_not_closed": [
+    {
+      "id": "AUD-N1",
+      "origin": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT",
+      "reported_row_id": "AUD-N1",
+      "category_as_reported": "Evidence",
+      "severity_as_reported": "MODERATE",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "NOT_APPLICABLE",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "Missing per-invocation telemetry, solver version, best bound and full warning history limit reconstruction of the historical execution; the stored solver contract (status, gap, finite objective) is verifiable for 81/81 cases."
+    },
+    {
+      "id": "AUD-N2",
+      "origin": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT",
+      "reported_row_id": "AUD-N2",
+      "category_as_reported": "Implementation",
+      "severity_as_reported": "MODERATE",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "OPEN / NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "NOT_APPLICABLE",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "The canonical-input timestamp fingerprint is hashed in the unit pandas reads, not the documented int64-ns; a cross-environment portability limitation of that fingerprint. The raw-byte SHA-256 of the canonical input is bound in the run authority and re-verified here. Not repaired; no frozen artifact patched."
+    },
+    {
+      "id": "AUD-N3",
+      "origin": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT",
+      "reported_row_id": "AUD-N3",
+      "category_as_reported": "Implementation",
+      "severity_as_reported": "MINOR",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "NOT_APPLICABLE",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "The stored authority payload carries the static label main_full81_execution_authorized=false. The execution gate resolves a separate published execution authorization (src/production_successor_stack_v7_3.py:948-949 -> src/main_full81_authorization_v7_4.py:2384); read from source in this session. See ACC-OBS-4 for the same label class in the 81 stored case definitions."
+    },
+    {
+      "id": "AUD-N4",
+      "origin": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT",
+      "reported_row_id": "AUD-N4",
+      "category_as_reported": "Evidence",
+      "severity_as_reported": "INFORMATIONAL",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "NOT_APPLICABLE",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "The 651 result files are gitignored and untracked. This package publishes none of them; it makes only their identities durable. Preservation or publication of the bytes needs separate authorization."
+    },
+    {
+      "id": "G1-N1",
+      "origin": "G1_LIFECYCLE_CARRIED_FINDING",
+      "reported_row_id": "G1-N1",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "OPEN / CARRIED / NONBLOCKING",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "Carried unchanged from the accepted G1 lifecycle; descriptive origin label only."
+    },
+    {
+      "id": "G1-N2",
+      "origin": "G1_LIFECYCLE_CARRIED_FINDING",
+      "reported_row_id": "G1-N2",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MAJOR",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "OPEN / CARRIED / NONBLOCKING",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "Carried unchanged from the accepted G1 lifecycle; concerns predecessor freeze coverage, not the G1 21-path live identity, which was recomputed here from live bytes and from execution-HEAD blobs."
+    },
+    {
+      "id": "G1-N3",
+      "origin": "G1_LIFECYCLE_CARRIED_FINDING",
+      "reported_row_id": "G1-N3",
+      "category_as_reported": "Evidence",
+      "severity_as_reported": "INFORMATIONAL",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "CARRIED",
+      "status_in_accepted_g1_authority_records": "DISCLOSED / CARRIED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "Carried unchanged from the accepted G1 lifecycle; no test campaign was re-run or re-certified here."
+    },
+    {
+      "id": "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY",
+      "origin": "G1_LIFECYCLE_CARRIED_FINDING",
+      "reported_row_id": "R7 durability",
+      "category_as_reported": "Evidence",
+      "severity_as_reported": "MAJOR",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "OPEN / CARRIED / NONBLOCKING",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "Carried unchanged from the accepted G1 lifecycle; historical preservation evidence remains not Git-durable."
+    },
+    {
+      "id": "SAR-N1",
+      "origin": "G1_READINESS_REVIEW_OBSERVATION",
+      "reported_row_id": "SAR-N1–N4",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR–MODERATE",
+      "severity_scope_note": "The report gives one group row for SAR-N1 through SAR-N4 with a severity RANGE; per-item severity is NOT_STATED_IN_REPORT and is not assigned here.",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "OBSERVATION_NOT_CLOSED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "Carried unchanged; stale descriptive runtime label, not edited (runtime identity)."
+    },
+    {
+      "id": "SAR-N2",
+      "origin": "G1_READINESS_REVIEW_OBSERVATION",
+      "reported_row_id": "SAR-N1–N4",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR–MODERATE",
+      "severity_scope_note": "The report gives one group row for SAR-N1 through SAR-N4 with a severity RANGE; per-item severity is NOT_STATED_IN_REPORT and is not assigned here.",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "OBSERVATION_NOT_CLOSED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "Carried unchanged and observed again in this session: see ACC-OBS-6."
+    },
+    {
+      "id": "SAR-N3",
+      "origin": "G1_READINESS_REVIEW_OBSERVATION",
+      "reported_row_id": "SAR-N1–N4",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR–MODERATE",
+      "severity_scope_note": "The report gives one group row for SAR-N1 through SAR-N4 with a severity RANGE; per-item severity is NOT_STATED_IN_REPORT and is not assigned here.",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "OBSERVATION_NOT_CLOSED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "Carried unchanged; the untracked docs/checkpoints candidate records are outside the gate-protected prefixes and were not touched."
+    },
+    {
+      "id": "SAR-N4",
+      "origin": "G1_READINESS_REVIEW_OBSERVATION",
+      "reported_row_id": "SAR-N1–N4",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR–MODERATE",
+      "severity_scope_note": "The report gives one group row for SAR-N1 through SAR-N4 with a severity RANGE; per-item severity is NOT_STATED_IN_REPORT and is not assigned here.",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "status_in_accepted_g1_authority_records": "OBSERVATION_NOT_CLOSED",
+      "blocking_for_full81_numerical_results_acceptance": false,
+      "lifecycle_disposition_after_this_acceptance": "CARRIED / NOT_CLOSED",
+      "closed": false,
+      "closed_by_this_acceptance": false,
+      "remediated_by_this_acceptance": false,
+      "acceptance_operator_note": "Carried unchanged; no durable role record was created for it here."
+    }
+  ],
+  "disclosed_limitations_carried": [
+    {
+      "id": "AUDITOR_INDEPENDENCE_BOUNDARY",
+      "source": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+      "statement": "The independent delta audit was performed by a separate, fresh Claude Code session (5a2e0245-83c6-4891-a55b-e2a1dc8bf823). It was not performed by Codex and is not claimed as cross-model verification.",
+      "blocks_full81_numerical_results_acceptance": false,
+      "closed_by_this_acceptance": false
+    },
+    {
+      "id": "AUDIT_PRIMARY_EVIDENCE_NOT_GIT_DURABLE",
+      "source": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+      "statement": "The audit's primary logs and JSON evidence are retained in a local session scratchpad and identified by SHA-256 in the published audit record; they are not Git-durable.",
+      "blocks_full81_numerical_results_acceptance": false,
+      "closed_by_this_acceptance": false
+    },
+    {
+      "id": "HISTORICAL_21I_CONTENT",
+      "source": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+      "statement": "Historical 21i raw bytes (sha256 5954738053d32a5e541a2bf9db8d8e4fd360e2fa70945734f9de2fe6fdadebd8) are locally recoverable from the R1/R2 preservation archives but are not remote Git-durable.",
+      "blocks_full81_numerical_results_acceptance": false,
+      "closed_by_this_acceptance": false
+    },
+    {
+      "id": "FIXTURE_CONTROL_53_OF_54",
+      "source": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+      "statement": "Committed fixture controls passed 53/54; the exception (F2 unknown extra key) is classified NONBLOCKING / INVALID_TEST_EXPECTATION by the published audit record and is not a fail-open vulnerability. 54/54 is not claimed.",
+      "blocks_full81_numerical_results_acceptance": false,
+      "closed_by_this_acceptance": false
+    }
+  ],
+  "fixture_control_limitation": {
+    "id": "FIXTURE_CONTROL_53_OF_54",
+    "passed": 53,
+    "total": 54,
+    "not_claimed": "54/54",
+    "classification_in_published_g1_audit_record": "NONBLOCKING / INVALID_TEST_EXPECTATION",
+    "rewritten_by_this_acceptance": false
+  },
+  "g1_independence_limitation_preserved": "The G1 independent delta audit was performed by a separate Claude Code session, not by Codex, and is not claimed as cross-model verification. Unchanged by this acceptance.",
+  "evidence_qualifications_carried_unchanged": [
+    {
+      "item": "historical_actual_optimization_attempts",
+      "grade_as_reported": "SUPPORTED",
+      "upgraded_by_this_acceptance": false
+    },
+    {
+      "item": "historical_model_constructions",
+      "grade_as_reported": "SUPPORTED",
+      "upgraded_by_this_acceptance": false
+    },
+    {
+      "item": "gurobi_version_best_bound_values_and_complete_warning_history",
+      "grade_as_reported": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+      "upgraded_by_this_acceptance": false
+    },
+    {
+      "item": "operator_identity_and_owner_launch_decision_history",
+      "grade_as_reported": "NOT_RECONSTRUCTIBLE_FROM_SAVED_ARTIFACTS",
+      "upgraded_by_this_acceptance": false
+    },
+    {
+      "item": "full_production_validator_fixture_suite",
+      "grade_as_reported": "NOT_EXECUTED_BY_THE_INDEPENDENT_AUDIT",
+      "upgraded_by_this_acceptance": false
+    },
+    {
+      "item": "byte_verification_scope",
+      "grade_as_reported": "BOUNDED_SCOPE_NOT_A_WHOLE_DISK_SNAPSHOT",
+      "upgraded_by_this_acceptance": false
+    }
+  ],
+  "reconstructibility": {
+    "code_reconstructibility": "CONFIRMED (the 21 runtime paths are tracked; the digest recomputed here from execution-HEAD blobs equals the accepted G1 digest)",
+    "input_reconstructibility": "CONFIRMED (canonical input and four execution inputs are tracked at the execution HEAD with the bound hashes); AUD-N2 limits the cross-environment portability of the timestamp fingerprint only",
+    "execution_identity_reconstructibility": "CONFIRMED (execution HEAD, source and input identities and the authorization chain are Git-durable)",
+    "full_execution_state_reconstructibility": "PARTIALLY_RECONSTRUCTIBLE (no OS or process history, no per-invocation telemetry, no solver version or log, no launch history)",
+    "numerical_results_reconstructibility": "CURRENTLY_RECONSTRUCTIBLE_FROM_SURVIVING_GITIGNORED_BYTES / NOT_DURABLY_RECONSTRUCTIBLE_FROM_GIT_HISTORY (only the identities are Git-durable)",
+    "overall_reconstructibility": "PARTIALLY_RECONSTRUCTIBLE; sufficient for this acceptance; not a complete transient-execution replay and not a durable result publication"
+  },
+  "binding_carry_forward_conditions": [
+    "ACC-N1: an exposure log, with an authorized path and serialization, must exist before the first scientific inspection of Full81 results and before any supervisor discussion; establishing it needs a separate authorization.",
+    "Once Main Full81 results are exposed, U-01 may not be described as fully pre-Full81 blinded, and Full81 magnitudes must not be used to calibrate U-01 (sequencing closure sections 11 and 12). U-01 remains OPEN / HOLD; A2 remains HARD BLOCKED.",
+    "A cross-case aggregation or reporting layer must not add a materiality-classification column (run authority.json, governance_state.cross_case_aggregation).",
+    "A production runner must re-determine authority live at the then-live HEAD; neither the Phase A commit nor the commit that will contain this package is a solver-execution commit."
+  ],
+  "explicit_non_claims": [
+    "This record does not claim that the acceptance operator recomputed the numerical results.",
+    "This record does not claim the audit ran on GPT-5.6 Sol.",
+    "This record does not upgrade SUPPORTED to CONFIRMED or PARTIALLY_RECONSTRUCTIBLE to FULLY_RECONSTRUCTIBLE.",
+    "This record does not make the 651 result files Git-durable.",
+    "This record closes or remediates no finding, including AUD-N2 and ACC-N1.",
+    "This record is not an exposure log, a current-mainline pointer, a notebook or an analysis.",
+    "This record does not modify the G1 role contract, any G1 lifecycle record, any authorization, the Framework or the Registry.",
+    "This record does not state that it is published; publication is proven from live Git."
+  ],
+  "not_authorized_by_this_record": [
+    "CURRENT_MAINLINE_POINTER",
+    "PIPELINE_MANAGEMENT_NOTEBOOK",
+    "DOWNSTREAM_LAYER_A_RESULTS_ANALYSIS_OR_SCIENTIFIC_INSPECTION",
+    "SUPERVISOR_DISCUSSION_OF_FULL81_RESULTS_WITHOUT_AN_EXPOSURE_EVENT",
+    "EXPOSURE_LOG_CREATION",
+    "CROSS_CASE_AGGREGATION_OR_REPORTING_LAYER",
+    "ANY_SOLVER_CALL_MODEL_CONSTRUCTION_OR_PRODUCTION_RUN",
+    "A2_LAYER_B_DG_OR_SENSITIVITY",
+    "REMEDIATION_OF_ANY_FINDING",
+    "PRESERVATION_OR_PUBLICATION_OF_THE_651_RESULT_FILES",
+    "HANDOFF_DOCUMENT_SYNCHRONIZATION",
+    "GIT_TAG"
+  ],
+  "git_state_at_authoring": {
+    "branch": "thesis-v7",
+    "head": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+    "upstream": "origin/thesis-v7",
+    "origin_url": "https://github.com/irischg/iris_thesis.git",
+    "cached_remote_tracking_ref": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+    "live_remote_head_from_ls_remote": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+    "head_equals_live_remote_head": true,
+    "ahead_behind_vs_upstream": [
+      0,
+      0
+    ],
+    "staged_paths": [],
+    "unstaged_content_diff_paths": [],
+    "porcelain_non_untracked_entries": [
+      "results/provenance/main_full81_authorization_r2/main_full81_authorization.json"
+    ],
+    "untracked_file_count": 20,
+    "untracked_under_gate_protected_prefixes": 0,
+    "porcelain_command_argv": [
+      "git",
+      "-c",
+      "core.quotePath=false",
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all"
+    ],
+    "porcelain_raw_bytes": 1349,
+    "porcelain_raw_sha256": "99621d7fff34cc9b1963798ff3c2062f10785d627095dc802999f4f2b636ad24",
+    "porcelain_equals_phase_a_authoring_snapshot": true,
+    "porcelain_text": "NOT_PUBLISHED (untracked local file names are withheld from a public repository; the raw output is committed to by byte count and SHA-256 only)",
+    "ignored_paths_under_results": 9704,
+    "ignored_paths_under_results_scope": "git ls-files --others --ignored --exclude-standard -- results",
+    "acceptance_package_paths_absent_before_authoring": true,
+    "package_directory_ignore_rule": ".gitignore:23:results/",
+    "checkpoint_path_ignored": false,
+    "git_index_rewritten_by_read_only_inspection": false
+  },
+  "this_acceptance_session": {
+    "operator_session_id": "1f3d8c9a-aeb0-4a9f-a5c7-fc8e5e79204b",
+    "operator_session_id_source": "session identifier exposed by the runtime's scratch-directory path",
+    "counters_scope": "Operator self-report as of the authoring of this record; not an independent audit.",
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "solver_calls": 0,
+    "solver_library_imports": 0,
+    "production_runs": 0,
+    "a2_layer_b_dg_sensitivity_solves": 0,
+    "tests_validators_preflights_or_production_gates_executed": 0,
+    "repairs": 0,
+    "production_result_files_modified": 0,
+    "previously_accepted_or_historical_files_modified": 0,
+    "files_created_in_the_repository": 3,
+    "gitignore_modified": false,
+    "gitattributes_modified": false,
+    "read_first_coverage": "Read in full: the four Phase A files, the Provenance Protocol v1, the Constitution (local copy), CROSS_AUDIT_PROTOCOL, the rigorous-audit protocol, the Codex authority header, CURRENT_STATE, the G1 acceptance closure and manifest, and the execution authorization. Read in the governing sections: Framework v7.4 (sections 0 and 3.4), the governance-sequencing R2 candidate (sections 5.2-11) and its acceptance closure (sections 9-18), PROJECT_HANDOFF (sections 1-4). Verified by hash and searched, not read in full: Registry v7.4. The v7.3 Framework and Registry named by the CLAUDE.md read-first list were not read; they are historical predecessors (ACC-OBS-6).",
+    "tooling": "Read-only hashing and parsing scripts kept in the session scratch directory outside the repository; they are not part of this package."
+  },
+  "package": {
+    "package_directory": "results/provenance/full81_g1_postsolve_results_acceptance_r1",
+    "files": [
+      {
+        "path": "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json",
+        "role": "full81_postsolve_results_acceptance_closure"
+      },
+      {
+        "path": "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_manifest.json",
+        "role": "acceptance_manifest"
+      },
+      {
+        "path": "docs/checkpoints/full81_g1_postsolve_results_acceptance_r1_2026-10-12.md",
+        "role": "human_readable_checkpoint (external to the package directory)"
+      }
+    ],
+    "publication_allowlist": [
+      "docs/checkpoints/full81_g1_postsolve_results_acceptance_r1_2026-10-12.md",
+      "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json",
+      "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_manifest.json"
+    ],
+    "force_add_required_paths": [
+      "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json",
+      "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_manifest.json"
+    ],
+    "this_record_own_sha256": "NOT_EMBEDDED_BY_DESIGN (registered in acceptance_manifest.json)",
+    "manifest_and_checkpoint_sha256": "NOT_EMBEDDED_BY_DESIGN (both are authored after this record; the manifest registers the checkpoint)"
+  },
+  "non_self_approval": {
+    "acceptance_operator_originated_the_numerical_pass": false,
+    "acceptance_operator_published_the_audit_evidence": false,
+    "this_package_is_independently_audited": false,
+    "statement": "The numerical PASS belongs to the independent Codex audit and its publication to a different operator session. This package has not itself been independently audited; a later reviewer can verify it from the registered hashes and from Git."
+  },
+  "next_legal_gate": "MACHINE_READABLE_CURRENT_MAINLINE_POINTER_DESIGN_AND_IMPLEMENTATION, under a separate owner authorization"
+}

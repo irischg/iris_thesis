@@ -1,0 +1,165 @@
+{
+  "artifact_type": "FULL81_G1_POSTSOLVE_RESULTS_ACCEPTANCE_MANIFEST",
+  "schema_version": "iris-thesis-full81-g1-postsolve-results-acceptance-manifest-v1",
+  "package_id": "FULL81_G1_POSTSOLVE_RESULTS_ACCEPTANCE_R1",
+  "package_revision": "R1",
+  "role": "acceptance_manifest",
+  "phase": "PHASE_B_FORMAL_RESULTS_ACCEPTANCE",
+  "date": "2026-10-12",
+  "authored_utc": "2026-10-12T09:49:28Z",
+  "serialization": "UTF-8, LF line endings, json.dumps(indent=2, ensure_ascii=False), insertion-ordered keys, one trailing newline",
+  "hash_basis": "SHA-256 and byte count over the raw bytes read back from the repository working tree after writing (LF bytes; equal to the Git blob bytes)",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_subject": "FULL81_NUMERICAL_RESULTS",
+  "package_directory": "results/provenance/full81_g1_postsolve_results_acceptance_r1",
+  "internal_package_files": [
+    {
+      "path": "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json",
+      "role": "full81_postsolve_results_acceptance_closure",
+      "file_type": "application/json; UTF-8; LF",
+      "bytes": 85857,
+      "sha256": "3b27f9a60f5e0bfbcffde343aad164e74cff2f8a98581d91fb95d4bc90e2ba02"
+    }
+  ],
+  "external_registered_artifacts": [
+    {
+      "path": "docs/checkpoints/full81_g1_postsolve_results_acceptance_r1_2026-10-12.md",
+      "role": "human_readable_checkpoint",
+      "file_type": "text/markdown; UTF-8; LF",
+      "bytes": 19853,
+      "sha256": "451587a89f217fedad0c3b8b6f387f735619ef901316fbe9367f798d6e327e38"
+    }
+  ],
+  "manifest_self_registration": {
+    "path": "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_manifest.json",
+    "role": "acceptance_manifest",
+    "bytes": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH",
+    "sha256": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH"
+  },
+  "hash_semantics": "Noncircular. The closure embeds no hash of the checkpoint or of this manifest. The checkpoint, written after the closure, quotes the closure's hash and no hash of this manifest. This manifest, written last, registers both. No file in the package embeds this manifest's hash, and no file embeds the hash of a commit that will contain it.",
+  "physical_files_in_package_directory": [
+    "acceptance_closure.json",
+    "acceptance_manifest.json"
+  ],
+  "publication_allowlist": [
+    "docs/checkpoints/full81_g1_postsolve_results_acceptance_r1_2026-10-12.md",
+    "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json",
+    "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_manifest.json"
+  ],
+  "publication_allowlist_is_exact": true,
+  "force_add_required_paths": [
+    "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json",
+    "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_manifest.json"
+  ],
+  "ordinary_add_paths": [
+    "docs/checkpoints/full81_g1_postsolve_results_acceptance_r1_2026-10-12.md"
+  ],
+  "registration_checks_at_build": {
+    "registered_artifacts": 2,
+    "registered_but_missing": 0,
+    "hash_mismatches_against_written_bytes": 0,
+    "byte_count_mismatches_against_written_bytes": 0,
+    "symlinks": 0,
+    "paths_escaping_repository": 0
+  },
+  "accepted_evidence_references": {
+    "note": "Identities of the evidence the acceptance relies on. These files are not part of this package and are not modified by it. Git-tracked entries were verified against blob bytes; the run artifact is gitignored and was verified against local bytes.",
+    "phase_a_publication_commit": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+    "phase_a_publication_commit_parent": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "phase_a_files": [
+      {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+        "git_blob_id": "bf20b233a749a3297b5f7ff77b5262534fed889a",
+        "bytes": 21479,
+        "sha256": "c6a07064451fa98f84fd714d09d59ed93eabc3e1b8d3e0461dd664e47937d394"
+      },
+      {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+        "git_blob_id": "a8570eb30dae2d403c20b3ee624bf6fe03f82e54",
+        "bytes": 88562,
+        "sha256": "a02f05e52862a3f99abb0d56e5f8b44d1a6ee851ad2f6fdbc012b1bd608ac3fa"
+      },
+      {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/publication_manifest.json",
+        "git_blob_id": "603564f9d93daf37880a5f8a1eda1b565c279337",
+        "bytes": 4617,
+        "sha256": "9f90449b31175f17d78d74cccf68764cf2e587f507a4bd13719b957d3d539337"
+      },
+      {
+        "path": "docs/checkpoints/full81_g1_postsolve_audit_evidence_publication_r1_2026-10-12.md",
+        "git_blob_id": "c625654b45cf2ed017407e8f592ee9410e4f4523",
+        "bytes": 17624,
+        "sha256": "6d7c49dd68e44d42915e2d4584a4be148032650475645b8b4a1bd9c1a2dc5f84"
+      }
+    ],
+    "target_run_root_completion_manifest": {
+      "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/completion_manifest.json",
+      "bytes": 103575,
+      "sha256": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24",
+      "git_tracked": false
+    },
+    "execution_head": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "g1_accepted_lifecycle_record": {
+      "path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json",
+      "sha256": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0"
+    },
+    "main_full81_execution_authorization": {
+      "path": "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json",
+      "sha256": "87ec6643deef262bc3710b2e1d7e76d582bcfd1eebd41ffdc6c6c71eb2f12c6e"
+    },
+    "framework_v7_4": {
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273"
+    },
+    "registry_v7_4": {
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433"
+    },
+    "canonical_annual_input": {
+      "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+      "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428"
+    },
+    "g1_runtime_identity_digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc"
+  },
+  "role_agreement": {
+    "agrees_with": "acceptance_closure",
+    "agreement_fields": [
+      "package_id",
+      "package_revision",
+      "phase",
+      "acceptance_status",
+      "acceptance_subject"
+    ],
+    "disagreements": []
+  },
+  "target_run": {
+    "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828",
+    "root_completion_manifest_sha256": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24"
+  },
+  "findings_open_after_acceptance": [
+    "ACC-N1",
+    "AUD-N1",
+    "AUD-N2",
+    "AUD-N3",
+    "AUD-N4",
+    "G1-N1",
+    "G1-N2",
+    "G1-N3",
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY",
+    "SAR-N1",
+    "SAR-N2",
+    "SAR-N3",
+    "SAR-N4"
+  ],
+  "containing_commit": "NOT_EMBEDDED_BY_DESIGN (publication is proven from live Git, not asserted here)",
+  "gitignore_modified": false,
+  "gitattributes_modified": false,
+  "production_result_files_registered_or_published": 0,
+  "is_acceptance_manifest": true,
+  "is_acceptance_closure": false,
+  "is_g1_lifecycle_role_record": false,
+  "is_g1_implementation_generation_acceptance": false,
+  "is_current_mainline_pointer": false,
+  "is_exposure_log_or_exposure_event": false,
+  "notes": "Registers the acceptance closure and the external checkpoint from their written bytes. Shares a file basename with the G1 Phase-B acceptance manifest but is a different artifact type at a different path and fills no G1 lifecycle role."
+}
