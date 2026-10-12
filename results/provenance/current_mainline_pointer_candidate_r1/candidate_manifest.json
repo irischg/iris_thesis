@@ -1,0 +1,505 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_CANDIDATE_MANIFEST",
+  "schema_version": "iris-thesis-current-mainline-pointer-candidate-manifest-v1",
+  "package_id": "CURRENT_MAINLINE_POINTER_CANDIDATE_R1",
+  "package_revision": "R1",
+  "role": "candidate_manifest",
+  "lifecycle": "CANDIDATE / NOT ACCEPTED / NOT CANONICAL / NOT CURRENT AUTHORITY",
+  "self_accepted": false,
+  "date": "2026-10-12",
+  "authored_utc": "2026-10-12T12:17:44Z",
+  "authoring_operator": "Claude Code session 8b5bb3d7-d815-491d-8107-4c78336734cd, model id claude-opus-5-5 as reported by the runtime; reasoning effort not verifiable by the operator; not self-accepting",
+  "authorization_basis": "The thesis owner's bounded Step 4 candidate-implementation authorization, received as the task instruction of the authoring session. The instruction text is not published and no signature is claimed.",
+  "serialization": "UTF-8, LF line endings, json.dumps(indent=2, ensure_ascii=False), insertion-ordered keys, one trailing newline",
+  "hash_basis": "SHA-256 and byte count over the raw bytes read back from the repository working tree after writing (LF bytes). No file of this package is tracked by Git, so no blob identity exists yet.",
+  "package_directory": "results/provenance/current_mainline_pointer_candidate_r1",
+  "registered_artifacts": [
+    {
+      "path": "configs/candidates/current_mainline_pointer_candidate_r1.json",
+      "role": "candidate_current_mainline_pointer",
+      "file_type": "application/json; UTF-8; LF",
+      "bytes": 53873,
+      "sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f",
+      "git_tracked": false
+    },
+    {
+      "path": "src/current_mainline_pointer_v1.py",
+      "role": "read_only_pointer_verifier",
+      "file_type": "text/x-python; UTF-8; LF",
+      "bytes": 118860,
+      "sha256": "fc73068a6a469842a7c234d4c07dac1baba1d669fc9c5a1adf2449b571d483e0",
+      "git_tracked": false
+    },
+    {
+      "path": "tests/test_current_mainline_pointer_v1.py",
+      "role": "focused_zero_solve_tests",
+      "file_type": "text/x-python; UTF-8; LF",
+      "bytes": 96372,
+      "sha256": "887ac34c56d2d9149e005e28b4b16bc6656c1284250077bb11ceea84d9db4188",
+      "git_tracked": false
+    },
+    {
+      "path": "docs/checkpoints/current_mainline_pointer_candidate_r1_2026-10-12.md",
+      "role": "human_readable_checkpoint",
+      "file_type": "text/markdown; UTF-8; LF",
+      "bytes": 25676,
+      "sha256": "00fa34ac5fbd871ab39c0ef4563edd2e77b65a56e4626982b77e230f6bf2527b",
+      "git_tracked": false
+    }
+  ],
+  "manifest_self_registration": {
+    "path": "results/provenance/current_mainline_pointer_candidate_r1/candidate_manifest.json",
+    "role": "candidate_manifest",
+    "bytes": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH",
+    "sha256": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH"
+  },
+  "hash_semantics": "Noncircular. The pointer embeds no hash of itself, of the verifier, of the tests, of the checkpoint or of this manifest. The verifier and the tests embed no hash at all. The checkpoint, written after them, quotes the hashes of the pointer, the verifier and the tests and no hash of this manifest. This manifest, written last, registers all four. No file embeds the hash of a commit that would contain it.",
+  "physical_files_in_package_directory": [
+    "candidate_manifest.json"
+  ],
+  "created_files": [
+    "configs/candidates/current_mainline_pointer_candidate_r1.json",
+    "src/current_mainline_pointer_v1.py",
+    "tests/test_current_mainline_pointer_v1.py",
+    "docs/checkpoints/current_mainline_pointer_candidate_r1_2026-10-12.md",
+    "results/provenance/current_mainline_pointer_candidate_r1/candidate_manifest.json"
+  ],
+  "created_files_are_exact": true,
+  "canonical_pointer": {
+    "proposed_path": "configs/current_mainline_pointer.json",
+    "exists": false,
+    "created_by_this_package": false,
+    "canonical_mode_result_on_the_live_repository": {
+      "verdict": "FAIL_CLOSED",
+      "failure_codes": [
+        "CANONICAL_POINTER_ABSENT"
+      ]
+    }
+  },
+  "pointer_summary": {
+    "schema_version": "iris-thesis-current-mainline-pointer-v1",
+    "pointer_revision": "R1",
+    "pointer_payload_digest": "1c118f22350aa21d74b04f94307be8bbb43d694023e5350b1edf512824980fdf",
+    "pointer_payload_digest_note": "Digest of the pointer minus its lifecycle envelope (pointer_identity, activation_basis). Informational for a later audit; nothing depends on it yet.",
+    "tracked_file_identities_bound": 35,
+    "local_only_file_identities_bound": 3,
+    "commits_recorded": 10,
+    "identity_axis_member_paths": {
+      "runtime": 21,
+      "validation": 9,
+      "governance_authority": 26
+    },
+    "cross_binding_rows": 258,
+    "internal_equalities": 49,
+    "checks": [
+      "C01_SCHEMA",
+      "C02_POINTER_LIFECYCLE_AND_MODE",
+      "C03_PATH_CONTAINMENT",
+      "C04_GIT_PROVENANCE",
+      "C05_FILE_IDENTITIES_RAW_BYTES_AND_GIT_BLOBS",
+      "C06_G1_IDENTITY_AXES",
+      "C07_GOVERNANCE_STATUS_AND_CROSS_BINDINGS",
+      "C08_CASE_UNIVERSE_AND_RUN_BINDING",
+      "C09_ROLES_AND_CONFLICTING_CLAIMS",
+      "C10_OPEN_FINDINGS_AND_SCIENTIFIC_EXPOSURE",
+      "C11_NON_AUTHORIZATION_BOUNDARIES",
+      "C12_LOCAL_RESULT_REGISTRATIONS",
+      "C13_CANONICAL_ACTIVATION_BASIS"
+    ],
+    "open_findings_carried": [
+      "ACC-N1",
+      "ACC-OBS-1",
+      "ACC-OBS-2",
+      "ACC-OBS-3",
+      "ACC-OBS-4",
+      "ACC-OBS-5",
+      "ACC-OBS-6",
+      "AUD-N1",
+      "AUD-N2",
+      "AUD-N3",
+      "AUD-N4",
+      "G1-N1",
+      "G1-N2",
+      "G1-N3",
+      "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY",
+      "SAR-N1",
+      "SAR-N2",
+      "SAR-N3",
+      "SAR-N4"
+    ],
+    "u_01_status": "OPEN_HOLD",
+    "blocked_purposes": [
+      "SCIENTIFIC_INSPECTION",
+      "RESULTS_ANALYSIS",
+      "SUPERVISOR_DISCUSSION"
+    ],
+    "permitted_purposes": [
+      "TECHNICAL_IDENTITY_VERIFICATION"
+    ],
+    "authorizes": []
+  },
+  "verified_identities": {
+    "note": "Re-derived from live bytes and Git objects by the verifier in this session; the values are in the pointer and are not repeated here beyond these anchors.",
+    "framework_v7_4_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+    "registry_v7_4_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+    "production_generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+    "g1_accepted_lifecycle_record_sha256": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0",
+    "g1_runtime_identity_digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+    "g1_validation_identity_digest": "1bd49904e8d774c27b5e8a0390240eb836e92fa6cf857948f7b9d3486914111b",
+    "g1_governance_authority_identity_digest": "360c81b133440e1b0444e01f2fd120eb1f49d0db3501283773a2952c032dbeb4",
+    "canonical_annual_input_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+    "accepted_run_id": "20261008T183934456307Z_a6826f4828",
+    "root_completion_manifest_sha256": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24",
+    "run_file_aggregate_sha256": "7d0e2d0c066d956080445f66236bc91ed97ad5cd8d8256f6617a4f2b07b12c41",
+    "historical_execution_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "audit_evidence_publication_commit": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+    "results_acceptance_publication_commit": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+    "owner_stated_identities_reproduced": true
+  },
+  "verification_runs_on_final_bytes": {
+    "NOT_CHECKED": {
+      "verdict": "CANDIDATE_INTERNALLY_CONSISTENT_NOT_ACCEPTED_NOT_AUTHORITY",
+      "is_current_authority": false,
+      "results_integrity": "NOT_CHECKED",
+      "results_consumption_permitted": false,
+      "failure_codes": [],
+      "checks": {
+        "C01_SCHEMA": "PASS",
+        "C02_POINTER_LIFECYCLE_AND_MODE": "PASS",
+        "C03_PATH_CONTAINMENT": "PASS",
+        "C04_GIT_PROVENANCE": "PASS",
+        "C05_FILE_IDENTITIES_RAW_BYTES_AND_GIT_BLOBS": "PASS",
+        "C06_G1_IDENTITY_AXES": "PASS",
+        "C07_GOVERNANCE_STATUS_AND_CROSS_BINDINGS": "PASS",
+        "C08_CASE_UNIVERSE_AND_RUN_BINDING": "PASS",
+        "C09_ROLES_AND_CONFLICTING_CLAIMS": "PASS",
+        "C10_OPEN_FINDINGS_AND_SCIENTIFIC_EXPOSURE": "PASS",
+        "C11_NON_AUTHORIZATION_BOUNDARIES": "PASS",
+        "C12_LOCAL_RESULT_REGISTRATIONS": "NOT_RUN",
+        "C13_CANONICAL_ACTIVATION_BASIS": "NOT_APPLICABLE"
+      },
+      "file_identities": {
+        "tracked": 35,
+        "local_only_checked": 0,
+        "local_only_deferred": 3
+      },
+      "pointer_sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f"
+    },
+    "METADATA_ONLY": {
+      "verdict": "CANDIDATE_INTERNALLY_CONSISTENT_NOT_ACCEPTED_NOT_AUTHORITY",
+      "is_current_authority": false,
+      "results_integrity": "METADATA_ONLY_NOT_FULL_INTEGRITY",
+      "results_consumption_permitted": false,
+      "failure_codes": [],
+      "checks": {
+        "C01_SCHEMA": "PASS",
+        "C02_POINTER_LIFECYCLE_AND_MODE": "PASS",
+        "C03_PATH_CONTAINMENT": "PASS",
+        "C04_GIT_PROVENANCE": "PASS",
+        "C05_FILE_IDENTITIES_RAW_BYTES_AND_GIT_BLOBS": "PASS",
+        "C06_G1_IDENTITY_AXES": "PASS",
+        "C07_GOVERNANCE_STATUS_AND_CROSS_BINDINGS": "PASS",
+        "C08_CASE_UNIVERSE_AND_RUN_BINDING": "PASS",
+        "C09_ROLES_AND_CONFLICTING_CLAIMS": "PASS",
+        "C10_OPEN_FINDINGS_AND_SCIENTIFIC_EXPOSURE": "PASS",
+        "C11_NON_AUTHORIZATION_BOUNDARIES": "PASS",
+        "C12_LOCAL_RESULT_REGISTRATIONS": "PASS",
+        "C13_CANONICAL_ACTIVATION_BASIS": "NOT_APPLICABLE"
+      },
+      "file_identities": {
+        "tracked": 35,
+        "local_only_checked": 3,
+        "local_only_deferred": 0
+      },
+      "pointer_sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f"
+    },
+    "STRICT_FULL_REHASH": {
+      "verdict": "CANDIDATE_INTERNALLY_CONSISTENT_NOT_ACCEPTED_NOT_AUTHORITY",
+      "is_current_authority": false,
+      "results_integrity": "STRICT_FULL_INTEGRITY_PASS",
+      "results_consumption_permitted": false,
+      "failure_codes": [],
+      "checks": {
+        "C01_SCHEMA": "PASS",
+        "C02_POINTER_LIFECYCLE_AND_MODE": "PASS",
+        "C03_PATH_CONTAINMENT": "PASS",
+        "C04_GIT_PROVENANCE": "PASS",
+        "C05_FILE_IDENTITIES_RAW_BYTES_AND_GIT_BLOBS": "PASS",
+        "C06_G1_IDENTITY_AXES": "PASS",
+        "C07_GOVERNANCE_STATUS_AND_CROSS_BINDINGS": "PASS",
+        "C08_CASE_UNIVERSE_AND_RUN_BINDING": "PASS",
+        "C09_ROLES_AND_CONFLICTING_CLAIMS": "PASS",
+        "C10_OPEN_FINDINGS_AND_SCIENTIFIC_EXPOSURE": "PASS",
+        "C11_NON_AUTHORIZATION_BOUNDARIES": "PASS",
+        "C12_LOCAL_RESULT_REGISTRATIONS": "PASS",
+        "C13_CANONICAL_ACTIVATION_BASIS": "NOT_APPLICABLE"
+      },
+      "file_identities": {
+        "tracked": 35,
+        "local_only_checked": 3,
+        "local_only_deferred": 0
+      },
+      "pointer_sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f"
+    }
+  },
+  "tests_executed": {
+    "suite": "tests/test_current_mainline_pointer_v1.py",
+    "interpreter": "Python 3.14.3 (.venv), unittest, PYTHONDONTWRITEBYTECODE=1, -B",
+    "run_against": "the final bytes of the pointer, the verifier and the tests registered by this manifest; none of the three was edited after these runs",
+    "totals": {
+      "tests": 59,
+      "passed": 59,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "runs": [
+      {
+        "command": "python -B -m unittest tests.test_current_mainline_pointer_v1.StaticVerifierTests tests.test_current_mainline_pointer_v1.PathContainmentTests tests.test_current_mainline_pointer_v1.FixtureCandidateTests tests.test_current_mainline_pointer_v1.FixtureCanonicalTests",
+        "classes": {
+          "StaticVerifierTests": 7,
+          "PathContainmentTests": 3,
+          "FixtureCandidateTests": 18,
+          "FixtureCanonicalTests": 11
+        },
+        "tests": 39,
+        "outcome": "OK",
+        "seconds": 196.304
+      },
+      {
+        "command": "python -B -m unittest -v tests.test_current_mainline_pointer_v1.LiveCandidateTests",
+        "classes": {
+          "LiveCandidateTests": 20
+        },
+        "tests": 20,
+        "outcome": "OK",
+        "seconds": 437.24
+      }
+    ],
+    "split_reason": "One command would exceed the session's ten-minute command limit; the two commands together cover every test class exactly once.",
+    "environment_dependent_skips": "None occurred. The directory-link test created a Windows junction and ran. On a clone without the local result files, the strict and metadata live assertions assert the fail-closed outcome instead, and the mutation sweep skips with an explicit reason.",
+    "logs": "Session-local, not Git-durable.",
+    "mutation_sweep": {
+      "what": "One mutation per payload leaf of the final pointer, verified under the METADATA_ONLY policy.",
+      "payload_leaves": 688,
+      "under_descriptive_keys_not_verified_by_design": 66,
+      "mutated": 622,
+      "failed_closed": 604,
+      "unnoticed_and_explained": 18,
+      "explained_classes": [
+        "pointer_revision: the pointer's own name",
+        "accepted_result_set.status_layers.execution_time_case_status: bound by the per-case manifests, i.e. under the strict policy only (covered by a fixture test)",
+        "roles.historical_only and roles.accepted_other_scope_not_bound_by_this_pointer (16 leaves): advisory lists, enforced only as must-not-overlap-a-bound-path"
+      ],
+      "gaps_found_and_closed_during_authoring": [
+        "file identities that are elements of a list were not hash-checked",
+        "finding severity and disposition were not compared with the accepted record",
+        "a publication commit could be any later commit that still contained the record",
+        "the accepted-current role list was only loosely bound"
+      ],
+      "in_suite": "LiveCandidateTests.test_every_payload_value_is_verified_or_explicitly_descriptive repeats the sweep and passes on the final bytes."
+    },
+    "pre_existing_suites_executed": 0,
+    "production_scripts_or_gates_executed": 0,
+    "observations": [
+      {
+        "id": "PTR-OBS-1",
+        "severity_assessed_by_authoring_operator": "MODERATE",
+        "statement": "While untracked, src/current_mainline_pointer_v1.py and tests/test_current_mainline_pointer_v1.py are untracked files under gate-protected prefixes. Read from source and not executed: _authority_untracked_paths in src/production_successor_stack_v7_3.py lists untracked paths under src/ and tests/, so the production gate is expected to fail closed until these files are published or removed. No production execution is authorized or pending."
+      },
+      {
+        "id": "PTR-OBS-2",
+        "severity_assessed_by_authoring_operator": "MINOR",
+        "statement": "The live test layer assumes the state bound by Candidate R1 is the live repository state. When a later accepted pointer revision supersedes R1, those tests are to be retired with it rather than edited until they pass."
+      },
+      {
+        "id": "PTR-OBS-3",
+        "severity_assessed_by_authoring_operator": "MINOR",
+        "statement": "The canonical activation contract is proposed and unaccepted; it was exercised on synthetic fixture artifacts only. No activation artifact exists and no digest of one is reserved."
+      },
+      {
+        "id": "PTR-OBS-4",
+        "severity_assessed_by_authoring_operator": "MINOR",
+        "statement": "This pointer revision binds the Full81 Layer A result set only. The accepted EOB and core-three runs are listed but neither bound nor verified."
+      },
+      {
+        "id": "PTR-OBS-5",
+        "severity_assessed_by_authoring_operator": "MINOR",
+        "statement": "The verifier makes no network call; publication is proven against the local remote-tracking ref."
+      },
+      {
+        "id": "PTR-OBS-6",
+        "severity_assessed_by_authoring_operator": "MINOR",
+        "statement": "The pinned .gitattributes is bound by the frozen G1 governance identity and was not extended, so the new files have no EOL rule. Their hashes are over LF bytes; a CRLF-converting checkout changes working-tree hashes and the verifier then fails closed, naming the cause."
+      },
+      {
+        "id": "PTR-OBS-7",
+        "severity_assessed_by_authoring_operator": "INFORMATIONAL",
+        "statement": "The verifier checks identities and cross-bindings. It does not re-run the G1 lifecycle role validators, because it must never import the production stack."
+      },
+      {
+        "id": "PTR-OBS-8",
+        "severity_assessed_by_authoring_operator": "INFORMATIONAL",
+        "statement": "The Constitution and the 2026-10-12 handoff were read from outside the repository and are not Git-durable. The handoff predates the audit publication and the results acceptance; live primary artifacts were used. Framework v7.4 was read in its header and sections 0.1 to 0.3 and 3.4, and Registry v7.4 in its header, not in full. docs/ai_handoff/CURRENT_STATE.md is stale (SAR-N2, ACC-OBS-6) and was not edited."
+      },
+      {
+        "id": "PTR-OBS-9",
+        "severity_assessed_by_authoring_operator": "INFORMATIONAL",
+        "statement": "The pointer, the checkpoint and this manifest were generated by session-local scripts that are not part of the package. The pointer is verified independently of how it was authored."
+      },
+      {
+        "id": "PTR-OBS-10",
+        "severity_assessed_by_authoring_operator": "INFORMATIONAL",
+        "statement": "A candidate PASS shows that the pointer agrees with the accepted records it names. Whether it names the right records is for the independent audit."
+      }
+    ]
+  },
+  "git_state": {
+    "branch": "thesis-v7",
+    "head_before": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+    "head_after": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+    "upstream_tracking_ref_before": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+    "upstream_tracking_ref_after": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+    "live_remote_head_observed_at_authoring": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f (git ls-remote origin refs/heads/thesis-v7; one read-only query, no fetch)",
+    "staged_paths_before": [],
+    "staged_paths_after": [],
+    "git_index_sha256_before": "c938996bf671e7d9cda9811c913c40ae82dc5860b5512725a5ad4cc6175a1e04",
+    "git_index_sha256_after": "c938996bf671e7d9cda9811c913c40ae82dc5860b5512725a5ad4cc6175a1e04",
+    "refs_sha256_before": "b2e353f6f9c9ad64bd83c6b1b2b9a44a0c9508469f8da2e576178a28a720d7ec",
+    "refs_sha256_after": "b2e353f6f9c9ad64bd83c6b1b2b9a44a0c9508469f8da2e576178a28a720d7ec",
+    "porcelain_command_argv": [
+      "git",
+      "-c",
+      "core.quotePath=false",
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all"
+    ],
+    "porcelain_before": {
+      "raw_bytes": 1349,
+      "raw_sha256": "99621d7fff34cc9b1963798ff3c2062f10785d627095dc802999f4f2b636ad24"
+    },
+    "porcelain_after": {
+      "raw_bytes": 1569,
+      "raw_sha256": "fbecdd6b06218f0f7da51c407ca4917120e5b8f749bcc551789a5ecff9f5f223",
+      "raw_base64": "IE0gcmVzdWx0cy9wcm92ZW5hbmNlL21haW5fZnVsbDgxX2F1dGhvcml6YXRpb25fcjIvbWFpbl9mdWxsODFfYXV0aG9yaXphdGlvbi5qc29uCj8/IC5vYnNpZGlhbi9hcHAuanNvbgo/PyAub2JzaWRpYW4vYXBwZWFyYW5jZS5qc29uCj8/IC5vYnNpZGlhbi9jb3JlLXBsdWdpbnMuanNvbgo/PyAub2JzaWRpYW4vd29ya3NwYWNlLmpzb24KPz8gMDYyOemWi+acg+mAkOWtl+eov0lyaXMuZG9jeAo/PyAiQ2xhdWRlIG91dHB1dHMvMDkzMF/pgLLluqbloLHlkYpf5oqV5b2x54mH5p625qeL6IiH6YCQ6aCB6Kyb56i/X3Y3LjIubWQiCj8/ICJDbGF1ZGUgb3V0cHV0cy9QMl9MaXRlcmF0dXJlX1Bvc2l0aW9uaW5nX3Y3LjIucHB0eCIKPz8gIkNsYXVkZSBvdXRwdXRzL2lyaXNfdGhlc2lzX2luZGVwZW5kZW50X2F1ZGl0XzIwMjYtMDktMTMubWQiCj8/ICJDbGF1ZGUgb3V0cHV0cy9pcmlzX3RoZXNpc19yZXBvX2F1ZGl0XzIwMjYtMDktMTMubWQiCj8/IEVPQl9BdHRlbXB0M18yMDI2MDkyNFQxODQwMzg4MDk1OTRaXzU5MTE2YjE1NTYuemlwCj8/IGNvbmZpZ3MvY2FuZGlkYXRlcy9jdXJyZW50X21haW5saW5lX3BvaW50ZXJfY2FuZGlkYXRlX3IxLmpzb24KPz8gImRvY3MvQ0FUT0NLRVJURUFJUE9URVAgcmN044SQ44SaUFYgIEkuaHRtbCIKPz8gImRvY3MvRVNHQyBDb3N0IFBlcmZvcm1hbmNlIFJlcG9ydCAyMDIyIFBOTkwtMzMyODMucGRmIgo/PyBkb2NzL2NoZWNrcG9pbnRzL2N1cnJlbnRfbWFpbmxpbmVfcG9pbnRlcl9jYW5kaWRhdGVfcjFfMjAyNi0xMC0xMi5tZAo/PyBkb2NzL2NoZWNrcG9pbnRzL21haW5fZnVsbDgxX3ByZWZsaWdodF9hdXRob3JpemF0aW9uX2d1YXJkX2NhbmRpZGF0ZV9yMV8yMDI2LTEwLTAzLm1kCj8/IGRvY3MvY2hlY2twb2ludHMvbWFpbl9mdWxsODFfcHJlZmxpZ2h0X2F1dGhvcml6YXRpb25fZ3VhcmRfY2FuZGlkYXRlX3IyXzIwMjYtMTAtMDQubWQKPz8gZG9jcy9jaGVja3BvaW50cy9tYWluX2Z1bGw4MV9wcmVmbGlnaHRfYXV0aG9yaXphdGlvbl9ndWFyZF9jYW5kaWRhdGVfcjNfMjAyNi0xMC0wNC5tZAo/PyBkb2NzL2NoZWNrcG9pbnRzL21haW5fZnVsbDgxX3ByZWZsaWdodF9hdXRob3JpemF0aW9uX2d1YXJkX2NhbmRpZGF0ZV9yNF8yMDI2LTEwLTA1Lm1kCj8/IGRvY3MvY2hlY2twb2ludHMvbWFpbl9mdWxsODFfcHJlZmxpZ2h0X2F1dGhvcml6YXRpb25fZ3VhcmRfY2FuZGlkYXRlX3I1XzIwMjYtMTAtMDUubWQKPz8gZG9jcy9jaGVja3BvaW50cy9tYWluX2Z1bGw4MV9wcmVmbGlnaHRfYXV0aG9yaXphdGlvbl9ndWFyZF9jYW5kaWRhdGVfcjZfMjAyNi0xMC0wNS5tZAo/PyBkb2NzL2NoZWNrcG9pbnRzL21haW5fZnVsbDgxX3ByZWZsaWdodF9hdXRob3JpemF0aW9uX2d1YXJkX2NhbmRpZGF0ZV9yN18yMDI2LTEwLTA2Lm1kCj8/IGRvY3MvY2hlY2twb2ludHMvcG9zdF9mdWxsODFfcHJlX3JvYnVzdG5lc3NfYWxpZ25tZW50X2NoZWNrcG9pbnRfdjdfNF8yMDI2LTEwLTAyLm1kCj8/IHNyYy9jdXJyZW50X21haW5saW5lX3BvaW50ZXJfdjEucHkKPz8gdGVzdHMvdGVzdF9jdXJyZW50X21haW5saW5lX3BvaW50ZXJfdjEucHkK"
+    },
+    "porcelain_entries_removed": [],
+    "porcelain_entries_added": [
+      "?? configs/candidates/current_mainline_pointer_candidate_r1.json",
+      "?? docs/checkpoints/current_mainline_pointer_candidate_r1_2026-10-12.md",
+      "?? src/current_mainline_pointer_v1.py",
+      "?? tests/test_current_mainline_pointer_v1.py"
+    ],
+    "porcelain_note": "The manifest lies under the ignored results/ tree, so it adds no porcelain entry; it adds one ignored path. The snapshot labelled 'after' was taken once the other four files were final and before this manifest was written.",
+    "ignored_paths_under_results_before_manifest": 9704,
+    "commits_pushes_tags_resets_cleans_stashes": 0,
+    "snapshot_discipline": "Snapshots use GIT_OPTIONAL_LOCKS=0 and no working-tree diff. Two ordinary read-only commands (git status, git diff --stat) ran once at session start, before the first snapshot; whether they refreshed index stat data is not provable from the snapshots."
+  },
+  "non_mutation": {
+    "accepted_or_historical_files_modified": 0,
+    "tracked_files_modified": 0,
+    "tracked_index_entries_sha256_unchanged": true,
+    "gitignore_modified": false,
+    "gitattributes_modified": false,
+    "full81_run_file_count": 651,
+    "full81_run_total_bytes": 156562246,
+    "full81_run_file_aggregate_sha256_before": "7d0e2d0c066d956080445f66236bc91ed97ad5cd8d8256f6617a4f2b07b12c41",
+    "full81_run_file_aggregate_sha256_after": "7d0e2d0c066d956080445f66236bc91ed97ad5cd8d8256f6617a4f2b07b12c41",
+    "full81_run_file_aggregate_equals_accepted_value": true,
+    "pre_existing_unrelated_working_tree_entries_preserved": true
+  },
+  "zero_execution_counters": {
+    "solver_library_imports": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "production_scripts_executed": 0,
+    "production_gates_or_preflights_executed": 0,
+    "pre_existing_test_suites_executed": 0,
+    "a2_layer_b_dg_sensitivity_solves": 0,
+    "basis": "The verifier is standard-library only (asserted from its AST by the tests); a fresh interpreter that ran a strict verification loaded no solver, numeric or project module (asserted by the tests). The operator's own report for everything else."
+  },
+  "scientific_exposure_in_this_session": {
+    "exposure_log_entries_created": 0,
+    "this_package_is_an_exposure_log": false,
+    "case_level_result_values_parsed_or_displayed": 0,
+    "what_was_read": "Result files were hashed as opaque bytes. Of the run's own records, only the root completion manifest (registry, case ids, case set, counts, status), one per-case completion manifest's key names, status and call count, and the governance and identity fields of authority.json were read. The published results-acceptance checkpoint was read as a required input; it states a solver-gap bound and a balance-residual figure that are already published there and are not repeated here.",
+    "acc_n1": "MAJOR / OPEN; not closed, not remediated and not reinterpreted by this package."
+  },
+  "known_limitations_and_observations": [
+    {
+      "id": "PTR-OBS-1",
+      "severity_assessed_by_authoring_operator": "MODERATE",
+      "statement": "While untracked, src/current_mainline_pointer_v1.py and tests/test_current_mainline_pointer_v1.py are untracked files under gate-protected prefixes. Read from source and not executed: _authority_untracked_paths in src/production_successor_stack_v7_3.py lists untracked paths under src/ and tests/, so the production gate is expected to fail closed until these files are published or removed. No production execution is authorized or pending."
+    },
+    {
+      "id": "PTR-OBS-2",
+      "severity_assessed_by_authoring_operator": "MINOR",
+      "statement": "The live test layer assumes the state bound by Candidate R1 is the live repository state. When a later accepted pointer revision supersedes R1, those tests are to be retired with it rather than edited until they pass."
+    },
+    {
+      "id": "PTR-OBS-3",
+      "severity_assessed_by_authoring_operator": "MINOR",
+      "statement": "The canonical activation contract is proposed and unaccepted; it was exercised on synthetic fixture artifacts only. No activation artifact exists and no digest of one is reserved."
+    },
+    {
+      "id": "PTR-OBS-4",
+      "severity_assessed_by_authoring_operator": "MINOR",
+      "statement": "This pointer revision binds the Full81 Layer A result set only. The accepted EOB and core-three runs are listed but neither bound nor verified."
+    },
+    {
+      "id": "PTR-OBS-5",
+      "severity_assessed_by_authoring_operator": "MINOR",
+      "statement": "The verifier makes no network call; publication is proven against the local remote-tracking ref."
+    },
+    {
+      "id": "PTR-OBS-6",
+      "severity_assessed_by_authoring_operator": "MINOR",
+      "statement": "The pinned .gitattributes is bound by the frozen G1 governance identity and was not extended, so the new files have no EOL rule. Their hashes are over LF bytes; a CRLF-converting checkout changes working-tree hashes and the verifier then fails closed, naming the cause."
+    },
+    {
+      "id": "PTR-OBS-7",
+      "severity_assessed_by_authoring_operator": "INFORMATIONAL",
+      "statement": "The verifier checks identities and cross-bindings. It does not re-run the G1 lifecycle role validators, because it must never import the production stack."
+    },
+    {
+      "id": "PTR-OBS-8",
+      "severity_assessed_by_authoring_operator": "INFORMATIONAL",
+      "statement": "The Constitution and the 2026-10-12 handoff were read from outside the repository and are not Git-durable. The handoff predates the audit publication and the results acceptance; live primary artifacts were used. Framework v7.4 was read in its header and sections 0.1 to 0.3 and 3.4, and Registry v7.4 in its header, not in full. docs/ai_handoff/CURRENT_STATE.md is stale (SAR-N2, ACC-OBS-6) and was not edited."
+    },
+    {
+      "id": "PTR-OBS-9",
+      "severity_assessed_by_authoring_operator": "INFORMATIONAL",
+      "statement": "The pointer, the checkpoint and this manifest were generated by session-local scripts that are not part of the package. The pointer is verified independently of how it was authored."
+    },
+    {
+      "id": "PTR-OBS-10",
+      "severity_assessed_by_authoring_operator": "INFORMATIONAL",
+      "statement": "A candidate PASS shows that the pointer agrees with the accepted records it names. Whether it names the right records is for the independent audit."
+    }
+  ],
+  "not_authorized_and_not_done": [
+    "SELF_ACCEPTANCE",
+    "INDEPENDENT_AUDIT",
+    "CANONICAL_POINTER_CREATION_OR_ACTIVATION",
+    "COMMIT",
+    "PUSH",
+    "TAG",
+    "EXPOSURE_LOG_CREATION",
+    "SCIENTIFIC_INSPECTION_OR_RESULTS_ANALYSIS",
+    "PIPELINE_NOTEBOOK",
+    "DEPENDENCY_GRAPH",
+    "SELECTIVE_RERUN_PLANNER",
+    "CONTROLLED_EXECUTOR",
+    "ANY_SOLVE_OR_MODEL_CONSTRUCTION",
+    "REMEDIATION_OF_ANY_FINDING",
+    "HANDOFF_DOCUMENT_SYNCHRONIZATION",
+    "GITATTRIBUTES_OR_GITIGNORE_CHANGE"
+  ],
+  "next_legal_gate": "INDEPENDENT_READ_ONLY_POINTER_AUDIT_BY_A_FRESH_SEPARATE_OPERATOR",
+  "is_candidate_manifest": true,
+  "is_acceptance_record": false,
+  "is_independent_audit_record": false,
+  "is_current_mainline_pointer": false,
+  "is_exposure_log_or_exposure_event": false
+}

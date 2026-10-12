@@ -1,0 +1,1035 @@
+{
+  "artifact_type": "IRIS_THESIS_CURRENT_MAINLINE_POINTER",
+  "schema_version": "iris-thesis-current-mainline-pointer-v1",
+  "pointer_revision": "R1",
+  "documentation": {
+    "purpose": "Read-first routing index. It states which methodology, evidence authority, production implementation, canonical input and formally accepted result set are current, with identities a read-only verifier can check against live bytes and Git objects. It is not a governance authority of its own, replaces no accepted primary artifact, and grants no production execution authority.",
+    "serialization": "UTF-8, LF line endings, json.dumps(indent=2, ensure_ascii=False), insertion-ordered keys, one trailing newline.",
+    "path_convention": "Every path is repository-relative POSIX. No absolute path, drive letter, backslash, '.' or '..' segment is permitted. The verifier resolves each path against the repository root at run time and refuses any path whose real location differs from its lexical one.",
+    "descriptive_keys": "Text under a key named 'note' or 'documentation', or ending in '_note', is explanation for human readers and is not verified. Every other value in the authority payload is checked against a primary artifact, a Git object or the verifier interface; pointer_revision is the pointer's own name."
+  },
+  "pointer_identity": {
+    "pointer_id": "CURRENT_MAINLINE_POINTER_CANDIDATE_R1",
+    "lifecycle": "CANDIDATE / NOT ACCEPTED / NOT CURRENT AUTHORITY",
+    "lifecycle_state": "CANDIDATE",
+    "is_candidate": true,
+    "is_accepted": false,
+    "is_canonical": false,
+    "is_current_authority": false,
+    "self_accepted": false,
+    "this_file_path": "configs/candidates/current_mainline_pointer_candidate_r1.json",
+    "proposed_canonical_path": "configs/current_mainline_pointer.json",
+    "canonical_file_created_by_this_candidate": false,
+    "self_hash": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH",
+    "git_containment": "NOT_EMBEDDED_BY_DESIGN (no commit contains this file at authoring; publication, if separately authorized, is proven from live Git)",
+    "date": "2026-10-12",
+    "authored_utc": "2026-10-12T11:46:00Z",
+    "authoring_operator": "Claude Code session 8b5bb3d7-d815-491d-8107-4c78336734cd, model id claude-opus-5-5 as reported by the runtime; reasoning effort not verifiable by the operator; not self-accepting",
+    "authorization_basis": "The thesis owner's bounded Step 4 candidate-implementation authorization, received as the task instruction of the authoring session. The instruction text is not published and no signature is claimed.",
+    "next_required_gate": "INDEPENDENT_READ_ONLY_POINTER_AUDIT_BY_A_FRESH_SEPARATE_OPERATOR",
+    "not_authorized_for_this_candidate": [
+      "SELF_ACCEPTANCE",
+      "CANONICAL_ACTIVATION",
+      "COMMIT",
+      "PUSH",
+      "TAG"
+    ]
+  },
+  "activation_basis": {
+    "status": "NOT_ACTIVATED",
+    "audited_candidate": null,
+    "independent_audit_record": null,
+    "acceptance_closure": null,
+    "acceptance_manifest": null,
+    "contract_note": "PROPOSED and unaccepted: the activation contract is implemented by the canonical mode of src/current_mainline_pointer_v1.py and is itself subject to independent audit. No activation artifact exists, and no digest or commit of one is stated, reserved or stubbed."
+  },
+  "methodology_authority": {
+    "formal_name": "Framework v7.4",
+    "role": "CURRENT_METHODOLOGY_AUTHORITY",
+    "lifecycle": "CLOSED_ACCEPTED",
+    "acceptance_commit": "2fe2105180c68d9289eddc2668399687d4c49d2e",
+    "naming_note": "The _r2 path suffix is repository/provenance identity only; the formal methodology name is Framework v7.4.",
+    "document": {
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "bytes": 216186,
+      "git_tracked": true,
+      "git_blob_id": "fad14f25bab2263c72a72f1441e2ac59c5b0394e",
+      "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "git_anchor_role": "CONTENT_AT_THIS_COMMIT"
+    },
+    "acceptance_closure": {
+      "path": "docs/checkpoints/framework_v7_4_acceptance_closure_2026-09-26.md",
+      "sha256": "39171a983534f723550ee8003924f28ad88b1abb4cb7a63d2944a1123496dd1f",
+      "bytes": 18809,
+      "git_tracked": true,
+      "git_blob_id": "fc5c79183aa1d86f7c220a18d690a72ced658815",
+      "git_anchor_commit": "2fe2105180c68d9289eddc2668399687d4c49d2e",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "acceptance_manifest": {
+      "path": "results/provenance/framework_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+      "sha256": "5f883925a4ff08fa1953d4b8b132d7cd93fae2b8774b2e167d42a426cd628a33",
+      "bytes": 15144,
+      "git_tracked": true,
+      "git_blob_id": "0972bba6b8905918c240f066c3fd08520bd235a9",
+      "git_anchor_commit": "2fe2105180c68d9289eddc2668399687d4c49d2e",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    }
+  },
+  "evidence_authority": {
+    "formal_name": "Registry v7.4",
+    "role": "CURRENT_EVIDENCE_AUTHORITY",
+    "lifecycle": "CLOSED_ACCEPTED",
+    "acceptance_commit": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+    "naming_note": "The formal evidence name is Registry v7.4; 'Candidate R1' is the provenance identity of the accepted bytes.",
+    "document": {
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "bytes": 245125,
+      "git_tracked": true,
+      "git_blob_id": "f4e0dc03916befc217cf9e5b4a9d78f4c7c7e9c8",
+      "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "git_anchor_role": "CONTENT_AT_THIS_COMMIT"
+    },
+    "independent_audit": {
+      "path": "docs/checkpoints/literature_evidence_registry_v7_4_independent_audit_2026-09-26.md",
+      "sha256": "bf909363d726ecd2f55ce883a71e6a894e718587bbeb6946d879758f246c12ce",
+      "bytes": 7639,
+      "git_tracked": true,
+      "git_blob_id": "527c83d78aa9687cfa59cc3bd8268cbfdbf72019",
+      "git_anchor_commit": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "acceptance_closure": {
+      "path": "docs/checkpoints/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26.md",
+      "sha256": "4b7607373f457fc3c607d0f4e3205e55ff2db2a4fc319c41dc7706b9ad391977",
+      "bytes": 16944,
+      "git_tracked": true,
+      "git_blob_id": "68c4727c00ce5c7e5711e8b0b68994483c752d1e",
+      "git_anchor_commit": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "acceptance_manifest": {
+      "path": "results/provenance/literature_evidence_registry_v7_4_acceptance_closure_2026-09-26/acceptance_manifest.json",
+      "sha256": "53074cfe44c0276d6f319497cbe6f5aaf07b255ac0c335f9481174dd968063fe",
+      "bytes": 16818,
+      "git_tracked": true,
+      "git_blob_id": "ae168798dcd5fdd8c884c7bd93fbb67c3076c6d5",
+      "git_anchor_commit": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    }
+  },
+  "production_generation": {
+    "generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+    "lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+    "candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+    "production_authority_freeze_status": "FROZEN",
+    "acceptance_status": "CLOSED_ACCEPTED",
+    "independent_audit_status": "PASS",
+    "status_field_note": "This is the current production-authority generation. Its lifecycle record keeps the cross-generation field names u06_acceptance_status and u06_independent_audit_status; their values describe G1 Candidate R1.",
+    "accepted_lifecycle_record": {
+      "path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json",
+      "sha256": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0",
+      "bytes": 8351,
+      "git_tracked": true,
+      "git_blob_id": "6bbaf4847ff11c6055f1f4cc9456ca5eeaffca27",
+      "git_anchor_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+      "artifact_type": "FULL81_PRODUCTION_G1_ACCEPTED_LIFECYCLE"
+    },
+    "lifecycle_roles": {
+      "implementation_candidate": {
+        "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+        "sha256": "bd3621cf9de16a6b7ed0c84444272cd17ce28326b2f4081317c926cd3aa1071a",
+        "bytes": 28291,
+        "git_tracked": true,
+        "git_blob_id": "1524fb207f2857d15811e059ea05d707adc9d49f",
+        "git_anchor_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      },
+      "independent_audit_pass": {
+        "path": "results/provenance/current_full81_production_generation_g1_independent_audit_r1/independent_audit_pass_record.json",
+        "sha256": "e7c3dcd60ed613ffaea14afe5e6fd91fe711ae0f385b8bfc7cdc6c7d1c09500c",
+        "bytes": 14045,
+        "git_tracked": true,
+        "git_blob_id": "06caf6109c038208ad840c1013936a62543d20bd",
+        "git_anchor_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      },
+      "acceptance_closure": {
+        "path": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+        "sha256": "d0122f990a14d202fa2e07f1805ce6e8cba17952e37ff1badc37613a517a5879",
+        "bytes": 9895,
+        "git_tracked": true,
+        "git_blob_id": "667fe48ffe52de46c6ea4ab02e02f48ed7631856",
+        "git_anchor_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      },
+      "acceptance_manifest": {
+        "path": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_manifest.json",
+        "sha256": "bb4aa458d94bfd73db51ae1d87a1661f5272c3a57eaa260be5df3e89abac0926",
+        "bytes": 7925,
+        "git_tracked": true,
+        "git_blob_id": "0d480cd0b8e179e17f03651e6806f1c0b930b549",
+        "git_anchor_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      },
+      "production_authority_re_freeze": {
+        "path": "results/provenance/current_full81_production_generation_g1_re_freeze_r1/production_authority_re_freeze_record.json",
+        "sha256": "41ec7d2a185993d55f745eaf512df2ab08e82c98e66bf611a95dc967a32c0982",
+        "bytes": 8866,
+        "git_tracked": true,
+        "git_blob_id": "7b57034dabbcd844c71a098576e693effab093ff",
+        "git_anchor_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      }
+    },
+    "candidate_checkpoint": {
+      "path": "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+      "sha256": "dccbbffccc37dbea2179bcbc6210f1afa76351d9883fc73485f3be83278ce9a9",
+      "bytes": 9404,
+      "git_tracked": true,
+      "git_blob_id": "e792a363b917cec72a56e0b5b83f8d240da73b2d",
+      "git_anchor_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "candidate_change_ledger": {
+      "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json",
+      "sha256": "e1b2ecc8fcb44327b4d8e0a38f1fd7ba200bd9fa44b363ceaf89220aadbde080",
+      "bytes": 49686,
+      "git_tracked": true,
+      "git_blob_id": "3d14c689b44fbd8c0d5c15282ba75500e97a8d25",
+      "git_anchor_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "identity_axes": {
+      "digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8",
+      "path_list_source": {
+        "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+        "sha256": "bd3621cf9de16a6b7ed0c84444272cd17ce28326b2f4081317c926cd3aa1071a",
+        "bytes": 28291,
+        "git_tracked": true,
+        "git_blob_id": "1524fb207f2857d15811e059ea05d707adc9d49f",
+        "git_anchor_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+        "artifact_type": "FULL81_PRODUCTION_G1_IMPLEMENTATION_CANDIDATE"
+      },
+      "path_list_note": "The member paths of each axis are read from the accepted G1 candidate manifest, which is itself hash-bound by the accepted lifecycle record. The verifier recomputes each digest from live raw bytes and from the blobs of the historical execution commit.",
+      "runtime": {
+        "identity_class": "G1_RUNTIME_IDENTITY",
+        "manifest_key": "runtime_identity",
+        "digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+        "path_count": 21
+      },
+      "validation": {
+        "identity_class": "G1_VALIDATION_IDENTITY",
+        "manifest_key": "validation_identity",
+        "digest": "1bd49904e8d774c27b5e8a0390240eb836e92fa6cf857948f7b9d3486914111b",
+        "path_count": 9
+      },
+      "governance_authority": {
+        "identity_class": "G1_GOVERNANCE_AUTHORITY_IDENTITY",
+        "manifest_key": "governance_authority_identity",
+        "digest": "360c81b133440e1b0444e01f2fd120eb1f49d0db3501283773a2952c032dbeb4",
+        "path_count": 26
+      }
+    }
+  },
+  "full81_authorizations": {
+    "scope_authorization": {
+      "path": "results/provenance/main_full81_authorization_g1/main_full81_authorization.json",
+      "sha256": "0dc75214904682476def42f36e73688a1f1d254523f20bfd319e6561c4a81338",
+      "bytes": 6060,
+      "git_tracked": true,
+      "git_blob_id": "f69c74d5923989fb1beec66e231eb69630bd0bb5",
+      "git_anchor_commit": "ab5c7bea4fdcd28e0ca967daadc80d86f25c7588",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+      "artifact_type": "MAIN_FULL81_SCOPE_AUTHORIZATION",
+      "authorization_status": "GRANTED",
+      "authorized_historically_by_this_record": [
+        "MAIN_FULL81_NO_SOLVE_PRODUCTION_PREFLIGHT"
+      ],
+      "authorizes_full81_execution": false
+    },
+    "no_solve_preflight_evidence": {
+      "path": "results/provenance/main_full81_no_solve_preflight_g1/main_full81_21d_no_solve_preflight_evidence.json",
+      "sha256": "95047e2fa9c0d524d5c43c0fdcafe40a93662c4282fd1aaaf0558be681f4da76",
+      "bytes": 1341441,
+      "git_tracked": true,
+      "git_blob_id": "7982add35b26679a3ae29615f2ced5c0d96fa348",
+      "git_anchor_commit": "21ff5f48a606f88b2dcd5429ddb10799341f3aeb",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "execution_authorization": {
+      "path": "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json",
+      "sha256": "87ec6643deef262bc3710b2e1d7e76d582bcfd1eebd41ffdc6c6c71eb2f12c6e",
+      "bytes": 5969,
+      "git_tracked": true,
+      "git_blob_id": "872cc4624b8365de1651dee2f08c79af48bcff4e",
+      "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+      "artifact_type": "MAIN_FULL81_EXECUTION_AUTHORIZATION",
+      "execution_authorization_status": "GRANTED",
+      "authorized_historically_by_this_record": [
+        "MAIN_FULL81_EXECUTION"
+      ],
+      "authorization_semantic_boundary": "EXECUTION_AUTHORIZED_NOT_LAUNCHED",
+      "restart_policy": "FRESH_RUN_ONLY",
+      "excluded_scopes": [
+        "A2",
+        "A2_VARIABLE_FLOOR_TREATMENT_EFFECT",
+        "PERFECT_INFORMATION",
+        "DG_EXTENSIONS",
+        "NEW_SENSITIVITIES",
+        "ALTERNATE_ANNUAL_INPUTS",
+        "ALTERED_ALPHA_BETA_GRIDS",
+        "NEW_SOLVER_SETTINGS",
+        "METHODOLOGY_CHANGES"
+      ]
+    },
+    "pointer_grants_execution_authority": false,
+    "note": "These records authorized the one historical Main Full81 execution (FRESH_RUN_ONLY) that produced the accepted run. They are cited as provenance. Neither they nor this pointer authorize a new execution, a rerun or any other scope."
+  },
+  "canonical_annual_input": {
+    "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+    "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+    "bytes": 554037,
+    "git_tracked": true,
+    "git_blob_id": "d23dfbcca8c49703d11c20d4c4303a323035c84c",
+    "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "git_anchor_role": "CONTENT_AT_THIS_COMMIT",
+    "role": "reconstructed_pv_mainline",
+    "rows": 8760,
+    "filename_provenance_note": "The v7_3 filename segment is accepted provenance naming for the canonical planning input and must not be renamed, regenerated, or normalized.",
+    "epistemic_boundary_note": "The winter PV reconstruction is a model-based, weather-informed, separately validated estimate for planning use; it is not observed meter data, not exact ground truth, and not an exact recovery of the missing historical series. (Framework v7.4 required epistemic statement.)"
+  },
+  "implementation": {
+    "scientific_model_core": {
+      "path": "src/annual_design_model_v7_2.py",
+      "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+      "bytes": 124399,
+      "git_tracked": true,
+      "git_blob_id": "4724023cbf98f414afa4d2cb8e2478a482f55f36",
+      "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "git_anchor_role": "CONTENT_AT_THIS_COMMIT",
+      "version": "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10",
+      "role": "ACCEPTED_SCIENTIFIC_IMPLEMENTATION_UNCHANGED"
+    },
+    "production_successor_stack": {
+      "path": "src/production_successor_stack_v7_3.py",
+      "sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+      "bytes": 81197,
+      "git_tracked": true,
+      "git_blob_id": "02024b99c6961b2093541e1c69c604249e14f794",
+      "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "git_anchor_role": "CONTENT_AT_THIS_COMMIT",
+      "version": "v7.3-macro-gate-2e-a-zero-solve-successor-stack-2026-09-24-r1",
+      "role": "PRODUCTION_SUCCESSOR_STACK_V7_4_AUTHORITY_BOUND"
+    },
+    "production_runner": {
+      "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+      "sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+      "bytes": 11679,
+      "git_tracked": true,
+      "git_blob_id": "b01686a3da4e81b334a8861bb383c1a936a79565",
+      "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "git_anchor_role": "CONTENT_AT_THIS_COMMIT",
+      "version": "v7.4-main-full81-no-solve-preflight-runner-2026-10-03-candidate-r3",
+      "role": "FULL81_PREFLIGHT_AND_DEPLOYMENT_GATED_ENTRY_POINT"
+    },
+    "naming_note": "The v7_2 / v7_3 labels in these paths are accepted provenance naming. The authority binding is Framework v7.4 under production generation G1; nothing is renamed.",
+    "anchor_note": "Each implementation, input and methodology/evidence document is anchored by content at the historical execution commit: the blob in that commit's tree, which the verifier also requires to be unchanged in the live HEAD."
+  },
+  "economic_parameter_interfaces": {
+    "parameter_registry": {
+      "path": "data/reference/parameter_registry_v7_2.csv",
+      "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+      "bytes": 7951,
+      "git_tracked": true,
+      "git_blob_id": "a725d737239924958f52afd52fbb6042c529a3e5",
+      "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "git_anchor_role": "CONTENT_AT_THIS_COMMIT",
+      "role": "ACCEPTED_PARAMETER_REGISTRY"
+    },
+    "execution_input_authority": [
+      {
+        "path": "data/reference/production_economic_interface_v7_2.json",
+        "sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+        "bytes": 8118,
+        "git_tracked": true,
+        "git_blob_id": "670737bebd4d5cce1740bf9e19d495419ca84c65",
+        "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "git_anchor_role": "CONTENT_AT_THIS_COMMIT"
+      },
+      {
+        "path": "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+        "sha256": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+        "bytes": 16427,
+        "git_tracked": true,
+        "git_blob_id": "8a136991aa4fe91d97815952ef7ee4b2613f1b60",
+        "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "git_anchor_role": "CONTENT_AT_THIS_COMMIT"
+      },
+      {
+        "path": "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+        "sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+        "bytes": 19752,
+        "git_tracked": true,
+        "git_blob_id": "2b37d99056a8ee5741b13b6aabf9cb50be0826ab",
+        "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "git_anchor_role": "CONTENT_AT_THIS_COMMIT"
+      },
+      {
+        "path": "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+        "sha256": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+        "bytes": 4579,
+        "git_tracked": true,
+        "git_blob_id": "702f79aa7e7fd3329f900572f005ad6bfae4aac3",
+        "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "git_anchor_role": "CONTENT_AT_THIS_COMMIT"
+      }
+    ],
+    "solver_parameter_fingerprint": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+    "source_note": "Main Full81 scope authorization (parameter registry) and execution authorization (execution-input authority, solver-parameter fingerprint)."
+  },
+  "accepted_result_set": {
+    "result_namespace": "results/layer_a/final_81_v7_3",
+    "namespace_disposition": "HISTORICAL_NAME_OPERATIONALLY_VALID_NOT_RENAMED_IN_THIS_ALIGNMENT",
+    "namespace_note": "final_81_v7_3 is an inherited historical namespace name that is operationally valid and intentionally not renamed; it is not evidence of a v7.3 route.",
+    "run_id": "20261008T183934456307Z_a6826f4828",
+    "run_path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828",
+    "case_set": "full81",
+    "case_count": 81,
+    "case_universe": {
+      "alpha_universe": [
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95,
+        1.0
+      ],
+      "beta_universe_h": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "case_id_rule": "a{alpha:.2f}_b{beta_h:02d} over the Cartesian product",
+      "grid_authority": "Framework v7.4 section 0.1 (dense 9x9 = 81 alpha/beta grid) and section 3.4 (alpha 0.60 to 1.00 in 0.05 steps; beta 4 to 12 h)"
+    },
+    "root_artifacts": {
+      "completion_manifest": {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/completion_manifest.json",
+        "sha256": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24",
+        "bytes": 103575,
+        "git_tracked": false,
+        "git_blob_id": null,
+        "git_anchor_commit": null,
+        "git_anchor_role": null
+      },
+      "authority": {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "sha256": "ecef360b340de92b2f1f612b7028efebfa1b26986fa9fe22efad66a46b3442bb",
+        "bytes": 110125,
+        "git_tracked": false,
+        "git_blob_id": null,
+        "git_anchor_commit": null,
+        "git_anchor_role": null
+      },
+      "case_schedule": {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/case_schedule.json",
+        "sha256": "08b05f654dbf997fb91ed4d835594d3f796567e47882e478b9fa05e5ba240df4",
+        "bytes": 570473,
+        "git_tracked": false,
+        "git_blob_id": null,
+        "git_anchor_commit": null,
+        "git_anchor_role": null
+      }
+    },
+    "registrations": {
+      "files_under_run_root": 651,
+      "total_bytes": 156562246,
+      "root_registered_artifacts": 650,
+      "case_registered_artifacts": 567,
+      "unregistered_by_design": [
+        "completion_manifest.json"
+      ]
+    },
+    "run_file_aggregate": {
+      "sha256": "7d0e2d0c066d956080445f66236bc91ed97ad5cd8d8256f6617a4f2b07b12c41",
+      "algorithm": "sha256 over the UTF-8 concatenation of '<relative posix path>\\t<sha256>\\t<bytes>\\n' for every file under the run root, sorted by relative path (code-point order)",
+      "recorded_in_note": "Results acceptance closure, target_run.run_file_aggregate_sha256_at_authoring."
+    },
+    "status_layers": {
+      "execution_time_completion_manifest_status": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+      "execution_time_case_status": "COMPLETE_PASS",
+      "execution_time_authority_status": "PRODUCTION_AUTHORITY_FROZEN",
+      "execution_time_optimization_calls": 81,
+      "current_governance_status": "CLOSED / ACCEPTED / PUBLISHED",
+      "note": "Two separate status layers. The execution-time completion manifest keeps its stored status string, which is historical and correct for its moment; those bytes are not rewritten. The current governance status of the results is carried by the additive formal_results_acceptance package. Neither layer rewrites the other."
+    },
+    "git_durability": {
+      "result_files_git_tracked": 0,
+      "status": "LOCALLY_RETAINED_NOT_GIT_DURABLE"
+    }
+  },
+  "independent_audit_evidence_publication": {
+    "package_id": "FULL81_G1_POSTSOLVE_AUDIT_EVIDENCE_PUBLICATION_R1",
+    "publication_commit": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+    "result_acceptance_status_recorded_at_publication": "PENDING",
+    "evidence_grade": "CODEX_REPORTED_PASS (subject to the publication-evidence checks recorded here; not recomputed in this acceptance session)",
+    "note": "Publication of the independent post-solve audit evidence. It accepted nothing; the acceptance is the separate formal_results_acceptance package.",
+    "independent_audit_report": {
+      "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+      "sha256": "c6a07064451fa98f84fd714d09d59ed93eabc3e1b8d3e0461dd664e47937d394",
+      "bytes": 21479,
+      "git_tracked": true,
+      "git_blob_id": "bf20b233a749a3297b5f7ff77b5262534fed889a",
+      "git_anchor_commit": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "audit_evidence_record": {
+      "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+      "sha256": "a02f05e52862a3f99abb0d56e5f8b44d1a6ee851ad2f6fdbc012b1bd608ac3fa",
+      "bytes": 88562,
+      "git_tracked": true,
+      "git_blob_id": "a8570eb30dae2d403c20b3ee624bf6fe03f82e54",
+      "git_anchor_commit": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "publication_manifest": {
+      "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/publication_manifest.json",
+      "sha256": "9f90449b31175f17d78d74cccf68764cf2e587f507a4bd13719b957d3d539337",
+      "bytes": 4617,
+      "git_tracked": true,
+      "git_blob_id": "603564f9d93daf37880a5f8a1eda1b565c279337",
+      "git_anchor_commit": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+      "artifact_type": "FULL81_G1_POSTSOLVE_AUDIT_EVIDENCE_PUBLICATION_MANIFEST"
+    },
+    "checkpoint": {
+      "path": "docs/checkpoints/full81_g1_postsolve_audit_evidence_publication_r1_2026-10-12.md",
+      "sha256": "6d7c49dd68e44d42915e2d4584a4be148032650475645b8b4a1bd9c1a2dc5f84",
+      "bytes": 17624,
+      "git_tracked": true,
+      "git_blob_id": "c625654b45cf2ed017407e8f592ee9410e4f4523",
+      "git_anchor_commit": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    }
+  },
+  "formal_results_acceptance": {
+    "package_id": "FULL81_G1_POSTSOLVE_RESULTS_ACCEPTANCE_R1",
+    "acceptance_status": "CLOSED_ACCEPTED",
+    "acceptance_subject": "FULL81_NUMERICAL_RESULTS",
+    "governance_status": "CLOSED / ACCEPTED / PUBLISHED",
+    "publication_commit": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+    "publication_proof_note": "Not self-asserted by the records. The verifier proves from Git that the closure, the manifest and the checkpoint were added by publication_commit with the recorded bytes and that the commit is reachable from the upstream ref.",
+    "acceptance_closure": {
+      "path": "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json",
+      "sha256": "3b27f9a60f5e0bfbcffde343aad164e74cff2f8a98581d91fb95d4bc90e2ba02",
+      "bytes": 85857,
+      "git_tracked": true,
+      "git_blob_id": "ec8bca0b0f7d6413b4bae98c564e1177ba9238ae",
+      "git_anchor_commit": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+      "artifact_type": "FULL81_G1_POSTSOLVE_RESULTS_ACCEPTANCE_CLOSURE"
+    },
+    "acceptance_manifest": {
+      "path": "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_manifest.json",
+      "sha256": "c3137a9779585f18c340317b271b68a5fbd20b447cc7c47cc0c799589b1c5aed",
+      "bytes": 7987,
+      "git_tracked": true,
+      "git_blob_id": "54c51d52dbd80ecaacee6b8d705629b5e0fcba5a",
+      "git_anchor_commit": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+      "artifact_type": "FULL81_G1_POSTSOLVE_RESULTS_ACCEPTANCE_MANIFEST"
+    },
+    "checkpoint": {
+      "path": "docs/checkpoints/full81_g1_postsolve_results_acceptance_r1_2026-10-12.md",
+      "sha256": "451587a89f217fedad0c3b8b6f387f735619ef901316fbe9367f798d6e327e38",
+      "bytes": 19853,
+      "git_tracked": true,
+      "git_blob_id": "13c594acf2b119c21c0c6907ed00d1d108d78afc",
+      "git_anchor_commit": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    }
+  },
+  "git_provenance": {
+    "branch": "thesis-v7",
+    "upstream_ref": "refs/remotes/origin/thesis-v7",
+    "historical_execution_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "historical_execution_commit_note": "HEAD of the repository when the accepted Full81 run executed. A solver-execution commit, not a governance publication of results. The two later commits below are governance publications, not execution commits.",
+    "audit_evidence_publication_commit": "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+    "results_acceptance_publication_commit": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+    "ancestry_chain_oldest_to_newest": [
+      "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+      "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+      "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+      "ab5c7bea4fdcd28e0ca967daadc80d86f25c7588",
+      "21ff5f48a606f88b2dcd5429ddb10799341f3aeb",
+      "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+      "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f"
+    ],
+    "ancestry_chain_note": [
+      "1. G1 candidate and independent audit PASS publication (Phase A)",
+      "2. G1 acceptance publication (Phase B)",
+      "3. G1 production-authority re-freeze and accepted lifecycle publication (Phase C)",
+      "4. Main Full81 scope authorization publication",
+      "5. Main Full81 no-solve preflight evidence publication",
+      "6. Main Full81 execution authorization publication = historical execution commit",
+      "7. Full81 post-solve independent audit evidence publication",
+      "8. Full81 numerical results acceptance publication"
+    ],
+    "direct_parent_links": [
+      [
+        "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "5992624e26d19304c1fc76f09c2ce128ab0e7215"
+      ],
+      [
+        "5992624e26d19304c1fc76f09c2ce128ab0e7215",
+        "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f"
+      ]
+    ],
+    "live_head_must_equal_a_recorded_commit": false,
+    "live_head_note": "Later additive commits are expected. Every recorded commit must be in the ancestry of the live HEAD and reachable from the upstream ref, and every bound tracked file must carry the same blob in the live HEAD as in its anchor commit. The live HEAD is never required to equal a historical commit."
+  },
+  "roles": {
+    "note": "DEFAULT DENY. Only the paths listed under accepted_current are current. Any other methodology, evidence, implementation, input or result path is not current, whatever its name, version label or date. The two other lists are advisory and not exhaustive: the verifier enforces only that none of their paths overlaps a path this pointer binds.",
+    "accepted_current": [
+      {
+        "role": "CURRENT_METHODOLOGY_AUTHORITY",
+        "path": "docs/research_framework_v7_4_2026-09-26_r2.md"
+      },
+      {
+        "role": "CURRENT_EVIDENCE_AUTHORITY",
+        "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md"
+      },
+      {
+        "role": "CURRENT_PRODUCTION_GENERATION_ACCEPTED_LIFECYCLE",
+        "path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json"
+      },
+      {
+        "role": "CANONICAL_ANNUAL_PLANNING_INPUT",
+        "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet"
+      },
+      {
+        "role": "ACCEPTED_SCIENTIFIC_MODEL_CORE",
+        "path": "src/annual_design_model_v7_2.py"
+      },
+      {
+        "role": "PRODUCTION_SUCCESSOR_STACK",
+        "path": "src/production_successor_stack_v7_3.py"
+      },
+      {
+        "role": "PRODUCTION_RUNNER",
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py"
+      },
+      {
+        "role": "ACCEPTED_CURRENT_FULL81_LAYER_A_RESULT_SET",
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828"
+      },
+      {
+        "role": "FORMAL_FULL81_RESULTS_ACCEPTANCE",
+        "path": "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json"
+      }
+    ],
+    "accepted_other_scope_not_bound_by_this_pointer": [
+      {
+        "role": "ACCEPTED_EOB_RUN_ECONOMIC_ONLY_BASELINE",
+        "path": "results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556",
+        "note": "Framework v7.4 section 0.3 records it as Accepted EOB, CLOSED / ACCEPTED. Not a Full81 result set. Identity not bound or verified by this pointer revision."
+      },
+      {
+        "role": "ACCEPTED_CORE_THREE_RUN",
+        "path": "results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55",
+        "note": "Framework v7.4 section 0.3 records it as Accepted core-three, CLOSED / ACCEPTED. Three representative cases executed before G1; not the Full81 result set and must not be routed as Full81. Identity not bound or verified by this pointer revision."
+      }
+    ],
+    "historical_only": [
+      {
+        "role": "HISTORICAL_V7_2_FULL81_RUN",
+        "path": "results/layer_a/final_81/runs/20260911T112258206802Z_4d0eb9e1da",
+        "note": "Historical v7.2 Full81 execution on a different annual input; immutable provenance, not the current Full81 (docs/ai_handoff/CURRENT_STATE.md section 6, a handoff-level source)."
+      },
+      {
+        "role": "INCOMPLETE_STAGING_DIRECTORY_NOT_A_RESULT_SET",
+        "path": "results/layer_a/final_81_v7_3/runs/.pending_layer_a_20261008T182936610185Z_802a64df5c",
+        "note": "Earlier incomplete staging attempt beside the accepted run; it holds no case artifact and is not part of the accepted run (results acceptance closure, ACC-OBS-2)."
+      },
+      {
+        "role": "HISTORICAL_V7_2_EOB_PRODUCTION_NAMESPACE",
+        "path": "results/eob_production",
+        "note": "v7.2 EOB production baseline; frozen historical artifact (CLAUDE.md hard rules)."
+      },
+      {
+        "role": "HISTORICAL_ACCEPTED_METHODOLOGY_PREDECESSOR",
+        "path": "docs/research_framework_v7_3_2026-09-23.md",
+        "note": "Framework v7.3 is the accepted immutable predecessor of Framework v7.4 (Framework v7.4 source manifest)."
+      },
+      {
+        "role": "HISTORICAL_ACCEPTED_EVIDENCE_PREDECESSOR",
+        "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md",
+        "note": "Registry v7.3 R3 is the accepted immutable predecessor of Registry v7.4 (Registry v7.4 version lineage)."
+      },
+      {
+        "role": "SUPERSEDED_MAIN_FULL81_SCOPE_AUTHORIZATION",
+        "path": "results/provenance/main_full81_authorization_r3/main_full81_authorization.json",
+        "note": "SUPERSEDED_BY_G1_IMMUTABLE_HISTORICAL_PROVENANCE (G1 scope authorization, supersedes_authorization)."
+      }
+    ]
+  },
+  "open_findings_and_limitations": {
+    "carry_note": "Every finding is carried exactly as recorded by the accepted results acceptance (results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json). Severity and disposition are copied, not re-graded, and the verifier compares them with that record. A pointer closes and remediates nothing; a finding may be shown as closed only with accepted resolution evidence bound by path and SHA-256.",
+    "findings": [
+      {
+        "id": "ACC-N1",
+        "accepted_list": "new_findings_and_observations",
+        "severity": "MAJOR",
+        "disposition": "OPEN",
+        "closed": false,
+        "blocks_purposes": [
+          "SCIENTIFIC_INSPECTION",
+          "RESULTS_ANALYSIS",
+          "SUPERVISOR_DISCUSSION"
+        ],
+        "resolution_evidence": null
+      },
+      {
+        "id": "ACC-OBS-1",
+        "accepted_list": "new_findings_and_observations",
+        "severity": "MINOR",
+        "disposition": "OPEN",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "ACC-OBS-2",
+        "accepted_list": "new_findings_and_observations",
+        "severity": "INFORMATIONAL",
+        "disposition": "OPEN / CARRIED",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "ACC-OBS-3",
+        "accepted_list": "new_findings_and_observations",
+        "severity": "INFORMATIONAL",
+        "disposition": "DISCLOSED / CARRIED",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "ACC-OBS-4",
+        "accepted_list": "new_findings_and_observations",
+        "severity": "MINOR",
+        "disposition": "OPEN / CARRIED",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "ACC-OBS-5",
+        "accepted_list": "new_findings_and_observations",
+        "severity": "INFORMATIONAL",
+        "disposition": "DISCLOSED",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "ACC-OBS-6",
+        "accepted_list": "new_findings_and_observations",
+        "severity": "MINOR",
+        "disposition": "OPEN / CARRIED",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "AUD-N1",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MODERATE",
+        "disposition": "NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "AUD-N2",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MODERATE",
+        "disposition": "OPEN / NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "AUD-N3",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MINOR",
+        "disposition": "NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "AUD-N4",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "INFORMATIONAL",
+        "disposition": "NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "G1-N1",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MINOR",
+        "disposition": "CARRIED / NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "G1-N2",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MAJOR",
+        "disposition": "CARRIED / NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "G1-N3",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "INFORMATIONAL",
+        "disposition": "CARRIED",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MAJOR",
+        "disposition": "CARRIED / NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "SAR-N1",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MINOR–MODERATE",
+        "disposition": "CARRIED / NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "SAR-N2",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MINOR–MODERATE",
+        "disposition": "CARRIED / NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "SAR-N3",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MINOR–MODERATE",
+        "disposition": "CARRIED / NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      },
+      {
+        "id": "SAR-N4",
+        "accepted_list": "findings_carried_not_closed",
+        "severity": "MINOR–MODERATE",
+        "disposition": "CARRIED / NONBLOCKING",
+        "closed": false,
+        "blocks_purposes": [],
+        "resolution_evidence": null
+      }
+    ],
+    "unresolved_register": {
+      "U-01": {
+        "status": "OPEN_HOLD",
+        "blocks_main_full81": false,
+        "must_be_frozen_before": [
+          "A2_EXECUTION",
+          "A2_RESULT_EXPOSURE",
+          "A2_INTERPRETATION",
+          "A2_CONDITIONAL_EXTENSION_AUTHORIZATION"
+        ],
+        "note": "U-01 (materiality definition) is OPEN / HOLD, as recorded by the G1 Main Full81 scope authorization. It must be resolved, audited, accepted and frozen before every A2 event. It may no longer be described as fully pre-Full81 blinded, and Full81 magnitudes must not be used to calibrate it."
+      }
+    },
+    "limitations_carried_from_results_acceptance": [
+      {
+        "id": "AUDITOR_INDEPENDENCE_BOUNDARY",
+        "statement": "The independent delta audit was performed by a separate, fresh Claude Code session (5a2e0245-83c6-4891-a55b-e2a1dc8bf823). It was not performed by Codex and is not claimed as cross-model verification."
+      },
+      {
+        "id": "AUDIT_PRIMARY_EVIDENCE_NOT_GIT_DURABLE",
+        "statement": "The audit's primary logs and JSON evidence are retained in a local session scratchpad and identified by SHA-256 in the published audit record; they are not Git-durable."
+      },
+      {
+        "id": "HISTORICAL_21I_CONTENT",
+        "statement": "Historical 21i raw bytes (sha256 5954738053d32a5e541a2bf9db8d8e4fd360e2fa70945734f9de2fe6fdadebd8) are locally recoverable from the R1/R2 preservation archives but are not remote Git-durable."
+      },
+      {
+        "id": "FIXTURE_CONTROL_53_OF_54",
+        "statement": "Committed fixture controls passed 53/54; the exception (F2 unknown extra key) is classified NONBLOCKING / INVALID_TEST_EXPECTATION by the published audit record and is not a fail-open vulnerability. 54/54 is not claimed."
+      }
+    ],
+    "fixture_control_limitation": {
+      "id": "FIXTURE_CONTROL_53_OF_54",
+      "passed": 53,
+      "total": 54,
+      "not_claimed": "54/54"
+    },
+    "pointer_limitations_note": [
+      {
+        "id": "RESULT_FILES_NOT_GIT_DURABLE",
+        "statement": "The 651 Full81 production result files under the accepted run path are locally retained and gitignored. They are not Git-durable: only their identities (the root completion manifest hash and the run-file aggregate) are bound by published records. If the local files are lost they cannot be restored from Git, and strict results verification then fails closed."
+      },
+      {
+        "id": "EVIDENCE_GRADES_NOT_UPGRADED",
+        "statement": "Evidence grades stand as recorded by the results acceptance and are not upgraded by this pointer: independent_numerical_acceptance = CODEX_REPORTED_PASS (subject to the publication-evidence checks recorded here; not recomputed in this acceptance session); historical_optimization_call_count = SUPPORTED (not directly confirmed from per-invocation telemetry); complete_transient_solver_execution_environment = PARTIALLY_RECONSTRUCTIBLE; result_files_651 = LOCALLY_RETAINED_AND_VERIFIED_BY_PRIOR_AUDIT / NOT_GIT_DURABLE (re-hashed by the acceptance operator against the root and case registries: 0 mismatches); overall_reconstructibility = PARTIALLY_RECONSTRUCTIBLE; sufficient for this acceptance; not a complete transient-execution replay and not a durable result publication."
+      },
+      {
+        "id": "EOL_CONVERSION_OF_UNPINNED_GOVERNANCE_TEXT",
+        "statement": "The pinned .gitattributes fixes the checkout form of the G1 authority surface only. The Full81 audit-publication and results-acceptance records, and this pointer's own files, have no rule there; their recorded SHA-256 values are over LF bytes equal to the Git blob bytes. A checkout under core.autocrlf=true may convert them to CRLF, which changes working-tree hashes only; the verifier reports that as RAW_BYTES_DIFFER_BY_EOL_CONVERSION_ONLY and fails closed. .gitattributes is bound by the frozen G1 governance identity and is not modified."
+      },
+      {
+        "id": "PUBLICATION_PROVEN_FROM_LOCAL_REMOTE_TRACKING_REF",
+        "statement": "The verifier makes no network call. 'PUBLISHED' is proven against the local remote-tracking ref named in git_provenance.upstream_ref, which is as current as the last fetch or push."
+      },
+      {
+        "id": "POINTER_SCOPE_FULL81_LAYER_A_ONLY",
+        "statement": "This pointer revision binds and verifies the Full81 Layer A result set only. The accepted EOB and core-three runs are listed under roles.accepted_other_scope_not_bound_by_this_pointer; their identities are neither bound nor verified here."
+      }
+    ],
+    "closed_or_remediated_by_this_pointer": []
+  },
+  "scientific_exposure_restrictions": {
+    "governing_finding": "ACC-N1",
+    "governing_clause": {
+      "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md",
+      "sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851",
+      "bytes": 28760,
+      "git_tracked": true,
+      "git_blob_id": "def9f2ae2aa48f624dee08786a7d9e106690d012",
+      "git_anchor_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "git_anchor_role": "CONTENT_AT_THIS_COMMIT",
+      "sections_note": "Section 13 (mandatory exposure log), with 11 (reduced-blinding claim boundary) and 12 (prohibited Full81-to-U-01 calibration)."
+    },
+    "exposure_log": {
+      "established": false,
+      "path": null,
+      "entries_created_by_this_pointer": 0,
+      "this_pointer_is_an_exposure_log": false,
+      "note": "No exposure log exists and no path or serialization for one has been fixed. Establishing it needs a separate authorization. A retrospective or fabricated exposure record is itself a governance failure under the governing clause."
+    },
+    "blocked_purposes": [
+      "SCIENTIFIC_INSPECTION",
+      "RESULTS_ANALYSIS",
+      "SUPERVISOR_DISCUSSION"
+    ],
+    "permitted_purposes": [
+      "TECHNICAL_IDENTITY_VERIFICATION"
+    ],
+    "carry_forward_conditions": [
+      "ACC-N1: an exposure log, with an authorized path and serialization, must exist before the first scientific inspection of Full81 results and before any supervisor discussion; establishing it needs a separate authorization.",
+      "Once Main Full81 results are exposed, U-01 may not be described as fully pre-Full81 blinded, and Full81 magnitudes must not be used to calibrate U-01 (sequencing closure sections 11 and 12). U-01 remains OPEN / HOLD; A2 remains HARD BLOCKED.",
+      "A cross-case aggregation or reporting layer must not add a materiality-classification column (run authority.json, governance_state.cross_case_aggregation).",
+      "A production runner must re-determine authority live at the then-live HEAD; neither the Phase A commit nor the commit that will contain this package is a solver-execution commit."
+    ],
+    "purpose_note": "DEFAULT DENY. A consumer must name its purpose. Only a permitted purpose is served; a blocked purpose is refused while the governing finding (ACC-N1, MAJOR / OPEN) is open; an unlisted purpose is refused.",
+    "verifier_output_note": "Pointer authoring and technical identity verification never display or interpret case-level sizing, objective values, response surfaces, rankings, turning points or any other scientific result magnitude. Result files are hashed as opaque bytes."
+  },
+  "non_authorization_boundaries": {
+    "pointer_grants_execution_authority": false,
+    "authorizes": [],
+    "not_authorized_by_this_pointer": [
+      "PIPELINE_MANAGEMENT_NOTEBOOK",
+      "DOWNSTREAM_LAYER_A_RESULTS_ANALYSIS_OR_SCIENTIFIC_INSPECTION",
+      "SUPERVISOR_DISCUSSION_OF_FULL81_RESULTS_WITHOUT_AN_EXPOSURE_EVENT",
+      "EXPOSURE_LOG_CREATION",
+      "CROSS_CASE_AGGREGATION_OR_REPORTING_LAYER",
+      "ANY_SOLVER_CALL_MODEL_CONSTRUCTION_OR_PRODUCTION_RUN",
+      "A2_LAYER_B_DG_OR_SENSITIVITY",
+      "REMEDIATION_OF_ANY_FINDING",
+      "PRESERVATION_OR_PUBLICATION_OF_THE_651_RESULT_FILES",
+      "HANDOFF_DOCUMENT_SYNCHRONIZATION",
+      "GIT_TAG",
+      "NEW_FULL81_EXECUTION_OR_RERUN",
+      "LAYER_B",
+      "DG_EXTENSION",
+      "U_01_RESOLUTION_OR_CALIBRATION",
+      "DEPENDENCY_GRAPH",
+      "SELECTIVE_RERUN_PLANNER",
+      "CONTROLLED_EXECUTOR",
+      "RENAMING_OF_HISTORICAL_VERSION_LABELS_OR_DIRECTORIES"
+    ],
+    "a2_variable_floor_status": "HARD_BLOCKED_UNTIL_U_01_RESOLVED_AUDITED_ACCEPTED_AND_FROZEN",
+    "production_authority_note": "Production authority is determined live, at the then-live HEAD, by the production runner's own authority gate. This pointer is never an input to that gate, never substitutes for it and never widens it."
+  },
+  "validation_contract": {
+    "verifier_module": "src/current_mainline_pointer_v1.py",
+    "verifier_interface_version": "iris-thesis-current-mainline-pointer-verifier-v1",
+    "required_checks": [
+      "C01_SCHEMA",
+      "C02_POINTER_LIFECYCLE_AND_MODE",
+      "C03_PATH_CONTAINMENT",
+      "C04_GIT_PROVENANCE",
+      "C05_FILE_IDENTITIES_RAW_BYTES_AND_GIT_BLOBS",
+      "C06_G1_IDENTITY_AXES",
+      "C07_GOVERNANCE_STATUS_AND_CROSS_BINDINGS",
+      "C08_CASE_UNIVERSE_AND_RUN_BINDING",
+      "C09_ROLES_AND_CONFLICTING_CLAIMS",
+      "C10_OPEN_FINDINGS_AND_SCIENTIFIC_EXPOSURE",
+      "C11_NON_AUTHORIZATION_BOUNDARIES",
+      "C12_LOCAL_RESULT_REGISTRATIONS",
+      "C13_CANONICAL_ACTIVATION_BASIS"
+    ],
+    "documentation": {
+      "modes": {
+        "CANDIDATE": "Reads a candidate under configs/candidates/ and reports internal consistency. Never an acceptance; never confers authority.",
+        "CANONICAL": "Reads only configs/current_mainline_pointer.json and requires an accepted, published activation basis. Absent, candidate-only, unpublished, mismatched or stale: FAIL_CLOSED, with no substitute route."
+      },
+      "results_policies": {
+        "NOT_CHECKED": "Local result files are not examined. Says nothing about result integrity.",
+        "METADATA_ONLY": "Names, sizes and the three root artifacts are checked; result files are not re-hashed. Reported as METADATA_ONLY_NOT_FULL_INTEGRITY and never permits results consumption.",
+        "STRICT_FULL_REHASH": "Every file under the run root is re-hashed against the root and case registrations, and the run-file aggregate is recomputed against the value recorded by the results acceptance. Required for results consumption."
+      },
+      "failure_semantics": "FAIL CLOSED. Any failed check yields the verdict FAIL_CLOSED with machine-readable failure codes. An internal verifier error is a failure, never a pass. No alternative route is guessed, and no check is skipped silently: a check that did not run is reported as NOT_RUN or NOT_APPLICABLE.",
+      "hash_axes": {
+        "raw_working_tree_sha256": "SHA-256 of the file bytes as they are on disk.",
+        "git_blob_identity": "The blob id of the path in its anchor commit and in the live HEAD, and the SHA-256 of the blob bytes.",
+        "relationship": "For every tracked binding all of these must agree with the recorded identity. A raw-byte mismatch is classified as an EOL conversion or a content difference and fails closed in both cases."
+      },
+      "usage": [
+        "python -B src/current_mainline_pointer_v1.py candidate --pointer configs/candidates/current_mainline_pointer_candidate_r1.json --results-policy STRICT_FULL_REHASH",
+        "python -B src/current_mainline_pointer_v1.py canonical --results-policy STRICT_FULL_REHASH"
+      ]
+    }
+  }
+}

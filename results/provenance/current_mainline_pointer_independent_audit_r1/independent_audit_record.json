@@ -1,0 +1,134 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_INDEPENDENT_AUDIT_RECORD",
+  "schema_version": "iris-thesis-current-mainline-pointer-independent-audit-record-v1",
+  "date": "2026-10-12",
+  "authored_utc": "2026-10-12T12:37:56Z",
+  "phase": "STEP_4_POINTER_CANDIDATE_INDEPENDENT_REVIEW",
+  "verdict": "PASS",
+  "verdict_scope": "Candidate design, original-byte identities, independent hermetic verifier tests, and selected published Git source identities; NOT canonical activation, NOT a re-audit of the 651 local result bytes.",
+  "self_audit": false,
+  "independent_reviewer": "ChatGPT (separate from the Claude Code authoring session); read-only static and hermetic-test review of owner-supplied ZIP; no independent human signature claimed.",
+  "authoring_operator": "Claude Code session 8b5bb3d7-d815-491d-8107-4c78336734cd, as stated in the candidate manifest",
+  "audited_candidate": {
+    "path": "configs/candidates/current_mainline_pointer_candidate_r1.json",
+    "sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f",
+    "bytes": 53873
+  },
+  "audited_payload_digest": "1c118f22350aa21d74b04f94307be8bbb43d694023e5350b1edf512824980fdf",
+  "source_package": {
+    "uploaded_zip_sha256": "2139970e1d7afdb14ba43746c00b05b202e35ed568ded9b6deec86d0f3f43640",
+    "file_count": 5,
+    "source_files": [
+      {
+        "path": "configs/candidates/current_mainline_pointer_candidate_r1.json",
+        "bytes": 53873,
+        "sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f"
+      },
+      {
+        "path": "src/current_mainline_pointer_v1.py",
+        "bytes": 118860,
+        "sha256": "fc73068a6a469842a7c234d4c07dac1baba1d669fc9c5a1adf2449b571d483e0"
+      },
+      {
+        "path": "tests/test_current_mainline_pointer_v1.py",
+        "bytes": 96372,
+        "sha256": "887ac34c56d2d9149e005e28b4b16bc6656c1284250077bb11ceea84d9db4188"
+      },
+      {
+        "path": "docs/checkpoints/current_mainline_pointer_candidate_r1_2026-10-12.md",
+        "bytes": 25676,
+        "sha256": "00fa34ac5fbd871ab39c0ef4563edd2e77b65a56e4626982b77e230f6bf2527b"
+      },
+      {
+        "path": "results/provenance/current_mainline_pointer_candidate_r1/candidate_manifest.json",
+        "bytes": 28532,
+        "sha256": "15c320ea72a3e6f9f1f562b15d491ad2014d5f45159bd8ef87ced75b18e2076b"
+      }
+    ],
+    "source_zip_filename": "current_mainline_pointer_candidate_r1_2026-10-12.zip"
+  },
+  "independent_checks": {
+    "package_integrity": {
+      "verdict": "PASS",
+      "files_verified": 5,
+      "claim": "All five files matched the Claude Code report and every registered manifest SHA-256/byte count."
+    },
+    "syntax_and_static_checks": {
+      "verdict": "PASS",
+      "python_ast_valid": true,
+      "sha256_recomputed": true,
+      "no_direct_solver_invocation_observed": true,
+      "candidate_cannot_self_accept_in_code_review": true
+    },
+    "independent_hermetic_tests": {
+      "verdict": "PASS",
+      "executed": 39,
+      "passed": 39,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "runtime": "system Python 3.13.5, standalone unittest classes StaticVerifierTests, PathContainmentTests, FixtureCandidateTests, FixtureCanonicalTests"
+    },
+    "live_repository_tests": {
+      "verdict": "NOT_INDEPENDENTLY_REPRODUCED",
+      "tests_reported_by_author": 20,
+      "author_reported_outcome": "20 passed",
+      "reason": "Owner supplied five candidate files but not the complete local repository and its 651 gitignored production-result bytes; running live-repo negative controls against the ZIP alone yields fixture-premise failures, not independent evidence of real-repository defects."
+    },
+    "github_git_blob_spot_verification": {
+      "verdict": "PASS",
+      "paths_checked": 10,
+      "matching_git_blobs": 10,
+      "source_revision": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+      "scope": "Framework, Registry, G1 lifecycle, execution authorization, canonical parquet, model core, successor stack, runner, accepted results closure, audit evidence record."
+    },
+    "activation_control_review": {
+      "verdict": "PASS_WITH_LIMITATION",
+      "positive_and_negative_fixture_coverage": true,
+      "canonical_requires": [
+        "audited candidate",
+        "published independent audit record",
+        "published acceptance closure",
+        "published acceptance manifest",
+        "canonical file in Git HEAD and reachable upstream"
+      ],
+      "actual_live_activation": "NOT_TESTED_NOT_CREATED"
+    }
+  },
+  "nonblocking_findings": [
+    {
+      "id": "PTR-REVIEW-1",
+      "severity": "MODERATE",
+      "status": "OPEN",
+      "description": "Windows raw-checkout CRLF conversion may cause fail-closed text-byte mismatches after recheckout; original candidate has no applicable new-file EOL rules. Avoid silently treating a fresh Windows checkout as portable and run actual canonical verification after activation."
+    },
+    {
+      "id": "PTR-REVIEW-2",
+      "severity": "INFORMATIONAL",
+      "status": "OPEN",
+      "description": "The verifier is approximately 2933 lines, significantly larger than the desired minimal read-only interface; maintainability burden remains."
+    },
+    {
+      "id": "PTR-REVIEW-3",
+      "severity": "EVIDENCE_LIMITATION",
+      "status": "OPEN",
+      "description": "Twenty live-repository tests and 651-file strict integrity verification were not independently rerun in the review sandbox. Their reported PASS is attributed solely to the authoring operator; the local publisher must re-run the complete targeted suite and strict check before publication."
+    }
+  ],
+  "acceptance_blockers_found": [],
+  "recommended_disposition": "ACCEPT_CANDIDATE_SUBJECT_TO_LOCAL_LIVE_CHECKS_AND_GIT_PUBLICATION_PROOF",
+  "publication_conditions": [
+    "Do not edit or overwrite accepted/historical G1 sources or 651 local result bytes.",
+    "On the actual thesis-v7 repository, re-run all 59 focused zero-solve tests and strict full rehash of the original candidate; abort on any failure.",
+    "Create additive independent audit and explicit owner-authorized acceptance artifacts, publish via non-force fast-forward commits, then create canonical pointer with exact audited payload and complete activation references.",
+    "Check canonical pointer strict mode and permitted technical-identity purpose on actual local Windows checkout AFTER canonical publication; if EOL conversion leads to FAIL_CLOSED, do not claim the pointer operationally complete.",
+    "Preserve ACC-N1, U-01 OPEN/HOLD, R7 durability, and the prohibition against scientific inspection and solver execution."
+  ],
+  "explicit_non_claims": [
+    "No full independent execution of the 20 live-repo tests in this sandbox.",
+    "No independent strict rehash of the 651 local result files in this sandbox.",
+    "No authority conferred or canonical activation by this record.",
+    "No solve, model construction, code modification in user repository, or scientific result inspection.",
+    "No human signature or independent model-provider designation asserted."
+  ]
+}
