@@ -1,0 +1,89 @@
+{
+  "artifact_type": "FULL81_G1_POSTSOLVE_AUDIT_EVIDENCE_PUBLICATION_MANIFEST",
+  "schema_version": "iris-thesis-full81-g1-postsolve-audit-evidence-publication-manifest-v1",
+  "package_id": "FULL81_G1_POSTSOLVE_AUDIT_EVIDENCE_PUBLICATION_R1",
+  "package_revision": "R1",
+  "role": "publication_manifest",
+  "phase": "PHASE_A_AUDIT_EVIDENCE_PUBLICATION",
+  "date": "2026-10-12",
+  "authored_utc": "2026-10-12T09:09:33Z",
+  "serialization": "UTF-8, LF line endings, json.dumps(indent=2, ensure_ascii=False), insertion-ordered keys, one trailing newline",
+  "hash_basis": "SHA-256 and byte count over the raw bytes read back from the repository working tree after writing (LF bytes; equal to the Git blob bytes)",
+  "package_directory": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1",
+  "internal_package_files": [
+    {
+      "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+      "role": "independent_audit_report_verbatim_source_copy",
+      "file_type": "text/markdown; UTF-8; LF; no trailing newline",
+      "bytes": 21479,
+      "sha256": "c6a07064451fa98f84fd714d09d59ed93eabc3e1b8d3e0461dd664e47937d394"
+    },
+    {
+      "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+      "role": "machine_readable_audit_evidence_record",
+      "file_type": "application/json; UTF-8; LF",
+      "bytes": 88562,
+      "sha256": "a02f05e52862a3f99abb0d56e5f8b44d1a6ee851ad2f6fdbc012b1bd608ac3fa"
+    }
+  ],
+  "external_registered_artifacts": [
+    {
+      "path": "docs/checkpoints/full81_g1_postsolve_audit_evidence_publication_r1_2026-10-12.md",
+      "role": "human_readable_checkpoint",
+      "file_type": "text/markdown; UTF-8; LF",
+      "bytes": 17624,
+      "sha256": "6d7c49dd68e44d42915e2d4584a4be148032650475645b8b4a1bd9c1a2dc5f84"
+    }
+  ],
+  "manifest_self_registration": {
+    "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/publication_manifest.json",
+    "role": "publication_manifest",
+    "bytes": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH",
+    "sha256": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH"
+  },
+  "physical_files_in_package_directory": [
+    "audit_evidence_record.json",
+    "independent_audit_report.md",
+    "publication_manifest.json"
+  ],
+  "publication_allowlist": [
+    "docs/checkpoints/full81_g1_postsolve_audit_evidence_publication_r1_2026-10-12.md",
+    "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+    "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+    "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/publication_manifest.json"
+  ],
+  "publication_allowlist_is_exact": true,
+  "force_add_required_paths": [
+    "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+    "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+    "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/publication_manifest.json"
+  ],
+  "ordinary_add_paths": [
+    "docs/checkpoints/full81_g1_postsolve_audit_evidence_publication_r1_2026-10-12.md"
+  ],
+  "registration_checks_at_build": {
+    "registered_artifacts": 3,
+    "registered_but_missing": 0,
+    "hash_mismatches_against_written_bytes": 0,
+    "byte_count_mismatches_against_written_bytes": 0,
+    "symlinks": 0,
+    "paths_escaping_repository": 0
+  },
+  "source_report_binding": {
+    "report_copy_sha256": "c6a07064451fa98f84fd714d09d59ed93eabc3e1b8d3e0461dd664e47937d394",
+    "equals_record_report_copy_sha256": true,
+    "source": "final assistant message of the Codex rollout identified in audit_evidence_record.json (independent_audit.source_provenance)"
+  },
+  "target_run": {
+    "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828",
+    "root_completion_manifest_sha256": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24"
+  },
+  "containing_commit": "NOT_EMBEDDED_BY_DESIGN (publication is proven from live Git, not asserted here)",
+  "gitignore_modified": false,
+  "gitattributes_modified": false,
+  "production_result_files_registered_or_published": 0,
+  "is_result_acceptance": false,
+  "is_acceptance_manifest": false,
+  "result_acceptance_status": "PENDING",
+  "notes": "Registers the two internal package files and the external checkpoint from their written bytes. The manifest does not register its own hash, and no file in the package embeds the manifest hash."
+}

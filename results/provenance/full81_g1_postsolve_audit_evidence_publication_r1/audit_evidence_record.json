@@ -1,0 +1,1759 @@
+{
+  "artifact_type": "FULL81_G1_POSTSOLVE_INDEPENDENT_AUDIT_EVIDENCE_PUBLICATION",
+  "schema_version": "iris-thesis-full81-g1-postsolve-audit-evidence-publication-v1",
+  "package_id": "FULL81_G1_POSTSOLVE_AUDIT_EVIDENCE_PUBLICATION_R1",
+  "package_revision": "R1",
+  "role": "full81_postsolve_independent_audit_evidence_publication",
+  "phase": "PHASE_A_AUDIT_EVIDENCE_PUBLICATION",
+  "date": "2026-10-12",
+  "authored_utc": "2026-10-12T09:08:28Z",
+  "serialization": "UTF-8, LF line endings, json.dumps(indent=2, ensure_ascii=False), insertion-ordered keys, one trailing newline",
+  "is_result_acceptance": false,
+  "is_acceptance_closure": false,
+  "is_acceptance_manifest": false,
+  "is_production_authority_re_freeze": false,
+  "is_accepted_lifecycle_record": false,
+  "is_current_mainline_pointer": false,
+  "is_execution_authorization": false,
+  "is_independent_audit_of_this_package": false,
+  "lifecycle_status": {
+    "evidence_status": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT_EVIDENCE",
+    "independent_audit_verdict_as_reported": "PASS",
+    "independent_audit_verdict_originated_in_this_pass": false,
+    "publication_status": "DETERMINED_FROM_LIVE_GIT_NOT_SELF_ASSERTED",
+    "publication_status_rule": "PUBLISHED only if this record, the report copy, the manifest and the checkpoint are contained, byte-identical, in one commit reachable from origin/thesis-v7. This record embeds no containing commit id.",
+    "containing_commit": "NOT_EMBEDDED_BY_DESIGN",
+    "maximum_state_after_verified_publication": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT_EVIDENCE — PUBLISHED / RESULT_ACCEPTANCE_PENDING",
+    "result_acceptance_status": "PENDING",
+    "full81_results_governance_status": "NOT_ACCEPTED / NOT_CLOSED",
+    "thesis_authoritative_result_promotion": "NOT_PERFORMED",
+    "run_completion_manifest_status_unchanged": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE"
+  },
+  "target_run": {
+    "run_id": "20261008T183934456307Z_a6826f4828",
+    "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828",
+    "namespace_note": "The final_81_v7_3 path segment and the v7.2 core label are accepted historical implementation-lineage names, not stale scientific authority.",
+    "root_artifacts": [
+      {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "bytes": 110125,
+        "sha256": "ecef360b340de92b2f1f612b7028efebfa1b26986fa9fe22efad66a46b3442bb"
+      },
+      {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/case_schedule.json",
+        "bytes": 570473,
+        "sha256": "08b05f654dbf997fb91ed4d835594d3f796567e47882e478b9fa05e5ba240df4"
+      },
+      {
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/completion_manifest.json",
+        "bytes": 103575,
+        "sha256": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24"
+      }
+    ],
+    "root_completion_manifest_sha256_equals_owner_stated_value": true,
+    "root_manifest_stored_fields": {
+      "status": "COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE",
+      "case_set": "full81",
+      "case_count": 81,
+      "optimization_calls": 81
+    },
+    "file_count": 651,
+    "total_bytes": 156562246,
+    "json_file_count": 408,
+    "csv_file_count": 243,
+    "root_registered_artifacts": 650,
+    "root_registry_missing": 0,
+    "root_registry_hash_or_byte_mismatches": 0,
+    "files_not_registered_in_root_manifest": [
+      "completion_manifest.json"
+    ],
+    "root_manifest_self_registration": "ABSENT_BY_PUBLISHER_DESIGN (non-circular registry)",
+    "case_registry_entries": 567,
+    "case_registry_hash_or_byte_mismatches": 0,
+    "symlinks_found": 0,
+    "symlink_substitution_check": "No symbolic link under the run root (os.path.islink over every entry). Entries carry the OneDrive cloud-files reparse attribute (tag 0x9000e01a observed on the run root), which is not a symlink or junction.",
+    "sibling_staging_directory_observed_not_touched": "results/layer_a/final_81_v7_3/runs/.pending_layer_a_20261008T182936610185Z_802a64df5c"
+  },
+  "execution_identity": {
+    "execution_head": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "execution_origin_head": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "execution_branch": "thesis-v7",
+    "execution_head_source": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json (fields head / origin_head / branch)",
+    "execution_head_equals_owner_stated_value": true,
+    "execution_head_is_not_the_publication_commit": true,
+    "execution_head_note": "The frozen historical execution HEAD stays c8f5550... after repository HEAD advances. A later publication commit is not the solver-execution commit and grants no permission to run a production runner.",
+    "production_generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+    "production_lineage_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+    "candidate_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1_CANDIDATE_R1",
+    "run_authority_status": "PRODUCTION_AUTHORITY_FROZEN",
+    "run_authority_freeze_status": "FROZEN",
+    "selected_scope": "full81",
+    "core_version": "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10",
+    "stack_version": "v7.3-macro-gate-2e-a-zero-solve-successor-stack-2026-09-24-r1",
+    "run_start_utc_from_run_id": "2026-10-08T18:39:34.456307Z"
+  },
+  "methodology_evidence_authority": {
+    "framework": {
+      "formal_name": "Framework v7.4",
+      "role": "CURRENT_METHODOLOGY_AUTHORITY",
+      "lifecycle_as_recorded_in_run_authority": "CLOSED_ACCEPTED",
+      "path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "bytes": 216186,
+      "sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "live_bytes_match_run_authority_binding": true
+    },
+    "registry": {
+      "formal_name": "Registry v7.4",
+      "role": "CURRENT_EVIDENCE_AUTHORITY",
+      "lifecycle_as_recorded_in_run_authority": "CLOSED_ACCEPTED",
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "bytes": 245125,
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "live_bytes_match_run_authority_binding": true
+    },
+    "closed_decisions_reopened_by_this_publication": 0,
+    "methodology_change_by_this_publication": false
+  },
+  "g1_authority_chain": {
+    "records": [
+      {
+        "stage": "G1_CANDIDATE",
+        "role": "g1_candidate_checkpoint",
+        "path": "docs/checkpoints/current_full81_production_generation_g1_candidate_r1_2026-10-07.md",
+        "bytes": 9404,
+        "sha256": "dccbbffccc37dbea2179bcbc6210f1afa76351d9883fc73485f3be83278ce9a9",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "G1_CANDIDATE",
+        "role": "g1_candidate_manifest",
+        "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/g1_candidate_manifest.json",
+        "bytes": 28291,
+        "sha256": "bd3621cf9de16a6b7ed0c84444272cd17ce28326b2f4081317c926cd3aa1071a",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "G1_CANDIDATE",
+        "role": "g1_candidate_change_ledger",
+        "path": "results/provenance/current_full81_production_generation_g1_candidate_r1_2026-10-07/candidate_change_ledger.json",
+        "bytes": 49686,
+        "sha256": "e1b2ecc8fcb44327b4d8e0a38f1fd7ba200bd9fa44b363ceaf89220aadbde080",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "G1_INDEPENDENT_AUDIT_PASS_PHASE_A",
+        "role": "g1_independent_audit_pass",
+        "path": "results/provenance/current_full81_production_generation_g1_independent_audit_r1/independent_audit_pass_record.json",
+        "bytes": 14045,
+        "sha256": "e7c3dcd60ed613ffaea14afe5e6fd91fe711ae0f385b8bfc7cdc6c7d1c09500c",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "G1_ACCEPTANCE_PHASE_B",
+        "role": "g1_acceptance_closure",
+        "path": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+        "bytes": 9895,
+        "sha256": "d0122f990a14d202fa2e07f1805ce6e8cba17952e37ff1badc37613a517a5879",
+        "publication_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "publication_commit_time": "2026-10-08T20:46:20+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "G1_ACCEPTANCE_PHASE_B",
+        "role": "g1_acceptance_manifest",
+        "path": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_manifest.json",
+        "bytes": 7925,
+        "sha256": "bb4aa458d94bfd73db51ae1d87a1661f5272c3a57eaa260be5df3e89abac0926",
+        "publication_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "publication_commit_time": "2026-10-08T20:46:20+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "G1_RE_FREEZE_PHASE_C",
+        "role": "g1_production_authority_re_freeze",
+        "path": "results/provenance/current_full81_production_generation_g1_re_freeze_r1/production_authority_re_freeze_record.json",
+        "bytes": 8866,
+        "sha256": "41ec7d2a185993d55f745eaf512df2ab08e82c98e66bf611a95dc967a32c0982",
+        "publication_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+        "publication_commit_time": "2026-10-08T21:27:43+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "G1_ACCEPTED_LIFECYCLE_PHASE_C",
+        "role": "g1_accepted_lifecycle",
+        "path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json",
+        "bytes": 8351,
+        "sha256": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0",
+        "publication_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+        "publication_commit_time": "2026-10-08T21:27:43+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "MAIN_FULL81_SCOPE_AUTHORIZATION",
+        "role": "main_full81_scope_authorization",
+        "path": "results/provenance/main_full81_authorization_g1/main_full81_authorization.json",
+        "bytes": 6060,
+        "sha256": "0dc75214904682476def42f36e73688a1f1d254523f20bfd319e6561c4a81338",
+        "publication_commit": "ab5c7bea4fdcd28e0ca967daadc80d86f25c7588",
+        "publication_commit_time": "2026-10-08T23:29:44+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "MAIN_FULL81_NO_SOLVE_PREFLIGHT_EVIDENCE",
+        "role": "main_full81_no_solve_preflight_evidence",
+        "path": "results/provenance/main_full81_no_solve_preflight_g1/main_full81_21d_no_solve_preflight_evidence.json",
+        "bytes": 1341441,
+        "sha256": "95047e2fa9c0d524d5c43c0fdcafe40a93662c4282fd1aaaf0558be681f4da76",
+        "publication_commit": "21ff5f48a606f88b2dcd5429ddb10799341f3aeb",
+        "publication_commit_time": "2026-10-09T00:10:33+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      },
+      {
+        "stage": "MAIN_FULL81_EXECUTION_AUTHORIZATION",
+        "role": "main_full81_execution_authorization",
+        "path": "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json",
+        "bytes": 5969,
+        "sha256": "87ec6643deef262bc3710b2e1d7e76d582bcfd1eebd41ffdc6c6c71eb2f12c6e",
+        "publication_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "publication_commit_time": "2026-10-09T01:12:13+08:00",
+        "commits_touching_path": 1,
+        "head_blob_sha256_equals_live_bytes": true,
+        "working_tree_clean": true
+      }
+    ],
+    "cross_binding_checks_by_publication_operator": {
+      "accepted_lifecycle_five_roles_bind_live_sha256": true,
+      "accepted_lifecycle_candidate_checkpoint_binds_live_sha256": true,
+      "accepted_lifecycle_change_ledger_binds_live_sha256": true,
+      "scope_authorization_binds_accepted_lifecycle_sha256": true,
+      "execution_authorization_binds_accepted_lifecycle_sha256": true,
+      "execution_authorization_binds_scope_authorization_sha256": true,
+      "execution_authorization_binds_no_solve_preflight_sha256": true,
+      "execution_authorization_named_commits_equal_git_adding_commits": true,
+      "execution_authorization_status_granted": true,
+      "execution_authorization_added_in_execution_head": true,
+      "publication_commit_times_non_decreasing_in_lifecycle_order": true,
+      "all_publication_commits_are_ancestors_of_or_equal_to_head": true,
+      "run_start_after_execution_authorization_commit": true,
+      "run_authority_head_equals_execution_head": true,
+      "no_solve_preflight_zero_execution_counters": true
+    },
+    "temporal_sequence": [
+      {
+        "stage": "G1_CANDIDATE",
+        "role": "g1_candidate_checkpoint",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00"
+      },
+      {
+        "stage": "G1_CANDIDATE",
+        "role": "g1_candidate_manifest",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00"
+      },
+      {
+        "stage": "G1_CANDIDATE",
+        "role": "g1_candidate_change_ledger",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00"
+      },
+      {
+        "stage": "G1_INDEPENDENT_AUDIT_PASS_PHASE_A",
+        "role": "g1_independent_audit_pass",
+        "publication_commit": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_commit_time": "2026-10-08T18:17:13+08:00"
+      },
+      {
+        "stage": "G1_ACCEPTANCE_PHASE_B",
+        "role": "g1_acceptance_closure",
+        "publication_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "publication_commit_time": "2026-10-08T20:46:20+08:00"
+      },
+      {
+        "stage": "G1_ACCEPTANCE_PHASE_B",
+        "role": "g1_acceptance_manifest",
+        "publication_commit": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "publication_commit_time": "2026-10-08T20:46:20+08:00"
+      },
+      {
+        "stage": "G1_RE_FREEZE_PHASE_C",
+        "role": "g1_production_authority_re_freeze",
+        "publication_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+        "publication_commit_time": "2026-10-08T21:27:43+08:00"
+      },
+      {
+        "stage": "G1_ACCEPTED_LIFECYCLE_PHASE_C",
+        "role": "g1_accepted_lifecycle",
+        "publication_commit": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+        "publication_commit_time": "2026-10-08T21:27:43+08:00"
+      },
+      {
+        "stage": "MAIN_FULL81_SCOPE_AUTHORIZATION",
+        "role": "main_full81_scope_authorization",
+        "publication_commit": "ab5c7bea4fdcd28e0ca967daadc80d86f25c7588",
+        "publication_commit_time": "2026-10-08T23:29:44+08:00"
+      },
+      {
+        "stage": "MAIN_FULL81_NO_SOLVE_PREFLIGHT_EVIDENCE",
+        "role": "main_full81_no_solve_preflight_evidence",
+        "publication_commit": "21ff5f48a606f88b2dcd5429ddb10799341f3aeb",
+        "publication_commit_time": "2026-10-09T00:10:33+08:00"
+      },
+      {
+        "stage": "MAIN_FULL81_EXECUTION_AUTHORIZATION",
+        "role": "main_full81_execution_authorization",
+        "publication_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "publication_commit_time": "2026-10-09T01:12:13+08:00"
+      },
+      {
+        "stage": "FULL81_RUN_ESTABLISHED",
+        "role": "target_run",
+        "publication_commit": "NOT_APPLICABLE",
+        "publication_commit_time": "2026-10-08T18:39:34.456307Z"
+      }
+    ],
+    "execution_authorization_status": "GRANTED",
+    "execution_authorization_semantic_boundary": "EXECUTION_AUTHORIZED_NOT_LAUNCHED",
+    "excluded_scopes": [
+      "A2",
+      "A2_VARIABLE_FLOOR_TREATMENT_EFFECT",
+      "PERFECT_INFORMATION",
+      "DG_EXTENSIONS",
+      "NEW_SENSITIVITIES",
+      "ALTERNATE_ANNUAL_INPUTS",
+      "ALTERED_ALPHA_BETA_GRIDS",
+      "NEW_SOLVER_SETTINGS",
+      "METHODOLOGY_CHANGES"
+    ]
+  },
+  "implementation_identities": {
+    "g1_implementation_identity_digest": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+    "g1_implementation_identity_digest_recomputed_by_publication_operator": true,
+    "g1_implementation_identity_digest_algorithm": "sha256 over json.dumps({path: sha256}, sort_keys=True, separators=(',',':')) encoded utf-8",
+    "g1_implementation_identity_path_count": 21,
+    "g1_implementation_identity_path_list_source": "results/provenance/main_full81_no_solve_preflight_g1/main_full81_21d_no_solve_preflight_evidence.json (u06_runtime_dependency_report.accepted_implementation_identity)",
+    "g1_implementation_identity_live_paths_differing_from_recorded": [],
+    "g1_implementation_identity_digest_bindings": {
+      "run_authority_json.main_full81_authorization": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+      "run_authority_json.u06_accepted_lifecycle": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+      "g1_accepted_lifecycle_record": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+      "main_full81_scope_authorization": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+      "main_full81_execution_authorization": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc"
+    },
+    "g1_validation_identity_digest_as_recorded": "1bd49904e8d774c27b5e8a0390240eb836e92fa6cf857948f7b9d3486914111b",
+    "g1_governance_authority_identity_digest_as_recorded": "360c81b133440e1b0444e01f2fd120eb1f49d0db3501283773a2952c032dbeb4",
+    "g1_validation_and_governance_digests_recomputed_by_publication_operator": false,
+    "solver_parameter_fingerprint": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+    "solver_parameter_fingerprint_bound_in": [
+      "results/provenance/main_full81_authorization_g1/main_full81_authorization.json",
+      "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json"
+    ],
+    "solver_parameter_fingerprint_recomputed_by_publication_operator": false,
+    "canonical_annual_input_fingerprint_sha256_as_stored_in_run_authority": "1aa2f364f08b54d0ba5a6c37e7855c652ce19ce6703d693d557265313c62bcb0",
+    "canonical_annual_input_row_count_as_stored": 8760,
+    "files": [
+      {
+        "name": "canonical_annual_input",
+        "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet",
+        "bytes": 554037,
+        "sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "bound_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "bound_in": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "production_runner",
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py",
+        "bytes": 11679,
+        "sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+        "bound_sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+        "bound_in": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "model_core",
+        "path": "src/annual_design_model_v7_2.py",
+        "bytes": 124399,
+        "sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+        "bound_sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+        "bound_in": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "production_successor_stack",
+        "path": "src/production_successor_stack_v7_3.py",
+        "bytes": 81197,
+        "sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+        "bound_sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+        "bound_in": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "parameter_registry",
+        "path": "data/reference/parameter_registry_v7_2.csv",
+        "bytes": 7951,
+        "sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+        "bound_sha256": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+        "bound_in": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "main_full81_authorization_module",
+        "path": "src/main_full81_authorization_v7_4.py",
+        "bytes": 122976,
+        "sha256": "0b4899412bc5cd6d6a4b64a45a243ae8b98d2488ea9ac165f595d2cd7eec7880",
+        "bound_sha256": "0b4899412bc5cd6d6a4b64a45a243ae8b98d2488ea9ac165f595d2cd7eec7880",
+        "bound_in": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "accepted_lifecycle_overlay_module",
+        "path": "src/production_authority_lifecycle_u06.py",
+        "bytes": 418661,
+        "sha256": "c65aaedc6ea4f357b4ac463ebe0428d717ed953c5e12dc2f547cc98334bd7c45",
+        "bound_sha256": "c65aaedc6ea4f357b4ac463ebe0428d717ed953c5e12dc2f547cc98334bd7c45",
+        "bound_in": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "v7_4_alignment_verifier",
+        "path": "scripts/21e_preflight_v7_4_production_authority_alignment.py",
+        "bytes": 10464,
+        "sha256": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803",
+        "bound_sha256": "6b97be4258f0cccf3538a9078548951d0f4fc5d1ede7c43ae94cd26319568803",
+        "bound_in": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "execution_input:production_economic_interface_v7_2.json",
+        "path": "data/reference/production_economic_interface_v7_2.json",
+        "bytes": 8118,
+        "sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+        "bound_sha256": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+        "bound_in": "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "execution_input:taipower_seasonal_settlement_matrix_v7_2.csv",
+        "path": "data/reference/taipower_seasonal_settlement_matrix_v7_2.csv",
+        "bytes": 16427,
+        "sha256": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+        "bound_sha256": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+        "bound_in": "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "execution_input:taipower_tariff_optimization_ntd2023_v7_2.csv",
+        "path": "data/reference/taipower_tariff_optimization_ntd2023_v7_2.csv",
+        "bytes": 19752,
+        "sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+        "bound_sha256": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+        "bound_in": "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json",
+        "live_bytes_match_binding": true
+      },
+      {
+        "name": "execution_input:taipower_transition_period_settlement_interface_v7_2.json",
+        "path": "data/reference/taipower_transition_period_settlement_interface_v7_2.json",
+        "bytes": 4579,
+        "sha256": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+        "bound_sha256": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+        "bound_in": "results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json",
+        "live_bytes_match_binding": true
+      }
+    ]
+  },
+  "case_universe": {
+    "alpha_grid": [
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "beta_grid_h": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "grid_source": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828/authority.json (alpha_grid, beta_grid_h)",
+    "grid_equals_scope_and_execution_authorization_universes": true,
+    "case_id_rule": "a{alpha:.2f}_b{beta_h:02d} over the Cartesian product",
+    "expected_case_count": 81,
+    "expected_case_ids": [
+      "a0.60_b04",
+      "a0.60_b05",
+      "a0.60_b06",
+      "a0.60_b07",
+      "a0.60_b08",
+      "a0.60_b09",
+      "a0.60_b10",
+      "a0.60_b11",
+      "a0.60_b12",
+      "a0.65_b04",
+      "a0.65_b05",
+      "a0.65_b06",
+      "a0.65_b07",
+      "a0.65_b08",
+      "a0.65_b09",
+      "a0.65_b10",
+      "a0.65_b11",
+      "a0.65_b12",
+      "a0.70_b04",
+      "a0.70_b05",
+      "a0.70_b06",
+      "a0.70_b07",
+      "a0.70_b08",
+      "a0.70_b09",
+      "a0.70_b10",
+      "a0.70_b11",
+      "a0.70_b12",
+      "a0.75_b04",
+      "a0.75_b05",
+      "a0.75_b06",
+      "a0.75_b07",
+      "a0.75_b08",
+      "a0.75_b09",
+      "a0.75_b10",
+      "a0.75_b11",
+      "a0.75_b12",
+      "a0.80_b04",
+      "a0.80_b05",
+      "a0.80_b06",
+      "a0.80_b07",
+      "a0.80_b08",
+      "a0.80_b09",
+      "a0.80_b10",
+      "a0.80_b11",
+      "a0.80_b12",
+      "a0.85_b04",
+      "a0.85_b05",
+      "a0.85_b06",
+      "a0.85_b07",
+      "a0.85_b08",
+      "a0.85_b09",
+      "a0.85_b10",
+      "a0.85_b11",
+      "a0.85_b12",
+      "a0.90_b04",
+      "a0.90_b05",
+      "a0.90_b06",
+      "a0.90_b07",
+      "a0.90_b08",
+      "a0.90_b09",
+      "a0.90_b10",
+      "a0.90_b11",
+      "a0.90_b12",
+      "a0.95_b04",
+      "a0.95_b05",
+      "a0.95_b06",
+      "a0.95_b07",
+      "a0.95_b08",
+      "a0.95_b09",
+      "a0.95_b10",
+      "a0.95_b11",
+      "a0.95_b12",
+      "a1.00_b04",
+      "a1.00_b05",
+      "a1.00_b06",
+      "a1.00_b07",
+      "a1.00_b08",
+      "a1.00_b09",
+      "a1.00_b10",
+      "a1.00_b11",
+      "a1.00_b12"
+    ],
+    "observed_case_directory_ids": [
+      "a0.60_b04",
+      "a0.60_b05",
+      "a0.60_b06",
+      "a0.60_b07",
+      "a0.60_b08",
+      "a0.60_b09",
+      "a0.60_b10",
+      "a0.60_b11",
+      "a0.60_b12",
+      "a0.65_b04",
+      "a0.65_b05",
+      "a0.65_b06",
+      "a0.65_b07",
+      "a0.65_b08",
+      "a0.65_b09",
+      "a0.65_b10",
+      "a0.65_b11",
+      "a0.65_b12",
+      "a0.70_b04",
+      "a0.70_b05",
+      "a0.70_b06",
+      "a0.70_b07",
+      "a0.70_b08",
+      "a0.70_b09",
+      "a0.70_b10",
+      "a0.70_b11",
+      "a0.70_b12",
+      "a0.75_b04",
+      "a0.75_b05",
+      "a0.75_b06",
+      "a0.75_b07",
+      "a0.75_b08",
+      "a0.75_b09",
+      "a0.75_b10",
+      "a0.75_b11",
+      "a0.75_b12",
+      "a0.80_b04",
+      "a0.80_b05",
+      "a0.80_b06",
+      "a0.80_b07",
+      "a0.80_b08",
+      "a0.80_b09",
+      "a0.80_b10",
+      "a0.80_b11",
+      "a0.80_b12",
+      "a0.85_b04",
+      "a0.85_b05",
+      "a0.85_b06",
+      "a0.85_b07",
+      "a0.85_b08",
+      "a0.85_b09",
+      "a0.85_b10",
+      "a0.85_b11",
+      "a0.85_b12",
+      "a0.90_b04",
+      "a0.90_b05",
+      "a0.90_b06",
+      "a0.90_b07",
+      "a0.90_b08",
+      "a0.90_b09",
+      "a0.90_b10",
+      "a0.90_b11",
+      "a0.90_b12",
+      "a0.95_b04",
+      "a0.95_b05",
+      "a0.95_b06",
+      "a0.95_b07",
+      "a0.95_b08",
+      "a0.95_b09",
+      "a0.95_b10",
+      "a0.95_b11",
+      "a0.95_b12",
+      "a1.00_b04",
+      "a1.00_b05",
+      "a1.00_b06",
+      "a1.00_b07",
+      "a1.00_b08",
+      "a1.00_b09",
+      "a1.00_b10",
+      "a1.00_b11",
+      "a1.00_b12"
+    ],
+    "observed_equals_expected": true,
+    "root_manifest_case_ids_equal_expected": true,
+    "case_schedule_ids_equal_expected": true,
+    "missing_case_ids": [],
+    "unexpected_case_ids": [],
+    "duplicate_case_ids_in_root_manifest": 0,
+    "duplicate_case_ids_in_schedule": 0,
+    "solve_slots_are_1_to_81": true,
+    "required_files_per_case": [
+      "billing_exact.csv",
+      "case_definition.json",
+      "completion_manifest.json",
+      "dispatch.csv",
+      "mandatory_audits.json",
+      "result.json",
+      "solver_settings.json",
+      "transition_settlement_detail.csv"
+    ],
+    "cases_with_unexpected_file_set": [],
+    "per_case_completion_status_counts": {
+      "COMPLETE_PASS": 81
+    },
+    "failed_final_cases": [],
+    "surplus_pv_recharge_values_in_schedule": [
+      "False"
+    ]
+  },
+  "solver_contract_and_results": {
+    "acceptance_contract_source_as_reported": "scripts/19b_run_final_layer_a_81_cases.py:446 solver_acceptance()",
+    "acceptance_contract_source_location_checked_by_publication_operator": "def solver_acceptance(result) is at line 446 of the live scripts/19b_run_final_layer_a_81_cases.py",
+    "acceptance_predicates_as_reported_verbatim": "`has_solution`、`OPTIMAL/status_code=2`、finite objective、`0 ≤ MIPGap ≤ 10⁻⁶`。",
+    "stored_solver_settings_all_cases": {
+      "MIPFocus": 0,
+      "MIPGap": 1e-06,
+      "NumericFocus": 1,
+      "OutputFlag": 0,
+      "Threads": 0,
+      "TimeLimit": null,
+      "mode": "binary"
+    },
+    "stored_solver_settings_distinct_sha256": {
+      "bbe6b3e496ef17db86ab66da7fb5d16f62461dcfcae1ccbb6993a5dc43b09f16": 81
+    },
+    "run_authority_solver_settings_contract_layer_a": {
+      "MIPFocus": 0,
+      "MIPGap": 1e-06,
+      "NumericFocus": 1,
+      "OutputFlag": 0,
+      "Threads": 0,
+      "TimeLimit": "INFINITY_UNSET",
+      "mode": "binary",
+      "source": "scripts/19a_preflight_final_layer_a_81_cases.py"
+    },
+    "stored_result_status_counts": {
+      "OPTIMAL": 81
+    },
+    "stored_result_status_code_counts": {
+      "2": 81
+    },
+    "stored_has_solution_false_cases": [],
+    "stored_mip_gap_min": 0.0,
+    "stored_mip_gap_max": 9.916563814474196e-07,
+    "stored_mip_gap_max_case": "a0.90_b12",
+    "stored_cases_with_mip_gap_above_1e-6": [],
+    "stored_solver_audit_accepted_status_counts": {
+      "COMPLETE_SOLVER_PASS": 81
+    },
+    "stored_modes": [
+      "binary"
+    ],
+    "stored_core_versions": [
+      "v7.2-annual-design-core-transition-candidate1-exact-d-preflight-2026-09-16-r10"
+    ],
+    "stored_gurobi_runtime_sum_sec": 279674.522,
+    "stored_values_read_by": "PUBLICATION_OPERATOR_FROM_STORED_RESULT_BYTES (parsing only; no solver call)",
+    "independent_audit_reported_solver_acceptance": "PASS for 81/81 stored results",
+    "historical_actual_solver_invocations": "SUPPORTED_NOT_CONFIRMED (saved counters and guarded source path; no durable per-invocation telemetry)",
+    "gurobi_version": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+    "best_bound_values": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+    "complete_solver_warning_history": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE"
+  },
+  "audit_families": [
+    {
+      "family": "solver",
+      "independent_audit_reported_result": "PASS",
+      "independent_audit_reported_family_label": "Solver acceptance",
+      "independent_audit_reported_row_verbatim": "| Solver acceptance | 81；依 source predicates 獨立核對 | PASS | 最大 gap `9.9166e-7` | `1e-6` |",
+      "stored_mandatory_audit_status_counts_read_by_publication_operator": {
+        "PASS": 81
+      },
+      "recomputed_by_publication_operator": false
+    },
+    {
+      "family": "physical",
+      "independent_audit_reported_result": "PASS",
+      "independent_audit_reported_family_label": "Physical",
+      "independent_audit_reported_row_verbatim": "| Physical | 81；重算 AC balance、aggregate／segment dynamics、SOC、bounds、cyclicity、互斥與 binary indicators | PASS | AC：`8.8151e-7 kW`，`a0.60_b06`；state dynamics：`8.8494e-7 kWh`，`a1.00_b08` | `1e-5 kW/kWh` |",
+      "stored_mandatory_audit_status_counts_read_by_publication_operator": {
+        "PASS": 81
+      },
+      "recomputed_by_publication_operator": false
+    },
+    {
+      "family": "resilience",
+      "independent_audit_reported_result": "PASS",
+      "independent_audit_reported_family_label": "Resilience",
+      "independent_audit_reported_row_verbatim": "| Resilience | 81；掃描全部 **708,993 valid starts、5,671,404 outage hours** | PASS | Reserve：`1.4552e-11 kWh`，`a0.90_b12`；power violation：`4.5475e-13 kW` | Reserve identity `1e-6 kWh`；state `1e-5 kWh`；power `1e-6 kW` |",
+      "stored_mandatory_audit_status_counts_read_by_publication_operator": {
+        "PASS": 81
+      },
+      "recomputed_by_publication_operator": false
+    },
+    {
+      "family": "billing",
+      "independent_audit_reported_result": "PASS",
+      "independent_audit_reported_family_label": "Billing",
+      "independent_audit_reported_row_verbatim": "| Billing | 81；重算 **3,888 demand rows**、hourly TOU、12-month basic charges、pure-season penalties | PASS | Demand：`1.3642e-12 kW`，`a0.85_b11`；pure penalty：`2.4212e-5 NTD-2023`，`a0.60_b06` | Demand `1e-5 kW`；penalty `0.05 NTD` |",
+      "stored_mandatory_audit_status_counts_read_by_publication_operator": {
+        "PASS": 81
+      },
+      "recomputed_by_publication_operator": false
+    },
+    {
+      "family": "transition",
+      "independent_audit_reported_result": "PASS",
+      "independent_audit_reported_family_label": "Transition",
+      "independent_audit_reported_row_verbatim": "| Transition | 81；重算 **648 rows** 的 seasonal maxima、source、timestamps、tiers、rates、bounded products | PASS | Native maxima：`1.9008e-10 kW`，`a0.90_b06`；annual charge：`5.5984e-7 NTD`，`a0.80_b10` | `1e-5 kW`；`0.05 NTD` |",
+      "stored_mandatory_audit_status_counts_read_by_publication_operator": {
+        "PASS": 81
+      },
+      "recomputed_by_publication_operator": false
+    },
+    {
+      "family": "cost",
+      "independent_audit_reported_result": "PASS",
+      "independent_audit_reported_family_label": "Cost",
+      "independent_audit_reported_row_verbatim": "| Cost | 81；獨立重算所有七項成本及 objective | PASS | `2.4363e-5 NTD-2023/year`，`a0.60_b06` | `0.001 NTD` |",
+      "stored_mandatory_audit_status_counts_read_by_publication_operator": {
+        "PASS": 81
+      },
+      "recomputed_by_publication_operator": false
+    },
+    {
+      "family": "degradation",
+      "independent_audit_reported_result": "PASS",
+      "independent_audit_reported_family_label": "Degradation",
+      "independent_audit_reported_row_verbatim": "| Degradation | 81；segment discharge／ηd、derived λ、cost reconciliation | PASS | Throughput：`2.7791e-5 kWh`，`a0.80_b06`；cost：`4.1473e-10 NTD` | `0.001 kWh/NTD` |",
+      "stored_mandatory_audit_status_counts_read_by_publication_operator": {
+        "PASS": 81
+      },
+      "recomputed_by_publication_operator": false
+    },
+    {
+      "family": "rainflow",
+      "independent_audit_reported_result": "PASS",
+      "independent_audit_reported_family_label": "Rainflow",
+      "independent_audit_reported_row_verbatim": "| Rainflow | 81；另寫記憶體內 periodic turning-point／stack counting，使用固定五點 G curve | PASS | Energy：`3.5000e-5 kWh`；PWL−rainflow：`4.4693e-6 NTD`，均為 `a0.80_b06` | Energy `0.001 kWh`；cost `max(0.05, 10⁻⁶×cost scale)` |",
+      "stored_mandatory_audit_status_counts_read_by_publication_operator": {
+        "PASS": 81
+      },
+      "recomputed_by_publication_operator": false
+    }
+  ],
+  "independent_audit": {
+    "report_title_line": "**FULL81 POST-SOLVE INDEPENDENT ACCEPTANCE — PASS**",
+    "verdict_as_reported": "PASS",
+    "kind": "INDEPENDENT_READ_ONLY_POSTSOLVE_AUDIT_BY_A_SEPARATE_CODEX_SESSION; treated here as an externally supplied audit transcript",
+    "numerical_audit_performed_by_publication_operator": false,
+    "verdict_originated_in_this_pass": false,
+    "no_acceptance_statement_verbatim": "本次獨立稽核支持這組 Full81 結果進入後續接受程序。**本報告沒有建立正式 acceptance artifact、變更 current pointer，或將結果提升為 thesis-authoritative result set。**",
+    "coverage_as_reported": {
+      "valid_outage_starts": "708,993",
+      "outage_hours": "5,671,404",
+      "billing_demand_rows": "3,888",
+      "transition_rows": "648",
+      "negative_controls_verbatim": "執行了 **12 個記憶體內負向控制**，全部拒絕對應缺陷：無 primal、非 optimal、超限 gap、非有限 objective、missing／duplicate case、corrupt hash、wrong input、missing execution authorization、scope 冒充 execution、audit FAIL、缺少 registration。另有一個 solver positive control。",
+      "validator_fixture_suite_verbatim": "其中 solver controls 使用 AST 擷取、已審讀的純函式；其他為獨立 audit predicates。**沒有執行完整 production validator fixture suite，亦未宣稱執行過。**"
+    },
+    "five_layer_assessment_as_reported": [
+      {
+        "layer": "Methodology",
+        "conclusion_as_reported": "PASS",
+        "reported_row_verbatim": "| Methodology | PASS | **CONFIRMED**：依 accepted Framework v7.4；未重開 CLOSED decisions |"
+      },
+      {
+        "layer": "Evidence",
+        "conclusion_as_reported": "PASS",
+        "reported_row_verbatim": "| Evidence | PASS | **CONFIRMED**：canonical input、結果檔案、必要數值檢查均可重建 |"
+      },
+      {
+        "layer": "Implementation",
+        "conclusion_as_reported": "PASS，保留非阻擋事項",
+        "reported_row_verbatim": "| Implementation | PASS，保留非阻擋事項 | **CONFIRMED**：21 個 implementation paths 的實際 bytes 與 G1 digest 一致 |"
+      },
+      {
+        "layer": "Numerical Execution",
+        "conclusion_as_reported": "PASS",
+        "reported_row_verbatim": "| Numerical Execution | PASS | **CONFIRMED**：81 個保存結果符合 solver contract；歷史實際呼叫次數屬 **SUPPORTED** |"
+      },
+      {
+        "layer": "Governance / Provenance",
+        "conclusion_as_reported": "PASS",
+        "reported_row_verbatim": "| Governance / Provenance | PASS | **CONFIRMED**：必要 authority chain、publication containment、Git 順序成立；完整操作歷史仍有界線 |"
+      }
+    ],
+    "audit_session_forbidden_action_counters_as_reported": [
+      {
+        "reported_row_verbatim": "| Repository files modified | 0 |",
+        "action": "Repository files modified",
+        "count_as_reported": "0"
+      },
+      {
+        "reported_row_verbatim": "| Repository files created／deleted | 0／0 |",
+        "action": "Repository files created／deleted",
+        "count_as_reported": "0／0"
+      },
+      {
+        "reported_row_verbatim": "| Git stage／commit／push／tag operations | 0 |",
+        "action": "Git stage／commit／push／tag operations",
+        "count_as_reported": "0"
+      },
+      {
+        "reported_row_verbatim": "| Model constructions | 0 |",
+        "action": "Model constructions",
+        "count_as_reported": "0"
+      },
+      {
+        "reported_row_verbatim": "| `optimize()` calls | 0 |",
+        "action": "`optimize()` calls",
+        "count_as_reported": "0"
+      },
+      {
+        "reported_row_verbatim": "| Production reruns | 0 |",
+        "action": "Production reruns",
+        "count_as_reported": "0"
+      },
+      {
+        "reported_row_verbatim": "| A2／Layer B／DG solves | 0 |",
+        "action": "A2／Layer B／DG solves",
+        "count_as_reported": "0"
+      },
+      {
+        "reported_row_verbatim": "| Sensitivity solves | 0 |",
+        "action": "Sensitivity solves",
+        "count_as_reported": "0"
+      },
+      {
+        "reported_row_verbatim": "| Repairs | 0 |",
+        "action": "Repairs",
+        "count_as_reported": "0"
+      }
+    ],
+    "report_copy": {
+      "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+      "bytes": 21479,
+      "sha256": "c6a07064451fa98f84fd714d09d59ed93eabc3e1b8d3e0461dd664e47937d394",
+      "characters": 17457,
+      "line_feed_count": 315,
+      "carriage_return_count": 0,
+      "ends_with_newline": false,
+      "transformation": "NONE. The file is exactly the UTF-8 encoding of the source message text: nothing added, removed, redacted, reworded or newline-normalized.",
+      "is_redacted_or_transformed_copy": false
+    },
+    "source_provenance": {
+      "custody": "The owner did not hand over a separate report file. With explicit owner authorization given in this publication session, the publication operator read the local Codex session rollout log read-only and extracted the final assistant message verbatim.",
+      "source_kind": "CODEX_SESSION_ROLLOUT_JSONL_FINAL_ASSISTANT_MESSAGE",
+      "rollout_file_name": "rollout-2026-10-12T16-02-28-01a12f22-6d74-7c32-bb7d-84a93188e17a.jsonl",
+      "rollout_location": "<CODEX_HOME>/sessions/2026/10/12/ on the owner's workstation",
+      "rollout_bytes_at_extraction": 1252680,
+      "rollout_sha256_at_extraction": "dd4be32bfc772c7da40027b2909a5948f485fc9023e409c7984e4c69f33e0a82",
+      "rollout_is_published": false,
+      "rollout_is_git_durable": false,
+      "rollout_mutability_note": "The rollout is a live tool log outside the repository; it may be appended to or removed later. The byte count and SHA-256 are as observed at extraction only.",
+      "source_record_zero_based_line_index": 223,
+      "source_record_selector": "type=response_item, payload.type=message, payload.role=assistant, payload.phase=final_answer, single output_text part",
+      "source_record_unique": true,
+      "source_record_timestamp": "2026-10-12T08:26:20.100Z",
+      "equals_task_complete_last_agent_message": true,
+      "equals_final_answer_agent_message_event": true,
+      "session_metadata_as_recorded_in_rollout": {
+        "session_id": "01a12f22-6d74-7c32-bb7d-84a93188e17a",
+        "session_start_timestamp": "2026-10-12T08:02:28.154Z",
+        "originator": "codex_vscode",
+        "cli_version": "0.162.0-alpha.2",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "xhigh",
+        "verification": "AS_RECORDED_IN_ROLLOUT; not independently verified by the publication operator"
+      },
+      "report_statement_on_model_setting_verbatim": "計算均在記憶體內完成；沒有建立稽核報告檔。亦未宣稱已將此會話切換成附件指定的 GPT-5.6 Sol／Extra High 設定。",
+      "signature": "NOT_APPLICABLE (the transcript carries no signature)",
+      "audit_working_evidence": "NOT_PUBLISHED. Per the report the computations were in memory and no audit report or log file was created; no audit log exists to publish."
+    },
+    "disclosure_review": {
+      "destination_repository": "https://github.com/irischg/iris_thesis.git",
+      "destination_visibility": "PUBLIC (observed by the publication operator through an unauthenticated GitHub REST API request during this session)",
+      "local_absolute_paths_in_report": [
+        "C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis"
+      ],
+      "urls_in_report": [
+        "https://github.com/irischg/iris_thesis/tree/thesis-v7"
+      ],
+      "email_addresses_in_report": 0,
+      "uuid_like_tokens_in_report": 0,
+      "credential_like_tokens_in_report": 0,
+      "owner_disclosure_decision": "Publish the report verbatim if it contains only repository content and local absolute paths of the kind already present in tracked files; otherwise STOP. Decision given by the owner in this publication session.",
+      "outcome": "VERBATIM_PUBLICATION_WITHIN_OWNER_DECISION"
+    }
+  },
+  "evidence_qualifications_carried_unchanged": [
+    {
+      "item": "historical_actual_optimization_attempts",
+      "grade_as_reported": "SUPPORTED",
+      "reported_text_verbatim": "| 歷史實際 optimization attempts | 每 case 1 | **SUPPORTED：81**；沒有逐次 durable telemetry 可直接逐筆證明 |",
+      "upgraded_by_this_publication": false
+    },
+    {
+      "item": "historical_model_constructions",
+      "grade_as_reported": "SUPPORTED",
+      "reported_text_verbatim": "| 歷史 model constructions | 81 | **SUPPORTED：81**；由 guarded call chain 推導，未保存逐模型 counter |",
+      "upgraded_by_this_publication": false
+    },
+    {
+      "item": "gurobi_version_best_bound_values_and_complete_warning_history",
+      "grade_as_reported": "NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE",
+      "reported_text_verbatim": "**NOT_RECONSTRUCTIBLE_FROM_AVAILABLE_EVIDENCE：**執行時 Gurobi version、直接 best-bound 值、完整 warning history。保存的設定與 accepted source 一致；本報告沒有宣稱完整 solver log 無警告。",
+      "upgraded_by_this_publication": false
+    },
+    {
+      "item": "operator_identity_and_owner_launch_decision_history",
+      "grade_as_reported": "NOT_RECONSTRUCTIBLE_FROM_SAVED_ARTIFACTS",
+      "reported_text_verbatim": "Execution-authorization authoring pass 本身沒有 launch；保存 artifacts 無法重建操作者身分或另外的 owner launch 對話。本次確認的是既定 machine-readable execution authority，不把發布 commit 誤當成 launch 行為證明。",
+      "upgraded_by_this_publication": false
+    },
+    {
+      "item": "full_production_validator_fixture_suite",
+      "grade_as_reported": "NOT_EXECUTED_BY_THE_INDEPENDENT_AUDIT",
+      "reported_text_verbatim": "其中 solver controls 使用 AST 擷取、已審讀的純函式；其他為獨立 audit predicates。**沒有執行完整 production validator fixture suite，亦未宣稱執行過。**",
+      "upgraded_by_this_publication": false
+    },
+    {
+      "item": "byte_verification_scope",
+      "grade_as_reported": "BOUNDED_SCOPE_NOT_A_WHOLE_DISK_SNAPSHOT",
+      "reported_text_verbatim": "以上是明確範圍的 byte verification，沒有宣稱對整個磁碟建立完整 snapshot。",
+      "upgraded_by_this_publication": false
+    }
+  ],
+  "reconstructibility_as_reported": [
+    {
+      "axis_as_reported": "Code",
+      "leading_grade_as_reported": "CONFIRMED",
+      "reported_row_verbatim": "| Code | **CONFIRMED**：21 個 implementation files 可由 execution HEAD 重建，與 live bytes 相同 |"
+    },
+    {
+      "axis_as_reported": "Input",
+      "leading_grade_as_reported": "CONFIRMED",
+      "reported_row_verbatim": "| Input | **CONFIRMED**：canonical raw bytes、schema、chronology、參數與四個 execution inputs 可重建 |"
+    },
+    {
+      "axis_as_reported": "Execution identity",
+      "leading_grade_as_reported": "CONFIRMED",
+      "reported_row_verbatim": "| Execution identity | **CONFIRMED**：HEAD、source/input identities、authorization chain 可重建 |"
+    },
+    {
+      "axis_as_reported": "Full execution state",
+      "leading_grade_as_reported": "PARTIALLY_RECONSTRUCTIBLE",
+      "reported_row_verbatim": "| Full execution state | **PARTIALLY_RECONSTRUCTIBLE**：缺 OS/process history、逐次 telemetry、solver version/log、操作者 launch history |"
+    },
+    {
+      "axis_as_reported": "Numerical results",
+      "leading_grade_as_reported": "CONFIRMED",
+      "reported_row_verbatim": "| Numerical results | **CONFIRMED**：目前保存 primal 足以重算所有 mandatory numerical checks |"
+    },
+    {
+      "axis_as_reported": "Overall",
+      "leading_grade_as_reported": "足以支持本次 post-solve acceptance",
+      "reported_row_verbatim": "| Overall | **足以支持本次 post-solve acceptance**；不等同完整 transient execution replay 或已完成 durable result publication |"
+    }
+  ],
+  "local_numerical_availability_versus_git_durability": {
+    "result_files_on_local_disk": 651,
+    "result_files_tracked_by_git": 0,
+    "result_files_gitignored": true,
+    "gitignore_rule": ".gitignore:23:results/",
+    "result_bytes_published_by_this_package": 0,
+    "result_bytes_git_durable": false,
+    "numerical_outputs_status": "LOCALLY_AVAILABLE_AND_INDEPENDENTLY_CHECKED_IN_THE_AUDITORS_ENVIRONMENT / NOT_GIT_DURABLE",
+    "what_this_package_makes_durable": "Only identities: the root completion-manifest SHA-256 (which registers the byte count and SHA-256 of the other 650 files), the root artifact hashes, and the audit transcript. Anyone holding the result bytes can verify them against these values; the bytes themselves are not preserved by Git.",
+    "related_finding": "AUD-N4"
+  },
+  "findings_carried_not_closed": [
+    {
+      "id": "AUD-N1",
+      "origin": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT",
+      "reported_row_id": "AUD-N1",
+      "category_as_reported": "Evidence",
+      "severity_as_reported": "MODERATE",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "NOT_APPLICABLE",
+      "accepted_g1_authority_record_text": "NOT_APPLICABLE",
+      "reported_row_verbatim": "| AUD-N1 | Evidence／MODERATE | NONBLOCKING／否 | `SolveSettings.telemetry_callback=None`、`log_file=None`；publisher 未保存 invocation telemetry、version、bound 或完整 warnings。必要 solver contract 可驗證，完整歷史不可重建。未來若增強記錄，須另行授權 |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "AUD-N2",
+      "origin": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT",
+      "reported_row_id": "AUD-N2",
+      "category_as_reported": "Implementation",
+      "severity_as_reported": "MODERATE",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "OPEN / NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "NOT_APPLICABLE",
+      "accepted_g1_authority_record_text": "NOT_APPLICABLE",
+      "reported_row_verbatim": "| AUD-N2 | Implementation／MODERATE | OPEN／NONBLOCKING／否 | `production_input_authority_v7_3.py:153–201` 宣稱 timestamp int64-ns，但目前 pandas 3.0.2 讀入 `datetime64[us]`，`.asi8` 實際以 µs hashing。Native digest 為保存的 `1aa2f364f08b54d0ba5a6c37e7855c652ce19ce6703d693d557265313c62bcb0`；強制 ns 則為 `d38fa2437abf5bb243140d50e1e992d6a2911adfb5ccfaf9978c5a348179d0b2`。影響跨環境 portability，未改變本 run chronology 或已綁定身分；不得原地修補 frozen artifacts |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "AUD-N3",
+      "origin": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT",
+      "reported_row_id": "AUD-N3",
+      "category_as_reported": "Implementation",
+      "severity_as_reported": "MINOR",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "NOT_APPLICABLE",
+      "accepted_g1_authority_record_text": "NOT_APPLICABLE",
+      "reported_row_verbatim": "| AUD-N3 | Implementation／MINOR | NONBLOCKING／否 | `production_successor_stack_v7_3.py` 的 authority payload 固定輸出 `main_full81_execution_authorized=False`；有效 execution guard 另行解析並要求獨立 authorization。此欄不能代表有效 execution 權限；未來 reporting correction 須走新 authority 流程 |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "AUD-N4",
+      "origin": "FULL81_POSTSOLVE_INDEPENDENT_AUDIT",
+      "reported_row_id": "AUD-N4",
+      "category_as_reported": "Evidence",
+      "severity_as_reported": "INFORMATIONAL",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "NOT_APPLICABLE",
+      "accepted_g1_authority_record_text": "NOT_APPLICABLE",
+      "reported_row_verbatim": "| AUD-N4 | Evidence／INFORMATIONAL | NONBLOCKING／否 | 本 run 的 651 files 僅由目前 local bytes＋manifest hashes 支持，未 Git-track；現行 publisher 不要求將結果提交 Git。後續保存／publication 必須另行授權 |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "G1-N1",
+      "origin": "G1_LIFECYCLE_CARRIED_FINDING",
+      "reported_row_id": "G1-N1",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "OPEN / CARRIED / NONBLOCKING",
+      "accepted_g1_authority_record_text": "Bundle pin production_successor_stack keeps origin tag U_06_ALIGNMENT_CANDIDATE_R3 while Git shows later stack byte history (02b998b). Descriptive metadata only; no guard reads it. Not edited in G1.",
+      "reported_row_verbatim": "| G1-N1 | Governance／MINOR | CARRIED／NONBLOCKING／否 | 已接受的 historical origin-label ambiguity；實際 bytes/digest 正確，未默示關閉 |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "G1-N2",
+      "origin": "G1_LIFECYCLE_CARRIED_FINDING",
+      "reported_row_id": "G1-N2",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MAJOR",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "OPEN / CARRIED / NONBLOCKING",
+      "accepted_g1_authority_record_text": "At predecessor commit 222685f the published runtime bytes equal neither the R8 nor the FULLSTACK-01 frozen implementation identity (see the change ledger's known_historical_inconsistency). G1 binds neither as a live identity.",
+      "reported_row_verbatim": "| G1-N2 | Governance／MAJOR | CARRIED／NONBLOCKING／否 | predecessor freeze coverage gap 保留；G1 自身 21-path live identity 完整，未將 predecessor gap 當成 current binding |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "G1-N3",
+      "origin": "G1_LIFECYCLE_CARRIED_FINDING",
+      "reported_row_id": "G1-N3",
+      "category_as_reported": "Evidence",
+      "severity_as_reported": "INFORMATIONAL",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "CARRIED",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "DISCLOSED / CARRIED",
+      "accepted_g1_authority_record_text": "tests_executed records, for each of the nine suites, a run on exactly these validation bytes and these runtime bytes, taken before this package existed (the ledger is finalized first). Package-phase regression is reported outside the package and is not self-recorded.",
+      "reported_row_verbatim": "| G1-N3 | Evidence／INFORMATIONAL | CARRIED／否 | validation evidence phase 限制照原 lifecycle 保留；本次沒有重跑或重新認證歷史 test campaign |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY",
+      "origin": "G1_LIFECYCLE_CARRIED_FINDING",
+      "reported_row_id": "R7 durability",
+      "category_as_reported": "Evidence",
+      "severity_as_reported": "MAJOR",
+      "severity_scope_note": "NOT_APPLICABLE",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "OPEN / CARRIED / NONBLOCKING",
+      "accepted_g1_authority_record_text": "Historical 21i raw bytes (sha256 5954738053d32a5e541a2bf9db8d8e4fd360e2fa70945734f9de2fe6fdadebd8) are locally recoverable from the R1/R2 preservation archives but are not remote Git-durable.",
+      "reported_row_verbatim": "| R7 durability | Evidence／MAJOR | CARRIED／NONBLOCKING／否 | historical preservation/audit primary evidence 的 Git durability 限制，見 G1 acceptance closure；沒有假稱 scratchpad／ZIP 已 durable publication |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "SAR-N1",
+      "origin": "G1_READINESS_REVIEW_OBSERVATION",
+      "reported_row_id": "SAR-N1–N4",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR–MODERATE",
+      "severity_scope_note": "The report gives one group row for SAR-N1 through SAR-N4 with a severity RANGE; per-item severity is NOT_STATED_IN_REPORT and is not assigned here.",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "OBSERVATION_NOT_CLOSED",
+      "accepted_g1_authority_record_text": "FULLSTACK_01_REMEDIATION_STATUS runtime label is stale relative to the accepted FULLSTACK-01 lifecycle; it is reported at the execution-input boundary; descriptive only; not edited (runtime identity).",
+      "reported_row_verbatim": "| SAR-N1–N4 | Governance／MINOR–MODERATE | CARRIED／NONBLOCKING／否 | stale FULLSTACK label、stale handoff、protected surface 外 untracked checkpoints、缺少獨立 frozen-verification role record；適用必要 roles 已存在，未自動關閉這些事項 |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "SAR-N2",
+      "origin": "G1_READINESS_REVIEW_OBSERVATION",
+      "reported_row_id": "SAR-N1–N4",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR–MODERATE",
+      "severity_scope_note": "The report gives one group row for SAR-N1 through SAR-N4 with a severity RANGE; per-item severity is NOT_STATED_IN_REPORT and is not assigned here.",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "OBSERVATION_NOT_CLOSED",
+      "accepted_g1_authority_record_text": "Handoff documents (CURRENT_STATE, PROJECT_HANDOFF, CLAUDE.md read-first list) predate the G1 generation.",
+      "reported_row_verbatim": "| SAR-N1–N4 | Governance／MINOR–MODERATE | CARRIED／NONBLOCKING／否 | stale FULLSTACK label、stale handoff、protected surface 外 untracked checkpoints、缺少獨立 frozen-verification role record；適用必要 roles 已存在，未自動關閉這些事項 |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "SAR-N3",
+      "origin": "G1_READINESS_REVIEW_OBSERVATION",
+      "reported_row_id": "SAR-N1–N4",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR–MODERATE",
+      "severity_scope_note": "The report gives one group row for SAR-N1 through SAR-N4 with a severity RANGE; per-item severity is NOT_STATED_IN_REPORT and is not assigned here.",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "OBSERVATION_NOT_CLOSED",
+      "accepted_g1_authority_record_text": "Untracked docs/checkpoints candidate records outside the gate-protected prefixes.",
+      "reported_row_verbatim": "| SAR-N1–N4 | Governance／MINOR–MODERATE | CARRIED／NONBLOCKING／否 | stale FULLSTACK label、stale handoff、protected surface 外 untracked checkpoints、缺少獨立 frozen-verification role record；適用必要 roles 已存在，未自動關閉這些事項 |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    },
+    {
+      "id": "SAR-N4",
+      "origin": "G1_READINESS_REVIEW_OBSERVATION",
+      "reported_row_id": "SAR-N1–N4",
+      "category_as_reported": "Governance",
+      "severity_as_reported": "MINOR–MODERATE",
+      "severity_scope_note": "The report gives one group row for SAR-N1 through SAR-N4 with a severity RANGE; per-item severity is NOT_STATED_IN_REPORT and is not assigned here.",
+      "disposition_as_reported": "CARRIED / NONBLOCKING",
+      "blocking_as_reported": false,
+      "status_in_accepted_g1_authority_records": "OBSERVATION_NOT_CLOSED",
+      "accepted_g1_authority_record_text": "READ_ONLY_FROZEN_AUTHORITY_VERIFICATION has no durable role record.",
+      "reported_row_verbatim": "| SAR-N1–N4 | Governance／MINOR–MODERATE | CARRIED／NONBLOCKING／否 | stale FULLSTACK label、stale handoff、protected surface 外 untracked checkpoints、缺少獨立 frozen-verification role record；適用必要 roles 已存在，未自動關閉這些事項 |",
+      "closed": false,
+      "closed_by_this_publication": false,
+      "remediated_by_this_publication": false
+    }
+  ],
+  "disclosed_limitations_carried_from_g1": [
+    {
+      "id": "AUDITOR_INDEPENDENCE_BOUNDARY",
+      "source": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+      "statement": "The independent delta audit was performed by a separate, fresh Claude Code session (5a2e0245-83c6-4891-a55b-e2a1dc8bf823). It was not performed by Codex and is not claimed as cross-model verification.",
+      "blocks_acceptance_per_source": false,
+      "listed_in_accepted_lifecycle_disclosed_limitations_carried": true,
+      "closed_by_this_publication": false
+    },
+    {
+      "id": "AUDIT_PRIMARY_EVIDENCE_NOT_GIT_DURABLE",
+      "source": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+      "statement": "The audit's primary logs and JSON evidence are retained in a local session scratchpad and identified by SHA-256 in the published audit record; they are not Git-durable.",
+      "blocks_acceptance_per_source": false,
+      "listed_in_accepted_lifecycle_disclosed_limitations_carried": true,
+      "closed_by_this_publication": false
+    },
+    {
+      "id": "HISTORICAL_21I_CONTENT",
+      "source": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+      "statement": "Historical 21i raw bytes (sha256 5954738053d32a5e541a2bf9db8d8e4fd360e2fa70945734f9de2fe6fdadebd8) are locally recoverable from the R1/R2 preservation archives but are not remote Git-durable.",
+      "blocks_acceptance_per_source": false,
+      "listed_in_accepted_lifecycle_disclosed_limitations_carried": true,
+      "closed_by_this_publication": false
+    },
+    {
+      "id": "FIXTURE_CONTROL_53_OF_54",
+      "source": "results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json",
+      "statement": "Committed fixture controls passed 53/54; the exception (F2 unknown extra key) is classified NONBLOCKING / INVALID_TEST_EXPECTATION by the published audit record and is not a fail-open vulnerability. 54/54 is not claimed.",
+      "blocks_acceptance_per_source": false,
+      "listed_in_accepted_lifecycle_disclosed_limitations_carried": true,
+      "closed_by_this_publication": false
+    }
+  ],
+  "fixture_control_limitation": {
+    "id": "FIXTURE_CONTROL_53_OF_54",
+    "passed": 53,
+    "total": 54,
+    "not_claimed": "54/54",
+    "classification_in_published_g1_audit_record": "NONBLOCKING / INVALID_TEST_EXPECTATION",
+    "source": "results/provenance/current_full81_production_generation_g1_independent_audit_r1/independent_audit_pass_record.json",
+    "postsolve_audit_statement_verbatim": "既有 `53/54 fixture controls` 例外及原 G1 audit independence boundary 均保留，沒有改寫成 `54/54` 或跨模型歷史驗證。",
+    "rewritten_by_this_publication": false
+  },
+  "publication_operator_consistency_cross_checks": {
+    "nature": "Implementation self-checking by the publication operator against locally accessible bytes. It is NOT an independent audit and does not re-perform the numerical post-solve reconstruction.",
+    "checks": [
+      {
+        "claim": "case directories / completion manifests",
+        "independent_audit_reported_value": "81",
+        "publication_operator_value_from_local_bytes": "81",
+        "agrees": true
+      },
+      {
+        "claim": "stored solver status distribution",
+        "independent_audit_reported_value": "OPTIMAL: 81",
+        "publication_operator_value_from_local_bytes": "{\"OPTIMAL\": 81}",
+        "agrees": true
+      },
+      {
+        "claim": "maximum stored MIPGap and its case",
+        "independent_audit_reported_value": "9.916563814474196e-7 at a0.90_b12",
+        "publication_operator_value_from_local_bytes": "9.916563814474196e-07 at a0.90_b12",
+        "agrees": true
+      },
+      {
+        "claim": "sum of stored Gurobi runtime (s)",
+        "independent_audit_reported_value": "279,674.522",
+        "publication_operator_value_from_local_bytes": "279674.522",
+        "agrees": true
+      },
+      {
+        "claim": "shortest / longest stored Gurobi runtime (s, case)",
+        "independent_audit_reported_value": "72.301 a0.80_b05 / 6,143.711 a0.60_b10",
+        "publication_operator_value_from_local_bytes": "72.301 a0.80_b05 / 6,143.711 a0.60_b10",
+        "agrees": true
+      },
+      {
+        "claim": "maximum wall minus Gurobi runtime (s, case)",
+        "independent_audit_reported_value": "1.113 a0.70_b04",
+        "publication_operator_value_from_local_bytes": "1.113 a0.70_b04",
+        "agrees": true
+      },
+      {
+        "claim": "stored objective range (NTD-2023/year)",
+        "independent_audit_reported_value": "82,841,774.990–139,264,927.383",
+        "publication_operator_value_from_local_bytes": "82,841,774.990–139,264,927.383",
+        "agrees": true
+      },
+      {
+        "claim": "stored solution count range",
+        "independent_audit_reported_value": "2–10",
+        "publication_operator_value_from_local_bytes": "2–10",
+        "agrees": true
+      },
+      {
+        "claim": "valid outage starts over 81 cases (from case_schedule valid_start_count)",
+        "independent_audit_reported_value": "708,993",
+        "publication_operator_value_from_local_bytes": "708,993",
+        "agrees": true
+      },
+      {
+        "claim": "outage hours over 81 cases (valid_start_count x beta_h)",
+        "independent_audit_reported_value": "5,671,404",
+        "publication_operator_value_from_local_bytes": "5,671,404",
+        "agrees": true
+      },
+      {
+        "claim": "billing demand rows (stored billing structure row counts)",
+        "independent_audit_reported_value": "3,888",
+        "publication_operator_value_from_local_bytes": "3,888",
+        "agrees": true
+      },
+      {
+        "claim": "transition settlement rows (stored component counts)",
+        "independent_audit_reported_value": "648",
+        "publication_operator_value_from_local_bytes": "648",
+        "agrees": true
+      },
+      {
+        "claim": "physical files under run root",
+        "independent_audit_reported_value": "651",
+        "publication_operator_value_from_local_bytes": "651",
+        "agrees": true
+      },
+      {
+        "claim": "root manifest registrations",
+        "independent_audit_reported_value": "650",
+        "publication_operator_value_from_local_bytes": "650",
+        "agrees": true
+      },
+      {
+        "claim": "case manifest registrations",
+        "independent_audit_reported_value": "567",
+        "publication_operator_value_from_local_bytes": "567",
+        "agrees": true
+      },
+      {
+        "claim": "JSON / CSV file counts",
+        "independent_audit_reported_value": "408／243",
+        "publication_operator_value_from_local_bytes": "408／243",
+        "agrees": true
+      },
+      {
+        "claim": "root + case registration hash/byte mismatches",
+        "independent_audit_reported_value": "0",
+        "publication_operator_value_from_local_bytes": "0",
+        "agrees": true
+      },
+      {
+        "claim": "root and case reported optimization-call counters",
+        "independent_audit_reported_value": "81 / 81",
+        "publication_operator_value_from_local_bytes": "81 / 81",
+        "agrees": true
+      },
+      {
+        "claim": "R/authority.json sha256",
+        "independent_audit_reported_value": "ecef360b340de92b2f1f612b7028efebfa1b26986fa9fe22efad66a46b3442bb",
+        "publication_operator_value_from_local_bytes": "ecef360b340de92b2f1f612b7028efebfa1b26986fa9fe22efad66a46b3442bb",
+        "agrees": true
+      },
+      {
+        "claim": "R/case_schedule.json sha256",
+        "independent_audit_reported_value": "08b05f654dbf997fb91ed4d835594d3f796567e47882e478b9fa05e5ba240df4",
+        "publication_operator_value_from_local_bytes": "08b05f654dbf997fb91ed4d835594d3f796567e47882e478b9fa05e5ba240df4",
+        "agrees": true
+      },
+      {
+        "claim": "R/completion_manifest.json sha256",
+        "independent_audit_reported_value": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24",
+        "publication_operator_value_from_local_bytes": "d5c647846e4ec4ddfedd50ff2fed837f70e5398dedd95d0fea90dfc5fcad7d24",
+        "agrees": true
+      },
+      {
+        "claim": "Framework v7.4 sha256",
+        "independent_audit_reported_value": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+        "publication_operator_value_from_local_bytes": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+        "agrees": true
+      },
+      {
+        "claim": "Registry v7.4 sha256",
+        "independent_audit_reported_value": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+        "publication_operator_value_from_local_bytes": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+        "agrees": true
+      },
+      {
+        "claim": "G1 runtime identity digest (21 paths) recomputed from live bytes",
+        "independent_audit_reported_value": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+        "publication_operator_value_from_local_bytes": "8cca5e81d62ab3976aaeeeea162bdfdca7867af4871156446bbcae4ece65eabc",
+        "agrees": true
+      },
+      {
+        "claim": "solver parameter fingerprint (as bound in scope/execution authorization; not recomputed)",
+        "independent_audit_reported_value": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+        "publication_operator_value_from_local_bytes": "598dc4365ce65055aa509f6c98a87ba91b173ff361e06119000bf165af4fdebe",
+        "agrees": true
+      },
+      {
+        "claim": "canonical annual-input timestamp fingerprint stored in run authority (AUD-N2 native digest)",
+        "independent_audit_reported_value": "1aa2f364f08b54d0ba5a6c37e7855c652ce19ce6703d693d557265313c62bcb0",
+        "publication_operator_value_from_local_bytes": "1aa2f364f08b54d0ba5a6c37e7855c652ce19ce6703d693d557265313c62bcb0",
+        "agrees": true
+      },
+      {
+        "claim": "run authority payload field main_full81_execution_authorized (AUD-N3)",
+        "independent_audit_reported_value": "False",
+        "publication_operator_value_from_local_bytes": "False",
+        "agrees": true
+      },
+      {
+        "claim": "pre-existing ' M' entry: working bytes equal HEAD blob (sha256)",
+        "independent_audit_reported_value": "ef534fdf6ae10b5c37811c95dc5c900b0c022bff14f7e445eb546e940886b15f",
+        "publication_operator_value_from_local_bytes": "ef534fdf6ae10b5c37811c95dc5c900b0c022bff14f7e445eb546e940886b15f",
+        "agrees": true
+      },
+      {
+        "claim": "untracked file count",
+        "independent_audit_reported_value": "20",
+        "publication_operator_value_from_local_bytes": "20",
+        "agrees": true
+      },
+      {
+        "claim": "target run files tracked by Git",
+        "independent_audit_reported_value": "0 (ignored, not Git-tracked)",
+        "publication_operator_value_from_local_bytes": "0",
+        "agrees": true
+      },
+      {
+        "claim": "g1_accepted_lifecycle sha256",
+        "independent_audit_reported_value": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0",
+        "publication_operator_value_from_local_bytes": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0",
+        "agrees": true
+      },
+      {
+        "claim": "main_full81_scope_authorization sha256",
+        "independent_audit_reported_value": "0dc75214904682476def42f36e73688a1f1d254523f20bfd319e6561c4a81338",
+        "publication_operator_value_from_local_bytes": "0dc75214904682476def42f36e73688a1f1d254523f20bfd319e6561c4a81338",
+        "agrees": true
+      },
+      {
+        "claim": "main_full81_no_solve_preflight_evidence sha256",
+        "independent_audit_reported_value": "95047e2fa9c0d524d5c43c0fdcafe40a93662c4282fd1aaaf0558be681f4da76",
+        "publication_operator_value_from_local_bytes": "95047e2fa9c0d524d5c43c0fdcafe40a93662c4282fd1aaaf0558be681f4da76",
+        "agrees": true
+      },
+      {
+        "claim": "main_full81_execution_authorization sha256",
+        "independent_audit_reported_value": "87ec6643deef262bc3710b2e1d7e76d582bcfd1eebd41ffdc6c6c71eb2f12c6e",
+        "publication_operator_value_from_local_bytes": "87ec6643deef262bc3710b2e1d7e76d582bcfd1eebd41ffdc6c6c71eb2f12c6e",
+        "agrees": true
+      },
+      {
+        "claim": "publication commit for stage G1_CANDIDATE",
+        "independent_audit_reported_value": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "publication_operator_value_from_local_bytes": "59e530f3a7d78c0480fa1368c56331f11e5731f0",
+        "agrees": true
+      },
+      {
+        "claim": "publication commit for stage G1_ACCEPTANCE_PHASE_B",
+        "independent_audit_reported_value": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "publication_operator_value_from_local_bytes": "bdbe0637a1de41cea0c2d2391149fe1a86e684e3",
+        "agrees": true
+      },
+      {
+        "claim": "publication commit for stage G1_RE_FREEZE_PHASE_C",
+        "independent_audit_reported_value": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+        "publication_operator_value_from_local_bytes": "b31d88c35d4d86bd4a4294bb783737d18d9e287e",
+        "agrees": true
+      },
+      {
+        "claim": "publication commit for stage MAIN_FULL81_SCOPE_AUTHORIZATION",
+        "independent_audit_reported_value": "ab5c7bea4fdcd28e0ca967daadc80d86f25c7588",
+        "publication_operator_value_from_local_bytes": "ab5c7bea4fdcd28e0ca967daadc80d86f25c7588",
+        "agrees": true
+      },
+      {
+        "claim": "publication commit for stage MAIN_FULL81_NO_SOLVE_PREFLIGHT_EVIDENCE",
+        "independent_audit_reported_value": "21ff5f48a606f88b2dcd5429ddb10799341f3aeb",
+        "publication_operator_value_from_local_bytes": "21ff5f48a606f88b2dcd5429ddb10799341f3aeb",
+        "agrees": true
+      },
+      {
+        "claim": "publication commit for stage MAIN_FULL81_EXECUTION_AUTHORIZATION",
+        "independent_audit_reported_value": "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "publication_operator_value_from_local_bytes": "c8f555094d6ab711ce6426302419fff958ed19fa",
+        "agrees": true
+      },
+      {
+        "claim": "canonical_annual_input sha256",
+        "independent_audit_reported_value": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "publication_operator_value_from_local_bytes": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+        "agrees": true
+      },
+      {
+        "claim": "production_runner sha256",
+        "independent_audit_reported_value": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+        "publication_operator_value_from_local_bytes": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+        "agrees": true
+      },
+      {
+        "claim": "model_core sha256",
+        "independent_audit_reported_value": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+        "publication_operator_value_from_local_bytes": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+        "agrees": true
+      },
+      {
+        "claim": "production_successor_stack sha256",
+        "independent_audit_reported_value": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+        "publication_operator_value_from_local_bytes": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+        "agrees": true
+      },
+      {
+        "claim": "parameter_registry sha256",
+        "independent_audit_reported_value": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+        "publication_operator_value_from_local_bytes": "c0969421853b9a6dd778bba658f869d275ca745921a67c68455188fbad3f76a1",
+        "agrees": true
+      },
+      {
+        "claim": "execution_input:production_economic_interface_v7_2.json sha256",
+        "independent_audit_reported_value": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+        "publication_operator_value_from_local_bytes": "9277d310a124e1ae9d91fe1bf5fc1d70210372ca2f3d9e3b1c110cd210c319a9",
+        "agrees": true
+      },
+      {
+        "claim": "execution_input:taipower_seasonal_settlement_matrix_v7_2.csv sha256",
+        "independent_audit_reported_value": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+        "publication_operator_value_from_local_bytes": "ed7f8dbf9d3e41564e3fc289c395df17aa390466b1abc1ea03a5c9e421324b79",
+        "agrees": true
+      },
+      {
+        "claim": "execution_input:taipower_tariff_optimization_ntd2023_v7_2.csv sha256",
+        "independent_audit_reported_value": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+        "publication_operator_value_from_local_bytes": "5c1582d8ecebba3fc46a4afe61a5ecb66c8a059ef81b4edeba69f67cc9974395",
+        "agrees": true
+      },
+      {
+        "claim": "execution_input:taipower_transition_period_settlement_interface_v7_2.json sha256",
+        "independent_audit_reported_value": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+        "publication_operator_value_from_local_bytes": "f101af4754f89a2126333796e3cea63210140c94cccc1ad925fa9128361c5b88",
+        "agrees": true
+      }
+    ],
+    "all_agree": true,
+    "not_reproduced_by_publication_operator": [
+      "Every residual, worst-case and tolerance value in report section G (independent physical, all-start resilience, billing, transition, cost, degradation and rainflow reconstruction).",
+      "The aggregate hashes in report section I (539 selected hashes; 651 run-file hashes): the aggregation algorithm is not specified in the report.",
+      "The 12 in-memory negative controls and the solver positive control.",
+      "The relevant ignored inventory count of 1,062 (its scope definition is not specified in the report).",
+      "G1 validation-identity and governance-identity digests (carried as recorded)."
+    ],
+    "identities_verified_against_run_authority_bindings_but_not_quoted_in_report": [
+      "main_full81_authorization_module",
+      "accepted_lifecycle_overlay_module",
+      "v7_4_alignment_verifier"
+    ]
+  },
+  "publication_operator_observations": [
+    {
+      "id": "PUB-OBS-1",
+      "class": "EOL_PORTABILITY",
+      "text": "The four published files have no .gitattributes rule (text/eol unspecified) and core.autocrlf=true on this workstation. .gitattributes is a pinned authority file and was deliberately not modified. Registered SHA-256 values are over the LF bytes written here, which equal the Git blob bytes. A checkout that smudges to CRLF yields different working-tree raw hashes; verify against blob bytes (git cat-file blob).",
+      "adjudication": "NOT_ADJUDICATED_BY_PUBLICATION_OPERATOR"
+    },
+    {
+      "id": "PUB-OBS-2",
+      "class": "PRE_EXISTING_WORKING_TREE_STATE",
+      "text": "results/provenance/main_full81_authorization_r2/main_full81_authorization.json shows a pre-existing stat-only ' M' porcelain entry; its working bytes equal the HEAD blob (SHA-256 ef534fdf6ae10b5c37811c95dc5c900b0c022bff14f7e445eb546e940886b15f). Left untouched.",
+      "adjudication": "NOT_ADJUDICATED_BY_PUBLICATION_OPERATOR"
+    },
+    {
+      "id": "PUB-OBS-3",
+      "class": "REMOTE_HEAD_CONFIRMATION",
+      "text": "The report confirmed the remote branch through a GitHub connector after its local git ls-remote failed. In this session git ls-remote --heads origin thesis-v7 succeeded and returned c8f555094d6ab711ce6426302419fff958ed19fa.",
+      "adjudication": "NOT_ADJUDICATED_BY_PUBLICATION_OPERATOR"
+    },
+    {
+      "id": "PUB-OBS-4",
+      "class": "READ_FIRST_COVERAGE",
+      "text": "Framework v7.4 and Registry v7.4 were verified by SHA-256 against their accepted bindings; the operator read Framework sections 0 and 3.4 and the Registry Full81 status statements, not both documents in full. The provenance protocol v1 and the governance Constitution (local copy outside the repository, SHA-256 4f5eaf050d96f84d96e06ebebd53e095f209ad50bb0a0f94a180f2dd0efc9c38) were read in full.",
+      "adjudication": "NOT_ADJUDICATED_BY_PUBLICATION_OPERATOR"
+    },
+    {
+      "id": "PUB-OBS-5",
+      "class": "VALIDATION_NOT_RUN",
+      "text": "No test suite, validator, preflight or production-authority gate was executed in this session. No implementation, validator, test, data or authority byte was changed, and the authorized scope is four additive governance files.",
+      "adjudication": "NOT_ADJUDICATED_BY_PUBLICATION_OPERATOR"
+    }
+  ],
+  "git_state_at_authoring": {
+    "branch": "thesis-v7",
+    "head": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "upstream": "origin/thesis-v7",
+    "origin_url": "https://github.com/irischg/iris_thesis.git",
+    "cached_remote_tracking_ref": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "live_remote_head_from_ls_remote": "c8f555094d6ab711ce6426302419fff958ed19fa",
+    "head_equals_live_remote_head": true,
+    "staged_paths": [],
+    "unstaged_content_diff_paths": [],
+    "porcelain_non_untracked_entries": [
+      "results/provenance/main_full81_authorization_r2/main_full81_authorization.json"
+    ],
+    "untracked_file_count": 20,
+    "porcelain_command_argv": [
+      "git",
+      "-c",
+      "core.quotePath=false",
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all"
+    ],
+    "porcelain_raw_bytes": 1349,
+    "porcelain_raw_sha256": "99621d7fff34cc9b1963798ff3c2062f10785d627095dc802999f4f2b636ad24",
+    "porcelain_text": "NOT_PUBLISHED (untracked local file names are withheld from a public repository; the raw output is committed to by byte count and SHA-256 only)",
+    "publication_paths_absent_before_authoring": true,
+    "package_directory_ignore_rule": ".gitignore:23:results/",
+    "checkpoint_path_ignored": false
+  },
+  "this_publication_session": {
+    "operator": "Claude Code publication operator, under explicit owner authorization; not the originator of the numerical PASS; not self-accepting",
+    "operator_session_id": "1bdd945a-8817-4cc8-9803-2e7118ee956f",
+    "operator_model_id_as_reported_by_runtime": "claude-opus-5-5",
+    "counters_scope": "Operator self-report as of the authoring of this record; not an independent audit.",
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "solver_calls": 0,
+    "production_runs": 0,
+    "a2_layer_b_dg_sensitivity_solves": 0,
+    "tests_or_validators_executed": 0,
+    "repairs": 0,
+    "production_result_files_modified": 0,
+    "previously_accepted_or_historical_files_modified": 0,
+    "gitignore_modified": false,
+    "gitattributes_modified": false,
+    "tooling": "Read-only hashing/parsing scripts kept in the session scratchpad outside the repository; they are not part of this package."
+  },
+  "package": {
+    "package_directory": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1",
+    "files": [
+      {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+        "role": "independent_audit_report_verbatim_source_copy"
+      },
+      {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+        "role": "machine_readable_audit_evidence_record"
+      },
+      {
+        "path": "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/publication_manifest.json",
+        "role": "publication_manifest"
+      },
+      {
+        "path": "docs/checkpoints/full81_g1_postsolve_audit_evidence_publication_r1_2026-10-12.md",
+        "role": "human_readable_checkpoint (external to the package directory)"
+      }
+    ],
+    "publication_allowlist": [
+      "docs/checkpoints/full81_g1_postsolve_audit_evidence_publication_r1_2026-10-12.md",
+      "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+      "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+      "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/publication_manifest.json"
+    ],
+    "force_add_required_paths": [
+      "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json",
+      "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/independent_audit_report.md",
+      "results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/publication_manifest.json"
+    ],
+    "this_record_own_sha256": "NOT_EMBEDDED_BY_DESIGN (registered in publication_manifest.json)",
+    "manifest_and_checkpoint_sha256": "NOT_EMBEDDED_BY_DESIGN (they are authored after this record; the manifest registers the checkpoint)"
+  },
+  "not_authorized_by_this_record": [
+    "FULL81_RESULT_ACCEPTANCE",
+    "FULL81_RESULTS_CLOSED_ACCEPTED",
+    "CURRENT_MAINLINE_POINTER",
+    "THESIS_AUTHORITATIVE_RESULT_PROMOTION",
+    "ACCEPTED_LIFECYCLE_OR_PRODUCTION_RE_FREEZE_RECORD",
+    "REPLACEMENT_OF_G1_SCOPE_OR_EXECUTION_AUTHORIZATION",
+    "ANY_SOLVER_CALL_OR_PRODUCTION_RUN",
+    "A2_LAYER_B_DG_OR_SENSITIVITY",
+    "REMEDIATION_OF_ANY_FINDING",
+    "PIPELINE_MANAGEMENT_NOTEBOOK",
+    "DOWNSTREAM_ANALYSIS",
+    "GIT_TAG"
+  ],
+  "non_self_approval": {
+    "publication_operator_originated_numerical_pass": false,
+    "publication_operator_accepts_this_package": false,
+    "this_package_is_independently_audited": false,
+    "statement": "The PASS belongs to the independent Codex post-solve audit. The operator's checks on this package are implementation self-checking only. The package and its publication commit remain subject to a later fresh, independent read-only publication audit, followed by a separate result-acceptance decision."
+  },
+  "next_legal_gate": "FRESH_INDEPENDENT_READ_ONLY_PUBLICATION_AUDIT_OF_THIS_PACKAGE_AND_ITS_COMMIT, then a separately authorized FORMAL_FULL81_RESULT_ACCEPTANCE decision"
+}
