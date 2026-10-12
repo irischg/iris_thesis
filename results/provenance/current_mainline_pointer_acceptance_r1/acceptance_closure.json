@@ -1,0 +1,220 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_CLOSURE",
+  "schema_version": "iris-thesis-current-mainline-pointer-acceptance-closure-v1",
+  "package_id": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_R1",
+  "role": "current_mainline_pointer_acceptance_closure",
+  "date": "2026-10-12",
+  "authored_utc": "2026-10-12T12:50:19Z",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_subject": "CURRENT_MAINLINE_POINTER_CANDIDATE_R1",
+  "acceptance_meaning": "The audited candidate payload is accepted as the content of the canonical current-mainline pointer. This is a governance routing decision. It is not a scientific interpretation, changes no accepted result, closes no finding and grants no execution authority.",
+  "canonical_pointer_path": "configs/current_mainline_pointer.json",
+  "accepted_candidate": {
+    "path": "configs/candidates/current_mainline_pointer_candidate_r1.json",
+    "sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f",
+    "bytes": 53873,
+    "git_tracked": true,
+    "git_blob_id": "be8422e3a923a76de40852d0bae27a5c2060a660",
+    "git_anchor_commit": "baf5eab0a9f53ed5865cf66421eed9ae6c7f8789",
+    "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+    "publication_commit": "baf5eab0a9f53ed5865cf66421eed9ae6c7f8789"
+  },
+  "accepted_payload_digest": "1c118f22350aa21d74b04f94307be8bbb43d694023e5350b1edf512824980fdf",
+  "independent_audit_record": {
+    "path": "results/provenance/current_mainline_pointer_independent_audit_r1/independent_audit_record.json",
+    "sha256": "4f2415c8663bfd26428c6271f39f6b6491bbb91a2e78edd5509c0c1637102f97",
+    "bytes": 7085,
+    "git_tracked": true,
+    "git_blob_id": "423d22eb2ac51e7c58cbd92c9220711d0b6b4e86",
+    "git_anchor_commit": "baf5eab0a9f53ed5865cf66421eed9ae6c7f8789",
+    "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+    "publication_commit": "baf5eab0a9f53ed5865cf66421eed9ae6c7f8789"
+  },
+  "candidate_package_publication": {
+    "commit": "baf5eab0a9f53ed5865cf66421eed9ae6c7f8789",
+    "parent": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f",
+    "files": [
+      {
+        "path": "configs/candidates/current_mainline_pointer_candidate_r1.json",
+        "sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f"
+      },
+      {
+        "path": "src/current_mainline_pointer_v1.py",
+        "sha256": "fc73068a6a469842a7c234d4c07dac1baba1d669fc9c5a1adf2449b571d483e0"
+      },
+      {
+        "path": "tests/test_current_mainline_pointer_v1.py",
+        "sha256": "887ac34c56d2d9149e005e28b4b16bc6656c1284250077bb11ceea84d9db4188"
+      },
+      {
+        "path": "docs/checkpoints/current_mainline_pointer_candidate_r1_2026-10-12.md",
+        "sha256": "00fa34ac5fbd871ab39c0ef4563edd2e77b65a56e4626982b77e230f6bf2527b"
+      },
+      {
+        "path": "results/provenance/current_mainline_pointer_candidate_r1/candidate_manifest.json",
+        "sha256": "15c320ea72a3e6f9f1f562b15d491ad2014d5f45159bd8ef87ced75b18e2076b"
+      }
+    ]
+  },
+  "publication_status": "DETERMINED_FROM_LIVE_GIT_NOT_SELF_ASSERTED",
+  "containing_commit": "NOT_EMBEDDED_BY_DESIGN",
+  "canonical_pointer_at_authoring": "NOT_YET_CREATED (it is created after this closure and embeds this closure's hash; this closure embeds no hash of it)",
+  "decision": {
+    "decision": "ACCEPT_AND_PUBLISH_SUBJECT_TO_LOCAL_CHECKS",
+    "authority": "The thesis owner's conditional authorization, received as the task instruction of the publishing session: accept and publish once every listed check passes. The instruction text is not published and no signature is claimed.",
+    "owner_identity_verification": "NOT_PERFORMED (the session user is taken to be the thesis owner)"
+  },
+  "operator": {
+    "operator": "Claude Code session 8b5bb3d7-d815-491d-8107-4c78336734cd, model id claude-opus-5-5 as reported by the runtime",
+    "independence_boundary": "The publishing operator is the SAME session that authored the candidate. It did not audit the candidate and did not originate the acceptance decision: the audit is the separate reviewer's and the decision is the owner's. Earlier lifecycle closures in this repository were written by sessions separate from the candidate author; this one is not."
+  },
+  "independent_audit_attribution": {
+    "reviewer_as_stated_in_the_record": "ChatGPT (separate from the Claude Code authoring session); read-only static and hermetic-test review of owner-supplied ZIP; no independent human signature claimed.",
+    "verdict": "PASS",
+    "verdict_scope": "Candidate design, original-byte identities, independent hermetic verifier tests, and selected published Git source identities; NOT canonical activation, NOT a re-audit of the 651 local result bytes.",
+    "recommended_disposition": "ACCEPT_CANDIDATE_SUBJECT_TO_LOCAL_LIVE_CHECKS_AND_GIT_PUBLICATION_PROOF",
+    "not_independently_reproduced_by_the_reviewer": [
+      "No full independent execution of the 20 live-repo tests in this sandbox.",
+      "No independent strict rehash of the 651 local result files in this sandbox.",
+      "No authority conferred or canonical activation by this record.",
+      "No solve, model construction, code modification in user repository, or scientific result inspection.",
+      "No human signature or independent model-provider designation asserted."
+    ],
+    "reviewer_identity_and_session_verified_by_publishing_operator": false,
+    "record_custody": "Owner-supplied file read from outside the repository; published byte-identical. Its SHA-256 equals the value the owner stated."
+  },
+  "local_prepublication_checks_by_publishing_operator": {
+    "all_passed": true,
+    "run_on": "the actual thesis-v7 working tree at HEAD fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f, immediately before publication, with the five candidate files byte-identical to the audited ones",
+    "focused_tests": {
+      "suite": "tests/test_current_mainline_pointer_v1.py",
+      "tests": 59,
+      "passed": 59,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "runs": [
+        {
+          "classes": "StaticVerifierTests, PathContainmentTests, FixtureCandidateTests, FixtureCanonicalTests",
+          "tests": 39,
+          "outcome": "OK",
+          "seconds": 286.391
+        },
+        {
+          "classes": "LiveCandidateTests",
+          "tests": 20,
+          "outcome": "OK",
+          "seconds": 456.249
+        }
+      ],
+      "note": "Two commands run concurrently; together they cover every test class once."
+    },
+    "candidate_strict_full_rehash": {
+      "verdict": "CANDIDATE_INTERNALLY_CONSISTENT_NOT_ACCEPTED_NOT_AUTHORITY",
+      "results_integrity": "STRICT_FULL_INTEGRITY_PASS",
+      "failure_codes": [],
+      "checks": {
+        "C01_SCHEMA": "PASS",
+        "C02_POINTER_LIFECYCLE_AND_MODE": "PASS",
+        "C03_PATH_CONTAINMENT": "PASS",
+        "C04_GIT_PROVENANCE": "PASS",
+        "C05_FILE_IDENTITIES_RAW_BYTES_AND_GIT_BLOBS": "PASS",
+        "C06_G1_IDENTITY_AXES": "PASS",
+        "C07_GOVERNANCE_STATUS_AND_CROSS_BINDINGS": "PASS",
+        "C08_CASE_UNIVERSE_AND_RUN_BINDING": "PASS",
+        "C09_ROLES_AND_CONFLICTING_CLAIMS": "PASS",
+        "C10_OPEN_FINDINGS_AND_SCIENTIFIC_EXPOSURE": "PASS",
+        "C11_NON_AUTHORIZATION_BOUNDARIES": "PASS",
+        "C12_LOCAL_RESULT_REGISTRATIONS": "PASS",
+        "C13_CANONICAL_ACTIVATION_BASIS": "NOT_APPLICABLE"
+      }
+    },
+    "logs": "session-local, not Git-durable"
+  },
+  "review_findings_carried_open": [
+    {
+      "id": "PTR-REVIEW-1",
+      "severity": "MODERATE",
+      "status": "OPEN",
+      "description": "Windows raw-checkout CRLF conversion may cause fail-closed text-byte mismatches after recheckout; original candidate has no applicable new-file EOL rules. Avoid silently treating a fresh Windows checkout as portable and run actual canonical verification after activation."
+    },
+    {
+      "id": "PTR-REVIEW-2",
+      "severity": "INFORMATIONAL",
+      "status": "OPEN",
+      "description": "The verifier is approximately 2933 lines, significantly larger than the desired minimal read-only interface; maintainability burden remains."
+    },
+    {
+      "id": "PTR-REVIEW-3",
+      "severity": "EVIDENCE_LIMITATION",
+      "status": "OPEN",
+      "description": "Twenty live-repository tests and 651-file strict integrity verification were not independently rerun in the review sandbox. Their reported PASS is attributed solely to the authoring operator; the local publisher must re-run the complete targeted suite and strict check before publication."
+    }
+  ],
+  "candidate_observations_carried": "PTR-OBS-1 to PTR-OBS-10 of the candidate checkpoint are carried unchanged. PTR-OBS-1 (untracked files under gate-protected prefixes) is expected to lapse once the files are tracked; the production gate was not run to confirm it.",
+  "new_observations": [
+    {
+      "id": "PTR-ACC-OBS-1",
+      "severity_assessed_by_operator": "MODERATE",
+      "statement": "Author and publishing operator are the same session (see operator.independence_boundary)."
+    },
+    {
+      "id": "PTR-ACC-OBS-2",
+      "severity_assessed_by_operator": "MINOR",
+      "statement": "The 20 live-repository tests and the strict 651-file rehash have only ever been run by the authoring/publishing operator; the reviewer did not reproduce them (PTR-REVIEW-3)."
+    },
+    {
+      "id": "PTR-ACC-OBS-3",
+      "severity_assessed_by_operator": "MINOR",
+      "statement": "The pointer's files have no .gitattributes rule. On this working tree they are LF; a fresh checkout under core.autocrlf=true converts them and the verifier then fails closed (PTR-REVIEW-1, PTR-OBS-6)."
+    }
+  ],
+  "pointer_findings_all_remain_open": [
+    "ACC-N1",
+    "ACC-OBS-1",
+    "ACC-OBS-2",
+    "ACC-OBS-3",
+    "ACC-OBS-4",
+    "ACC-OBS-5",
+    "ACC-OBS-6",
+    "AUD-N1",
+    "AUD-N2",
+    "AUD-N3",
+    "AUD-N4",
+    "G1-N1",
+    "G1-N2",
+    "G1-N3",
+    "R7_BINDING_AND_PRESERVATION_GIT_DURABILITY",
+    "SAR-N1",
+    "SAR-N2",
+    "SAR-N3",
+    "SAR-N4"
+  ],
+  "acc_n1": "MAJOR / OPEN. Scientific inspection, results analysis and supervisor discussion stay blocked. No exposure log exists; none is created or claimed.",
+  "u_01": "OPEN_HOLD",
+  "closed_or_remediated_by_this_acceptance": [],
+  "not_authorized_by_this_record": [
+    "ANY_SOLVER_CALL_MODEL_CONSTRUCTION_OR_PRODUCTION_RUN",
+    "SCIENTIFIC_INSPECTION_OR_RESULTS_ANALYSIS",
+    "SUPERVISOR_DISCUSSION",
+    "EXPOSURE_LOG_CREATION",
+    "PIPELINE_NOTEBOOK",
+    "DEPENDENCY_GRAPH",
+    "SELECTIVE_RERUN_PLANNER",
+    "CONTROLLED_EXECUTOR",
+    "A2_LAYER_B_DG_OR_SENSITIVITY",
+    "REMEDIATION_OF_ANY_FINDING",
+    "GIT_TAG",
+    "HANDOFF_DOCUMENT_SYNCHRONIZATION"
+  ],
+  "zero_execution": {
+    "solver_library_imports": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "production_scripts_or_gates_executed": 0
+  },
+  "is_acceptance_closure": true,
+  "is_independent_audit_record": false,
+  "is_current_mainline_pointer": false,
+  "is_exposure_log_or_exposure_event": false
+}

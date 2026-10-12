@@ -1,0 +1,35 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_MANIFEST",
+  "schema_version": "iris-thesis-current-mainline-pointer-acceptance-manifest-v1",
+  "package_id": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_R1",
+  "role": "acceptance_manifest",
+  "date": "2026-10-12",
+  "authored_utc": "2026-10-12T12:50:19Z",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_closure": {
+    "path": "results/provenance/current_mainline_pointer_acceptance_r1/acceptance_closure.json",
+    "sha256": "057a8474bb2110d6900aeeda9af43c747730d08b8cbc45439c2d45083b37d0a1",
+    "bytes": 10945
+  },
+  "independent_audit_record": {
+    "path": "results/provenance/current_mainline_pointer_independent_audit_r1/independent_audit_record.json",
+    "sha256": "4f2415c8663bfd26428c6271f39f6b6491bbb91a2e78edd5509c0c1637102f97",
+    "bytes": 7085,
+    "publication_commit": "baf5eab0a9f53ed5865cf66421eed9ae6c7f8789"
+  },
+  "accepted_candidate": {
+    "path": "configs/candidates/current_mainline_pointer_candidate_r1.json",
+    "sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f",
+    "publication_commit": "baf5eab0a9f53ed5865cf66421eed9ae6c7f8789"
+  },
+  "accepted_payload_digest": "1c118f22350aa21d74b04f94307be8bbb43d694023e5350b1edf512824980fdf",
+  "canonical_pointer_path": "configs/current_mainline_pointer.json",
+  "manifest_self_registration": {
+    "path": "results/provenance/current_mainline_pointer_acceptance_r1/acceptance_manifest.json",
+    "sha256": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH"
+  },
+  "hash_semantics": "Noncircular. The closure embeds the candidate and audit-record hashes and the commit that published them; this manifest embeds the closure hash; the canonical pointer, written last, embeds the hashes of all four activation artifacts and their publication commits. Nothing embeds the canonical pointer's hash or the commit that contains itself.",
+  "containing_commit": "NOT_EMBEDDED_BY_DESIGN",
+  "is_acceptance_manifest": true,
+  "is_current_mainline_pointer": false
+}
