@@ -1,0 +1,43 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_MANIFEST",
+  "schema_version": "iris-thesis-current-mainline-pointer-acceptance-manifest-v1",
+  "package_id": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_R2",
+  "role": "acceptance_manifest",
+  "date": "2026-10-14",
+  "authored_utc": "2026-10-14T10:45:19Z",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_closure": {
+    "path": "results/provenance/current_mainline_pointer_acceptance_r2/acceptance_closure.json",
+    "sha256": "bf0bb2766d15fd69b27d95436e4375958de1bc98f84dce31b2c1be3249053d71",
+    "bytes": 16901
+  },
+  "independent_audit_record": {
+    "path": "results/provenance/current_mainline_pointer_independent_audit_r2/independent_audit_record.json",
+    "sha256": "0de5756fdbcfc548b258e5d99b34036f140ff4cc3b98f041544629ede0416e08",
+    "bytes": 14501,
+    "publication_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5"
+  },
+  "accepted_candidate": {
+    "path": "configs/candidates/current_mainline_pointer_candidate_r2.json",
+    "sha256": "7f4971f630a8ceed429f7a3638d68015ec21758b05817a6500b1d9e808aebb60",
+    "publication_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5"
+  },
+  "accepted_payload_digest": "08d09477d7bcda349197427f38bd642cf8f7d3e0413abdfdc4c362dab141ee4e",
+  "accepted_governance_amendments": [
+    {
+      "amendment_id": "ACC_N1_EXPOSURE_LOG_PREREQUISITE_WITHDRAWAL_R1",
+      "path": "results/provenance/acc_n1_exposure_log_prerequisite_withdrawal_candidate_r1/governance_amendment_record.json",
+      "sha256": "bd97a6d06985712c35b1b3dfcd755cff2889dfc71c8f1be0a15fa13688282b85",
+      "publication_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5"
+    }
+  ],
+  "canonical_pointer_path": "configs/current_mainline_pointer.json",
+  "manifest_self_registration": {
+    "path": "results/provenance/current_mainline_pointer_acceptance_r2/acceptance_manifest.json",
+    "sha256": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH"
+  },
+  "hash_semantics": "Noncircular. The closure embeds the candidate, audit-record and amendment hashes and the commit that published them; this manifest embeds the closure hash; the canonical pointer, written last, embeds the hashes of all four activation artifacts and their publication commits. Nothing embeds the canonical pointer's hash or the commit that contains itself.",
+  "containing_commit": "NOT_EMBEDDED_BY_DESIGN",
+  "is_acceptance_manifest": true,
+  "is_current_mainline_pointer": false
+}

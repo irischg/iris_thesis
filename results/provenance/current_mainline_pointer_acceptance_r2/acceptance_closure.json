@@ -1,0 +1,270 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_CLOSURE",
+  "schema_version": "iris-thesis-current-mainline-pointer-acceptance-closure-v1",
+  "package_id": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_R2",
+  "role": "current_mainline_pointer_acceptance_closure",
+  "date": "2026-10-14",
+  "authored_utc": "2026-10-14T10:45:19Z",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_subject": "CURRENT_MAINLINE_POINTER_CANDIDATE_R2 and governance amendment ACC_N1_EXPOSURE_LOG_PREREQUISITE_WITHDRAWAL_R1",
+  "acceptance_meaning": "The audited candidate R2 payload is accepted as the content of the canonical current-mainline pointer, and the bound governance amendment is accepted. This is a governance / authorization decision. It is not a scientific interpretation, changes no accepted result, closes no finding and grants no execution authority. It takes effect only when the canonical pointer is activated from this closure and published.",
+  "canonical_pointer_path": "configs/current_mainline_pointer.json",
+  "accepted_candidate": {
+    "path": "configs/candidates/current_mainline_pointer_candidate_r2.json",
+    "sha256": "7f4971f630a8ceed429f7a3638d68015ec21758b05817a6500b1d9e808aebb60",
+    "bytes": 56791,
+    "git_tracked": true,
+    "git_blob_id": "39f2988a4a8f690690c5a41018b16da9874e9cf0",
+    "git_anchor_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5",
+    "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+    "publication_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5"
+  },
+  "accepted_payload_digest": "08d09477d7bcda349197427f38bd642cf8f7d3e0413abdfdc4c362dab141ee4e",
+  "independent_audit_record": {
+    "path": "results/provenance/current_mainline_pointer_independent_audit_r2/independent_audit_record.json",
+    "sha256": "0de5756fdbcfc548b258e5d99b34036f140ff4cc3b98f041544629ede0416e08",
+    "bytes": 14501,
+    "git_tracked": true,
+    "git_blob_id": "44644704218e56574419cc813dc66790c881578e",
+    "git_anchor_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5",
+    "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+    "publication_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5"
+  },
+  "accepted_governance_amendments": [
+    {
+      "amendment_id": "ACC_N1_EXPOSURE_LOG_PREREQUISITE_WITHDRAWAL_R1",
+      "path": "results/provenance/acc_n1_exposure_log_prerequisite_withdrawal_candidate_r1/governance_amendment_record.json",
+      "sha256": "bd97a6d06985712c35b1b3dfcd755cff2889dfc71c8f1be0a15fa13688282b85",
+      "bytes": 10575,
+      "git_blob_id": "34310c290d9b6555f5624e74eab9212bcc2ed83b",
+      "publication_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5"
+    }
+  ],
+  "candidate_package_publication": {
+    "commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5",
+    "parent": "354e0492aef8295a52cc35b8c58a14d81be3e3d4",
+    "files": [
+      {
+        "path": "configs/candidates/current_mainline_pointer_candidate_r2.json",
+        "sha256": "7f4971f630a8ceed429f7a3638d68015ec21758b05817a6500b1d9e808aebb60"
+      },
+      {
+        "path": "src/current_mainline_pointer_v1.py",
+        "sha256": "03485b36188d83163cdf9fd49cc14770aec8ca37769a402cbca4643df18ad930"
+      },
+      {
+        "path": "tests/test_current_mainline_pointer_acc_n1_amendment.py",
+        "sha256": "a1a998662c1c75cbef7fae8b47f6e5f90c4135053d36f734d6758fe183a976bf"
+      },
+      {
+        "path": "results/provenance/acc_n1_exposure_log_prerequisite_withdrawal_candidate_r1/governance_amendment_record.json",
+        "sha256": "bd97a6d06985712c35b1b3dfcd755cff2889dfc71c8f1be0a15fa13688282b85"
+      },
+      {
+        "path": "docs/checkpoints/acc_n1_exposure_log_prerequisite_withdrawal_candidate_r1_2026-10-14.md",
+        "sha256": "9745f3dcb2fb9cf83fbf5c4f02f6d676e2b6859e3a9ff6311173d88f47a0c3d5"
+      },
+      {
+        "path": "results/provenance/current_mainline_pointer_independent_audit_r2/independent_audit_record.json",
+        "sha256": "0de5756fdbcfc548b258e5d99b34036f140ff4cc3b98f041544629ede0416e08"
+      }
+    ]
+  },
+  "publication_status": "DETERMINED_FROM_LIVE_GIT_NOT_SELF_ASSERTED",
+  "containing_commit": "NOT_EMBEDDED_BY_DESIGN",
+  "canonical_pointer_at_authoring": "Still R1. R2 is written after this closure and embeds this closure's hash; this closure embeds no hash of it.",
+  "predecessor": {
+    "pointer_id": "CURRENT_MAINLINE_POINTER_R1",
+    "accepted_payload_digest": "1c118f22350aa21d74b04f94307be8bbb43d694023e5350b1edf512824980fdf",
+    "acceptance_closure": {
+      "path": "results/provenance/current_mainline_pointer_acceptance_r1/acceptance_closure.json",
+      "sha256": "057a8474bb2110d6900aeeda9af43c747730d08b8cbc45439c2d45083b37d0a1"
+    },
+    "activation_commit": "354e0492aef8295a52cc35b8c58a14d81be3e3d4",
+    "disposition_on_r2_activation": "Superseded as routing authority. Preserved in Git history and as candidate R1; none of its accepted records is modified; no redundant copy is made."
+  },
+  "decision": {
+    "decision": "ACCEPT",
+    "decided_by": "The thesis owner (research lead), as the acceptance decision maker.",
+    "authority": "The owner's decisions D1-D8 of 2026-10-14, given as the task instruction of the operator session. The instruction text is not published and no signature is claimed.",
+    "owner_identity_verification": "NOT_PERFORMED (the session user is taken to be the thesis owner)",
+    "operator_role": "Prepares files, checks versions, runs zero-solve verification and executes the Git steps under D8. The operator does not decide acceptance."
+  },
+  "owner_decisions": {
+    "D1_acceptance": "ACCEPT the independently audited pointer candidate R2 and the ACC-N1 governance amendment as the subject of this closure. The decision does not by itself publish or activate anything; Phases A, B and C are completed in order.",
+    "D2_cross_agent_review_exception": {
+      "decision": "CASE-SPECIFIC EXCEPTION",
+      "statement": "Codex had no available quota, so the owner accepts an independent review by a separate, fresh Claude Code session for this case only. It is NOT a cross-model review.",
+      "requirements_not_met": [
+        "docs/ai_handoff/CROSS_AUDIT_PROTOCOL.md: the secondary auditor is 'the other of Codex/Claude Code'.",
+        "Version Provenance Protocol §11 preferred pattern (Claude Code implements, Codex audits) and the §28 header line 'Acceptance requires independent read-only cross-agent audit'."
+      ],
+      "requirement_met": "Version Provenance Protocol §11 binding sentence: the agent that created the candidate is not the only acceptor; the owner accepts.",
+      "protocol_revision": "None. Neither protocol makes a prior revision a precondition for an owner's case-specific exception; the exception is recorded here and does not change either protocol."
+    },
+    "D3_independence_limitation": "ACCEPTED AS DISCLOSED (MIN-1): same model as the author, and the reviewer read the author's project-memory notes before the review. No complete information isolation is claimed. The reviewer re-checked repository bytes, SHA-256 values, the verifier and the tests from primary sources, and that is accepted as review evidence.",
+    "D4_classification": {
+      "classification": "GOVERNANCE / AUTHORIZATION CHANGE",
+      "not": "SCIENTIFIC METHODOLOGY CHANGE",
+      "classified_by": "GPT Chat, from the stated change scope (owner statement). Not an independent review of the local bytes.",
+      "operator_scope_check": {
+        "outcome": "WITHIN_SCOPE",
+        "changed_paths_in_phases_a_to_c": [
+          "configs/candidates/current_mainline_pointer_candidate_r2.json",
+          "src/current_mainline_pointer_v1.py",
+          "tests/test_current_mainline_pointer_acc_n1_amendment.py",
+          "results/provenance/acc_n1_exposure_log_prerequisite_withdrawal_candidate_r1/governance_amendment_record.json",
+          "docs/checkpoints/acc_n1_exposure_log_prerequisite_withdrawal_candidate_r1_2026-10-14.md",
+          "results/provenance/current_mainline_pointer_independent_audit_r2/independent_audit_record.json",
+          "results/provenance/current_mainline_pointer_acceptance_r2/acceptance_closure.json",
+          "results/provenance/current_mainline_pointer_acceptance_r2/acceptance_manifest.json",
+          "configs/current_mainline_pointer.json"
+        ],
+        "verifier_diff": "Adds governance-amendment validation and activation checks only; no import added or removed; no model, solver, cost, parameter or input code.",
+        "pointer_payload_sections_changed_from_r1": [
+          "pointer_revision",
+          "documentation",
+          "scientific_exposure_restrictions",
+          "open_findings_and_limitations",
+          "non_authorization_boundaries",
+          "validation_contract"
+        ],
+        "pointer_payload_sections_unchanged_from_r1": [
+          "methodology_authority",
+          "evidence_authority",
+          "production_generation",
+          "full81_authorizations",
+          "canonical_annual_input",
+          "implementation",
+          "economic_parameter_interfaces",
+          "accepted_result_set",
+          "independent_audit_evidence_publication",
+          "formal_results_acceptance",
+          "git_provenance",
+          "roles"
+        ],
+        "not_modified": "Framework, Registry, research equations, MILP, cost formulas, alpha/beta definitions, input data, accepted results (the strict 651-file rehash reproduces the accepted run-file aggregate)."
+      }
+    },
+    "D5_limited_verifier_version_migration": {
+      "decision": "AUTHORIZED: limited in-place update of the pointer verifier; no duplicate v2 module.",
+      "module": "src/current_mainline_pointer_v1.py",
+      "interface_version": "iris-thesis-current-mainline-pointer-verifier-v1 (unchanged)",
+      "r1_accepted_identity": {
+        "sha256": "fc73068a6a469842a7c234d4c07dac1baba1d669fc9c5a1adf2449b571d483e0",
+        "bytes": 118860,
+        "git_blob_id": "29e3b0ad2b7fd247450fff1fef7d8c449fe45e00",
+        "publication_commit": "baf5eab0a9f53ed5865cf66421eed9ae6c7f8789"
+      },
+      "r2_accepted_identity": {
+        "sha256": "03485b36188d83163cdf9fd49cc14770aec8ca37769a402cbca4643df18ad930",
+        "bytes": 132591,
+        "git_blob_id": "1ed110cb0675c3a23a0d65fa8b90c8e929518ef6",
+        "publication_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5"
+      },
+      "basis": "Version Provenance Protocol §5 asks for a separately authorized migration before an accepted artifact is mutated; this entry is that authorization, limited to this module and this change. The R1 bytes remain in Git.",
+      "not_authorized": "Any change to a historical accepted closure, manifest or accepted scientific result."
+    },
+    "D6_audit_report_custody": "The report was extracted from the reviewer's session transcript and its text SHA-256 checked; only a summary, the reviewer identity, the verdict, the findings and evidence hashes are published (see the audit record's report_custody).",
+    "D7_activation_test_update": {
+      "decision": "AUTHORIZED: minimal update of the live premise in the amendment tests at activation, reviewed by the owner (diff and SHA-256) before the activation commit.",
+      "path": "tests/test_current_mainline_pointer_acc_n1_amendment.py",
+      "audited_sha256": "a1a998662c1c75cbef7fae8b47f6e5f90c4135053d36f734d6758fe183a976bf",
+      "updated_sha256": "5e9f840de8407c136af33aa548d5904657b312f18aad1c27864888fe567d5e34",
+      "updated_bytes": 37851,
+      "covered_by_the_independent_audit": false,
+      "scope": "LiveAmendmentTests only: R1 is read from candidate R1 instead of the canonical file, and test_canonical_r1_is_unchanged_and_still_blocks is replaced by test_canonical_r2_serves_the_three_purposes_and_nothing_more (canonical verified, activation check PASS, payload equals candidate R2, candidate R1 payload equals R1's accepted digest, three purposes served with STRICT, FULL81_EXECUTION/A2/LAYER_B/U_01_CALIBRATION refused). Fixture tests unchanged.",
+      "addresses": "MIN-3 / CAND-OBS-4"
+    },
+    "D8_git_operations": "Three separate commits (A publication, B acceptance, C activation) and one push at the end. The owner chose the normal Claude Code manual-approval mode for the operator's writes and Git steps; if a tool refuses an action, the owner runs the commands. Permission checks are not modified or bypassed."
+  },
+  "authorization_of_the_three_purposes": "The owner's decision is itself the separate authorization of SCIENTIFIC_INSPECTION, RESULTS_ANALYSIS and SUPERVISOR_DISCUSSION on the bound result set (run 20261008T183934456307Z_a6826f4828, case set full81). It takes effect only with the canonical activation of R2 and does not extend to any other result set. (MIN-2)",
+  "section_12_evidence_burden": "Without an exposure log, compliance with §12 (no calibration of U-01 from Full81 magnitudes) can be shown only by the independent record of the U-01 rationale when U-01 is reviewed. (INF-1)",
+  "verifier_lineage": {
+    "module": "src/current_mainline_pointer_v1.py",
+    "from_sha256": "fc73068a6a469842a7c234d4c07dac1baba1d669fc9c5a1adf2449b571d483e0",
+    "to_sha256": "03485b36188d83163cdf9fd49cc14770aec8ca37769a402cbca4643df18ad930",
+    "new_test_module": {
+      "path": "tests/test_current_mainline_pointer_acc_n1_amendment.py",
+      "sha256_as_audited": "a1a998662c1c75cbef7fae8b47f6e5f90c4135053d36f734d6758fe183a976bf",
+      "publication_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5"
+    },
+    "note": "The pointer binds the verifier path and interface version only, not its bytes. (INF-3)"
+  },
+  "acc_n1": "MAJOR / OPEN. Not closed, remediated or regraded. Its blocking effect on the three purposes is withdrawn by the accepted amendment, on the bound result set only. No exposure log exists; none is created, claimed or reconstructed.",
+  "preserved_restrictions": {
+    "u_01": "OPEN_HOLD; must be frozen before A2_EXECUTION, A2_RESULT_EXPOSURE, A2_INTERPRETATION, A2_CONDITIONAL_EXTENSION_AUTHORIZATION",
+    "a2": "HARD_BLOCKED_UNTIL_U_01_RESOLVED_AUDITED_ACCEPTED_AND_FROZEN",
+    "section_8": "Zero-A2-result-exposure firewall in force.",
+    "section_11": "U-01 may not be described as pre-Full81 blinded; Main Full81 results are treated as exposed.",
+    "section_12": "Full81-to-U-01 calibration prohibited.",
+    "materiality_column": "Prohibited in any aggregation layer."
+  },
+  "review_findings_carried": {
+    "MIN-1": "Recorded; disposed of by D2/D3.",
+    "MIN-2": "Addressed by authorization_of_the_three_purposes.",
+    "MIN-3": "Addressed by D7 at activation.",
+    "MIN-4": "OPEN (EOL portability; no .gitattributes change).",
+    "INF-1": "Recorded in section_12_evidence_burden.",
+    "INF-2": "Recorded; unchecked record fields are protected by content hash and the review.",
+    "INF-3": "Recorded in verifier_lineage.",
+    "INF-4": "Recorded.",
+    "INF-5": "The stat-only file is not staged.",
+    "INF-6": "The amendment record is published with git add -f.",
+    "INF-7": "CURRENT_STATE.md synchronization stays a separate task.",
+    "PTR-REVIEW-1": "OPEN",
+    "PTR-REVIEW-2": "OPEN",
+    "PTR-REVIEW-3": "OPEN"
+  },
+  "local_prepublication_checks_by_operator": {
+    "run_on": "the thesis-v7 working tree at HEAD 354e0492aef8295a52cc35b8c58a14d81be3e3d4, before commit A, with the five audited files byte-identical",
+    "tests": {
+      "amendment_suite": {
+        "tests": 16,
+        "outcome": "OK",
+        "seconds": 418.192,
+        "skipped": 0
+      },
+      "v1_static_path_fixture_candidate_fixture_canonical": {
+        "tests": 39,
+        "outcome": "OK",
+        "seconds": 399.436,
+        "skipped": 0
+      },
+      "v1_live_candidate_tests": {
+        "tests": 20,
+        "outcome": "OK",
+        "seconds": 567.548,
+        "skipped": 0
+      }
+    },
+    "canonical_r1_strict": "CANONICAL_POINTER_VERIFIED, STRICT_FULL_INTEGRITY_PASS, three purposes blocked",
+    "candidate_r2_strict": "CANDIDATE_INTERNALLY_CONSISTENT_NOT_ACCEPTED_NOT_AUTHORITY, STRICT_FULL_INTEGRITY_PASS, payload 08d09477",
+    "logs": "session-local, not Git-durable"
+  },
+  "closed_or_remediated_by_this_acceptance": [],
+  "not_authorized_by_this_record": [
+    "ANY_SOLVER_CALL_MODEL_CONSTRUCTION_OR_PRODUCTION_RUN",
+    "NEW_FULL81_EXECUTION_OR_RERUN",
+    "EXPOSURE_LOG_CREATION",
+    "CROSS_CASE_AGGREGATION_OR_REPORTING_LAYER",
+    "PIPELINE_MANAGEMENT_NOTEBOOK",
+    "U_01_RESOLUTION_OR_CALIBRATION",
+    "A2_LAYER_B_DG_OR_SENSITIVITY",
+    "REMEDIATION_OF_ANY_FINDING",
+    "MODIFICATION_OF_ANY_ACCEPTED_RECORD_OR_RESULT",
+    "CROSS_AUDIT_OR_PROVENANCE_PROTOCOL_REVISION",
+    "HANDOFF_DOCUMENT_SYNCHRONIZATION",
+    "GIT_TAG"
+  ],
+  "zero_execution": {
+    "solver_library_imports": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "production_scripts_or_gates_executed": 0
+  },
+  "is_acceptance_closure": true,
+  "is_independent_audit_record": false,
+  "is_current_mainline_pointer": false,
+  "is_exposure_log_or_exposure_event": false
+}
