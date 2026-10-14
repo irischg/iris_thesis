@@ -5,6 +5,72 @@ methodology — see `PROJECT_HANDOFF.md` and the Framework itself for that.**
 A stage below is marked complete only where a checkpoint/audit artifact supports it — never merely
 because a script exists.
 
+### Current-Use Governance Status — 2026-10-14
+
+**Authority:** Accepted and activated Canonical Mainline Pointer R2.
+
+**ACC-N1: MAJOR / OPEN — NONBLOCKING FOR APPROVED FULL81 SCIENTIFIC USE**
+
+ACC-N1 remains an open historical governance finding. It has not been closed, remediated, or regraded.
+
+The accepted governance amendment `ACC_N1_EXPOSURE_LOG_PREREQUISITE_WITHDRAWAL_R1`, activated through Canonical Pointer R2, withdraws its blocking effect on scientific inspection, results analysis, and supervisor discussion of the accepted Main Layer A Full81 result set.
+
+A dedicated exposure log is no longer required for these purposes. No retrospective exposure record is created or claimed.
+
+**ACC-N1 remediation is not a prerequisite for these three approved scientific activities.**
+
+The following restrictions remain unchanged:
+
+- U-01 remains `OPEN_HOLD`.
+- Main Full81 results must not be used to calibrate U-01.
+- U-01 must not be described as fully pre-Full81 blinded.
+- A2 remains `HARD_BLOCKED` until the required U-01 lifecycle is completed.
+- No new solver execution, Layer B, DG extension, cross-case aggregation/reporting tooling, or other previously unauthorized activity is authorized by this synchronization.
+
+Earlier accepted records describing the original ACC-N1 blocking conditions remain valid historical provenance. Their current-use blocking effect is superseded only within the scope of the accepted amendment and Canonical Pointer R2.
+
+**Authority references:**
+
+- `configs/current_mainline_pointer.json`
+- `results/provenance/current_mainline_pointer_acceptance_r2/acceptance_closure.json`
+- `results/provenance/acc_n1_exposure_log_prerequisite_withdrawal_candidate_r1/governance_amendment_record.json`
+
+### Current-Use Lifecycle Status — 2026-10-14
+
+This documentation-only synchronization records the accepted primary authority chain in §3 at the
+observed base HEAD `5a101042cb91f6191208cfdad1e8ddcbebb972f0`, equal to the local
+`origin/thesis-v7` reference. It changes no methodology, governance decision, implementation, input,
+result, or production-authority identity and does not run a production gate.
+
+- **Framework v7.4 and Registry v7.4 remain `CLOSED / ACCEPTED`.**
+- **U-06 R3 alignment has its own independent audit `PASS`, acceptance `CLOSED_ACCEPTED`, and
+  published Phase-C re-freeze / accepted lifecycle.** It is an accepted historical predecessor;
+  its status is verified from its own records, not inferred from G1 acceptance.
+- **Current production generation: `CURRENT_FULL81_PRODUCTION_GENERATION_G1`, Candidate R1,
+  `CLOSED_ACCEPTED`, independent audit `PASS`, accepted production-authority freeze `FROZEN`.**
+  The G1 lifecycle's inherited `u06_*` field names describe G1, not the U-06 predecessor.
+- **Accepted Main Layer A Full81 run:**
+  `results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828` — `81` cases completed
+  with `COMPLETE_PASS`; formal results governance is **`CLOSED / ACCEPTED / PUBLISHED`**.
+  Audit-evidence publication and numerical-results acceptance are separate records and commits.
+- **Result custody:** all `651` run files are locally retained and gitignored, **not Git-durable**.
+  Published governance/provenance records bind their identities; publication of those records does
+  not publish the result files or upgrade the recorded evidence qualifications.
+- **Canonical Pointer R2 is accepted and activated.** Its approved scientific-use scope is recorded
+  in the existing Current-Use Governance Status section above. That permission creates no authority
+  to implement cross-case aggregation/reporting software or to execute new runs, Layer B, or DG.
+
+The historical pending/absent/no-result assertions annotated below do not describe this current state.
+Accepted lifecycle/freeze, historical execution authorization, completed execution, formal results
+acceptance, and scientific-use permission remain distinct. Any future production execution must
+re-determine authority through the then-live runner gate and requires separate authorization.
+
+### Historical Status Interpretation
+
+Older dated sections of this handoff may describe previously valid governance restrictions or pre-R2 lifecycle states. They must not override the current canonical authority. Live authority must always be re-derived from the applicable accepted records and canonical pointer.
+
+Retain historical provenance without silently rewriting it as though the prior governance states never existed.
+
 Last reconstructed: 2026-09-27, from primary repository evidence at the observed pre-F-03 base
 commit `d07d34a163f0e45c8f8764526e81070f19d48747` ("Governance: accept Task 3 robustness
 preregistration Candidate R2").
@@ -58,6 +124,11 @@ describes a specific past base point rather than whatever HEAD is live right now
 - Similarly, any tag-vs-HEAD relationship described below (§5) is an **observation from that specific
   reconstruction**, not an ongoing or permanent claim about current tag status. Re-check it live
   (`git rev-parse <tag>^{}` vs `git rev-parse HEAD`) before relying on it.
+
+  **Historical scope of the following gate description:** its implementation and lifecycle-absence
+  assertions record the 2026-10-02 U-06 candidate snapshot. The accepted U-06 R3 predecessor and
+  current G1 lifecycle in §3 supersede those absence assertions; live gate verification remains required.
+
 - **Production authorization must always be determined live**, by running the current production
   runner's own authority gate against the live HEAD — never read off this file. The current gate is
   the deployment-gate / `require_production_authority()` path in
@@ -68,7 +139,26 @@ describes a specific past base point rather than whatever HEAD is live right now
   production run. **No accepted U-06 lifecycle exists, so the gate currently fails closed for every
   production scope.** Section 5 records a historical v7.2 mechanism and does not authorize its reuse.
 
-## 1.1 U-06 V7.4 production-authority alignment — R1 FAILED, R2 NO-GO, R3 pending
+## 1.1 U-06 alignment acceptance and current G1 authority
+
+**Current-use synchronization — 2026-10-14.** U-06 R3 is independently audited `PASS` and
+`CLOSED_ACCEPTED` through its own acceptance closure and published accepted-lifecycle record
+(`results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_closure.json` and
+`results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json`).
+That closure records `F-01` and `A-01`–`A-03` as `CLOSED`; it does not turn the failed R1 or R2
+candidates into accepted candidates, or remediate their other retained findings.
+
+The accepted generation sequence is U-06 R3 -> Main Full81 authorization mechanism R2 -> Main Full81
+preflight-authorization guard generation R1 (accepted Candidate R8) -> **G1 (accepted Candidate R1)**.
+Each has a distinct accepted lifecycle. Only G1 is current; a predecessor's freeze cannot authorize
+the live generation. G1 acceptance/freeze did not itself authorize a solve: the later scope,
+no-solve-preflight, execution-authorization, and results-acceptance records are listed separately in §3.
+
+### Historical U-06 snapshot — 2026-10-02: R1 FAILED, R2 NO-GO, R3 pending
+
+The original candidate-era record below is retained. Its `PENDING`, `NOT ACCEPTED`, `ABSENT`,
+`NOT_FROZEN`, and next-audit assertions were true at that snapshot and are superseded for current use
+by the accepted lifecycles above; they must not be reported as the current U-06 or G1 status.
 
 **Candidate R1: `FAILED INDEPENDENT AUDIT`** on `F-01` (lifecycle anchoring): the gate could reach
 `PRODUCTION_AUTHORITY_FROZEN` once candidate bytes were merely committed and pushed.
@@ -277,6 +367,11 @@ separate governance actions performed in separate passes — an audit `PASS` is 
 
 ### Task 3 governance-sequencing successor lifecycle — current
 
+**2026-10-14 lifecycle supersession:** the Full81 prerequisite stages described below were subsequently
+completed through the separate accepted G1 and Full81 records in §3. The original closure alone still
+did not confer execution authority. U-01 / A2 restrictions remain binding; the exposure-log rule has
+the bounded historical interpretation already recorded below and in the Current-Use Governance Status.
+
 - The original successor candidate
   (`docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_2026-10-01.md`;
   SHA-256 `f2bc1f5909ce4281d05465dba07541507194974d841df704fbf5a471f8b92d82`) is
@@ -310,6 +405,11 @@ separate governance actions performed in separate passes — an audit `PASS` is 
   **no** direct acceptance-to-Full81-authorization path. The U-06 alignment work (§1.1) is the first of
   those gates: Candidate R1 failed its independent audit, Candidate R2 received a CRITICAL NO-GO, and
   Candidate R3 is not yet audited or accepted.
+
+  **Historical interpretation of the following bullet:** Its "still binding" exposure-log wording
+  records the pre-R2 rule. The 2026-10-14 current-use status above supersedes that prerequisite for the
+  three approved purposes only; the U-01 blinding-claim and calibration restrictions remain binding.
+
 - Also recorded by that closure and still binding: once Main Full81 results are exposed, `U-01` may not
   be described as fully pre-Full81 blinded; Full81 magnitudes must not be used to calibrate `U-01`; and
   a prospective exposure log must be established in the authorized Full81 provenance namespace before
@@ -384,6 +484,53 @@ separate governance actions performed in separate passes — an audit `PASS` is 
   relationship above is an observation at this base and must be re-derived live from Git.
 
 ## 3. Checkpoint / audit chain
+
+### Current accepted lifecycle and results chain — 2026-10-14
+
+1. **U-06 R3 — accepted historical alignment predecessor.** Independent audit, acceptance closure,
+   re-freeze, and accepted-lifecycle records are respectively:
+   `results/provenance/u_06_v7_4_production_authority_independent_audit_r3/independent_audit_pass_record.json`,
+   `results/provenance/u_06_v7_4_production_authority_acceptance_r3/acceptance_closure.json`,
+   `results/provenance/u_06_v7_4_production_authority_re_freeze_r3/production_authority_re_freeze_record.json`,
+   and `results/provenance/u_06_v7_4_production_authority_accepted_lifecycle_r3/accepted_lifecycle_record.json`.
+   Phase-C lifecycle publication: `e10f8f123af19c0796f5045a51807486cb58647a`.
+2. **Accepted intermediary generations — superseded historical authority, not live G1 bindings.**
+   `results/provenance/main_full81_authorization_mechanism_accepted_lifecycle_r2/accepted_lifecycle_record.json`
+   and `results/provenance/main_full81_preflight_authorization_guard_accepted_lifecycle_r1/accepted_lifecycle_record.json`
+   record their own audit `PASS`, `CLOSED_ACCEPTED`, and freeze. Their lifecycle publications are
+   `72ec94ac69b427fa44e44d98eafe76d3e410027d` and `0291171424d2654cfe9ac3c8ffaa773e163c75be`.
+3. **Current G1 — accepted Candidate R1 and production-authority freeze.**
+   `results/provenance/current_full81_production_generation_g1_acceptance_r1/acceptance_closure.json`,
+   `results/provenance/current_full81_production_generation_g1_re_freeze_r1/production_authority_re_freeze_record.json`,
+   and `results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json`.
+   Candidate/audit publication: `59e530f3a7d78c0480fa1368c56331f11e5731f0`; acceptance publication:
+   `bdbe0637a1de41cea0c2d2391149fe1a86e684e3`; re-freeze/lifecycle publication:
+   `b31d88c35d4d86bd4a4294bb783737d18d9e287e`.
+4. **Separate historical Main Full81 authorization and preflight chain.**
+   `results/provenance/main_full81_authorization_g1/main_full81_authorization.json`,
+   `results/provenance/main_full81_no_solve_preflight_g1/main_full81_21d_no_solve_preflight_evidence.json`,
+   and `results/provenance/main_full81_execution_authorization_g1/main_full81_execution_authorization.json`
+   were published in `ab5c7bea4fdcd28e0ca967daadc80d86f25c7588`,
+   `21ff5f48a606f88b2dcd5429ddb10799341f3aeb`, and `c8f555094d6ab711ce6426302419fff958ed19fa`.
+   They are provenance of the accepted execution, not permission for a new run or rerun.
+5. **Full81 post-solve audit evidence and formal numerical-results acceptance — separate publications.**
+   `results/provenance/full81_g1_postsolve_audit_evidence_publication_r1/audit_evidence_record.json`
+   was published in `5992624e26d19304c1fc76f09c2ce128ab0e7215`.
+   `results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json`, its
+   `acceptance_manifest.json`, and `docs/checkpoints/full81_g1_postsolve_results_acceptance_r1_2026-10-12.md`
+   were published in `fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f`.
+   The closure accepts the bound run's `81` completed Main Layer A cases; it changes no run manifest.
+6. **Current scientific-use routing — accepted and activated Pointer R2.**
+   `configs/current_mainline_pointer.json` and
+   `results/provenance/current_mainline_pointer_acceptance_r2/acceptance_closure.json` bind the
+   accepted result set and ACC-N1 amendment already described above. Activation publication:
+   `5a101042cb91f6191208cfdad1e8ddcbebb972f0`.
+
+### Historical chain inventory — 2026-10-02 reconstruction
+
+In the retained inventory below, `current` refers to that reconstruction. U-06 R3 audit-pending and
+lifecycle-absent statements are superseded by items 1–3 above. The historical candidate failures and
+the separately accepted scientific/preregistration records retain their original evidence roles.
 
 **Current U-06 V7.4 production-authority alignment chain (candidate — not accepted):**
 
@@ -522,6 +669,21 @@ The detailed historical reconstruction remains in §5. None of those v7.2 runner
 authorizes current production execution.
 
 ## 4. Latest completed implementation stage
+
+**Current-use synchronization — 2026-10-14.** G1 Candidate R1 is accepted and its production-authority
+re-freeze / accepted lifecycle is published. The separate Main Full81 execution produced the accepted
+run `20261008T183934456307Z_a6826f4828`: all `81` cases are `COMPLETE_PASS`, and formal results
+governance is `CLOSED / ACCEPTED / PUBLISHED` through the results-acceptance package in §3.
+Its immutable root manifest still says `COMPLETE_PASS_PENDING_INDEPENDENT_ACCEPTANCE`; this is the
+execution-time status, not a pending current governance decision. The `651` result files remain
+locally retained, not Git-durable. This synchronization interprets no numerical result magnitude.
+
+### Historical implementation reconstruction — 2026-10-02
+
+The original status list below is preserved as that snapshot. In particular, the `NOT_YET_EXECUTED` /
+`NOT_YET_AUTHORIZED` Full81 assertion and the two-available/four-missing baseline inventory are
+pre-G1 observations, not current availability claims. The accepted Full81 state above supersedes them
+without changing the preregistered A2 cases, threshold requirements, or any historical artifact.
 
 - **Framework v7.4 methodology governance: `CLOSED / ACCEPTED`** (see §1). Framework v7.4 accepted
   exactly three claim-boundary changes — zero-winter current role, observed-versus-planning PV
@@ -683,6 +845,31 @@ matters, not read off this file.
 
 ## 6. Current governance, implementation, and validation state
 
+**Current-use synchronization — 2026-10-14.** U-06 R3 alignment is an accepted historical predecessor;
+current G1 acceptance/freeze and Full81 results acceptance/publication are recorded in §3. The older
+U-06 unresolved / candidate-only, B-03 authority-absence, re-freeze-pending, Full81-not-executed, and
+post-solve-validation-pending statements below are historical. Framework v7.4 / Registry v7.4 are
+exact-bound by current G1 authority; no earlier freeze digest substitutes for the G1 identity.
+
+`U-01` remains `OPEN_HOLD`; `A2` remains `HARD_BLOCKED` until U-01 is resolved, independently audited,
+accepted, and frozen. Main Full81 results must not calibrate U-01, and full pre-Full81 blinding must
+not be claimed. This documentation pass resolves no U-item and grants no execution or implementation
+authority. Scientific-use permission under R2 does not authorize new aggregation/reporting software;
+such work needs separate authorization and must not add a materiality-classification column.
+
+Historical limitations remain disclosed: U-06's retained nonblocking findings; G1-N1, G1-N2, G1-N3 and
+R7 preservation/publication durability; the G1 auditor-independence boundary; session-local primary
+audit evidence and historical 21i bytes that are not Git-durable; and fixture controls `53/54`, not
+`54/54`. Results-acceptance evidence grades remain unchanged: historical optimization-call count is
+`SUPPORTED`, and the full transient execution state / overall reconstructibility is
+`PARTIALLY_RECONSTRUCTIBLE`. Governance publication does not make the `651` result files Git-durable.
+
+### Historical governance / validation reconstruction — 2026-10-02
+
+The original list below records that reconstruction. Its completed scientific acceptances and
+remaining A2 restrictions retain their roles; its pending U-06 / Full81 claims do not override the
+current accepted records or R2 scientific-use permission, including for analysis and discussion.
+
 - **Task 3 preregistration: `CLOSED / ACCEPTED`.** Candidate R1 is immutable historical STOP provenance;
   Candidate R2 is the accepted design recorded in §4. This is not implementation or execution authority.
 - **Independent Task 3 Candidate R2 audit: `COMPLETED`.** Verdict
@@ -773,6 +960,24 @@ matters, not read off this file.
   Layer A per Framework §0.3, but has not been started as of this writing.
 
 ## 7. Next legal step
+
+**Current-use synchronization — 2026-10-14.** The pending U-06 audit, acceptance/re-freeze, and Main
+Full81 authorization/execution sequence retained below has already been completed through the
+separate authority chain in §3. It is not the current next step and must not trigger a rerun.
+
+The next proposed repository action is owner review of this bounded documentation diff, followed
+only after separate approval by a single documentation-only commit containing exactly
+`docs/ai_handoff/CURRENT_STATE.md`, and then a separately verified push to `origin/thesis-v7`.
+This pass stops before staging, committing, or pushing. Scientific inspection, analysis, and supervisor
+discussion remain within the existing R2 permission; reporting-software implementation and new
+solver runs, Layer B, DG, or A2 activities are not authorized by this handoff synchronization.
+U-01 completion remains required before every A2 event, independently of permitted Full81 analysis.
+
+### Historical next-step sequence — 2026-10-02
+
+The original go/no-go statement and proposed sequence below describe the pre-acceptance snapshot.
+Their `NOT_FROZEN`, `NOT_YET_AUTHORIZED`, `NOT_YET_EXECUTED`, and `No Full81 result exists` wording is
+historical only; the later accepted G1 / Full81 / R2 records above govern current use.
 
 > **FRESH INDEPENDENT READ-ONLY AUDIT OF U-06 V7.4 PRODUCTION-AUTHORITY ALIGNMENT CANDIDATE R3.**
 > It is not performed or authorized by the remediation pass, which produced only a candidate. Candidate
