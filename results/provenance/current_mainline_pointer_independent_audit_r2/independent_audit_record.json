@@ -1,0 +1,211 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_INDEPENDENT_AUDIT_RECORD",
+  "schema_version": "iris-thesis-current-mainline-pointer-independent-audit-record-v1",
+  "date": "2026-10-14",
+  "authored_utc": "2026-10-14T10:28:31Z",
+  "phase": "POINTER_CANDIDATE_R2_AND_ACC_N1_AMENDMENT_INDEPENDENT_REVIEW",
+  "verdict": "PASS",
+  "verdict_as_reported": "INDEPENDENT AUDIT PASS",
+  "verdict_scope": "Exactly the five audited files listed under audited_bytes. The reviewer stated that any change to any of them voids the verdict. NOT canonical activation, NOT the activation-time test update.",
+  "self_audit": false,
+  "self_audit_note": "The reviewer is a different Claude Code session from the author. This is NOT a cross-agent or cross-model review: reviewer and author run the same model. See independence.",
+  "independent_reviewer": {
+    "agent": "Claude Code",
+    "session_id": "3b1d925c-5d6e-44d3-9cf8-310cc549fcbb",
+    "model_id": "claude-opus-5-5 (as recorded in the reviewer's session transcript)",
+    "report_timestamp_utc": "2026-10-14T08:54:59.467Z",
+    "human_signature": "NONE_CLAIMED"
+  },
+  "authoring_operator": "Claude Code session 49e9c62c-6026-4b8d-be77-99bce1d7f52b, model id claude-opus-5-5",
+  "independence": {
+    "cross_agent_review": false,
+    "same_model_as_author": true,
+    "reviewer_read_author_memory_notes_before_review": true,
+    "complete_information_isolation_claimed": false,
+    "acceptance_critical_facts_reverified_from_primary_bytes": "As stated by the reviewer (MIN-1); see independent_checks.",
+    "cross_audit_protocol_secondary_agent_requirement_met": false,
+    "note": "Disclosed by the reviewer as MIN-1. The owner's case-specific disposition is recorded in the acceptance closure, not here."
+  },
+  "audited_candidate": {
+    "path": "configs/candidates/current_mainline_pointer_candidate_r2.json",
+    "sha256": "7f4971f630a8ceed429f7a3638d68015ec21758b05817a6500b1d9e808aebb60",
+    "bytes": 56791
+  },
+  "audited_payload_digest": "08d09477d7bcda349197427f38bd642cf8f7d3e0413abdfdc4c362dab141ee4e",
+  "audited_bytes": [
+    {
+      "path": "results/provenance/acc_n1_exposure_log_prerequisite_withdrawal_candidate_r1/governance_amendment_record.json",
+      "sha256": "bd97a6d06985712c35b1b3dfcd755cff2889dfc71c8f1be0a15fa13688282b85",
+      "bytes": 10575
+    },
+    {
+      "path": "configs/candidates/current_mainline_pointer_candidate_r2.json",
+      "sha256": "7f4971f630a8ceed429f7a3638d68015ec21758b05817a6500b1d9e808aebb60",
+      "bytes": 56791
+    },
+    {
+      "path": "src/current_mainline_pointer_v1.py",
+      "sha256": "03485b36188d83163cdf9fd49cc14770aec8ca37769a402cbca4643df18ad930",
+      "bytes": 132591
+    },
+    {
+      "path": "tests/test_current_mainline_pointer_acc_n1_amendment.py",
+      "sha256": "a1a998662c1c75cbef7fae8b47f6e5f90c4135053d36f734d6758fe183a976bf",
+      "bytes": 36718
+    },
+    {
+      "path": "docs/checkpoints/acc_n1_exposure_log_prerequisite_withdrawal_candidate_r1_2026-10-14.md",
+      "sha256": "9745f3dcb2fb9cf83fbf5c4f02f6d676e2b6859e3a9ff6311173d88f47a0c3d5",
+      "bytes": 14623
+    }
+  ],
+  "report_custody": {
+    "record_written_by_reviewer": false,
+    "compiled_by": "Claude Code session f8625c5d-18c0-4377-9889-415e4c29e0b1, model id claude-opus-5-5 as reported by the runtime; neither the author nor the reviewer of the candidate",
+    "compilation_authority": "The thesis owner's decision D6 of 2026-10-14 (extract the report from the reviewer's session transcript and check the existing text SHA).",
+    "source": "The reviewer session's final report message (transcript record uuid 2295e811-0173-4a1a-8dd0-9182c514e104).",
+    "report_text_sha256": "dff34aae01d61c976f0ac56e771e2946a24cf19ac9f29855219f5c9981e85298",
+    "report_text_utf8_bytes": 10551,
+    "hash_semantics": "SHA-256 of the UTF-8 bytes of the message's single text part, exactly as stored in the transcript.",
+    "hash_cross_check": "Equals the value recorded earlier on 2026-10-14 by session af4d4925-63ff-49da-85fa-cd039b810922.",
+    "report_language": "Traditional Chinese. Finding texts below are verbatim; other fields are the compiling operator's English transcription, and each transcribed quantity was checked to occur verbatim in the report.",
+    "full_report_or_transcript_published": false,
+    "publication_note": "The repository is public. By owner decision D6 only the reviewer identity, verdict, findings and evidence hashes are published; the private session transcript and the full report text are not."
+  },
+  "review_questions": {
+    "A_scope_of_the_lift": "Correct. Liftable purposes are derived from the accepted closure's blocking flags and can only be the three purposes; A2, FULL81_EXECUTION and LAYER_B are not servable purposes; only two hard-coded, accepted-listed non-authorization items are liftable; scope is bound to run path and case set; independent R1/R2 payload comparison: only ACC-N1 routing changes.",
+    "B_historical_truthfulness": "Preserved. Accepted closures and manifests match HEAD; ACC-N1 stays MAJOR/OPEN (closed=false); no exposure log (established=false, path=null); no retrospective record; partial prior exposure acknowledged; U-01 OPEN_HOLD, §12 calibration prohibition, §8 firewall and A2 HARD BLOCK are verifier-checked and cross-bound.",
+    "C_pointer_and_verifier": "Safe (see cand_obs_1_disposition).",
+    "D_analysis_tooling_reviewer_opinion": "The pointer authorizes no cross-case reporting (authorizes=[]; CROSS_CASE_AGGREGATION_OR_REPORTING_LAYER stays not authorized and cannot be lifted by an amendment). In the reviewer's opinion a separate owner authorization can lawfully start purely read-only Layer A analysis tooling after R2 activation, via require_current_mainline(purpose=RESULTS_ANALYSIS) with STRICT rehash, with no writes to any accepted namespace, no materiality column, no U-01 calibration and no A2; the run's authority.json requires the aggregation layer to be authorized and built before substantive response-surface interpretation or meeting analysis. Reviewer opinion only; not a decision of this record."
+  },
+  "cand_obs_1_disposition": {
+    "in_place_v1_extension": "ACCEPTABLE",
+    "reasons": [
+      "R1 verification unaffected: the pointer binds path and interface version only; R1-accepted verifier bytes stay in Git (blob 29e3b0ad), SHA re-derived as fc73068a.",
+      "Old and new verifier give byte-identical canonical R1 output under NOT_CHECKED and STRICT_FULL_REHASH.",
+      "Downgrade is safe: the R1 verifier fails R2 closed (SCIENTIFIC_EXPOSURE_RESTRICTION_WEAKENED, NON_AUTHORIZATION_BOUNDARY_DROPPED).",
+      "Consistent with Version Provenance Protocol §5 in the reviewer's reading: the verifier is a live read-only routing tool, in no G1 identity and no production-gate input, and no history is erased.",
+      "A v2 module would add about 3,000 duplicate lines (PTR-REVIEW-2) without a safety benefit."
+    ],
+    "conditions": [
+      "INF-3 is recorded in the acceptance closure.",
+      "The verifier is not modified between this review and publication."
+    ]
+  },
+  "independent_checks": {
+    "amendment_suite": {
+      "tests": 16,
+      "outcome": "OK",
+      "seconds": 457
+    },
+    "v1_static_path_fixture_candidate_fixture_canonical": {
+      "tests": 39,
+      "outcome": "OK",
+      "seconds": 437
+    },
+    "v1_live_candidate_tests": {
+      "tests": 20,
+      "outcome": "OK",
+      "seconds": 601
+    },
+    "skips_and_errors": 0,
+    "canonical_r1_strict": "CANONICAL_POINTER_VERIFIED, STRICT_FULL_INTEGRITY_PASS, three purposes still blocked",
+    "candidate_r2_strict": "CANDIDATE_INTERNALLY_CONSISTENT_NOT_ACCEPTED_NOT_AUTHORITY; is_current_authority=false; results_consumption_permitted=false",
+    "reviewer_probes": "62 probes; every verifier verdict correct. 10 were flagged by the reviewer's own harness because of the reviewer's wrong expectations (pointer changes unrelated to the amendment, also FAIL_CLOSED); not defects.",
+    "hashes_and_digests": "Match the candidate checkpoint.",
+    "repository_effect": "No change to .git/index, git status, any package file or HEAD 354e049.",
+    "solver_calls": 0,
+    "full81_values_read": 0
+  },
+  "findings": {
+    "CRITICAL": [],
+    "MAJOR": [],
+    "MINOR_AND_INFORMATIONAL": [
+      {
+        "id": "MIN-1",
+        "severity": "MINOR",
+        "blocking": false,
+        "text_verbatim": "**MIN-1 審查獨立性有限。** 我是新的 Claude Code session（3b1d925c），但與作者使用同一模型（claude-opus-5-5）。CROSS_AUDIT_PROTOCOL 指定的審查者是「另一種」agent，也就是 Codex。另外，我開始前讀過作者 session 留下的 memory 摘要；所有關鍵事實都已從 primary bytes 重新驗證。Protocol §11 的強制要求「作者不得是唯一接受者」仍然成立，因為接受與否由您決定。建議在 audit record 與 acceptance closure 中揭露這一點；是否加做 Codex 交叉審查由您決定。"
+      },
+      {
+        "id": "MIN-2",
+        "severity": "MINOR",
+        "blocking": false,
+        "text_verbatim": "**MIN-2 授權語意的措辭。** 原 results closure 只把 `DOWNSTREAM_LAYER_A_RESULTS_ANALYSIS_OR_SCIENTIFIC_INSPECTION` 列為「本紀錄不授權」，並沒有說它「僅因 exposure 限制而存在」，那是 verifier 註解自己的描述。amendment 只寫「不再是前置條件」，沒有明文寫出正面授權。最小修正：在 acceptance closure 加一句「負責人的決定即為 bound run 上這三個用途的單獨授權」。不需要改 candidate bytes。"
+      },
+      {
+        "id": "MIN-3",
+        "severity": "MINOR",
+        "blocking": false,
+        "text_verbatim": "**MIN-3 啟用時 live tests 會失敗。** 這是作者自報的 CAND-OBS-4。R2 啟用後，`test_canonical_r1_is_unchanged_and_still_blocks` 和把 R2 當 candidate 的斷言一定會失敗。activation package 應一併記錄這些測試的退役，並提供已審查過的 R2-canonical 版測試，以免失敗的測試被誤讀或被隨手改掉。"
+      },
+      {
+        "id": "MIN-4",
+        "severity": "MINOR",
+        "blocking": false,
+        "text_verbatim": "**MIN-4 換行符號（EOL）可攜性。** 延續既有的 CAND-OBS-3／PTR-ACC-OBS-3。這台機器 `core.autocrlf=true`，而新增或修改的檔案都沒有 `.gitattributes` 規則；在新的 checkout 中，檔案會被轉成 CRLF，驗證會 fail-closed（不是 fail-open）。"
+      },
+      {
+        "id": "INF-1",
+        "severity": "INFORMATIONAL",
+        "blocking": false,
+        "text_verbatim": "**INF-1 §12 的證據負擔轉移。** 「視為已暴露」完全滿足 §11。但沒有 exposure log 之後，§12（不得用 Full81 校準 U-01）能否被證明遵守，只能靠日後 U-01 rationale 的獨立記錄。現在與指導教授討論 Full81 不需留下 exposure event，而 U-01 正在等待指導教授的方法論意見，所以這一點日後審查 U-01 時會被檢視。建議 acceptance closure 寫明一句即可，不必開新的治理工作。"
+      },
+      {
+        "id": "INF-2",
+        "severity": "INFORMATIONAL",
+        "blocking": false,
+        "text_verbatim": "**INF-2 verifier 不檢查的 record 欄位。** `sections_amended`、`not_extended_to`、record 自己的 `not_authorized_by_this_record` 及決定說明文字都不受 verifier 檢查。probe 證實：用正確的 hash 竄改這些欄位仍會通過。它們只受 content hash 與本次審查保護。我已人工核對這些欄位，內容正確：只修訂 §13，保留 §8／11／12，排除 A2／β=8／Layer B／DG／敏感度分析／其他 run／solve。"
+      },
+      {
+        "id": "INF-3",
+        "severity": "INFORMATIONAL",
+        "blocking": false,
+        "text_verbatim": "**INF-3 verifier 版本傳承。** Pointer 只綁定 verifier 的路徑與 interface 版本，不綁定其 bytes（R1 既有設計）。建議 R2 acceptance closure 明列 verifier 從 `fc73068a…` 變為 `03485b36…`，以及新測試 `a1a99866…`。"
+      },
+      {
+        "id": "INF-4",
+        "severity": "INFORMATIONAL",
+        "blocking": false,
+        "text_verbatim": "**INF-4** `carry_forward_conditions` 仍逐字保留 ACC-N1 條件，以便與 accepted closure 交叉比對；機器可讀的「已被取代」標記放在 `superseded_carry_forward_conditions`。"
+      },
+      {
+        "id": "INF-5",
+        "severity": "INFORMATIONAL",
+        "blocking": false,
+        "text_verbatim": "**INF-5** `main_full81_authorization_r2/main_full81_authorization.json` 只有檔案時間戳改變（SHA = HEAD，mtime 為 10-03），不屬於本 package；發布時不可 stage。"
+      },
+      {
+        "id": "INF-6",
+        "severity": "INFORMATIONAL",
+        "blocking": false,
+        "text_verbatim": "**INF-6** amendment record 位於被 gitignore 的 `results/` 下，發布時需 `git add -f`。在它被 Git 追蹤之前，production gate 的 untracked-path 檢查會 fail-closed。"
+      },
+      {
+        "id": "INF-7",
+        "severity": "INFORMATIONAL",
+        "blocking": false,
+        "text_verbatim": "**INF-7** `CURRENT_STATE.md` 已過時；handoff 同步屬另案。"
+      }
+    ]
+  },
+  "acceptance_blockers_found": [],
+  "required_corrections_to_candidate_bytes": [],
+  "recommended_next_steps_as_reported": [
+    "Commit A: publish only the audited bytes plus a separate audit record (audited_candidate.sha256=7f4971f6…, audited_payload_digest=08d09477…, self_audit=false, MIN-1 disclosed); git add -f for the amendment record; do not stage the INF-5 file or unrelated untracked files.",
+    "Commit B: the acceptance closure lists the amendment under accepted_governance_amendments (id, path, bd97a6d0…) and carries one sentence each for MIN-2, INF-1 and INF-3.",
+    "Commit C: payload equals 08d09477…; push; run canonical STRICT again; handle MIN-3."
+  ],
+  "explicit_non_claims": [
+    "Not a cross-agent or cross-model review.",
+    "No complete information isolation between author and reviewer.",
+    "Not written by the reviewer; compiled from the reviewer's report by a third session under owner decision D6.",
+    "No human signature.",
+    "No acceptance, activation or authority is conferred by this record.",
+    "The activation-time test update is not covered by this review."
+  ],
+  "is_independent_audit_record": true,
+  "is_acceptance_closure": false,
+  "is_current_mainline_pointer": false,
+  "is_exposure_log_or_exposure_event": false
+}

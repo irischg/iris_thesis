@@ -43,6 +43,17 @@ value: result files are hashed as opaque bytes.
 
 It contains no identity literal.  Every expected hash, commit and status lives
 in the pointer, so this module can never become a second, competing pointer.
+
+Governance amendments (optional).  A pointer may bind, under
+``scientific_exposure_restrictions.governance_amendments``, an owner amendment
+record that withdraws the scientific-exposure blocking effect of the governing
+open finding.  The record is bound by path, SHA-256 and size, and its content is
+checked against the accepted records: it may lift only blocking flags that the
+accepted results acceptance sets for that finding.  It must keep the finding
+open, claim no exposure log, and carry U-01 and the A2 boundary unchanged.  A
+canonical pointer may rely on it only when its activation closure accepts the
+record and the record is published.  A pointer that binds no amendment
+verifies exactly as before.
 """
 
 from __future__ import annotations
@@ -159,6 +170,19 @@ CLOSURE_BLOCKING_FLAG_PURPOSES: Mapping[str, tuple[str, ...]] = {
         PURPOSE_SUPERVISOR_DISCUSSION,
     ),
 }
+
+#: An owner amendment that withdraws the blocking effect of the governing open
+#: finding.  It never closes or remediates the finding.
+AMENDMENT_ARTIFACT_TYPE = "FULL81_SCIENTIFIC_EXPOSURE_GOVERNANCE_AMENDMENT"
+AMENDMENT_SCHEMA_VERSION = "iris-thesis-full81-scientific-exposure-governance-amendment-v1"
+#: Carried non-authorization items that exist only because of the scientific-
+#: exposure restriction.  An amendment may lift these and nothing else.
+AMENDMENT_LIFTABLE_NON_AUTHORIZATIONS = frozenset(
+    {
+        "DOWNSTREAM_LAYER_A_RESULTS_ANALYSIS_OR_SCIENTIFIC_INSPECTION",
+        "SUPERVISOR_DISCUSSION_OF_FULL81_RESULTS_WITHOUT_AN_EXPOSURE_EVENT",
+    }
+)
 
 #: Where the accepted results acceptance lists its open findings, and under
 #: which keys it records their severity and disposition.
@@ -568,6 +592,22 @@ POINTER_SCHEMA: Mapping[str, Any] = {
         "verifier_interface_version": str,
         "required_checks": [str],
     },
+}
+
+#: Optional ``scientific_exposure_restrictions.governance_amendments``: when the
+#: key is present it must be a non-empty list of these.  The record is bound by
+#: content (SHA-256 and size); its publication is proven from live Git in
+#: canonical mode, never embedded.
+AMENDMENT_BINDING_SCHEMA: Mapping[str, Any] = {
+    "amendment_id": str,
+    "artifact_type": str,
+    "target_finding": str,
+    "record_path": str,
+    "record_sha256": _SHA,
+    "record_bytes": int,
+    "lifted_purposes": [str],
+    "lifted_non_authorization_items": [str],
+    "superseded_carry_forward_conditions": [str],
 }
 
 
@@ -1453,6 +1493,9 @@ class _Verification:
         self.results_integrity = RESULTS_NOT_CHECKED
         self.pointer: Mapping[str, Any] = {}
         self.records: dict[str, Any] = {}
+        #: Effects of the bound governance amendments that passed every check.
+        self.lifted_flags: set[tuple[Any, str]] = set()
+        self.lifted_non_authorizations: set[str] = set()
 
     def start(self, check: str) -> None:
         if self.checks[check] == STATUS_NOT_RUN:
@@ -1511,6 +1554,13 @@ class _Verification:
                 "permitted_purposes": list(restrictions.get("permitted_purposes") or []),
                 "exposure_log_established": _lookup(restrictions, ("exposure_log", "established")),
             }
+            amendments = restrictions.get("governance_amendments", _MISSING)
+            if amendments is not _MISSING:
+                exposure["governance_amendments"] = [
+                    entry.get("amendment_id")
+                    for entry in (amendments if isinstance(amendments, list) else [])
+                    if isinstance(entry, Mapping)
+                ]
         return {
             "verifier": {
                 "module": VERIFIER_MODULE_RELATIVE_PATH,
@@ -1551,6 +1601,13 @@ def _check_schema(v: _Verification, pointer: Any) -> bool:
         return False
     problems: list[str] = []
     _schema_problems(pointer, POINTER_SCHEMA, "pointer", problems)
+    amendments = _lookup(pointer, ("scientific_exposure_restrictions", "governance_amendments"))
+    if amendments is not _MISSING:
+        where = "pointer.scientific_exposure_restrictions.governance_amendments"
+        if isinstance(amendments, list) and amendments:
+            _schema_problems(amendments, [AMENDMENT_BINDING_SCHEMA], where, problems)
+        else:
+            problems.append(f"{where}: expected a non-empty list when present")
     for key in pointer:
         if key not in POINTER_SCHEMA:
             problems.append(f"pointer.{key}: unknown top-level key")
@@ -2143,6 +2200,169 @@ def _check_roles(v: _Verification, git_ok: bool) -> None:
     v.info["canonical_pointer_present"] = canonical_present
 
 
+def _check_amendments(
+    v: _Verification,
+    findings: Mapping[Any, Mapping[str, Any]],
+    accepted_findings: Mapping[Any, tuple[str, Any, Any, Mapping[str, Any]]],
+    closure: Any,
+) -> None:
+    """Bound governance amendments: identity, sources and preserved restrictions.
+
+    Only an amendment that passes every check lifts anything.  An invalid one
+    fails closed and lifts nothing, so every restriction it names stays
+    enforced.
+    """
+
+    restrictions = v.pointer["scientific_exposure_restrictions"]
+    entries = restrictions.get("governance_amendments")
+    if entries is None:
+        return
+    ids = [entry["amendment_id"] for entry in entries]
+    unique = v.require(
+        CHECK_FINDINGS, "AMENDMENT_INVALID", len(set(ids)) == len(ids), "an amendment is bound twice"
+    )
+    conditions = _lookup(closure, ("binding_carry_forward_conditions",)) if closure else _MISSING
+    carried_items = _lookup(closure, ("not_authorized_by_this_record",)) if closure else _MISSING
+    acceptance = v.pointer["formal_results_acceptance"]["acceptance_closure"]
+    clause = restrictions["governing_clause"]
+    u01 = v.pointer["open_findings_and_limitations"]["unresolved_register"]["U-01"]
+    results = v.pointer["accepted_result_set"]
+    head_tree = v.git.tree("HEAD")
+    report = []
+    for entry in entries:
+        label = f"amendment {entry['amendment_id']}"
+        failures_before = len(v.failures)
+        path = v.resolve(entry["record_path"])
+        data = path.read_bytes() if path is not None and path.is_file() else None
+        record: Any = _MISSING
+        if v.require(
+            CHECK_FINDINGS,
+            "AMENDMENT_RECORD_IDENTITY_MISMATCH",
+            data is not None
+            and len(data) == entry["record_bytes"]
+            and sha256_bytes(data) == entry["record_sha256"],
+            f"{label}: {entry['record_path']} does not carry the bound bytes",
+        ):
+            try:
+                record = json.loads(data.decode("utf-8"))
+            except (UnicodeDecodeError, ValueError):
+                v.fail(CHECK_FINDINGS, "AMENDMENT_INVALID", f"{label}: the record is not JSON")
+        target = entry["target_finding"]
+        accepted = accepted_findings.get(target)
+        carried = findings.get(target)
+        flags = _lookup(record, ("effect", "lifted_blocking_flags"))
+        flags_valid = (
+            isinstance(flags, list)
+            and bool(flags)
+            and len(set(map(str, flags))) == len(flags)
+            and all(flag in CLOSURE_BLOCKING_FLAG_PURPOSES for flag in flags)
+        )
+        v.require(
+            CHECK_FINDINGS,
+            "AMENDMENT_INVALID",
+            target == restrictions["governing_finding"]
+            and accepted is not None
+            and carried is not None
+            and carried["closed"] is False,
+            f"{label}: it may only withdraw the blocking effect of the open governing finding",
+        )
+        v.require(
+            CHECK_FINDINGS,
+            "AMENDMENT_INVALID",
+            flags_valid
+            and accepted is not None
+            and all(accepted[3].get(flag) is True for flag in flags),
+            f"{label}: it may lift only blocking flags the accepted record sets for {target}",
+        )
+        purposes = entry["lifted_purposes"]
+        v.equal(
+            CHECK_FINDINGS,
+            "AMENDMENT_INVALID",
+            sorted(purposes) if len(set(purposes)) == len(purposes) else _MISSING,
+            sorted({p for flag in flags for p in CLOSURE_BLOCKING_FLAG_PURPOSES[flag]})
+            if flags_valid
+            else _MISSING,
+            f"{label}: lifted purposes must be exactly those of the lifted flags",
+        )
+        items = entry["lifted_non_authorization_items"]
+        v.require(
+            CHECK_FINDINGS,
+            "AMENDMENT_INVALID",
+            len(set(items)) == len(items)
+            and set(items) <= AMENDMENT_LIFTABLE_NON_AUTHORIZATIONS
+            and isinstance(carried_items, list)
+            and set(items) <= set(carried_items),
+            f"{label}: lifts non-authorization items that are not liftable: "
+            f"{sorted(set(items) - AMENDMENT_LIFTABLE_NON_AUTHORIZATIONS)}",
+        )
+        v.equal(
+            CHECK_FINDINGS,
+            "AMENDMENT_INVALID",
+            sorted(entry["superseded_carry_forward_conditions"]),
+            sorted(c for c in conditions if isinstance(c, str) and c.startswith(f"{target}:"))
+            if isinstance(conditions, list)
+            else _MISSING,
+            f"{label}: it supersedes exactly the carry-forward conditions of {target}",
+        )
+        expectations = (
+            (("artifact_type",), AMENDMENT_ARTIFACT_TYPE),
+            (("artifact_type",), entry["artifact_type"]),
+            (("schema_version",), AMENDMENT_SCHEMA_VERSION),
+            (("amendment_id",), entry["amendment_id"]),
+            (("self_accepted",), False),
+            (("is_exposure_log_or_exposure_event",), False),
+            (("target_finding", "id"), target),
+            (("target_finding", "results_acceptance_closure", "path"), acceptance["path"]),
+            (("target_finding", "results_acceptance_closure", "sha256"), acceptance["sha256"]),
+            (("amended_clause", "path"), clause["path"]),
+            (("amended_clause", "sha256"), clause["sha256"]),
+            (("effect", "lifted_purposes"), purposes),
+            (("effect", "lifted_non_authorization_items"), items),
+            (
+                ("effect", "superseded_carry_forward_conditions"),
+                entry["superseded_carry_forward_conditions"],
+            ),
+            (("effect", "scope", "result_set_run_path"), results["run_path"]),
+            (("effect", "scope", "case_set"), results["case_set"]),
+            (("finding_status_after_amendment", "closed"), False),
+            (("finding_status_after_amendment", "remediated"), False),
+            (("exposure_log", "established"), False),
+            (("exposure_log", "created_by_this_amendment"), False),
+            (("exposure_log", "retrospective_or_reconstructed_record_created"), False),
+            (("preserved_restrictions", "u_01_status"), u01["status"]),
+            (("preserved_restrictions", "u_01_must_be_frozen_before"), u01["must_be_frozen_before"]),
+            (
+                ("preserved_restrictions", "a2_variable_floor_status"),
+                v.pointer["non_authorization_boundaries"]["a2_variable_floor_status"],
+            ),
+            (("preserved_restrictions", "full81_to_u01_calibration_prohibited"), True),
+            (("preserved_restrictions", "u01_may_be_described_as_pre_full81_blinded"), False),
+            (("preserved_restrictions", "main_full81_results_treated_as_exposed"), True),
+        )
+        if record is not _MISSING:
+            for keys, expected in expectations:
+                v.equal(
+                    CHECK_FINDINGS,
+                    "AMENDMENT_INVALID",
+                    _lookup(record, keys),
+                    expected,
+                    f"{label}: {'.'.join(keys)}",
+                )
+        valid = unique and record is not _MISSING and len(v.failures) == failures_before
+        if valid:
+            v.lifted_flags |= {(target, flag) for flag in flags}
+            v.lifted_non_authorizations |= set(items)
+        report.append(
+            {
+                "amendment_id": entry["amendment_id"],
+                "record_path": entry["record_path"],
+                "valid": valid,
+                "tracked_in_head": entry["record_path"] in head_tree,
+            }
+        )
+    v.info["governance_amendments"] = report
+
+
 def _check_findings(v: _Verification) -> None:
     v.start(CHECK_FINDINGS)
     section = v.pointer["open_findings_and_limitations"]
@@ -2218,6 +2438,7 @@ def _check_findings(v: _Verification) -> None:
         bool(accepted_findings),
         "the findings of the accepted results acceptance could not be read",
     )
+    _check_amendments(v, findings, accepted_findings, closure)
     for finding_id in sorted(set(findings) - set(accepted_findings), key=str):
         v.fail(
             CHECK_FINDINGS,
@@ -2243,7 +2464,7 @@ def _check_findings(v: _Verification) -> None:
         if carried["closed"]:
             continue  # an unevidenced closure is reported above
         for flag, purposes in CLOSURE_BLOCKING_FLAG_PURPOSES.items():
-            if accepted.get(flag) is True:
+            if accepted.get(flag) is True and (finding_id, flag) not in v.lifted_flags:
                 v.require(
                     CHECK_FINDINGS,
                     "SCIENTIFIC_EXPOSURE_RESTRICTION_WEAKENED",
@@ -2288,6 +2509,29 @@ def _check_findings(v: _Verification) -> None:
         not blocked & permitted,
         f"purposes are both blocked and permitted: {sorted(blocked & permitted)}",
     )
+    # A bound, valid amendment must actually be applied: the purposes it lifts
+    # leave its finding and, unless another open finding still blocks them,
+    # move from blocked to permitted.
+    for finding_id, flag in sorted(v.lifted_flags, key=str):
+        for purpose in CLOSURE_BLOCKING_FLAG_PURPOSES[flag]:
+            v.require(
+                CHECK_FINDINGS,
+                "AMENDMENT_NOT_APPLIED",
+                purpose not in findings[finding_id]["blocks_purposes"],
+                f"{finding_id} still blocks {purpose}, which an amendment lifts",
+            )
+            if any(
+                not other["closed"] and purpose in other["blocks_purposes"]
+                for other in findings.values()
+            ):
+                continue
+            v.require(
+                CHECK_FINDINGS,
+                "AMENDMENT_NOT_APPLIED",
+                purpose in permitted and purpose not in blocked,
+                f"{purpose} is lifted by an amendment and blocked by no open finding, "
+                "but it is not a permitted purpose",
+            )
     log = restrictions["exposure_log"]
     v.require(
         CHECK_FINDINGS,
@@ -2328,9 +2572,9 @@ def _check_non_authorization(v: _Verification) -> None:
         isinstance(carried, list) and bool(carried),
         "the accepted non-authorization list could not be read",
     ):
-        required = (set(carried) - NON_AUTHORIZATION_ITEMS_NOT_CARRIED) | set(
-            POINTER_OWN_NON_AUTHORIZATIONS
-        )
+        required = (
+            set(carried) - NON_AUTHORIZATION_ITEMS_NOT_CARRIED - v.lifted_non_authorizations
+        ) | set(POINTER_OWN_NON_AUTHORIZATIONS)
         v.require(
             CHECK_NON_AUTHORIZATION,
             "NON_AUTHORIZATION_BOUNDARY_DROPPED",
@@ -2682,6 +2926,7 @@ def _check_activation(v: _Verification, git_ok: bool) -> None:
         (invalid_acceptance, manifest, ("acceptance_closure", "sha256"), closure_sha),
     ):
         bind(code, _lookup(record, keys), expected, ".".join(keys))
+    _check_activation_amendments(v, closure, git_ok)
     # The object under verification must be the published file, not a variant.
     on_disk, _digest, unreadable = _read_pointer(v.root, CANONICAL_POINTER_RELATIVE_PATH)
     v.require(
@@ -2716,6 +2961,47 @@ def _check_activation(v: _Verification, git_ok: bool) -> None:
         bool(introduced and upstream and v.git.is_ancestor(introduced, upstream)),
         "the commit that last wrote the canonical pointer is not reachable from the upstream ref",
     )
+
+
+def _check_activation_amendments(v: _Verification, closure: Any, git_ok: bool) -> None:
+    """Canonical mode: every bound amendment is accepted and published.
+
+    Acceptance is the activation closure naming the record by id, path and
+    SHA-256.  Publication is proven from live Git: the record is in the live
+    HEAD with the bound bytes, and the commit that last wrote it is reachable
+    from the upstream ref.
+    """
+
+    entries = _lookup(v.pointer, ("scientific_exposure_restrictions", "governance_amendments"))
+    if entries is _MISSING:
+        return
+    listed = _lookup(closure, ("accepted_governance_amendments",))
+    accepted = {
+        (item.get("amendment_id"), item.get("path"), item.get("sha256"))
+        for item in (listed if isinstance(listed, list) else [])
+        if isinstance(item, Mapping)
+    }
+    upstream = v.git.rev(v.pointer["git_provenance"]["upstream_ref"]) if git_ok else None
+    for entry in entries:
+        relative = entry["record_path"]
+        v.require(
+            CHECK_ACTIVATION,
+            "ACTIVATION_AMENDMENT_NOT_ACCEPTED",
+            (entry["amendment_id"], relative, entry["record_sha256"]) in accepted,
+            f"the acceptance closure does not accept amendment {entry['amendment_id']}",
+        )
+        if not git_ok:
+            continue
+        blob = v.git.tree("HEAD").get(relative)
+        digest = v.git.blob_digests([blob])[blob] if blob else None
+        introduced = v.git.last_commit_touching(relative) if blob else None
+        v.require(
+            CHECK_ACTIVATION,
+            "ACTIVATION_AMENDMENT_NOT_PUBLISHED",
+            digest == (entry["record_sha256"], entry["record_bytes"])
+            and bool(introduced and upstream and v.git.is_ancestor(introduced, upstream)),
+            f"amendment record {relative} is not published with the bound bytes",
+        )
 
 
 def _verify(

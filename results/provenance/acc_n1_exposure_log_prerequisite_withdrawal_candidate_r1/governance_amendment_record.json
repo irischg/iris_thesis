@@ -1,0 +1,156 @@
+{
+  "artifact_type": "FULL81_SCIENTIFIC_EXPOSURE_GOVERNANCE_AMENDMENT",
+  "schema_version": "iris-thesis-full81-scientific-exposure-governance-amendment-v1",
+  "amendment_id": "ACC_N1_EXPOSURE_LOG_PREREQUISITE_WITHDRAWAL_R1",
+  "package_id": "ACC_N1_EXPOSURE_LOG_PREREQUISITE_WITHDRAWAL_CANDIDATE_R1",
+  "date": "2026-10-14",
+  "authored_utc": "2026-10-14T08:10:46Z",
+  "authoring_operator": "Claude Code session 49e9c62c-6026-4b8d-be77-99bce1d7f52b, model id claude-opus-5-5 as reported by the runtime; not self-accepting",
+  "lifecycle": "CANDIDATE / NOT ACCEPTED / NOT IN EFFECT",
+  "lifecycle_state": "CANDIDATE",
+  "self_accepted": false,
+  "in_effect_when": "Only after an independent read-only audit reports PASS, a published acceptance closure names this record by amendment_id, path and SHA-256 under accepted_governance_amendments, and the canonical current-mainline pointer is activated from a candidate that binds it. Until then the R1 canonical pointer remains the routing authority and keeps the three purposes blocked.",
+  "change_classification": {
+    "change_class": "GOVERNANCE_RULE_REVISION",
+    "is_methodology_change": false,
+    "is_finding_remediation": false,
+    "is_implementation_correction": false,
+    "note": "This record changes the governance precondition for using already accepted results. It changes no formula, parameter, input, solver setting, Layer A/B boundary, result or result identity."
+  },
+  "decision": {
+    "decision": "WITHDRAW_THE_EXPOSURE_LOG_PREREQUISITE_FOR_SCIENTIFIC_USE_OF_THE_ACCEPTED_MAIN_LAYER_A_FULL81_RESULTS",
+    "decided_by": "The thesis owner (research lead). The owner gave the decision explicitly as the instruction of the authoring session on 2026-10-14. The instruction text is not published, and no signature is claimed.",
+    "owner_identity_verification": "NOT_PERFORMED (the session user is taken to be the thesis owner)",
+    "owner_stated_reason": "Research analysis of the accepted Main Layer A Full81 results must not be delayed further to establish an exposure log. The owner asks to withdraw a current-use restriction that is not needed, not to remediate ACC-N1.",
+    "supporting_rationale_recorded_by_operator": [
+      "Section 13 required an exposure log so that the timing of Main Full81 knowledge relative to U-01 finalization could be evidenced. This amendment instead treats the Main Full81 results as exposed for every purpose of sections 11 and 12. The strictest claim boundary therefore applies without any timing evidence.",
+      "Partial exposure has already occurred without a log (ACC-N1 result_information_already_visible). A log started now could not supply a prospective record of that exposure, and the governing clause prohibits a retrospective record.",
+      "The A2 robustness inference relies on the zero-A2-result-exposure firewall (section 8) and on freezing U-01 before every A2 event. Neither depends on the exposure log, and both are unchanged."
+    ]
+  },
+  "target_finding": {
+    "id": "ACC-N1",
+    "class": "MANDATORY_EXPOSURE_LOG_NOT_ESTABLISHED",
+    "severity_as_recorded": "MAJOR",
+    "disposition_as_recorded": "OPEN",
+    "results_acceptance_closure": {
+      "path": "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json",
+      "sha256": "3b27f9a60f5e0bfbcffde343aad164e74cff2f8a98581d91fb95d4bc90e2ba02"
+    },
+    "accepted_blocking_flags": {
+      "blocking_for_first_scientific_inspection_of_full81_results": true,
+      "blocking_for_supervisor_discussion_of_full81_results": true
+    }
+  },
+  "amended_clause": {
+    "path": "docs/checkpoints/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01.md",
+    "sha256": "9f1af8e805b23f6e16c827ada645bfff7d920d98a24b70fb2ea448683ec78851",
+    "machine_readable_form": {
+      "path": "results/provenance/layer_a_robustness_preregistration_governance_sequencing_successor_candidate_r2_acceptance_closure_2026-10-01/acceptance_manifest.json",
+      "sha256": "4bbd58b8e8bd92c292d44b7b3d8b6a2035c3d41dc894581697f52583a55b6476"
+    },
+    "sections_amended": [
+      "13"
+    ],
+    "sections_retained_unchanged": [
+      "8",
+      "11",
+      "12"
+    ],
+    "old_rule_preserved": "Section 13 stays byte-for-byte in the accepted closure as historical accepted governance. It is not deleted, rewritten, back-patched or relabeled. The same applies to the closure's machine-readable manifest and to the run's authority.json, which binds the closure as governing authority.",
+    "new_rule": "For the accepted Main Layer A Full81 result set bound under effect.scope, a dedicated exposure log and per-event exposure records are no longer a prerequisite for scientific inspection, results analysis or supervisor discussion. No exposure event has to be created for these purposes.",
+    "bounded_supersession": "This amendment supersedes section 13 only as a prerequisite for the three lifted purposes on the bound result set. Sections 8, 11 and 12 and every other part of the closure remain in force. The amendment does not extend to A2 or to any other result set, scope or future run."
+  },
+  "effect": {
+    "lifted_blocking_flags": [
+      "blocking_for_first_scientific_inspection_of_full81_results",
+      "blocking_for_supervisor_discussion_of_full81_results"
+    ],
+    "lifted_purposes": [
+      "SCIENTIFIC_INSPECTION",
+      "RESULTS_ANALYSIS",
+      "SUPERVISOR_DISCUSSION"
+    ],
+    "lifted_non_authorization_items": [
+      "DOWNSTREAM_LAYER_A_RESULTS_ANALYSIS_OR_SCIENTIFIC_INSPECTION",
+      "SUPERVISOR_DISCUSSION_OF_FULL81_RESULTS_WITHOUT_AN_EXPOSURE_EVENT"
+    ],
+    "superseded_carry_forward_conditions": [
+      "ACC-N1: an exposure log, with an authorized path and serialization, must exist before the first scientific inspection of Full81 results and before any supervisor discussion; establishing it needs a separate authorization."
+    ],
+    "scope": {
+      "layer": "MAIN_LAYER_A_CONSTANT_FLOOR",
+      "result_set_run_path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828",
+      "run_id": "20261008T183934456307Z_a6826f4828",
+      "case_set": "full81",
+      "case_count": 81
+    },
+    "not_extended_to": [
+      "A2 variable-floor execution, results, paired differences or interpretation",
+      "The conditional beta=8 A2 extension",
+      "Layer B, DG extensions and sensitivity analyses",
+      "Any other result set, including the historical v7.2 Full81 run and future runs",
+      "Any solve, rerun or model construction"
+    ]
+  },
+  "finding_status_after_amendment": {
+    "closed": false,
+    "remediated": false,
+    "blocking": false,
+    "statement": "ACC-N1 stays OPEN with severity MAJOR, exactly as recorded. It is not closed, remediated or regraded, and the accepted closure that raised it is unchanged. The amendment withdraws only its blocking effect on the three purposes."
+  },
+  "exposure_log": {
+    "established": false,
+    "created_by_this_amendment": false,
+    "retrospective_or_reconstructed_record_created": false,
+    "statement": "No exposure log exists. This amendment creates none and reconstructs none for past exposure. The absence of a log before the Phase A audit publication, the results acceptance and this amendment is a permanent historical fact."
+  },
+  "historical_facts_preserved": [
+    "The Full81 results acceptance (FULL81_G1_POSTSOLVE_RESULTS_ACCEPTANCE_R1) raised ACC-N1 as MAJOR / OPEN, blocking the first scientific inspection and supervisor discussion of the Full81 results.",
+    "No exposure log has been established at any point.",
+    "Some Full81 result information has already been visible. The public Phase A audit publication carries aggregate solver and objective statistics, and the results-acceptance session displayed some values for six cases (ACC-N1 result_information_already_visible). Full blinding to the Main Full81 results is not claimed."
+  ],
+  "preserved_restrictions": {
+    "u_01_status": "OPEN_HOLD",
+    "u_01_must_be_frozen_before": [
+      "A2_EXECUTION",
+      "A2_RESULT_EXPOSURE",
+      "A2_INTERPRETATION",
+      "A2_CONDITIONAL_EXTENSION_AUTHORIZATION"
+    ],
+    "a2_variable_floor_status": "HARD_BLOCKED_UNTIL_U_01_RESOLVED_AUDITED_ACCEPTED_AND_FROZEN",
+    "full81_to_u01_calibration_prohibited": true,
+    "u01_may_be_described_as_pre_full81_blinded": false,
+    "main_full81_results_treated_as_exposed": true,
+    "statements": [
+      "Section 11 remains in force. Once this amendment takes effect, the Main Full81 results are treated as exposed for sections 11 and 12, and partial exposure had already occurred before then. U-01 may not be described as fully pre-Full81 blinded. The defensible claim is the one section 11 states: U-01 is finalized after exposure to the Main constant-floor Full81 surface, but before any A2 variable-floor execution, result exposure or paired difference.",
+      "Section 12 remains in force. No Full81 magnitude, distribution, range, surface geometry, knee, transition, plateau, binding pattern or ranking may be used to choose or tune any element of the U-01 materiality rule.",
+      "Section 8, the zero-A2-result-exposure firewall, remains in force in full. A2 remains HARD BLOCKED until U-01 is resolved, independently audited, accepted and frozen.",
+      "Every other carry-forward condition of the results acceptance remains in force. This includes the prohibition on a materiality-classification column in any cross-case aggregation or reporting layer."
+    ]
+  },
+  "scientific_non_change": [
+    "Framework v7.4 and Registry v7.4 are unchanged.",
+    "The EOB baseline is unchanged, and so is the MILP model with its equations, parameters, tariff and cost basis, degradation semantics and solver settings.",
+    "The 81 accepted Main Full81 G1 results are unchanged, together with their run directory and every registered file and SHA-256. Nothing is re-solved, rerun or re-accepted."
+  ],
+  "not_authorized_by_this_record": [
+    "ANY_SOLVER_CALL_MODEL_CONSTRUCTION_OR_PRODUCTION_RUN",
+    "A2_EXECUTION_EXPOSURE_OR_INTERPRETATION",
+    "U_01_RESOLUTION_OR_CALIBRATION",
+    "CROSS_CASE_AGGREGATION_OR_REPORTING_LAYER",
+    "PIPELINE_MANAGEMENT_NOTEBOOK",
+    "EXPOSURE_LOG_CREATION",
+    "REMEDIATION_OR_CLOSURE_OF_ANY_FINDING",
+    "MODIFICATION_OF_ANY_ACCEPTED_ARTIFACT",
+    "SELF_ACCEPTANCE",
+    "COMMIT_PUSH_OR_TAG"
+  ],
+  "is_exposure_log_or_exposure_event": false,
+  "zero_execution": {
+    "solver_library_imports": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "full81_result_values_read": 0
+  }
+}
