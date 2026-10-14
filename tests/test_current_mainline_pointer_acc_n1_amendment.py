@@ -3,8 +3,9 @@
 
 What this suite proves
 ----------------------
-* The accepted canonical pointer R1 still verifies and still blocks the three
-  scientific purposes: nothing here activates the amendment.
+* The canonical pointer is R2, activated from the audited candidate R2 with the
+  amendment accepted and published.  It serves the three scientific purposes and
+  still refuses every other purpose.  R1 survives as candidate R1.
 * Pointer candidate R2 verifies as a candidate, and its payload differs from R1
   only in the ACC-N1 scientific-exposure routing.  Every identity binding,
   including the accepted Full81 G1 result set, is carried unchanged.
@@ -18,9 +19,10 @@ What this suite proves
 
 Two layers, as in ``test_current_mainline_pointer_v1``
 ------------------------------------------------------
-``Live*`` classes read the real repository.  They encode a LIVE PREMISE: R1 is
-the canonical pointer and R2 is an unaccepted candidate.  Retire them with that
-premise when R2 is activated; do not edit them until they pass.
+``Live*`` classes read the real repository.  They encode a LIVE PREMISE: R2 is
+the canonical pointer, activated from the audited candidate R2, and R1 survives
+as candidate R1.  The earlier premise (R1 canonical, R2 an unaccepted candidate)
+was retired when R2 was activated.
 
 ``Fixture*`` classes are hermetic.  They reuse the synthetic repository of the
 v1 suite and add a synthetic amendment record built from the fixture pointer.
@@ -55,6 +57,7 @@ RECORD = (
     "governance_amendment_record.json"
 )
 AMENDMENT_ID = "ACC_N1_EXPOSURE_LOG_PREREQUISITE_WITHDRAWAL_R1"
+R1_ACCEPTANCE_CLOSURE = "results/provenance/current_mainline_pointer_acceptance_r1/acceptance_closure.json"
 LIFTED = [cmp.PURPOSE_SCIENTIFIC_INSPECTION, cmp.PURPOSE_RESULTS_ANALYSIS, cmp.PURPOSE_SUPERVISOR_DISCUSSION]
 LIFTED_ITEMS = [
     "DOWNSTREAM_LAYER_A_RESULTS_ANALYSIS_OR_SCIENTIFIC_INSPECTION",
@@ -317,14 +320,14 @@ class AmendmentInterfaceTests(unittest.TestCase):
 
 
 class LiveAmendmentTests(AmendmentCase):
-    """LIVE PREMISE: R1 is canonical and R2 is an unaccepted candidate."""
+    """LIVE PREMISE: R2 is canonical; R1 survives as candidate R1."""
 
     @classmethod
     def setUpClass(cls) -> None:
-        for relative in (CANDIDATE_R2, RECORD, CANONICAL):
+        for relative in (CANDIDATE_R1, CANDIDATE_R2, RECORD, CANONICAL):
             if not (ROOT / relative).is_file():
                 raise unittest.SkipTest(f"{relative} is absent")
-        cls.r1 = load(CANONICAL)
+        cls.r1 = load(CANDIDATE_R1)
         cls.r2 = load(CANDIDATE_R2)
         cls.record = load(RECORD)
         cls.result = cmp.verify_candidate_pointer(ROOT, CANDIDATE_R2)
@@ -334,21 +337,32 @@ class LiveAmendmentTests(AmendmentCase):
         change(pointer)
         return v1.verify_object(ROOT, pointer, relative=CANDIDATE_R2)
 
-    def test_canonical_r1_is_unchanged_and_still_blocks(self) -> None:
+    def test_canonical_r2_serves_the_three_purposes_and_nothing_more(self) -> None:
+        canonical = load(CANONICAL)
         result = cmp.verify_canonical_pointer(ROOT)
         self.assertEqual(result["failures"], [])
         self.assertEqual(result["verdict"], cmp.VERDICT_CANONICAL_VERIFIED)
-        self.assertEqual(result["scientific_exposure"]["blocked_purposes"], LIFTED)
-        self.assertNotIn("governance_amendments", result["scientific_exposure"])
-        self.assertNotIn("governance_amendments", result)
+        self.assertEqual(result["checks"][cmp.CHECK_ACTIVATION], cmp.STATUS_PASS)
+        self.assertEqual(result["scientific_exposure"]["blocked_purposes"], [])
+        self.assertEqual(result["scientific_exposure"]["governance_amendments"], [AMENDMENT_ID])
+        self.assertEqual(canonical["pointer_revision"], "R2")
+        self.assertEqual(canonical["activation_basis"]["audited_candidate"]["path"], CANDIDATE_R2)
+        self.assertEqual(cmp.pointer_payload_digest(canonical), cmp.pointer_payload_digest(self.r2))
+        # R1 is not lost: candidate R1 still carries the payload R1's acceptance accepted.
         self.assertEqual(self.r1["pointer_revision"], "R1")
         self.assertEqual(
-            cmp.pointer_payload_digest(self.r1), cmp.pointer_payload_digest(load(CANDIDATE_R1))
+            cmp.pointer_payload_digest(self.r1),
+            load(R1_ACCEPTANCE_CLOSURE)["accepted_payload_digest"],
         )
-        for purpose in LIFTED:
+        for purpose in (cmp.PURPOSE_TECHNICAL_IDENTITY_VERIFICATION, *LIFTED):
+            with self.subTest(purpose=purpose):
+                route = cmp.require_current_mainline(ROOT, purpose=purpose)
+                self.assertEqual(route["accepted_result_run_path"], canonical["accepted_result_set"]["run_path"])
+                self.assertFalse(route["grants_execution_authority"])
+        for purpose in ("FULL81_EXECUTION", "A2", "LAYER_B", "U_01_CALIBRATION", ""):
             with self.subTest(purpose=purpose), self.assertRaises(cmp.CurrentMainlinePointerError) as caught:
                 cmp.require_current_mainline(ROOT, purpose=purpose, results_policy=cmp.RESULTS_POLICY_NONE)
-            self.assertEqual(caught.exception.code, "PURPOSE_BLOCKED_BY_SCIENTIFIC_EXPOSURE_RESTRICTION")
+            self.assertEqual(caught.exception.code, "PURPOSE_NOT_PERMITTED")
 
     def test_r2_candidate_is_internally_consistent_and_nothing_more(self) -> None:
         self.assertCandidateConsistent(self.result)
