@@ -1,0 +1,48 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_MANIFEST",
+  "schema_version": "iris-thesis-current-mainline-pointer-acceptance-manifest-v1",
+  "package_id": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_R3",
+  "role": "acceptance_manifest",
+  "date": "2026-10-24",
+  "authored_utc": "2026-10-24T13:15:00Z",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_closure": {
+    "path": "results/provenance/current_mainline_pointer_acceptance_r3/acceptance_closure.json",
+    "sha256": "7b737f307415b3939c8c41e0de038a6bc216abc78a21e451807720590bb5fb12",
+    "bytes": 14671,
+    "git_blob_id": "8a4b65abddff5ba0090c5c46531c38dfd060acc9"
+  },
+  "independent_audit_record": {
+    "path": "docs/audits/Iris_Thesis_Pointer_v2_R3_Independent_Audit_Record_2026-10-24.json",
+    "sha256": "ce1c10e73993d2b06f28e5012b92891891a8805b5383e100f6200bf0307a1999",
+    "bytes": 43406,
+    "git_blob_id": "d1dafc706f10c9b495ae004a6eda737d28020cc3"
+  },
+  "accepted_candidate": {
+    "path": "configs/candidates/current_mainline_pointer_candidate_r3.json",
+    "sha256": "7cd154f82089991a1346efe71525f4dab1dd80c3390abb0947c87277a9ff63e4",
+    "publication_commit": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23"
+  },
+  "accepted_payload_digest": "886b906bf2f9d8a13ad2693a93fe4ea122196ecb65504cb3228e84c9e16df506",
+  "accepted_methodology_activation": {
+    "framework_formal_name": "Framework v8",
+    "framework_document_sha256": "cf299f2edbb771d36a1ce791e837c513d24428791eab982e6fcdf2608a171f93",
+    "registry_formal_name": "Registry v8",
+    "registry_component_sha256": [
+      "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "99fe6eb5d2c47784d978012368f254b0094abdd8613cb1547a0def29f310e93c"
+    ],
+    "gate3_acceptance_record_sha256": "b67eb1f05f8cd6dfd08040cf12599a324483cb4616c23bb1dc8763d436880cc9",
+    "predecessor_pointer_id": "CURRENT_MAINLINE_POINTER_R2"
+  },
+  "canonical_pointer_path": "configs/current_mainline_pointer.json",
+  "manifest_self_registration": {
+    "path": "results/provenance/current_mainline_pointer_acceptance_r3/acceptance_manifest.json",
+    "sha256": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH"
+  },
+  "hash_semantics": "Noncircular. The closure embeds the candidate and audit-record hashes; this manifest embeds the closure hash; the canonical pointer, written last, embeds the hashes of all four activation artifacts and their publication commits. Nothing embeds the canonical pointer's hash or the commit that contains itself.",
+  "serialization": "UTF-8, LF line endings, json.dumps(indent=2, ensure_ascii=False), one trailing newline.",
+  "containing_commit": "NOT_EMBEDDED_BY_DESIGN",
+  "is_acceptance_manifest": true,
+  "is_current_mainline_pointer": false
+}

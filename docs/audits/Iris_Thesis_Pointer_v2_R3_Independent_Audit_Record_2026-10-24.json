@@ -1,0 +1,481 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_INDEPENDENT_AUDIT_RECORD",
+  "record_id": "IRIS_THESIS_POINTER_V2_R3_A1_TARGETED_INDEPENDENT_AUDIT_2026_10_24",
+  "verdict": "PASS",
+  "self_audit": false,
+  "audit_date": "2026-10-24",
+  "audit_timezone": "Asia/Taipei",
+  "record_nature": "New targeted independent audit conducted in this Codex session and its explicitly authorized continuation turns. This is not a recovered or reconstructed original reviewer transcript.",
+  "reviewer": {
+    "agent": "Codex",
+    "provider": "OpenAI",
+    "model_description": "GPT-6-based, as identified by this session's instructions",
+    "exact_runtime_model_id": null,
+    "session_id": null,
+    "identity_limitations": "No exact runtime model identifier or durable session identifier is exposed. No signature or cryptographic attestation of reviewer identity is claimed.",
+    "independence_level": "SESSION_INDEPENDENT_AND_CROSS_PROVIDER_RELATIVE_TO_RECORDED_PRODUCER",
+    "producing_agent_as_recorded": "Claude Code session c7c5196b-e507-411c-8e52-76e7b8de794c, model id claude-opus-5-5 as reported by the runtime",
+    "independence_basis": "This Codex/OpenAI session did not construct or modify the accepted v2 verifier, R3 candidate, tests, or acceptance record; it inspected primary artifacts and executed checks independently. R3 attributes production to a Claude Code session. Cross-provider status is relative to that recorded producer identity, not independent authentication of its runtime.",
+    "prior_reviewer_claims": "The earlier 49-test closure referenced by the researcher acceptance record retains conversation-only custody. None of its tests or synthetic positive canonical results is claimed as an execution by this session."
+  },
+  "scope": {
+    "classification": "Additive audit evidence only; neither a methodology change nor an implementation correction.",
+    "verdict_meaning": "PASS for the minimum activation-critical identity, publication, lifecycle, historical-preservation, activation-contract, and nine selected focused-test checks of the exact accepted Pointer v2 / Candidate R3 package.",
+    "exclusions": [
+      "No new Gate 2 or Gate 3 audit",
+      "No complete re-audit of the package",
+      "No new researcher acceptance decision",
+      "No live v8 activation or canonical promotion",
+      "No synthetic positive canonical activation executed or relied on in A1",
+      "No Full81 numerical-results integrity re-audit",
+      "No v8 Coding, model construction, Pilot, optimization, or production execution"
+    ]
+  },
+  "audited_candidate": {
+    "path": "configs/candidates/current_mainline_pointer_candidate_r3.json",
+    "sha256": "7cd154f82089991a1346efe71525f4dab1dd80c3390abb0947c87277a9ff63e4",
+    "bytes": 30703,
+    "git_blob_id": "1e45527da516c16714af9e77522a47feae9dd4a2",
+    "raw_equals_publication_and_HEAD": true,
+    "crlf_count": 0,
+    "git_tracked": true,
+    "git_anchor_commit": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+    "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+  },
+  "audited_payload_digest": "886b906bf2f9d8a13ad2693a93fe4ea122196ecb65504cb3228e84c9e16df506",
+  "payload_digest_method": {
+    "module": "src/current_mainline_pointer_v1.py",
+    "function": "pointer_payload_digest",
+    "module_sha256": "03485b36188d83163cdf9fd49cc14770aec8ca37769a402cbca4643df18ad930",
+    "definition": "Actual accepted implementation invoked; SHA-256 over sorted-key compact UTF-8 JSON with ensure_ascii=False, excluding pointer_identity and activation_basis. Not the raw file SHA-256."
+  },
+  "accepted_package_identities": [
+    {
+      "path": "src/current_mainline_pointer_v2.py",
+      "sha256": "d2d2d7f0b65097c5485b9f0c910f3d45a41aafa9d7a3d0579e6676986627f1dd",
+      "bytes": 60611,
+      "git_blob_id": "16b6fd60b2897d84a0153a4aa95e44374fa8a3f9",
+      "raw_equals_publication_and_HEAD": true,
+      "crlf_count": 0
+    },
+    {
+      "path": "configs/candidates/current_mainline_pointer_candidate_r3.json",
+      "sha256": "7cd154f82089991a1346efe71525f4dab1dd80c3390abb0947c87277a9ff63e4",
+      "bytes": 30703,
+      "git_blob_id": "1e45527da516c16714af9e77522a47feae9dd4a2",
+      "raw_equals_publication_and_HEAD": true,
+      "crlf_count": 0
+    },
+    {
+      "path": "tests/test_current_mainline_pointer_v2.py",
+      "sha256": "56b9c5645db7109e0e95da7674075ba6ee08276325fd5d8a2a304c5eb9c71013",
+      "bytes": 41355,
+      "git_blob_id": "c9c04a5310352925d92b1554738482b7ae8ff6c9",
+      "raw_equals_publication_and_HEAD": true,
+      "crlf_count": 0
+    },
+    {
+      "path": "docs/checkpoints/Iris_Thesis_Pointer_v2_R3_Combined_Acceptance_Record_2026-10-24.md",
+      "sha256": "d7e4590e0031bbbebde7cf870e2f05111efefdb98ce3a3c4f7ec4922b48358d1",
+      "bytes": 10525,
+      "git_blob_id": "7c04d61929acc2175f398bb4ae46913ced1d8ccb",
+      "raw_equals_publication_and_HEAD": true,
+      "crlf_count": 0
+    }
+  ],
+  "source_verifier_identities": [
+    {
+      "path": "src/current_mainline_pointer_v1.py",
+      "sha256": "03485b36188d83163cdf9fd49cc14770aec8ca37769a402cbca4643df18ad930",
+      "bytes": 132591
+    },
+    {
+      "path": "src/current_mainline_pointer_v2.py",
+      "sha256": "d2d2d7f0b65097c5485b9f0c910f3d45a41aafa9d7a3d0579e6676986627f1dd",
+      "bytes": 60611,
+      "git_blob_id": "16b6fd60b2897d84a0153a4aa95e44374fa8a3f9",
+      "raw_equals_publication_and_HEAD": true,
+      "crlf_count": 0
+    }
+  ],
+  "source_test_identity": {
+    "path": "tests/test_current_mainline_pointer_v2.py",
+    "sha256": "56b9c5645db7109e0e95da7674075ba6ee08276325fd5d8a2a304c5eb9c71013",
+    "bytes": 41355,
+    "git_blob_id": "c9c04a5310352925d92b1554738482b7ae8ff6c9",
+    "raw_equals_publication_and_HEAD": true,
+    "crlf_count": 0
+  },
+  "git_publication": {
+    "repository": "irischg/iris_thesis",
+    "branch": "thesis-v7",
+    "publication_commit": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+    "parent": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+    "observed_head": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+    "observed_origin_thesis_v7": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+    "exact_four_additions": [
+      "A\tconfigs/candidates/current_mainline_pointer_candidate_r3.json",
+      "A\tdocs/checkpoints/Iris_Thesis_Pointer_v2_R3_Combined_Acceptance_Record_2026-10-24.md",
+      "A\tsrc/current_mainline_pointer_v2.py",
+      "A\ttests/test_current_mainline_pointer_v2.py"
+    ],
+    "ancestry_result": "PASS: parent -> publication -> HEAD and origin/thesis-v7; HEAD and origin/thesis-v7 equal publication.",
+    "live_remote_check": {
+      "command": "$env:GIT_OPTIONAL_LOCKS='0'\n$env:GIT_TERMINAL_PROMPT='0'\ngit --no-optional-locks ls-remote --exit-code origin refs/heads/thesis-v7",
+      "execution_context": "require_escalated read-only network check; no fetch",
+      "exit_code": 0,
+      "stdout": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23\trefs/heads/thesis-v7\n"
+    },
+    "raw_byte_result": "All four accepted files equal their Git blob bytes at publication and HEAD; exact SHA-256 and sizes match; no EOL normalization. v1 also matches its accepted SHA and HEAD blob.",
+    "identity_check": {
+      "command": "@'\nimport pathlib, subprocess, hashlib, json, sys, datetime\nfrom src import current_mainline_pointer_v1 as v1\nr=pathlib.Path.cwd()\npublication='88833aed3b1bc2a322dc3e98a22e0eaff91d1b23'\nparent='420f182ed221f3d4e2629f5e44da95c395d9f6b3'\nexpected={\n'src/current_mainline_pointer_v2.py':('d2d2d7f0b65097c5485b9f0c910f3d45a41aafa9d7a3d0579e6676986627f1dd',60611),\n'configs/candidates/current_mainline_pointer_candidate_r3.json':('7cd154f82089991a1346efe71525f4dab1dd80c3390abb0947c87277a9ff63e4',30703),\n'tests/test_current_mainline_pointer_v2.py':('56b9c5645db7109e0e95da7674075ba6ee08276325fd5d8a2a304c5eb9c71013',41355),\n'docs/checkpoints/Iris_Thesis_Pointer_v2_R3_Combined_Acceptance_Record_2026-10-24.md':('d7e4590e0031bbbebde7cf870e2f05111efefdb98ce3a3c4f7ec4922b48358d1',10525)}\ndef git(*a):\n p=subprocess.run(['git','--no-optional-locks',*a],capture_output=True,check=True);return p.stdout\nidentities=[]\nfor p,(sha,n) in expected.items():\n raw=(r/p).read_bytes();blob=git('cat-file','blob',publication+':'+p)\n h=hashlib.sha256(raw).hexdigest()\n assert (h,len(raw))==(sha,n) and raw==blob,p\n assert git('cat-file','blob','HEAD:'+p)==raw,p\n identities.append({'path':p,'sha256':h,'bytes':len(raw),'git_blob_id':git('rev-parse',publication+':'+p).decode().strip(),'raw_equals_publication_and_HEAD':True,'crlf_count':raw.count(b'\\r\\n')})\nassert git('rev-parse',publication+'^').decode().strip()==parent\nchanges=git('diff-tree','--no-commit-id','--name-status','-r',publication).decode().splitlines()\nassert set(changes)=={'A\\t'+p for p in expected},changes\nfor older,newer in [(parent,publication),(publication,'HEAD'),(publication,'origin/thesis-v7')]:\n git('merge-base','--is-ancestor',older,newer)\np=json.loads((r/'configs/candidates/current_mainline_pointer_candidate_r3.json').read_bytes())\nc=json.loads((r/v1.CANONICAL_POINTER_RELATIVE_PATH).read_bytes())\ndigest=v1.pointer_payload_digest(p)\nassert digest=='886b906bf2f9d8a13ad2693a93fe4ea122196ecb65504cb3228e84c9e16df506'\nassert c['pointer_identity']['pointer_id']=='CURRENT_MAINLINE_POINTER_R2'\nassert c['schema_version']==v1.POINTER_SCHEMA_VERSION\nassert c['pointer_identity']['is_current_authority'] is True\nassert p['pointer_identity']['is_current_authority'] is False and p['activation_basis']['status']=='NOT_ACTIVATED'\nv1raw=(r/'src/current_mainline_pointer_v1.py').read_bytes()\nassert hashlib.sha256(v1raw).hexdigest()=='03485b36188d83163cdf9fd49cc14770aec8ca37769a402cbca4643df18ad930'\nassert git('cat-file','blob','HEAD:src/current_mainline_pointer_v1.py')==v1raw\nout={'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'python':sys.version,'python_executable':sys.executable,'identities':identities,'payload_digest':digest,'v1_sha256':hashlib.sha256(v1raw).hexdigest(),'v1_bytes':len(v1raw),'publication_commit':publication,'parent':parent,'publication_exact_four_additions':changes,'ancestry_checks':'PASS','canonical':{'path':v1.CANONICAL_POINTER_RELATIVE_PATH,'sha256':hashlib.sha256((r/v1.CANONICAL_POINTER_RELATIVE_PATH).read_bytes()).hexdigest(),'bytes':len((r/v1.CANONICAL_POINTER_RELATIVE_PATH).read_bytes()),'schema':c['schema_version'],'identity':c['pointer_identity'],'payload_digest':v1.pointer_payload_digest(c),'activation_status':c['activation_basis']['status']},'candidate_author':p['pointer_identity']['authoring_operator'],'activation_contract':p['activation_contract'],'v8_unbuilt_stages':p['v8_unbuilt_stages'],'framework':p['methodology_authority']['document'],'registry_base':p['evidence_authority']['base_component']['document'],'registry_delta':p['evidence_authority']['delta_component']['document'],'gate3_record':p['methodology_authority']['gate3_acceptance_record']}\nprint(json.dumps(out,ensure_ascii=True))\n'@ | python -B -",
+      "exit_code": 0,
+      "observed_at_utc": "2026-10-24T12:54:12.803291+00:00"
+    }
+  },
+  "authority_state": {
+    "canonical_pointer": {
+      "path": "configs/current_mainline_pointer.json",
+      "sha256": "ed7005dea8dc423fb4372554b3f8d15fd34c3988441c4fb14c2dede0d64afcb4",
+      "bytes": 58156,
+      "schema_version": "iris-thesis-current-mainline-pointer-v1",
+      "pointer_id": "CURRENT_MAINLINE_POINTER_R2",
+      "lifecycle": "ACCEPTED_CANONICAL",
+      "current": true,
+      "payload_digest": "08d09477d7bcda349197427f38bd642cf8f7d3e0413abdfdc4c362dab141ee4e"
+    },
+    "canonical_verification": "Earlier directly evidenced V1RegressionTests.test_v1_canonical_still_verifies_with_r3_present passed, using v1 RESULTS_POLICY_NONE. Canonical and inventoried source bytes remain unchanged across every continuation.",
+    "methodology_current": "Framework v7.4",
+    "evidence_current": "Registry v7.4",
+    "framework_v8_activation": "NOT_ACTIVATED",
+    "pointer_r3": "Researcher-accepted and published candidate; candidate envelope remains CANDIDATE, is_current_authority=false, self_accepted=false, activation_basis.status=NOT_ACTIVATED.",
+    "proposed_v8_framework": {
+      "path": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Research_Framework_v8_Candidate_R2_2026-10-24_DRAFT.md",
+      "sha256": "cf299f2edbb771d36a1ce791e837c513d24428791eab982e6fcdf2608a171f93",
+      "bytes": 89767,
+      "git_tracked": true,
+      "git_blob_id": "9ac0e92f48f7911e49ff0c40091940201be25b1a",
+      "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "proposed_v8_registry_base": {
+      "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+      "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "bytes": 245125,
+      "git_tracked": true,
+      "git_blob_id": "f4e0dc03916befc217cf9e5b4a9d78f4c7c7e9c8",
+      "git_anchor_commit": "bf87b7f0659da17277fbb797099141b24343aa79",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "proposed_v8_registry_delta": {
+      "path": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Literature_Evidence_Registry_v8_Delta_Candidate_R1_2026-10-24_DRAFT.md",
+      "sha256": "99fe6eb5d2c47784d978012368f254b0094abdd8613cb1547a0def29f310e93c",
+      "bytes": 23268,
+      "git_tracked": true,
+      "git_blob_id": "e98f640e93d1ccc8ca5c942da4686e43effd89e8",
+      "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "gate3_acceptance_record": {
+      "path": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Framework_v8_Registry_v8_Delta_Gate3_Acceptance_Record_2026-10-24.md",
+      "sha256": "b67eb1f05f8cd6dfd08040cf12599a324483cb4616c23bb1dc8763d436880cc9",
+      "bytes": 14291,
+      "git_tracked": true,
+      "git_blob_id": "1abde566cd9bfe16acf14807bb49059fa431b711",
+      "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "v8_unbuilt_stages": {
+      "historical_identity_reuse_permitted": false,
+      "scientific_implementation": {
+        "status": "NOT_YET_AUTHORIZED",
+        "identity": "NOT_YET_AUTHORIZED"
+      },
+      "production_generation": {
+        "status": "NOT_YET_AUTHORIZED",
+        "identity": "NOT_YET_AUTHORIZED"
+      },
+      "production_runner": {
+        "status": "NOT_YET_AUTHORIZED",
+        "identity": "NOT_YET_AUTHORIZED"
+      },
+      "input_compatibility": {
+        "status": "NOT_YET_AUTHORIZED",
+        "identity": "NOT_YET_AUTHORIZED"
+      },
+      "pilot": {
+        "status": "NOT_YET_AUTHORIZED",
+        "identity": "NOT_YET_EXECUTED"
+      },
+      "numerical_results": {
+        "status": "NOT_YET_EXECUTED",
+        "identity": "NOT_YET_EXECUTED"
+      },
+      "result_acceptance": {
+        "status": "NOT_YET_EXECUTED",
+        "identity": "NOT_YET_EXECUTED"
+      },
+      "note": "No v8 implementation, production generation, runner, input compatibility decision, Pilot, numerical result or result acceptance exists. Build stages need a separate authorization first (Protocol section 24); results have not occurred (Protocol section 14). No historical v7.4 / G1 identity and no placeholder hash may stand in for any of them."
+    },
+    "numerical_authority_boundary": "No v7.4 Full81, G1, EOB, or other historical numerical result is promoted into v8 authority."
+  },
+  "activation_contract_assessment": {
+    "verdict": "PASS_WITHIN_TARGETED_SCOPE",
+    "primary_source_locations": [
+      "src/current_mainline_pointer_v1.py:pointer_payload_digest, _check_lifecycle, _check_files, _check_activation",
+      "src/current_mainline_pointer_v2.py:_Verification.result, _check_v8_authority, _check_v8_stages, _check_v8_results, _check_roles, _check_historical, _check_boundaries, _check_historical_route, _check_activation, _verify",
+      "configs/candidates/current_mainline_pointer_candidate_r3.json:activation_contract and activation_basis"
+    ],
+    "required_audit_fields": {
+      "artifact_type": "CURRENT_MAINLINE_POINTER_INDEPENDENT_AUDIT_RECORD",
+      "verdict": "PASS",
+      "self_audit": false,
+      "audited_candidate.sha256": "7cd154f82089991a1346efe71525f4dab1dd80c3390abb0947c87277a9ff63e4",
+      "audited_payload_digest": "886b906bf2f9d8a13ad2693a93fe4ea122196ecb65504cb3228e84c9e16df506"
+    },
+    "additional_canonical_requirements": [
+      "v1 requires all four distinct activation role artifacts to be Git tracked and anchored at their publication commits, with the audited candidate under configs/candidates/ and none being the canonical pointer itself.",
+      "v1 compares the canonical payload digest to the audited candidate payload and requires the audited candidate lifecycle to remain CANDIDATE.",
+      "v1 checks the acceptance closure artifact type, CLOSED_ACCEPTED status, canonical path, candidate SHA, payload digest and independent-audit SHA; the manifest must have the required type and bind the closure SHA.",
+      "The standard identity/Git checks bind raw file bytes and Git blobs. Canonical content must equal the published file in HEAD, and its last-writing commit must be reachable from upstream.",
+      "v2 additionally prohibits activation roles from aliasing files already bound in the payload and requires the closure's accepted_methodology_activation object to exactly name Framework v8, both Registry v8 components in base/delta order, Gate 3 record SHA and predecessor pointer ID.",
+      "This audit file itself must subsequently be published and bound by a separately authorized activation acceptance chain. Its creation does not satisfy publication or activate anything."
+    ],
+    "expected_future_closure_binding": {
+      "framework_formal_name": "Framework v8",
+      "framework_document_sha256": "cf299f2edbb771d36a1ce791e837c513d24428791eab982e6fcdf2608a171f93",
+      "registry_formal_name": "Registry v8",
+      "registry_component_sha256": [
+        "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+        "99fe6eb5d2c47784d978012368f254b0094abdd8613cb1547a0def29f310e93c"
+      ],
+      "gate3_acceptance_record_sha256": "b67eb1f05f8cd6dfd08040cf12599a324483cb4616c23bb1dc8763d436880cc9",
+      "predecessor_pointer_id": "CURRENT_MAINLINE_POINTER_R2"
+    },
+    "independent_conclusions": [
+      "Candidate verification returns consistency only: authority, candidate acceptance, promotion, activation and execution-authority flags remain false; candidate activation validation is NOT_APPLICABLE.",
+      "The v8 methodology identity is the accepted Framework v8 Candidate R2 byte identity. Registry v8 is the unchanged Registry v7.4 base plus accepted Registry v8 Delta R1, not the delta alone.",
+      "Every declared v8 implementation, generation, runner, input, Pilot and numerical-result stage retains its prescribed NOT_YET_* sentinels. Historical identities and placeholder hashes cannot substitute.",
+      "Historical R1/R2 canonical Git objects, R2 candidate payload, accepted v1 verification route and carried v7.4 identities remain preserved and checked in their historical roles.",
+      "Candidate consistency PASS is not Activation PASS. Source-level acceptance-field validation is not a cryptographic authentication of reviewer identity; genuine independence is established and disclosed by this review's provenance."
+    ]
+  },
+  "execution_evidence": {
+    "provenance_rule": "The original A1 execution and the final two-test recovery are different executions in the same independent reviewer conversation. Their real outputs are retained below; no aggregate nine-test process execution is invented.",
+    "original_a1": {
+      "date": "2026-10-24",
+      "exact_start_and_end_utc": null,
+      "exact_time_limitation": "Original unittest invocation did not emit timestamps; the date and 61.685-second unittest duration are observed. No precise start/end timestamp is reconstructed.",
+      "command": "$env:PYTHONDONTWRITEBYTECODE='1'\n$env:GIT_OPTIONAL_LOCKS='0'\npython -B -m unittest -v -f tests.test_current_mainline_pointer_v2.LiveR3Tests.test_candidate_r3_is_consistent_and_not_authority tests.test_current_mainline_pointer_v2.LiveR3Tests.test_framework_and_composite_registry_identities tests.test_current_mainline_pointer_v2.LiveR3Tests.test_every_v8_stage_is_not_yet tests.test_current_mainline_pointer_v2.LifecycleBoundaryAndGitTests.test_non_authorization_and_activation_contract tests.test_current_mainline_pointer_v2.LifecycleBoundaryAndGitTests.test_git_provenance tests.test_current_mainline_pointer_v2.CanonicalModeTests.test_unpublished_activation_records_are_refused tests.test_current_mainline_pointer_v2.V1RegressionTests.test_v1_canonical_still_verifies_with_r3_present tests.test_current_mainline_pointer_v2.EolAxisTests.test_crlf_conversion_is_reported_and_fails_closed tests.test_current_mainline_pointer_v2.ZeroExecutionTests.test_verification_runs_only_read_only_git_and_builds_no_model",
+      "process_exit_code": 1,
+      "tests_run": 8,
+      "passed": 7,
+      "errors": 1,
+      "not_run": 1,
+      "unittest_duration_seconds": 61.685,
+      "passed_selectors": [
+        "tests.test_current_mainline_pointer_v2.LiveR3Tests.test_candidate_r3_is_consistent_and_not_authority",
+        "tests.test_current_mainline_pointer_v2.LiveR3Tests.test_framework_and_composite_registry_identities",
+        "tests.test_current_mainline_pointer_v2.LiveR3Tests.test_every_v8_stage_is_not_yet",
+        "tests.test_current_mainline_pointer_v2.LifecycleBoundaryAndGitTests.test_non_authorization_and_activation_contract",
+        "tests.test_current_mainline_pointer_v2.LifecycleBoundaryAndGitTests.test_git_provenance",
+        "tests.test_current_mainline_pointer_v2.CanonicalModeTests.test_unpublished_activation_records_are_refused",
+        "tests.test_current_mainline_pointer_v2.V1RegressionTests.test_v1_canonical_still_verifies_with_r3_present"
+      ],
+      "error_selector": "tests.test_current_mainline_pointer_v2.EolAxisTests.test_crlf_conversion_is_reported_and_fails_closed",
+      "not_run_selector": "tests.test_current_mainline_pointer_v2.ZeroExecutionTests.test_verification_runs_only_read_only_git_and_builds_no_model",
+      "captured_output": "test_candidate_r3_is_consistent_and_not_authority (tests.test_current_mainline_pointer_v2.LiveR3Tests.test_candidate_r3_is_consistent_and_not_authority) ... ok\r\ntest_framework_and_composite_registry_identities (tests.test_current_mainline_pointer_v2.LiveR3Tests.test_framework_and_composite_registry_identities) ... ok\r\ntest_every_v8_stage_is_not_yet (tests.test_current_mainline_pointer_v2.LiveR3Tests.test_every_v8_stage_is_not_yet) ... ok\r\ntest_non_authorization_and_activation_contract (tests.test_current_mainline_pointer_v2.LifecycleBoundaryAndGitTests.test_non_authorization_and_activation_contract) ... ok\r\ntest_git_provenance (tests.test_current_mainline_pointer_v2.LifecycleBoundaryAndGitTests.test_git_provenance) ... ok\r\ntest_unpublished_activation_records_are_refused (tests.test_current_mainline_pointer_v2.CanonicalModeTests.test_unpublished_activation_records_are_refused) ... ok\r\ntest_v1_canonical_still_verifies_with_r3_present (tests.test_current_mainline_pointer_v2.V1RegressionTests.test_v1_canonical_still_verifies_with_r3_present) ... ok\r\ntest_crlf_conversion_is_reported_and_fails_closed (tests.test_current_mainline_pointer_v2.EolAxisTests.test_crlf_conversion_is_reported_and_fails_closed) ... ERROR\r\n\r\n======================================================================\r\nERROR: test_crlf_conversion_is_reported_and_fails_closed (tests.test_current_mainline_pointer_v2.EolAxisTests.test_crlf_conversion_is_reported_and_fails_closed)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"C:\\Users\\Iris C\\OneDrive\\Desktop\\iris_thesis\\tests\\test_current_mainline_pointer_v2.py\", line 708, in setUp\r\n    self.root.mkdir()\r\n    ~~~~~~~~~~~~~~~^^\r\n  File \"C:\\Users\\Iris C\\anaconda3\\Lib\\pathlib\\_local.py\", line 722, in mkdir\r\n    os.mkdir(self, mode)\r\n    ~~~~~~~~^^^^^^^^^^^^\r\nPermissionError: [WinError 5] Access is denied: 'C:\\\\Users\\\\Iris C\\\\AppData\\\\Local\\\\Temp\\\\cmp2_eol_21dsfd42\\\\repo'\r\n\r\n----------------------------------------------------------------------\r\nRan 8 tests in 61.685s\r\n\r\nFAILED (errors=1)\r\n",
+      "disposition": "Original A1 STOP retained. EOL fixture setup failed before its assertion; no PASS artifact was created."
+    },
+    "intermediate_retry": {
+      "date": "2026-10-24",
+      "test_outcomes": "UNESTABLISHED_NOT_CREDITED",
+      "wrapper_exit_code": 1,
+      "observed_failure": "Traceback (most recent call last):\r\n  File \"<stdin>\", line 44, in <module>\r\n  File \"C:\\Users\\Iris C\\anaconda3\\Lib\\shutil.py\", line 790, in rmtree\r\n    return _rmtree_unsafe(path, onexc)\r\n  File \"C:\\Users\\Iris C\\anaconda3\\Lib\\shutil.py\", line 629, in _rmtree_unsafe\r\n    onexc(os.unlink, fullname, err)\r\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\Iris C\\anaconda3\\Lib\\shutil.py\", line 625, in _rmtree_unsafe\r\n    os.unlink(fullname)\r\n    ~~~~~~~~~^^^^^^^^^^\r\nPermissionError: [WinError 5] Access is denied: 'C:\\\\Users\\\\Iris C\\\\AppData\\\\Local\\\\Temp\\\\iris_a1_retry_mea8z7fi\\\\cmp2_eol_668q3l8g\\\\repo\\\\.git\\\\objects\\\\43\\\\1590a4071736c0d98526037977372ae2fdec27'\r\n",
+      "disposition": "The wrapper invoked the two selected tests after its permission probe, but Python shutil.rmtree then raised WinError 5 on a read-only disposable Git object before captured test results were emitted. No test PASS is inferred from that invocation. Native cleanup subsequently succeeded; the project snapshot remained unchanged."
+    },
+    "final_two_test_recovery": {
+      "date": "2026-10-24",
+      "started_utc": "2026-10-24T12:53:31.9951114Z",
+      "completed_utc": "2026-10-24T12:53:38.8940666Z",
+      "command": "$taskTemp = 'C:\\Users\\Iris C\\AppData\\Local\\Temp\\iris_a1_retry_mea8z7fi'\nif (Test-Path -LiteralPath $taskTemp) { throw 'Disposable path unexpectedly exists' }\nNew-Item -ItemType Directory -Path $taskTemp -ErrorAction Stop | Out-Null\n$env:TEMP=$taskTemp\n$env:TMP=$taskTemp\n$env:TMPDIR=$taskTemp\n$env:PYTHONDONTWRITEBYTECODE='1'\n$env:GIT_OPTIONAL_LOCKS='0'\n$env:GIT_TERMINAL_PROMPT='0'\nWrite-Output ('START_UTC=' + [DateTime]::UtcNow.ToString('o'))\nWrite-Output ('TEMP=' + $env:TEMP)\nWrite-Output ('TMP=' + $env:TMP)\nWrite-Output ('TMPDIR=' + $env:TMPDIR)\nWrite-Output 'PYTHONDONTWRITEBYTECODE=1; GIT_OPTIONAL_LOCKS=0; GIT_TERMINAL_PROMPT=0'\n@'\nimport json, os, pathlib, tempfile, sys\nexpected=pathlib.Path(os.environ[\"TEMP\"]).resolve()\nactual=pathlib.Path(tempfile.gettempdir()).resolve()\nassert actual==expected\nhome=pathlib.Path(tempfile.mkdtemp(prefix=\"permission_probe_\")).resolve()\nassert home.parent==expected\nnested=home/\"repo\"\nnested.mkdir()\nsample=nested/\"probe.txt\"\nsample.write_bytes(b\"probe\")\nassert sample.read_bytes()==b\"probe\"\nsample.unlink()\nnested.rmdir()\nhome.rmdir()\nprint(json.dumps({\"probe\":\"PASS\",\"tempfile_gettempdir\":str(actual),\"nested_create_write_read_delete\":\"PASS\",\"bytecode_disabled\":sys.dont_write_bytecode,\"python_executable\":sys.executable}))\n'@ | python -B -\nif ($LASTEXITCODE -ne 0) { throw 'Permission probe failed; tests not run' }\nWrite-Output 'COMMAND: python -B -m unittest -v -f tests.test_current_mainline_pointer_v2.EolAxisTests.test_crlf_conversion_is_reported_and_fails_closed tests.test_current_mainline_pointer_v2.ZeroExecutionTests.test_verification_runs_only_read_only_git_and_builds_no_model'\npython -B -m unittest -v -f tests.test_current_mainline_pointer_v2.EolAxisTests.test_crlf_conversion_is_reported_and_fails_closed tests.test_current_mainline_pointer_v2.ZeroExecutionTests.test_verification_runs_only_read_only_git_and_builds_no_model\n$testExitCode=$LASTEXITCODE\nWrite-Output ('UNITTEST_PROCESS_EXIT_CODE=' + $testExitCode)\nWrite-Output ('END_UTC=' + [DateTime]::UtcNow.ToString('o'))\nexit $testExitCode",
+      "execution_context": "Permission-reviewed require_escalated execution; permissions not modified.",
+      "environment": {
+        "TEMP": "C:\\Users\\Iris C\\AppData\\Local\\Temp\\iris_a1_retry_mea8z7fi",
+        "TMP": "C:\\Users\\Iris C\\AppData\\Local\\Temp\\iris_a1_retry_mea8z7fi",
+        "TMPDIR": "C:\\Users\\Iris C\\AppData\\Local\\Temp\\iris_a1_retry_mea8z7fi",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_TERMINAL_PROMPT": "0"
+      },
+      "python_executable": "C:\\Users\\Iris C\\anaconda3\\python.exe",
+      "python_version": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+      "permission_probe": "PASS in a fresh Python process: tempfile.gettempdir matched the selected external directory; nested repo creation, file write/read/delete, and directory removal succeeded.",
+      "individual_results": [
+        {
+          "selector": "tests.test_current_mainline_pointer_v2.EolAxisTests.test_crlf_conversion_is_reported_and_fails_closed",
+          "result": "PASS"
+        },
+        {
+          "selector": "tests.test_current_mainline_pointer_v2.ZeroExecutionTests.test_verification_runs_only_read_only_git_and_builds_no_model",
+          "result": "PASS"
+        }
+      ],
+      "tests_run": 2,
+      "passed": 2,
+      "errors": 0,
+      "failures": 0,
+      "unittest_duration_seconds": 6.379,
+      "process_exit_code": 0,
+      "captured_output": "START_UTC=2026-10-24T12:53:31.9951114Z\r\nTEMP=C:\\Users\\Iris C\\AppData\\Local\\Temp\\iris_a1_retry_mea8z7fi\r\nTMP=C:\\Users\\Iris C\\AppData\\Local\\Temp\\iris_a1_retry_mea8z7fi\r\nTMPDIR=C:\\Users\\Iris C\\AppData\\Local\\Temp\\iris_a1_retry_mea8z7fi\r\nPYTHONDONTWRITEBYTECODE=1; GIT_OPTIONAL_LOCKS=0; GIT_TERMINAL_PROMPT=0\r\n{\"probe\": \"PASS\", \"tempfile_gettempdir\": \"C:\\\\Users\\\\Iris C\\\\AppData\\\\Local\\\\Temp\\\\iris_a1_retry_mea8z7fi\", \"nested_create_write_read_delete\": \"PASS\", \"bytecode_disabled\": true, \"python_executable\": \"C:\\\\Users\\\\Iris C\\\\anaconda3\\\\python.exe\"}\r\nCOMMAND: python -B -m unittest -v -f tests.test_current_mainline_pointer_v2.EolAxisTests.test_crlf_conversion_is_reported_and_fails_closed tests.test_current_mainline_pointer_v2.ZeroExecutionTests.test_verification_runs_only_read_only_git_and_builds_no_model\r\ntest_crlf_conversion_is_reported_and_fails_closed (tests.test_current_mainline_pointer_v2.EolAxisTests.test_crlf_conversion_is_reported_and_fails_closed) ... ok\r\ntest_verification_runs_only_read_only_git_and_builds_no_model (tests.test_current_mainline_pointer_v2.ZeroExecutionTests.test_verification_runs_only_read_only_git_and_builds_no_model) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 2 tests in 6.379s\r\n\r\nOK\r\nUNITTEST_PROCESS_EXIT_CODE=0\r\nEND_UTC=2026-10-24T12:53:38.8940666Z\r\n",
+      "evidence_emitted_before_cleanup": true,
+      "separate_cleanup": {
+        "command": "$taskTemp = [System.IO.Path]::GetFullPath('C:\\Users\\Iris C\\AppData\\Local\\Temp\\iris_a1_retry_mea8z7fi')\n$expectedParent = [System.IO.Path]::GetFullPath('C:\\Users\\Iris C\\AppData\\Local\\Temp')\nif ([System.IO.Directory]::GetParent($taskTemp).FullName -ne $expectedParent -or [System.IO.Path]::GetFileName($taskTemp) -ne 'iris_a1_retry_mea8z7fi') { throw 'Temporary cleanup containment check failed' }\nRemove-Item -LiteralPath $taskTemp -Recurse -Force -ErrorAction Stop\n[pscustomobject]@{TaskTemp=$taskTemp; Removed=(-not (Test-Path -LiteralPath $taskTemp))} | ConvertTo-Json -Compress",
+        "process_exit_code": 0,
+        "stdout": "{\"TaskTemp\":\"C:\\\\Users\\\\Iris C\\\\AppData\\\\Local\\\\Temp\\\\iris_a1_retry_mea8z7fi\",\"Removed\":true}\r\n"
+      }
+    },
+    "combined_supported_result": {
+      "unique_selected_tests": 9,
+      "passed": 9,
+      "substantive_assertion_failures": 0,
+      "unresolved_required_tests": 0,
+      "all_49_tests_run": false
+    },
+    "cache_policy": "python -B and PYTHONDONTWRITEBYTECODE=1; unittest used directly, no pytest cache. Disposable test fixtures only.",
+    "fixture_boundary": "The accepted EOL test creates and configures/commits a synthetic Git repository in external temp storage. Those fixture-only operations do not alter the research repository, its Git configuration, refs, index, or objects."
+  },
+  "preservation": {
+    "original_session_snapshot": {
+      "at_utc": "2026-10-24T12:40:08.721077+00:00",
+      "index_sha256": "8dc64fa4a11d27d0ce56563093b4d764fa4a2499812daccacca5aa316c93fd14",
+      "index_entries_sha256": "68e54b57b089995eef62edb0cf1a8c080b87b26d90aec9c2ed02bba63a468f73",
+      "cached_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unstaged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "head": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+      "origin_ref": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+      "status_count": 2227,
+      "tracked_changes": [
+        " M results/provenance/main_full81_authorization_r2/main_full81_authorization.json"
+      ],
+      "files_digest": "756fd09912e3cb3c56cf61cccbd41a8ac28349f589191fc1fb634df8d424a431",
+      "file_count": 2564,
+      "total_bytes": 74777922,
+      "status_sha256": "f323db9ee44c6fedd9eb6fb2282358cb613eebc1ae08c42104828f56724ce608"
+    },
+    "original_stop_snapshot": {
+      "at_utc": "2026-10-24T12:42:59.145717+00:00",
+      "index_sha256": "8dc64fa4a11d27d0ce56563093b4d764fa4a2499812daccacca5aa316c93fd14",
+      "index_entries_sha256": "68e54b57b089995eef62edb0cf1a8c080b87b26d90aec9c2ed02bba63a468f73",
+      "cached_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unstaged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "head": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+      "origin_ref": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+      "status_count": 2227,
+      "tracked_changes": [
+        " M results/provenance/main_full81_authorization_r2/main_full81_authorization.json"
+      ],
+      "files_digest": "756fd09912e3cb3c56cf61cccbd41a8ac28349f589191fc1fb634df8d424a431",
+      "file_count": 2564,
+      "total_bytes": 74777922,
+      "status_sha256": "f323db9ee44c6fedd9eb6fb2282358cb613eebc1ae08c42104828f56724ce608"
+    },
+    "final_recovery_start_snapshot": {
+      "at_utc": "2026-10-24T12:53:12.728900+00:00",
+      "index_sha256": "8dc64fa4a11d27d0ce56563093b4d764fa4a2499812daccacca5aa316c93fd14",
+      "index_entries_sha256": "68e54b57b089995eef62edb0cf1a8c080b87b26d90aec9c2ed02bba63a468f73",
+      "cached_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unstaged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "head": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+      "origin_ref": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+      "status_count": 2227,
+      "tracked_changes": [
+        " M results/provenance/main_full81_authorization_r2/main_full81_authorization.json"
+      ],
+      "files_digest": "756fd09912e3cb3c56cf61cccbd41a8ac28349f589191fc1fb634df8d424a431",
+      "file_count": 2564,
+      "total_bytes": 74777922,
+      "status_sha256": "f323db9ee44c6fedd9eb6fb2282358cb613eebc1ae08c42104828f56724ce608"
+    },
+    "immediately_before_record_snapshot": {
+      "at_utc": "2026-10-24T12:54:41.779327+00:00",
+      "index_sha256": "8dc64fa4a11d27d0ce56563093b4d764fa4a2499812daccacca5aa316c93fd14",
+      "index_entries_sha256": "68e54b57b089995eef62edb0cf1a8c080b87b26d90aec9c2ed02bba63a468f73",
+      "cached_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unstaged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "head": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+      "origin_ref": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+      "status_count": 2227,
+      "tracked_changes": [
+        " M results/provenance/main_full81_authorization_r2/main_full81_authorization.json"
+      ],
+      "files_digest": "756fd09912e3cb3c56cf61cccbd41a8ac28349f589191fc1fb634df8d424a431",
+      "file_count": 2564,
+      "total_bytes": 74777922,
+      "status_sha256": "f323db9ee44c6fedd9eb6fb2282358cb613eebc1ae08c42104828f56724ce608"
+    },
+    "protected_git_metadata_before": {
+      "git_config_sha256": "20ae10361527ac366cb6e40008a620f784156aa32a3db7e39240b8258e21754c",
+      "head_file_sha256": "377362af814a973659624093df34895a239154111be578c5375f3f12fdb4124c"
+    },
+    "protected_git_metadata_before_record": {
+      "git_config_sha256": "20ae10361527ac366cb6e40008a620f784156aa32a3db7e39240b8258e21754c",
+      "head_file_sha256": "377362af814a973659624093df34895a239154111be578c5375f3f12fdb4124c"
+    },
+    "comparison": "PASS: all 2,564 tracked/nonignored untracked file identities and sizes, status bytes, index bytes/entries, HEAD/upstream and diff digests match the original A1 baseline. Repository .git/config and .git/HEAD bytes match across the retries.",
+    "snapshot_command": "@'\nimport subprocess, pathlib, hashlib, json, datetime\nr=pathlib.Path.cwd()\ndef git(*a):\n p=subprocess.run(['git','--no-optional-locks',*a],capture_output=True,check=True); return p.stdout\nstatus=git('status','--porcelain=v1','-z','--untracked-files=all')\npaths=set(x.decode('utf-8') for x in git('ls-files','-z','--cached','--others','--exclude-standard').split(b'\\0') if x)\nfiles={}\nfor p in sorted(paths):\n q=r/p\n if q.is_file():\n  h=hashlib.sha256()\n  with q.open('rb') as f:\n   for b in iter(lambda:f.read(1048576),b''): h.update(b)\n  files[p]={'sha256':h.hexdigest(),'bytes':q.stat().st_size}\n elif not q.exists(): files[p]={'absent':True}\n else: raise RuntimeError('Unexpected non-file path: '+p)\nout={'at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'files':files,'status_hex':status.hex(),'index_sha256':hashlib.sha256((r/'.git/index').read_bytes()).hexdigest(),'index_entries_sha256':hashlib.sha256(git('ls-files','--stage','-z')).hexdigest(),'cached_diff_sha256':hashlib.sha256(git('diff','--cached','--binary','--no-ext-diff')).hexdigest(),'unstaged_diff_sha256':hashlib.sha256(git('diff','--binary','--no-ext-diff')).hexdigest(),'head':git('rev-parse','HEAD').decode().strip(),'origin_ref':git('rev-parse','refs/remotes/origin/thesis-v7').decode().strip(),'status_count':len([x for x in status.split(b'\\0') if x]),'tracked_changes':[x.decode('utf-8') for x in status.split(b'\\0') if x and not x.startswith(b'??')]}\nout['files_digest']=hashlib.sha256(json.dumps(files,sort_keys=True,separators=(',',':')).encode()).hexdigest()\nout['file_count']=len(files)\nout['total_bytes']=sum(x.get('bytes',0) for x in files.values())\nout['status_sha256']=hashlib.sha256(status).hexdigest()\nout.pop('status_hex')\nout.pop('files')\nprint(json.dumps(out,ensure_ascii=True))\nprint(json.dumps({'git_config_sha256':hashlib.sha256((r/'.git/config').read_bytes()).hexdigest(),'head_file_sha256':hashlib.sha256((r/'.git/HEAD').read_bytes()).hexdigest()}))\n'@ | python -B -",
+    "existing_unrelated_entries": "2,226 untracked files and one pre-existing tracked status entry remain untouched. No staging changes. The tracked entry remains reported M even though git diff is empty; this audit neither normalizes nor repairs it.",
+    "ignored_files_limitation": "The repository-wide snapshot covers git ls-files --cached --others --exclude-standard, not ignored result directories or every filesystem metadata attribute. No code path writes production results; no numerical results were opened for computation.",
+    "authorized_persistent_output": "docs/audits/Iris_Thesis_Pointer_v2_R3_Independent_Audit_Record_2026-10-24.json",
+    "write_boundary": "Only this new audit JSON is authorized. Its previously absent parent docs/audits directory may be created solely to hold this file. The record will be left untracked. Final post-write integrity/status verification is reported externally, avoiding any self-hash inside this file."
+  },
+  "zero_execution": {
+    "production_solves": 0,
+    "solver_library_imports": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "pilot_runs": 0,
+    "evidence": "Executed ZeroExecutionTests confirms read-only verifier Git commands, no imported solver/production modules, unchanged verifier snapshots, and zero execution counters. No production gate or solver runner was invoked.",
+    "research_repository_git_writes": 0,
+    "accepted_artifact_modifications": 0,
+    "canonical_pointer_modifications": 0,
+    "git_configuration_modifications": 0,
+    "authorized_output_count": 1
+  },
+  "findings": {
+    "acceptance_critical_findings": [],
+    "unresolved_a1_blockers": [],
+    "resolved_execution_incidents": [
+      "Original external-temp nested mkdir setup error prevented EOL assertion execution.",
+      "Intermediate retry cleanup suppressed evidence; that invocation has no credited test result.",
+      "Final recovery emitted two PASS results and exit code 0 before successful native cleanup."
+    ],
+    "limitations": [
+      "Targeted audit only; no claim of a complete 49-test run or fresh Gate 2/Gate 3 audit.",
+      "Historical numerical results were not rehashed under STRICT_FULL_REHASH; v1 regression uses RESULTS_POLICY_NONE.",
+      "No synthetic positive canonical activation was executed; no live v8 activation is claimed.",
+      "Earlier conversation-only reviewer evidence remains conversation-only and is not reconstructed here.",
+      "Producer/reviewer runtime identities are disclosed to the extent observable and are not cryptographically attested.",
+      "An unchanged acceptance record recommends a durable positive canonical fixture and EOL transition planning; this audit neither implements those recommendations nor treats them as a new A1 requirement."
+    ]
+  },
+  "remaining_activation_dependencies": [
+    "Separately authorized Git publication of this audit record, with exact bytes subsequently bound by the activation chain.",
+    "Researcher activation acceptance closure and manifest binding this audit, exact accepted R3 payload, Framework v8, both Registry v8 components, Gate 3 record and predecessor.",
+    "Separately authorized canonical promotion and controlled transition of v1 callers/routing/current-state assumptions.",
+    "Separate authorization for any subsequent v8 Coding, compatibility assessment, Pilot or execution; A1 grants none."
+  ],
+  "non_authorization": {
+    "researcher_approval_claimed": false,
+    "audit_record_publication_claimed": false,
+    "activation_performed": false,
+    "canonical_promotion_performed": false,
+    "routing_transition_performed": false,
+    "v8_execution_authorized": false,
+    "automatic_progression_to_a2": false
+  },
+  "self_identity_note": "This record contains no hash of itself. Its SHA-256 and byte size are calculated after writing and reported externally.",
+  "record_creation_note": "An initial one-shot shell write did not start because Windows rejected the command length (CreateProcess error 206); no file was written by that attempt.",
+  "authored_utc": "2026-10-24T12:57:29.233Z",
+  "authored_asia_taipei": "2026-10-24T20:57:29.233+08:00"
+}

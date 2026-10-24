@@ -1,0 +1,185 @@
+{
+  "artifact_type": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_CLOSURE",
+  "schema_version": "iris-thesis-current-mainline-pointer-acceptance-closure-v1",
+  "package_id": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_R3",
+  "role": "current_mainline_pointer_acceptance_closure",
+  "date": "2026-10-24",
+  "authored_utc": "2026-10-24T13:15:00Z",
+  "acceptance_status": "CLOSED_ACCEPTED",
+  "acceptance_subject": "CURRENT_MAINLINE_POINTER_R3 (audited candidate R3, schema v2) as the content of the canonical pointer, and through it the formal activation of Framework v8 as current methodology authority and Registry v8 as current composite evidence authority",
+  "acceptance_meaning": {
+    "1_candidate_acceptance": "Accepts, for activation, the already independently audited Pointer R3 candidate at the exact SHA-256 and payload digest below. The candidate was accepted as an exact compatibility candidate in the researcher acceptance record bound below; this closure adds the activation acceptance that record left open.",
+    "2_framework_v8_methodology_activation": "Framework v8 (the Gate 3 accepted Framework v8 Candidate R2 bytes) becomes the current methodology authority when the canonical pointer R3 is published and verifies.",
+    "3_registry_v8_evidence_activation": "Registry v8 = Registry v7.4 (unchanged base) plus Registry v8 Delta R1, in that order, becomes the current composite evidence authority on the same condition. The delta alone is not Registry v8.",
+    "4_non_authorization": "Nothing here authorizes v8 coding or implementation, model construction, a solver call, a v8 Pilot, a v8 production generation or run, an input-compatibility decision, numerical results or result acceptance. Every v8 stage stays NOT_YET_AUTHORIZED / NOT_YET_EXECUTED as R3 states.",
+    "nature": "Governance / authority-routing decision. Not a methodology change, not an implementation correction, not a scientific interpretation; it reopens no CLOSED decision and changes no accepted artifact or result.",
+    "effect_condition": "Takes effect only when configs/current_mainline_pointer.json holds the R3 payload with an activation basis naming this closure, is published on origin/thesis-v7, and the v2 verifier reports CANONICAL_POINTER_VERIFIED. Creating or publishing this closure alone activates nothing."
+  },
+  "canonical_pointer_path": "configs/current_mainline_pointer.json",
+  "accepted_candidate": {
+    "path": "configs/candidates/current_mainline_pointer_candidate_r3.json",
+    "sha256": "7cd154f82089991a1346efe71525f4dab1dd80c3390abb0947c87277a9ff63e4",
+    "bytes": 30703,
+    "git_tracked": true,
+    "git_blob_id": "1e45527da516c16714af9e77522a47feae9dd4a2",
+    "git_anchor_commit": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+    "git_anchor_role": "ADDED_BY_THIS_COMMIT",
+    "publication_commit": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23"
+  },
+  "accepted_payload_digest": "886b906bf2f9d8a13ad2693a93fe4ea122196ecb65504cb3228e84c9e16df506",
+  "accepted_payload_digest_method": "src/current_mainline_pointer_v1.py pointer_payload_digest: SHA-256 of sorted-key compact UTF-8 JSON (ensure_ascii=False) of the pointer without pointer_identity and activation_basis.",
+  "independent_audit_record": {
+    "path": "docs/audits/Iris_Thesis_Pointer_v2_R3_Independent_Audit_Record_2026-10-24.json",
+    "sha256": "ce1c10e73993d2b06f28e5012b92891891a8805b5383e100f6200bf0307a1999",
+    "bytes": 43406,
+    "git_blob_id": "d1dafc706f10c9b495ae004a6eda737d28020cc3",
+    "record_id": "IRIS_THESIS_POINTER_V2_R3_A1_TARGETED_INDEPENDENT_AUDIT_2026_10_24",
+    "verdict": "PASS",
+    "self_audit": false,
+    "audited_candidate_sha256": "7cd154f82089991a1346efe71525f4dab1dd80c3390abb0947c87277a9ff63e4",
+    "audited_payload_digest": "886b906bf2f9d8a13ad2693a93fe4ea122196ecb65504cb3228e84c9e16df506",
+    "reviewer_as_recorded": "Codex (OpenAI), session- and provider-independent of the recorded producer",
+    "publication": "Published unchanged, byte-for-byte, in the same commit as this closure and its manifest. That commit is not embedded here (circular); the canonical pointer binds it."
+  },
+  "accepted_methodology_activation": {
+    "framework_formal_name": "Framework v8",
+    "framework_document_sha256": "cf299f2edbb771d36a1ce791e837c513d24428791eab982e6fcdf2608a171f93",
+    "registry_formal_name": "Registry v8",
+    "registry_component_sha256": [
+      "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "99fe6eb5d2c47784d978012368f254b0094abdd8613cb1547a0def29f310e93c"
+    ],
+    "gate3_acceptance_record_sha256": "b67eb1f05f8cd6dfd08040cf12599a324483cb4616c23bb1dc8763d436880cc9",
+    "predecessor_pointer_id": "CURRENT_MAINLINE_POINTER_R2"
+  },
+  "accepted_methodology_activation_paths": {
+    "framework_document": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Research_Framework_v8_Candidate_R2_2026-10-24_DRAFT.md",
+    "registry_base_component": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+    "registry_delta_component": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Literature_Evidence_Registry_v8_Delta_Candidate_R1_2026-10-24_DRAFT.md",
+    "gate3_acceptance_record": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Framework_v8_Registry_v8_Delta_Gate3_Acceptance_Record_2026-10-24.md",
+    "v8_package_publication_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+    "note": "Paths for readers. The binding is the SHA-256 object above, which the v2 verifier compares exactly."
+  },
+  "researcher_candidate_acceptance_record": {
+    "path": "docs/checkpoints/Iris_Thesis_Pointer_v2_R3_Combined_Acceptance_Record_2026-10-24.md",
+    "sha256": "d7e4590e0031bbbebde7cf870e2f05111efefdb98ce3a3c4f7ec4922b48358d1",
+    "bytes": 10525,
+    "publication_commit": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23",
+    "open_gaps_it_named_and_their_disposition": {
+      "file_bound_independent_audit_record": "Met by the A1 record bound above (new targeted audit; no transcript reconstructed).",
+      "acceptance_closure_and_manifest": "This closure and its manifest.",
+      "canonical_replacement": "Authorized below; performed only after publication of this package.",
+      "routing_transition": "Authorized below as a minimal whitelist.",
+      "durable_positive_canonical_fixture_in_test_module": "NOT done. The accepted v2 test module is not modified; positive canonical verification is performed in a disposable fixture and in the live repository after publication.",
+      "checkout_eol_handling": "No .gitattributes or Git configuration change. LF-exact checkout is demonstrated in a disposable clone with a clone-scoped core.autocrlf=false."
+    }
+  },
+  "verifier_and_tests": {
+    "verifier_v2": {
+      "path": "src/current_mainline_pointer_v2.py",
+      "sha256": "d2d2d7f0b65097c5485b9f0c910f3d45a41aafa9d7a3d0579e6676986627f1dd",
+      "publication_commit": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23"
+    },
+    "tests_v2": {
+      "path": "tests/test_current_mainline_pointer_v2.py",
+      "sha256": "56b9c5645db7109e0e95da7674075ba6ee08276325fd5d8a2a304c5eb9c71013",
+      "publication_commit": "88833aed3b1bc2a322dc3e98a22e0eaff91d1b23"
+    },
+    "historical_verifier_v1": {
+      "path": "src/current_mainline_pointer_v1.py",
+      "sha256": "03485b36188d83163cdf9fd49cc14770aec8ca37769a402cbca4643df18ad930",
+      "role_after_activation": "Historical v7.4 route only: v1 CANDIDATE mode on configs/candidates/current_mainline_pointer_candidate_r2.json. v1 CANONICAL mode reports FAIL_CLOSED on a schema-v2 canonical pointer by design; that is not corruption."
+    },
+    "modified_by_this_acceptance": false
+  },
+  "a1_audit_limitations_accepted_as_disclosed": [
+    "Targeted audit: nine selected tests passed; the complete 49-test module was not re-run in A1.",
+    "No synthetic positive canonical activation was executed or relied on in A1.",
+    "Reviewer and producer runtime identities are disclosed as observed, not cryptographically attested.",
+    "Earlier conversation-only reviewer evidence is not reconstructed.",
+    "Historical numerical results were not strictly re-hashed (v1 RESULTS_POLICY_NONE)."
+  ],
+  "predecessor": {
+    "pointer_id": "CURRENT_MAINLINE_POINTER_R2",
+    "accepted_payload_digest": "08d09477d7bcda349197427f38bd642cf8f7d3e0413abdfdc4c362dab141ee4e",
+    "acceptance_closure": {
+      "path": "results/provenance/current_mainline_pointer_acceptance_r2/acceptance_closure.json",
+      "sha256": "bf0bb2766d15fd69b27d95436e4375958de1bc98f84dce31b2c1be3249053d71"
+    },
+    "activation_commit": "5a101042cb91f6191208cfdad1e8ddcbebb972f0",
+    "disposition_on_r3_activation": "HISTORICAL_ACCEPTED_PREDECESSOR. Superseded as routing authority. Preserved in Git history and as configs/candidates/current_mainline_pointer_candidate_r2.json; none of its records is modified.",
+    "carried_unchanged_in_v7_4_historical_scope": {
+      "ACC-N1": "MAJOR / OPEN, not closed",
+      "U-01": "OPEN_HOLD",
+      "A2": "HARD_BLOCKED_UNTIL_U_01_RESOLVED_AUDITED_ACCEPTED_AND_FROZEN"
+    },
+    "r2_three_purpose_permission": "Not withdrawn, not re-granted and not extended by this closure. It remains a historical v7.4-scope record in the R2 acceptance closure (key authorization_of_the_three_purposes). After activation the v1 programmatic gate require_current_mainline on the canonical path fails closed by design, so it no longer serves as the machine check of that permission. Any decision on continued use of the historical Full81 results under Framework v8 is the researcher's and is outside this closure.",
+    "r2_closure_three_purposes_text_sha256": "3768c0b457970ec463988d2906f50528345a04d6ea34f1f367c644913bcedd10"
+  },
+  "decision": {
+    "decision": "ACCEPT_AND_AUTHORIZE_ACTIVATION",
+    "decided_by": "Researcher Iris, the thesis owner and sole acceptance authority.",
+    "authority": "The researcher's explicit Activation authorization of 2026-10-24, given in the operator session together with the A2-A4 combined activation instruction.",
+    "authorization_statement_verbatim": "我作為 Iris Thesis 研究者，明確授權在 A1 Independent Audit Record 的實際 SHA、內容及驗證契約全部核對通過的前提下，執行本指令限定的 Framework v8／Registry v8 Authority Activation。\n\n授權範圍包括：建立必要的研究者 Activation Acceptance Closure 與 Manifest、受控 Git publication、將 canonical pointer 由 R2 轉為經接受的 R3，以及最小必要的 caller/routing transition 與 LF-exact 驗證。\n\n我接受的 Framework v8 與 Registry v8 身分限於已通過 Gate 3 的 exact artifacts，並要求 Pointer R3 authority payload digest 保持不變。\n\n所有寫入及 Git 操作僅限指令所述範圍。任何重要身分、授權、驗證或 Git publication 衝突均須 STOP，不得擅自修復或擴大範圍。\n\n本授權不包括新的研究方法修改、模型 Coding、Pilot、Solver、數值結果接受、歷史結果修改或其他治理工作。",
+    "authorization_statement_sha256_utf8": "32d84151f39aed329138356c6c3b399db75e8eb19571d610ddf372a9a2b3935e",
+    "authorization_statement_custody": "Transcribed by the operator from the session message; no signature is claimed.",
+    "authorization_conditions_checked_by_operator_before_this_closure": {
+      "a1_audit_sha256_and_bytes": "MATCH (ce1c10e7...a1999, 43406 bytes, LF only, no CR)",
+      "a1_audit_content_read_in_full": true,
+      "a1_activation_contract_fields": "artifact_type, verdict PASS, self_audit false, audited_candidate.sha256 and audited_payload_digest all equal the accepted R3 values",
+      "r3_payload_digest_recomputed": "886b906bf2f9d8a13ad2693a93fe4ea122196ecb65504cb3228e84c9e16df506",
+      "accepted_identities_vs_git_blobs": "Framework v8 R2, Registry v7.4, Registry v8 Delta R1, Gate 3 record, verifier v2, R3, tests v2, candidate acceptance record and v1 all equal their HEAD blobs and working-tree bytes",
+      "repository_state": "thesis-v7 at 88833aed3b1bc2a322dc3e98a22e0eaff91d1b23 = origin/thesis-v7; index empty of staged changes; canonical pointer R2 verifies under v1"
+    },
+    "owner_identity_verification": "NOT_PERFORMED (the session user is taken to be the researcher)",
+    "operator_role": "Claude Code session dd517753-b168-4c6d-9a95-799507fd3621 (model id claude-opus-5-5 as reported by the runtime) records this decision, prepares files, runs zero-solve verification and executes the authorized Git steps. The operator does not decide acceptance and is not the independent auditor."
+  },
+  "authorized_repository_mutations": {
+    "commit_1_evidence_publication": [
+      "docs/audits/Iris_Thesis_Pointer_v2_R3_Independent_Audit_Record_2026-10-24.json",
+      "results/provenance/current_mainline_pointer_acceptance_r3/acceptance_closure.json",
+      "results/provenance/current_mainline_pointer_acceptance_r3/acceptance_manifest.json"
+    ],
+    "commit_2_canonical_activation_and_minimal_routing": [
+      "configs/current_mainline_pointer.json",
+      "CLAUDE.md",
+      "docs/ai_handoff/CURRENT_STATE.md",
+      "docs/ai_handoff/PROJECT_HANDOFF.md"
+    ],
+    "canonical_envelope_only": "pointer_identity and activation_basis change; the authority payload stays the audited R3 payload (digest above).",
+    "git": "Normal fast-forward pushes to origin thesis-v7 only. No force push, reset, amend, tag, branch rename, Git configuration or .gitattributes change."
+  },
+  "publication_status": "DETERMINED_FROM_LIVE_GIT_NOT_SELF_ASSERTED",
+  "containing_commit": "NOT_EMBEDDED_BY_DESIGN",
+  "canonical_pointer_at_authoring": "Still R2. R3 is written after this closure is published and embeds this closure's hash; this closure embeds no hash of it.",
+  "closed_or_remediated_by_this_acceptance": [],
+  "not_authorized_by_this_record": [
+    "V8_CODING_OR_IMPLEMENTATION",
+    "MODEL_CONSTRUCTION",
+    "SOLVER_CALL",
+    "V8_PILOT",
+    "V8_PRODUCTION_GENERATION_OR_RUN",
+    "V8_INPUT_COMPATIBILITY_DECISION",
+    "V8_NUMERICAL_RESULTS_OR_RESULT_ACCEPTANCE",
+    "NEW_FULL81_EXECUTION_OR_RERUN",
+    "U_01_RESOLUTION_OR_CALIBRATION",
+    "A2_EXECUTION_OR_EXPOSURE",
+    "LAYER_B_DG_OR_SENSITIVITY",
+    "REMEDIATION_OR_CLOSURE_OF_ANY_FINDING",
+    "MODIFICATION_OF_ANY_HISTORICAL_OR_ACCEPTED_ARTIFACT",
+    "METHODOLOGY_CHANGE_OR_REOPENING_OF_CLOSED_DECISIONS",
+    "POINTER_R4",
+    "GATE2_OR_GATE3_REACCEPTANCE",
+    "PROTOCOL_REVISION",
+    "GIT_TAG"
+  ],
+  "zero_execution": {
+    "solver_library_imports": 0,
+    "model_constructions": 0,
+    "optimize_calls": 0,
+    "production_scripts_or_gates_executed": 0
+  },
+  "is_acceptance_closure": true,
+  "is_independent_audit_record": false,
+  "is_current_mainline_pointer": false
+}
