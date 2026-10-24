@@ -1,0 +1,558 @@
+{
+  "artifact_type": "IRIS_THESIS_CURRENT_MAINLINE_POINTER",
+  "schema_version": "iris-thesis-current-mainline-pointer-v2",
+  "pointer_revision": "R3",
+  "documentation": {
+    "purpose": "Read-first routing index, schema v2. If activated, it routes Framework v8 as the current methodology authority and Registry v8 (Registry v7.4 base plus Registry v8 Delta R1) as the current evidence authority. It routes no v8 implementation, production generation, input, Pilot or result, because none exists: each is an explicit NOT_YET_* stage. It is not a governance authority of its own, replaces no accepted primary artifact and grants no execution authority.",
+    "serialization": "UTF-8, LF line endings, json.dumps(indent=2, ensure_ascii=False), insertion-ordered keys, one trailing newline.",
+    "path_convention": "Every path is repository-relative POSIX. No absolute path, drive letter, backslash, '.' or '..' segment is permitted. The verifier resolves each path against the repository root at run time and refuses any path whose real location differs from its lexical one.",
+    "descriptive_keys": "Text under a key named 'note' or 'documentation', or ending in '_note', is explanation for human readers and is not verified. Every other value in the authority payload is checked against a primary artifact, a Git object or the verifier interface; pointer_revision is the pointer's own name.",
+    "state_note": "The payload is written to be true both as a candidate and after activation, so that an activated pointer can carry exactly the audited payload. Role labels describe the routing the pointer establishes once activated. While pointer_identity says CANDIDATE, nothing in this file is current: Framework v7.4 and Registry v7.4 remain the current authority under the canonical pointer R2.",
+    "revision_note": "R3 is the first schema-v2 pointer. Schema v1 cannot carry a methodology-only Framework v8 route: it requires a current production generation, implementation, input and accepted result set, and anchors the methodology document at the historical Full81 execution commit. R3 binds the v7.4 mainline by content through pointer R2 instead of restating it as current."
+  },
+  "pointer_identity": {
+    "pointer_id": "CURRENT_MAINLINE_POINTER_R3",
+    "lifecycle": "CANDIDATE / NOT ACCEPTED / NOT CURRENT AUTHORITY",
+    "lifecycle_state": "CANDIDATE",
+    "is_candidate": true,
+    "is_accepted": false,
+    "is_canonical": false,
+    "is_current_authority": false,
+    "self_accepted": false,
+    "this_file_path": "configs/candidates/current_mainline_pointer_candidate_r3.json",
+    "proposed_canonical_path": "configs/current_mainline_pointer.json",
+    "self_hash": "OMITTED_BY_DESIGN_TO_AVOID_A_CIRCULAR_SELF_HASH",
+    "git_containment": "NOT_EMBEDDED_BY_DESIGN (publication would be proven from live Git by the verifier)",
+    "predecessor_note": "Successor candidate to CURRENT_MAINLINE_POINTER_R2 (payload digest 08d09477d7bcda349197427f38bd642cf8f7d3e0413abdfdc4c362dab141ee4e, activated at 5a101042cb91f6191208cfdad1e8ddcbebb972f0). R2 stays the canonical pointer until a separately authorized activation of this candidate.",
+    "date": "2026-10-24",
+    "authored_utc": "2026-10-24T09:54:04Z",
+    "authoring_operator": "Claude Code session c7c5196b-e507-411c-8e52-76e7b8de794c, model id claude-opus-5-5 as reported by the runtime",
+    "authorization_basis": "The thesis owner's 2026-10-24 instruction to construct the minimum combined v8 pointer compatibility candidate: schema v2, verifier v2, pointer candidate R3 and focused tests. Candidate construction and static tests only.",
+    "authority_note": "CANDIDATE / NOT ACCEPTED / NOT ACTIVATED. A consistent candidate is not an acceptance and not an activation."
+  },
+  "activation_basis": {
+    "status": "NOT_ACTIVATED",
+    "audited_candidate": null,
+    "independent_audit_record": null,
+    "acceptance_closure": null,
+    "acceptance_manifest": null,
+    "contract_note": "No activation artifact exists, and no digest of one is stated, reserved or stubbed. The future contract is in activation_contract."
+  },
+  "methodology_authority": {
+    "formal_name": "Framework v8",
+    "role": "CURRENT_METHODOLOGY_AUTHORITY",
+    "lifecycle": "GATE3_ACCEPTED",
+    "naming_note": "Framework v8 is exactly the bytes of Framework v8 Candidate R2 (Gate 3 record section 1.1). The _DRAFT / Candidate filename is preserved provenance naming.",
+    "document": {
+      "path": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Research_Framework_v8_Candidate_R2_2026-10-24_DRAFT.md",
+      "sha256": "cf299f2edbb771d36a1ce791e837c513d24428791eab982e6fcdf2608a171f93",
+      "bytes": 89767,
+      "git_tracked": true,
+      "git_blob_id": "9ac0e92f48f7911e49ff0c40091940201be25b1a",
+      "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "gate3_acceptance_record": {
+      "path": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Framework_v8_Registry_v8_Delta_Gate3_Acceptance_Record_2026-10-24.md",
+      "sha256": "b67eb1f05f8cd6dfd08040cf12599a324483cb4616c23bb1dc8763d436880cc9",
+      "bytes": 14291,
+      "git_tracked": true,
+      "git_blob_id": "1abde566cd9bfe16acf14807bb49059fa431b711",
+      "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "gate3_independent_audit": {
+      "verdict_as_recorded": "FRAMEWORK V8 R2 + REGISTRY V8 DELTA — CONTINUATION AUDIT PASS",
+      "report_custody": "CONVERSATION_ONLY_NOT_FILE_BOUND",
+      "report_file": null,
+      "independence_note": "As recorded by the Gate 3 record section 2: session-independent, same Claude model family, not cross-model; partial Codex evidence never issued PASS or STOP. Not upgraded here."
+    },
+    "gate3_researcher_acceptance": {
+      "acceptor": "Researcher Iris (sole acceptor)",
+      "decision_ids": [
+        "G3-D1",
+        "G3-D2",
+        "G3-D3",
+        "G3-D4",
+        "G3-D5"
+      ],
+      "activation_authorized_by_gate3_record": false,
+      "note": "Gate 3 acceptance only. The record authorizes neither activation, nor a pointer change, nor Git, Coding, Solver or Pilot."
+    },
+    "gate2_governing_sources": [
+      {
+        "source_id": "REC",
+        "document": {
+          "path": "docs/v8_gate3_accepted_package_2026-10-24/gate2_accepted_sources/Iris_Phase1_Methodology_Specification_Acceptance_Decision_Record_2026-10-24.md",
+          "sha256": "459c3a861ae890fd90a868bac9f269d9f1316eba25cf054796597d071b9d795b",
+          "bytes": 13718,
+          "git_tracked": true,
+          "git_blob_id": "131e6ca510bbc450f4b658bb9844b7a6b2d1dd75",
+          "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+          "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+        }
+      },
+      {
+        "source_id": "SPEC",
+        "document": {
+          "path": "docs/v8_gate3_accepted_package_2026-10-24/gate2_accepted_sources/Iris_Phase1_Minimal_Candidate_Spec_R2_2026-10-23_DRAFT.md",
+          "sha256": "1a7cf0bd926f821cc9dddbec0145854dbba212a825d32f948bb2f00e5347f557",
+          "bytes": 40221,
+          "git_tracked": true,
+          "git_blob_id": "7dfd34ebceac2f0d63a6c59f92e285bc6d4d44ed",
+          "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+          "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+        }
+      },
+      {
+        "source_id": "CL1",
+        "document": {
+          "path": "docs/v8_gate3_accepted_package_2026-10-24/gate2_accepted_sources/Iris_Phase1_ClassC_Guard_Additive_Clarification_R1_2026-10-23_DRAFT.md",
+          "sha256": "4fde9052cde3450c9476829d7144d70606d077f54f8b4030a801e5e064b0a878",
+          "bytes": 30690,
+          "git_tracked": true,
+          "git_blob_id": "a078e4995f8dc6854f1c5908990ddf8e2247627e",
+          "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+          "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+        }
+      },
+      {
+        "source_id": "RES",
+        "document": {
+          "path": "docs/v8_gate3_accepted_package_2026-10-24/gate2_accepted_sources/Iris_Phase1_Proposed_Acceptance_Resolution_R1_2026-10-23_DRAFT.md",
+          "sha256": "3c9e35033c9fab492593b6b056cbcde447ed8a949ac4de8ff1e096e9db5a04c5",
+          "bytes": 27864,
+          "git_tracked": true,
+          "git_blob_id": "3cdc881fb32a9a9f22a2d89924343b699d6a54d1",
+          "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+          "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+        }
+      },
+      {
+        "source_id": "ART2",
+        "document": {
+          "path": "docs/v8_gate3_accepted_package_2026-10-24/gate2_accepted_sources/Iris_Phase1_Proposed_Acceptance_Artifact_R2_Candidate_2026-10-24_DRAFT.md",
+          "sha256": "2386d47b96690ac3a8c81673b1c4750e85bce93ef837ce47a75e850cb49f8268",
+          "bytes": 76581,
+          "git_tracked": true,
+          "git_blob_id": "dbdace13ffe9d9dbe0edad2465fac16a1b78cb67",
+          "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+          "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+        }
+      },
+      {
+        "source_id": "DD",
+        "document": {
+          "path": "docs/v8_gate3_accepted_package_2026-10-24/gate2_accepted_sources/Iris_Phase1_Methodology_Specification_Acceptance_Decision_Candidate_R1_2026-10-24_DRAFT.md",
+          "sha256": "ac0728d9d8eb33efdc92b2866bd1f87c709710e53c6e75b7b030313f100c04b7",
+          "bytes": 32536,
+          "git_tracked": true,
+          "git_blob_id": "1959b5eaec6049ea2189b8d038fac8c24193dcc8",
+          "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+          "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+        }
+      }
+    ],
+    "governing_protocol": {
+      "path": "docs/protocols/Iris_Thesis_Version_Provenance_Management_Protocol_v1_2026-09-21.md",
+      "sha256": "c7a339896ddafc3575d0dc1d3eb78d3dc13ba89bb8acf70791db6cc21c4fd696",
+      "bytes": 19977,
+      "git_tracked": true,
+      "git_blob_id": "834273221cf1163b7aaec60ce320716ef876e2e3",
+      "git_anchor_commit": "a476ec9c82f338765e9db1c004ced8a1247a6b1f",
+      "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+    },
+    "anchor_note": "Every v8 document is bound to the commit that published it in Git (the v8 package publication commit), never to the historical v7.4 Full81 execution commit."
+  },
+  "evidence_authority": {
+    "formal_name": "Registry v8",
+    "role": "CURRENT_EVIDENCE_AUTHORITY",
+    "lifecycle": "GATE3_ACCEPTED",
+    "composition": "REGISTRY_V7_4_BASE_PLUS_REGISTRY_V8_DELTA_R1",
+    "composite_formula_as_recorded": "Registry v8 ＝ REG74 ＋ REGD",
+    "delta_alone_is_registry_v8": false,
+    "base_component": {
+      "formal_name": "Registry v7.4",
+      "acceptance_commit": "9050d0eabd0ee5c41626ba924c31a67f301c7293",
+      "modified_by_v8": false,
+      "document": {
+        "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md",
+        "sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+        "bytes": 245125,
+        "git_tracked": true,
+        "git_blob_id": "f4e0dc03916befc217cf9e5b4a9d78f4c7c7e9c8",
+        "git_anchor_commit": "bf87b7f0659da17277fbb797099141b24343aa79",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      },
+      "note": "Registry v7.4, unmodified (Gate 3 record section 1.1: REG74 不修改). Bound to the commit that added its bytes."
+    },
+    "delta_component": {
+      "formal_name": "Registry v8 Delta R1",
+      "document": {
+        "path": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Literature_Evidence_Registry_v8_Delta_Candidate_R1_2026-10-24_DRAFT.md",
+        "sha256": "99fe6eb5d2c47784d978012368f254b0094abdd8613cb1547a0def29f310e93c",
+        "bytes": 23268,
+        "git_tracked": true,
+        "git_blob_id": "e98f640e93d1ccc8ca5c942da4686e43effd89e8",
+        "git_anchor_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      }
+    }
+  },
+  "v8_unbuilt_stages": {
+    "historical_identity_reuse_permitted": false,
+    "scientific_implementation": {
+      "status": "NOT_YET_AUTHORIZED",
+      "identity": "NOT_YET_AUTHORIZED"
+    },
+    "production_generation": {
+      "status": "NOT_YET_AUTHORIZED",
+      "identity": "NOT_YET_AUTHORIZED"
+    },
+    "production_runner": {
+      "status": "NOT_YET_AUTHORIZED",
+      "identity": "NOT_YET_AUTHORIZED"
+    },
+    "input_compatibility": {
+      "status": "NOT_YET_AUTHORIZED",
+      "identity": "NOT_YET_AUTHORIZED"
+    },
+    "pilot": {
+      "status": "NOT_YET_AUTHORIZED",
+      "identity": "NOT_YET_EXECUTED"
+    },
+    "numerical_results": {
+      "status": "NOT_YET_EXECUTED",
+      "identity": "NOT_YET_EXECUTED"
+    },
+    "result_acceptance": {
+      "status": "NOT_YET_EXECUTED",
+      "identity": "NOT_YET_EXECUTED"
+    },
+    "note": "No v8 implementation, production generation, runner, input compatibility decision, Pilot, numerical result or result acceptance exists. Build stages need a separate authorization first (Protocol section 24); results have not occurred (Protocol section 14). No historical v7.4 / G1 identity and no placeholder hash may stand in for any of them."
+  },
+  "historical_v7_4_authority": {
+    "scope": "HISTORICAL_V7_4_FULL81_SCOPE_ONLY",
+    "status_upon_activation": "HISTORICAL_ACCEPTED_PREDECESSOR",
+    "bytes_modified_by_this_pointer": false,
+    "note": "Framework v7.4, Registry v7.4, G1, the Full81 run and its acceptance, EOB, and pointers R1 and R2 stay byte-identical and historically valid under their own assumptions (ART2 7.5.4-E; Framework v8 R2 8.4 and 8.5-6). They are bound here by content through pointer R2 and verified by v1, not restated as v8 authority.",
+    "predecessor_pointer": {
+      "pointer_id": "CURRENT_MAINLINE_POINTER_R2",
+      "schema_version": "iris-thesis-current-mainline-pointer-v1",
+      "payload_digest": "08d09477d7bcda349197427f38bd642cf8f7d3e0413abdfdc4c362dab141ee4e",
+      "canonical_object": {
+        "git_path": "configs/current_mainline_pointer.json",
+        "git_commit": "5a101042cb91f6191208cfdad1e8ddcbebb972f0",
+        "git_blob_id": "c6b9b50ce37c44040e5ff9660a1242ec63845c26",
+        "blob_sha256": "ed7005dea8dc423fb4372554b3f8d15fd34c3988441c4fb14c2dede0d64afcb4",
+        "blob_bytes": 58156
+      },
+      "audited_candidate": {
+        "path": "configs/candidates/current_mainline_pointer_candidate_r2.json",
+        "sha256": "7f4971f630a8ceed429f7a3638d68015ec21758b05817a6500b1d9e808aebb60",
+        "bytes": 56791,
+        "git_tracked": true,
+        "git_blob_id": "39f2988a4a8f690690c5a41018b16da9874e9cf0",
+        "git_anchor_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      },
+      "independent_audit_record": {
+        "path": "results/provenance/current_mainline_pointer_independent_audit_r2/independent_audit_record.json",
+        "sha256": "0de5756fdbcfc548b258e5d99b34036f140ff4cc3b98f041544629ede0416e08",
+        "bytes": 14501,
+        "git_tracked": true,
+        "git_blob_id": "44644704218e56574419cc813dc66790c881578e",
+        "git_anchor_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      },
+      "acceptance_closure": {
+        "path": "results/provenance/current_mainline_pointer_acceptance_r2/acceptance_closure.json",
+        "sha256": "bf0bb2766d15fd69b27d95436e4375958de1bc98f84dce31b2c1be3249053d71",
+        "bytes": 16901,
+        "git_tracked": true,
+        "git_blob_id": "e459bd9211dc9004f08e51c48bb7b9e3b76986c3",
+        "git_anchor_commit": "b77183f2e4857ac706a0c2a165cebaa79286b5b9",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      },
+      "acceptance_manifest": {
+        "path": "results/provenance/current_mainline_pointer_acceptance_r2/acceptance_manifest.json",
+        "sha256": "4ed60b51c5e8f77eb4fbd2b905da829aa6932bf89b0afdce7827b089a1af2065",
+        "bytes": 2434,
+        "git_tracked": true,
+        "git_blob_id": "21cd33693ba238bbae6bc58d9d3fbe21a76eb35b",
+        "git_anchor_commit": "b77183f2e4857ac706a0c2a165cebaa79286b5b9",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      },
+      "canonical_object_note": "The canonical file as published by the R2 activation commit. Bound as a Git object, so it still verifies after the canonical path is rewritten by a later activation."
+    },
+    "pointer_r1": {
+      "pointer_id": "CURRENT_MAINLINE_POINTER_R1",
+      "payload_digest": "1c118f22350aa21d74b04f94307be8bbb43d694023e5350b1edf512824980fdf",
+      "canonical_object": {
+        "git_path": "configs/current_mainline_pointer.json",
+        "git_commit": "354e0492aef8295a52cc35b8c58a14d81be3e3d4",
+        "git_blob_id": "2afb6de1872d0c934b93bfc26961760b83e9de93",
+        "blob_sha256": "bf38226b2895c18b984da5932269208e6e89c520667f60fddea78c1f9be39946",
+        "blob_bytes": 55146
+      },
+      "candidate": {
+        "path": "configs/candidates/current_mainline_pointer_candidate_r1.json",
+        "sha256": "1619627b0b1e3d28f16e2d985bf83a8d47d8743402d07cb87f8cfb9abea5c24f",
+        "bytes": 53873,
+        "git_tracked": true,
+        "git_blob_id": "be8422e3a923a76de40852d0bae27a5c2060a660",
+        "git_anchor_commit": "baf5eab0a9f53ed5865cf66421eed9ae6c7f8789",
+        "git_anchor_role": "ADDED_BY_THIS_COMMIT"
+      }
+    },
+    "historical_verification_route": {
+      "verifier_module_identity": {
+        "path": "src/current_mainline_pointer_v1.py",
+        "sha256": "03485b36188d83163cdf9fd49cc14770aec8ca37769a402cbca4643df18ad930",
+        "bytes": 132591,
+        "git_tracked": true,
+        "git_blob_id": "1ed110cb0675c3a23a0d65fa8b90c8e929518ef6",
+        "git_anchor_commit": "aa6db5f9071ff6541d84244aaac75bf345620cd5",
+        "git_anchor_role": "CONTENT_AT_THIS_COMMIT"
+      },
+      "verifier_interface_version": "iris-thesis-current-mainline-pointer-verifier-v1",
+      "mode": "CANDIDATE",
+      "pointer_path": "configs/candidates/current_mainline_pointer_candidate_r2.json",
+      "results_policy": "NOT_CHECKED",
+      "route_note": "The v2 verifier runs this route on every verification. Strict Full81 result integrity stays available through: python -B src/current_mainline_pointer_v1.py candidate --pointer configs/candidates/current_mainline_pointer_candidate_r2.json --results-policy STRICT_FULL_REHASH. Once the canonical path holds a schema-v2 pointer, v1 canonical mode fails closed by design; this candidate route is the historical one."
+    },
+    "carried_identities": {
+      "framework_v7_4_document_path": "docs/research_framework_v7_4_2026-09-26_r2.md",
+      "framework_v7_4_document_sha256": "36dd18039667ef908c80cc0be78aa8ea0a89779ab1f1cd23d9ee21541ad2f273",
+      "registry_v7_4_document_sha256": "5cc5d091af3be1943531a5a44d648fad58738730581dbf0331cdc2fe86029433",
+      "production_generation_id": "CURRENT_FULL81_PRODUCTION_GENERATION_G1",
+      "g1_accepted_lifecycle_record_sha256": "f1d798ab357ff82454f3030587b3cda30e13b55bf890a2b7257bbb40c325d3b0",
+      "canonical_annual_input_sha256": "3ac8dda4a3f1c6983780508cc8131977dd87fda35fc0fc7aff287cc56a50c428",
+      "scientific_model_core_sha256": "9d828321814b09141497056d1bb17da8b2839c5eb151fce8530059fb7e193da8",
+      "production_successor_stack_sha256": "65728c40e8df746da92865e859072c345370ae93aa4a2b32a24b149c67a3dcda",
+      "production_runner_sha256": "1a55c34897548a3595a9812dfeaa854f3b6b478594630c750931cd7cf2371bd1",
+      "historical_execution_commit": "c8f555094d6ab711ce6426302419fff958ed19fa",
+      "full81_run_id": "20261008T183934456307Z_a6826f4828",
+      "full81_run_file_aggregate_sha256": "7d0e2d0c066d956080445f66236bc91ed97ad5cd8d8256f6617a4f2b07b12c41",
+      "results_acceptance_closure_sha256": "3b27f9a60f5e0bfbcffde343aad164e74cff2f8a98581d91fb95d4bc90e2ba02",
+      "results_acceptance_publication_commit": "fcb35fcbe8edd8095822a32d2cae8c8b45f45a1f"
+    },
+    "carried_dispositions": {
+      "scope": "HISTORICAL_V7_4_FULL81_SCOPE_ONLY",
+      "reinterpreted_as_v8_constraint": false,
+      "closed_or_remediated_by_this_pointer": [],
+      "ACC-N1": {
+        "severity": "MAJOR",
+        "disposition": "OPEN",
+        "closed": false
+      },
+      "U-01": {
+        "status": "OPEN_HOLD",
+        "must_be_frozen_before": [
+          "A2_EXECUTION",
+          "A2_RESULT_EXPOSURE",
+          "A2_INTERPRETATION",
+          "A2_CONDITIONAL_EXTENSION_AUTHORIZATION"
+        ]
+      },
+      "A2": {
+        "a2_variable_floor_status": "HARD_BLOCKED_UNTIL_U_01_RESOLVED_AUDITED_ACCEPTED_AND_FROZEN"
+      },
+      "note": "Carried exactly as pointer R2 records them, within the v7.4 Full81 scope only. Nothing is closed, remediated, re-graded or turned into a Framework v8 constraint. The full findings and limitations register stays in pointer R2."
+    }
+  },
+  "git_provenance": {
+    "branch": "thesis-v7",
+    "upstream_ref": "refs/remotes/origin/thesis-v7",
+    "v8_package_publication_commit": "420f182ed221f3d4e2629f5e44da95c395d9f6b3",
+    "predecessor_pointer_activation_commit": "5a101042cb91f6191208cfdad1e8ddcbebb972f0",
+    "ancestry_chain_oldest_to_newest": [
+      "354e0492aef8295a52cc35b8c58a14d81be3e3d4",
+      "5a101042cb91f6191208cfdad1e8ddcbebb972f0",
+      "420f182ed221f3d4e2629f5e44da95c395d9f6b3"
+    ],
+    "ancestry_chain_note": [
+      "1. Pointer R1 activation",
+      "2. Pointer R2 activation (current canonical pointer)",
+      "3. Publication of the Gate 3 accepted Framework v8 R2 / Registry v8 Delta R1 package"
+    ],
+    "live_head_must_equal_a_recorded_commit": false,
+    "live_head_note": "Later additive commits are expected. Every recorded commit must be in the ancestry of the live HEAD and reachable from the upstream ref, and every bound tracked file must carry the same blob in the live HEAD as in its anchor commit."
+  },
+  "roles": {
+    "note": "DEFAULT DENY. Once activated, only accepted_current is current. Registry v7.4 is the only predecessor path that continues, unmodified, as the base component of Registry v8. Every other path pointer R2 routes is carried as historical_only.",
+    "accepted_current": [
+      {
+        "role": "CURRENT_METHODOLOGY_AUTHORITY",
+        "path": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Research_Framework_v8_Candidate_R2_2026-10-24_DRAFT.md"
+      },
+      {
+        "role": "CURRENT_EVIDENCE_AUTHORITY_BASE_COMPONENT",
+        "path": "docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md"
+      },
+      {
+        "role": "CURRENT_EVIDENCE_AUTHORITY_DELTA_COMPONENT",
+        "path": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Literature_Evidence_Registry_v8_Delta_Candidate_R1_2026-10-24_DRAFT.md"
+      },
+      {
+        "role": "METHODOLOGY_GATE3_ACCEPTANCE_RECORD",
+        "path": "docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Framework_v8_Registry_v8_Delta_Gate3_Acceptance_Record_2026-10-24.md"
+      }
+    ],
+    "historical_only": [
+      {
+        "role": "HISTORICAL_V7_4_METHODOLOGY_AUTHORITY",
+        "path": "docs/research_framework_v7_4_2026-09-26_r2.md"
+      },
+      {
+        "role": "HISTORICAL_V7_4_PRODUCTION_GENERATION_ACCEPTED_LIFECYCLE",
+        "path": "results/provenance/current_full81_production_generation_g1_accepted_lifecycle/accepted_lifecycle_record.json"
+      },
+      {
+        "role": "HISTORICAL_V7_4_CANONICAL_ANNUAL_PLANNING_INPUT",
+        "path": "data/processed/annual_input_v7_3_reconstructed_pv_mainline_candidate_r3_2026-09-23.parquet"
+      },
+      {
+        "role": "HISTORICAL_V7_4_ACCEPTED_SCIENTIFIC_MODEL_CORE",
+        "path": "src/annual_design_model_v7_2.py"
+      },
+      {
+        "role": "HISTORICAL_V7_4_PRODUCTION_SUCCESSOR_STACK",
+        "path": "src/production_successor_stack_v7_3.py"
+      },
+      {
+        "role": "HISTORICAL_V7_4_PRODUCTION_RUNNER",
+        "path": "scripts/21d_preflight_v7_3_final81_successor.py"
+      },
+      {
+        "role": "HISTORICAL_V7_4_ACCEPTED_FULL81_LAYER_A_RESULT_SET",
+        "path": "results/layer_a/final_81_v7_3/runs/20261008T183934456307Z_a6826f4828"
+      },
+      {
+        "role": "HISTORICAL_V7_4_FORMAL_FULL81_RESULTS_ACCEPTANCE",
+        "path": "results/provenance/full81_g1_postsolve_results_acceptance_r1/acceptance_closure.json"
+      },
+      {
+        "role": "HISTORICAL_V7_4_ACCEPTED_EOB_RUN_ECONOMIC_ONLY_BASELINE",
+        "path": "results/eob_production_v7_3/runs/20260924T184038809594Z_59116b1556"
+      },
+      {
+        "role": "HISTORICAL_V7_4_ACCEPTED_CORE_THREE_RUN",
+        "path": "results/layer_a/final_81_v7_3/runs/20260925T062317399837Z_bb564f7b55"
+      },
+      {
+        "role": "HISTORICAL_V7_2_FULL81_RUN",
+        "path": "results/layer_a/final_81/runs/20260911T112258206802Z_4d0eb9e1da"
+      },
+      {
+        "role": "HISTORICAL_V7_4_INCOMPLETE_STAGING_DIRECTORY_NOT_A_RESULT_SET",
+        "path": "results/layer_a/final_81_v7_3/runs/.pending_layer_a_20261008T182936610185Z_802a64df5c"
+      },
+      {
+        "role": "HISTORICAL_V7_2_EOB_PRODUCTION_NAMESPACE",
+        "path": "results/eob_production"
+      },
+      {
+        "role": "HISTORICAL_ACCEPTED_METHODOLOGY_PREDECESSOR",
+        "path": "docs/research_framework_v7_3_2026-09-23.md"
+      },
+      {
+        "role": "HISTORICAL_ACCEPTED_EVIDENCE_PREDECESSOR",
+        "path": "docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md"
+      },
+      {
+        "role": "HISTORICAL_V7_4_SUPERSEDED_MAIN_FULL81_SCOPE_AUTHORIZATION",
+        "path": "results/provenance/main_full81_authorization_r3/main_full81_authorization.json"
+      }
+    ]
+  },
+  "non_authorization_boundaries": {
+    "pointer_grants_execution_authority": false,
+    "authorizes": [],
+    "not_authorized_by_this_pointer": [
+      "V8_CODING_OR_IMPLEMENTATION",
+      "MODEL_CONSTRUCTION",
+      "SOLVER_CALL",
+      "V8_PILOT",
+      "V8_PRODUCTION_GENERATION_OR_RUN",
+      "V8_INPUT_COMPATIBILITY_DECISION",
+      "V8_RESULT_ACCEPTANCE",
+      "SENSITIVITY_OR_VALIDATION_EXECUTION",
+      "GIT_COMMIT_TAG_OR_PUSH",
+      "HANDOFF_OR_PROTOCOL_ROUTING_UPDATE",
+      "LAYER_B",
+      "DG_EXTENSION",
+      "BETA_24H_SCOPE",
+      "NEW_KNEE_OR_MARGINAL_DECISION_RULE",
+      "NEW_FULL81_EXECUTION_OR_RERUN",
+      "U_01_RESOLUTION_OR_CALIBRATION",
+      "A2_EXECUTION_OR_EXPOSURE",
+      "REMEDIATION_OR_CLOSURE_OF_HISTORICAL_FINDINGS",
+      "MODIFICATION_OF_HISTORICAL_V7_4_ARTIFACTS",
+      "RENAMING_OF_HISTORICAL_VERSION_LABELS_OR_DIRECTORIES"
+    ],
+    "note": "Neither this candidate nor its activation authorizes any listed step (Gate 3 record 4.2; Framework v8 R2 8.5-7). Production authority, if ever built for v8, is determined by its own gate."
+  },
+  "activation_contract": {
+    "predecessor_pointer_id": "CURRENT_MAINLINE_POINTER_R2",
+    "lifecycle_sequence": [
+      "CANDIDATE_CONSISTENCY",
+      "INDEPENDENT_AUDIT",
+      "RESEARCHER_ACCEPTANCE",
+      "PUBLICATION_AND_ACTIVATION"
+    ],
+    "independent_audit_required_before_acceptance": true,
+    "independent_audit_must_not_be_self_audit": true,
+    "candidate_consistency_is_acceptance": false,
+    "automatic_progression": false,
+    "activation_record_form": "CANONICAL_POINTER_SUCCESSOR",
+    "activation_artifact_types": {
+      "independent_audit_record": "CURRENT_MAINLINE_POINTER_INDEPENDENT_AUDIT_RECORD",
+      "acceptance_closure": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_CLOSURE",
+      "acceptance_manifest": "CURRENT_MAINLINE_POINTER_ACCEPTANCE_MANIFEST"
+    },
+    "closure_activation_binding_key": "accepted_methodology_activation",
+    "conditions_note": "Activation follows the existing pointer precedent (Framework v8 R2 8.5-5): an independent audit record (not a self-audit) PASS on this exact candidate and payload digest, a researcher acceptance closure and manifest whose accepted_methodology_activation names Framework v8, both Registry v8 components, the Gate 3 record and the predecessor pointer, publication of those records, and a separately authorized canonical replacement whose payload equals this audited payload. None of these exists or is authorized by this candidate, and no step triggers the next. Handoff and protocol routing updates (OPEN-11) are separate repository mutations."
+  },
+  "validation_contract": {
+    "verifier_module": "src/current_mainline_pointer_v2.py",
+    "verifier_interface_version": "iris-thesis-current-mainline-pointer-verifier-v2",
+    "required_checks": [
+      "C01_SCHEMA_V2",
+      "C02_POINTER_LIFECYCLE_AND_MODE",
+      "C03_PATH_CONTAINMENT",
+      "C04_GIT_PROVENANCE",
+      "C05_FILE_IDENTITIES_RAW_BYTES_AND_GIT_BLOBS",
+      "C06_HISTORICAL_GIT_OBJECT_IDENTITIES",
+      "C07_V8_METHODOLOGY_EVIDENCE_AND_GATE3_BINDINGS",
+      "C08_V8_NOT_YET_STAGE_STATUSES",
+      "C09_ROLES_AND_CONFLICTING_CLAIMS",
+      "C10_HISTORICAL_V7_4_PRESERVATION",
+      "C11_NON_AUTHORIZATION_AND_ACTIVATION_CONTRACT",
+      "C12_V8_RESULT_VALIDATION",
+      "C13_HISTORICAL_V7_4_VERIFICATION_ROUTE",
+      "C14_CANONICAL_ACTIVATION_BASIS"
+    ],
+    "documentation": {
+      "modes": {
+        "CANDIDATE": "Reads a candidate under configs/candidates/ and reports internal consistency. Never an acceptance or activation; never confers authority.",
+        "CANONICAL": "Reads only configs/current_mainline_pointer.json and requires a schema-v2 pointer with an accepted, published activation basis. A schema-v1 canonical pointer is FAIL_CLOSED here and verified by the v1 verifier."
+      },
+      "status_vocabulary": {
+        "NOT_APPLICABLE": "A check status. C12 uses it only after confirming both v8 result stages are NOT_YET_EXECUTED (no v8 result object exists); C14 in candidate mode.",
+        "NOT_YET_EXECUTED / NOT_YET_AUTHORIZED": "Pointer sentinels for v8 stages that have not occurred or have not been authorized.",
+        "FAIL_CLOSED": "Verdict whenever any required identity or consistency condition fails."
+      },
+      "hash_axes": {
+        "raw_working_tree_sha256": "SHA-256 of the file bytes as they are on disk.",
+        "git_blob_identity": "Blob id in the anchor commit and in the live HEAD, and SHA-256 of the blob bytes.",
+        "historical_git_object": "Blob id in its own commit's tree and SHA-256 of the blob bytes; never compared with the live HEAD.",
+        "relationship": "A raw-byte mismatch of a tracked file is classified as RAW_BYTES_DIFFER_BY_EOL_CONVERSION_ONLY or RAW_BYTES_DIFFER_IN_CONTENT and fails closed in both cases. No EOL normalization is applied. .gitattributes is not modified."
+      },
+      "usage": [
+        "python -B src/current_mainline_pointer_v2.py candidate --pointer configs/candidates/current_mainline_pointer_candidate_r3.json",
+        "python -B src/current_mainline_pointer_v2.py canonical"
+      ]
+    }
+  }
+}
