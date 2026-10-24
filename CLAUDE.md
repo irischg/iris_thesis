@@ -6,9 +6,14 @@ planning, NTUST demonstration case), not a generic software project.
 
 ## Read first, in order
 
-1. `docs/research_framework_v7_3_2026-09-23.md` — **current methodology source of truth**
-2. `docs/thesis_literature_evidence_registry_v7_3_2026-09-23_r3.md` — **current evidence source of truth**
-3. `docs/v7_3_methodology_evidence_authority_freeze_2026-09-23.md` — **current methodology/evidence lifecycle closure**
+1. `configs/current_mainline_pointer.json` — **canonical routing index** (Pointer R3, schema v2). Verify it
+   with `python -B src/current_mainline_pointer_v2.py canonical`; only `CANONICAL_POINTER_VERIFIED` routes
+   authority. Activation acceptance: `results/provenance/current_mainline_pointer_acceptance_r3/acceptance_closure.json`.
+2. `docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Research_Framework_v8_Candidate_R2_2026-10-24_DRAFT.md`
+   — **current methodology source of truth (Framework v8)**, Gate 3 accepted, activated 2026-10-24
+3. **Registry v8** = `docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md` (unchanged base) **plus**
+   `docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Literature_Evidence_Registry_v8_Delta_Candidate_R1_2026-10-24_DRAFT.md`
+   (delta) — **current evidence source of truth**. The delta alone is not Registry v8.
 4. `docs/ai_handoff/PROJECT_HANDOFF.md` — stable orientation (problem, pipeline, authority hierarchy)
 5. `docs/ai_handoff/CURRENT_STATE.md` — **current implementation state** (branch, HEAD, latest
    checkpoint/audit, open blockers) — this is the only file that should ever name a specific "latest"
@@ -18,7 +23,15 @@ planning, NTUST demonstration case), not a generic software project.
 7. The latest applicable checkpoint/audit **as identified by `CURRENT_STATE.md`** — treat this, not any
    path hard-coded here, as the current implementation evidence.
 
-The current research lineage branch is `thesis-v7`. Framework v7.2 and Registry v7.2 are historical
+The current research lineage branch is `thesis-v7` (the branch name is historical and is not renamed).
+Framework v8 activation is methodology/evidence only: v8 coding, model construction, solver calls, Pilot,
+production runs and results acceptance are **not authorized** (every v8 stage in the pointer is
+`NOT_YET_AUTHORIZED` / `NOT_YET_EXECUTED`). Framework v7.4, the accepted G1 / Full81 / EOB results and
+Pointers R1/R2 are historical accepted predecessors in v7.4 scope; Registry v7.4 continues only as the
+unchanged base component of Registry v8. `src/current_mainline_pointer_v1.py` canonical mode now fails
+closed by design; the historical v7.4 route is v1 candidate mode on
+`configs/candidates/current_mainline_pointer_candidate_r2.json`. Framework v7.3 and Registry v7.3 are
+historical accepted predecessors only. Framework v7.2 and Registry v7.2 are historical
 accepted predecessors only. Registry v7.3 R1/R2 are failed immutable provenance. Earlier framework /
 registry files and failed candidates must not be used as current authority; use them only for their
 explicitly assigned provenance, regression, historical-lineage, replication, or comparison roles.

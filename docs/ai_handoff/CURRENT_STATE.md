@@ -5,7 +5,51 @@ methodology — see `PROJECT_HANDOFF.md` and the Framework itself for that.**
 A stage below is marked complete only where a checkpoint/audit artifact supports it — never merely
 because a script exists.
 
+### Current Authority Activation — Framework v8 / Registry v8 — 2026-10-24
+
+**Authority:** Canonical Mainline Pointer **R3** (`configs/current_mainline_pointer.json`, schema v2),
+activated from the independently audited candidate R3 (payload digest
+`886b906bf2f9d8a13ad2693a93fe4ea122196ecb65504cb3228e84c9e16df506`) under the researcher's acceptance
+closure `results/provenance/current_mainline_pointer_acceptance_r3/acceptance_closure.json`. The A1 audit
+record, that closure and its manifest were published in `283fb1c11068c0f224e1c650a2ac6357aeb8e79e`.
+Verify live with `python -B src/current_mainline_pointer_v2.py canonical` (expected
+`CANONICAL_POINTER_VERIFIED`); never read authority off this file.
+
+- **Current methodology:** Framework v8 —
+  `docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Research_Framework_v8_Candidate_R2_2026-10-24_DRAFT.md`.
+- **Current evidence:** Registry v8 = Registry v7.4
+  (`docs/thesis_literature_evidence_registry_v7_4_2026-09-26.md`, unchanged base) plus Registry v8 Delta R1
+  (`docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Literature_Evidence_Registry_v8_Delta_Candidate_R1_2026-10-24_DRAFT.md`).
+- **Not authorized:** v8 coding or implementation, model construction, solver calls, v8 Pilot, v8 production
+  generation or run, input-compatibility decisions, numerical results and result acceptance. Every v8 stage
+  in the pointer is `NOT_YET_AUTHORIZED` / `NOT_YET_EXECUTED`; no historical identity stands in for one.
+- **Historical v7.4 scope:** Framework v7.4, G1, the accepted Main Full81 run and its acceptance, EOB, and
+  Pointers R1/R2 are historical accepted predecessors, byte-unchanged. ACC-N1 (MAJOR / OPEN), U-01
+  (`OPEN_HOLD`) and A2 (`HARD_BLOCKED_UNTIL_U_01_RESOLVED_AUDITED_ACCEPTED_AND_FROZEN`) are carried unchanged
+  in v7.4 scope; none is closed or reinterpreted as a v8 constraint.
+- **Verifier routes:** v2 canonical mode is the current route. `src/current_mainline_pointer_v1.py`
+  canonical mode now reports `FAIL_CLOSED` on the schema-v2 canonical pointer **by design; that is not
+  corruption**. The historical v7.4 route is v1 candidate mode on
+  `configs/candidates/current_mainline_pointer_candidate_r2.json` (add `--results-policy STRICT_FULL_REHASH`
+  for strict Full81 integrity).
+- **Open item for the researcher:** the R2-era permission for scientific inspection, results analysis and
+  supervisor discussion of the historical Full81 results is neither withdrawn nor re-granted by this
+  activation. The v1 `require_current_mainline` gate on the canonical path no longer serves as its machine
+  check. Continued use under Framework v8 is the researcher's decision.
+- **Live tests on the old premise:** accepted test modules that assert "R2 canonical / R3 candidate" against
+  the live repository now fail on the activated premise. They are not modified; updating them needs separate
+  authorization.
+- **Checkout EOL:** the canonical pointer and the R3 activation records have no `.gitattributes` rule. With
+  the host default `core.autocrlf=true`, a fresh checkout converts them to CRLF and the verifier fails
+  closed. Clone with a clone-scoped `-c core.autocrlf=false` for LF-exact bytes. `.gitattributes` and the
+  repository Git configuration are unchanged.
+
+The two 2026-10-14 sections below record the Pointer R2 state. They are retained as historical record;
+their ACC-N1, U-01 and A2 restrictions continue as carried above.
+
 ### Current-Use Governance Status — 2026-10-14
+
+*Historical since the 2026-10-24 Pointer R3 activation; see the section above.*
 
 **Authority:** Accepted and activated Canonical Mainline Pointer R2.
 

@@ -117,6 +117,17 @@ remains a billing-demand proxy — not sub-hourly physical validation.
 
 ## 5. Authority hierarchy (read this before trusting any number or rule)
 
+> **2026-10-24: Framework v8 / Registry v8 activated (methodology and evidence only).** The canonical
+> pointer `configs/current_mainline_pointer.json` (Pointer R3, verified by
+> `python -B src/current_mainline_pointer_v2.py canonical`) routes
+> `docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Research_Framework_v8_Candidate_R2_2026-10-24_DRAFT.md`
+> as the current methodology source of truth (Framework v8) and Registry v8 = item 2 below (unchanged base)
+> plus `docs/v8_gate3_accepted_package_2026-10-24/Iris_Thesis_Literature_Evidence_Registry_v8_Delta_Candidate_R1_2026-10-24_DRAFT.md`
+> as the current evidence source of truth. Item 1 below (Framework v7.4) is now the historical accepted
+> predecessor; item 2 continues only as the base component of Registry v8. No v8 coding, solver call,
+> Pilot or results acceptance is authorized. The v7.4-era text below is retained as historical record;
+> see `CURRENT_STATE.md`.
+
 1. **`docs/research_framework_v7_4_2026-09-26_r2.md`** — current methodology source of truth
    (`CLOSED / ACCEPTED`). The formal methodology name is **Framework v7.4**, never "Framework v7.4
    R2"; the `_r2` suffix is repository/provenance identity only. Its acceptance evidence is
